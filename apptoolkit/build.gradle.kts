@@ -2,6 +2,50 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     `maven-publish`
+    signing
+}
+
+android {
+    namespace = "com.d4rk.android.libs.apptoolkit"
+    compileSdk = 34
+    defaultConfig {
+        minSdk = 23
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+dependencies {
+    // Ktor
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
 publishing {
@@ -18,11 +62,11 @@ publishing {
             pom {
                 name.set("AppToolkit")
                 description.set("A toolkit library for Android applications.")
-                url.set("http://www.example.com/apptoolkit")
+                url.set("https://github.com/D4rK7355608/AppToolkit")
                 licenses {
                     license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        name.set("GNU General Public License v3.0")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0.html")
                     }
                 }
                 developers {
@@ -33,9 +77,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://example.com/apptoolkit.git")
-                    developerConnection.set("scm:git:ssh://example.com/apptoolkit.git")
-                    url.set("http://example.com/apptoolkit/")
+                    connection.set("scm:git:git://github.com/D4rK7355608/AppToolkit.git")
+                    developerConnection.set("scm:git:ssh://github.com/D4rK7355608/AppToolkit.git")
+                    url.set("https://github.com/D4rK7355608/AppToolkit")
                 }
             }
         }
@@ -49,49 +93,6 @@ publishing {
     }
 }
 
-android {
-    namespace = "com.d4rk.android.libs.apptoolkit"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 23
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt") ,
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-}
-
-dependencies {
-
-    // Ktor
-    implementation(dependencyNotation = platform(libs.ktor.bom))
-    implementation(dependencyNotation = libs.ktor.client.android)
-    implementation(dependencyNotation = libs.ktor.client.serialization)
-    implementation(dependencyNotation = libs.ktor.client.logging)
-    implementation(dependencyNotation = libs.ktor.client.content.negotiation)
-    implementation(dependencyNotation = libs.ktor.serialization.kotlinx.json)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+signing {
+    sign(publishing.publications["release"])
 }
