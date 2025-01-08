@@ -2,10 +2,12 @@ plugins {
     alias(notation = libs.plugins.android.library)
     alias(notation = libs.plugins.kotlin.android)
     alias(notation = libs.plugins.compose.compiler)
+    alias(notation = libs.plugins.about.libraries)
     `maven-publish`
 }
 
 android {
+
     namespace = "com.d4rk.android.libs.apptoolkit"
     compileSdk = 35
 
@@ -18,10 +20,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt") ,
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt") , "proguard-rules.pro")
         }
     }
 
@@ -40,6 +39,7 @@ android {
 }
 
 dependencies {
+
     //AndroidX
     implementation(dependencyNotation = libs.androidx.core.ktx)
     implementation(dependencyNotation = libs.androidx.appcompat)
@@ -70,12 +70,12 @@ dependencies {
     implementation(dependencyNotation = libs.ktor.client.content.negotiation)
     implementation(dependencyNotation = libs.ktor.serialization.kotlinx.json)
 
-
-
+    // About
+    implementation(dependencyNotation = libs.aboutlibraries)
+    implementation(dependencyNotation = libs.core)
 
 
     implementation(libs.material)
-
 }
 
 publishing {

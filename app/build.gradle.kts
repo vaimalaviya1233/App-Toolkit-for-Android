@@ -2,6 +2,7 @@ plugins {
     alias(notation = libs.plugins.android.application)
     alias(notation = libs.plugins.kotlin.android)
     alias(notation = libs.plugins.compose.compiler)
+    alias(notation = libs.plugins.about.libraries)
 }
 
 android {

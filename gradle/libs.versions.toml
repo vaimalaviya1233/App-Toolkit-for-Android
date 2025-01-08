@@ -1,9 +1,11 @@
 [versions]
 agp = "8.7.3"
 appcompat = "1.7.0"
+aboutlibraries = "11.3.0"
+core = "4.6.2"
 composeBom = "2024.12.01"
 #noinspection GradleDependency
-ktorBom = "2.3.2" # Old version because generative AI uses this version of KTor and Studio Bot will not work on update
+ktorBom = "2.3.2" # Old version because generative AI uses this version of KTor and Studio Bot will not work if we update the version
 coreSplashscreen = "1.0.1"
 datastoreCore = "1.1.1"
 kotlin = "2.0.21"
@@ -20,6 +22,8 @@ workRuntimeKtx = "2.10.0"
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+core = { module = "io.noties.markwon:core", version.ref = "core" }
+aboutlibraries = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutlibraries" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation" }
@@ -48,3 +52,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }

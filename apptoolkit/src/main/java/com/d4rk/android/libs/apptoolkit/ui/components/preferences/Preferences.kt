@@ -50,8 +50,8 @@ fun SwitchCardComposable(
     val view : View = LocalView.current
     Card(modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp)
-            .clip(RoundedCornerShape(28.dp))
+            .padding(all = 24.dp)
+            .clip(RoundedCornerShape(size = 28.dp))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onSwitchToggled(! switchState.value)
@@ -59,7 +59,7 @@ fun SwitchCardComposable(
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp) ,
+                    .padding(all = 16.dp) ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -93,8 +93,8 @@ fun SettingsPreferenceItem(
     Card(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(2.dp)) ,
-        shape = RoundedCornerShape(2.dp) ,
+                .clip(RoundedCornerShape(size = 2.dp)) ,
+        shape = RoundedCornerShape(size = 2.dp) ,
     ) {
         PreferenceItem(rippleEffectDp = rippleEffectDp ,
                        icon = icon ,
@@ -148,7 +148,7 @@ fun PreferenceItem(
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(rippleEffectDp))
+                .clip(RoundedCornerShape(size = rippleEffectDp))
                 .clickable(enabled = enabled , onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onClick()
@@ -156,7 +156,7 @@ fun PreferenceItem(
     ) {
         icon?.let {
             LargeHorizontalSpacer()
-            Icon(it , contentDescription = null)
+            Icon(imageVector = it , contentDescription = null)
         }
         Column(
             modifier = Modifier.padding(16.dp)
@@ -203,7 +203,7 @@ fun SwitchPreferenceItem(
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(size = 16.dp))
                 .clickable(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onCheckedChange(! checked)
@@ -211,13 +211,13 @@ fun SwitchPreferenceItem(
     ) {
         icon?.let {
             LargeHorizontalSpacer()
-            Icon(it , contentDescription = null)
+            Icon(imageVector = it , contentDescription = null)
             LargeHorizontalSpacer()
         }
         Column(
             modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f)
+                    .padding(all = 16.dp)
+                    .weight(weight = 1f)
         ) {
             Text(text = title , style = MaterialTheme.typography.titleLarge)
             summary?.let {
@@ -226,7 +226,7 @@ fun SwitchPreferenceItem(
         }
         Switch(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
-        } , modifier = Modifier.padding(16.dp))
+        } , modifier = Modifier.padding(all = 16.dp))
     }
 }
 
@@ -259,7 +259,7 @@ fun SwitchPreferenceItemWithDivider(
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
+                .clip(shape = RoundedCornerShape(size = 16.dp))
                 .clickable(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onClick()
@@ -267,13 +267,13 @@ fun SwitchPreferenceItemWithDivider(
     ) {
         icon?.let {
             LargeHorizontalSpacer()
-            Icon(it , contentDescription = null)
+            Icon(imageVector = it , contentDescription = null)
             LargeHorizontalSpacer()
         }
         Column(
             modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f)
+                    .padding(all = 16.dp)
+                    .weight(weight = 1f)
         ) {
             Text(text = title , style = MaterialTheme.typography.titleLarge)
             Text(text = summary , style = MaterialTheme.typography.bodyMedium)
@@ -281,14 +281,14 @@ fun SwitchPreferenceItemWithDivider(
 
         VerticalDivider(
             modifier = Modifier
-                    .height(32.dp)
-                    .align(Alignment.CenterVertically) ,
+                    .height(height = 32.dp)
+                    .align(alignment = Alignment.CenterVertically) ,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f) ,
             thickness = 1.dp
         )
         Switch(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
             onSwitchClick(isChecked)
-        } , modifier = Modifier.padding(16.dp))
+        } , modifier = Modifier.padding(all = 16.dp))
     }
 }
