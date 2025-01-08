@@ -16,10 +16,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -50,45 +47,14 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("release") {
+        register<MavenPublication>("release") {
             groupId = "com.d4rk.android.libs"
             artifactId = "apptoolkit"
-            version = "1.0.0"
+            version = "v0.0.2"
 
             afterEvaluate {
                 from(components["release"])
             }
-
-            pom {
-                name.set("AppToolkit")
-                description.set("A toolkit library for Android applications.")
-                url.set("https://github.com/D4rK7355608/AppToolkit")
-                licenses {
-                    license {
-                        name.set("GNU General Public License v3.0")
-                        url.set("https://www.gnu.org/licenses/gpl-3.0.html")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("d4rk")
-                        name.set("D4rK")
-                        email.set("d4rk7355608@gmail.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/D4rK7355608/AppToolkit.git")
-                    developerConnection.set("scm:git:ssh://github.com/D4rK7355608/AppToolkit.git")
-                    url.set("https://github.com/D4rK7355608/AppToolkit")
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            val releasesRepoUrl = uri(layout.buildDirectory.dir("repos/releases"))
-            val snapshotsRepoUrl = uri(layout.buildDirectory.dir("repos/snapshots"))
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
         }
     }
 }
