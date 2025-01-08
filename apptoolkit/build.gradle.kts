@@ -2,12 +2,11 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     `maven-publish`
-    signing
 }
 
 android {
     namespace = "com.d4rk.android.libs.apptoolkit"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         minSdk = 23
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,17 +47,13 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.d4rk.android.libs"
-            artifactId = "apptoolkit"
-            version = "v0.0.2"
+            groupId = "com.github.D4rK7355608"
+            artifactId = "AppToolkit"
+            version = "0.0.3"
 
             afterEvaluate {
                 from(components["release"])
             }
         }
     }
-}
-
-signing {
-    sign(publishing.publications["release"])
 }
