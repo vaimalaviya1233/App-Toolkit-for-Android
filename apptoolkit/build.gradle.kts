@@ -28,20 +28,42 @@ android {
 }
 
 dependencies {
-    // Ktor
-    implementation(platform(libs.ktor.bom))
-    implementation(libs.ktor.client.android)
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.logging)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
+    //AndroidX
+    implementation(dependencyNotation = libs.androidx.core.ktx)
+    implementation(dependencyNotation = libs.androidx.appcompat)
+    implementation(dependencyNotation = libs.androidx.core.splashscreen)
+    implementation(dependencyNotation = libs.androidx.multidex)
+    implementation(dependencyNotation = libs.androidx.work.runtime.ktx)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
+    // Compose
+    implementation(dependencyNotation = platform(libs.androidx.compose.bom))
+    implementation(dependencyNotation = libs.androidx.ui)
+    implementation(dependencyNotation = libs.androidx.activity.compose)
+    implementation(dependencyNotation = libs.androidx.ui.graphics)
+    implementation(dependencyNotation = libs.androidx.compose.runtime)
+    implementation(dependencyNotation = libs.androidx.runtime.livedata)
+    implementation(dependencyNotation = libs.androidx.ui.tooling.preview)
+    implementation(dependencyNotation = libs.androidx.material3)
+    implementation(dependencyNotation = libs.androidx.material.icons.extended)
+    implementation(dependencyNotation = libs.datastore.preferences)
+    implementation(dependencyNotation = libs.androidx.datastore.preferences)
+    implementation(dependencyNotation = libs.androidx.foundation)
+    implementation(dependencyNotation = libs.androidx.navigation.compose)
+
+    // Ktor
+    implementation(dependencyNotation = platform(libs.ktor.bom))
+    implementation(dependencyNotation = libs.ktor.client.android)
+    implementation(dependencyNotation = libs.ktor.client.serialization)
+    implementation(dependencyNotation = libs.ktor.client.logging)
+    implementation(dependencyNotation = libs.ktor.client.content.negotiation)
+    implementation(dependencyNotation = libs.ktor.serialization.kotlinx.json)
+
+
+
+
+
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
 }
 
 publishing {
@@ -49,7 +71,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.3"
+            version = "0.0.4"
 
             afterEvaluate {
                 from(components["release"])

@@ -3,8 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
-
-
 android {
     namespace = "com.d4rk.android.libs.apptoolkit"
     compileSdk = 35
@@ -38,13 +36,5 @@ android {
 }
 
 dependencies {
-
     implementation(dependencyNotation = project(path = ":apptoolkit"))
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
