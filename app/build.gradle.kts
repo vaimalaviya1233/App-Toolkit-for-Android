@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.d4rk.android.libs.apptoolkit"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.d4rk.android.libs.apptoolkit"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
