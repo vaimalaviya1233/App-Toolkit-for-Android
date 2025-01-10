@@ -5,6 +5,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 
+/**
+ *  A helper object for managing clipboard operations.
+ */
 object ClipboardHelper {
     fun copyTextToClipboard(
         context : Context , label : String , text : String , onShowSnackbar : () -> Unit = {}

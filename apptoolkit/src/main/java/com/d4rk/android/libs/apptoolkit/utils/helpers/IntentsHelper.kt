@@ -72,23 +72,29 @@ object IntentsHelper {
     }
 
     /**
-     * Opens the app's share sheet.
+     * Opens the app's share sheet, allowing users to share a message about the app.
      *
-     * This function creates an Intent with the ACTION_SEND action and a share message containing the app's name and a link to the app's Play Store listing.
-     * The intent is then wrapped in a chooser Intent to allow the user to select an app to share the message with.
+     * This function constructs a share message using a provided string resource and the app's Play Store link.
+     * It then creates an ACTION_SEND intent with this message and uses a chooser intent to present the user with options for sharing the message (e.g., email, messaging apps).
      *
      * @param context The Android context in which the share sheet should be opened.
+     * @param shareMessageFormat The resource ID of the string to be used as the base for the share message. This string should include a placeholder, where the app's playstore link will be injected.
+     *                           Example : "Check out this awesome app! Download it here: %s"
+     *                           The %s will be replaced by the app's Play Store URL.
      */
-    fun shareApp(context : Context, shareMessageResource: Int) {
-        val shareMessage : String = context.getString(shareMessageResource , "https://play.google.com/store/apps/details?id=${context.packageName}")
-        val shareIntent : Intent = Intent().apply {
+    fun shareApp(context : Context , shareMessageFormat : Int) {
+        val messageToShare : String = context.getString(
+            shareMessageFormat ,
+            "https://play.google.com/store/apps/details?id=${context.packageName}"
+        )
+        val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT , shareMessage)
+            putExtra(Intent.EXTRA_TEXT , messageToShare)
             type = "text/plain"
         }
         context.startActivity(
             Intent.createChooser(
-                shareIntent , context.resources.getText(R.string.send_email_using)
+                sendIntent , context.resources.getText(R.string.send_email_using)
             )
         )
     }
@@ -97,49 +103,87 @@ object IntentsHelper {
      * Composes and sends an email to the developer with a predefined subject and message body.
      *
      * This function constructs an email Intent with the developer's email address pre-filled in the "to" field.
-     * The subject line includes the application name for easy identification. The email body starts with
-     * a generic salutation and leaves the rest of the body empty for the user to fill in their feedback.
-     * A chooser is displayed, allowing the user to select their preferred email app for sending the email.
+     * The subject line includes the application name (obtained from the provided resource ID) for easy identification.
+     * The email body starts with a generic salutation and provides a blank line for the user to enter their feedback.
+     * A chooser dialog is displayed, allowing the user to select their preferred email application for sending.
      *
      * @param context The Android context used to access resources and start the activity.
+     * @param applicationName  The resource ID of the string containing the application's name.
+     *
+     * @throws android.content.ActivityNotFoundException if no email app is installed on the device.
      */
-    fun sendEmailToDeveloper(context : Context, appName : Int) {
+    fun sendEmailToDeveloper(context : Context , applicationName : Int) {
         val developerEmail = "d4rk7355608@gmail.com"
-        val appName : String = context.getString(appName)
-        val subject : String = context.getString(R.string.feedback_for) + appName
-        val body : String = context.getString(R.string.dear_developer) + "\n\n"
+        val applicationName : String = context.getString(applicationName)
+        val subject : String = context.getString(R.string.feedback_for) + applicationName
+        val emailBodyTemplate : String = context.getString(R.string.dear_developer) + "\n\n"
 
-        val emailIntent : Intent = Intent(Intent.ACTION_SENDTO).apply {
+        val feedbackEmailIntent : Intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:$developerEmail")
             putExtra(Intent.EXTRA_SUBJECT , subject)
-            putExtra(Intent.EXTRA_TEXT , body)
+            putExtra(Intent.EXTRA_TEXT , emailBodyTemplate)
         }
 
         context.startActivity(
             Intent.createChooser(
-                emailIntent , context.resources.getText(R.string.send_email_using)
+                feedbackEmailIntent , context.resources.getText(R.string.send_email_using)
             )
         )
     }
 
+    /**
+     * Opens a screen displaying open-source licenses, EULA, and changelog information.
+     *
+     * This function uses the `LibsBuilder` library to create and display an activity that shows
+     * details about the application, including its open-source licenses, End-User License Agreement (EULA),
+     * and changelog. It configures the activity with specific titles, content, and formatting options.
+     *
+     * @param context The context from which the activity is launched.
+     * @param eulaHtmlString An optional HTML string containing the EULA content. If null, a loading message is displayed.
+     * @param changelogHtmlString An optional HTML string containing the changelog content. If null, a loading message is displayed.
+     * @param ossLicenseTitle The string resource ID for the title of the open-source licenses section.
+     * @param appName The string resource ID for the application name.
+     * @param appVersion The string resource ID for the application version.
+     * @param appVersionCode The integer representing the application's version code.
+     * @param eulaTitle The string resource ID for the title of the EULA section.
+     * @param loadingEula The string resource ID for the message to display while the EULA is loading.
+     * @param changelogTitle The string resource ID for the title of the changelog section.
+     * @param loadingChangelog The string resource ID for the message to display while the changelog is loading.
+     * @param appShortDescription The string resource ID for a short description of the application.
+     */
     fun openLicensesScreen(
-        context : Context , eulaHtmlString : String? , changelogHtmlString : String?, ossLicenseTitle: Int, appName: Int, appVersion: Int, appVersionCode: Int,
-        eulaTitle: Int, loadingEula: Int, changelogTitle: Int, loadingChangelog: Int, appShortDescription: Int
+        context : Context ,
+        eulaHtmlString : String? ,
+        changelogHtmlString : String? ,
+        ossLicenseTitle : Int ,
+        appName : Int ,
+        appVersion : Int ,
+        appVersionCode : Int ,
+        eulaTitle : Int ,
+        loadingEula : Int ,
+        changelogTitle : Int ,
+        loadingChangelog : Int ,
+        appShortDescription : Int
     ) {
         LibsBuilder().withActivityTitle(
             activityTitle = context.getString(ossLicenseTitle)
         ).withEdgeToEdge(asEdgeToEdge = true).withShowLoadingProgress(showLoadingProgress = true)
                 .withSearchEnabled(searchEnabled = true).withAboutIconShown(aboutShowIcon = true)
-                .withAboutAppName(aboutAppName = context.getString(appName)).withVersionShown(showVersion = true)
+                .withAboutAppName(aboutAppName = context.getString(appName))
+                .withVersionShown(showVersion = true)
                 .withAboutVersionString(aboutVersionString = "$appVersion ($appVersionCode)")
                 .withLicenseShown(showLicense = true).withAboutVersionShown(aboutShowVersion = true)
                 .withAboutVersionShownName(aboutShowVersion = true)
                 .withAboutVersionShownCode(aboutShowVersion = true)
                 .withAboutSpecial1(aboutAppSpecial1 = context.getString(eulaTitle))
-                .withAboutSpecial1Description(aboutAppSpecial1Description = eulaHtmlString ?: context.getString(loadingEula))
-                .withAboutSpecial2(aboutAppSpecial2 = context.getString(changelogTitle))
-                .withAboutSpecial2Description(aboutAppSpecial2Description = changelogHtmlString ?: context.getString(loadingChangelog))
-                .withAboutDescription(aboutDescription = context.getString(appShortDescription))
+                .withAboutSpecial1Description(
+                    aboutAppSpecial1Description = eulaHtmlString ?: context.getString(loadingEula)
+                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(changelogTitle))
+                .withAboutSpecial2Description(
+                    aboutAppSpecial2Description = changelogHtmlString ?: context.getString(
+                        loadingChangelog
+                    )
+                ).withAboutDescription(aboutDescription = context.getString(appShortDescription))
                 .activity(ctx = context)
     }
 }
