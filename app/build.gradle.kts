@@ -21,11 +21,20 @@ android {
 
     buildTypes {
         release {
+            isDebuggable = false
+        }
+
+        debug {
+            isDebuggable = true
+        }
+    }
+
+    buildTypes.forEach { buildType ->
+        with(buildType) {
+            multiDexEnabled = true
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt") ,
-                "proguard-rules.pro"
-            )
+            isShrinkResources = false
+            proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt") , "proguard-rules.pro")
         }
     }
 

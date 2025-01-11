@@ -41,41 +41,53 @@ android {
 dependencies {
 
     //AndroidX
-    implementation(dependencyNotation = libs.androidx.core.ktx)
-    implementation(dependencyNotation = libs.androidx.appcompat)
-    implementation(dependencyNotation = libs.androidx.core.splashscreen)
-    implementation(dependencyNotation = libs.androidx.multidex)
-    implementation(dependencyNotation = libs.androidx.work.runtime.ktx)
+    api(dependencyNotation = libs.androidx.core.ktx)
+    api(dependencyNotation = libs.androidx.appcompat)
+    api(dependencyNotation = libs.androidx.core.splashscreen)
+    api(dependencyNotation = libs.androidx.multidex)
+    api(dependencyNotation = libs.androidx.work.runtime.ktx)
 
     // Compose
-    implementation(dependencyNotation = platform(libs.androidx.compose.bom))
-    implementation(dependencyNotation = libs.androidx.ui)
-    implementation(dependencyNotation = libs.androidx.activity.compose)
-    implementation(dependencyNotation = libs.androidx.ui.graphics)
-    implementation(dependencyNotation = libs.androidx.compose.runtime)
-    implementation(dependencyNotation = libs.androidx.runtime.livedata)
-    implementation(dependencyNotation = libs.androidx.ui.tooling.preview)
-    implementation(dependencyNotation = libs.androidx.material3)
-    implementation(dependencyNotation = libs.androidx.material.icons.extended)
-    implementation(dependencyNotation = libs.datastore.preferences)
-    implementation(dependencyNotation = libs.androidx.datastore.preferences)
-    implementation(dependencyNotation = libs.androidx.foundation)
-    implementation(dependencyNotation = libs.androidx.navigation.compose)
+    api(dependencyNotation = platform(libs.androidx.compose.bom))
+    api(dependencyNotation = libs.androidx.ui)
+    api(dependencyNotation = libs.androidx.activity.compose)
+    api(dependencyNotation = libs.androidx.ui.graphics)
+    api(dependencyNotation = libs.androidx.compose.runtime)
+    api(dependencyNotation = libs.androidx.runtime.livedata)
+    api(dependencyNotation = libs.androidx.ui.tooling.preview)
+    api(dependencyNotation = libs.androidx.material3)
+    api(dependencyNotation = libs.androidx.material.icons.extended)
+    api(dependencyNotation = libs.datastore.preferences)
+    api(dependencyNotation = libs.androidx.datastore.preferences)
+    api(dependencyNotation = libs.androidx.foundation)
+    api(dependencyNotation = libs.androidx.navigation.compose)
+
+    // Google
+    api(libs.material)
+
+    // Kotlin
+    api(dependencyNotation = libs.kotlinx.coroutines.android)
+    api(dependencyNotation = libs.kotlinx.serialization.json)
 
     // Ktor
-    implementation(dependencyNotation = platform(libs.ktor.bom))
-    implementation(dependencyNotation = libs.ktor.client.android)
-    implementation(dependencyNotation = libs.ktor.client.serialization)
-    implementation(dependencyNotation = libs.ktor.client.logging)
-    implementation(dependencyNotation = libs.ktor.client.content.negotiation)
-    implementation(dependencyNotation = libs.ktor.serialization.kotlinx.json)
+    api(dependencyNotation = platform(libs.ktor.bom))
+    api(dependencyNotation = libs.ktor.client.android)
+    api(dependencyNotation = libs.ktor.client.serialization)
+    api(dependencyNotation = libs.ktor.client.logging)
+    api(dependencyNotation = libs.ktor.client.content.negotiation)
+    api(dependencyNotation = libs.ktor.serialization.kotlinx.json)
+
+    // Lifecycle
+    api(dependencyNotation = libs.androidx.lifecycle.runtime.ktx)
+    api(dependencyNotation = libs.androidx.lifecycle.livedata.ktx)
+    api(dependencyNotation = libs.androidx.lifecycle.process)
+    api(dependencyNotation = libs.androidx.lifecycle.viewmodel.ktx)
+    api(dependencyNotation = libs.androidx.lifecycle.viewmodel.compose)
+    api(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
 
     // About
-    implementation(dependencyNotation = libs.aboutlibraries)
-    implementation(dependencyNotation = libs.core)
-
-
-    implementation(libs.material)
+    api(dependencyNotation = libs.aboutlibraries)
+    api(dependencyNotation = libs.core)
 }
 
 publishing {
@@ -83,7 +95,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.6"
+            version = "0.0.7"
 
             afterEvaluate {
                 from(components["release"])
