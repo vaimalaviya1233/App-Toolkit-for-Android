@@ -3,4 +3,16 @@
     <string name="feedback_for" translatable="false">Feedback for </string>
     <string name="dear_developer" translatable="false">Dear developer, </string>
     <string name="send_email_using" translatable="false">Send mail using:</string>
+
+
+
+
+
+    <string name="oss_license_title">Open source licenses</string>
+    <string name="eula_title" translatable="false">EULA</string>
+    <string name="changelog" translatable="false">CHANGELOG</string>
+    <string name="loading_eula" translatable="false">Loading EULA</string>
+    <string name="error_loading_eula" translatable="false">Error loading EULA</string>
+    <string name="loading_changelog" translatable="false">Loading changelog</string>
+    <string name="error_loading_changelog" translatable="false">Error loading changelog</string>
 </resources>
