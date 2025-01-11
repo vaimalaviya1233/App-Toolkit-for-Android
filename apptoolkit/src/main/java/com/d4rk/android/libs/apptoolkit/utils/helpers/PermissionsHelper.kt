@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.d4rk.android.libs.apptoolkit.utils.constants.PermissionsConstants
+import com.d4rk.android.libs.apptoolkit.utils.constants.permissions.PermissionsConstants
 
 /**
  * Utility class for handling runtime permissions.

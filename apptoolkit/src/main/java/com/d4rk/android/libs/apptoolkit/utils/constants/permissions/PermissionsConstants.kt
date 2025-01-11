@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.utils.constants
+package com.d4rk.android.libs.apptoolkit.utils.constants.permissions
 
 /**
  * Constants related to permissions used in the application.

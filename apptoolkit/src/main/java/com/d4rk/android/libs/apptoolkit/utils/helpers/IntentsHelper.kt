@@ -102,19 +102,19 @@ object IntentsHelper {
     /**
      * Composes and sends an email to the developer with a predefined subject and message body.
      *
-     * This function constructs an email Intent with the developer's email address pre-filled in the "to" field.
-     * The subject line includes the application name (obtained from the provided resource ID) for easy identification.
-     * The email body starts with a generic salutation and provides a blank line for the user to enter their feedback.
-     * A chooser dialog is displayed, allowing the user to select their preferred email application for sending.
+     * This function creates an email Intent with the developer's email address as the recipient.
+     * The email subject is dynamically generated, including the application's name (obtained from the provided resource ID),
+     * prefixed with "Feedback for: " to help identify the source of the email.
+     * The email body begins with "Dear Developer,\n\n" providing a space for the user to add their feedback, issue report, or other message.
+     * It then utilizes a chooser to allow the user to select their preferred email client before sending the email.
      *
-     * @param context The Android context used to access resources and start the activity.
-     * @param applicationName  The resource ID of the string containing the application's name.
+     * @param context The Android context used to access resources (like string resources) and start the email activity.
+     * @param applicationName  The resource ID of the string containing the application's name. This is used to generate the email subject line.
      *
-     * @throws android.content.ActivityNotFoundException if no email app is installed on the device.
+     * @throws android.content.ActivityNotFoundException if no email application is installed on the device that can handle the email intent.
      */
     fun sendEmailToDeveloper(context : Context , applicationName : Int) {
         val developerEmail = "d4rk7355608@gmail.com"
-        val applicationName : String = context.getString(applicationName)
         val subject : String = context.getString(R.string.feedback_for) + applicationName
         val emailBodyTemplate : String = context.getString(R.string.dear_developer) + "\n\n"
 
@@ -134,22 +134,25 @@ object IntentsHelper {
     /**
      * Opens a screen displaying open-source licenses, EULA, and changelog information.
      *
-     * This function uses the `LibsBuilder` library to create and display an activity that shows
+     * This function uses the `LibsBuilder` library to create and display an activity that provides
      * details about the application, including its open-source licenses, End-User License Agreement (EULA),
-     * and changelog. It configures the activity with specific titles, content, and formatting options.
+     * and changelog. It configures the activity's appearance and content using provided parameters.
+     *
+     * The screen includes:
+     *  - A list of open-source licenses used by the application.
+     *  - An optional EULA section, which displays the EULA content provided as an HTML string. If no EULA is provided, a loading message is displayed.
+     *  - An optional changelog section, displaying the changelog content provided as an HTML string. If no changelog is provided, a loading message is displayed.
+     *  - Application name, version, and a short description.
      *
      * @param context The context from which the activity is launched.
-     * @param eulaHtmlString An optional HTML string containing the EULA content. If null, a loading message is displayed.
-     * @param changelogHtmlString An optional HTML string containing the changelog content. If null, a loading message is displayed.
-     * @param ossLicenseTitle The string resource ID for the title of the open-source licenses section.
-     * @param appName The string resource ID for the application name.
-     * @param appVersion The string resource ID for the application version.
-     * @param appVersionCode The integer representing the application's version code.
-     * @param eulaTitle The string resource ID for the title of the EULA section.
-     * @param loadingEula The string resource ID for the message to display while the EULA is loading.
-     * @param changelogTitle The string resource ID for the title of the changelog section.
-     * @param loadingChangelog The string resource ID for the message to display while the changelog is loading.
+     * @param eulaHtmlString An optional HTML string containing the EULA content. If `null`, a loading message is displayed in its place.
+     * @param changelogHtmlString An optional HTML string containing the changelog content. If `null`, a loading message is displayed in its place.
+     * @param appName The string resource ID for the application's name.
+     * @param appVersion The application's version string (e.g., "1.0.0").
+     * @param appVersionCode The integer representing the application's version code (e.g., 1).
      * @param appShortDescription The string resource ID for a short description of the application.
+     *
+     * @see LibsBuilder for more details about the underlying library.
      */
     fun openLicensesScreen(
         context : Context ,
