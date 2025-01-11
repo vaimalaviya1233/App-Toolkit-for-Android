@@ -36,12 +36,14 @@ import com.d4rk.android.libs.apptoolkit.ui.components.spacers.LargeHorizontalSpa
 /**
  * Creates a clickable card with a title and a switch for app preference screens.
  *
- * This composable function displays a card with a title and a switch. The entire card is clickable and toggles the switch when clicked, calling the provided `onSwitchToggled` callback function with the new state.
- * The switch displays a check icon when it's in the 'on' state.
+ * This composable function displays a card with a title and a switch. The entire card is clickable, and clicking it toggles the switch and invokes the `onSwitchToggled` callback.
+ * The switch visually indicates its 'on' state by displaying a check icon within the thumb.
  *
- * @param title The text displayed on the card's title.
- * @param switchState A state variable holding the current on/off state of the switch. Set to true for on and false for off.
- * @param onSwitchToggled A callback function that is called whenever the switch is toggled. This function receives the new state of the switch (boolean) as a parameter.
+ * @param title The text displayed as the card's title.
+ * @param switchState A [State] object holding the current on/off state of the switch. Use `true` for the 'on' state and `false` for the 'off' state.
+ * @param onSwitchToggled A callback function invoked when the switch is toggled, either by clicking the card or the switch itself.  It receives the new state of the switch (a `Boolean` value) as a parameter.
+ *
+ * The card has a rounded corner shape and provides a click sound effect upon interaction.
  */
 @Composable
 fun SwitchCardComposable(
@@ -82,6 +84,24 @@ fun SwitchCardComposable(
     }
 }
 
+/**
+ * A composable function that creates a settings preference item card.
+ *
+ * This function wraps a [PreferenceItem] composable inside a [Card] to provide a visually
+ * distinct and interactive element for settings screens. It allows customization of the icon,
+ * title, summary, ripple effect, and the action to perform when clicked.
+ *
+ * @param icon The optional [ImageVector] to display as an icon in the preference item.
+ *             If null, no icon will be displayed.
+ * @param title The optional [String] to display as the title of the preference item.
+ *              If null, no title will be displayed.
+ * @param summary The optional [String] to display as the summary of the preference item.
+ *               If null, no summary will be displayed.
+ * @param rippleEffectDp The [Dp] value to control the size of the ripple effect when the item is clicked.
+ *                      Defaults to 2.dp.
+ * @param onClick The lambda function to execute when the preference item is clicked.
+ *                Defaults to an empty lambda, meaning no action will be performed by default.
+ */
 @Composable
 fun SettingsPreferenceItem(
     icon : ImageVector? = null ,
@@ -107,11 +127,11 @@ fun SettingsPreferenceItem(
 }
 
 /**
- * Displays a category header within your app's preference screens.
+ * Displays a category header within preference screens.
  *
- * This composable function is used to display a category header in your app's preference screens. It helps in separating different sections of your app's preferences with clear category titles. The title is displayed in a distinct style and color to differentiate it from other preference items.
+ * This composable function renders a distinct header for preference categories, enhancing the visual organization of settings screens. It uses a primary color and semi-bold text styling to clearly distinguish the category title from individual preference items.
  *
- * @param title The text to be displayed as the category header. This is typically the name of the category.
+ * @param title The text to be displayed as the category header. This should clearly and concisely name the preference category.
  */
 @Composable
 fun PreferenceCategoryItem(

@@ -10,6 +10,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 
+/**
+ * An animated extended floating action button that can be shown or hidden with a scaling and translation animation.
+ *
+ * @param visible Whether the button is currently visible. If false, the button will animate to a scaled and translated out state.
+ * @param onClick The action to perform when the button is clicked.
+ * @param icon The content of the button's icon slot.
+ * @param text The content of the button's text slot, if any.
+ * @param offsetX The horizontal offset for the button when it is hidden (not visible). Default is 50f.
+ * @param offsetY The vertical offset for the button when it is hidden (not visible). Default is 50f.
+ * @param scale The scale of the button when it is hidden (not visible). Default is 0.8f.
+ * @param animationSpec The animation specification to use for the show/hide animation. Default is a 300ms tween with FastOutSlowInEasing.
+ * @param expanded Whether the button is expanded or not. Default is true.
+ * @param modifier Modifier for the button.
+ */
 @Composable
 fun AnimatedExtendedFloatingActionButton(
     visible : Boolean = true ,

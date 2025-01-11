@@ -65,6 +65,11 @@ dependencies {
     // Google
     api(libs.material)
 
+    // Images
+    implementation(dependencyNotation = libs.coil.compose)
+    implementation(dependencyNotation = libs.coil.gif)
+    implementation(dependencyNotation = libs.coil.network.okhttp)
+
     // Kotlin
     api(dependencyNotation = libs.kotlinx.coroutines.android)
     api(dependencyNotation = libs.kotlinx.serialization.json)
@@ -95,7 +100,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.9"
+            version = "0.0.10"
 
             afterEvaluate {
                 from(components["release"])
