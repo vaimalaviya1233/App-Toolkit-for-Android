@@ -22,7 +22,7 @@ For **Kotlin DSL**:
 
 ```kotlin
 dependencies {
-    implementation("com.github.D4rK7355608:AppToolkit:0.0.7") {
+    api("com.github.D4rK7355608:AppToolkit:0.0.7") {
         isTransitive = true
     }
 }
@@ -32,7 +32,7 @@ For **Groovy DSL**:
 
 ```groovy
 dependencies {
-    implementation('com.github.D4rK7355608:AppToolkit:0.0.7') {
+    api('com.github.D4rK7355608:AppToolkit:0.0.7') {
         transitive = true
     }
 }
@@ -103,7 +103,7 @@ IntentHelper.shareText(context , "Check out AppToolkit!")
 Redirect users to the AboutLibraries screen to display open-source licenses:
 
 ```kotlin
-                                     IntentsHelper.openLicensesScreen(
+IntentsHelper.openLicensesScreen(
     context = context ,
     eulaHtmlString = eulaHtmlString ,
     changelogHtmlString = changelogHtmlString ,

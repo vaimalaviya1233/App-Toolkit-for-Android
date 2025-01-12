@@ -66,9 +66,9 @@ dependencies {
     api(libs.material)
 
     // Images
-    implementation(dependencyNotation = libs.coil.compose)
-    implementation(dependencyNotation = libs.coil.gif)
-    implementation(dependencyNotation = libs.coil.network.okhttp)
+    api(dependencyNotation = libs.coil.compose)
+    api(dependencyNotation = libs.coil.gif)
+    api(dependencyNotation = libs.coil.network.okhttp)
 
     // Kotlin
     api(dependencyNotation = libs.kotlinx.coroutines.android)
@@ -100,7 +100,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.10"
+            version = "0.0.11"
 
             afterEvaluate {
                 from(components["release"])
