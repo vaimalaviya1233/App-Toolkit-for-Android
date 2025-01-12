@@ -23,8 +23,9 @@ object ClipboardHelper {
     fun copyTextToClipboard(
         context : Context , label : String , text : String , onShowSnackbar : () -> Unit = {}
     ) {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(label , text)
+        val clipboard : ClipboardManager =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip : ClipData = ClipData.newPlainText(label , text)
         clipboard.setPrimaryClip(clip)
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {

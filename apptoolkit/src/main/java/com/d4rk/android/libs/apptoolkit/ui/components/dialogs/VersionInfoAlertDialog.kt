@@ -73,7 +73,7 @@ fun VersionInfoAlertDialogContent(
 ) {
     val context : Context = LocalContext.current
     val appIcon : Drawable = context.packageManager.getApplicationIcon(context.packageName)
-    val imageLoader = ImageLoader.Builder(context).build()
+    val imageLoader : ImageLoader = ImageLoader.Builder(context = context).build()
 
     Row(
         modifier = Modifier.fillMaxWidth()
@@ -81,7 +81,7 @@ fun VersionInfoAlertDialogContent(
         AsyncImage(
             model = appIcon ,
             contentDescription = null ,
-            modifier = Modifier.size(48.dp) ,
+            modifier = Modifier.size(size = 48.dp) ,
             imageLoader = imageLoader
         )
         LargeHorizontalSpacer()
