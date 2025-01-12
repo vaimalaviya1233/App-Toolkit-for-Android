@@ -35,7 +35,7 @@ import com.d4rk.android.libs.apptoolkit.ui.components.spacers.LargeVerticalSpace
 @Composable
 fun VersionInfoAlertDialog(
     onDismiss : () -> Unit ,
-    copyrightString : String ,
+    copyrightString : Int ,
     appName : Int ,
     versionName : String ,
     versionString : Int
@@ -66,7 +66,7 @@ fun VersionInfoAlertDialog(
  */
 @Composable
 fun VersionInfoAlertDialogContent(
-    copyrightString : String ,
+    copyrightString : Int ,
     appName : Int ,
     versionName : String ,
     versionString : Int
@@ -95,7 +95,7 @@ fun VersionInfoAlertDialogContent(
             )
             LargeVerticalSpacer()
             Text(
-                text = copyrightString , style = MaterialTheme.typography.bodyMedium
+                text = stringResource(id = copyrightString) , style = MaterialTheme.typography.bodyMedium
             )
         }
     }
