@@ -1,10 +1,11 @@
-package com.d4rk.android.libs.apptoolkit
+package com.d4rk.android.libs.apptoolkit.utils
 
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
+import com.d4rk.android.libs.apptoolkit.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.commonmark.parser.Parser
