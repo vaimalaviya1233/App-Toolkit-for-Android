@@ -12,10 +12,10 @@ import com.d4rk.android.libs.apptoolkit.utils.constants.datastore.DataStoreNames
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.commonDataStore by preferencesDataStore(name = "data_store_settings")
+val Context.commonDataStore by preferencesDataStore(name = DataStoreNamesConstants.DATA_STORE_SETTINGS)
 
 open class CommonDataStore(context: Context) {
-    private val dataStore = context.commonDataStore
+    val dataStore = context.commonDataStore
 
     companion object {
         @Volatile
