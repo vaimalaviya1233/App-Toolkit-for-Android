@@ -6,17 +6,21 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -310,5 +314,85 @@ fun SwitchPreferenceItemWithDivider(
             onCheckedChange(isChecked)
             onSwitchClick(isChecked)
         } , modifier = Modifier.padding(all = 16.dp))
+    }
+}
+
+/**
+ * A composable function that creates a radio button preference item.
+ *
+ * This item displays a text label and a radio button. Clicking on the item toggles the radio button's state.
+ *
+ * @param text The text to display next to the radio button.
+ * @param isChecked Whether the radio button is currently checked.
+ * @param onCheckedChange A callback that is invoked when the radio button's state changes.
+ *                        It provides the new checked state as a Boolean parameter.
+ */
+@Composable
+fun RadioButtonPreferenceItem(
+    text : String ,
+    isChecked : Boolean ,
+    onCheckedChange : (Boolean) -> Unit ,
+) {
+    Row(modifier = Modifier
+            .fillMaxWidth()
+            .clip(shape = RoundedCornerShape(size = 16.dp))
+            .clickable { onCheckedChange(! isChecked) } ,
+        verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = text ,
+            style = MaterialTheme.typography.titleLarge ,
+            modifier = Modifier
+                    .weight(weight = 1f)
+                    .padding(end = 16.dp , start = 16.dp)
+        )
+        RadioButton(selected = isChecked , onClick = { onCheckedChange(! isChecked) })
+    }
+}
+
+/**
+ * A composable function that creates a preference item with a checkbox.
+ *
+ * This item displays an optional icon, a title, an optional summary, and a checkbox.
+ * Clicking the item toggles the checkbox state and triggers the provided [onCheckedChange] callback.
+ *
+ * @param icon The optional icon to display at the start of the item.
+ * @param title The main title text for the preference item.
+ * @param summary The optional summary text to display below the title.
+ * @param checked The current checked state of the checkbox.
+ * @param onCheckedChange A callback function that is invoked when the checkbox state changes.
+ *                       It receives the new checked state as a boolean parameter.
+ */
+@Composable
+fun CheckBoxPreferenceItem(
+    icon : ImageVector? = null ,
+    title : String ,
+    summary : String? = null ,
+    checked : Boolean ,
+    onCheckedChange : (Boolean) -> Unit
+) {
+    Row(modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .clickable {
+                onCheckedChange(! checked)
+            } , verticalAlignment = Alignment.CenterVertically) {
+        icon?.let {
+            Spacer(modifier = Modifier.width(16.dp))
+            Icon(it , contentDescription = null)
+            Spacer(modifier = Modifier.width(16.dp))
+        }
+        Column(
+            modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f)
+        ) {
+            Text(text = title , style = MaterialTheme.typography.titleLarge)
+            summary?.let {
+                Text(text = it , style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+        Checkbox(checked = checked , onCheckedChange = { isChecked ->
+            onCheckedChange(isChecked)
+        } , modifier = Modifier.padding(start = 16.dp))
     }
 }
