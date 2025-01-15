@@ -13,6 +13,8 @@ components and utilities that adhere to modern design principles.
 - **AboutLibraries Integration**: Easy redirection
   to [AboutLibraries by Mike Penz](https://github.com/mikepenz/AboutLibraries) for displaying
   open-source licenses.
+- **ScreenHelper**: A utility class to determine screen types (e.g., tablet, phone, orientation).
+  open-source licenses.
 
 ## Installation
 
@@ -22,7 +24,7 @@ For **Kotlin DSL**:
 
 ```kotlin
 dependencies {
-    api("com.github.D4rK7355608:AppToolkit:0.0.7") {
+    api("com.github.D4rK7355608:AppToolkit:+") {
         isTransitive = true
     }
 }
@@ -32,7 +34,7 @@ For **Groovy DSL**:
 
 ```groovy
 dependencies {
-    api('com.github.D4rK7355608:AppToolkit:0.0.7') {
+    api('com.github.D4rK7355608:AppToolkit:+') {
         transitive = true
     }
 }
