@@ -14,6 +14,16 @@ import kotlinx.coroutines.flow.map
 
 val Context.commonDataStore by preferencesDataStore(name = DataStoreNamesConstants.DATA_STORE_SETTINGS)
 
+/**
+ * A singleton class responsible for managing application-wide data using Android DataStore.
+ *
+ * This class provides methods to access and modify various application settings and data,
+ * such as last used timestamp, startup status, theme preferences, language, and usage & diagnostics settings.
+ *
+ * The DataStore is backed by a file named "common_data_store" within the application's data directory.
+ *
+ * @property dataStore The DataStore instance for storing preferences.
+ */
 open class CommonDataStore(context: Context) {
     val dataStore = context.commonDataStore
 

@@ -1,5 +1,15 @@
 package com.d4rk.android.libs.apptoolkit.utils.constants.datastore
 
+/**
+ * Defines constants for the names of different DataStore files used in the application.
+ *
+ * This class provides a centralized location for accessing DataStore file names,
+ * ensuring consistency and avoiding hardcoding these values throughout the codebase.
+ *
+ * Each constant represents the name of a specific DataStore file, used to persist
+ * different types of application data such as settings, user preferences, and
+ * other application states.
+ */
 open class DataStoreNamesConstants {
     companion object {
         const val DATA_STORE_SETTINGS = "settings"

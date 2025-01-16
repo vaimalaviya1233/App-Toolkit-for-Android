@@ -24,6 +24,15 @@ import androidx.core.view.WindowCompat
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 
+/**
+ * Defines the light color scheme for the application.
+ *
+ * This color scheme is used when the application is in light mode. It specifies
+ * the colors for various UI elements such as primary, secondary, and tertiary
+ * components, as well as background, surface, and error states. The colors are
+ * derived from the corresponding light color constants defined elsewhere
+ * (e.g., [primaryLight], [onPrimaryLight]).
+ */
 private val lightScheme = lightColorScheme(
     primary = primaryLight ,
     onPrimary = onPrimaryLight ,
@@ -62,6 +71,13 @@ private val lightScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLight ,
 )
 
+/**
+ * Defines the color scheme for the dark theme.
+ *
+ * This utilizes the Material Design dark color palette, assigning specific dark color values
+ * to various UI elements like primary, secondary, tertiary, background, surface, and their
+ * corresponding 'on' colors.
+ */
 private val darkScheme = darkColorScheme(
     primary = primaryDark ,
     onPrimary = onPrimaryDark ,
@@ -140,6 +156,14 @@ private fun getColorScheme(
     }
 }
 
+/**
+ *  AppTheme is a composable function that sets up the application's theme, including dark/light mode,
+ *  dynamic colors, and AMOLED mode. It reads user preferences from the data store and applies
+ *  the corresponding Material Theme.
+ *
+ * @param content The composable content to be themed.
+ * @param dataStore The data store to read user preferences.
+ */
 @Composable
 fun AppTheme(
     content: @Composable () -> Unit,

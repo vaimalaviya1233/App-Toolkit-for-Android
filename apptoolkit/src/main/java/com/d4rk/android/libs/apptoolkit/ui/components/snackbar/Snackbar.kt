@@ -11,6 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
+/**
+ * A simple Snackbar composable function.
+ *
+ * @param message The message to display in the Snackbar.
+ * @param showSnackbar A boolean indicating whether the Snackbar should be shown.
+ * @param onDismiss A callback function that is invoked when the Snackbar is dismissed.
+ */
 @Composable
 fun Snackbar(
     message : String , showSnackbar : Boolean , onDismiss : () -> Unit

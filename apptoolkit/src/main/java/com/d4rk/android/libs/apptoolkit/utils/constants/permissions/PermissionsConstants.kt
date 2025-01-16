@@ -1,8 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.utils.constants.permissions
 
 /**
- * Constants related to permissions used in the application.
+ *  A class containing constants related to permissions.
  */
-object PermissionsConstants {
-    const val REQUEST_CODE_NOTIFICATION_PERMISSION = 1
+open class PermissionsConstants {
+    companion object {
+        const val REQUEST_CODE_NOTIFICATION_PERMISSION = 1
+    }
 }
