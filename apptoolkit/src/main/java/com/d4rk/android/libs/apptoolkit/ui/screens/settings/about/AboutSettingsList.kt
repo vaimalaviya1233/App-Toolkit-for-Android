@@ -21,7 +21,7 @@ import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.utils.interfaces.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.utils.interfaces.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.utils.rememberHtmlData
 
 @Composable
