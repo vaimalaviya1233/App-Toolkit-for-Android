@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
+import com.d4rk.android.libs.apptoolkit.utils.error.ErrorHandler.handleInitializationFailure
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -42,8 +43,14 @@ open class BaseCoreManager : MultiDexApplication() , Application.ActivityLifecyc
         finalizeInitialization()
     }
 
-    private suspend fun initializeKtorClient() {
-        ktorClient = KtorClient().createClient()
+    private fun initializeKtorClient() {
+        runCatching {
+            ktorClient = KtorClient().createClient()
+        }.onFailure {
+            handleInitializationFailure(
+                message = "Ktor client initialization failed" , exception = it as Exception , applicationContext = applicationContext
+            )
+        }
     }
 
     protected open suspend fun onInitializeApp() {}
