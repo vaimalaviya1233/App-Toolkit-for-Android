@@ -158,7 +158,7 @@ object IntentsHelper {
         context : Context ,
         eulaHtmlString : String? ,
         changelogHtmlString : String? ,
-        appName : Int ,
+        appName : String ,
         appVersion : String ,
         appVersionCode : Int ,
         appShortDescription : Int
@@ -167,7 +167,7 @@ object IntentsHelper {
             activityTitle = context.getString(R.string.oss_license_title)
         ).withEdgeToEdge(asEdgeToEdge = true).withShowLoadingProgress(showLoadingProgress = true)
                 .withSearchEnabled(searchEnabled = true).withAboutIconShown(aboutShowIcon = true)
-                .withAboutAppName(aboutAppName = context.getString(appName))
+                .withAboutAppName(aboutAppName = appName)
                 .withVersionShown(showVersion = true)
                 .withAboutVersionString(aboutVersionString = "$appVersion ($appVersionCode)")
                 .withLicenseShown(showLicense = true).withAboutVersionShown(aboutShowVersion = true)

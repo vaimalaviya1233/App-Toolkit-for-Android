@@ -19,7 +19,9 @@ import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCate
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.utils.helpers.ClipboardHelper
+import com.d4rk.android.libs.apptoolkit.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.utils.interfaces.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.utils.rememberHtmlData
 
 @Composable
 fun AboutSettingsList(
@@ -27,6 +29,14 @@ fun AboutSettingsList(
     provider: AboutSettingsProvider
 ) {
     val context: Context = LocalContext.current
+
+    val htmlData = rememberHtmlData(
+        packageName = provider.packageName ,
+        currentVersionName = provider.appVersion ,
+        context = context
+    )
+    val changelogHtmlString = htmlData.value.first
+    val eulaHtmlString = htmlData.value.second
 
     var showSnackbar: Boolean by remember { mutableStateOf(value = false) }
 
@@ -36,18 +46,27 @@ fun AboutSettingsList(
         ) {
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
-            }
-            item {
                 PreferenceItem(
                     title = provider.appName,
                     summary = provider.copyrightText,
                 )
-            }
-            item {
                 PreferenceItem(
                     title = stringResource(id = R.string.app_build_version),
                     summary = provider.appVersion
                 )
+                PreferenceItem(title = stringResource(id = R.string.oss_license_title) ,
+                               summary = stringResource(id = R.string.summary_preference_settings_oss) ,
+                               onClick = {
+                                   IntentsHelper.openLicensesScreen(
+                                       context = context ,
+                                       eulaHtmlString = eulaHtmlString ,
+                                       changelogHtmlString = changelogHtmlString ,
+                                       appName = provider.appName ,
+                                       appVersion = provider.appVersion ,
+                                       appVersionCode = provider.appVersionCode ,
+                                       appShortDescription = R.string.app_short_description
+                                   )
+                               })
             }
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.device_info))
