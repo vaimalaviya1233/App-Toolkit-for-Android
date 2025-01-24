@@ -2,12 +2,10 @@ package com.d4rk.android.libs.apptoolkit.data.core
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
-import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred

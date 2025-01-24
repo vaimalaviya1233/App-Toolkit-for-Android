@@ -16,14 +16,20 @@ open class AdsCoreManager(protected val context : Context) {
     private var appOpenAdManager : AppOpenAdManager? = null
     val isShowingAd : Boolean
         get() = appOpenAdManager?.isShowingAd == true
+    private var areAdsEnabled: Boolean = true
 
-    fun initializeAds(appOpenUnitId : String) {
-        MobileAds.initialize(context)
-        appOpenAdManager = AppOpenAdManager(appOpenUnitId)
+    fun initializeAds(appOpenUnitId: String, adsEnabled: Boolean) {
+        areAdsEnabled = adsEnabled
+        if (areAdsEnabled) {
+            MobileAds.initialize(context)
+            appOpenAdManager = AppOpenAdManager(appOpenUnitId)
+        }
     }
 
-    fun showAdIfAvailable(activity : Activity) {
-        appOpenAdManager?.showAdIfAvailable(activity)
+    fun showAdIfAvailable(activity: Activity) {
+        if (areAdsEnabled) {
+            appOpenAdManager?.showAdIfAvailable(activity)
+        }
     }
 
     private inner class AppOpenAdManager(private val appOpenUnitId : String) {
