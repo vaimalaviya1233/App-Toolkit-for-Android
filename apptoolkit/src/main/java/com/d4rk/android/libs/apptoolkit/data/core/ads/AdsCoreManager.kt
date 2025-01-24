@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.data.core.ads
 
 import android.app.Activity
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.utils.interfaces.OnShowAdCompleteListener
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -9,27 +10,22 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.util.Date
 
 open class AdsCoreManager(protected val context : Context) {
 
+    private var dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
-    val isShowingAd : Boolean
-        get() = appOpenAdManager?.isShowingAd == true
-    private var areAdsEnabled: Boolean = true
 
-    fun initializeAds(appOpenUnitId: String, adsEnabled: Boolean) {
-        areAdsEnabled = adsEnabled
-        if (areAdsEnabled) {
-            MobileAds.initialize(context)
-            appOpenAdManager = AppOpenAdManager(appOpenUnitId)
-        }
+    fun initializeAds(appOpenUnitId: String) {
+        MobileAds.initialize(context)
+        appOpenAdManager = AppOpenAdManager(appOpenUnitId)
     }
 
-    fun showAdIfAvailable(activity: Activity) {
-        if (areAdsEnabled) {
-            appOpenAdManager?.showAdIfAvailable(activity)
-        }
+    fun showAdIfAvailable(activity : Activity) {
+        appOpenAdManager?.showAdIfAvailable(activity = activity)
     }
 
     private inner class AppOpenAdManager(private val appOpenUnitId : String) {
@@ -76,11 +72,19 @@ open class AdsCoreManager(protected val context : Context) {
         fun showAdIfAvailable(
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
-            if (isShowingAd || ! isAdAvailable()) {
+            val isAdsChecked : Boolean = runBlocking {
+                dataStore.ads.first()
+            }
+
+            if (isShowingAd || ! isAdsChecked) {
+                return
+            }
+            if (! isAdAvailable()) {
                 onShowAdCompleteListener.onShowAdComplete()
                 loadAd(context = activity)
                 return
             }
+
             appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     appOpenAd = null
