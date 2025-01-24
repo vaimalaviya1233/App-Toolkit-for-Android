@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,20 +26,18 @@ import com.d4rk.android.libs.apptoolkit.utils.rememberHtmlData
 
 @Composable
 fun AboutSettingsList(
-    paddingValues: PaddingValues = PaddingValues(),
-    provider: AboutSettingsProvider
+    paddingValues : PaddingValues = PaddingValues() ,
+    provider : AboutSettingsProvider ,
 ) {
-    val context: Context = LocalContext.current
+    val context : Context = LocalContext.current
 
-    val htmlData = rememberHtmlData(
-        packageName = provider.packageName ,
-        currentVersionName = provider.appVersion ,
-        context = context
+    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(
+        packageName = provider.packageName , currentVersionName = provider.appVersion , context = context
     )
-    val changelogHtmlString = htmlData.value.first
-    val eulaHtmlString = htmlData.value.second
+    val changelogHtmlString : String? = htmlData.value.first
+    val eulaHtmlString : String? = htmlData.value.second
 
-    var showSnackbar: Boolean by remember { mutableStateOf(value = false) }
+    var showSnackbar : Boolean by remember { mutableStateOf(value = false) }
 
     Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
         LazyColumn(
@@ -47,52 +46,30 @@ fun AboutSettingsList(
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
                 PreferenceItem(
-                    title = provider.appName,
-                    summary = provider.copyrightText,
+                    title = provider.appName ,
+                    summary = provider.copyrightText ,
                 )
                 PreferenceItem(
-                    title = stringResource(id = R.string.app_build_version),
-                    summary = provider.appVersion
+                    title = stringResource(id = R.string.app_build_version) , summary = provider.appVersion + " (${provider.appVersionCode})"
                 )
-                PreferenceItem(title = stringResource(id = R.string.oss_license_title) ,
-                               summary = stringResource(id = R.string.summary_preference_settings_oss) ,
-                               onClick = {
-                                   IntentsHelper.openLicensesScreen(
-                                       context = context ,
-                                       eulaHtmlString = eulaHtmlString ,
-                                       changelogHtmlString = changelogHtmlString ,
-                                       appName = provider.appName ,
-                                       appVersion = provider.appVersion ,
-                                       appVersionCode = provider.appVersionCode ,
-                                       appShortDescription = R.string.app_short_description
-                                   )
-                               })
+                PreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss) , onClick = {
+                    IntentsHelper.openLicensesScreen(
+                        context = context , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , appName = provider.appName , appVersion = provider.appVersion , appVersionCode = provider.appVersionCode , appShortDescription = R.string.app_short_description
+                    )
+                })
             }
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.device_info))
             }
             item {
-                PreferenceItem(
-                    title = stringResource(id = R.string.device_info),
-                    summary = provider.deviceInfo,
-                    onClick = {
-                        ClipboardHelper.copyTextToClipboard(
-                            context = context,
-                            label = "Device Info",
-                            text = provider.deviceInfo,
-                            onShowSnackbar = {
-                                showSnackbar = true
-                            }
-                        )
-                    }
-                )
+                PreferenceItem(title = stringResource(id = R.string.device_info) , summary = provider.deviceInfo , onClick = {
+                    ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = provider.deviceInfo , onShowSnackbar = {
+                        showSnackbar = true
+                    })
+                })
             }
         }
 
-        Snackbar(
-            message = stringResource(id = R.string.snack_device_info_copied) ,
-            showSnackbar = showSnackbar ,
-            onDismiss = { showSnackbar = false }
-        )
+        Snackbar(message = stringResource(id = R.string.snack_device_info_copied) , showSnackbar = showSnackbar , onDismiss = { showSnackbar = false })
     }
 }

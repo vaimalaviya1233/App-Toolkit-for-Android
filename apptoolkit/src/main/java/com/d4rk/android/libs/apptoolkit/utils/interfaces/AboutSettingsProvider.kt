@@ -6,6 +6,5 @@ interface AboutSettingsProvider {
     val appVersion: String
     val appVersionCode: Int
     val copyrightText: String
-    val isDebug: Boolean
     val deviceInfo: String
 }
