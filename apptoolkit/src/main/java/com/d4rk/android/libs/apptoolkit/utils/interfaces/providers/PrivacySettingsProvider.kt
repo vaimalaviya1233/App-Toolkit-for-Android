@@ -1,7 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.utils.interfaces.providers
 
-import android.content.Context
-
 interface PrivacySettingsProvider {
     val privacyPolicyUrl: String
         get() = "https://default.privacy.policy.url"
@@ -18,7 +16,7 @@ interface PrivacySettingsProvider {
     val licenseUrl: String
         get() = "https://www.gnu.org/licenses/gpl-3.0"
 
-    fun openPermissionsScreen(context: Context)
-    fun openAdsScreen(context: Context)
-    fun openUsageAndDiagnosticsScreen(context: Context)
+    fun openPermissionsScreen()
+    fun openAdsScreen()
+    fun openUsageAndDiagnosticsScreen()
 }

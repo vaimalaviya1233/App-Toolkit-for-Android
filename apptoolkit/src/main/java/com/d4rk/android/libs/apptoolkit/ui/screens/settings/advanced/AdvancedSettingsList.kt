@@ -17,23 +17,19 @@ import com.d4rk.android.libs.apptoolkit.utils.interfaces.providers.AdvancedSetti
 
 @Composable
 fun AdvancedSettingsList(
-    paddingValues: PaddingValues = PaddingValues() ,
+    paddingValues : PaddingValues = PaddingValues() ,
     provider : AdvancedSettingsProvider ,
 ) {
-    val context: Context = LocalContext.current
+    val context : Context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier
                 .fillMaxHeight()
                 .padding(paddingValues = paddingValues) ,
     ) {
-        item() {
+        item {
             PreferenceCategoryItem(title = stringResource(id = R.string.error_reporting))
-            PreferenceItem(
-                title = stringResource(id = R.string.bug_report),
-                summary = stringResource(id = R.string.summary_preference_settings_bug_report),
-                onClick = { IntentsHelper.openUrl(context , url = provider.bugReportUrl) }
-            )
+            PreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openUrl(context , url = provider.bugReportUrl) })
         }
     }
 }
