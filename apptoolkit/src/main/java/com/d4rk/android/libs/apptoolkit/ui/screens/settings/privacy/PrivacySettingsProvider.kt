@@ -24,7 +24,7 @@ fun PrivacySettingsList(
     LazyColumn(
         modifier = Modifier
                 .fillMaxHeight()
-                .padding(paddingValues) ,
+                .padding(paddingValues = paddingValues) ,
     ) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.privacy))

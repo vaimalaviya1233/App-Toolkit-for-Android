@@ -29,7 +29,7 @@ fun AdvancedSettingsList(
     ) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.error_reporting))
-            PreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openUrl(context , url = provider.bugReportUrl) })
+            PreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openUrl(context = context , url = provider.bugReportUrl) })
         }
     }
 }

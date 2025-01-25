@@ -33,7 +33,7 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
  * derived from the corresponding light color constants defined elsewhere
  * (e.g., [primaryLight], [onPrimaryLight]).
  */
-private val lightScheme = lightColorScheme(
+private val lightScheme : ColorScheme = lightColorScheme(
     primary = primaryLight ,
     onPrimary = onPrimaryLight ,
     primaryContainer = primaryContainerLight ,
@@ -78,7 +78,7 @@ private val lightScheme = lightColorScheme(
  * to various UI elements like primary, secondary, tertiary, background, surface, and their
  * corresponding 'on' colors.
  */
-private val darkScheme = darkColorScheme(
+private val darkScheme : ColorScheme = darkColorScheme(
     primary = primaryDark ,
     onPrimary = onPrimaryDark ,
     primaryContainer = primaryContainerDark ,
@@ -162,14 +162,13 @@ private fun getColorScheme(
  *  the corresponding Material Theme.
  *
  * @param content The composable content to be themed.
- * @param dataStore The data store to read user preferences.
  */
 @Composable
 fun AppTheme(
     content: @Composable () -> Unit,
-    dataStore: CommonDataStore
 ) {
     val context: Context = LocalContext.current
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val themeMode: String = dataStore.themeMode.collectAsState(initial = "follow_system").value
     val isDynamicColors: Boolean = dataStore.dynamicColors.collectAsState(initial = true).value
     val isAmoledMode: Boolean = dataStore.amoledMode.collectAsState(initial = false).value
