@@ -137,7 +137,7 @@
     <string name="summary_ads">See ads that are relevant to you. Manage the information used to show personalized ads based on your app activity. You can always turn off personalization here.\n</string>
 
     <string name="usage_and_diagnostics">Usage and diagnostics</string>
-    <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve Cart Calculator</string>
+    <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve in-app experience</string>
     <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data to us. This will help improve app performance, stability, and other enhancements. Some aggregate data will also help our apps.\n\nThis is general information about your device and how you use our apps (such as battery level, system and app activity, and errors). The data will be used to improve our apps\n\nTurning off this feature doesn\'t affect your device\'s ability to send the information needed for essential services such as app updates and security.\n</string>
 
     <string name="legal">Legal</string>

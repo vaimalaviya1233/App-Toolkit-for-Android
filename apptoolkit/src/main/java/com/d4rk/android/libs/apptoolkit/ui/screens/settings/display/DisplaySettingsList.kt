@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,7 +46,6 @@ fun DisplaySettingsList(
         else -> stringResource(id = R.string.will_turn_on_automatically_by_system)
     }
     val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
-    val switchState : MutableState<Boolean> = remember { mutableStateOf(value = themeMode == darkModeString) }
     val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
     LazyColumn(
         modifier = Modifier
@@ -56,24 +54,36 @@ fun DisplaySettingsList(
     ) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.appearance))
-            SwitchPreferenceItemWithDivider(title = stringResource(
-                id = R.string.dark_theme
-            ) , summary = themeSummary , checked = switchState.value , onCheckedChange = { isChecked ->
-                switchState.value = isChecked
-            } , onSwitchClick = { isChecked ->
-                coroutineScope.launch {
-                    if (isChecked) {
-                        dataStore.saveThemeMode(mode = darkModeString)
-                        dataStore.themeModeState.value = darkModeString
+            SwitchPreferenceItemWithDivider(
+                title = stringResource(id = R.string.dark_theme),
+                summary = themeSummary,
+                checked = (themeMode == darkModeString),
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch {
+                        if (isChecked) {
+                            dataStore.saveThemeMode(mode = darkModeString)
+                            dataStore.themeModeState.value = darkModeString
+                        } else {
+                            dataStore.saveThemeMode(mode = lightModeString)
+                            dataStore.themeModeState.value = lightModeString
+                        }
                     }
-                    else {
-                        dataStore.saveThemeMode(mode = lightModeString)
-                        dataStore.themeModeState.value = lightModeString
+                },
+                onSwitchClick = { isChecked ->
+                    coroutineScope.launch {
+                        if (isChecked) {
+                            dataStore.saveThemeMode(mode = darkModeString)
+                            dataStore.themeModeState.value = darkModeString
+                        } else {
+                            dataStore.saveThemeMode(mode = lightModeString)
+                            dataStore.themeModeState.value = lightModeString
+                        }
                     }
+                },
+                onClick = {
+                    provider.openThemeSettings()
                 }
-            } , onClick = {
-                provider.openThemeSettings()
-            })
+            )
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 SwitchPreferenceItem(
