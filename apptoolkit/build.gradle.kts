@@ -65,6 +65,7 @@ dependencies {
     // Google
     api(dependencyNotation = libs.play.services.ads)
     api(dependencyNotation = libs.material)
+    api(dependencyNotation = libs.app.update.ktx)
 
     // Images
     api(dependencyNotation = libs.coil.compose)
@@ -101,7 +102,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.40"
+            version = "0.0.42"
 
             afterEvaluate {
                 from(components["release"])

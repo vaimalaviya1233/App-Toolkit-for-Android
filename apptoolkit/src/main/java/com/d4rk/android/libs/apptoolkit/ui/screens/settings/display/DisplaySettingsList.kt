@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -31,22 +32,33 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DisplaySettingsList(
-    paddingValues : PaddingValues = PaddingValues() , provider : DisplaySettingsProvider
+    paddingValues: PaddingValues = PaddingValues(),
+    provider: DisplaySettingsProvider
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context)
-    var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
-    var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
-    val darkModeString : String = stringResource(id = R.string.dark_mode)
-    val lightModeString : String = stringResource(id = R.string.light_mode)
-    val themeSummary : String = when (themeMode) {
-        darkModeString , lightModeString -> stringResource(id = R.string.will_never_turn_on_automatically)
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
+    var showLanguageDialog: Boolean by remember { mutableStateOf(value = false) }
+    var showStartupDialog: Boolean by remember { mutableStateOf(value = false) }
+
+    val themeMode: String = dataStore.themeMode.collectAsState(initial = "follow_system").value
+    val darkModeString: String = stringResource(id = R.string.dark_mode)
+    val lightModeString: String = stringResource(id = R.string.light_mode)
+    val isSystemDarkTheme: Boolean = isSystemInDarkTheme()
+    val isDarkTheme: Boolean = when (themeMode) {
+        darkModeString -> true
+        lightModeString -> false
+        else -> isSystemDarkTheme
+    }
+
+    val themeSummary: String = when (themeMode) {
+        darkModeString, lightModeString -> stringResource(id = R.string.will_never_turn_on_automatically)
         else -> stringResource(id = R.string.will_turn_on_automatically_by_system)
     }
-    val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
-    val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
+
+    val isDynamicColors: State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
+    val bouncyButtons: Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
+
     LazyColumn(
         modifier = Modifier
                 .fillMaxHeight()
@@ -57,7 +69,7 @@ fun DisplaySettingsList(
             SwitchPreferenceItemWithDivider(
                 title = stringResource(id = R.string.dark_theme),
                 summary = themeSummary,
-                checked = (themeMode == darkModeString),
+                checked = isDarkTheme,
                 onCheckedChange = { isChecked ->
                     coroutineScope.launch {
                         if (isChecked) {
