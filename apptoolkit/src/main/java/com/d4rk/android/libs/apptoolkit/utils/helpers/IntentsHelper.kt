@@ -175,11 +175,11 @@ object IntentsHelper {
                 .withAboutVersionShownCode(aboutShowVersion = true)
                 .withAboutSpecial1(aboutAppSpecial1 = context.getString(R.string.eula_title))
                 .withAboutSpecial1Description(
-                    aboutAppSpecial1Description = eulaHtmlString ?: context.getString(R.string.loading_eula)
-                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(R.string.changelog))
+                    aboutAppSpecial1Description = eulaHtmlString ?: context.getString(R.string.loading_eula_message)
+                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(R.string.changelog_title))
                 .withAboutSpecial2Description(
                     aboutAppSpecial2Description = changelogHtmlString ?: context.getString(
-                        R.string.loading_changelog
+                        R.string.loading_changelog_message
                     )
                 ).withAboutDescription(aboutDescription = context.getString(appShortDescription))
                 .activity(ctx = context)

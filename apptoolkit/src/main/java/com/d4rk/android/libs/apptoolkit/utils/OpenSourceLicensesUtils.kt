@@ -83,7 +83,7 @@ object OpenSourceLicensesUtils {
         return fetchMarkdownFile(
             packageName = packageName ,
             fileName = "CHANGELOG.md" ,
-            errorResId = R.string.error_loading_changelog ,
+            errorResId = R.string.error_loading_changelog_message ,
             context = context
         )
     }
@@ -107,7 +107,7 @@ object OpenSourceLicensesUtils {
         return fetchMarkdownFile(
             packageName = packageName ,
             fileName = "EULA.md" ,
-            errorResId = R.string.error_loading_eula ,
+            errorResId = R.string.error_loading_eula_message ,
             context = context
         )
     }

@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Understand the rules and guidelines for behavior within our service</string>
 
     <string name="permissions">Permissions</string>
+    <string name="summary_preference_settings_permissions">Manage the permissions granted to our service</string>
     <string name="normal">Normal</string>
     <string name="runtime">Runtime</string>
     <string name="storage">Storage</string>
