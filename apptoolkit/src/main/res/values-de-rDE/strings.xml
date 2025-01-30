@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Diese App wurde entwickelt, um Ihren Workflow zu optimieren. Sie bietet Ihnen wichtige Tools und Funktionen, um bei jeder Aufgabe organisiert und effizient zu bleiben. 📱</string>
+    <string name="app_short_description">Diese App wurde entwickelt, um Ihren Workflow zu optimieren. Sie bietet Ihnen wichtige Tools und Funktionen, um bei jeder Aufgabe organisiert und effizient zu bleiben. 📱</string>
     <string name="notification_update_title">Ein neues Update ist verfügbar!</string>
     <string name="summary_notification_update">Eine neue Version der App ist verfügbar. Klicken Sie hier, um zu aktualisieren!</string>
     <string name="notification_last_time_used_title">Es ist eine Weile her!</string>

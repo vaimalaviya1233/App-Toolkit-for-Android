@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Dirancang untuk menyederhanakan alur kerja Anda, aplikasi ini menyediakan alat dan fitur penting untuk membantu Anda tetap terorganisir dan efisien dalam setiap tugas. 📱</string>
+    <string name="app_short_description">Dirancang untuk menyederhanakan alur kerja Anda, aplikasi ini menyediakan alat dan fitur penting untuk membantu Anda tetap terorganisir dan efisien dalam setiap tugas. 📱</string>
     <string name="notification_update_title">Pembaruan baru tersedia!</string>
     <string name="summary_notification_update">Versi baru dari aplikasi tersedia. Klik untuk memperbarui!</string>
     <string name="notification_last_time_used_title">Sudah lama tidak bertemu!</string>

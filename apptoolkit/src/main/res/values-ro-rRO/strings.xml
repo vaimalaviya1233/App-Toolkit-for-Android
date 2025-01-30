@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Proiectată pentru a îmbunătăți fluxul de lucru, această aplicație oferă instrumente și funcții esențiale pentru a te ajuta să rămâi organizat și eficient în orice sarcină. 📱</string>
+    <string name="app_short_description">Proiectată pentru a îmbunătăți fluxul de lucru, această aplicație oferă instrumente și funcții esențiale pentru a te ajuta să rămâi organizat și eficient în orice sarcină. 📱</string>
     <string name="notification_update_title">O nouă actualizare este disponibilă!</string>
     <string name="summary_notification_update">O nouă versiune a aplicației este disponibilă. Apasă pentru a actualiza!</string>
     <string name="notification_last_time_used_title">A trecut ceva timp!</string>

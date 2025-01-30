@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Designed to streamline your workflow, this app provides essential tools and features to help you stay organized and efficient across any task. 📱</string>
+    <string name="app_short_description">Designed to streamline your workflow, this app provides essential tools and features to help you stay organized and efficient across any task. 📱</string>
     <string name="notification_update_title">A new update available!</string>
     <string name="summary_notification_update">A new version of the app is available. Click to update!</string>
     <string name="notification_last_time_used_title">It\'s been a while!</string>
@@ -126,6 +126,7 @@
     <string name="error_loading_eula_message">Unable to load the End User License Agreement. Please try again.</string>
     <string name="error_loading_changelog_message">Unable to load the application changelog. Please try again.</string>
 
+    <string name="device_info">Device Info</string>
     <string name="app_build">App Build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Release</string>

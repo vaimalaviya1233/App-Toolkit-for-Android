@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Utformad för att effektivisera ditt arbetsflöde, den här appen erbjuder viktiga verktyg och funktioner som hjälper dig att hålla dig organiserad och effektiv i alla uppgifter. 📱</string>
+    <string name="app_short_description">Utformad för att effektivisera ditt arbetsflöde, den här appen erbjuder viktiga verktyg och funktioner som hjälper dig att hålla dig organiserad och effektiv i alla uppgifter. 📱</string>
     <string name="notification_update_title">En ny uppdatering är tillgänglig!</string>
     <string name="summary_notification_update">En ny version av appen är tillgänglig. Klicka för att uppdatera!</string>
     <string name="notification_last_time_used_title">Det var ett tag sedan!</string>

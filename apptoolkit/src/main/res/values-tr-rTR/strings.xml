@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">İş akışınızı daha verimli hale getirmek için tasarlanmış bu uygulama, görevlerinizde düzenli ve verimli kalmanıza yardımcı olacak temel araçlar ve özellikler sunar. 📱</string>
+    <string name="app_short_description">İş akışınızı daha verimli hale getirmek için tasarlanmış bu uygulama, görevlerinizde düzenli ve verimli kalmanıza yardımcı olacak temel araçlar ve özellikler sunar. 📱</string>
     <string name="notification_update_title">Yeni bir güncelleme mevcut!</string>
     <string name="summary_notification_update">Uygulamanın yeni bir sürümü mevcut. Güncellemek için tıklayın!</string>
     <string name="notification_last_time_used_title">Uzun zamandır görüşmedik!</string>

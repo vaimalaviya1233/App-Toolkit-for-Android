@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">此應用程式專為簡化您的工作流程而設計，提供必要的工具和功能，幫助您在執行任何任務時保持有序和高效。📱</string>
+    <string name="app_short_description">此應用程式專為簡化您的工作流程而設計，提供必要的工具和功能，幫助您在執行任何任務時保持有序和高效。📱</string>
     <string name="notification_update_title">有可用的更新！</string>
     <string name="summary_notification_update">應用程式的新版本已可用。點擊以更新！</string>
     <string name="notification_last_time_used_title">好久不見！</string>

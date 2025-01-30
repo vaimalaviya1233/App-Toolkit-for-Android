@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">Progettata per semplificare il tuo flusso di lavoro, questa app offre strumenti e funzionalità essenziali per aiutarti a rimanere organizzato ed efficiente in ogni compito. 📱</string>
+    <string name="app_short_description">Progettata per semplificare il tuo flusso di lavoro, questa app offre strumenti e funzionalità essenziali per aiutarti a rimanere organizzato ed efficiente in ogni compito. 📱</string>
     <string name="notification_update_title">È disponibile un nuovo aggiornamento!</string>
     <string name="summary_notification_update">È disponibile una nuova versione dell\'app. Clicca per aggiornare!</string>
     <string name="notification_last_time_used_title">È passato un po\' di tempo!</string>

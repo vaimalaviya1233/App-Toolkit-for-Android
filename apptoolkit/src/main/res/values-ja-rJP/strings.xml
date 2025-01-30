@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_about_description">ワークフローを効率化するために設計されたこのアプリは、組織的かつ効率的にタスクを進めるための基本的なツールと機能を提供します。 📱</string>
+    <string name="app_short_description">ワークフローを効率化するために設計されたこのアプリは、組織的かつ効率的にタスクを進めるための基本的なツールと機能を提供します。 📱</string>
     <string name="notification_update_title">新しいアップデートがあります！</string>
     <string name="summary_notification_update">アプリの新しいバージョンが利用可能です。クリックしてアップデートしてください！</string>
     <string name="notification_last_time_used_title">しばらくぶりですね！</string>
