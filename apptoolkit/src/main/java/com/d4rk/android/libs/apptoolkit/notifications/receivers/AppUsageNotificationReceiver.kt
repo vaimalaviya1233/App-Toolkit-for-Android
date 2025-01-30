@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.d4rk.android.libs.apptoolkit.notifications.workers.AppUsageNotificationWorker
 
 /**
@@ -27,8 +28,14 @@ import com.d4rk.android.libs.apptoolkit.notifications.workers.AppUsageNotificati
  *  using IntentFilter. Also the [AppUsageNotificationWorker] must be defined for it to work properly
  */
 class AppUsageNotificationReceiver : BroadcastReceiver() {
-    override fun onReceive(context : Context , intent : Intent?) {
-        val workRequest : OneTimeWorkRequest = OneTimeWorkRequestBuilder<AppUsageNotificationWorker>().build()
-        WorkManager.getInstance(context = context).enqueue(request = workRequest)
+    override fun onReceive(context: Context, intent: Intent?) {
+        val notificationSummary = intent?.getIntExtra("notification_summary", -1) ?: return
+
+        val workRequest = OneTimeWorkRequestBuilder<AppUsageNotificationWorker>()
+                .setInputData(
+                    workDataOf("notification_summary" to notificationSummary)
+                )
+                .build()
+        WorkManager.getInstance(context).enqueue(workRequest)
     }
 }

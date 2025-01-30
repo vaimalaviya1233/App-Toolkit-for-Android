@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.StringRes
 import com.d4rk.android.libs.apptoolkit.notifications.receivers.AppUsageNotificationReceiver
 import java.util.concurrent.TimeUnit
 
@@ -15,23 +16,27 @@ import java.util.concurrent.TimeUnit
  *
  * @property context The application context used for scheduling app usage checks.
  */
-class AppUsageNotificationsManager(private val context : Context) {
-    private val alarmManager : AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val notificationIntent : PendingIntent = Intent(context , AppUsageNotificationReceiver::class.java).let { intent ->
-        PendingIntent.getBroadcast(context , 0 , intent , PendingIntent.FLAG_IMMUTABLE)
-    }
+class AppUsageNotificationsManager(private val context: Context) {
+    private val alarmManager: AlarmManager =
+            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    /**
-     * Schedules a periodic check for app usage notifications.
-     *
-     * This function schedules a recurring task using WorkManager to perform app usage checks
-     * every 3 days. It enqueues a PeriodicWorkRequest with a specified interval and triggers
-     * an instance of the AppUsageNotificationWorker to handle the app usage check.
-     */
-    fun scheduleAppUsageCheck() {
-        val triggerTime : Long = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3)
+    fun scheduleAppUsageCheck(@StringRes notificationSummary: Int) {
+        val intent = Intent(context, AppUsageNotificationReceiver::class.java).apply {
+            putExtra("notification_summary", notificationSummary)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val triggerTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3)
         alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP , triggerTime , TimeUnit.DAYS.toMillis(3) , notificationIntent
+            AlarmManager.RTC_WAKEUP,
+            triggerTime,
+            TimeUnit.DAYS.toMillis(3),
+            pendingIntent
         )
     }
 }
