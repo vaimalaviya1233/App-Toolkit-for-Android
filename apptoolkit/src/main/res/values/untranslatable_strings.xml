@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="share_lesson_subject" translatable="false">%1$s</string>
-    <string name="app_name" translatable="false">Android Studio Tutorials</string>
     <string name="bulgarian" translatable="false">Български</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">Français</string>
@@ -20,19 +18,10 @@
     <string name="traditional_chinese" translatable="false">中文</string>
     <string name="thai" translatable="false">ไทย</string>
     <string name="brazilian_portuguese" translatable="false">Português (Brasil)</string>
-    <string name="copyright" translatable="false">Copyright ©2022-2025, D4rK</string>
     <string name="arch" translatable="false">Arch:</string>
     <string name="summary_preference_settings_license" translatable="false">General Public License-3.0</string>
 
     <string name="feedback_for" translatable="false">Feedback for </string>
     <string name="dear_developer" translatable="false">Dear developer, </string>
     <string name="send_email_using" translatable="false">Send mail using:</string>
-
-    <string name="oss_license_title">Open source licenses</string>
-    <string name="eula_title" translatable="false">EULA</string>
-    <string name="changelog" translatable="false">CHANGELOG</string>
-    <string name="loading_eula" translatable="false">Loading EULA</string>
-    <string name="error_loading_eula" translatable="false">Error loading EULA</string>
-    <string name="loading_changelog" translatable="false">Loading changelog</string>
-    <string name="error_loading_changelog" translatable="false">Error loading changelog</string>
 </resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_about_description">Zapewniając niezbędne narzędzia i funkcje, ta aplikacja została zaprojektowana, aby usprawnić Twoją pracę i pomóc Ci pozostać zorganizowanym oraz efektywnym w każdej czynności. 📱</string>
+    <string name="notification_update_title">Dostępna jest nowa aktualizacja!</string>
+    <string name="summary_notification_update">Dostępna jest nowa wersja aplikacji. Kliknij, aby zaktualizować!</string>
+    <string name="notification_last_time_used_title">Minęło trochę czasu!</string>
+    <string name="default_notification_summary">Czeka na Ciebie wiele funkcji. Otwórz aplikację!</string>
+
+    <string name="welcome">Witamy</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Przeczytaj i zaakceptuj nasze Warunki korzystania z usługi oraz Politykę prywatności, aby kontynuować</string>
+    <string name="agree">Zgadzam się</string>
+
+    <string name="navigation_drawer_open">Otwórz menu nawigacyjne</string>
+    <string name="snack_app_updated">Aplikacja została pomyślnie zaktualizowana</string>
+    <string name="snack_update_failed">Wystąpił problem podczas aktualizacji</string>
+    <string name="try_again">Spróbuj ponownie</string>
+    <string name="summary_share_message">Sprawdź tę niesamowitą aplikację, której używam! Ma kilka naprawdę ciekawych funkcji, które mogą Ci się spodobać. Pobierz ją z Play Store pod adresem: %1$s</string>
+    <string name="learn_more">Dowiedz się więcej</string>
+    <string name="close">Zamknąć?</string>
+    <string name="summary_close">Czy na pewno chcesz zakończyć?</string>
+
+    <string name="home">Strona główna</string>
+
+    <string name="activity_not_found">Nie znaleziono aktywności.</string>
+    <string name="security_error">Wystąpił błąd bezpieczeństwa. Spróbuj ponownie później.</string>
+    <string name="io_error">Wystąpił błąd wejścia/wyjścia. Sprawdź połączenie sieciowe lub pamięć i spróbuj ponownie.</string>
+    <string name="illegal_argument_error">Podano nieprawidłowe dane lub argument. Sprawdź informacje i spróbuj ponownie.</string>
+    <string name="unknown_error">Wystąpił nieznany błąd.</string>
+    <string name="initialization_error">Inicjalizacja nie powiodła się. Spróbuj ponownie później.</string>
+
+    <string name="settings">Ustawienia</string>
+    <string name="settings_placeholder_description">Nie wybrano żadnych ustawień. Wybierz opcję, aby wyświetlić jej szczegóły tutaj.</string>
+    <string name="get_help">Uzyskaj pomoc</string>
+
+    <string name="display">Wyświetlanie</string>
+    <string name="summary_preference_settings_display">Spersonalizuj wygląd i działanie swojej aplikacji</string>
+
+    <string name="appearance">Wygląd</string>
+    <string name="dark_theme">Motyw ciemny</string>
+    <string name="will_turn_on_automatically_by_system">Zostanie automatycznie włączony przez system</string>
+    <string name="will_never_turn_on_automatically">Nigdy nie włączy się automatycznie</string>
+    <string name="amoled_mode">Tryb AMOLED</string>
+    <string name="follow_system">Podążaj za ustawieniami systemu</string>
+    <string name="light_mode">Tryb jasny</string>
+    <string name="dark_mode">Tryb ciemny</string>
+    <string name="summary_dark_theme">Motyw ciemny wykorzystuje głębokie tło, aby pomóc przedłużyć żywotność baterii</string>
+
+    <string name="dynamic_colors">Kolory dynamiczne</string>
+    <string name="summary_preference_settings_dynamic_colors">Zastosuj kolory z tapet do motywu aplikacji</string>
+
+    <string name="app_behavior">Zachowanie aplikacji</string>
+    <string name="bounce_buttons">Efekt kliknięcia</string>
+    <string name="summary_preference_settings_bounce_buttons">Zastosuj subtelną animację przy kliknięciu do wszystkich elementów klikalnych</string>
+
+    <string name="navigation">Nawigacja</string>
+    <string name="startup_page">Strona startowa</string>
+    <string name="summary_preference_settings_startup_page">Wybierz ekran, który ma być wyświetlany przy uruchomieniu aplikacji.</string>
+
+    <string name="language">Język</string>
+    <string name="summary_preference_settings_language">Zmień język używany w aplikacji</string>
+
+    <string name="dialog_startup_subtitle">Wybierz preferowaną stronę startową:</string>
+    <string name="dialog_info_startup">Konfiguruje ekran początkowy wyświetlany użytkownikom przy uruchamianiu aplikacji. To ustawienie wpływa na pierwszą interakcję użytkownika z aplikacją.</string>
+
+    <string name="dialog_language_subtitle">Wybierz preferowany język</string>
+    <string name="dialog_info_language">Spersonalizuj swoje doświadczenie za pomocą preferowanego języka. Wszelkie zmiany języka zostaną zastosowane natychmiast.</string>
+
+    <string name="notifications">Powiadomienia</string>
+    <string name="summary_preference_settings_notifications">Zarządzaj powiadomieniami aplikacji</string>
+
+    <string name="app_usage_notifications">Powiadomienia o użyciu aplikacji</string>
+    <string name="update_notifications">Powiadomienia o aktualizacjach</string>
+
+    <string name="advanced">Zaawansowane</string>
+    <string name="summary_preference_settings_advanced">Odkryj więcej zaawansowanych ustawień</string>
+
+    <string name="error_reporting">Zgłaszanie błędów</string>
+    <string name="bug_report">Raport o błędzie</string>
+    <string name="summary_preference_settings_bug_report">Prześlij raporty o błędach i żądania funkcji na stronę zgłoszeń problemów w repozytorium GitHub aplikacji</string>
+
+    <string name="security_and_privacy">Bezpieczeństwo i prywatność</string>
+    <string name="summary_preference_settings_privacy_and_security">Zarządzaj ustawieniami prywatności</string>
+
+    <string name="privacy">Prywatność</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="summary_preference_settings_privacy_policy">Wyświetl zasady dotyczące tego, jak przetwarzamy Twoje dane</string>
+    <string name="terms_of_service">Warunki świadczenia usług</string>
+    <string name="summary_preference_settings_terms_of_service">Przejrzyj warunki, na które się zgadzasz, korzystając z naszej usługi</string>
+    <string name="code_of_conduct">Kodeks postępowania</string>
+    <string name="summary_preference_settings_code_of_conduct">Zrozum zasady i wytyczne dotyczące zachowania w naszej usłudze</string>
+
+    <string name="permissions">Uprawnienia</string>
+    <string name="normal">Normalne</string>
+    <string name="runtime">Czas wykonywania</string>
+    <string name="storage">Pamięć</string>
+
+    <string name="ads">Reklamy</string>
+    <string name="summary_preference_settings_ads">Kontroluj, jak używamy Twoich informacji do wyświetlania odpowiednich reklam</string>
+
+    <string name="display_ads">Wyświetlaj reklamy</string>
+    <string name="personalized_ads">Spersonalizowane reklamy</string>
+    <string name="summary_ads_personalized_ads">Wybierz sposób personalizacji reklam na podstawie swoich zainteresowań</string>
+    <string name="summary_ads">Wyświetlaj reklamy dostosowane do Ciebie. Zarządzaj informacjami używanymi do wyświetlania spersonalizowanych reklam. Możesz zawsze wyłączyć personalizację tutaj.</string>
+
+    <string name="usage_and_diagnostics">Użycie i diagnostyka</string>
+    <string name="summary_preference_settings_usage_and_diagnostics">Udostępnij dane, aby pomóc ulepszyć doświadczenia w aplikacji</string>
+    <string name="summary_usage_and_diagnostics">Pomóż poprawić swoje doświadczenia, automatycznie przesyłając dane diagnostyczne, dane urządzenia i użytkowania aplikacji.</string>
+
+    <string name="legal">Informacje prawne</string>
+    <string name="legal_notices">Noty prawne</string>
+    <string name="summary_preference_settings_legal_notices">Wyświetl informacje prawne dotyczące naszej usługi</string>
+    <string name="license">Licencja</string>
+
+    <string name="about">O aplikacji</string>
+
+    <string name="app_info">Informacje o aplikacji</string>
+    <string name="app_build_version">Wersja kompilacji aplikacji</string>
+    <string name="oss_license_title">Licencje open source</string>
+    <string name="summary_preference_settings_oss">Szczegóły licencji na oprogramowanie open source</string>
+
+    <string name="eula_title">Umowa licencyjna użytkownika końcowego</string>
+    <string name="changelog_title">Dziennik zmian aplikacji</string>
+    <string name="loading_eula_message">Pobieranie umowy licencyjnej użytkownika końcowego…</string>
+    <string name="loading_changelog_message">Pobieranie dziennika zmian aplikacji…</string>
+    <string name="error_loading_eula_message">Nie można załadować umowy licencyjnej użytkownika końcowego. Spróbuj ponownie.</string>
+    <string name="error_loading_changelog_message">Nie można załadować dziennika zmian aplikacji. Spróbuj ponownie.</string>
+
+    <string name="app_build">Kompilacja aplikacji: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="debug">Debugowanie</string>
+    <string name="release">Wydanie</string>
+    <string name="manufacturer">Producent:</string>
+    <string name="device_model">Model urządzenia:</string>
+    <string name="android_version">Wersja Androida:</string>
+    <string name="api_level">Poziom API:</string>
+    <string name="snack_device_info_copied">Informacje o urządzeniu zostały skopiowane do schowka</string>
+
+    <string name="help_and_feedback">Pomoc i opinie</string>
+    <string name="help">Pomoc</string>
+    <string name="faq">Często zadawane pytania</string>
+    <string name="popular_help_resources">Popularne zasoby pomocy</string>
+    <string name="contact_us">Skontaktuj się z nami</string>
+    <string name="contact_us_description">Opowiedz nam więcej, a my Ci pomożemy</string>
+    <string name="view_in_google_play_store">Zobacz w Google Play Store</string>
+    <string name="version_info">Informacje o wersji</string>
+    <string name="version">Wersja %1$s</string>
+    <string name="beta_program">Program beta</string>
+
+    <string name="feedback">Opinie</string>
+
+    <string name="updates">Aktualizacje</string>
+
+    <string name="share">Udostępnij</string>
+
+    <string name="support_us">Wesprzyj nas</string>
+    <string name="paid_support">Wsparcie płatne</string>
+    <string name="summary_donations">Bez względu na kwotę darowizny, pomożesz nam utrzymać aplikację i ulepszać jej funkcje. Doceniamy Twoją hojność i życzliwość!</string>
+    <string name="non_paid_support">Wsparcie bezpłatne</string>
+    <string name="web_ad">Reklama internetowa</string>
+</resources>

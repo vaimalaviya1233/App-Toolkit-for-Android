@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_about_description">Proiectată pentru a îmbunătăți fluxul de lucru, această aplicație oferă instrumente și funcții esențiale pentru a te ajuta să rămâi organizat și eficient în orice sarcină. 📱</string>
+    <string name="notification_update_title">O nouă actualizare este disponibilă!</string>
+    <string name="summary_notification_update">O nouă versiune a aplicației este disponibilă. Apasă pentru a actualiza!</string>
+    <string name="notification_last_time_used_title">A trecut ceva timp!</string>
+    <string name="default_notification_summary">Sunt multe funcții care te așteaptă. Deschide aplicația!</string>
+
+    <string name="welcome">Bine ai venit</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Citește și acceptă Termenii de utilizare și Politica de confidențialitate pentru a continua</string>
+    <string name="agree">Sunt de acord</string>
+
+    <string name="navigation_drawer_open">Deschide meniul de navigare</string>
+    <string name="snack_app_updated">Aplicația a fost actualizată cu succes</string>
+    <string name="snack_update_failed">A apărut o problemă în timpul actualizării</string>
+    <string name="try_again">Încearcă din nou</string>
+    <string name="summary_share_message">Verifică această aplicație uimitoare pe care o folosesc! Are câteva funcții interesante. O poți descărca din Play Store la: %1$s</string>
+    <string name="learn_more">Află mai multe</string>
+    <string name="close">Închide?</string>
+    <string name="summary_close">Ești sigur că vrei să ieși?</string>
+
+    <string name="home">Acasă</string>
+
+    <string name="activity_not_found">Activitatea nu a fost găsită.</string>
+    <string name="security_error">A apărut o eroare de securitate. Încearcă din nou mai târziu.</string>
+    <string name="io_error">A apărut o eroare de intrare/ieșire. Verifică conexiunea la rețea sau spațiul de stocare și încearcă din nou.</string>
+    <string name="illegal_argument_error">Datele introduse sau argumentul furnizat sunt invalide. Verifică informațiile și încearcă din nou.</string>
+    <string name="unknown_error">A apărut o eroare necunoscută.</string>
+    <string name="initialization_error">Inițializarea a eșuat. Încearcă din nou mai târziu.</string>
+
+    <string name="settings">Setări</string>
+    <string name="settings_placeholder_description">Nicio setare selectată. Alege o opțiune pentru a vedea detalii aici.</string>
+    <string name="get_help">Obține ajutor</string>
+
+    <string name="display">Afișaj</string>
+    <string name="summary_preference_settings_display">Personalizează aspectul și funcționalitatea aplicației</string>
+
+    <string name="appearance">Aspect</string>
+    <string name="dark_theme">Temă întunecată</string>
+    <string name="will_turn_on_automatically_by_system">Se va activa automat prin setările sistemului</string>
+    <string name="will_never_turn_on_automatically">Nu se va activa niciodată automat</string>
+    <string name="amoled_mode">Mod AMOLED</string>
+    <string name="follow_system">Urmărește setările sistemului</string>
+    <string name="light_mode">Mod luminos</string>
+    <string name="dark_mode">Mod întunecat</string>
+    <string name="summary_dark_theme">Tema întunecată utilizează un fundal închis pentru a ajuta la economisirea bateriei</string>
+
+    <string name="dynamic_colors">Culori dinamice</string>
+    <string name="summary_preference_settings_dynamic_colors">Aplică culorile din tapetul dispozitivului la tema aplicației</string>
+
+    <string name="app_behavior">Comportamentul aplicației</string>
+    <string name="bounce_buttons">Animație la clic</string>
+    <string name="summary_preference_settings_bounce_buttons">Aplică o animație subtilă de săritură la elementele clicabile</string>
+
+    <string name="navigation">Navigare</string>
+    <string name="startup_page">Pagina de pornire</string>
+    <string name="summary_preference_settings_startup_page">Alege ecranul care va fi afișat la pornirea aplicației.</string>
+
+    <string name="language">Limbă</string>
+    <string name="summary_preference_settings_language">Schimbă limba utilizată în aplicație</string>
+
+    <string name="dialog_startup_subtitle">Alege pagina de pornire preferată:</string>
+    <string name="dialog_info_startup">Configurează ecranul inițial prezentat utilizatorilor la lansarea aplicației. Această setare influențează prima interacțiune a utilizatorului cu aplicația.</string>
+
+    <string name="dialog_language_subtitle">Selectează limba preferată</string>
+    <string name="dialog_info_language">Personalizează-ți experiența folosind limba preferată. Orice modificare se aplică imediat.</string>
+
+    <string name="notifications">Notificări</string>
+    <string name="summary_preference_settings_notifications">Gestionează notificările aplicației</string>
+
+    <string name="app_usage_notifications">Notificări de utilizare a aplicației</string>
+    <string name="update_notifications">Notificări de actualizare</string>
+
+    <string name="advanced">Avansat</string>
+    <string name="summary_preference_settings_advanced">Explorează mai multe setări avansate</string>
+
+    <string name="error_reporting">Raportare erori</string>
+    <string name="bug_report">Raportare bug</string>
+    <string name="summary_preference_settings_bug_report">Trimite rapoarte de erori și solicitări de funcții pe pagina de probleme a aplicației din GitHub</string>
+
+    <string name="security_and_privacy">Securitate și confidențialitate</string>
+    <string name="summary_preference_settings_privacy_and_security">Gestionează setările de confidențialitate</string>
+
+    <string name="privacy">Confidențialitate</string>
+    <string name="privacy_policy">Politica de Confidențialitate</string>
+    <string name="summary_preference_settings_privacy_policy">Vezi politica care reglementează modul în care gestionăm datele tale</string>
+    <string name="terms_of_service">Termeni de Serviciu</string>
+    <string name="summary_preference_settings_terms_of_service">Revizuiește termenii pe care îi accepți utilizând serviciul nostru</string>
+    <string name="code_of_conduct">Cod de Conduită</string>
+    <string name="summary_preference_settings_code_of_conduct">Înțelege regulile și liniile directoare pentru comportament în cadrul serviciului nostru</string>
+
+    <string name="permissions">Permisiuni</string>
+    <string name="normal">Normal</string>
+    <string name="runtime">Timp de rulare</string>
+    <string name="storage">Stocare</string>
+
+    <string name="ads">Reclame</string>
+    <string name="summary_preference_settings_ads">Controlează modul în care folosim informațiile tale pentru a afișa reclame relevante</string>
+
+    <string name="display_ads">Afișează reclame</string>
+    <string name="personalized_ads">Reclame personalizate</string>
+    <string name="summary_ads_personalized_ads">Alege cum personalizăm reclamele pentru tine în funcție de interesele tale</string>
+    <string name="summary_ads">Vezi reclame relevante pentru tine. Gestionează informațiile utilizate pentru a afișa reclame personalizate bazate pe activitatea ta în aplicație. Poți dezactiva personalizarea aici oricând.</string>
+
+    <string name="usage_and_diagnostics">Utilizare și diagnoză</string>
+    <string name="summary_preference_settings_usage_and_diagnostics">Partajează date pentru a ajuta la îmbunătățirea experienței în aplicație</string>
+    <string name="summary_usage_and_diagnostics">Ajută la îmbunătățirea experienței trimițând automat date de diagnosticare, utilizare a dispozitivului și a aplicației.</string>
+
+    <string name="legal">Informații legale</string>
+    <string name="legal_notices">Avertismente legale</string>
+    <string name="summary_preference_settings_legal_notices">Vezi informațiile legale despre serviciul nostru</string>
+    <string name="license">Licență</string>
+
+    <string name="about">Despre</string>
+
+    <string name="app_info">Informații despre aplicație</string>
+    <string name="app_build_version">Versiunea de compilare a aplicației</string>
+    <string name="oss_license_title">Licențe open source</string>
+    <string name="summary_preference_settings_oss">Detalii despre licențele software-ului open source</string>
+
+    <string name="eula_title">Acordul de Licență pentru Utilizatorul Final</string>
+    <string name="changelog_title">Jurnal de modificări al aplicației</string>
+    <string name="loading_eula_message">Se preia Acordul de Licență pentru Utilizatorul Final…</string>
+    <string name="loading_changelog_message">Se preia jurnalul de modificări al aplicației…</string>
+    <string name="error_loading_eula_message">Nu s-a putut încărca Acordul de Licență pentru Utilizatorul Final. Încearcă din nou.</string>
+    <string name="error_loading_changelog_message">Nu s-a putut încărca jurnalul de modificări al aplicației. Încearcă din nou.</string>
+
+    <string name="app_build">Compilare aplicație: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="debug">Depanare</string>
+    <string name="release">Lansare</string>
+    <string name="manufacturer">Producător:</string>
+    <string name="device_model">Model dispozitiv:</string>
+    <string name="android_version">Versiune Android:</string>
+    <string name="api_level">Nivel API:</string>
+    <string name="snack_device_info_copied">Informațiile dispozitivului au fost copiate în clipboard</string>
+
+    <string name="help_and_feedback">Ajutor și feedback</string>
+    <string name="help">Ajutor</string>
+    <string name="faq">Întrebări frecvente</string>
+    <string name="popular_help_resources">Resurse de ajutor populare</string>
+    <string name="contact_us">Contactează-ne</string>
+    <string name="contact_us_description">Spune-ne mai multe și te vom ajuta</string>
+    <string name="view_in_google_play_store">Vezi în Google Play Store</string>
+    <string name="version_info">Informații despre versiune</string>
+    <string name="version">Versiunea %1$s</string>
+    <string name="beta_program">Program beta</string>
+
+    <string name="feedback">Feedback</string>
+
+    <string name="updates">Actualizări</string>
+
+    <string name="share">Distribuie</string>
+
+    <string name="support_us">Susține-ne</string>
+    <string name="paid_support">Suport plătit</string>
+    <string name="summary_donations">Indiferent de suma donată, ne vei ajuta să menținem aplicația în funcțiune și să îmbunătățim funcțiile. Îți apreciem generozitatea și bunătatea!</string>
+    <string name="non_paid_support">Suport neplătit</string>
+    <string name="web_ad">Reclamă web</string>
+</resources>

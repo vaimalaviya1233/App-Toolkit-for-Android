@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_about_description">ワークフローを効率化するために設計されたこのアプリは、組織的かつ効率的にタスクを進めるための基本的なツールと機能を提供します。 📱</string>
+    <string name="notification_update_title">新しいアップデートがあります！</string>
+    <string name="summary_notification_update">アプリの新しいバージョンが利用可能です。クリックしてアップデートしてください！</string>
+    <string name="notification_last_time_used_title">しばらくぶりですね！</string>
+    <string name="default_notification_summary">たくさんの機能があなたを待っています。アプリを開いてください！</string>
+
+    <string name="welcome">ようこそ</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">続行するには、利用規約およびプライバシーポリシーをお読みいただき、同意してください</string>
+    <string name="agree">同意する</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="snack_app_updated">アプリが正常に更新されました</string>
+    <string name="snack_update_failed">アップデート中に問題が発生しました</string>
+    <string name="try_again">もう一度試してください</string>
+    <string name="summary_share_message">この素晴らしいアプリを見てください！本当に面白い機能があります。Playストアからダウンロードできます：%1$s</string>
+    <string name="learn_more">詳しく見る</string>
+    <string name="close">閉じますか？</string>
+    <string name="summary_close">本当に終了しますか？</string>
+
+    <string name="home">ホーム</string>
+
+    <string name="activity_not_found">アクティビティが見つかりません。</string>
+    <string name="security_error">セキュリティエラーが発生しました。後でもう一度お試しください。</string>
+    <string name="io_error">入力/出力エラーが発生しました。ネットワーク接続またはストレージを確認して、再試行してください。</string>
+    <string name="illegal_argument_error">無効な入力または引数が提供されました。情報を確認して再試行してください。</string>
+    <string name="unknown_error">不明なエラーが発生しました。</string>
+    <string name="initialization_error">初期化に失敗しました。後でもう一度お試しください。</string>
+
+    <string name="settings">設定</string>
+    <string name="settings_placeholder_description">設定が選択されていません。詳細を表示するにはオプションを選択してください。</string>
+    <string name="get_help">ヘルプを取得</string>
+
+    <string name="display">ディスプレイ</string>
+    <string name="summary_preference_settings_display">アプリの外観と操作感をカスタマイズする</string>
+
+    <string name="appearance">外観</string>
+    <string name="dark_theme">ダークテーマ</string>
+    <string name="will_turn_on_automatically_by_system">システムによって自動的にオンになります</string>
+    <string name="will_never_turn_on_automatically">自動的にオンにはなりません</string>
+    <string name="amoled_mode">AMOLEDモード</string>
+    <string name="follow_system">システムモードに従う</string>
+    <string name="light_mode">ライトモード</string>
+    <string name="dark_mode">ダークモード</string>
+    <string name="summary_dark_theme">ダークテーマはバッテリー寿命を延ばすために深い背景色を使用します</string>
+
+    <string name="dynamic_colors">動的カラー</string>
+    <string name="summary_preference_settings_dynamic_colors">壁紙からアプリテーマに色を適用する</string>
+
+    <string name="app_behavior">アプリの動作</string>
+    <string name="bounce_buttons">クリック時のバウンド</string>
+    <string name="summary_preference_settings_bounce_buttons">クリック時にクリック可能な要素にさりげないバウンドアニメーションを適用する</string>
+
+    <string name="navigation">ナビゲーション</string>
+    <string name="startup_page">スタートアップページ</string>
+    <string name="summary_preference_settings_startup_page">アプリ起動時に表示される画面を選択する</string>
+
+    <string name="language">言語</string>
+    <string name="summary_preference_settings_language">アプリ内で使用される言語を変更する</string>
+
+    <string name="dialog_startup_subtitle">お好みのスタートアップページを選択してください：</string>
+    <string name="dialog_info_startup">アプリ起動時にユーザーに提示される初期画面を設定します。この設定は、アプリとの最初のインタラクションに影響を与えます。</string>
+
+    <string name="dialog_language_subtitle">お好みの言語を選択してください</string>
+    <string name="dialog_info_language">お好みの言語で体験をカスタマイズします。言語の変更はすぐに反映されます。</string>
+
+    <string name="notifications">通知</string>
+    <string name="summary_preference_settings_notifications">アプリの通知を管理する</string>
+
+    <string name="app_usage_notifications">アプリ使用通知</string>
+    <string name="update_notifications">アップデート通知</string>
+
+    <string name="advanced">詳細設定</string>
+    <string name="summary_preference_settings_advanced">さらに高度な設定を探索する</string>
+
+    <string name="error_reporting">エラー報告</string>
+    <string name="bug_report">バグ報告</string>
+    <string name="summary_preference_settings_bug_report">アプリのGitHubリポジトリの問題ページにバグ報告と機能リクエストを送信する</string>
+
+    <string name="security_and_privacy">セキュリティとプライバシー</string>
+    <string name="summary_preference_settings_privacy_and_security">プライバシー設定を管理する</string>
+
+    <string name="privacy">プライバシー</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="summary_preference_settings_privacy_policy">データをどのように扱うかを規定するポリシーを表示する</string>
+    <string name="terms_of_service">利用規約</string>
+    <string name="summary_preference_settings_terms_of_service">サービス利用時に同意する規約を確認する</string>
+    <string name="code_of_conduct">行動規範</string>
+    <string name="summary_preference_settings_code_of_conduct">サービス内での行動ルールとガイドラインを理解する</string>
+
+    <string name="permissions">権限</string>
+    <string name="normal">通常</string>
+    <string name="runtime">ランタイム</string>
+    <string name="storage">ストレージ</string>
+
+    <string name="ads">広告</string>
+    <string name="summary_preference_settings_ads">関連性のある広告を表示するために情報をどのように使用するかを制御する</string>
+
+    <string name="display_ads">広告を表示する</string>
+    <string name="personalized_ads">パーソナライズ広告</string>
+    <string name="summary_ads_personalized_ads">興味に基づいて広告をパーソナライズする方法を選択する</string>
+    <string name="summary_ads">あなたに関連する広告を表示します。アプリのアクティビティに基づいた広告のパーソナライズを管理できます。ここでパーソナライズをいつでも無効にすることができます。</string>
+
+    <string name="usage_and_diagnostics">使用状況と診断</string>
+    <string name="summary_preference_settings_usage_and_diagnostics">アプリ内の体験向上に役立つデータを共有する</string>
+    <string name="summary_usage_and_diagnostics">診断、デバイス、およびアプリの使用データを自動的に送信することで、体験を向上させる手助けをしてください。</string>
+
+    <string name="legal">法的情報</string>
+    <string name="legal_notices">法的通知</string>
+    <string name="summary_preference_settings_legal_notices">サービスに関する法的情報を表示する</string>
+    <string name="license">ライセンス</string>
+
+    <string name="about">アプリについて</string>
+
+    <string name="app_info">アプリ情報</string>
+    <string name="app_build_version">アプリビルドバージョン</string>
+    <string name="oss_license_title">オープンソースライセンス</string>
+    <string name="summary_preference_settings_oss">オープンソースソフトウェアのライセンス詳細</string>
+
+    <string name="eula_title">エンドユーザーライセンス契約</string>
+    <string name="changelog_title">アプリの変更履歴</string>
+    <string name="loading_eula_message">エンドユーザーライセンス契約を取得しています…</string>
+    <string name="loading_changelog_message">アプリの変更履歴を取得しています…</string>
+    <string name="error_loading_eula_message">エンドユーザーライセンス契約を読み込めません。再試行してください。</string>
+    <string name="error_loading_changelog_message">アプリの変更履歴を読み込めません。再試行してください。</string>
+
+    <string name="app_build">アプリビルド: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="debug">デバッグ</string>
+    <string name="release">リリース</string>
+    <string name="manufacturer">メーカー:</string>
+    <string name="device_model">デバイスモデル:</string>
+    <string name="android_version">Androidバージョン:</string>
+    <string name="api_level">APIレベル:</string>
+    <string name="snack_device_info_copied">デバイス情報がクリップボードにコピーされました</string>
+
+    <string name="help_and_feedback">ヘルプとフィードバック</string>
+    <string name="help">ヘルプ</string>
+    <string name="faq">よくある質問</string>
+    <string name="popular_help_resources">人気のヘルプリソース</string>
+    <string name="contact_us">お問い合わせ</string>
+    <string name="contact_us_description">詳しくお聞かせください。サポートいたします。</string>
+    <string name="view_in_google_play_store">Google Playストアで表示</string>
+    <string name="version_info">バージョン情報</string>
+    <string name="version">バージョン %1$s</string>
+    <string name="beta_program">ベータプログラム</string>
+
+    <string name="feedback">フィードバック</string>
+
+    <string name="updates">更新情報</string>
+
+    <string name="share">共有</string>
+
+    <string name="support_us">サポートする</string>
+    <string name="paid_support">有料サポート</string>
+    <string name="summary_donations">寄付額にかかわらず、アプリの運営を支援し、機能改善にご協力いただけます。あなたの寛大さと親切心に感謝します！</string>
+    <string name="non_paid_support">無償サポート</string>
+    <string name="web_ad">ウェブ広告</string>
+</resources>
