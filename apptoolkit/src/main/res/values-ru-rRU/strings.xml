@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Ознакомьтесь с правилами и руководящими принципами поведения</string>
 
     <string name="permissions">Разрешения</string>
+    <string name="summary_preference_settings_permissions">Управляйте разрешениями, предоставленными нашей службе</string>
     <string name="normal">Обычные</string>
     <string name="runtime">Время выполнения</string>
     <string name="storage">Хранилище</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Не удалось загрузить лицензионное соглашение. Попробуйте снова.</string>
     <string name="error_loading_changelog_message">Не удалось загрузить журнал изменений приложения. Попробуйте снова.</string>
 
+    <string name="device_info">Информация об устройстве</string>
     <string name="app_build">Сборка приложения: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Отладка</string>
     <string name="release">Релиз</string>

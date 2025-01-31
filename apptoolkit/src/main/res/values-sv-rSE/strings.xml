@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Förstå reglerna och riktlinjerna för beteende inom vår tjänst</string>
 
     <string name="permissions">Behörigheter</string>
+    <string name="summary_preference_settings_permissions">Hantera de behörigheter som beviljats vår tjänst</string>
     <string name="normal">Normal</string>
     <string name="runtime">Körningstid</string>
     <string name="storage">Lagring</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Det gick inte att ladda licensavtalet. Försök igen.</string>
     <string name="error_loading_changelog_message">Det gick inte att ladda ändringsloggen. Försök igen.</string>
 
+    <string name="device_info">Enhetsinformation</string>
     <string name="app_build">Appversion: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Felsökning</string>
     <string name="release">Utgåva</string>

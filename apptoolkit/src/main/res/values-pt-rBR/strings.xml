@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Compreenda as regras e diretrizes de comportamento dentro do nosso serviço</string>
 
     <string name="permissions">Permissões</string>
+    <string name="summary_preference_settings_permissions">Gerencie as permissões concedidas ao nosso serviço</string>
     <string name="normal">Normal</string>
     <string name="runtime">Tempo de execução</string>
     <string name="storage">Armazenamento</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Não foi possível carregar o Contrato de Licença de Usuário Final. Tente novamente.</string>
     <string name="error_loading_changelog_message">Não foi possível carregar o registro de alterações do aplicativo. Tente novamente.</string>
 
+    <string name="device_info">Informações do dispositivo</string>
     <string name="app_build">Compilação do aplicativo: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Depurar</string>
     <string name="release">Lançamento</string>

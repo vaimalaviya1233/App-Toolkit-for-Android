@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Разберете правилата и насоките за поведение в услугата ни</string>
 
     <string name="permissions">Разрешения</string>
+    <string name="summary_preference_settings_permissions">Управлявайте разрешенията, предоставени на нашата услуга</string>
     <string name="normal">Обикновено</string>
     <string name="runtime">По време на изпълнение</string>
     <string name="storage">Памет</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Неуспешно зареждане на лицензионното споразумение. Опитайте отново.</string>
     <string name="error_loading_changelog_message">Неуспешно зареждане на дневника на промените. Опитайте отново.</string>
 
+    <string name="device_info">Информация за устройството</string>
     <string name="app_build">Компилация на приложението: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Отстраняване на грешки</string>
     <string name="release">Релийз</string>

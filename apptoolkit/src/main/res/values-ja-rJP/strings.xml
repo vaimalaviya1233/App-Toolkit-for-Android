@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">サービス内での行動ルールとガイドラインを理解する</string>
 
     <string name="permissions">権限</string>
+    <string name="summary_preference_settings_permissions">当サービスに付与された権限を管理する</string>
     <string name="normal">通常</string>
     <string name="runtime">ランタイム</string>
     <string name="storage">ストレージ</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">エンドユーザーライセンス契約を読み込めません。再試行してください。</string>
     <string name="error_loading_changelog_message">アプリの変更履歴を読み込めません。再試行してください。</string>
 
+    <string name="device_info">デバイス情報</string>
     <string name="app_build">アプリビルド: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">デバッグ</string>
     <string name="release">リリース</string>

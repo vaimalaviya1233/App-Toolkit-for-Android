@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Ismerd meg a szolgáltatásban elvárt viselkedési szabályokat</string>
 
     <string name="permissions">Engedélyek</string>
+    <string name="summary_preference_settings_permissions">Kezelje a szolgáltatásunkhoz adott engedélyeket</string>
     <string name="normal">Normál</string>
     <string name="runtime">Futásidő</string>
     <string name="storage">Tárhely</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Nem sikerült betölteni a végfelhasználói licencszerződést. Próbáld újra.</string>
     <string name="error_loading_changelog_message">Nem sikerült betölteni az alkalmazás változásnaplóját. Próbáld újra.</string>
 
+    <string name="device_info">Eszközinformációk</string>
     <string name="app_build">Alkalmazásverzió: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Hibakeresés</string>
     <string name="release">Kiadás</string>

@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">हमारी सेवा के भीतर व्यवहार के नियमों और दिशानिर्देशों को समझें</string>
 
     <string name="permissions">अनुमतियाँ</string>
+    <string name="summary_preference_settings_permissions">हमारी सेवा को दी गई अनुमतियों का प्रबंधन करें</string>
     <string name="normal">सामान्य</string>
     <string name="runtime">रनटाइम</string>
     <string name="storage">स्टोरेज</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">एंड यूज़र लाइसेंस एग्रीमेंट लोड करने में असमर्थ। कृपया पुनः प्रयास करें।</string>
     <string name="error_loading_changelog_message">एप्लिकेशन चेंजलॉग लोड करने में असमर्थ। कृपया पुनः प्रयास करें।</string>
 
+    <string name="device_info">डिवाइस जानकारी</string>
     <string name="app_build">ऐप निर्माण: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">डीबग</string>
     <string name="release">रिलीज़</string>

@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">了解服務中的行為規範和指南</string>
 
     <string name="permissions">權限</string>
+    <string name="summary_preference_settings_permissions">管理授予我們服務的權限</string>
     <string name="normal">一般</string>
     <string name="runtime">執行時</string>
     <string name="storage">儲存空間</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">無法加載最終用戶許可協議。請再試一次。</string>
     <string name="error_loading_changelog_message">無法加載應用程式變更紀錄。請再試一次。</string>
 
+    <string name="device_info">設備資訊</string>
     <string name="app_build">應用程式構建：%6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">除錯</string>
     <string name="release">發行</string>

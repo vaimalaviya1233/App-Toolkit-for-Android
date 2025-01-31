@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Comprenez les règles et lignes directrices concernant le comportement au sein de notre service</string>
 
     <string name="permissions">Autorisations</string>
+    <string name="summary_preference_settings_permissions">Gérez les autorisations accordées à notre service</string>
     <string name="normal">Normal</string>
     <string name="runtime">En temps d\'exécution</string>
     <string name="storage">Stockage</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Impossible de charger l\'accord de licence. Veuillez réessayer.</string>
     <string name="error_loading_changelog_message">Impossible de charger le journal des modifications. Veuillez réessayer.</string>
 
+    <string name="device_info">Informations sur l\'appareil</string>
     <string name="app_build">Compilation de l\'application: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Débogage</string>
     <string name="release">Version</string>

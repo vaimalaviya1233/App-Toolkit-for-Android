@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Erfahren Sie die Regeln und Richtlinien für die Nutzung unserer Dienste</string>
 
     <string name="permissions">Berechtigungen</string>
+    <string name="summary_preference_settings_permissions">Verwalten Sie die Berechtigungen, die unserem Dienst erteilt wurden</string>
     <string name="normal">Normal</string>
     <string name="runtime">Laufzeit</string>
     <string name="storage">Speicher</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Lizenzvereinbarung konnte nicht geladen werden. Bitte versuchen Sie es erneut.</string>
     <string name="error_loading_changelog_message">Änderungsprotokoll konnte nicht geladen werden. Bitte versuchen Sie es erneut.</string>
 
+    <string name="device_info">Geräteinformationen</string>
     <string name="app_build">App-Build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Release</string>

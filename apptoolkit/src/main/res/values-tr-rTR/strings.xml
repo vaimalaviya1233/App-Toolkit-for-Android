@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Hizmetimizdeki davranış kurallarını ve yönergelerini anlayın</string>
 
     <string name="permissions">İzinler</string>
+    <string name="summary_preference_settings_permissions">Hizmetimize verilen izinleri yönetin</string>
     <string name="normal">Normal</string>
     <string name="runtime">Çalışma zamanı</string>
     <string name="storage">Depolama</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Son Kullanıcı Lisans Sözleşmesi yüklenemedi. Lütfen tekrar deneyin.</string>
     <string name="error_loading_changelog_message">Değişiklik günlüğü yüklenemedi. Lütfen tekrar deneyin.</string>
 
+    <string name="device_info">Cihaz Bilgileri</string>
     <string name="app_build">Uygulama Yapısı: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Hata ayıklama</string>
     <string name="release">Yayın</string>

@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Comprende las reglas y pautas para el comportamiento dentro de nuestro servicio</string>
 
     <string name="permissions">Permisos</string>
+    <string name="summary_preference_settings_permissions">Administre los permisos otorgados a nuestro servicio</string>
     <string name="normal">Normal</string>
     <string name="runtime">En tiempo de ejecución</string>
     <string name="storage">Almacenamiento</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">No se pudo cargar el acuerdo de licencia. Inténtalo de nuevo.</string>
     <string name="error_loading_changelog_message">No se pudo cargar el registro de cambios. Inténtalo de nuevo.</string>
 
+    <string name="device_info">Información del dispositivo</string>
     <string name="app_build">Compilación de la aplicación: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Depuración</string>
     <string name="release">Lanzamiento</string>

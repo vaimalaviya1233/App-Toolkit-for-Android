@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">เข้าใจกฎและแนวทางการปฏิบัติภายในบริการของเรา</string>
 
     <string name="permissions">สิทธิ์การเข้าถึง</string>
+    <string name="summary_preference_settings_permissions">จัดการสิทธิ์ที่มอบให้กับบริการของเรา</string>
     <string name="normal">ปกติ</string>
     <string name="runtime">ระหว่างการทำงาน</string>
     <string name="storage">พื้นที่เก็บข้อมูล</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">ไม่สามารถโหลดข้อตกลงการใช้งานได้ กรุณาลองใหม่</string>
     <string name="error_loading_changelog_message">ไม่สามารถโหลดบันทึกการเปลี่ยนแปลงได้ กรุณาลองใหม่</string>
 
+    <string name="device_info">ข้อมูลอุปกรณ์</string>
     <string name="app_build">เวอร์ชันแอป: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">แก้ไขข้อผิดพลาด</string>
     <string name="release">เวอร์ชันเผยแพร่</string>

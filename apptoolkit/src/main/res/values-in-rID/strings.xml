@@ -90,6 +90,7 @@
     <string name="summary_preference_settings_code_of_conduct">Pahami aturan dan pedoman perilaku dalam layanan kami</string>
 
     <string name="permissions">Izin</string>
+    <string name="summary_preference_settings_permissions">Kelola izin yang diberikan kepada layanan kami</string>
     <string name="normal">Normal</string>
     <string name="runtime">Runtime</string>
     <string name="storage">Penyimpanan</string>
@@ -125,6 +126,7 @@
     <string name="error_loading_eula_message">Tidak dapat memuat Perjanjian Lisensi Pengguna Akhir. Silakan coba lagi.</string>
     <string name="error_loading_changelog_message">Tidak dapat memuat catatan perubahan aplikasi. Silakan coba lagi.</string>
 
+    <string name="device_info">Informasi Perangkat</string>
     <string name="app_build">Build Aplikasi: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Rilis</string>
