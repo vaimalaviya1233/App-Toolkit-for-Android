@@ -8,6 +8,7 @@ import android.provider.Settings
 import androidx.annotation.StringRes
 import com.d4rk.android.libs.apptoolkit.R
 import com.mikepenz.aboutlibraries.LibsBuilder
+import java.net.URLEncoder
 
 /**
  * A utility object for performing common operations such as opening URLs, activities, and app notification settings.
@@ -85,8 +86,7 @@ object IntentsHelper {
      */
     fun shareApp(context : Context , shareMessageFormat : Int) {
         val messageToShare : String = context.getString(
-            shareMessageFormat ,
-            "https://play.google.com/store/apps/details?id=${context.packageName}"
+            shareMessageFormat , "https://play.google.com/store/apps/details?id=${context.packageName}"
         )
         val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -101,33 +101,47 @@ object IntentsHelper {
     }
 
     /**
-     * Composes and sends an email to the developer with a predefined subject and message body.
+     * Sends an email to the developer with pre-filled subject and body.
      *
-     * This function creates an email Intent with the developer's email address as the recipient.
-     * The email subject is dynamically generated, including the application's name (obtained from the provided resource ID),
-     * prefixed with "Feedback for: " to help identify the source of the email.
-     * The email body begins with "Dear Developer,\n\n" providing a space for the user to add their feedback, issue report, or other message.
-     * It then utilizes a chooser to allow the user to select their preferred email client before sending the email.
+     * This function constructs an email intent with the specified application name in the subject
+     * and a default greeting in the body. It then prompts the user to choose an email client to
+     * send the email.
      *
-     * @param context The Android context used to access resources (like string resources) and start the email activity.
-     * @param applicationName  The resource ID of the string containing the application's name. This is used to generate the email subject line.
+     * @param context The application context.
+     * @param applicationNameRes The string resource ID of the application's name. This name will be
+     *                           included in the email subject. For example R.string.app_name
      *
-     * @throws android.content.ActivityNotFoundException if no email application is installed on the device that can handle the email intent.
+     * @throws android.content.ActivityNotFoundException if no email client is found on the device.
+     *
+     * Example Usage:
+     * ```kotlin
+     *  sendEmailToDeveloper(this, R.string.app_name)
+     * ```
+     *
+     * The subject of the email will be "Feedback for [application name]"
+     * The Body of the email will be "Dear developer \n\n"
+     * The receiver of the email is "d4rk7355608@gmail.com"
      */
-    fun sendEmailToDeveloper(context : Context , @StringRes applicationName : Int) {
-        val developerEmail = "d4rk7355608@gmail.com"
-        val subject : String = context.getString(com.d4rk.android.libs.apptoolkit.R.string.feedback_for + applicationName)
-        val emailBodyTemplate : String = context.getString(R.string.dear_developer) + "\n\n"
+    fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
+        val developerEmail : String = "d4rk7355608@gmail.com"
 
-        val feedbackEmailIntent : Intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$developerEmail")
-            putExtra(Intent.EXTRA_SUBJECT , subject)
-            putExtra(Intent.EXTRA_TEXT , emailBodyTemplate)
-        }
+        val appName : String = context.getString(applicationNameRes)
+        val subject : String = context.getString(R.string.feedback_for , appName)
+        val body : String = context.getString(
+            com.d4rk.android.libs.apptoolkit.R.string.dear_developer
+        ) + "\n\n"
+
+        val subjectEncoded : String = URLEncoder.encode(subject , "UTF-8").replace("+" , "%20")
+        val bodyEncoded : String = URLEncoder.encode(body , "UTF-8").replace("+" , "%20")
+
+        val mailtoUri : Uri = Uri.parse(
+            "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded"
+        )
+        val emailIntent : Intent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
         context.startActivity(
             Intent.createChooser(
-                feedbackEmailIntent , context.resources.getText(R.string.send_email_using)
+                emailIntent , context.getString(com.d4rk.android.libs.apptoolkit.R.string.send_email_using)
             )
         )
     }
@@ -156,33 +170,18 @@ object IntentsHelper {
      * @see LibsBuilder for more details about the underlying library.
      */
     fun openLicensesScreen(
-        context : Context ,
-        eulaHtmlString : String? ,
-        changelogHtmlString : String? ,
-        appName : String ,
-        appVersion : String ,
-        appVersionCode : Int ,
-        appShortDescription : Int
+        context : Context , eulaHtmlString : String? , changelogHtmlString : String? , appName : String , appVersion : String , appVersionCode : Int , appShortDescription : Int
     ) {
         LibsBuilder().withActivityTitle(
             activityTitle = context.getString(R.string.oss_license_title)
-        ).withEdgeToEdge(asEdgeToEdge = true).withShowLoadingProgress(showLoadingProgress = true)
-                .withSearchEnabled(searchEnabled = true).withAboutIconShown(aboutShowIcon = true)
-                .withAboutAppName(aboutAppName = appName)
-                .withVersionShown(showVersion = true)
-                .withAboutVersionString(aboutVersionString = "$appVersion ($appVersionCode)")
-                .withLicenseShown(showLicense = true).withAboutVersionShown(aboutShowVersion = true)
-                .withAboutVersionShownName(aboutShowVersion = true)
-                .withAboutVersionShownCode(aboutShowVersion = true)
-                .withAboutSpecial1(aboutAppSpecial1 = context.getString(R.string.eula_title))
-                .withAboutSpecial1Description(
+        ).withEdgeToEdge(asEdgeToEdge = true).withShowLoadingProgress(showLoadingProgress = true).withSearchEnabled(searchEnabled = true).withAboutIconShown(aboutShowIcon = true).withAboutAppName(aboutAppName = appName).withVersionShown(showVersion = true)
+                .withAboutVersionString(aboutVersionString = "$appVersion ($appVersionCode)").withLicenseShown(showLicense = true).withAboutVersionShown(aboutShowVersion = true).withAboutVersionShownName(aboutShowVersion = true).withAboutVersionShownCode(aboutShowVersion = true)
+                .withAboutSpecial1(aboutAppSpecial1 = context.getString(R.string.eula_title)).withAboutSpecial1Description(
                     aboutAppSpecial1Description = eulaHtmlString ?: context.getString(R.string.loading_eula_message)
-                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(R.string.changelog_title))
-                .withAboutSpecial2Description(
+                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(R.string.changelog_title)).withAboutSpecial2Description(
                     aboutAppSpecial2Description = changelogHtmlString ?: context.getString(
                         R.string.loading_changelog_message
                     )
-                ).withAboutDescription(aboutDescription = context.getString(appShortDescription))
-                .activity(ctx = context)
+                ).withAboutDescription(aboutDescription = context.getString(appShortDescription)).activity(ctx = context)
     }
 }
