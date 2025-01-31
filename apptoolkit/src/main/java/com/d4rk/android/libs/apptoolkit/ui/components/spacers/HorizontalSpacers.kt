@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.ui.components.spacers
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -64,26 +63,4 @@ fun MediumHorizontalSpacer() {
 @Composable
 fun SmallHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = 8.dp))
-}
-
-/**
- * A composable function that creates a horizontal spacer with the default icon spacing
- * used in Material Design buttons.
- *
- * This spacer is useful for providing consistent spacing between elements, such as
- * icons and text, within or adjacent to buttons. It leverages the `ButtonDefaults.IconSpacing`
- * value for a Material Design compliant layout.
- *
- * @sample
- * ```kotlin
- *  Row {
- *    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search Icon")
- *    ButtonHorizontalSpacer()
- *    Text("Search")
- *  }
- * ```
- */
-@Composable
-fun ButtonHorizontalSpacer() {
-    Spacer(modifier = Modifier.width(width = ButtonDefaults.IconSpacing))
 }

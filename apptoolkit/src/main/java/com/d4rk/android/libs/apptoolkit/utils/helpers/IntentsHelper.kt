@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.StringRes
 import com.d4rk.android.libs.apptoolkit.R
 import com.mikepenz.aboutlibraries.LibsBuilder
 
@@ -113,9 +114,9 @@ object IntentsHelper {
      *
      * @throws android.content.ActivityNotFoundException if no email application is installed on the device that can handle the email intent.
      */
-    fun sendEmailToDeveloper(context : Context , applicationName : Int) {
+    fun sendEmailToDeveloper(context : Context , @StringRes applicationName : Int) {
         val developerEmail = "d4rk7355608@gmail.com"
-        val subject : String = context.getString(R.string.feedback_for) + applicationName
+        val subject : String = context.getString(com.d4rk.android.libs.apptoolkit.R.string.feedback_for + applicationName)
         val emailBodyTemplate : String = context.getString(R.string.dear_developer) + "\n\n"
 
         val feedbackEmailIntent : Intent = Intent(Intent.ACTION_SENDTO).apply {
