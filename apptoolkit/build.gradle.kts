@@ -62,11 +62,19 @@ dependencies {
     api(dependencyNotation = libs.androidx.foundation)
     api(dependencyNotation = libs.androidx.navigation.compose)
 
+    // Firebase
+    implementation(dependencyNotation = platform(libs.firebase.bom))
+    implementation(dependencyNotation = libs.firebase.analytics.ktx)
+    implementation(dependencyNotation = libs.firebase.crashlytics.ktx)
+    implementation(dependencyNotation = libs.firebase.perf)
+
     // Google
     api(dependencyNotation = libs.play.services.ads)
     api(dependencyNotation = libs.user.messaging.platform)
     api(dependencyNotation = libs.material)
     api(dependencyNotation = libs.app.update.ktx)
+    api(dependencyNotation = libs.billing)
+    api(dependencyNotation = libs.review.ktx)
 
     // Images
     api(dependencyNotation = libs.coil.compose)
@@ -103,7 +111,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.49"
+            version = "0.0.50"
 
             afterEvaluate {
                 from(components["release"])
