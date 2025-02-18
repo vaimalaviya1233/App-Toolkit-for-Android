@@ -5,15 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -28,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.d4rk.android.libs.apptoolkit.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchCardComposable
 import kotlinx.coroutines.CoroutineScope
@@ -55,8 +51,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
         ) {
             item {
                 SwitchCardComposable(
-                    title = stringResource(id = R.string.amoled_mode) ,
-                    switchState = isAmoledMode
+                    title = stringResource(id = R.string.amoled_mode) , switchState = isAmoledMode
                 ) { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveAmoledMode(isChecked = isChecked)
@@ -71,36 +66,28 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 ) {
                     themeOptions.forEach { text ->
                         Row(
-                            Modifier.fillMaxWidth() ,
-                            verticalAlignment = Alignment.CenterVertically
+                            Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically
                         ) {
-                            RadioButton(modifier = Modifier.bounceClick() ,
-                                        selected = (text == themeMode) ,
-                                        onClick = {
-                                            coroutineScope.launch {
-                                                dataStore.saveThemeMode(mode = text)
-                                                dataStore.themeModeState.value = text
-                                            }
-                                        })
+                            RadioButton(modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
+                                coroutineScope.launch {
+                                    dataStore.saveThemeMode(mode = text)
+                                    dataStore.themeModeState.value = text
+                                }
+                            })
                             Text(
-                                text = text ,
-                                style = MaterialTheme.typography.bodyMedium.merge() ,
-                                modifier = Modifier.padding(start = 16.dp)
+                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = 16.dp)
                             )
                         }
                     }
                 }
             }
             item {
-                Column(
+                InfoMessageSection(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 24.dp)
-                ) {
-                    Icon(imageVector = Icons.Outlined.Info , contentDescription = null)
-                    Spacer(modifier = Modifier.height(height = 24.dp))
-                    Text(text = stringResource(id = R.string.summary_dark_theme))
-                }
+                            .padding(all = 24.dp) ,
+                    message = stringResource(id = R.string.summary_dark_theme)
+                )
             }
         }
     }
