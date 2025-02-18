@@ -26,6 +26,7 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchCardComposable
+import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -45,9 +46,9 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
+            contentPadding = paddingValues,
             modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues = paddingValues) ,
         ) {
             item {
                 SwitchCardComposable(
@@ -75,7 +76,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                                 }
                             })
                             Text(
-                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = 16.dp)
+                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
                             )
                         }
                     }

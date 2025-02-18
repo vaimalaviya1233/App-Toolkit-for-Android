@@ -1,7 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.ui.screens.settings.privacy.usage
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,31 +29,29 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , provider : UsageAndD
     val switchState : State<Boolean> = dataStore.usageAndDiagnostics.collectAsState(initial = ! provider.isDebugBuild)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = paddingValues) ,
-        ) {
-            item {
-                SwitchCardComposable(
-                    title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState
-                ) { isChecked ->
-                    coroutineScope.launch {
-                        dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
-                    }
+    LazyColumn(
+        contentPadding = paddingValues,
+        modifier = Modifier
+                .fillMaxSize()
+    ) {
+        item {
+            SwitchCardComposable(
+                title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState
+            ) { isChecked ->
+                coroutineScope.launch {
+                    dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
                 }
             }
-            item {
-                InfoMessageSection(
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(all = 24.dp),
-                    message = stringResource(id = R.string.summary_usage_and_diagnostics),
-                    learnMoreText = stringResource(id = R.string.learn_more),
-                    learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy"
-                )
-            }
+        }
+        item {
+            InfoMessageSection(
+                modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 24.dp),
+                message = stringResource(id = R.string.summary_usage_and_diagnostics),
+                learnMoreText = stringResource(id = R.string.learn_more),
+                learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy"
+            )
         }
     }
 }

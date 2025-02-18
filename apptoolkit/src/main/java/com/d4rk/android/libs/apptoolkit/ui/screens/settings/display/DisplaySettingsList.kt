@@ -8,7 +8,6 @@ import android.provider.Settings
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -60,9 +59,9 @@ fun DisplaySettingsList(
     val bouncyButtons: Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
 
     LazyColumn(
+        contentPadding = paddingValues,
         modifier = Modifier
                 .fillMaxHeight()
-                .padding(paddingValues = paddingValues)
     ) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.appearance))

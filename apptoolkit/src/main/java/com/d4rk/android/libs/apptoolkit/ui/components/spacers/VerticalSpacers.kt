@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 
 /**
  * A composable function that creates a vertical spacer with a predefined height.
@@ -26,7 +27,7 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun LargeVerticalSpacer() {
-    Spacer(modifier = Modifier.height(height = 16.dp))
+    Spacer(modifier = Modifier.height(height = SizeConstants.LargeSize))
 }
 
 /**

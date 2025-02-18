@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.data.model.ui.animations.button.ButtonState
+import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 
 /**
  * A modifier that adds a bounce effect to a composable when it's clicked.
@@ -119,5 +119,5 @@ fun Modifier.animateVisibility(
             .graphicsLayer {
                 this.alpha = alpha.value
             }
-            .padding(vertical = 4.dp)
+            .padding(vertical = SizeConstants.ExtraSmallSize)
 }

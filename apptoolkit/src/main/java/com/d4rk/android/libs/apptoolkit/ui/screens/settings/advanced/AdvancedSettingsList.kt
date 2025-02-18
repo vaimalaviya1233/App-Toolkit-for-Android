@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.ui.screens.settings.advanced
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,9 +22,9 @@ fun AdvancedSettingsList(
     val context : Context = LocalContext.current
 
     LazyColumn(
+        contentPadding = paddingValues,
         modifier = Modifier
                 .fillMaxHeight()
-                .padding(paddingValues = paddingValues) ,
     ) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.error_reporting))

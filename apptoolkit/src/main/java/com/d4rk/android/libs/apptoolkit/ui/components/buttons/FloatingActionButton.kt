@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 
 /**
  * An animated extended floating action button that can be shown or hidden with a scaling and translation animation.
@@ -26,42 +27,26 @@ import androidx.compose.ui.graphics.graphicsLayer
  */
 @Composable
 fun AnimatedExtendedFloatingActionButton(
-    visible : Boolean = true ,
-    onClick : () -> Unit ,
-    icon : @Composable () -> Unit ,
-    text : (@Composable () -> Unit)? = null ,
-    offsetX : Float = 50f ,
-    offsetY : Float = 50f ,
-    scale : Float = 0.8f ,
-    animationSpec : AnimationSpec<Float> = tween(
+    visible : Boolean = true , onClick : () -> Unit , icon : @Composable () -> Unit , text : (@Composable () -> Unit)? = null , offsetX : Float = 50f , offsetY : Float = 50f , scale : Float = 0.8f , animationSpec : AnimationSpec<Float> = tween(
         durationMillis = 300 , easing = FastOutSlowInEasing
-    ) ,
-    expanded : Boolean = true,
-    modifier : Modifier
+    ) , expanded : Boolean = true , modifier : Modifier
 ) {
     val animatedOffsetX : Float by animateFloatAsState(
-        targetValue = if (visible) 0f else offsetX ,
-        animationSpec = animationSpec ,
-        label = "OffsetX"
+        targetValue = if (visible) 0f else offsetX , animationSpec = animationSpec , label = "OffsetX"
     )
     val animatedOffsetY : Float by animateFloatAsState(
-        targetValue = if (visible) 0f else offsetY ,
-        animationSpec = animationSpec ,
-        label = "OffsetY"
+        targetValue = if (visible) 0f else offsetY , animationSpec = animationSpec , label = "OffsetY"
     )
     val animatedScale : Float by animateFloatAsState(
         targetValue = if (visible) 1f else scale , animationSpec = animationSpec , label = "Scale"
     )
 
-    ExtendedFloatingActionButton(onClick = onClick ,
-                                 icon = icon ,
-                                 text = text ?: {} ,
-                                 expanded = expanded ,
-                                 modifier = modifier
-                                         .graphicsLayer {
-                                             scaleX = animatedScale
-                                             scaleY = animatedScale
-                                             translationX = animatedOffsetX
-                                             translationY = animatedOffsetY
-                                         })
+    ExtendedFloatingActionButton(onClick = onClick , icon = icon , text = text ?: {} , expanded = expanded , modifier = modifier
+            .graphicsLayer {
+                scaleX = animatedScale
+                scaleY = animatedScale
+                translationX = animatedOffsetX
+                translationY = animatedOffsetY
+            }
+            .bounceClick())
 }

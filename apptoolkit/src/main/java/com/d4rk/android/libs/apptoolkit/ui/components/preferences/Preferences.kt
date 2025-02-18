@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 
 /**
  * Creates a clickable card with a title and a switch for app preference screens.
@@ -57,7 +58,7 @@ fun SwitchCardComposable(
     Card(modifier = Modifier
             .fillMaxWidth()
             .padding(all = 24.dp)
-            .clip(RoundedCornerShape(size = 28.dp))
+            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onSwitchToggled(! switchState.value)
@@ -65,7 +66,7 @@ fun SwitchCardComposable(
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 16.dp) ,
+                    .padding(all = SizeConstants.LargeSize) ,
             horizontalArrangement = Arrangement.SpaceBetween ,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -145,7 +146,7 @@ fun PreferenceCategoryItem(
         text = title ,
         color = MaterialTheme.colorScheme.primary ,
         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold) ,
-        modifier = Modifier.padding(start = 16.dp , top = 16.dp)
+        modifier = Modifier.padding(start = SizeConstants.LargeSize , top = SizeConstants.LargeSize)
     )
 }
 
@@ -165,7 +166,7 @@ fun PreferenceItem(
     title : String? = null ,
     summary : String? = null ,
     enabled : Boolean = true ,
-    rippleEffectDp : Dp = 16.dp ,
+    rippleEffectDp : Dp = SizeConstants.LargeSize ,
     onClick : () -> Unit = {}
 ) {
     val view : View = LocalView.current
@@ -183,7 +184,7 @@ fun PreferenceItem(
             Icon(imageVector = it , contentDescription = null)
         }
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(all = SizeConstants.LargeSize)
         ) {
             title?.let {
                 Text(
@@ -227,7 +228,7 @@ fun SwitchPreferenceItem(
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = 16.dp))
+                .clip(RoundedCornerShape(size = SizeConstants.LargeSize))
                 .clickable(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onCheckedChange(! checked)
@@ -240,7 +241,7 @@ fun SwitchPreferenceItem(
         }
         Column(
             modifier = Modifier
-                    .padding(all = 16.dp)
+                    .padding(all = SizeConstants.LargeSize)
                     .weight(weight = 1f)
         ) {
             Text(text = title , style = MaterialTheme.typography.titleLarge)
@@ -250,7 +251,7 @@ fun SwitchPreferenceItem(
         }
         Switch(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
-        } , modifier = Modifier.padding(all = 16.dp))
+        } , modifier = Modifier.padding(all = SizeConstants.LargeSize))
     }
 }
 
@@ -283,7 +284,7 @@ fun SwitchPreferenceItemWithDivider(
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(size = 16.dp))
+                .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 .clickable(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onClick()
@@ -296,7 +297,7 @@ fun SwitchPreferenceItemWithDivider(
         }
         Column(
             modifier = Modifier
-                    .padding(all = 16.dp)
+                    .padding(all = SizeConstants.LargeSize)
                     .weight(weight = 1f)
         ) {
             Text(text = title , style = MaterialTheme.typography.titleLarge)
@@ -313,7 +314,7 @@ fun SwitchPreferenceItemWithDivider(
         Switch(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
             onSwitchClick(isChecked)
-        } , modifier = Modifier.padding(all = 16.dp))
+        } , modifier = Modifier.padding(all = SizeConstants.LargeSize))
     }
 }
 
@@ -335,7 +336,7 @@ fun RadioButtonPreferenceItem(
 ) {
     Row(modifier = Modifier
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(size = 16.dp))
+            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             .clickable { onCheckedChange(! isChecked) } ,
         verticalAlignment = Alignment.CenterVertically) {
         Text(
@@ -343,7 +344,7 @@ fun RadioButtonPreferenceItem(
             style = MaterialTheme.typography.titleLarge ,
             modifier = Modifier
                     .weight(weight = 1f)
-                    .padding(end = 16.dp , start = 16.dp)
+                    .padding(end = SizeConstants.LargeSize , start = SizeConstants.LargeSize)
         )
         RadioButton(selected = isChecked , onClick = { onCheckedChange(! isChecked) })
     }
@@ -372,19 +373,19 @@ fun CheckBoxPreferenceItem(
 ) {
     Row(modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(size = SizeConstants.LargeSize))
             .clickable {
                 onCheckedChange(! checked)
             } , verticalAlignment = Alignment.CenterVertically) {
         icon?.let {
-            Spacer(modifier = Modifier.width(16.dp))
+            LargeHorizontalSpacer()
             Icon(it , contentDescription = null)
-            Spacer(modifier = Modifier.width(16.dp))
+            LargeHorizontalSpacer()
         }
         Column(
             modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f)
+                    .padding(all = SizeConstants.LargeSize)
+                    .weight(weight = 1f)
         ) {
             Text(text = title , style = MaterialTheme.typography.titleLarge)
             summary?.let {
@@ -393,6 +394,6 @@ fun CheckBoxPreferenceItem(
         }
         Checkbox(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
-        } , modifier = Modifier.padding(start = 16.dp))
+        } , modifier = Modifier.padding(start = SizeConstants.LargeSize))
     }
 }
