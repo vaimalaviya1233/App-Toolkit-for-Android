@@ -19,25 +19,37 @@ import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 
 @Composable
 fun AnimatedButtonDirection(
-    modifier : Modifier = Modifier , visible : Boolean = true , icon : ImageVector , contentDescription : String? , onClick : () -> Unit , durationMillis : Int = 500 , autoAnimate : Boolean = true , fromRight : Boolean = false
+    modifier: Modifier = Modifier ,
+    visible: Boolean = true ,
+    icon: ImageVector ,
+    contentDescription: String? ,
+    onClick: () -> Unit ,
+    durationMillis: Int = 500 ,
+    autoAnimate: Boolean = true ,
+    fromRight: Boolean = false
 ) {
-    val animatedVisibility : MutableState<Boolean> = remember { mutableStateOf(false) }
+    val animatedVisibility = remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        if (autoAnimate) {
+    LaunchedEffect(visible) {
+        if (autoAnimate && visible) {
             animatedVisibility.value = true
+        } else if (!visible) {
+            animatedVisibility.value = false
         }
     }
 
     AnimatedVisibility(
-        visible = if (autoAnimate) animatedVisibility.value else visible ,
-        enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) + slideInHorizontally(initialOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis)) ,
-        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) + slideOutHorizontally(targetOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis))
+        visible = animatedVisibility.value && visible,
+        enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) +
+                slideInHorizontally(initialOffsetX = { if (fromRight) it else -it }, animationSpec = tween(durationMillis = durationMillis)),
+        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) +
+                slideOutHorizontally(targetOffsetX = { if (fromRight) it else -it }, animationSpec = tween(durationMillis = durationMillis))
     ) {
         IconButton(
-            modifier = modifier.bounceClick() , onClick = onClick
+            modifier = modifier.bounceClick(),
+            onClick = onClick
         ) {
-            Icon(imageVector = icon , contentDescription = contentDescription)
+            Icon(imageVector = icon, contentDescription = contentDescription)
         }
     }
 }
