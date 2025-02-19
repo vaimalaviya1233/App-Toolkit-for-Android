@@ -19,11 +19,16 @@ import com.d4rk.android.libs.apptoolkit.ui.components.buttons.AnimatedButtonDire
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LargeTopAppBarWithScaffold(title: String, onBackClicked: () -> Unit, actions: @Composable (RowScope.() -> Unit) = {}, floatingActionButton: @Composable (() -> Unit)? = null, content: @Composable (PaddingValues) -> Unit) {
-    val scrollBehaviorState: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
-
+fun LargeTopAppBarWithScaffold(
+    title: String ,
+    onBackClicked: () -> Unit ,
+    actions: @Composable (RowScope.() -> Unit) = {} ,
+    floatingActionButton: @Composable (() -> Unit)? = null ,
+    scrollBehavior: TopAppBarScrollBehavior? = null ,
+    content: @Composable (PaddingValues) -> Unit
+) {
     Scaffold(
-        modifier = Modifier.nestedScroll(connection = scrollBehaviorState.nestedScrollConnection) ,
+        modifier = scrollBehavior?.let { Modifier.nestedScroll(it.nestedScrollConnection) } ?: Modifier,
         topBar = {
             LargeTopAppBar(
                 title = { Text(text = title) },
@@ -35,10 +40,10 @@ fun LargeTopAppBarWithScaffold(title: String, onBackClicked: () -> Unit, actions
                     )
                 },
                 actions = actions,
-                scrollBehavior = scrollBehaviorState
+                scrollBehavior = scrollBehavior
             )
-        } ,
-        floatingActionButton = floatingActionButton ?: {} ,
+        },
+        floatingActionButton = floatingActionButton ?: {},
     ) { paddingValues ->
         content(paddingValues)
     }
