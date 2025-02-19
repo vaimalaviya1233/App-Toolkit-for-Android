@@ -11,6 +11,8 @@
     <string name="agree">Setuju</string>
 
     <string name="navigation_drawer_open">Buka menu navigasi</string>
+    <string name="go_back">Kembali</string>
+
     <string name="snack_app_updated">Aplikasi berhasil diperbarui</string>
     <string name="snack_update_failed">Proses pembaruan mengalami masalah</string>
     <string name="try_again">Coba lagi</string>

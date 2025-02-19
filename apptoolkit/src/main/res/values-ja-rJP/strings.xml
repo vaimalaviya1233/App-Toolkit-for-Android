@@ -11,6 +11,8 @@
     <string name="agree">同意する</string>
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="go_back">戻る</string>
+
     <string name="snack_app_updated">アプリが正常に更新されました</string>
     <string name="snack_update_failed">アップデート中に問題が発生しました</string>
     <string name="try_again">もう一度試してください</string>

@@ -11,6 +11,8 @@
     <string name="agree">Погодитися</string>
 
     <string name="navigation_drawer_open">Відкрити меню навігації</string>
+    <string name="go_back">Повернутися</string>
+
     <string name="snack_app_updated">Додаток успішно оновлено</string>
     <string name="snack_update_failed">Виникла проблема під час оновлення</string>
     <string name="try_again">Спробувати знову</string>

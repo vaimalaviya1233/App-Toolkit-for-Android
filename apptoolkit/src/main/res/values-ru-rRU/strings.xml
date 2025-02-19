@@ -11,6 +11,8 @@
     <string name="agree">Согласен</string>
 
     <string name="navigation_drawer_open">Открыть меню навигации</string>
+    <string name="go_back">Назад</string>
+
     <string name="snack_app_updated">Приложение успешно обновлено</string>
     <string name="snack_update_failed">Во время обновления произошла ошибка</string>
     <string name="try_again">Попробуйте снова</string>

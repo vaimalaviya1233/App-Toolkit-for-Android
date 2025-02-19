@@ -11,6 +11,8 @@
     <string name="agree">Agree</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="go_back">Go back</string>
+
     <string name="snack_app_updated">The app has been successfully updated</string>
     <string name="snack_update_failed">The update process encountered an issue</string>
     <string name="try_again">Try again</string>

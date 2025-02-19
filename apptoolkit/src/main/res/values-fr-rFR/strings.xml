@@ -11,6 +11,8 @@
     <string name="agree">Accepter</string>
 
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
+    <string name="go_back">Retour</string>
+
     <string name="snack_app_updated">L\'application a été mise à jour avec succès</string>
     <string name="snack_update_failed">Un problème est survenu lors de la mise à jour</string>
     <string name="try_again">Réessayer</string>

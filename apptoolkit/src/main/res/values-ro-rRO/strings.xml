@@ -11,6 +11,8 @@
     <string name="agree">Sunt de acord</string>
 
     <string name="navigation_drawer_open">Deschide meniul de navigare</string>
+    <string name="go_back">Înapoi</string>
+
     <string name="snack_app_updated">Aplicația a fost actualizată cu succes</string>
     <string name="snack_update_failed">A apărut o problemă în timpul actualizării</string>
     <string name="try_again">Încearcă din nou</string>
