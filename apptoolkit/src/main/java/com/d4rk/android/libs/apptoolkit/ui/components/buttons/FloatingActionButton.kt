@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.ui.components.buttons
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -9,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 
 /**
@@ -40,9 +43,14 @@ fun AnimatedExtendedFloatingActionButton(
         label = "FAB Scale"
     )
 
+    val view : View = LocalView.current
+
     if (animatedScale > 0f) {
         ExtendedFloatingActionButton(
-            onClick = onClick,
+            onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onClick()
+            },
             icon = icon,
             text = text ?: {},
             expanded = expanded,

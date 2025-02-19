@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.ui.components.buttons
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -10,10 +12,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 
 @Composable
@@ -27,7 +31,8 @@ fun AnimatedButtonDirection(
     autoAnimate: Boolean = true ,
     fromRight: Boolean = false
 ) {
-    val animatedVisibility = remember { mutableStateOf(false) }
+    val animatedVisibility : MutableState<Boolean> = remember { mutableStateOf(value = false) }
+    val view : View = LocalView.current
 
     LaunchedEffect(visible) {
         if (autoAnimate && visible) {
@@ -46,7 +51,10 @@ fun AnimatedButtonDirection(
     ) {
         IconButton(
             modifier = modifier.bounceClick(),
-            onClick = onClick
+            onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onClick()
+            }
         ) {
             Icon(imageVector = icon, contentDescription = contentDescription)
         }
