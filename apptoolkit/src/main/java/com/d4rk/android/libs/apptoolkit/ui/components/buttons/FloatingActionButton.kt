@@ -39,7 +39,7 @@ fun AnimatedExtendedFloatingActionButton(
 ) {
     val animatedScale : Float by animateFloatAsState(
         targetValue = if (visible) 1f else 0f ,
-        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing) ,
+        animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing) ,
         label = "FAB Scale"
     )
 

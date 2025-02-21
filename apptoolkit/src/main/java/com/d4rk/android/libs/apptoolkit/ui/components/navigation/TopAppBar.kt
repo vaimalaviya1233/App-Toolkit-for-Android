@@ -24,11 +24,11 @@ fun LargeTopAppBarWithScaffold(
     onBackClicked: () -> Unit ,
     actions: @Composable (RowScope.() -> Unit) = {} ,
     floatingActionButton: @Composable (() -> Unit)? = null ,
-    scrollBehavior: TopAppBarScrollBehavior? = null ,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() ,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
-        modifier = scrollBehavior?.let { Modifier.nestedScroll(it.nestedScrollConnection) } ?: Modifier,
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             LargeTopAppBar(
                 title = { Text(text = title) },
