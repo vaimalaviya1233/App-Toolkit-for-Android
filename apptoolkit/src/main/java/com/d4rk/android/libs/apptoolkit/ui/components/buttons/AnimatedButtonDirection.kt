@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
@@ -44,41 +45,31 @@ import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
  *      visible = is */
 @Composable
 fun AnimatedButtonDirection(
-    modifier: Modifier = Modifier ,
-    visible: Boolean = true ,
-    icon: ImageVector ,
-    contentDescription: String? ,
-    onClick: () -> Unit ,
-    durationMillis: Int = 500 ,
-    autoAnimate: Boolean = true ,
-    fromRight: Boolean = false
+    modifier : Modifier = Modifier , visible : Boolean = true , icon : ImageVector , contentDescription : String? , onClick : () -> Unit , durationMillis : Int = 500 , autoAnimate : Boolean = true , fromRight : Boolean = false
 ) {
-    val animatedVisibility : MutableState<Boolean> = remember { mutableStateOf(value = false) }
+    val animatedVisibility : MutableState<Boolean> = rememberSaveable { mutableStateOf(value = false) }
+
     val view : View = LocalView.current
 
     LaunchedEffect(visible) {
         if (autoAnimate && visible) {
             animatedVisibility.value = true
-        } else if (!visible) {
+        }
+        else if (! visible) {
             animatedVisibility.value = false
         }
     }
 
     AnimatedVisibility(
-        visible = animatedVisibility.value && visible,
-        enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) +
-                slideInHorizontally(initialOffsetX = { if (fromRight) it else -it }, animationSpec = tween(durationMillis = durationMillis)),
-        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) +
-                slideOutHorizontally(targetOffsetX = { if (fromRight) it else -it }, animationSpec = tween(durationMillis = durationMillis))
+        visible = animatedVisibility.value && visible ,
+        enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) + slideInHorizontally(initialOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis)) ,
+        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) + slideOutHorizontally(targetOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis))
     ) {
-        IconButton(
-            modifier = modifier.bounceClick(),
-            onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
-                onClick()
-            }
-        ) {
-            Icon(imageVector = icon, contentDescription = contentDescription)
+        IconButton(modifier = modifier.bounceClick() , onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            onClick()
+        }) {
+            Icon(imageVector = icon , contentDescription = contentDescription)
         }
     }
 }

@@ -13,6 +13,7 @@
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
     <string name="go_back">Tillbaka</string>
 
+    <string name="error">Fel</string>
     <string name="snack_app_updated">Appen har uppdaterats framgångsrikt</string>
     <string name="snack_update_failed">Ett problem uppstod under uppdateringen</string>
     <string name="try_again">Försök igen</string>

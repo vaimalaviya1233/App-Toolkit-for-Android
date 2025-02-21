@@ -34,20 +34,13 @@ import com.d4rk.android.libs.apptoolkit.ui.components.spacers.LargeVerticalSpace
  */
 @Composable
 fun VersionInfoAlertDialog(
-    onDismiss : () -> Unit ,
-    copyrightString : Int ,
-    appName : Int ,
-    versionName : String ,
-    versionString : Int
+    onDismiss : () -> Unit , copyrightString : Int , appName : Int , versionName : String , versionString : Int
 ) {
     AlertDialog(
         onDismissRequest = onDismiss ,
         text = {
             VersionInfoAlertDialogContent(
-                copyrightString = copyrightString ,
-                appName = appName ,
-                versionName = versionName ,
-                versionString = versionString
+                copyrightString = copyrightString , appName = appName , versionName = versionName , versionString = versionString
             )
         } ,
         confirmButton = {} ,
@@ -66,10 +59,7 @@ fun VersionInfoAlertDialog(
  */
 @Composable
 fun VersionInfoAlertDialogContent(
-    copyrightString : Int ,
-    appName : Int ,
-    versionName : String ,
-    versionString : Int
+    copyrightString : Int , appName : Int , versionName : String , versionString : Int
 ) {
     val context : Context = LocalContext.current
     val appIcon : Drawable = context.packageManager.getApplicationIcon(context.packageName)
@@ -79,10 +69,7 @@ fun VersionInfoAlertDialogContent(
         modifier = Modifier.fillMaxWidth()
     ) {
         AsyncImage(
-            model = appIcon ,
-            contentDescription = null ,
-            modifier = Modifier.size(size = 48.dp) ,
-            imageLoader = imageLoader
+            model = appIcon , contentDescription = null , modifier = Modifier.size(size = 48.dp) , imageLoader = imageLoader
         )
         LargeHorizontalSpacer()
         Column {
@@ -90,8 +77,7 @@ fun VersionInfoAlertDialogContent(
                 text = context.getString(appName) , style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = stringResource(versionString , versionName) ,
-                style = MaterialTheme.typography.bodyMedium
+                text = stringResource(versionString , versionName) , style = MaterialTheme.typography.bodyMedium
             )
             LargeVerticalSpacer()
             Text(

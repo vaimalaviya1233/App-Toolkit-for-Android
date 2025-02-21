@@ -37,13 +37,12 @@ import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 fun Modifier.bounceClick(
     animationEnabled : Boolean = true ,
 ) : Modifier = composed {
-    var buttonState : ButtonState by remember { mutableStateOf(ButtonState.Idle) }
+    var buttonState : ButtonState by remember { mutableStateOf(value = ButtonState.Idle) }
     val context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val bouncyButtonsEnabled : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
     val scale : Float by animateFloatAsState(
-        if (buttonState == ButtonState.Pressed && animationEnabled && bouncyButtonsEnabled) 0.96f else 1f ,
-        label = "Button Press Scale Animation"
+        if (buttonState == ButtonState.Pressed && animationEnabled && bouncyButtonsEnabled) 0.96f else 1f , label = "Button Press Scale Animation"
     )
 
     if (bouncyButtonsEnabled) {
@@ -94,11 +93,7 @@ fun Modifier.bounceClick(
  * The modifier also adds a vertical padding of 4.dp for visual spacing.
  */
 fun Modifier.animateVisibility(
-    visible : Boolean = true ,
-    index : Int = 0 ,
-    offsetY : Int = 50 ,
-    durationMillis : Int = 300 ,
-    delayPerItem : Int = 64
+    visible : Boolean = true , index : Int = 0 , offsetY : Int = 50 , durationMillis : Int = 300 , delayPerItem : Int = 64
 ) = composed {
     val alpha : State<Float> = animateFloatAsState(
         targetValue = if (visible) 1f else 0f , animationSpec = tween(

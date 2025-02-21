@@ -6,12 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -55,7 +53,7 @@ fun SwitchCardComposable(
     title : String , switchState : State<Boolean> , onSwitchToggled : (Boolean) -> Unit
 ) {
     val view : View = LocalView.current
-    Card(modifier = Modifier
+    Card(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize) , modifier = Modifier
             .fillMaxWidth()
             .padding(all = 24.dp)
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
@@ -66,9 +64,7 @@ fun SwitchCardComposable(
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = SizeConstants.LargeSize) ,
-            horizontalArrangement = Arrangement.SpaceBetween ,
-            verticalAlignment = Alignment.CenterVertically
+                    .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = title)
             Switch(checked = switchState.value , onCheckedChange = { isChecked ->
@@ -109,11 +105,7 @@ fun SwitchCardComposable(
  */
 @Composable
 fun SettingsPreferenceItem(
-    icon : ImageVector? = null ,
-    title : String? = null ,
-    summary : String? = null ,
-    rippleEffectDp : Dp = 2.dp ,
-    onClick : () -> Unit = {}
+    icon : ImageVector? = null , title : String? = null , summary : String? = null , rippleEffectDp : Dp = 2.dp , onClick : () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
@@ -121,13 +113,9 @@ fun SettingsPreferenceItem(
                 .clip(RoundedCornerShape(size = 2.dp)) ,
         shape = RoundedCornerShape(size = 2.dp) ,
     ) {
-        PreferenceItem(rippleEffectDp = rippleEffectDp ,
-                       icon = icon ,
-                       title = title ,
-                       summary = summary ,
-                       onClick = {
-                           onClick()
-                       })
+        PreferenceItem(rippleEffectDp = rippleEffectDp , icon = icon , title = title , summary = summary , onClick = {
+            onClick()
+        })
     }
 }
 
@@ -143,10 +131,7 @@ fun PreferenceCategoryItem(
     title : String
 ) {
     Text(
-        text = title ,
-        color = MaterialTheme.colorScheme.primary ,
-        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold) ,
-        modifier = Modifier.padding(start = SizeConstants.LargeSize , top = SizeConstants.LargeSize)
+        text = title , color = MaterialTheme.colorScheme.primary , style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold) , modifier = Modifier.padding(start = SizeConstants.LargeSize , top = SizeConstants.LargeSize)
     )
 }
 
@@ -162,18 +147,13 @@ fun PreferenceCategoryItem(
  */
 @Composable
 fun PreferenceItem(
-    icon : ImageVector? = null ,
-    title : String? = null ,
-    summary : String? = null ,
-    enabled : Boolean = true ,
-    rippleEffectDp : Dp = SizeConstants.LargeSize ,
-    onClick : () -> Unit = {}
+    icon : ImageVector? = null , title : String? = null , summary : String? = null , enabled : Boolean = true , rippleEffectDp : Dp = SizeConstants.LargeSize , onClick : () -> Unit = {}
 ) {
     val view : View = LocalView.current
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = rippleEffectDp))
+                .clip(shape = RoundedCornerShape(size = rippleEffectDp))
                 .clickable(enabled = enabled , onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onClick()
@@ -188,16 +168,12 @@ fun PreferenceItem(
         ) {
             title?.let {
                 Text(
-                    text = it ,
-                    style = MaterialTheme.typography.titleLarge ,
-                    color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
+                    text = it , style = MaterialTheme.typography.titleLarge , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
                 )
             }
             summary?.let {
                 Text(
-                    text = it ,
-                    style = MaterialTheme.typography.bodyMedium ,
-                    color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
+                    text = it , style = MaterialTheme.typography.bodyMedium , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
                 )
             }
         }
@@ -218,17 +194,13 @@ fun PreferenceItem(
  */
 @Composable
 fun SwitchPreferenceItem(
-    icon : ImageVector? = null ,
-    title : String ,
-    summary : String? = null ,
-    checked : Boolean ,
-    onCheckedChange : (Boolean) -> Unit
+    icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit
 ) {
     val view : View = LocalView.current
     Row(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = SizeConstants.LargeSize))
+                .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 .clickable(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onCheckedChange(! checked)
@@ -272,13 +244,7 @@ fun SwitchPreferenceItem(
  */
 @Composable
 fun SwitchPreferenceItemWithDivider(
-    icon : ImageVector? = null ,
-    title : String ,
-    summary : String ,
-    checked : Boolean ,
-    onCheckedChange : (Boolean) -> Unit ,
-    onClick : () -> Unit ,
-    onSwitchClick : (Boolean) -> Unit
+    icon : ImageVector? = null , title : String , summary : String , checked : Boolean , onCheckedChange : (Boolean) -> Unit , onClick : () -> Unit , onSwitchClick : (Boolean) -> Unit
 ) {
     val view : View = LocalView.current
     Row(
@@ -307,9 +273,7 @@ fun SwitchPreferenceItemWithDivider(
         VerticalDivider(
             modifier = Modifier
                     .height(height = 32.dp)
-                    .align(alignment = Alignment.CenterVertically) ,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f) ,
-            thickness = 1.dp
+                    .align(alignment = Alignment.CenterVertically) , color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f) , thickness = 1.dp
         )
         Switch(checked = checked , onCheckedChange = { isChecked ->
             onCheckedChange(isChecked)
@@ -337,12 +301,9 @@ fun RadioButtonPreferenceItem(
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            .clickable { onCheckedChange(! isChecked) } ,
-        verticalAlignment = Alignment.CenterVertically) {
+            .clickable { onCheckedChange(! isChecked) } , verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = text ,
-            style = MaterialTheme.typography.titleLarge ,
-            modifier = Modifier
+            text = text , style = MaterialTheme.typography.titleLarge , modifier = Modifier
                     .weight(weight = 1f)
                     .padding(end = SizeConstants.LargeSize , start = SizeConstants.LargeSize)
         )
@@ -365,15 +326,11 @@ fun RadioButtonPreferenceItem(
  */
 @Composable
 fun CheckBoxPreferenceItem(
-    icon : ImageVector? = null ,
-    title : String ,
-    summary : String? = null ,
-    checked : Boolean ,
-    onCheckedChange : (Boolean) -> Unit
+    icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit
 ) {
     Row(modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(size = SizeConstants.LargeSize))
+            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             .clickable {
                 onCheckedChange(! checked)
             } , verticalAlignment = Alignment.CenterVertically) {

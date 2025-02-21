@@ -13,6 +13,7 @@
     <string name="navigation_drawer_open">Navigációs menü megnyitása</string>
     <string name="go_back">Vissza</string>
 
+    <string name="error">Hiba</string>
     <string name="snack_app_updated">Az alkalmazás sikeresen frissült</string>
     <string name="snack_update_failed">Probléma merült fel a frissítés során</string>
     <string name="try_again">Próbáld újra</string>

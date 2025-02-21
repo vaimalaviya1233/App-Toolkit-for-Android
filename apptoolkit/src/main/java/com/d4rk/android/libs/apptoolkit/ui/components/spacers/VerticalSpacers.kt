@@ -52,7 +52,7 @@ fun LargeVerticalSpacer() {
  */
 @Composable
 fun MediumVerticalSpacer() {
-    Spacer(modifier = Modifier.height(height = 12.dp))
+    Spacer(modifier = Modifier.height(height = SizeConstants.MediumSize))
 }
 
 /**
@@ -71,5 +71,5 @@ fun MediumVerticalSpacer() {
  */
 @Composable
 fun SmallVerticalSpacer() {
-    Spacer(modifier = Modifier.height(height = 8.dp))
+    Spacer(modifier = Modifier.height(height = SizeConstants.SmallSize))
 }

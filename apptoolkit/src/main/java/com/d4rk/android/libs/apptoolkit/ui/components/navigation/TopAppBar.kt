@@ -45,30 +45,22 @@ import com.d4rk.android.libs.apptoolkit.ui.components.buttons.AnimatedButtonDire
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LargeTopAppBarWithScaffold(
-    title: String ,
-    onBackClicked: () -> Unit ,
-    actions: @Composable (RowScope.() -> Unit) = {} ,
-    floatingActionButton: @Composable (() -> Unit)? = null ,
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() ,
-    content: @Composable (PaddingValues) -> Unit
+    title : String ,
+    onBackClicked : () -> Unit ,
+    actions : @Composable (RowScope.() -> Unit) = {} ,
+    floatingActionButton : @Composable (() -> Unit)? = null ,
+    scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() ,
+    content : @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) ,
         topBar = {
-            LargeTopAppBar(
-                title = { Text(text = title) },
-                navigationIcon = {
-                    AnimatedButtonDirection(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back),
-                        onClick = { onBackClicked() }
-                    )
-                },
-                actions = actions,
-                scrollBehavior = scrollBehavior
+            LargeTopAppBar(title = { Text(text = title) } , navigationIcon = {
+                AnimatedButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
+            } , actions = actions , scrollBehavior = scrollBehavior
             )
-        },
-        floatingActionButton = floatingActionButton ?: {},
+        } ,
+        floatingActionButton = floatingActionButton ?: {} ,
     ) { paddingValues ->
         content(paddingValues)
     }

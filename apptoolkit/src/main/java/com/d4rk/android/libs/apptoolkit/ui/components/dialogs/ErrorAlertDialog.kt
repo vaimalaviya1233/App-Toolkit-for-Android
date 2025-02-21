@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.d4rk.android.libs.apptoolkit.R
 
 /**
  * Displays an error dialog with a given error message.
@@ -16,12 +17,9 @@ import androidx.compose.ui.res.stringResource
 fun ErrorAlertDialog(
     errorMessage : String , onDismiss : () -> Unit
 ) {
-    AlertDialog(onDismissRequest = onDismiss ,
-                title = { Text(text = "Error") } ,
-                text = { Text(text = errorMessage) } ,
-                confirmButton = {
-                    TextButton(onClick = onDismiss) {
-                        Text(text = stringResource(id = android.R.string.ok))
-                    }
-                })
+    AlertDialog(onDismissRequest = onDismiss , title = { Text(text = stringResource(id = R.string.error)) } , text = { Text(text = errorMessage) } , confirmButton = {
+        TextButton(onClick = onDismiss) {
+            Text(text = stringResource(id = android.R.string.ok))
+        }
+    })
 }

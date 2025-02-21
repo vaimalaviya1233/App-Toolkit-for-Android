@@ -38,7 +38,8 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
     val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
 
-    val themeOptions : List<String> = listOf(
+    val themeOptionsKeys : List<String> = listOf("follow_system" , "dark" , "light")
+    val themeOptionsLabels : List<String> = listOf(
         stringResource(id = R.string.follow_system) ,
         stringResource(id = R.string.dark_mode) ,
         stringResource(id = R.string.light_mode) ,
@@ -46,9 +47,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
-            contentPadding = paddingValues,
-            modifier = Modifier
-                    .fillMaxSize()
+            contentPadding = paddingValues , modifier = Modifier.fillMaxSize()
         ) {
             item {
                 SwitchCardComposable(
@@ -63,20 +62,21 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 Column(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(24.dp)
+                            .padding(all = 24.dp)
                 ) {
-                    themeOptions.forEach { text ->
+                    themeOptionsKeys.forEachIndexed { index , mode ->
+                        val label : String = themeOptionsLabels[index]
                         Row(
                             Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically
                         ) {
-                            RadioButton(modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
+                            RadioButton(modifier = Modifier.bounceClick() , selected = (mode == themeMode) , onClick = {
                                 coroutineScope.launch {
-                                    dataStore.saveThemeMode(mode = text)
-                                    dataStore.themeModeState.value = text
+                                    dataStore.saveThemeMode(mode = mode)
+                                    dataStore.themeModeState.value = mode
                                 }
                             })
                             Text(
-                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
+                                text = label , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
                             )
                         }
                     }
@@ -86,8 +86,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 InfoMessageSection(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 24.dp) ,
-                    message = stringResource(id = R.string.summary_dark_theme)
+                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
                 )
             }
         }

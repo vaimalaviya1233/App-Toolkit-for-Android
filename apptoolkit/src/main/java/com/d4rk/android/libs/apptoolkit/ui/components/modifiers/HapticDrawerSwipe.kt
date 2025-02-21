@@ -37,7 +37,7 @@ fun Modifier.hapticDrawerSwipe(drawerState : DrawerState) : Modifier = composed 
     val haptic : HapticFeedback = LocalHapticFeedback.current
     var hasVibrated : Boolean by remember { mutableStateOf(value = false) }
 
-    LaunchedEffect(drawerState.currentValue , drawerState.targetValue) {
+    LaunchedEffect(key1 = drawerState.currentValue , key2 = drawerState.targetValue) {
         if (drawerState.isAnimationRunning && ! hasVibrated) {
             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             hasVibrated = true

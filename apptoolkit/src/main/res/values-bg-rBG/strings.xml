@@ -13,6 +13,7 @@
     <string name="navigation_drawer_open">Отворете навигационното меню</string>
     <string name="go_back">Назад</string>
 
+    <string name="error">Грешка</string>
     <string name="snack_app_updated">Приложението беше успешно актуализирано</string>
     <string name="snack_update_failed">Възникна проблем при актуализацията</string>
     <string name="try_again">Опитайте отново</string>

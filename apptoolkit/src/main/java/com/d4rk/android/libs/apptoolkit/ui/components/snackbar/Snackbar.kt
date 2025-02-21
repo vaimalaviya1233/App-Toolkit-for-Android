@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 fun Snackbar(
     message : String , showSnackbar : Boolean , onDismiss : () -> Unit
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarHostState : SnackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(showSnackbar) {
+    LaunchedEffect(key1 = showSnackbar) {
         if (showSnackbar) {
             snackbarHostState.showSnackbar(message = message , duration = SnackbarDuration.Short)
             onDismiss()

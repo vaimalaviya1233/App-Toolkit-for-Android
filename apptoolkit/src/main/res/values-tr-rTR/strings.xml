@@ -13,6 +13,7 @@
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
     <string name="go_back">Geri dön</string>
 
+    <string name="error">Hata</string>
     <string name="snack_app_updated">Uygulama başarıyla güncellendi</string>
     <string name="snack_update_failed">Güncelleme işleminde bir sorun oluştu</string>
     <string name="try_again">Tekrar dene</string>

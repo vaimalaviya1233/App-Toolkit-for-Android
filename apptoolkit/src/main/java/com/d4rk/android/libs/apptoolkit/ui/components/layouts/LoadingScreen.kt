@@ -24,8 +24,7 @@ fun LoadingScreen(progressAlpha : Float) {
         modifier = Modifier
                 .fillMaxSize()
                 .animateContentSize()
-                .alpha(alpha = progressAlpha) ,
-        contentAlignment = Alignment.Center
+                .alpha(alpha = progressAlpha) , contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }
