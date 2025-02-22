@@ -38,8 +38,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
     val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
 
-    val themeOptionsKeys : List<String> = listOf("follow_system" , "dark" , "light")
-    val themeOptionsLabels : List<String> = listOf(
+    val themeOptions : List<String> = listOf(
         stringResource(id = R.string.follow_system) ,
         stringResource(id = R.string.dark_mode) ,
         stringResource(id = R.string.light_mode) ,
@@ -64,19 +63,16 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                             .fillMaxWidth()
                             .padding(all = 24.dp)
                 ) {
-                    themeOptionsKeys.forEachIndexed { index , mode ->
-                        val label : String = themeOptionsLabels[index]
-                        Row(
-                            Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(modifier = Modifier.bounceClick() , selected = (mode == themeMode) , onClick = {
+                    themeOptions.forEach { text ->
+                        Row(Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
+                            RadioButton(modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
                                 coroutineScope.launch {
-                                    dataStore.saveThemeMode(mode = mode)
-                                    dataStore.themeModeState.value = mode
+                                    dataStore.saveThemeMode(mode = text)
+                                    dataStore.themeModeState.value = text
                                 }
                             })
                             Text(
-                                text = label , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
+                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
                             )
                         }
                     }
