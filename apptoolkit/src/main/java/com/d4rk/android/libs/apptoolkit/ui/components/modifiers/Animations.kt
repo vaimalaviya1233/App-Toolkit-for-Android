@@ -5,7 +5,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -21,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.data.model.ui.animations.button.ButtonState
-import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
 
 /**
  * A modifier that adds a bounce effect to a composable when it's clicked.
@@ -74,9 +72,9 @@ fun Modifier.bounceClick(
  *
  * @param visible Determines whether the composable should be visible (true) or invisible (false).
  * @param index An optional index used to stagger the animation start for multiple items.
- * @param offsetY The vertical offset in pixels applied when the composable is invisible. Defaults to 50.
- * @param durationMillis The duration of the animation in milliseconds. Defaults to 300.
- * @param delayPerItem The delay in milliseconds added for each item based on its index, used for staggered animations. Defaults to 64.
+ * @param invisibleOffsetY The vertical offset in pixels applied when the composable is invisible. Defaults to 50.
+ * @param animationDuration The duration of the animation in milliseconds. Defaults to 300.
+ * @param staggerDelay The delay in milliseconds added for each item based on its index, used for staggered animations. Defaults to 64.
  *
  * @return A [Modifier] that applies the visibility animation to the composable.
  *
@@ -85,34 +83,33 @@ fun Modifier.bounceClick(
  * 2. A vertical offset animation controlled by the [offsetYState] state.
  *
  * When [visible] is true, the composable fades in and the vertical offset is 0.
- * When [visible] is false, the composable fades out and the vertical offset is [offsetY].
+ * When [visible] is false, the composable fades out and the vertical offset is [invisibleOffsetY].
  *
- * The animation is staggered using the [delayPerItem] and [index] parameters,
+ * The animation is staggered using the [staggerDelay] and [index] parameters,
  * such that each item starts its animation after a delay proportional to its index.
  *
  * The modifier also adds a vertical padding of 4.dp for visual spacing.
  */
 fun Modifier.animateVisibility(
-    visible : Boolean = true , index : Int = 0 , offsetY : Int = 50 , durationMillis : Int = 300 , delayPerItem : Int = 64
+    visible : Boolean = true , index : Int = 0 , invisibleOffsetY : Int = 50 , animationDuration : Int = 300 , staggerDelay : Int = 64
 ) = composed {
     val alpha : State<Float> = animateFloatAsState(
         targetValue = if (visible) 1f else 0f , animationSpec = tween(
-            durationMillis = durationMillis , delayMillis = index * delayPerItem
+            durationMillis = animationDuration , delayMillis = index * staggerDelay
         ) , label = "Alpha"
     )
 
-    val offsetYState : State<Float> = animateFloatAsState(
-        targetValue = if (visible) 0f else offsetY.toFloat() , animationSpec = tween(
-            durationMillis = durationMillis , delayMillis = index * delayPerItem
+    val offsetState : State<Float> = animateFloatAsState(
+        targetValue = if (visible) 0f else invisibleOffsetY.toFloat() , animationSpec = tween(
+            durationMillis = animationDuration , delayMillis = index * staggerDelay
         ) , label = "OffsetY"
     )
 
     this
             .offset {
-                IntOffset(x = 0 , y = offsetYState.value.toInt())
+                IntOffset(x = 0 , y = offsetState.value.toInt())
             }
             .graphicsLayer {
                 this.alpha = alpha.value
             }
-            .padding(vertical = SizeConstants.ExtraSmallSize)
 }

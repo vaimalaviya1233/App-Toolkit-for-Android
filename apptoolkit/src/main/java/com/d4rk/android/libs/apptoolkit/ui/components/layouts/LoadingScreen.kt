@@ -7,24 +7,39 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 
 /**
- * A composable function that displays a loading screen with a circular progress indicator.
+ * A composable function that displays a full-screen loading indicator.
  *
- * The loading screen covers the entire screen and its opacity is controlled by the [progressAlpha] parameter.
- * It uses [CircularProgressIndicator] to visually indicate the loading process.
+ * This function creates a `Box` that fills the entire available space and centers
+ * a `CircularProgressIndicator` within it. The `animateContentSize` modifier is
+ * used to smoothly animate changes in the size of the `Box`, although in this
+ * particular case with the full screen and circular progress, the animation won't
+ * be visually noticeable.
  *
- * @param progressAlpha A float value between 0 and 1 that controls the opacity of the loading screen.
- *                      0 means fully transparent, 1 means fully opaque.
+ * The loading screen is often used to indicate that the application is performing
+ * some background task, such as fetching data from a network, and that the user
+ * should wait until the task is completed.
+ *
+ * @param modifier Modifier to be applied to the layout. Defaults to fillMaxSize() and animateContentSize().
+ *
+ * Example Usage:
+ *
+ * ```
+ *  if (isLoading) {
+ *      LoadingScreen()
+ *  } else {
+ *      // Display the main content here
+ *      MainContent()
+ *  }
+ * ```
  */
 @Composable
-fun LoadingScreen(progressAlpha : Float) {
+fun LoadingScreen() {
     Box(
         modifier = Modifier
                 .fillMaxSize()
-                .animateContentSize()
-                .alpha(alpha = progressAlpha) , contentAlignment = Alignment.Center
+                .animateContentSize() , contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }

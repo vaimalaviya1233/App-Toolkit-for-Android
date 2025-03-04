@@ -19,32 +19,32 @@ import androidx.compose.ui.platform.LocalHapticFeedback
  * gestures, and triggers a haptic feedback (long press) when the drawer animation starts.
  * The haptic feedback is only triggered once per animation, and is reset when the animation completes.
  *
- * @param drawerState The [DrawerState] of the drawer to monitor for swipe events.
+ * @param state The [DrawerState] of the drawer to monitor for swipe events.
  * @return A [Modifier] that applies the haptic feedback behavior.
  *
  * Example Usage:
  * ```
  * ModalNavigationDrawer(
- *      drawerState = drawerState,
+ *      state = state,
  *      drawerContent = { ... },
- *      modifier = Modifier.hapticDrawerSwipe(drawerState)
+ *      modifier = Modifier.hapticDrawerSwipe(state)
  *  ) {
  *      // Content
  *  }
  * ```
  */
-fun Modifier.hapticDrawerSwipe(drawerState : DrawerState) : Modifier = composed {
-    val haptic : HapticFeedback = LocalHapticFeedback.current
-    var hasVibrated : Boolean by remember { mutableStateOf(value = false) }
+fun Modifier.hapticDrawerSwipe(state : DrawerState) : Modifier = composed {
+    val feedback : HapticFeedback = LocalHapticFeedback.current
+    var hasFeedbackTriggered : Boolean by remember { mutableStateOf(value = false) }
 
-    LaunchedEffect(key1 = drawerState.currentValue , key2 = drawerState.targetValue) {
-        if (drawerState.isAnimationRunning && ! hasVibrated) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-            hasVibrated = true
+    LaunchedEffect(key1 = state.currentValue , key2 = state.targetValue) {
+        if (state.isAnimationRunning && ! hasFeedbackTriggered) {
+            feedback.performHapticFeedback(HapticFeedbackType.LongPress)
+            hasFeedbackTriggered = true
         }
 
-        if (! drawerState.isAnimationRunning) {
-            hasVibrated = false
+        if (! state.isAnimationRunning) {
+            hasFeedbackTriggered = false
         }
     }
 
