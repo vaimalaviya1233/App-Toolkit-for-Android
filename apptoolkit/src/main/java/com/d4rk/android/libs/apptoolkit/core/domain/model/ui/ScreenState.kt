@@ -4,6 +4,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenDataStatus
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 /**
  * Represents the UI state of a screen.
@@ -58,9 +59,11 @@ data class UiSnackbar(
  * @param newValues A lambda function that takes the current data of type [T] and returns a modified version of it.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(newDataState : ScreenState , newValues : (T) -> T) {
-    value = value.copy(
-        screenState = newDataState , data = value.data?.let(newValues)
-    )
+    update { current ->
+        current.copy(
+            screenState = newDataState , data = current.data?.let(newValues)
+        )
+    }
 }
 
 /**
@@ -71,7 +74,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(newDataState : ScreenState
  * @param newValues The new [ScreenState] to set.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateState(newValues : ScreenState) {
-    value = value.copy(screenState = newValues)
+    update { current ->
+        current.copy(screenState = newValues)
+    }
 }
 
 /**
@@ -82,7 +87,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.updateState(newValues : ScreenState) 
  * @param errors The list of [UiSnackbar] to set as errors.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) {
-    value = value.copy(errors = errors)
+    update { current ->
+        current.copy(errors = errors)
+    }
 }
 
 /**
@@ -93,7 +100,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) 
  * @param snackbar The [UiSnackbar] to display.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) {
-    value = value.copy(snackbar = snackbar)
+    update { current ->
+        current.copy(snackbar = snackbar)
+    }
 }
 
 /**
@@ -102,7 +111,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) {
  * This function sets the snackbar property of the [UiStateScreen] to null.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
-    value = value.copy(snackbar = null)
+    update { current ->
+        current.copy(snackbar = null)
+    }
 }
 
 /**
@@ -113,7 +124,11 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
  * @param errors The list of [UiSnackbar] to set as errors. If null, an empty list is used.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : ArrayList<UiSnackbar>?) {
-    this.value = this.value.copy(screenState = ScreenState.Error() , errors = errors ?: ArrayList())
+    update { current ->
+        current.copy(
+            screenState = ScreenState.Error(), errors = errors ?: ArrayList()
+        )
+    }
 }
 
 /**
@@ -122,7 +137,11 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : ArrayList<UiSnackb
  * This function updates the state to indicate that the screen is loading.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setLoading() {
-    this.value = this.value.copy(screenState = ScreenState.IsLoading())
+    update { current ->
+        current.copy(
+            screenState = ScreenState.IsLoading()
+        )
+    }
 }
 
 /**
