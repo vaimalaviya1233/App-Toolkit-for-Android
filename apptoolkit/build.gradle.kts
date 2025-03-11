@@ -93,6 +93,9 @@ dependencies {
     api(dependencyNotation = libs.ktor.client.content.negotiation)
     api(dependencyNotation = libs.ktor.serialization.kotlinx.json)
 
+    // Koin
+    api(dependencyNotation = libs.bundles.koin)
+
     // Lifecycle
     api(dependencyNotation = libs.androidx.lifecycle.runtime.ktx)
     api(dependencyNotation = libs.androidx.lifecycle.livedata.ktx)
@@ -111,7 +114,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "0.0.74"
+            version = "0.0.75"
 
             afterEvaluate {
                 from(components["release"])

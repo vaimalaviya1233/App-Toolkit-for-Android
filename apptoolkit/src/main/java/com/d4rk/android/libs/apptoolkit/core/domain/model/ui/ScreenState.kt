@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.update
  * Defaults to null.
  */
 data class UiStateScreen<T>(
-    val screenState : ScreenState = ScreenState.NoData() , var errors : List<UiSnackbar> = emptyList() , val snackbar : UiSnackbar? = null , val data : T? = null
+    val screenState : ScreenState = ScreenState.IsLoading() , var errors : List<UiSnackbar> = emptyList() , val snackbar : UiSnackbar? = null , val data : T? = null
 )
 
 /**
