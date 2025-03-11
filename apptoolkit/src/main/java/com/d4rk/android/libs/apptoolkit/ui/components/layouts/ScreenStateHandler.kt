@@ -12,12 +12,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.d4rk.cartcalculator.core.domain.model.ui.ScreenState
-import com.d4rk.cartcalculator.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import kotlinx.coroutines.delay
 
 @Composable
-fun <T> ScreenStateHandler(screenState : UiStateScreen<T> , onLoading : @Composable () -> Unit , onEmpty : @Composable () -> Unit , onSuccess : @Composable (T) -> Unit) {
+fun <T> ScreenStateHandler(screenState : UiStateScreen<T> , onLoading : @Composable () -> Unit , onEmpty : @Composable () -> Unit , onSuccess : @Composable (T) -> Unit , onError : (@Composable () -> Unit)? = null) {
     var currentScreenState : ScreenState by remember { mutableStateOf(value = screenState.screenState) }
 
     LaunchedEffect(screenState.screenState) {
@@ -47,7 +47,7 @@ fun <T> ScreenStateHandler(screenState : UiStateScreen<T> , onLoading : @Composa
             }
 
             is ScreenState.Error -> {
-                // TODO: Handle error
+                onError?.invoke()
             }
         }
     }

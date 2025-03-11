@@ -40,43 +40,19 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * ```
  * NoDataScreen(text = R.string.no_items_found, icon = Icons.Default.Warning */
 @Composable
-fun NoDataScreen(
-    text: Int = R.string.try_again ,
-    icon: ImageVector = Icons.Default.Info ,
-    showRetry: Boolean = false ,
-    onRetry: () -> Unit = {}
-) {
-    Box(
-        modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(align = Alignment.Center)
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = icon ,
-                contentDescription = null ,
-                modifier = Modifier
-                        .size(size = 58.dp)
-                        .padding(bottom = SizeConstants.LargeSize) ,
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = stringResource(id = text) ,
-                style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center) ,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.Default.Info , showRetry : Boolean = false , onRetry : () -> Unit = {}) {
+    Box(modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.Center)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
+            Icon(imageVector = icon , contentDescription = null , modifier = Modifier
+                    .size(size = 58.dp)
+                    .padding(bottom = SizeConstants.LargeSize) , tint = MaterialTheme.colorScheme.primary)
+            Text(text = stringResource(id = text) , style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center) , color = MaterialTheme.colorScheme.onBackground)
             if (showRetry) {
                 LargeVerticalSpacer()
-                Button(onClick = onRetry, modifier = Modifier.bounceClick()) {
-                    Icon(
-                        imageVector = Icons.Filled.Refresh,
-                        contentDescription = null,
-                        modifier = Modifier
-                                .size(size = SizeConstants.IconSize)
-                    )
+                Button(onClick = onRetry , modifier = Modifier.bounceClick()) {
+                    Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.IconSize))
                     ButtonIconSpacer()
                     Text(text = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.try_again))
                 }

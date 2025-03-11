@@ -19,9 +19,7 @@ import androidx.compose.ui.Modifier
  * @param onDismiss A callback function that is invoked when the Snackbar is dismissed.
  */
 @Composable
-fun Snackbar(
-    message : String , showSnackbar : Boolean , onDismiss : () -> Unit
-) {
+fun Snackbar(message : String , showSnackbar : Boolean , onDismiss : () -> Unit) {
     val snackbarHostState : SnackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = showSnackbar) {
@@ -31,9 +29,7 @@ fun Snackbar(
         }
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         SnackbarHost(
             hostState = snackbarHostState , modifier = Modifier.align(alignment = Alignment.BottomCenter)
         )
