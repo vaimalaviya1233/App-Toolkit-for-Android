@@ -26,7 +26,7 @@ import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCate
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchPreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchPreferenceItemWithDivider
-import com.d4rk.android.libs.apptoolkit.utils.interfaces.providers.DisplaySettingsProvider
+import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.DisplaySettingsProvider
 import kotlinx.coroutines.launch
 
 @Composable

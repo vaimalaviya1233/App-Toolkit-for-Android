@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.multidex.BuildConfig
-import com.d4rk.android.libs.apptoolkit.utils.constants.datastore.DataStoreNamesConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

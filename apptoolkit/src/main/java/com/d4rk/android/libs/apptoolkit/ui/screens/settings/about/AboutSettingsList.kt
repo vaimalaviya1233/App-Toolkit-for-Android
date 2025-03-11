@@ -19,10 +19,10 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.snackbar.Snackbar
-import com.d4rk.android.libs.apptoolkit.utils.helpers.ClipboardHelper
-import com.d4rk.android.libs.apptoolkit.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.utils.interfaces.providers.AboutSettingsProvider
-import com.d4rk.android.libs.apptoolkit.utils.rememberHtmlData
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.ui.components.network.rememberHtmlData
 
 @Composable
 fun AboutSettingsList(
@@ -31,9 +31,7 @@ fun AboutSettingsList(
 ) {
     val context : Context = LocalContext.current
 
-    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(
-        packageName = provider.packageName , currentVersionName = provider.appVersion , context = context
-    )
+    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(packageName = provider.packageName , currentVersionName = provider.appVersion , context = context)
     val changelogHtmlString : String? = htmlData.value.first
     val eulaHtmlString : String? = htmlData.value.second
 

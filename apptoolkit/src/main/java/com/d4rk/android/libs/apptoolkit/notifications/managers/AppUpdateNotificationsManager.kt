@@ -15,6 +15,7 @@ import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import androidx.core.net.toUri
 
 class AppUpdateNotificationsManager(private val context : Context , private val channelId : String) {
     private val updateNotificationId : Int = 0
@@ -36,7 +37,7 @@ class AppUpdateNotificationsManager(private val context : Context , private val 
                         NotificationCompat.Builder(context , channelId).setSmallIcon(R.drawable.ic_notification_update).setContentTitle(context.getString(R.string.notification_update_title)).setContentText(context.getString(R.string.summary_notification_update)).setAutoCancel(true).setContentIntent(
                                     PendingIntent.getActivity(
                                         context , 0 , Intent(
-                                            Intent.ACTION_VIEW , Uri.parse("market://details?id=${context.packageName}")
+                                            Intent.ACTION_VIEW , "market://details?id=${context.packageName}".toUri()
                                         ) , PendingIntent.FLAG_IMMUTABLE
                                     )
                                 )

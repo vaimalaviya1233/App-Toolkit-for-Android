@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
  *  A composable function that creates a horizontal space with a width of 16 dp.
@@ -63,4 +63,9 @@ fun MediumHorizontalSpacer() {
 @Composable
 fun SmallHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = SizeConstants.SmallSize))
+}
+
+@Composable
+fun ExtraSmallHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.ExtraSmallSize))
 }

@@ -20,7 +20,7 @@ import androidx.compose.ui.text.withStyle
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.ui.components.spacers.MediumVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
 fun InfoMessageSection(message : String , modifier : Modifier = Modifier , learnMoreText : String? = null , learnMoreUrl : String? = null) {

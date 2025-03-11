@@ -25,7 +25,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.ui.components.spacers.LargeVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
  * A composable function that displays a screen indicating that no data is available.
@@ -56,11 +56,11 @@ fun NoDataScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Icon(
-                imageVector = icon,
-                contentDescription = null,
+                imageVector = icon ,
+                contentDescription = null ,
                 modifier = Modifier
                         .size(size = 58.dp)
-                        .padding(bottom = SizeConstants.LargeSize),
+                        .padding(bottom = SizeConstants.LargeSize) ,
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
