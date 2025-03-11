@@ -74,6 +74,15 @@ fun SmallVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.SmallSize))
 }
 
+/**
+ * `SizeConstants` object is assumed to be defined elsewhere in your code.
+ * For example:
+ * ```kotlin
+ * object SizeConstants {
+ *     val ExtraSmallSize = 4.dp
+ * }
+ * ```
+ */
 @Composable
 fun ExtraSmallVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.ExtraSmallSize))

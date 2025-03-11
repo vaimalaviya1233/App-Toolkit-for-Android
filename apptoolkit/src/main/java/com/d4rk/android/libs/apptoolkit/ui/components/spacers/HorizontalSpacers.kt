@@ -65,6 +65,9 @@ fun SmallHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = SizeConstants.SmallSize))
 }
 
+/**
+ * Object containing constant sizes for UI elements.
+ */
 @Composable
 fun ExtraSmallHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = SizeConstants.ExtraSmallSize))

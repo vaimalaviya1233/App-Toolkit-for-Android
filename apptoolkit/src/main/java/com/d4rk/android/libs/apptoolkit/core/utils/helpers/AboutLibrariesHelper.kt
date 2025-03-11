@@ -13,6 +13,16 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * `AboutLibrariesHelper` is a utility object designed to fetch, process, and prepare
+ * data related to application information, such as changelogs and End User License Agreements (EULAs),
+ * from a remote GitHub repository. It handles fetching Markdown files, extracting specific
+ * version information, and converting Markdown to HTML for display in a user interface.
+ *
+ * This object centralizes the logic for retrieving and formatting data that might be used in an
+ * "About" or "Settings" screen of an Android application. It leverages coroutines for asynchronous
+ * network operations and handles potential errors gracefully.
+ */
 object AboutLibrariesHelper {
 
     private const val GITHUB_BASE_URL = "https://raw.githubusercontent.com/D4rK7355608"

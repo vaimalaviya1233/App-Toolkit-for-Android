@@ -22,6 +22,31 @@ import com.d4rk.android.libs.apptoolkit.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
+/**
+ * Displays an information message section with an optional "Learn More" link.
+ *
+ * This composable displays a section containing:
+ * - An info icon.
+ * - A text message.
+ * - Optionally, a clickable "Learn More" link that opens a specified URL.
+ *
+ * @param message The main message to be displayed.
+ * @param modifier The modifier to be applied to the container (Column).
+ * @param learnMoreText The text to be displayed for the "Learn More" link. If null or empty, the link will not be shown.
+ * @param learnMoreUrl The URL to be opened when the "Learn More" link is clicked. If null or empty, the link will not be shown.
+ *
+ * Example Usage:
+ * ```
+ * InfoMessageSection(
+ *     message = "This is an important information message.",
+ *     modifier = Modifier.padding(16.dp),
+ *     learnMoreText = "Learn More",
+ *     learnMoreUrl = "https://www.example.com"
+ * )
+ *
+ * InfoMessageSection(
+ *     message = "Another message without a learn more link",
+ */
 @Composable
 fun InfoMessageSection(message : String , modifier : Modifier = Modifier , learnMoreText : String? = null , learnMoreUrl : String? = null) {
     val context : Context = LocalContext.current
