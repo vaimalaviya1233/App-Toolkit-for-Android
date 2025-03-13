@@ -16,10 +16,10 @@ import java.util.Date
 
 open class AdsCoreManager(protected val context : Context) {
 
-    private var dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
-    fun initializeAds(appOpenUnitId: String) {
+    fun initializeAds(appOpenUnitId : String) {
         MobileAds.initialize(context)
         appOpenAdManager = AppOpenAdManager(appOpenUnitId)
     }
@@ -40,17 +40,18 @@ open class AdsCoreManager(protected val context : Context) {
             }
             isLoadingAd = true
             val request = AdRequest.Builder().build()
-            @Suppress("DEPRECATION") AppOpenAd.load(context , appOpenUnitId , request , AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT , object : AppOpenAd.AppOpenAdLoadCallback() {
-                override fun onAdLoaded(ad : AppOpenAd) {
-                    appOpenAd = ad
-                    isLoadingAd = false
-                    loadTime = Date().time
-                }
+            AppOpenAd.load(
+                context , appOpenUnitId , request , object : AppOpenAd.AppOpenAdLoadCallback() {
+                    override fun onAdLoaded(ad : AppOpenAd) {
+                        appOpenAd = ad
+                        isLoadingAd = false
+                        loadTime = Date().time
+                    }
 
-                override fun onAdFailedToLoad(loadAdError : LoadAdError) {
-                    isLoadingAd = false
-                }
-            })
+                    override fun onAdFailedToLoad(loadAdError : LoadAdError) {
+                        isLoadingAd = false
+                    }
+                })
         }
 
         private fun wasLoadTimeLessThanNHoursAgo() : Boolean {
