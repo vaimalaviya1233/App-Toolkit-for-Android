@@ -14,6 +14,7 @@
     <string name="go_back">Voltar</string>
 
     <string name="error">Erro</string>
+    <string name="app_not_installed">Aplicativo não instalado</string>
     <string name="snack_app_updated">O aplicativo foi atualizado com sucesso</string>
     <string name="snack_update_failed">Houve um problema durante o processo de atualização</string>
     <string name="try_again">Tente novamente</string>

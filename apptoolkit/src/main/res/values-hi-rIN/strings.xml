@@ -14,6 +14,7 @@
     <string name="go_back">वापस जाओ</string>
 
     <string name="error">त्रुटि</string>
+    <string name="app_not_installed">ऐप इंस्टॉल नहीं है</string>
     <string name="snack_app_updated">ऐप सफलतापूर्वक अपडेट कर दिया गया है</string>
     <string name="snack_update_failed">अपडेट प्रक्रिया में समस्या आई</string>
     <string name="try_again">फिर से प्रयास करें</string>
