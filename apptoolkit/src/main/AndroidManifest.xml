@@ -3,4 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application>
+        <activity
+            android:name=".ui.screens.help.ui.HelpActivity"
+            android:exported="true" />
+    </application>
 </manifest>

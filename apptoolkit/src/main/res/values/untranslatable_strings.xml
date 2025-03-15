@@ -21,6 +21,25 @@
     <string name="arch" translatable="false">Arch:</string>
     <string name="summary_preference_settings_license" translatable="false">General Public License-3.0</string>
 
+    <string name="question_1" translatable="false" />
+    <string name="summary_preference_faq_1" translatable="false" />
+    <string name="question_2" translatable="false" />
+    <string name="summary_preference_faq_2" translatable="false" />
+    <string name="question_3" translatable="false" />
+    <string name="summary_preference_faq_3" translatable="false" />
+    <string name="question_4" translatable="false" />
+    <string name="summary_preference_faq_4" translatable="false" />
+    <string name="question_5" translatable="false" />
+    <string name="summary_preference_faq_5" translatable="false" />
+    <string name="question_6" translatable="false" />
+    <string name="summary_preference_faq_6" translatable="false" />
+    <string name="question_7" translatable="false" />
+    <string name="summary_preference_faq_7" translatable="false" />
+    <string name="question_8" translatable="false" />
+    <string name="summary_preference_faq_8" translatable="false" />
+    <string name="question_9" translatable="false" />
+    <string name="summary_preference_faq_9" translatable="false" />
+
     <string name="feedback_for" translatable="false">Feedback for %1$s</string>
     <string name="dear_developer" translatable="false">Dear developer, </string>
     <string name="send_email_using" translatable="false">Send mail using:</string>
