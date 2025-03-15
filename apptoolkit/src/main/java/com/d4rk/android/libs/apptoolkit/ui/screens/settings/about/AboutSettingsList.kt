@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
-import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
-import com.d4rk.android.libs.apptoolkit.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.ui.components.network.rememberHtmlData
+import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
+import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
+import com.d4rk.android.libs.apptoolkit.ui.components.snackbar.Snackbar
 
 @Composable
 fun AboutSettingsList(

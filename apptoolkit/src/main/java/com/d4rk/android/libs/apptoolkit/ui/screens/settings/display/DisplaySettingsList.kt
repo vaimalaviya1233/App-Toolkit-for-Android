@@ -22,11 +22,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.DisplaySettingsProvider
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchPreferenceItem
 import com.d4rk.android.libs.apptoolkit.ui.components.preferences.SwitchPreferenceItemWithDivider
-import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.DisplaySettingsProvider
 import kotlinx.coroutines.launch
 
 @Composable

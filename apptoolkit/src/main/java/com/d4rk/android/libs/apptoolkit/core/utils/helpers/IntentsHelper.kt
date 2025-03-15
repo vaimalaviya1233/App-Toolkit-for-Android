@@ -6,10 +6,10 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.StringRes
+import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
 import com.mikepenz.aboutlibraries.LibsBuilder
 import java.net.URLEncoder
-import androidx.core.net.toUri
 
 /**
  * A utility object for performing common operations such as opening URLs, activities, and app notification settings.

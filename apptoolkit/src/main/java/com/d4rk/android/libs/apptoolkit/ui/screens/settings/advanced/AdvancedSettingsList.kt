@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
-import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.data.interfaces.providers.AdvancedSettingsProvider
+import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceCategoryItem
+import com.d4rk.android.libs.apptoolkit.ui.components.preferences.PreferenceItem
 
 @Composable
 fun AdvancedSettingsList(
