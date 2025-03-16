@@ -162,47 +162,4 @@
     <string name="summary_donations">No matter how much you donate, you will help us keep our app running and improve our features. We appreciate your generosity and kindness!</string>
     <string name="non_paid_support">Non-Paid Support</string>
     <string name="web_ad">Web Ad</string>
-
-
-
-
-
-
-
-
-    <string name="question_1">What is this app about?</string>
-    <string name="summary_preference_faq_1">This app helps you manage your tasks and improve your productivity in a simple way.</string>
-
-    <!-- FAQ 2 -->
-    <string name="question_2">How do I get started?</string>
-    <string name="summary_preference_faq_2">Download the app, create an account, and follow the simple onboarding steps to begin.</string>
-
-    <!-- FAQ 3 -->
-    <string name="question_3">Is my data secure?</string>
-    <string name="summary_preference_faq_3">Yes. We use industry-standard security measures to protect your personal information.</string>
-
-    <!-- FAQ 4 -->
-    <string name="question_4">How do I contact support?</string>
-    <string name="summary_preference_faq_4">Visit the Contact Us section in the app or email our support team for assistance.</string>
-
-    <!-- FAQ 5 -->
-    <string name="question_5">Can I use the app offline?</string>
-    <string name="summary_preference_faq_5">Many features are available offline, though some functions require an internet connection.</string>
-
-    <!-- FAQ 6 -->
-    <string name="question_6">How often is the app updated?</string>
-    <string name="summary_preference_faq_6">We regularly update the app to introduce new features and enhance performance.</string>
-
-    <!-- FAQ 7 -->
-    <string name="question_7">Is the app free to use?</string>
-    <string name="summary_preference_faq_7">The app is free to download and use, with optional in-app purchases for additional features.</string>
-
-    <!-- FAQ 8 -->
-    <string name="question_8">How do I provide feedback?</string>
-    <string name="summary_preference_faq_8">Your feedback is important! Use the feedback section in the app to share your thoughts.</string>
-
-    <!-- FAQ 9 -->
-    <string name="question_9">Where can I find more information?</string>
-    <string name="summary_preference_faq_9">For more details, check the About section or visit our website.</string>
-
 </resources>
