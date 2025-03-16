@@ -39,6 +39,8 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
@@ -47,10 +49,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity) {
+fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig : AdsConfig = koinInject()) {
     val screenState by viewModel.screenState.collectAsState()
 
     LargeTopAppBarWithScaffold(
@@ -61,7 +64,7 @@ fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity)
             onEmpty = { NoDataScreen() } ,
             onSuccess = { supportData ->
                 SupportScreenContent(
-                    paddingValues = paddingValues , activity = activity , supportData = supportData , viewModel = viewModel
+                    paddingValues = paddingValues , activity = activity , supportData = supportData , viewModel = viewModel , adsConfig = adsConfig
                 )
             } ,
         )
@@ -69,7 +72,7 @@ fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity)
 }
 
 @Composable
-fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActivity , supportData : UiSupportScreen , viewModel : SupportViewModel) {
+fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActivity , supportData : UiSupportScreen , viewModel : SupportViewModel , adsConfig : AdsConfig) {
     val context : Context = LocalContext.current
     val view : View = LocalView.current
     val billingClient : BillingClient = rememberBillingClient(context , viewModel)
@@ -109,8 +112,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                             .bounceClick() , onClick = {
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
                                         activity.initiatePurchase(
-                                            sku = "low_donation" ,
-                                            skuDetailsMap = supportData.skuDetails , billingClient = billingClient
+                                            sku = "low_donation" , skuDetailsMap = supportData.skuDetails , billingClient = billingClient
                                         )
                                     }) {
                                     Icon(
@@ -214,7 +216,9 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                 }
             }
             item {
-                //AdBanner(modifier = Modifier.padding(bottom = 12.dp), adSize = AdSize.LARGE_BANNER)
+                AdBanner(
+                    modifier = Modifier.padding(bottom = 12.dp) , adsConfig = adsConfig
+                )
             }
         }
     }
