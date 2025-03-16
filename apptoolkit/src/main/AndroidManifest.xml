@@ -6,7 +6,7 @@
 
     <application>
         <activity
-            android:name=".ui.screens.help.ui.HelpActivity"
+            android:name=".app.help.ui.HelpActivity"
             android:exported="true" />
     </application>
 </manifest>

@@ -2,8 +2,8 @@ package com.d4rk.android.libs.apptoolkit.data.core.ads
 
 import android.app.Activity
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.OnShowAdCompleteListener
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.d4rk.android.libs.apptoolkit.data.interfaces.OnShowAdCompleteListener
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
