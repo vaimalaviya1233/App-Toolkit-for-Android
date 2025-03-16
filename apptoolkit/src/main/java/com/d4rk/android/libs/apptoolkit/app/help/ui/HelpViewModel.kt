@@ -18,12 +18,13 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.google.android.play.core.review.ReviewInfo
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
 
@@ -31,53 +32,69 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
     val screenState : StateFlow<UiStateScreen<UiHelpScreen>> = _screenState.asStateFlow()
 
     init {
-        sendEvent(HelpAction.LoadHelp)
+        sendEvent(event = HelpAction.LoadHelp)
     }
 
     fun sendEvent(event : HelpAction) {
         when (event) {
             HelpAction.LoadHelp -> loadHelpData()
             HelpAction.RequestReview -> requestReviewFlow()
-            is HelpAction.LaunchReviewFlow -> launchReviewFlow(event.activity , event.reviewInfo)
+            is HelpAction.LaunchReviewFlow -> launchReviewFlow(activity = event.activity , reviewInfo = event.reviewInfo)
         }
     }
 
     private fun loadHelpData() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            val faqResult = getFAQsUseCase().flowOn(dispatcherProvider.io).first()
-            val reviewResult = requestReviewFlowUseCase().flowOn(dispatcherProvider.io).first()
-            withContext(dispatcherProvider.main) {
-                if (faqResult is DataState.Success<List<UiHelpQuestion> , *> && reviewResult is DataState.Success<ReviewInfo , *>) {
+        viewModelScope.launch {
+            val faqFlow : StateFlow<DataState<List<UiHelpQuestion> , Errors>> = getFAQsUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading())
+            val reviewFlow : StateFlow<DataState<ReviewInfo , Errors>> = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading())
+            val faqResult : DataState<List<UiHelpQuestion> , Errors> = faqFlow.first()
+            val reviewResult : DataState<ReviewInfo , Errors> = reviewFlow.first()
+
+            when {
+                faqResult is DataState.Success<List<UiHelpQuestion> , *> && reviewResult is DataState.Success<ReviewInfo , *> -> {
                     _screenState.updateData(newDataState = ScreenState.Success()) { current ->
-                        current.copy(
-                            questions = ArrayList(faqResult.data) , reviewInfo = reviewResult.data
-                        )
+                        current.copy(questions = ArrayList(faqResult.data) , reviewInfo = reviewResult.data)
                     }
                 }
-                else {
-                    _screenState.updateState(ScreenState.Error())
+
+                faqResult is DataState.Error || reviewResult is DataState.Error -> {
+                    _screenState.updateState(newValues = ScreenState.Error())
+                }
+
+                else -> {
+                    _screenState.updateState(newValues = ScreenState.IsLoading())
                 }
             }
         }
     }
 
     private fun requestReviewFlow() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            requestReviewFlowUseCase().flowOn(dispatcherProvider.io).collect { result : DataState<ReviewInfo , Errors> ->
-                        if (result is DataState.Success) {
-                            withContext(dispatcherProvider.main) {
-                                _screenState.updateData(newDataState = ScreenState.Success()) { current ->
-                                    current.copy(reviewInfo = result.data)
-                                }
-                            }
+        viewModelScope.launch {
+            requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
+                when (result) {
+                    is DataState.Success -> {
+                        _screenState.updateData(newDataState = ScreenState.Success()) { current ->
+                            current.copy(reviewInfo = result.data)
                         }
                     }
+
+                    is DataState.Error -> {
+                        _screenState.updateState(newValues = ScreenState.Error())
+                    }
+
+                    is DataState.Loading -> {
+                        _screenState.updateState(newValues = ScreenState.IsLoading())
+                    }
+
+                    else -> Unit
+                }
+            }
         }
     }
 
     private fun launchReviewFlow(activity : Activity , reviewInfo : ReviewInfo) {
-        viewModelScope.launch(dispatcherProvider.io) {
-            launchReviewFlowUseCase(Pair(activity , reviewInfo)).flowOn(dispatcherProvider.io).collect { /* Optionally handle result */ }
+        viewModelScope.launch {
+            launchReviewFlowUseCase(param = Pair(first = activity , second = reviewInfo)).flowOn(context = dispatcherProvider.io).collect { /* Optionally handle result */ }
         }
     }
 }
