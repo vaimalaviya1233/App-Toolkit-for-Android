@@ -8,5 +8,9 @@
         <activity
             android:name=".app.help.ui.HelpActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".app.support.ui.SupportActivity"
+            android:exported="true" />
     </application>
 </manifest>
