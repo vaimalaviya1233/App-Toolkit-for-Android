@@ -30,9 +30,9 @@ class GetFAQsUseCase(private val application : Application) {
                 faq.question.isNotBlank() && faq.answer.isNotBlank()
             }
         }.onSuccess { faqList ->
-            emit(DataState.Success(data = faqList))
+            emit(value = DataState.Success(data = faqList))
         }.onFailure { throwable ->
-            emit(DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_FAQS)))
+            emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_FAQS)))
         }
     }
 }

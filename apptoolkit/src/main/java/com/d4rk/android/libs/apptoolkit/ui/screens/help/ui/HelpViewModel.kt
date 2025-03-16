@@ -25,11 +25,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HelpViewModel(
-    private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider
-) : ViewModel() {
+class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
 
-    private val _screenState : MutableStateFlow<UiStateScreen<UiHelpScreen>> = MutableStateFlow(UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHelpScreen()))
+    private val _screenState : MutableStateFlow<UiStateScreen<UiHelpScreen>> = MutableStateFlow(value = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHelpScreen()))
     val screenState : StateFlow<UiStateScreen<UiHelpScreen>> = _screenState.asStateFlow()
 
     init {
