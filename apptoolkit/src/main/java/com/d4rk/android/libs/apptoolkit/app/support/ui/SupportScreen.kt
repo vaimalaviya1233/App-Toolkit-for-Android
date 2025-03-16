@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import android.content.Context
@@ -25,20 +23,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClientStateListener
-import com.android.billingclient.api.BillingResult
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
+import com.d4rk.android.libs.apptoolkit.app.support.ui.components.rememberBillingClient
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -222,28 +217,4 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
             }
         }
     }
-}
-
-@Composable
-fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : BillingClient {
-    val billingClient : BillingClient = remember {
-        BillingClient.newBuilder(context).setListener { _ , _ -> }.enablePendingPurchases().build()
-    }
-
-    DisposableEffect(billingClient) {
-        billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult : BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    viewModel.querySkuDetails(billingClient)
-                }
-            }
-
-            override fun onBillingServiceDisconnected() {}
-        })
-
-        onDispose {
-            billingClient.endConnection()
-        }
-    }
-    return billingClient
 }
