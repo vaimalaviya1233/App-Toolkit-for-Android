@@ -25,10 +25,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers.AboutSettingsProvider
 
 @Composable
-fun AboutSettingsList(
-    paddingValues : PaddingValues = PaddingValues() ,
-    provider : AboutSettingsProvider ,
-) {
+fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , provider : AboutSettingsProvider , ) {
     val context : Context = LocalContext.current
 
     val htmlData : State<Pair<String? , String?>> = rememberHtmlData(packageName = provider.packageName , currentVersionName = provider.appVersion , context = context)

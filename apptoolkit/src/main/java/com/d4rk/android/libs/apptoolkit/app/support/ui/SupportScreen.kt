@@ -35,6 +35,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
 import com.d4rk.android.libs.apptoolkit.app.support.ui.components.rememberBillingClient
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -49,28 +50,23 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig : AdsConfig = koinInject()) {
-    val screenState by viewModel.screenState.collectAsState()
+    val context : Context = LocalContext.current
+    val billingClient : BillingClient = rememberBillingClient(context = context , viewModel = viewModel)
+    val screenState : UiStateScreen<UiSupportScreen> by viewModel.screenState.collectAsState()
+
+    println(message = "screen state is: $screenState")
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.support_us) , onBackClicked = { activity.finish() }) { paddingValues ->
-        ScreenStateHandler(
-            screenState = screenState ,
-            onLoading = { LoadingScreen() } ,
-            onEmpty = { NoDataScreen() } ,
-            onSuccess = { supportData ->
-                SupportScreenContent(
-                    paddingValues = paddingValues , activity = activity , supportData = supportData , viewModel = viewModel , adsConfig = adsConfig
-                )
-            } ,
-        )
+        ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { supportData ->
+            SupportScreenContent(paddingValues = paddingValues , activity = activity , supportData = supportData , adsConfig = adsConfig , context = context , billingClient = billingClient)
+        })
     }
 }
 
 @Composable
-fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActivity , supportData : UiSupportScreen , viewModel : SupportViewModel , adsConfig : AdsConfig) {
-    val context : Context = LocalContext.current
+fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActivity , supportData : UiSupportScreen , adsConfig : AdsConfig , context : Context , billingClient : BillingClient) {
     val view : View = LocalView.current
-    val billingClient : BillingClient = rememberBillingClient(context , viewModel)
 
     Box(
         modifier = Modifier

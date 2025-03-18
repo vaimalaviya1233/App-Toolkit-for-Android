@@ -15,10 +15,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers.AdvancedSettingsProvider
 
 @Composable
-fun AdvancedSettingsList(
-    paddingValues : PaddingValues = PaddingValues() ,
-    provider : AdvancedSettingsProvider ,
-) {
+fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provider : AdvancedSettingsProvider , ) {
     val context : Context = LocalContext.current
 
     LazyColumn(

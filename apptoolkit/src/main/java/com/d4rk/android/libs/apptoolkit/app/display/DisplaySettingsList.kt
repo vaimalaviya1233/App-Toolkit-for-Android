@@ -30,10 +30,7 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.launch
 
 @Composable
-fun DisplaySettingsList(
-    paddingValues: PaddingValues = PaddingValues(),
-    provider: DisplaySettingsProvider
-) {
+fun DisplaySettingsList(paddingValues: PaddingValues = PaddingValues(), provider: DisplaySettingsProvider) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context)

@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,20 +53,20 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpScreenConfig) {
+    val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
     val screenState : UiStateScreen<UiHelpScreen> by viewModel.screenState.collectAsState()
     val context : Context = LocalContext.current
     val view : View = LocalView.current
-    val topAppBarState : TopAppBarState = rememberTopAppBarState()
-    val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topAppBarState)
-
+    val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
     val htmlData : State<Pair<String? , String?>> = rememberHtmlData(context = context , currentVersionName = config.versionName , packageName = activity.packageName)
     val changelogHtmlString : String? = htmlData.value.first
     val eulaHtmlString : String? = htmlData.value.second
 
-    val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
     }
+
+    println(message = "screenState is: $screenState")
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
         HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , view = view , config = config)

@@ -29,9 +29,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVertical
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
-fun QuestionCard(
-    title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit
-) {
+fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit) {
     Card(modifier = Modifier
             .clip(shape = RoundedCornerShape(size = 12.dp))
             .clickable { onToggleExpand() }

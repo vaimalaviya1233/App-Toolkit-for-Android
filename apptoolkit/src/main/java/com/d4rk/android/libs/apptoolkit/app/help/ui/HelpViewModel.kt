@@ -11,9 +11,9 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.LaunchReviewFlo
 import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.RequestReviewFlowUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.google.android.play.core.review.ReviewInfo
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -45,24 +45,17 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
 
     private fun loadHelpData() {
         viewModelScope.launch {
-            val faqFlow : StateFlow<DataState<List<UiHelpQuestion> , Errors>> = getFAQsUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading())
-            val reviewFlow : StateFlow<DataState<ReviewInfo , Errors>> = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading())
-            val faqResult : DataState<List<UiHelpQuestion> , Errors> = faqFlow.first()
-            val reviewResult : DataState<ReviewInfo , Errors> = reviewFlow.first()
-
-            when {
-                faqResult is DataState.Success<List<UiHelpQuestion> , *> && reviewResult is DataState.Success<ReviewInfo , *> -> {
-                    _screenState.updateData(newDataState = ScreenState.Success()) { current ->
-                        current.copy(questions = ArrayList(faqResult.data) , reviewInfo = reviewResult.data)
+            combine(flow = getFAQsUseCase().flowOn(context = dispatcherProvider.io) , flow2 = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io)) { faqResult , reviewResult -> Pair(first = faqResult , second = reviewResult) }.collect { (faqResult , reviewResult) ->
+                when {
+                    faqResult is DataState.Success<List<UiHelpQuestion> , *> && reviewResult is DataState.Success<ReviewInfo , *> -> {
+                        _screenState.updateData(newDataState = ScreenState.Success()) { current ->
+                            current.copy(questions = ArrayList(faqResult.data) , reviewInfo = reviewResult.data)
+                        }
                     }
-                }
 
-                faqResult is DataState.Error || reviewResult is DataState.Error -> {
-                    _screenState.updateState(newValues = ScreenState.Error())
-                }
-
-                else -> {
-                    _screenState.updateState(newValues = ScreenState.IsLoading())
+                    faqResult is DataState.Error || reviewResult is DataState.Error -> {
+                        _screenState.updateState(newValues = ScreenState.Error())
+                    }
                 }
             }
         }
@@ -83,7 +76,7 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
                     }
 
                     is DataState.Loading -> {
-                        _screenState.updateState(newValues = ScreenState.IsLoading())
+                        _screenState.setLoading()
                     }
 
                     else -> Unit

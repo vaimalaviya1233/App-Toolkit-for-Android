@@ -1,4 +1,0 @@
-<resources>
-    <style name="Theme.AppToolkit" parent="Theme.Material3.DynamicColors.DayNight">
-    </style>
-</resources>

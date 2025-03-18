@@ -12,5 +12,8 @@
         <activity
             android:name=".app.support.ui.SupportActivity"
             android:exported="true" />
+
+        <activity android:name=".app.settings.settings.ui.SettingsActivity"
+            android:exported="true" />
     </application>
 </manifest>

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.d4rk.android.libs.apptoolkit"
+    namespace = "com.d4rk.android.apps.apptoolkit"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.d4rk.android.libs.apptoolkit"
+        applicationId = "com.d4rk.android.apps.apptoolkit"
         minSdk = 23
         targetSdk = 35
         versionCode = 1
@@ -48,6 +48,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
