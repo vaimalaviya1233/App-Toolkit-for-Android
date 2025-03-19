@@ -1,4 +1,4 @@
-package com.d4rk.cartcalculator.core.data.datastore
+package com.d4rk.android.apps.apptoolkit.core.data.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences

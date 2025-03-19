@@ -117,6 +117,7 @@
     <string name="license">License</string>
 
     <string name="about">About</string>
+    <string name="summary_preference_settings_about">Learn more about the app</string>
 
     <string name="app_info">App info</string>
     <string name="app_build_version">Application build version</string>

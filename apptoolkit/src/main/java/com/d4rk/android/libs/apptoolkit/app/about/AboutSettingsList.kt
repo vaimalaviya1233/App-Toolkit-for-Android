@@ -22,7 +22,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.Preferenc
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 
 @Composable
 fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , provider : AboutSettingsProvider , ) {

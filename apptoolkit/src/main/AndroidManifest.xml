@@ -13,7 +13,13 @@
             android:name=".app.support.ui.SupportActivity"
             android:exported="true" />
 
-        <activity android:name=".app.settings.settings.ui.SettingsActivity"
+        <activity
+            android:name=".app.settings.settings.ui.SettingsActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".app.settings.general.ui.GeneralSettingsActivity"
+            android:exported="true" />
+
     </application>
 </manifest>

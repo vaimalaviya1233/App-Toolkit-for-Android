@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardComposable
-import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers.UsageAndDiagnosticsSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.UsageAndDiagnosticsSettingsProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

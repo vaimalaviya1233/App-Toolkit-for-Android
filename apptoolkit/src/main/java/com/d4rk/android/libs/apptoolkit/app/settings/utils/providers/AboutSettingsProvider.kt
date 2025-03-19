@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers
+package com.d4rk.android.libs.apptoolkit.app.settings.utils.providers
 
 /**
  * Interface for providing settings related to the "About" section of an application.

@@ -12,7 +12,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers.PrivacySettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
 
 @Composable
 fun PrivacySettingsList(

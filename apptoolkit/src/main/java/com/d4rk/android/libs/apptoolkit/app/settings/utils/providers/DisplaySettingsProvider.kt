@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.core.utils.interfaces.providers
+package com.d4rk.android.libs.apptoolkit.app.settings.utils.providers
 
 import androidx.compose.runtime.Composable
 
