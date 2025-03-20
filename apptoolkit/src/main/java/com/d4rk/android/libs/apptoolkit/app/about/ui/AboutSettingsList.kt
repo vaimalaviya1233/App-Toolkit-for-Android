@@ -2,10 +2,12 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -13,17 +15,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
-import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
-import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
-import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.Snackbar
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
+import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
+import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
+import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.Snackbar
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
 fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider) {
@@ -41,25 +47,44 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
         ) {
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
-                PreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
-                PreferenceItem(
-                    title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})"
-                )
-                PreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss) , onClick = {
-                    IntentsHelper.openLicensesScreen(
-                        context = context , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , appName = context.getString(R.string.app_name) , appVersion = configProvider.appVersion , appVersionCode = configProvider.appVersionCode , appShortDescription = R.string.app_short_description
-                    )
-                })
+                SmallVerticalSpacer()
+                Column(
+                    modifier = Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                ) {
+                    SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
+                    ExtraTinyVerticalSpacer()
+                    SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
+                    ExtraTinyVerticalSpacer()
+                    SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss) , onClick = {
+                        IntentsHelper.openLicensesScreen(
+                            context = context ,
+                            eulaHtmlString = eulaHtmlString ,
+                            changelogHtmlString = changelogHtmlString ,
+                            appName = context.getString(R.string.app_name) ,
+                            appVersion = configProvider.appVersion ,
+                            appVersionCode = configProvider.appVersionCode ,
+                            appShortDescription = R.string.app_short_description
+                        )
+                    })
+                }
+
             }
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.device_info))
-            }
-            item {
-                PreferenceItem(title = stringResource(id = R.string.device_info) , summary = deviceProvider.deviceInfo , onClick = {
-                    ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = deviceProvider.deviceInfo , onShowSnackbar = {
-                        showSnackbar = true
+                SmallVerticalSpacer()
+                Column(
+                    modifier = Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                ) {
+                    SettingsPreferenceItem(title = stringResource(id = R.string.device_info) , summary = deviceProvider.deviceInfo , onClick = {
+                        ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = deviceProvider.deviceInfo , onShowSnackbar = {
+                            showSnackbar = true
+                        })
                     })
-                })
+                }
             }
         }
 
