@@ -81,6 +81,11 @@
     <string name="error_reporting">Error reporting</string>
     <string name="bug_report">Bug report</string>
     <string name="summary_preference_settings_bug_report">Send bug reports and feature requests to the app\'s GitHub repository issues page</string>
+    <string name="cache_management">Cache Management</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="summary_preference_settings_clear_cache">Clear temporary application data.</string>
+    <string name="cache_cleared_success">Cache cleared successfully</string>
+    <string name="cache_cleared_error">Cache cleared with some errors</string>
 
     <string name="security_and_privacy">Security &amp; privacy</string>
     <string name="summary_preference_settings_privacy_and_security">Manage your privacy settings</string>

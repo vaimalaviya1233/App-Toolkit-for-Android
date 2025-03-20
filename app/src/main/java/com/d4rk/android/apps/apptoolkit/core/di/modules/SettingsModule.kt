@@ -38,6 +38,6 @@ val settingsModule = module {
 
     single<LoadConsentInfoUseCase> { LoadConsentInfoUseCase(context = get()) }
     viewModel {
-        AdsSettingsViewModel(configProvider = get() , dataStore = get() , loadConsentInfoUseCase = get() , dispatcherProvider = get())
+        AdsSettingsViewModel(loadConsentInfoUseCase = get() , dispatcherProvider = get())
     }
 }

@@ -14,7 +14,9 @@ import org.koin.dsl.module
 
 val appToolkitModule : Module = module {
     single<QuerySkuDetailsUseCase> { QuerySkuDetailsUseCase() }
-    viewModel { SupportViewModel(querySkuDetailsUseCase = get() , dispatcherProvider = get()) }
+    viewModel {
+        SupportViewModel(querySkuDetailsUseCase = get() , dispatcherProvider = get())
+    }
 
     single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }
     single<GetFAQsUseCase> { GetFAQsUseCase(application = get()) }

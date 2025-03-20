@@ -2,9 +2,9 @@ package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.actions.AdsSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.model.AdsSettingsData
 import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases.LoadConsentInfoUseCase
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -14,40 +14,50 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.ump.ConsentInformation
+import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class AdsSettingsViewModel(configProvider : BuildInfoProvider , private val dataStore : CommonDataStore , private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
+class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(UiStateScreen(screenState = ScreenState.IsLoading() , data = AdsSettingsData(adsEnabled = ! configProvider.isDebugBuild , consentInformation = null)))
+    private val _screenState : MutableStateFlow<UiStateScreen<AdsSettingsData>> = MutableStateFlow(value = UiStateScreen(screenState = ScreenState.IsLoading() , data = AdsSettingsData()))
     val screenState : StateFlow<UiStateScreen<AdsSettingsData>> = _screenState.asStateFlow()
 
     init {
-        loadAdsSettings()
+        sendEvent(event = AdsSettingsEvent.LoadAdsSettings)
+    }
+
+    fun sendEvent(event : AdsSettingsEvent) {
+        when (event) {
+            AdsSettingsEvent.LoadAdsSettings -> loadAdsSettings()
+            is AdsSettingsEvent.AdsSettingChanged -> onAdsSettingChanged(isEnabled = event.isEnabled)
+            is AdsSettingsEvent.OpenConsentForm -> openConsentForm(activity = event.activity)
+        }
     }
 
     private fun loadAdsSettings() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            loadConsentInfoUseCase().collect { result ->
+        viewModelScope.launch(context = dispatcherProvider.io) {
+            loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
+                delay(500)
                 when (result) {
                     is DataState.Success -> {
-                        dataStore.ads.collect { isEnabled ->
-                            _screenState.updateData(ScreenState.Success()) { current ->
-                                current.copy(adsEnabled = isEnabled , consentInformation = result.data)
-                            }
+                        _screenState.updateData(newDataState = ScreenState.Success()) { current ->
+                            current.copy(consentInformation = result.data)
                         }
                     }
 
                     is DataState.Error -> {
                         _screenState.setErrors(
-                            listOf(UiSnackbar(message = UiTextHelper.DynamicString("Failed to load ads settings")))
+                            errors = listOf(element = UiSnackbar(message = UiTextHelper.DynamicString(content = "Failed to load ads settings")))
                         )
-                        _screenState.updateState(ScreenState.Error())
+                        _screenState.updateState(newValues = ScreenState.Error())
                     }
 
                     else -> {}
@@ -56,24 +66,29 @@ class AdsSettingsViewModel(configProvider : BuildInfoProvider , private val data
         }
     }
 
-    fun toggleAds(isChecked : Boolean) {
-        viewModelScope.launch(dispatcherProvider.io) {
-            dataStore.saveAds(isChecked)
-            _screenState.updateData(ScreenState.Success()) { current ->
-                current.copy(adsEnabled = isChecked)
-            }
+    private fun onAdsSettingChanged(isEnabled : Boolean) {
+        _screenState.updateData(newDataState = ScreenState.Success()) { current : AdsSettingsData ->
+            current.copy(adsEnabled = isEnabled)
         }
     }
 
-    fun openConsentForm(activity : AdsSettingsActivity) {
-        _screenState.value.data?.consentInformation?.let { consentInfo ->
+    private fun openConsentForm(activity : AdsSettingsActivity) {
+        val consentInfo = _screenState.value.data?.consentInformation
+        if (consentInfo == null) {
+            sendEvent(event = AdsSettingsEvent.LoadAdsSettings)
+            return
+        }
+
+        val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
+
+        consentInfo.requestConsentInfoUpdate(activity , params , {
             UserMessagingPlatform.loadConsentForm(activity , { consentForm ->
                 if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED || consentInfo.consentStatus == ConsentInformation.ConsentStatus.OBTAINED) {
                     consentForm.show(activity) {
-                        loadAdsSettings()
+                        sendEvent(event = AdsSettingsEvent.LoadAdsSettings)
                     }
                 }
             } , {})
-        }
+        } , {})
     }
 }

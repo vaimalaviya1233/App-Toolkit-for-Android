@@ -20,7 +20,6 @@ class GeneralSettingsContentProvider(
 ) {
     @Composable
     fun ProvideContent(contentKey : String? , paddingValues : PaddingValues) {
-        println("contentKey: $contentKey")
         when (contentKey) {
             SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues , deviceProvider = deviceProvider , configProvider = configProvider)
             SettingsContent.ADVANCED -> AdvancedSettingsList(paddingValues = paddingValues , provider = advancedProvider)
