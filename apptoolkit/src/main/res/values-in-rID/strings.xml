@@ -81,6 +81,11 @@
     <string name="error_reporting">Pelaporan kesalahan</string>
     <string name="bug_report">Laporan bug</string>
     <string name="summary_preference_settings_bug_report">Kirim laporan bug dan permintaan fitur ke halaman masalah di repositori GitHub aplikasi</string>
+    <string name="cache_management">Manajemen Cache</string>
+    <string name="clear_cache">Bersihkan Cache</string>
+    <string name="summary_preference_settings_clear_cache">Bersihkan data aplikasi sementara.</string>
+    <string name="cache_cleared_success">Cache berhasil dibersihkan</string>
+    <string name="cache_cleared_error">Cache dibersihkan dengan beberapa kesalahan</string>
 
     <string name="security_and_privacy">Keamanan &amp; privasi</string>
     <string name="summary_preference_settings_privacy_and_security">Kelola pengaturan privasi Anda</string>
@@ -117,6 +122,7 @@
     <string name="license">Lisensi</string>
 
     <string name="about">Tentang</string>
+    <string name="summary_preference_settings_about">Pelajari lebih lanjut tentang aplikasi</string>
 
     <string name="app_info">Info aplikasi</string>
     <string name="app_build_version">Versi build aplikasi</string>

@@ -81,6 +81,11 @@
     <string name="error_reporting">Fehlerberichte</string>
     <string name="bug_report">Fehlerbericht</string>
     <string name="summary_preference_settings_bug_report">Senden Sie Fehlerberichte und Funktionsanfragen an die GitHub-Seite des Projekts</string>
+    <string name="cache_management">Cache-Verwaltung</string>
+    <string name="clear_cache">Cache leeren</string>
+    <string name="summary_preference_settings_clear_cache">Temporäre Anwendungsdaten löschen.</string>
+    <string name="cache_cleared_success">Cache erfolgreich geleert</string>
+    <string name="cache_cleared_error">Cache wurde mit einigen Fehlern geleert</string>
 
     <string name="security_and_privacy">Sicherheit &amp; Datenschutz</string>
     <string name="summary_preference_settings_privacy_and_security">Verwalten Sie Ihre Datenschutzeinstellungen</string>
@@ -117,6 +122,7 @@
     <string name="license">Lizenz</string>
 
     <string name="about">Über</string>
+    <string name="summary_preference_settings_about">Erfahren Sie mehr über die App</string>
 
     <string name="app_info">App-Informationen</string>
     <string name="app_build_version">App-Build-Version</string>

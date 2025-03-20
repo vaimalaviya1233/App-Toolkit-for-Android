@@ -81,6 +81,11 @@
     <string name="error_reporting">Hibajelentés</string>
     <string name="bug_report">Hibajelentés</string>
     <string name="summary_preference_settings_bug_report">Küldj hibajelentéseket és funkciókéréseket az alkalmazás GitHub-archívumának hibajelentő oldalára</string>
+    <string name="cache_management">Gyorsítótár-kezelés</string>
+    <string name="clear_cache">Gyorsítótár törlése</string>
+    <string name="summary_preference_settings_clear_cache">Törölje az ideiglenes alkalmazásadatokat.</string>
+    <string name="cache_cleared_success">A gyorsítótár sikeresen törölve</string>
+    <string name="cache_cleared_error">A gyorsítótár törlése néhány hibával történt</string>
 
     <string name="security_and_privacy">Biztonság és adatvédelem</string>
     <string name="summary_preference_settings_privacy_and_security">Kezeld az adatvédelmi beállításaidat</string>
@@ -117,6 +122,7 @@
     <string name="license">Licenc</string>
 
     <string name="about">Névjegy</string>
+    <string name="summary_preference_settings_about">Tudjon meg többet az alkalmazásról</string>
 
     <string name="app_info">Alkalmazásinformáció</string>
     <string name="app_build_version">Alkalmazásverzió</string>

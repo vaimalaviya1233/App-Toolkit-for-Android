@@ -81,6 +81,11 @@
     <string name="error_reporting">Отчёт об ошибках</string>
     <string name="bug_report">Отчёт о баге</string>
     <string name="summary_preference_settings_bug_report">Отправьте отчёты об ошибках и запросы на функции на страницу GitHub проекта</string>
+    <string name="cache_management">Управление кэшем</string>
+    <string name="clear_cache">Очистить кэш</string>
+    <string name="summary_preference_settings_clear_cache">Очистить временные данные приложения.</string>
+    <string name="cache_cleared_success">Кэш успешно очищен</string>
+    <string name="cache_cleared_error">Кэш очищен с некоторыми ошибками</string>
 
     <string name="security_and_privacy">Безопасность и конфиденциальность</string>
     <string name="summary_preference_settings_privacy_and_security">Управляйте настройками конфиденциальности</string>
@@ -117,6 +122,7 @@
     <string name="license">Лицензия</string>
 
     <string name="about">О приложении</string>
+    <string name="summary_preference_settings_about">Узнайте больше о приложении</string>
 
     <string name="app_info">Информация о приложении</string>
     <string name="app_build_version">Версия сборки приложения</string>

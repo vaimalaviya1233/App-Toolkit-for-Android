@@ -81,6 +81,11 @@
     <string name="error_reporting">การรายงานข้อผิดพลาด</string>
     <string name="bug_report">รายงานข้อผิดพลาด</string>
     <string name="summary_preference_settings_bug_report">ส่งรายงานข้อผิดพลาดไปยังหน้าปัญหาใน GitHub</string>
+    <string name="cache_management">การจัดการแคช</string>
+    <string name="clear_cache">ล้างแคช</string>
+    <string name="summary_preference_settings_clear_cache">ล้างข้อมูลแอปพลิเคชันชั่วคราว</string>
+    <string name="cache_cleared_success">ล้างแคชสำเร็จ</string>
+    <string name="cache_cleared_error">ล้างแคชแล้วแต่มีข้อผิดพลาดบางประการ</string>
 
     <string name="security_and_privacy">ความปลอดภัยและความเป็นส่วนตัว</string>
     <string name="summary_preference_settings_privacy_and_security">จัดการการตั้งค่าความเป็นส่วนตัวของคุณ</string>
@@ -117,6 +122,7 @@
     <string name="license">ใบอนุญาต</string>
 
     <string name="about">เกี่ยวกับแอป</string>
+    <string name="summary_preference_settings_about">เรียนรู้เพิ่มเติมเกี่ยวกับแอป</string>
 
     <string name="app_info">ข้อมูลแอป</string>
     <string name="app_build_version">เวอร์ชันแอป</string>

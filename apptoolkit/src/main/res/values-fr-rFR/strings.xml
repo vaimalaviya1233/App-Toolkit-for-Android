@@ -81,6 +81,11 @@
     <string name="error_reporting">Rapport d\'erreurs</string>
     <string name="bug_report">Rapport de bug</string>
     <string name="summary_preference_settings_bug_report">Envoyez des rapports de bugs et des demandes de fonctionnalités à la page de problèmes de GitHub</string>
+    <string name="cache_management">Gestion du cache</string>
+    <string name="clear_cache">Vider le cache</string>
+    <string name="summary_preference_settings_clear_cache">Effacer les données temporaires de l'application.</string>
+    <string name="cache_cleared_success">Cache vidé avec succès</string>
+    <string name="cache_cleared_error">Cache vidé avec quelques erreurs</string>
 
     <string name="security_and_privacy">Sécurité et confidentialité</string>
     <string name="summary_preference_settings_privacy_and_security">Gérez vos paramètres de confidentialité</string>
@@ -117,6 +122,7 @@
     <string name="license">Licence</string>
 
     <string name="about">À propos</string>
+    <string name="summary_preference_settings_about">En savoir plus sur l'application</string>
 
     <string name="app_info">Informations sur l\'application</string>
     <string name="app_build_version">Version de la compilation</string>

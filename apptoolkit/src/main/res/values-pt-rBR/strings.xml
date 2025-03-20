@@ -81,6 +81,11 @@
     <string name="error_reporting">Relatar erros</string>
     <string name="bug_report">Relatar bug</string>
     <string name="summary_preference_settings_bug_report">Envie relatórios de bugs e solicitações de recursos para a página de problemas do repositório do GitHub do aplicativo</string>
+    <string name="cache_management">Gerenciamento de cache</string>
+    <string name="clear_cache">Limpar cache</string>
+    <string name="summary_preference_settings_clear_cache">Limpar os dados temporários do aplicativo.</string>
+    <string name="cache_cleared_success">Cache limpo com sucesso</string>
+    <string name="cache_cleared_error">Cache limpo com alguns erros</string>
 
     <string name="security_and_privacy">Segurança e privacidade</string>
     <string name="summary_preference_settings_privacy_and_security">Gerencie suas configurações de privacidade</string>
@@ -117,6 +122,7 @@
     <string name="license">Licença</string>
 
     <string name="about">Sobre</string>
+    <string name="summary_preference_settings_about">Saiba mais sobre o aplicativo</string>
 
     <string name="app_info">Informações do aplicativo</string>
     <string name="app_build_version">Versão de compilação do aplicativo</string>

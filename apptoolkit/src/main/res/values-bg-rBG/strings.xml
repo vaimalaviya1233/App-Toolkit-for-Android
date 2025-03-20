@@ -81,6 +81,11 @@
     <string name="error_reporting">Докладване на грешки</string>
     <string name="bug_report">Доклад за грешка</string>
     <string name="summary_preference_settings_bug_report">Изпращайте доклади за грешки и предложения за функции към страницата с проблеми в GitHub</string>
+    <string name="cache_management">Управление на кеша</string>
+    <string name="clear_cache">Изчисти кеша</string>
+    <string name="summary_preference_settings_clear_cache">Изчисти временните данни на приложението.</string>
+    <string name="cache_cleared_success">Кешът беше успешно изчистен</string>
+    <string name="cache_cleared_error">Кешът беше изчистен, но с някои грешки</string>
 
     <string name="security_and_privacy">Сигурност и поверителност</string>
     <string name="summary_preference_settings_privacy_and_security">Управлявайте настройките за поверителност</string>
@@ -117,6 +122,7 @@
     <string name="license">Лиценз</string>
 
     <string name="about">Относно</string>
+    <string name="summary_preference_settings_about">Научете повече за приложението</string>
 
     <string name="app_info">Информация за приложението</string>
     <string name="app_build_version">Версия на компилацията</string>

@@ -81,6 +81,11 @@
     <string name="error_reporting">त्रुटि रिपोर्टिंग</string>
     <string name="bug_report">बग रिपोर्ट</string>
     <string name="summary_preference_settings_bug_report">बग रिपोर्ट और फीचर अनुरोध ऐप के GitHub भंडार मुद्दों पृष्ठ पर भेजें</string>
+    <string name="cache_management">कैश प्रबंधन</string>
+    <string name="clear_cache">कैश साफ़ करें</string>
+    <string name="summary_preference_settings_clear_cache">अस्थायी एप्लिकेशन डेटा साफ़ करें.</string>
+    <string name="cache_cleared_success">कैश सफलतापूर्वक साफ़ किया गया</string>
+    <string name="cache_cleared_error">कुछ त्रुटियों के साथ कैश साफ़ किया गया</string>
 
     <string name="security_and_privacy">सुरक्षा और गोपनीयता</string>
     <string name="summary_preference_settings_privacy_and_security">अपनी गोपनीयता सेटिंग्स का प्रबंधन करें</string>
@@ -117,6 +122,7 @@
     <string name="license">लाइसेंस</string>
 
     <string name="about">के बारे में</string>
+    <string name="summary_preference_settings_about">ऐप के बारे में अधिक जानें</string>
 
     <string name="app_info">ऐप जानकारी</string>
     <string name="app_build_version">एप्लिकेशन निर्माण संस्करण</string>

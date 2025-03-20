@@ -81,6 +81,11 @@
     <string name="error_reporting">Звіт про помилки</string>
     <string name="bug_report">Звіт про помилку</string>
     <string name="summary_preference_settings_bug_report">Надішліть звіти про помилки та побажання через сторінку GitHub</string>
+    <string name="cache_management">Управління кешем</string>
+    <string name="clear_cache">Очистити кеш</string>
+    <string name="summary_preference_settings_clear_cache">Очистити тимчасові дані застосунку.</string>
+    <string name="cache_cleared_success">Кеш успішно очищено</string>
+    <string name="cache_cleared_error">Кеш очищено з деякими помилками</string>
 
     <string name="security_and_privacy">Безпека та конфіденційність</string>
     <string name="summary_preference_settings_privacy_and_security">Керуйте своїми налаштуваннями конфіденційності</string>
@@ -117,6 +122,7 @@
     <string name="license">Ліцензія</string>
 
     <string name="about">Про додаток</string>
+    <string name="summary_preference_settings_about">Дізнайтеся більше про додаток</string>
 
     <string name="app_info">Інформація про додаток</string>
     <string name="app_build_version">Версія додатка</string>

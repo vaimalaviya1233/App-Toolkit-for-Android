@@ -81,6 +81,11 @@
     <string name="error_reporting">Hata raporlama</string>
     <string name="bug_report">Hata raporu</string>
     <string name="summary_preference_settings_bug_report">Hata raporları ve istekleri GitHub sorunlar sayfasına gönderin</string>
+    <string name="cache_management">Önbellek Yönetimi</string>
+    <string name="clear_cache">Önbelleği Temizle</string>
+    <string name="summary_preference_settings_clear_cache">Geçici uygulama verilerini temizle.</string>
+    <string name="cache_cleared_success">Önbellek başarıyla temizlendi</string>
+    <string name="cache_cleared_error">Önbellek bazı hatalarla temizlendi</string>
 
     <string name="security_and_privacy">Güvenlik ve gizlilik</string>
     <string name="summary_preference_settings_privacy_and_security">Gizlilik ayarlarınızı yönetin</string>
@@ -117,6 +122,7 @@
     <string name="license">Lisans</string>
 
     <string name="about">Hakkında</string>
+    <string name="summary_preference_settings_about">Uygulama hakkında daha fazla bilgi edinin</string>
 
     <string name="app_info">Uygulama bilgisi</string>
     <string name="app_build_version">Uygulama sürümü</string>

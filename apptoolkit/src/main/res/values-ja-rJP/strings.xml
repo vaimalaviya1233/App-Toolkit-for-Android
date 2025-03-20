@@ -81,6 +81,11 @@
     <string name="error_reporting">エラー報告</string>
     <string name="bug_report">バグ報告</string>
     <string name="summary_preference_settings_bug_report">アプリのGitHubリポジトリの問題ページにバグ報告と機能リクエストを送信する</string>
+    <string name="cache_management">キャッシュ管理</string>
+    <string name="clear_cache">キャッシュをクリア</string>
+    <string name="summary_preference_settings_clear_cache">一時的なアプリケーションデータをクリアします。</string>
+    <string name="cache_cleared_success">キャッシュのクリアに成功しました</string>
+    <string name="cache_cleared_error">いくつかのエラーが発生しましたが、キャッシュをクリアしました</string>
 
     <string name="security_and_privacy">セキュリティとプライバシー</string>
     <string name="summary_preference_settings_privacy_and_security">プライバシー設定を管理する</string>
@@ -117,6 +122,7 @@
     <string name="license">ライセンス</string>
 
     <string name="about">アプリについて</string>
+    <string name="summary_preference_settings_about">アプリについて詳しく知る</string>
 
     <string name="app_info">アプリ情報</string>
     <string name="app_build_version">アプリビルドバージョン</string>

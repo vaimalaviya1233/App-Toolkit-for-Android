@@ -81,6 +81,11 @@
     <string name="error_reporting">Zgłaszanie błędów</string>
     <string name="bug_report">Raport o błędzie</string>
     <string name="summary_preference_settings_bug_report">Prześlij raporty o błędach i żądania funkcji na stronę zgłoszeń problemów w repozytorium GitHub aplikacji</string>
+    <string name="cache_management">Zarządzanie pamięcią podręczną</string>
+    <string name="clear_cache">Wyczyść pamięć podręczną</string>
+    <string name="summary_preference_settings_clear_cache">Wyczyść tymczasowe dane aplikacji.</string>
+    <string name="cache_cleared_success">Pamięć podręczna została pomyślnie wyczyszczona</string>
+    <string name="cache_cleared_error">Pamięć podręczna została wyczyszczona z pewnymi błędami</string>
 
     <string name="security_and_privacy">Bezpieczeństwo i prywatność</string>
     <string name="summary_preference_settings_privacy_and_security">Zarządzaj ustawieniami prywatności</string>
@@ -117,6 +122,7 @@
     <string name="license">Licencja</string>
 
     <string name="about">O aplikacji</string>
+    <string name="summary_preference_settings_about">Dowiedz się więcej o aplikacji</string>
 
     <string name="app_info">Informacje o aplikacji</string>
     <string name="app_build_version">Wersja kompilacji aplikacji</string>

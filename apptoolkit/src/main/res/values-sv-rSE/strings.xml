@@ -81,6 +81,11 @@
     <string name="error_reporting">Felrapportering</string>
     <string name="bug_report">Felrapport</string>
     <string name="summary_preference_settings_bug_report">Skicka felrapporter och funktionsförfrågningar till appens GitHub-sida</string>
+    <string name="cache_management">Cachehantering</string>
+    <string name="clear_cache">Rensa cache</string>
+    <string name="summary_preference_settings_clear_cache">Rensa tillfälliga applikationsdata.</string>
+    <string name="cache_cleared_success">Cache rensades framgångsrikt</string>
+    <string name="cache_cleared_error">Cache rensades med vissa fel</string>
 
     <string name="security_and_privacy">Säkerhet och integritet</string>
     <string name="summary_preference_settings_privacy_and_security">Hantera dina sekretessinställningar</string>
@@ -117,6 +122,7 @@
     <string name="license">Licens</string>
 
     <string name="about">Om appen</string>
+    <string name="summary_preference_settings_about">Läs mer om appen</string>
 
     <string name="app_info">Appinformation</string>
     <string name="app_build_version">Byggversion</string>

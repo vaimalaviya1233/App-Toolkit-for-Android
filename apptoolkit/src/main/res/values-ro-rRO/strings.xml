@@ -81,6 +81,11 @@
     <string name="error_reporting">Raportare erori</string>
     <string name="bug_report">Raportare bug</string>
     <string name="summary_preference_settings_bug_report">Trimite rapoarte de erori și solicitări de funcții pe pagina de probleme a aplicației din GitHub</string>
+    <string name="cache_management">Gestionare cache</string>
+    <string name="clear_cache">Șterge cache</string>
+    <string name="summary_preference_settings_clear_cache">Șterge datele temporare ale aplicației.</string>
+    <string name="cache_cleared_success">Cache-ul a fost șters cu succes</string>
+    <string name="cache_cleared_error">Cache-ul a fost șters, dar cu unele erori</string>
 
     <string name="security_and_privacy">Securitate și confidențialitate</string>
     <string name="summary_preference_settings_privacy_and_security">Gestionează setările de confidențialitate</string>
@@ -117,6 +122,7 @@
     <string name="license">Licență</string>
 
     <string name="about">Despre</string>
+    <string name="summary_preference_settings_about">Află mai multe despre aplicație</string>
 
     <string name="app_info">Informații despre aplicație</string>
     <string name="app_build_version">Versiunea de compilare a aplicației</string>
