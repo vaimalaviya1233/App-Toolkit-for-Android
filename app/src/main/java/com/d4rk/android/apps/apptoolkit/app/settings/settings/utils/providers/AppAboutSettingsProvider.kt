@@ -3,7 +3,6 @@ package com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers
 import android.content.Context
 import android.os.Build
 import com.d4rk.android.apps.apptoolkit.BuildConfig
-import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 
 class AppAboutSettingsProvider(val context : Context) : AboutSettingsProvider {

@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.libs.apptoolkit.core.domain.usecases.Repository
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.toError
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
