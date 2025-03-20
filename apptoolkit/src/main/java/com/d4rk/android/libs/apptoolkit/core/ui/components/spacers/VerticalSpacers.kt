@@ -86,3 +86,8 @@ fun SmallVerticalSpacer() {
 fun ExtraSmallVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.ExtraSmallSize))
 }
+
+@Composable
+fun ExtraTinyVerticalSpacer() {
+    Spacer(modifier = Modifier.height(height = SizeConstants.ExtraTinySize))
+}

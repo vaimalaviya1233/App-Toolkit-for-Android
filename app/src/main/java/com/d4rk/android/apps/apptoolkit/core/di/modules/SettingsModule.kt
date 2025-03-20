@@ -6,8 +6,11 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Ap
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppPrivacySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppSettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppBuildInfoProvider
+import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases.LoadConsentInfoUseCase
 import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.ui.PermissionsViewModel
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.utils.interfaces.PermissionsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
@@ -22,6 +25,7 @@ import org.koin.dsl.module
 
 val settingsModule = module {
     single<SettingsProvider> { AppSettingsProvider() }
+
     viewModel {
         SettingsViewModel(settingsProvider = get() , dispatcherProvider = get())
     }
@@ -34,6 +38,11 @@ val settingsModule = module {
     single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(deviceProvider = get() , advancedProvider = get() , displayProvider = get() , privacyProvider = get() , configProvider = get()) }
     viewModel {
         GeneralSettingsViewModel()
+    }
+
+    single<PermissionsProvider> { PermissionsSettingsProvider() }
+    viewModel {
+        PermissionsViewModel(settingsProvider = get() , dispatcherProvider = get())
     }
 
     single<LoadConsentInfoUseCase> { LoadConsentInfoUseCase(context = get()) }

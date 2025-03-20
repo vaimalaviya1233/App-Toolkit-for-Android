@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsActivity
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.ui.PermissionsActivity
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsActivity
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsContent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
@@ -11,7 +12,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 class AppPrivacySettingsProvider(val context : Context) : PrivacySettingsProvider {
 
     override fun openPermissionsScreen() {
-        //  IntentsHelper.openActivity(context = context , activityClass = PermissionsSettingsActivity::class.java)
+         IntentsHelper.openActivity(context = context , activityClass = PermissionsActivity::class.java)
     }
 
     override fun openAdsScreen() {

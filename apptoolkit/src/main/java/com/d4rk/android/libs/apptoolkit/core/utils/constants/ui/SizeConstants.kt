@@ -14,5 +14,6 @@ object SizeConstants {
     val MediumSize : Dp = 12.dp
     val SmallSize : Dp = 8.dp
     val ExtraSmallSize : Dp = 4.dp
+    val ExtraTinySize : Dp = 2.dp
     val IconSize : Dp = ButtonDefaults.IconSize
 }

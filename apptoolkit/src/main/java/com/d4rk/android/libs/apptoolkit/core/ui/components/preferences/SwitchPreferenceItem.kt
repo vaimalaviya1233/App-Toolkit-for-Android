@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -43,48 +45,55 @@ fun SwitchPreferenceItem(
     icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit
 ) {
     val view : View = LocalView.current
-    Row(
+    Card(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-                .clickable(onClick = {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(! checked)
-                }) ,
-        verticalAlignment = Alignment.CenterVertically ,
+                .clip(RoundedCornerShape(size = 2.dp)) ,
+        shape = RoundedCornerShape(size = 2.dp) ,
     ) {
-        icon?.let {
-            LargeHorizontalSpacer()
-            Icon(imageVector = it , contentDescription = null)
-            LargeHorizontalSpacer()
-        }
-        Column(
+        Row(
             modifier = Modifier
-                    .padding(all = SizeConstants.LargeSize)
-                    .weight(weight = 1f) ,
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                    .clickable(onClick = {
+                        view.playSoundEffect(SoundEffectConstants.CLICK)
+                        onCheckedChange(! checked)
+                    }) ,
+            verticalAlignment = Alignment.CenterVertically ,
         ) {
-            Text(text = title , style = MaterialTheme.typography.titleLarge)
-            summary?.let {
-                Text(text = it , style = MaterialTheme.typography.bodyMedium)
+            icon?.let {
+                LargeHorizontalSpacer()
+                Icon(imageVector = it , contentDescription = null)
+                LargeHorizontalSpacer()
             }
+            Column(
+                modifier = Modifier
+                        .padding(all = SizeConstants.LargeSize)
+                        .weight(weight = 1f) ,
+            ) {
+                Text(text = title , style = MaterialTheme.typography.titleLarge)
+                summary?.let {
+                    Text(text = it , style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+            Switch(modifier = Modifier.padding(all = SizeConstants.LargeSize) , checked = checked , onCheckedChange = { isChecked ->
+                onCheckedChange(isChecked)
+            } , thumbContent = {
+                if (checked) {
+                    Icon(
+                        Icons.Filled.Check ,
+                        contentDescription = null ,
+                        modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
+                    )
+                }
+                else {
+                    Icon(
+                        Icons.Filled.Close ,
+                        contentDescription = null ,
+                        modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
+                    )
+                }
+            })
         }
-        Switch(modifier = Modifier.padding(all = SizeConstants.LargeSize) , checked = checked , onCheckedChange = { isChecked ->
-            onCheckedChange(isChecked)
-        } , thumbContent = {
-            if (checked) {
-                Icon(
-                    Icons.Filled.Check ,
-                    contentDescription = null ,
-                    modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
-                )
-            }
-            else {
-                Icon(
-                    Icons.Filled.Close ,
-                    contentDescription = null ,
-                    modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
-                )
-            }
-        })
     }
 }

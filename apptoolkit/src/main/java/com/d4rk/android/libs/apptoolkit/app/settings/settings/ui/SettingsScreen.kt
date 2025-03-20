@@ -52,6 +52,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 
@@ -175,24 +178,19 @@ fun SettingsDetail(preference : String , context : Context , paddingValues : Pad
 }
 
 @Composable
-fun SettingsList(
-    paddingValues : PaddingValues , settingsConfig : SettingsConfig , onPreferenceClick : (String) -> Unit = {}
-) {
-    LazyColumn(
-        contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()
-    ) {
+fun SettingsList(paddingValues : PaddingValues , settingsConfig : SettingsConfig , onPreferenceClick : (String) -> Unit = {}) {
+    LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         settingsConfig.categories.forEach { category ->
             item {
-                Spacer(modifier = Modifier.height(24.dp))
+                LargeVerticalSpacer()
                 Column(
                     modifier = Modifier
                             .padding(start = 16.dp , end = 16.dp)
-                            .clip(RoundedCornerShape(24.dp))
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
                 ) {
                     category.preferences.forEach { preference ->
-                        SettingsPreferenceItem(
-                            preference.icon , title = preference.title , summary = preference.summary , onClick = { preference.action.invoke() })
-                        Spacer(modifier = Modifier.height(2.dp))
+                        SettingsPreferenceItem(icon = preference.icon , title = preference.title , summary = preference.summary , onClick = { preference.action.invoke() })
+                        ExtraTinyVerticalSpacer()
                     }
                 }
             }
