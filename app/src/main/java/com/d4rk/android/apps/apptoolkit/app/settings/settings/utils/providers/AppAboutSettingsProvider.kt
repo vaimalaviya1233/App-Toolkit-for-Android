@@ -7,24 +7,6 @@ import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 
 class AppAboutSettingsProvider(val context : Context) : AboutSettingsProvider {
-
-    override val appName : String
-        get() = context.getString(R.string.app_name)
-
-    override val packageName : String
-        get() = context.packageName
-
-    override val appVersion : String
-        get() = BuildConfig.VERSION_NAME
-
-    override val appVersionCode : Int
-        get() {
-            return BuildConfig.VERSION_CODE
-        }
-
-    override val copyrightText : String
-        get() = context.getString(com.d4rk.android.libs.apptoolkit.R.string.copyright)
-
     override val deviceInfo : String
         get() {
             return context.getString(

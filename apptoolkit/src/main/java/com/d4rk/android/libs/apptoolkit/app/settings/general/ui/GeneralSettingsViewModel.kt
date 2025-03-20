@@ -24,6 +24,9 @@ class GeneralSettingsViewModel : ViewModel() {
     fun loadContent(contentKey : String?) {
         viewModelScope.launch {
             _screenState.setLoading()
+
+            delay(500)
+
             if (! contentKey.isNullOrBlank()) {
                 _screenState.updateData(newDataState = ScreenState.Success()) { contentKey }
             }

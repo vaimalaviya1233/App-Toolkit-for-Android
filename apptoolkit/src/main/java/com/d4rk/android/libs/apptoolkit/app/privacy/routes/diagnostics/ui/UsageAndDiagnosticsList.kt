@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.usage
+package com.d4rk.android.libs.apptoolkit.app.privacy.routes.diagnostics.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,17 +16,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
-import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardComposable
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.UsageAndDiagnosticsSettingsProvider
+import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun UsageAndDiagnosticsList(paddingValues : PaddingValues , provider : UsageAndDiagnosticsSettingsProvider) {
+fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val switchState : State<Boolean> = dataStore.usageAndDiagnostics.collectAsState(initial = ! provider.isDebugBuild)
+    val switchState : State<Boolean> = dataStore.usageAndDiagnostics.collectAsState(initial = ! configProvider.isDebugBuild)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
 
     LazyColumn(
@@ -35,7 +35,7 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , provider : UsageAndD
                 .fillMaxSize()
     ) {
         item {
-            SwitchCardComposable(
+            SwitchCardItem(
                 title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState
             ) { isChecked ->
                 coroutineScope.launch {

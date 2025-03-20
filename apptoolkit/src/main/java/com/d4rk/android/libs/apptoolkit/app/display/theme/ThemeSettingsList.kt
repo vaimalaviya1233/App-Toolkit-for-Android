@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
-import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardComposable
+import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -33,25 +33,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun ThemeSettingsList(paddingValues : PaddingValues) {
     val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
+
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
-
-    val themeOptions : List<String> = listOf(
-        stringResource(id = R.string.follow_system) ,
-        stringResource(id = R.string.dark_mode) ,
-        stringResource(id = R.string.light_mode) ,
-    )
+    val themeOptions : List<String> = listOf(stringResource(id = R.string.follow_system) , stringResource(id = R.string.dark_mode) , stringResource(id = R.string.light_mode))
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            contentPadding = paddingValues , modifier = Modifier.fillMaxSize()
-        ) {
+        LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxSize()) {
             item {
-                SwitchCardComposable(
-                    title = stringResource(id = R.string.amoled_mode) , switchState = isAmoledMode
-                ) { isChecked ->
+                SwitchCardItem(title = stringResource(id = R.string.amoled_mode) , switchState = isAmoledMode) { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveAmoledMode(isChecked = isChecked)
                     }
@@ -64,26 +56,22 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                             .padding(all = 24.dp)
                 ) {
                     themeOptions.forEach { text ->
-                        Row(Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
+                        Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
                                 coroutineScope.launch {
                                     dataStore.saveThemeMode(mode = text)
                                     dataStore.themeModeState.value = text
                                 }
                             })
-                            Text(
-                                text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize)
-                            )
+                            Text(text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize))
                         }
                     }
                 }
             }
             item {
-                InfoMessageSection(
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
-                )
+                InfoMessageSection(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme))
             }
         }
     }

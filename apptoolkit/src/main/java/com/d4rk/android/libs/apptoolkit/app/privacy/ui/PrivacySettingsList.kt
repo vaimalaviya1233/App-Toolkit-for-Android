@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy
+package com.d4rk.android.libs.apptoolkit.app.privacy.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues

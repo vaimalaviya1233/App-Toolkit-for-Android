@@ -34,12 +34,15 @@ interface DisplaySettingsProvider {
      * @param onStartupSelected Callback invoked when a startup option is selected by the user.
      *                          It provides the selected option as a `String`.
      *                          The specific format and meaning of this string are defined by the caller.
+     * @param onDismiss default empty function
      */
     @Composable
     fun StartupPageDialog(
         onDismiss: () -> Unit,
         onStartupSelected: (String) -> Unit
-    )
+    ) {
+
+    }
 
     /**
      * A composable dialog for selecting a language.
@@ -57,7 +60,9 @@ interface DisplaySettingsProvider {
     fun LanguageSelectionDialog(
         onDismiss: () -> Unit,
         onLanguageSelected: (String) -> Unit
-    )
+    ) {
+
+    }
 
     /**
      * Opens the theme settings screen or activity.
@@ -76,5 +81,7 @@ interface DisplaySettingsProvider {
      *
      * @see [closeThemeSettings] for closing the theme settings
      */
-    fun openThemeSettings()
+    fun openThemeSettings() {
+
+    }
 }

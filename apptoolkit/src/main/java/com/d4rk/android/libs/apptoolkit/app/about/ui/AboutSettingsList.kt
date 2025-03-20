@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.about
+package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box
@@ -23,12 +23,13 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 
 @Composable
-fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , provider : AboutSettingsProvider , ) {
+fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
 
-    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(packageName = provider.packageName , currentVersionName = provider.appVersion , context = context)
+    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(packageName = configProvider.packageName , currentVersionName = configProvider.appVersion , context = context)
     val changelogHtmlString : String? = htmlData.value.first
     val eulaHtmlString : String? = htmlData.value.second
 
@@ -40,16 +41,13 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , provider
         ) {
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
+                PreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
                 PreferenceItem(
-                    title = provider.appName ,
-                    summary = provider.copyrightText ,
-                )
-                PreferenceItem(
-                    title = stringResource(id = R.string.app_build_version) , summary = provider.appVersion + " (${provider.appVersionCode})"
+                    title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})"
                 )
                 PreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss) , onClick = {
                     IntentsHelper.openLicensesScreen(
-                        context = context , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , appName = provider.appName , appVersion = provider.appVersion , appVersionCode = provider.appVersionCode , appShortDescription = R.string.app_short_description
+                        context = context , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , appName = context.getString(R.string.app_name) , appVersion = configProvider.appVersion , appVersionCode = configProvider.appVersionCode , appShortDescription = R.string.app_short_description
                     )
                 })
             }
@@ -57,8 +55,8 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , provider
                 PreferenceCategoryItem(title = stringResource(id = R.string.device_info))
             }
             item {
-                PreferenceItem(title = stringResource(id = R.string.device_info) , summary = provider.deviceInfo , onClick = {
-                    ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = provider.deviceInfo , onShowSnackbar = {
+                PreferenceItem(title = stringResource(id = R.string.device_info) , summary = deviceProvider.deviceInfo , onClick = {
+                    ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = deviceProvider.deviceInfo , onShowSnackbar = {
                         showSnackbar = true
                     })
                 })

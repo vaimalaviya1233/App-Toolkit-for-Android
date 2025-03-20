@@ -5,7 +5,9 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Ap
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppDisplaySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppPrivacySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppSettingsProvider
-import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppUsageAndDiagnosticsProvider
+import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppBuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases.LoadConsentInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
@@ -14,34 +16,28 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AdvancedSet
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.UsageAndDiagnosticsSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val settingsModule = module {
     single<SettingsProvider> { AppSettingsProvider() }
-
-    single<AboutSettingsProvider> { AppAboutSettingsProvider(get()) }
-    single<AdvancedSettingsProvider> { AppAdvancedSettingsProvider(get()) }
-    single<DisplaySettingsProvider> { AppDisplaySettingsProvider(get()) }
-    single<PrivacySettingsProvider> { AppPrivacySettingsProvider(get()) }
-    single<UsageAndDiagnosticsSettingsProvider> { AppUsageAndDiagnosticsProvider() }
-
-    single {
-        GeneralSettingsContentProvider(
-            aboutProvider = get(),
-            advancedProvider = get(),
-            displayProvider = get(),
-            privacyProvider = get(),
-            usageProvider = get(),
-        )
+    viewModel {
+        SettingsViewModel(settingsProvider = get() , dispatcherProvider = get())
     }
 
+    single<AboutSettingsProvider> { AppAboutSettingsProvider(context = get()) }
+    single<AdvancedSettingsProvider> { AppAdvancedSettingsProvider(context = get()) }
+    single<DisplaySettingsProvider> { AppDisplaySettingsProvider(context = get()) }
+    single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
+    single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
+    single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(deviceProvider = get() , advancedProvider = get() , displayProvider = get() , privacyProvider = get() , configProvider = get()) }
     viewModel {
         GeneralSettingsViewModel()
     }
 
+    single<LoadConsentInfoUseCase> { LoadConsentInfoUseCase(context = get()) }
     viewModel {
-        SettingsViewModel(settingsProvider = get(), dispatcherProvider = get())
+        AdsSettingsViewModel(configProvider = get() , dataStore = get() , loadConsentInfoUseCase = get() , dispatcherProvider = get())
     }
 }

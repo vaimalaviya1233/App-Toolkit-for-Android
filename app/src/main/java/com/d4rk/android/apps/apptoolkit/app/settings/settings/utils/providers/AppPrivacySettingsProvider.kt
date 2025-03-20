@@ -1,26 +1,24 @@
 package com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers
 
 import android.content.Context
-import android.content.Intent
+import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsActivity
+import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsActivity
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsContent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 class AppPrivacySettingsProvider(val context : Context) : PrivacySettingsProvider {
 
     override fun openPermissionsScreen() {
-      //  IntentsHelper.openActivity(context = context , activityClass = PermissionsSettingsActivity::class.java)
+        //  IntentsHelper.openActivity(context = context , activityClass = PermissionsSettingsActivity::class.java)
     }
 
     override fun openAdsScreen() {
-     //   IntentsHelper.openActivity(context = context , activityClass = AdsSettingsActivity::class.java)
+        IntentsHelper.openActivity(context = context , activityClass = AdsSettingsActivity::class.java)
     }
 
     override fun openUsageAndDiagnosticsScreen() {
-
-/*        val intent : Intent = Intent(context , GeneralSettingsActivity::class.java).apply {
-            putExtra("extra_title" , context.getString(com.d4rk.android.libs.apptoolkit.R.string.usage_and_diagnostics))
-            putExtra("extra_content" , SettingsContent.USAGE_AND_DIAGNOSTICS.name)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        context.startActivity(intent)*/
+        GeneralSettingsActivity.start(context = context , title = context.getString(R.string.usage_and_diagnostics) , contentKey = SettingsContent.USAGE_AND_DIAGNOSTICS)
     }
 }
