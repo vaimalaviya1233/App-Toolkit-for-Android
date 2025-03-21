@@ -1,6 +1,8 @@
 package com.d4rk.android.apps.apptoolkit.app.main.ui
 
+import android.content.Context
 import android.view.View
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
@@ -19,17 +21,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.d4rk.android.apps.apptoolkit.app.home.ui.HomeScreen
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.AppNavigationHost
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.NavigationDrawer
+import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.handleNavigationItemClick
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNavigationRail
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.StatusSnackbarHost
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -38,8 +48,15 @@ import org.koin.compose.viewmodel.koinViewModel
 fun MainScreen() {
     val viewModel : MainViewModel = koinViewModel()
     val screenState : UiStateScreen<UiMainScreen> by viewModel.screenState.collectAsState()
+    val context : Context = LocalContext.current
+    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
 
-    NavigationDrawer(screenState = screenState)
+    if (isTabletOrLandscape) {
+        MainScaffoldTabletContent()
+    }
+    else {
+        NavigationDrawer(screenState = screenState)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,5 +82,30 @@ fun MainScaffoldContent(drawerState : DrawerState) {
         StatusSnackbarHost(snackBarHostState = snackBarHostState , view = view , navController = navController)
     }) { paddingValues ->
         AppNavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = { isFabVisible.value = it } , paddingValues = paddingValues)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScaffoldTabletContent() {
+    val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    var isRailExpanded by remember { mutableStateOf(false) }
+    val coroutineScope : CoroutineScope = rememberCoroutineScope()
+    val context : Context = LocalContext.current
+
+    val viewModel : MainViewModel = koinViewModel()
+    val screenState : UiStateScreen<UiMainScreen> by viewModel.screenState.collectAsState()
+    val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
+    val navController : NavHostController = rememberNavController()
+    val navBackStackEntry : NavBackStackEntry? by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize() , topBar = {
+            MainTopAppBar(navigationIcon = if (isRailExpanded) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu , onNavigationIconClick = { coroutineScope.launch { isRailExpanded = ! isRailExpanded } } , scrollBehavior = scrollBehavior)
+        }) { paddingValues ->
+        LeftNavigationRail(drawerItems = uiState.navigationDrawerItems , currentRoute = currentRoute , isRailExpanded = isRailExpanded , paddingValues = paddingValues , onDrawerItemClick = { item ->
+            handleNavigationItemClick(context = context , item = item)
+        } , content = { HomeScreen(paddingValues) })
     }
 }

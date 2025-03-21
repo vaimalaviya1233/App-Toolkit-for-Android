@@ -12,7 +12,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 class AppPrivacySettingsProvider(val context : Context) : PrivacySettingsProvider {
 
     override fun openPermissionsScreen() {
-         IntentsHelper.openActivity(context = context , activityClass = PermissionsActivity::class.java)
+        IntentsHelper.openActivity(context = context , activityClass = PermissionsActivity::class.java)
     }
 
     override fun openAdsScreen() {

@@ -20,34 +20,21 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigationHost(navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues) {
-    NavigationHost(
-        navController = navController , startDestination = NavigationRoutes.ROUTE_HOME
-    ) {
+    NavigationHost(navController = navController , startDestination = NavigationRoutes.ROUTE_HOME) {
         composable(route = NavigationRoutes.ROUTE_HOME) {
             HomeScreen(paddingValues)
         }
     }
 }
 
-fun handleNavigationItemClick(
-    context : Context , item : NavigationDrawerItem , drawerState : DrawerState , coroutineScope : CoroutineScope
-) {
+fun handleNavigationItemClick(context : Context , item : NavigationDrawerItem , drawerState : DrawerState? = null , coroutineScope : CoroutineScope? = null) {
     when (item.title) {
-        com.d4rk.android.libs.apptoolkit.R.string.settings -> {
-            IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
-        }
-
-        com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> {
-            IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
-        }
-
-        com.d4rk.android.libs.apptoolkit.R.string.updates -> {
-            IntentsHelper.openUrl(context = context , url = AppLinks.githubChangelog(packageName = context.packageName))
-        }
-
-        com.d4rk.android.libs.apptoolkit.R.string.share -> {
-            IntentsHelper.shareApp(context = context , shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
-        }
+        com.d4rk.android.libs.apptoolkit.R.string.settings -> IntentsHelper.openActivity(context , SettingsActivity::class.java)
+        com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> IntentsHelper.openActivity(context , HelpActivity::class.java)
+        com.d4rk.android.libs.apptoolkit.R.string.updates -> IntentsHelper.openUrl(context , AppLinks.githubChangelog(context.packageName))
+        com.d4rk.android.libs.apptoolkit.R.string.share -> IntentsHelper.shareApp(context , com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
     }
-    coroutineScope.launch { drawerState.close() }
+    if (drawerState != null && coroutineScope != null) {
+        coroutineScope.launch { drawerState.close() }
+    }
 }

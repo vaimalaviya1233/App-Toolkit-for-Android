@@ -35,21 +35,22 @@ fun HomeScreen(paddingValues : PaddingValues) {
             viewModel.fetchDeveloperApps()
         })
     } , onSuccess = { uiHomeScreen ->
-        HomeScreenContent(uiHomeScreen = uiHomeScreen, paddingValues = paddingValues)
+        HomeScreenContent(uiHomeScreen = uiHomeScreen , paddingValues = paddingValues)
     })
 }
 
 @Composable
-fun HomeScreenContent(uiHomeScreen: UiHomeScreen, paddingValues: PaddingValues) {
+fun HomeScreenContent(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
     val listState : LazyListState = rememberLazyListState()
 
     val (visibilityStates : SnapshotStateList<Boolean> , isFabVisible : MutableState<Boolean>) = rememberAnimatedVisibilityState(listState = listState , itemCount = uiHomeScreen.apps.size)
 
     LazyVerticalStaggeredGrid(modifier = Modifier.padding(horizontal = SizeConstants.LargeSize) , columns = StaggeredGridCells.Fixed(2) , contentPadding = paddingValues , horizontalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize) , verticalItemSpacing = SizeConstants.LargeSize) {
         itemsIndexed(uiHomeScreen.apps) { index , app ->
-            AppCard(appInfo = app, modifier = Modifier
-                    .animateItem()
-                    .animateVisibility(visible = visibilityStates.getOrElse(index) { false }, index = index))
+            AppCard(
+                appInfo = app , modifier = Modifier
+                        .animateItem()
+                        .animateVisibility(visible = visibilityStates.getOrElse(index) { false } , index = index))
         }
     }
 }

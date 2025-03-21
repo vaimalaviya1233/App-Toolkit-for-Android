@@ -5,6 +5,7 @@
     <application
         android:name=".AppToolkit"
         android:allowBackup="true"
+        android:appCategory="productivity"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +20,10 @@
             android:name="com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity"
             android:exported="true">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

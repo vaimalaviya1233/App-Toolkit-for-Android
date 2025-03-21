@@ -38,12 +38,12 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
             .clickable {
                 if (appInfo.packageName.isNotEmpty()) {
                     "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
-                       Intent(Intent.ACTION_VIEW , marketUri).run {
-                           runCatching { context.startActivity(this) }.getOrElse {
-                               val webUri : Uri = "${AppLinks.PLAY_STORE_MAIN}${appInfo.packageName}".toUri()
-                               context.startActivity(Intent(Intent.ACTION_VIEW , webUri))
-                           }
-                       }
+                        Intent(Intent.ACTION_VIEW , marketUri).run {
+                            runCatching { context.startActivity(this) }.getOrElse {
+                                val webUri : Uri = "${AppLinks.PLAY_STORE_MAIN}${appInfo.packageName}".toUri()
+                                context.startActivity(Intent(Intent.ACTION_VIEW , webUri))
+                            }
+                        }
                     }
                 }
             }) {

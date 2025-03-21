@@ -1,4 +1,5 @@
 @file:Suppress("DEPRECATION")
+
 package com.d4rk.android.apps.apptoolkit
 
 import android.app.Activity

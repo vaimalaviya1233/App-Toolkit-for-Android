@@ -29,8 +29,7 @@ class PermissionsSettingsProvider : PermissionsProvider {
                             summary = "dsdaddsad" ,
                         ) ,
                     ) ,
-                ),
-                SettingsCategory(
+                ) , SettingsCategory(
                     title = context.getString(com.d4rk.android.libs.apptoolkit.R.string.normal) ,
                     preferences = listOf(
                         SettingsPreference(
