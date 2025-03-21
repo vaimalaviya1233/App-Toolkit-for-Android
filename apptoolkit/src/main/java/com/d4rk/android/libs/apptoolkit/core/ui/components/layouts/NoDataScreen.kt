@@ -54,7 +54,7 @@ fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.De
                 Button(onClick = onRetry , modifier = Modifier.bounceClick()) {
                     Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.IconSize))
                     ButtonIconSpacer()
-                    Text(text = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.try_again))
+                    Text(text = stringResource(id = R.string.try_again))
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.ui
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,19 +21,16 @@ class GeneralSettingsActivity : AppCompatActivity() {
     private val viewModel : GeneralSettingsViewModel by viewModel()
 
     companion object {
-        private const val EXTRA_TITLE = "extra_title"
-        private const val EXTRA_CONTENT = "extra_content"
+        private const val EXTRA_TITLE : String = "extra_title"
+        private const val EXTRA_CONTENT : String = "extra_content"
 
         fun start(context : Context , title : String , contentKey : String) {
-            val intent = Intent(context , GeneralSettingsActivity::class.java).apply {
+            val intent : Intent = Intent(context , GeneralSettingsActivity::class.java).apply {
                 putExtra(EXTRA_TITLE , title)
                 putExtra(EXTRA_CONTENT , contentKey)
             }
 
-            if (context !is Activity) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }
@@ -43,10 +39,10 @@ class GeneralSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val title = intent.getStringExtra(EXTRA_TITLE) ?: getString(com.d4rk.android.libs.apptoolkit.R.string.settings)
-        val contentKey = intent.getStringExtra(EXTRA_CONTENT)
+        val title : String = intent.getStringExtra(EXTRA_TITLE) ?: getString(com.d4rk.android.libs.apptoolkit.R.string.settings)
+        val contentKey : String? = intent.getStringExtra(EXTRA_CONTENT)
 
-        viewModel.loadContent(contentKey)
+        viewModel.loadContent(contentKey = contentKey)
 
         setContent {
             AppTheme {

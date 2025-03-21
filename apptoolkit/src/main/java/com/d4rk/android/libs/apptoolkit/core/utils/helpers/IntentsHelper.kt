@@ -8,6 +8,7 @@ import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.mikepenz.aboutlibraries.LibsBuilder
 import java.net.URLEncoder
 
@@ -86,9 +87,7 @@ object IntentsHelper {
      *                           The %s will be replaced by the app's Play Store URL.
      */
     fun shareApp(context : Context , shareMessageFormat : Int) {
-        val messageToShare : String = context.getString(
-            shareMessageFormat , "https://play.google.com/store/apps/details?id=${context.packageName}"
-        )
+        val messageToShare : String = context.getString(shareMessageFormat , "${AppLinks.PLAY_STORE_APP}=${context.packageName}")
         val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT , messageToShare)
@@ -124,24 +123,20 @@ object IntentsHelper {
      * The receiver of the email is "d4rk7355608@gmail.com"
      */
     fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
-        val developerEmail : String = "d4rk7355608@gmail.com"
+        val developerEmail = "d4rk7355608@gmail.com"
 
         val appName : String = context.getString(applicationNameRes)
         val subject : String = context.getString(R.string.feedback_for , appName)
-        val body : String = context.getString(
-            com.d4rk.android.libs.apptoolkit.R.string.dear_developer
-        ) + "\n\n"
+        val body : String = context.getString(R.string.dear_developer) + "\n\n"
 
         val subjectEncoded : String = URLEncoder.encode(subject , "UTF-8").replace("+" , "%20")
         val bodyEncoded : String = URLEncoder.encode(body , "UTF-8").replace("+" , "%20")
 
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
-        val emailIntent : Intent = Intent(Intent.ACTION_SENDTO , mailtoUri)
+        val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
         context.startActivity(
-            Intent.createChooser(
-                emailIntent , context.getString(com.d4rk.android.libs.apptoolkit.R.string.send_email_using)
-            )
+            Intent.createChooser(emailIntent , context.getString(R.string.send_email_using))
         )
     }
 

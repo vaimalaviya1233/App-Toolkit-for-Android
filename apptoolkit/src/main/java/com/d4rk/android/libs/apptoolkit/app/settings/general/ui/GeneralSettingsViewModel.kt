@@ -10,7 +10,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,9 +23,6 @@ class GeneralSettingsViewModel : ViewModel() {
     fun loadContent(contentKey : String?) {
         viewModelScope.launch {
             _screenState.setLoading()
-
-            delay(500)
-
             if (! contentKey.isNullOrBlank()) {
                 _screenState.updateData(newDataState = ScreenState.Success()) { contentKey }
             }

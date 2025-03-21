@@ -17,7 +17,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -45,7 +44,6 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
     private fun loadAdsSettings() {
         viewModelScope.launch(context = dispatcherProvider.io) {
             loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
-                delay(500)
                 when (result) {
                     is DataState.Success -> {
                         _screenState.updateData(newDataState = ScreenState.Success()) { current ->

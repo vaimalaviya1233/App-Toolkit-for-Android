@@ -25,11 +25,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  *                        It provides the new checked state as a Boolean parameter.
  */
 @Composable
-fun RadioButtonPreferenceItem(
-    text : String ,
-    isChecked : Boolean ,
-    onCheckedChange : (Boolean) -> Unit ,
-) {
+fun RadioButtonPreferenceItem(text : String , isChecked : Boolean , onCheckedChange : (Boolean) -> Unit) {
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))

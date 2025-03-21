@@ -30,6 +30,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.Info
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -82,7 +83,7 @@ fun AdSettingsScreenContent(
                     }
                 }
                 item {
-                    Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+                    Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
                         PreferenceItem(
                             title = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.personalized_ads) , enabled = data.adsEnabled , summary = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.summary_ads_personalized_ads) , onClick = {
                                 viewModel.sendEvent(event = AdsSettingsEvent.OpenConsentForm(activity = activity as AdsSettingsActivity))

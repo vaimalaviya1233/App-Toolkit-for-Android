@@ -130,7 +130,7 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
         item {
             Card(
                 modifier = Modifier
-                        .padding(top = 16.dp , end = 16.dp)
+                        .padding(top = SizeConstants.LargeSize , end = SizeConstants.LargeSize)
                         .fillMaxSize()
                         .wrapContentHeight() ,
                 shape = RoundedCornerShape(size = 28.dp) ,
@@ -143,7 +143,7 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
                                 .size(size = 258.dp)
                                 .fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(height = 16.dp))
+                    Spacer(modifier = Modifier.height(height = SizeConstants.LargeSize))
                     Text(
                         modifier = Modifier.fillMaxWidth() , text = stringResource(id = R.string.app_name) , style = MaterialTheme.typography.titleMedium , color = MaterialTheme.colorScheme.onSurface , textAlign = TextAlign.Center
                     )
@@ -185,7 +185,7 @@ fun SettingsList(paddingValues : PaddingValues , settingsConfig : SettingsConfig
                 LargeVerticalSpacer()
                 Column(
                     modifier = Modifier
-                            .padding(start = 16.dp , end = 16.dp)
+                            .padding(start = SizeConstants.LargeSize , end = SizeConstants.LargeSize)
                             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
                 ) {
                     category.preferences.forEach { preference ->

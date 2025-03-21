@@ -18,6 +18,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -50,7 +51,7 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : Bui
                         .padding(all = 24.dp),
                 message = stringResource(id = R.string.summary_usage_and_diagnostics),
                 learnMoreText = stringResource(id = R.string.learn_more),
-                learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy"
+                learnMoreUrl = AppLinks.PRIVACY_POLICY
             )
         }
     }

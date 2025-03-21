@@ -25,9 +25,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
-import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
+import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.AppNavigationHost
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.NavigationDrawer
-import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.NavigationHost
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.StatusSnackbarHost
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +64,6 @@ fun MainScaffoldContent(drawerState : DrawerState) {
     } , snackbarHost = {
         StatusSnackbarHost(snackBarHostState = snackBarHostState , view = view , navController = navController)
     }) { paddingValues ->
-        NavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = { isFabVisible.value = it } , paddingValues = paddingValues)
+        AppNavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = { isFabVisible.value = it } , paddingValues = paddingValues)
     }
 }

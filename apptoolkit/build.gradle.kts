@@ -61,6 +61,7 @@ dependencies {
     api(dependencyNotation = libs.androidx.datastore.preferences)
     api(dependencyNotation = libs.androidx.foundation)
     api(dependencyNotation = libs.androidx.navigation.compose)
+    api(dependencyNotation = libs.androidx.graphics.shapes)
 
     // Firebase
     api(dependencyNotation = platform(libs.firebase.bom))

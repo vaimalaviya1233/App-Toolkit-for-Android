@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 import android.content.Context
 import androidx.annotation.StringRes
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.commonmark.node.Node
@@ -25,8 +26,6 @@ import java.net.URL
  */
 object AboutLibrariesHelper {
 
-    private const val GITHUB_BASE_URL = "https://raw.githubusercontent.com/D4rK7355608"
-
     /**
      * Fetches a Markdown file from a GitHub repository.
      *
@@ -42,7 +41,7 @@ object AboutLibrariesHelper {
      */
     private suspend fun fetchMarkdownFile(packageName : String , fileName : String , @StringRes errorResId : Int , context : Context) : String {
         return withContext(Dispatchers.IO) {
-            val fileUrl = "$GITHUB_BASE_URL/$packageName/refs/heads/master/$fileName"
+            val fileUrl = "${AppLinks.GITHUB_RAW}/$packageName/refs/heads/master/$fileName"
             val url = URL(fileUrl)
             (url.openConnection() as? HttpURLConnection)?.let { connection ->
                 runCatching {

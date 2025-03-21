@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -48,16 +49,14 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * @param onClick A callback function that is called when the entire preference item is clicked. If no action is needed on click, this can be left empty.
  */
 @Composable
-fun SwitchPreferenceItemWithDivider(
-    icon : ImageVector? = null , title : String , summary : String , checked : Boolean , onCheckedChange : (Boolean) -> Unit , onClick : () -> Unit , onSwitchClick : (Boolean) -> Unit
-) {
+fun SwitchPreferenceItemWithDivider(icon : ImageVector? = null , title : String , summary : String , checked : Boolean , onCheckedChange : (Boolean) -> Unit , onClick : () -> Unit , onSwitchClick : (Boolean) -> Unit) {
     val view : View = LocalView.current
 
     Card(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = 2.dp)) ,
-        shape = RoundedCornerShape(size = 2.dp) ,
+                .clip(RoundedCornerShape(size = SizeConstants.ExtraTinySize)) ,
+        shape = RoundedCornerShape(size = SizeConstants.ExtraTinySize) ,
     ) {
         Row(
             modifier = Modifier
@@ -77,7 +76,7 @@ fun SwitchPreferenceItemWithDivider(
                         .padding(all = SizeConstants.LargeSize)
                         .weight(weight = 1f)
             ) {
-                Text(text = title , style = MaterialTheme.typography.titleLarge)
+                Text(text = title , style = MaterialTheme.typography.titleLarge , maxLines = 1 , overflow = TextOverflow.Ellipsis)
                 Text(text = summary , style = MaterialTheme.typography.bodyMedium)
             }
             ExtraSmallHorizontalSpacer()

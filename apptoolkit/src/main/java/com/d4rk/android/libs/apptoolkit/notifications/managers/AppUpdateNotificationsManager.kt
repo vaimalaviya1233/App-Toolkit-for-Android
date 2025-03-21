@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -36,7 +37,7 @@ class AppUpdateNotificationsManager(private val context : Context , private val 
                         NotificationCompat.Builder(context , channelId).setSmallIcon(R.drawable.ic_notification_update).setContentTitle(context.getString(R.string.notification_update_title)).setContentText(context.getString(R.string.summary_notification_update)).setAutoCancel(true).setContentIntent(
                                     PendingIntent.getActivity(
                                         context , 0 , Intent(
-                                            Intent.ACTION_VIEW , "market://details?id=${context.packageName}".toUri()
+                                            Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}${context.packageName}".toUri()
                                         ) , PendingIntent.FLAG_IMMUTABLE
                                     )
                                 )

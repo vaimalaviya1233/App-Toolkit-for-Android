@@ -29,6 +29,7 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.HelpScreenConfi
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.VersionInfoAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
@@ -45,9 +46,7 @@ fun HelpScreenMenuActions(
     }) {
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.view_in_google_play_store)) } , leadingIcon = { Icon(imageVector = Icons.Outlined.Shop , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
-            IntentsHelper.openUrl(
-                context = context , url = "https://play.google.com/store/apps/details?id=${activity.packageName}"
-            )
+            IntentsHelper.openUrl(context = context , url = "${AppLinks.PLAY_STORE_APP}${activity.packageName}")
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.version_info)) } , leadingIcon = { Icon(imageVector = Icons.Outlined.Info , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
@@ -55,17 +54,15 @@ fun HelpScreenMenuActions(
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.beta_program)) } , leadingIcon = { Icon(imageVector = Icons.Outlined.Science , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
-            IntentsHelper.openUrl(
-                context = context , url = "https://play.google.com/apps/testing/${activity.packageName}"
-            )
+            IntentsHelper.openUrl(context = context , url = "${AppLinks.PLAY_STORE_BETA}${activity.packageName}")
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.terms_of_service)) } , leadingIcon = { Icon(imageVector = Icons.Outlined.Description , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
-            IntentsHelper.openUrl(context = context , url = "https://sites.google.com/view/d4rk7355608/more/apps/terms-of-service")
+            IntentsHelper.openUrl(context = context , url = AppLinks.TERMS_OF_SERVICE)
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.privacy_policy)) } , leadingIcon = { Icon(imageVector = Icons.Outlined.PrivacyTip , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
-            IntentsHelper.openUrl(context = context , url = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy")
+            IntentsHelper.openUrl(context = context , url = AppLinks.PRIVACY_POLICY)
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.oss_license_title)) } , leadingIcon = { Icon(Icons.Outlined.Balance , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
@@ -76,8 +73,6 @@ fun HelpScreenMenuActions(
     }
 
     if (showDialog.value) {
-        VersionInfoAlertDialog(
-            onDismiss = { showDialog.value = false } , copyrightString = R.string.copyright , appName = R.string.app_full_name , versionName = config.versionName , versionString = R.string.version
-        )
+        VersionInfoAlertDialog(onDismiss = { showDialog.value = false } , copyrightString = R.string.copyright , appName = R.string.app_full_name , versionName = config.versionName , versionString = R.string.version)
     }
 }

@@ -4,8 +4,9 @@ appcompat = "1.7.0"
 aboutlibraries = "11.3.0"
 core = "4.6.2"
 coil = "3.1.0"
-firebaseBom = "33.10.0"
+firebaseBom = "33.11.0"
 composeBom = "2025.03.00"
+graphicsShapes = "1.0.1"
 lifecycle = "2.8.7"
 kotlinxSerializationJson = "1.7.3"
 kotlinxCoroutinesAndroid = "1.10.1"
@@ -33,6 +34,7 @@ workRuntimeKtx = "2.10.0"
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version.ref = "graphicsShapes" }
 core = { module = "io.noties.markwon:core", version.ref = "core" }
 aboutlibraries = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutlibraries" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

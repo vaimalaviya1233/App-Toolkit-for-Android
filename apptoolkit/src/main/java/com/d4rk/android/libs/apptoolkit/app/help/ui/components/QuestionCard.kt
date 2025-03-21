@@ -31,7 +31,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @Composable
 fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit) {
     Card(modifier = Modifier
-            .clip(shape = RoundedCornerShape(size = 12.dp))
+            .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
             .clickable { onToggleExpand() }
             .padding(all = SizeConstants.LargeSize)
             .animateContentSize()
@@ -48,7 +48,7 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
                             .background(
                                 color = MaterialTheme.colorScheme.primaryContainer , shape = CircleShape
                             )
-                            .padding(all = 8.dp)
+                            .padding(all = SizeConstants.SmallSize)
                 )
 
                 LargeHorizontalSpacer()

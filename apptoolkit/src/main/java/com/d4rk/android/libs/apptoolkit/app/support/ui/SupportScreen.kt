@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.android.billingclient.api.BillingClient
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
@@ -88,9 +87,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                             .padding(all = SizeConstants.LargeSize)
                 ) {
                     Column {
-                        Text(
-                            text = stringResource(id = R.string.summary_donations) , modifier = Modifier.padding(16.dp)
-                        )
+                        Text(text = stringResource(id = R.string.summary_donations) , modifier = Modifier.padding(all = SizeConstants.LargeSize))
                         LazyRow(
                             modifier = Modifier
                                     .fillMaxWidth()
@@ -138,7 +135,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                         LazyRow(
                             modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp) , horizontalArrangement = Arrangement.SpaceEvenly
+                                    .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             item {
                                 FilledTonalButton(
@@ -185,7 +182,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
             item {
                 Text(
                     text = stringResource(id = R.string.non_paid_support) ,
-                    modifier = Modifier.padding(start = 16.dp) ,
+                    modifier = Modifier.padding(start = SizeConstants.LargeSize) ,
                     style = MaterialTheme.typography.titleLarge ,
                 )
             }
@@ -198,7 +195,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                 } , modifier = Modifier
                         .fillMaxWidth()
                         .bounceClick()
-                        .padding(16.dp)) {
+                        .padding(all = SizeConstants.LargeSize)) {
                     Icon(
                         Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
                     )
@@ -208,7 +205,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
             }
             item {
                 AdBanner(
-                    modifier = Modifier.padding(bottom = 12.dp) , adsConfig = adsConfig
+                    modifier = Modifier.padding(bottom = SizeConstants.MediumSize) , adsConfig = adsConfig
                 )
             }
         }

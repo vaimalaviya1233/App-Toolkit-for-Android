@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -41,20 +41,17 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * @param onCheckedChange A callback function that is called whenever the switch is toggled. This function receives the new state of the switch (boolean) as a parameter.
  */
 @Composable
-fun SwitchPreferenceItem(
-    icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit
-) {
+fun SwitchPreferenceItem(icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit) {
     val view : View = LocalView.current
     Card(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = 2.dp)) ,
-        shape = RoundedCornerShape(size = 2.dp) ,
+                .clip(RoundedCornerShape(size = SizeConstants.ExtraTinySize)) ,
+        shape = RoundedCornerShape(size = SizeConstants.ExtraTinySize) ,
     ) {
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                     .clickable(onClick = {
                         view.playSoundEffect(SoundEffectConstants.CLICK)
                         onCheckedChange(! checked)
@@ -71,7 +68,7 @@ fun SwitchPreferenceItem(
                         .padding(all = SizeConstants.LargeSize)
                         .weight(weight = 1f) ,
             ) {
-                Text(text = title , style = MaterialTheme.typography.titleLarge)
+                Text(text = title , style = MaterialTheme.typography.titleLarge , maxLines = 1 , overflow = TextOverflow.Ellipsis)
                 summary?.let {
                     Text(text = it , style = MaterialTheme.typography.bodyMedium)
                 }
@@ -80,18 +77,10 @@ fun SwitchPreferenceItem(
                 onCheckedChange(isChecked)
             } , thumbContent = {
                 if (checked) {
-                    Icon(
-                        Icons.Filled.Check ,
-                        contentDescription = null ,
-                        modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
-                    )
+                    Icon(Icons.Filled.Check , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
                 }
                 else {
-                    Icon(
-                        Icons.Filled.Close ,
-                        contentDescription = null ,
-                        modifier = Modifier.size(size = SwitchDefaults.IconSize) ,
-                    )
+                    Icon(Icons.Filled.Close , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
                 }
             })
         }

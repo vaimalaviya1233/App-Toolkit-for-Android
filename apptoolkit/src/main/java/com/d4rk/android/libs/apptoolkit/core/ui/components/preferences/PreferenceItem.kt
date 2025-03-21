@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -35,9 +35,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * @param onClick A callback function that is called when the entire preference item is clicked. If no action is needed on click, this can be left empty.
  */
 @Composable
-fun PreferenceItem(
-    icon : ImageVector? = null , title : String? = null , summary : String? = null , enabled : Boolean = true , rippleEffectDp : Dp = SizeConstants.LargeSize , onClick : () -> Unit = {}
-) {
+fun PreferenceItem(icon : ImageVector? = null , title : String? = null , summary : String? = null , enabled : Boolean = true , rippleEffectDp : Dp = SizeConstants.LargeSize , onClick : () -> Unit = {}) {
     val view : View = LocalView.current
     Row(
         modifier = Modifier
@@ -56,14 +54,10 @@ fun PreferenceItem(
             modifier = Modifier.padding(all = SizeConstants.LargeSize)
         ) {
             title?.let {
-                Text(
-                    text = it , style = MaterialTheme.typography.titleLarge , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
-                )
+                Text(text = it , style = MaterialTheme.typography.titleLarge , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current , maxLines = 1 , overflow = TextOverflow.Ellipsis)
             }
             summary?.let {
-                Text(
-                    text = it , style = MaterialTheme.typography.bodyMedium , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current
-                )
+                Text(text = it , style = MaterialTheme.typography.bodyMedium , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current)
             }
         }
     }
@@ -88,14 +82,12 @@ fun PreferenceItem(
  *                Defaults to an empty lambda, meaning no action will be performed by default.
  */
 @Composable
-fun SettingsPreferenceItem(
-    icon : ImageVector? = null , title : String? = null , summary : String? = null , rippleEffectDp : Dp = 2.dp , onClick : () -> Unit = {}
-) {
+fun SettingsPreferenceItem(icon : ImageVector? = null , title : String? = null , summary : String? = null , rippleEffectDp : Dp = SizeConstants.ExtraTinySize , onClick : () -> Unit = {}) {
     Card(
         modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(size = 2.dp)) ,
-        shape = RoundedCornerShape(size = 2.dp) ,
+                .clip(RoundedCornerShape(size = SizeConstants.ExtraTinySize)) ,
+        shape = RoundedCornerShape(size = SizeConstants.ExtraTinySize) ,
     ) {
         PreferenceItem(rippleEffectDp = rippleEffectDp , icon = icon , title = title , summary = summary , onClick = {
             onClick()

@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation
+package com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation
 
 import android.content.Context
 import androidx.compose.material.icons.Icons

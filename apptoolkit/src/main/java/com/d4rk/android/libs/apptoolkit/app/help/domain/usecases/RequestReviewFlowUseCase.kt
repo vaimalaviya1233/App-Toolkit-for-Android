@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.domain.usecases
 import android.app.Application
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.toError
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.tasks.Task
@@ -16,7 +17,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 class RequestReviewFlowUseCase(private val application : Application) {
-    operator fun invoke() : Flow<DataState<ReviewInfo , Errors>> = flow { // FIXME: Parameter 'param' is never used
+    operator fun invoke() : Flow<DataState<ReviewInfo , Errors>> = flow {
         runCatching {
             suspendCancellableCoroutine { continuation ->
                 val reviewManager : ReviewManager = ReviewManagerFactory.create(application)
@@ -31,9 +32,7 @@ class RequestReviewFlowUseCase(private val application : Application) {
                         continuation.resumeWithException(exception = Exception("Failed to request review flow"))
                     }
                 }.addOnFailureListener { throwable ->
-                    IntentsHelper.openUrl(
-                        context = application , url = "https://play.google.com/store/apps/details?id=$packageName&showAllReviews=true"
-                    )
+                    IntentsHelper.openUrl(context = application , url = "${AppLinks.PLAY_STORE_APP}$packageName${AppLinks.PLAY_STORE_APP_REVIEWS_SUFFIX}")
                     continuation.resumeWithException(exception = throwable)
                 }
             }

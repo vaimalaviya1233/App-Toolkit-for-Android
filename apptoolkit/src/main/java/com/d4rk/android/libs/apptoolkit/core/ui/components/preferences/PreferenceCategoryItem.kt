@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -16,10 +17,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * @param title The text to be displayed as the category header. This should clearly and concisely name the preference category.
  */
 @Composable
-fun PreferenceCategoryItem(
-    title : String
-) {
-    Text(
-        text = title , color = MaterialTheme.colorScheme.primary , style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold) , modifier = Modifier.padding(start = SizeConstants.LargeSize , top = SizeConstants.LargeSize)
-    )
+fun PreferenceCategoryItem(title : String) {
+    Text(text = title , color = MaterialTheme.colorScheme.primary , style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold) , modifier = Modifier.padding(start = SizeConstants.LargeSize , top = SizeConstants.LargeSize) , maxLines = 1 , overflow = TextOverflow.Ellipsis)
 }

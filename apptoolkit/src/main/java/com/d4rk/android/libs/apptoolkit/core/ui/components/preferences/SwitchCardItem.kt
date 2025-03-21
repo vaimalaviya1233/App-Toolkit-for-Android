@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -41,9 +42,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * The card has a rounded corner shape and provides a click sound effect upon interaction.
  */
 @Composable
-fun SwitchCardItem(
-    title : String , switchState : State<Boolean> , onSwitchToggled : (Boolean) -> Unit
-) {
+fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggled : (Boolean) -> Unit) {
     val view : View = LocalView.current
     Card(
         shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize) ,
@@ -59,7 +58,7 @@ fun SwitchCardItem(
         Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically) {
-            Text(text = title)
+            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Switch(checked = switchState.value , onCheckedChange = { isChecked ->
                 onSwitchToggled(isChecked)
             } , thumbContent = {

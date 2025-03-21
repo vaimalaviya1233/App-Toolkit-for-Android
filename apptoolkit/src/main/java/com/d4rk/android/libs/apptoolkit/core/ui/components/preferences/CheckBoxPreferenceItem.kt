@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -32,9 +33,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  *                       It receives the new checked state as a boolean parameter.
  */
 @Composable
-fun CheckBoxPreferenceItem(
-    icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit
-) {
+fun CheckBoxPreferenceItem(icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit) {
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
@@ -43,7 +42,7 @@ fun CheckBoxPreferenceItem(
             } , verticalAlignment = Alignment.CenterVertically) {
         icon?.let {
             LargeHorizontalSpacer()
-            Icon(it , contentDescription = null)
+            Icon(imageVector = it , contentDescription = null)
             LargeHorizontalSpacer()
         }
         Column(
@@ -51,12 +50,12 @@ fun CheckBoxPreferenceItem(
                     .padding(all = SizeConstants.LargeSize)
                     .weight(weight = 1f)
         ) {
-            Text(text = title , style = MaterialTheme.typography.titleLarge)
+            Text(text = title , style = MaterialTheme.typography.titleLarge , maxLines = 1 , overflow = TextOverflow.Ellipsis)
             summary?.let {
                 Text(text = it , style = MaterialTheme.typography.bodyMedium)
             }
         }
-        Checkbox(checked = checked , onCheckedChange = { isChecked ->
+        Checkbox(checked = checked , onCheckedChange = { isChecked : Boolean ->
             onCheckedChange(isChecked)
         } , modifier = Modifier.padding(start = SizeConstants.LargeSize))
     }
