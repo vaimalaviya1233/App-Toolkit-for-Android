@@ -60,9 +60,7 @@ data class UiSnackbar(
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(newDataState : ScreenState , newValues : (T) -> T) {
     update { current ->
-        current.copy(
-            screenState = newDataState , data = current.data?.let(newValues)
-        )
+        current.copy(screenState = newDataState , data = current.data?.let(newValues))
     }
 }
 

@@ -7,6 +7,11 @@
     <application>
 
         <activity
+            android:name=".app.startup.ui.StartupActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".app.settings.settings.ui.SettingsActivity"
             android:exported="true" />
 
