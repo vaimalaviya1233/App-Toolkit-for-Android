@@ -9,10 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.app.display.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
-
+    private val contentProvider : GeneralSettingsContentProvider by inject()
     private val viewModel: SettingsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    SettingsScreen(viewModel)
+                    SettingsScreen(viewModel, contentProvider)
                 }
             }
         }
