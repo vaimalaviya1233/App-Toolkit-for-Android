@@ -27,7 +27,7 @@ class SettingsViewModel(private val settingsProvider : SettingsProvider , privat
 
     fun loadSettings(context : Context) {
         viewModelScope.launch {
-            flowOf(settingsProvider.provideSettingsConfig(context)).flowOn(dispatcherProvider.io).collect { result ->
+            flowOf(settingsProvider.provideSettingsConfig(context)).flowOn(context = dispatcherProvider.io).collect { result ->
                         when {
                             result.categories.isNotEmpty() -> {
                                 _screenState.updateData(newDataState = ScreenState.Success()) { current ->

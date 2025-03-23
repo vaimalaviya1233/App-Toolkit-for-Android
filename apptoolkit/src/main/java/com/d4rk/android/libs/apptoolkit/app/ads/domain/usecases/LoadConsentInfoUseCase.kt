@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases
+package com.d4rk.android.libs.apptoolkit.app.ads.domain.usecases
 
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState

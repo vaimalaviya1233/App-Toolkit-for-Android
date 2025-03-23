@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui
+package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
 import android.app.Activity
 import android.content.Context
@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.actions.AdsSettingsEvent
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.model.AdsSettingsData
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsEvent
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -36,7 +36,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel, buildInfoProvider : BuildInfoProvider) {
+fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val uiState : UiStateScreen<AdsSettingsData> by viewModel.screenState.collectAsState()
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
@@ -58,7 +58,7 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel, bu
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdSettingsScreenContent(
-    context : Context , data : AdsSettingsData , viewModel : AdsSettingsViewModel , dataStore : CommonDataStore , activity : Activity, switchState : Boolean
+    context : Context , data : AdsSettingsData , viewModel : AdsSettingsViewModel , dataStore : CommonDataStore , activity : Activity , switchState : Boolean
 ) {
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val adsEnabledState : MutableState<Boolean> = remember { mutableStateOf(value = switchState) }

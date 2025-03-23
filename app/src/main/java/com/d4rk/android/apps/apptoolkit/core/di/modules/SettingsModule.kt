@@ -7,10 +7,10 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Ap
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppPrivacySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppSettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsProvider
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases.LoadConsentInfoUseCase
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsViewModel
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.ui.PermissionsViewModel
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.utils.interfaces.PermissionsProvider
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.usecases.LoadConsentInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.ads.ui.AdsSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
+import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider

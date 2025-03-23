@@ -1,6 +1,6 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.actions
+package com.d4rk.android.libs.apptoolkit.app.ads.domain.actions
 
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui.AdsSettingsActivity
+import com.d4rk.android.libs.apptoolkit.app.ads.ui.AdsSettingsActivity
 
 sealed class AdsSettingsEvent {
     data object LoadAdsSettings : AdsSettingsEvent()

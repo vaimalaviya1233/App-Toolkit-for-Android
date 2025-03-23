@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui
+package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

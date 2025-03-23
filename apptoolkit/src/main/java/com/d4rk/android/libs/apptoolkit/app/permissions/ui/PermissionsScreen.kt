@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.permissions.ui
+package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Column

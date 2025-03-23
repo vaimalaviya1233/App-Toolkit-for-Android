@@ -1,10 +1,10 @@
-package com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.ui
+package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.actions.AdsSettingsEvent
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.model.AdsSettingsData
-import com.d4rk.android.libs.apptoolkit.app.privacy.routes.ads.domain.usecases.LoadConsentInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsEvent
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.usecases.LoadConsentInfoUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -42,8 +43,8 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
     }
 
     private fun loadAdsSettings() {
-        viewModelScope.launch(context = dispatcherProvider.io) {
-            loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
+        viewModelScope.launch() {
+            loadConsentInfoUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
                 when (result) {
                     is DataState.Success -> {
                         _screenState.updateData(newDataState = ScreenState.Success()) { current ->

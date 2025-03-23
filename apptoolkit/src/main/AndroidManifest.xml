@@ -20,11 +20,11 @@
             android:exported="true" />
 
         <activity
-            android:name=".app.privacy.routes.permissions.ui.PermissionsActivity"
+            android:name=".app.permissions.ui.PermissionsActivity"
             android:exported="true" />
 
         <activity
-            android:name=".app.privacy.routes.ads.ui.AdsSettingsActivity"
+            android:name=".app.ads.ui.AdsSettingsActivity"
             android:exported="true" />
 
         <activity
