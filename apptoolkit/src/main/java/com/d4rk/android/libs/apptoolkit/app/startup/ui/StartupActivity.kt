@@ -18,8 +18,6 @@ import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.S
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.ump.ConsentForm
-import com.google.android.ump.ConsentInformation
-import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

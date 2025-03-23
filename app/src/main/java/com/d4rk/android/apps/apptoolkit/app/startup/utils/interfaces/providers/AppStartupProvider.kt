@@ -1,12 +1,12 @@
 package com.d4rk.android.apps.apptoolkit.app.startup.utils.interfaces.providers
 
+import android.Manifest
 import android.content.Context
-import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
-import javax.inject.Inject
 import android.content.Intent
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
+import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.google.android.ump.ConsentRequestParameters
-import android.Manifest
+import javax.inject.Inject
 
 class AppStartupProvider @Inject constructor() : StartupProvider {
     override val requiredPermissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
