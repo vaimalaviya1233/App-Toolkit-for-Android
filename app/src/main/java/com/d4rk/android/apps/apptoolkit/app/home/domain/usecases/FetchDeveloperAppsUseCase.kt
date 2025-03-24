@@ -32,10 +32,8 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
                 }
                 timeout { requestTimeoutMillis = 15000 }
             }.bodyAsText()
-            println("Response length: ${developerPageContent.length}")
-            println("HTML snippet: ${developerPageContent.take(n = 500)}")
 
-            val dataCallbackRegex = Regex("AF_initDataCallback\\((.*?)\\);" , RegexOption.DOT_MATCHES_ALL)
+            val dataCallbackRegex = Regex(pattern = "AF_initDataCallback\\((.*?)\\);" , option = RegexOption.DOT_MATCHES_ALL)
             val dataCallbackJson = dataCallbackRegex.findAll(developerPageContent).firstNotNullOfOrNull { match ->
                         val dataCallbackContent = match.groupValues[1]
                         if (dataCallbackContent.contains("\"ds:3\"") || dataCallbackContent.contains("key: 'ds:3'")) {
@@ -44,17 +42,13 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
                         else null
                     } ?: throw Exception("Failed to extract JSON data from the page.")
 
-            println("Extracted JSON snippet: $dataCallbackJson")
-            val dataContentJson = Json.parseToJsonElement(dataCallbackJson)
-            println("Full metadata JSON: $dataContentJson")
-            val foundApps = searchForApps(dataContentJson).sortedBy { it.name.lowercase() }
-            println("Number of apps parsed from JSON: ${foundApps.size}")
+            val dataContentJson : JsonElement = Json.parseToJsonElement(string = dataCallbackJson)
+            val foundApps : List<AppInfo> = searchForApps(jsonElement = dataContentJson).sortedBy { it.name.lowercase() }
             foundApps
         }.onSuccess { foundApps ->
-            emit(DataState.Success(data = foundApps))
+            emit(value = DataState.Success(data = foundApps))
         }.onFailure { error ->
-            println("Error occurred: ${error.stackTraceToString()}")
-            emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
+            emit(value = DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
         }
     }
 
@@ -83,7 +77,6 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
                         val appName = suggestedName ?: alternativeName ?: packageName
                         appInfos.add(AppInfo(name = appName , iconUrl = appIconUrl , packageName = packageName))
                         knownPackages.add(packageName)
-                        println("Found app candidate - package: $packageName, app name: $appName, icon: $appIconUrl")
                     }
                     jsonElement.forEach { traverse(it) }
                 }

@@ -43,7 +43,7 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
     }
 
     private fun loadAdsSettings() {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             loadConsentInfoUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
                 when (result) {
                     is DataState.Success -> {

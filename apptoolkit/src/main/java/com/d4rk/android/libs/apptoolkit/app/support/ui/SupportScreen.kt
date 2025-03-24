@@ -45,10 +45,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpa
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig : AdsConfig = koinInject()) {
+fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig: AdsConfig = koinInject(qualifier = named(name = "supportScreen"))) {
     val context : Context = LocalContext.current
     val billingClient : BillingClient = rememberBillingClient(context = context , viewModel = viewModel)
     val screenState : UiStateScreen<UiSupportScreen> by viewModel.screenState.collectAsState()
@@ -204,9 +205,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                 }
             }
             item {
-                AdBanner(
-                    modifier = Modifier.padding(bottom = SizeConstants.MediumSize) , adsConfig = adsConfig
-                )
+                AdBanner(modifier = Modifier.padding(bottom = SizeConstants.MediumSize) , adsConfig = adsConfig)
             }
         }
     }

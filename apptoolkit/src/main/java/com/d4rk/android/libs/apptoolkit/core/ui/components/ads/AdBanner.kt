@@ -18,14 +18,14 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
     val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context)
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val showAds : Boolean by dataStore.ads.collectAsState(initial = true)
 
     if (showAds) {
         AndroidView(
             modifier = modifier
                     .fillMaxWidth()
-                    .height(adsConfig.adSize.height.dp) , factory = { adViewContext ->
+                    .height(height = adsConfig.adSize.height.dp) , factory = { adViewContext : Context ->
                 AdView(adViewContext).apply {
                     setAdSize(adsConfig.adSize)
                     adUnitId = adsConfig.bannerAdUnitId

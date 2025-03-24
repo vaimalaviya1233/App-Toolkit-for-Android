@@ -14,6 +14,7 @@ import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.display.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         println("MainActivity ➡ onCreate()")
         installSplashScreen()
         enableEdgeToEdge()
-
+        MobileAds.initialize(this)
         lifecycleScope.launch {
             val isFirstLaunch = DataStore.getInstance(this@MainActivity).startup.first()
             println("MainActivity ➡ isFirstLaunch = $isFirstLaunch")

@@ -37,7 +37,7 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
 
     fun sendEvent(event : StartupEvent , activity : Activity) {
         when (event) {
-            StartupEvent.OpenConsentForm -> openConsentForm(activity)
+            StartupEvent.OpenConsentForm -> openConsentForm(activity = activity)
         }
     }
 
@@ -66,20 +66,20 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
     }
 
     private fun openConsentForm(activity : Activity) {
-        val consentInfo : ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
+        val consentInfo = _screenState.value.data?.consentInformation
+        if (consentInfo == null) {
+            loadConsentInfo()
+            return
+        }
 
         val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
 
         consentInfo.requestConsentInfoUpdate(activity , params , {
             UserMessagingPlatform.loadConsentForm(activity , { consentForm ->
-                val status = consentInfo.consentStatus
-                if (status == ConsentInformation.ConsentStatus.REQUIRED || status == ConsentInformation.ConsentStatus.OBTAINED) {
+                if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED || consentInfo.consentStatus == ConsentInformation.ConsentStatus.OBTAINED) {
                     consentForm.show(activity) {
                         onConsentFormLoaded()
                     }
-                }
-                else {
-                    onConsentFormLoaded()
                 }
             } , {
                 onConsentFormLoaded()

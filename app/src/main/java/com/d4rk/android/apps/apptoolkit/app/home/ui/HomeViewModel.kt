@@ -33,7 +33,6 @@ class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUs
     fun fetchDeveloperApps() {
         viewModelScope.launch {
             fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
-                println("view model Result: $result")
                 when (result) {
                     is DataState.Success -> {
                         if (result.data.isNotEmpty()) {
