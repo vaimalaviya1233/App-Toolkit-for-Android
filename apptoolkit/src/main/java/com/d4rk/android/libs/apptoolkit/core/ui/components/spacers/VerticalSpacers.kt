@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.spacers
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -90,4 +91,12 @@ fun ExtraSmallVerticalSpacer() {
 @Composable
 fun ExtraTinyVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.ExtraTinySize))
+}
+
+/**
+ * A composable function that creates a spacer with padding for the navigation bars.
+ */
+@Composable
+fun NavigationBarsVerticalSpacer() {
+    Spacer(modifier = Modifier.navigationBarsPadding())
 }
