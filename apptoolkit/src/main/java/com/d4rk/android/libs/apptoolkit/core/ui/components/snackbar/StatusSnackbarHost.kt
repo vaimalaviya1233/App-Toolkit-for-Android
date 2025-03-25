@@ -20,7 +20,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
-fun StatusSnackbarHost(snackBarHostState: SnackbarHostState , navController: NavController , view: View) {
+fun StatusSnackbarHost(snackBarHostState : SnackbarHostState , navController : NavController , view : View) {
     androidx.compose.material3.SnackbarHost(snackBarHostState) { snackBarData ->
         val isError : Boolean = navController.currentBackStackEntry?.savedStateHandle?.get<Boolean>("currentSnackbarIsError") ?: false
         val snackbarContentColor : Color = if (isError) MaterialTheme.colorScheme.error else SnackbarDefaults.contentColor

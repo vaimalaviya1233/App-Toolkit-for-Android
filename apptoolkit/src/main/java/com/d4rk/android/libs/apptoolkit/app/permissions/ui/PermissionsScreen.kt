@@ -59,9 +59,11 @@ fun PermissionsContent(paddingValues : PaddingValues , settingsConfig : Settings
                     PreferenceCategoryItem(title = title)
                     SmallVerticalSpacer()
                 }
-                Column(modifier = Modifier
-                        .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
+                Column(
+                    modifier = Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                ) {
                     category.preferences.forEach { preference ->
                         SettingsPreferenceItem(icon = preference.icon , title = preference.title , summary = preference.summary , onClick = { preference.action.invoke() })
                         ExtraTinyVerticalSpacer()

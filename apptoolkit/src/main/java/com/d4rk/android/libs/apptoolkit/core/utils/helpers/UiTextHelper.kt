@@ -12,8 +12,8 @@ import androidx.compose.ui.platform.LocalContext
  * string resources, without having to worry about the specific type when using it.
  */
 sealed class UiTextHelper {
-    data class DynamicString(val content: String) : UiTextHelper()
-    data class StringResource(val resourceId: Int , val arguments: List<Any> = emptyList()) : UiTextHelper()
+    data class DynamicString(val content : String) : UiTextHelper()
+    data class StringResource(val resourceId : Int , val arguments : List<Any> = emptyList()) : UiTextHelper()
 
     /**
      * Converts the current object to a String.
@@ -29,7 +29,7 @@ sealed class UiTextHelper {
      * @return The string representation of the object.
      * @throws android.content.res.Resources.NotFoundException If the resourceId is not found in the resources.
      */
-    fun asString(context: Context): String {
+    fun asString(context : Context) : String {
         return when (this) {
             is DynamicString -> content
             is StringResource -> context.getString(resourceId , *arguments.toTypedArray())
@@ -60,7 +60,7 @@ sealed class UiTextHelper {
      * @see StringResource
      */
     @Composable
-    fun asString(): String {
+    fun asString() : String {
         val context : Context = LocalContext.current.applicationContext
         return when (this) {
             is DynamicString -> content

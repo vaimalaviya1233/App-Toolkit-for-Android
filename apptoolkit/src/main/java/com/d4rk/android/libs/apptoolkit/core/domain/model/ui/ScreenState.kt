@@ -124,7 +124,7 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : ArrayList<UiSnackbar>?) {
     update { current ->
         current.copy(
-            screenState = ScreenState.Error(), errors = errors ?: ArrayList()
+            screenState = ScreenState.Error() , errors = errors ?: ArrayList()
         )
     }
 }

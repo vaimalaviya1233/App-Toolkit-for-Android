@@ -119,14 +119,18 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
     val context : Context = LocalContext.current
     LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {
-            Card(modifier = Modifier
-                    .padding(top = SizeConstants.LargeSize , end = SizeConstants.LargeSize)
-                    .fillMaxSize()
-                    .wrapContentHeight() , shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)) {
+            Card(
+                modifier = Modifier
+                        .padding(top = SizeConstants.LargeSize , end = SizeConstants.LargeSize)
+                        .fillMaxSize()
+                        .wrapContentHeight() , shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+            ) {
                 Column(modifier = Modifier.padding(all = 24.dp) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
-                    AsyncImage(model = R.drawable.il_settings , contentDescription = null , modifier = Modifier
-                            .size(size = 258.dp)
-                            .fillMaxWidth())
+                    AsyncImage(
+                        model = R.drawable.il_settings , contentDescription = null , modifier = Modifier
+                                .size(size = 258.dp)
+                                .fillMaxWidth()
+                    )
                     LargeVerticalSpacer()
                     Text(text = stringResource(id = R.string.app_name) , style = MaterialTheme.typography.titleMedium , textAlign = TextAlign.Center)
                     SmallVerticalSpacer()
@@ -166,9 +170,11 @@ fun SettingsList(paddingValues : PaddingValues , settingsConfig : SettingsConfig
         settingsConfig.categories.forEach { category : SettingsCategory ->
             item {
                 LargeVerticalSpacer()
-                Column(Modifier
-                               .padding(horizontal = SizeConstants.LargeSize)
-                               .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
+                Column(
+                    Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                ) {
                     category.preferences.forEach { pref : SettingsPreference ->
                         SettingsPreferenceItem(icon = pref.icon , title = pref.title , summary = pref.summary , onClick = { onPreferenceClick(pref) })
                         ExtraTinyVerticalSpacer()

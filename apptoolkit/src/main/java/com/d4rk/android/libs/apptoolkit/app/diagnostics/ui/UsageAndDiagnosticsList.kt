@@ -31,9 +31,7 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : Bui
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
 
     LazyColumn(
-        contentPadding = paddingValues,
-        modifier = Modifier
-                .fillMaxSize()
+        contentPadding = paddingValues , modifier = Modifier.fillMaxSize()
     ) {
         item {
             SwitchCardItem(
@@ -48,10 +46,7 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : Bui
             InfoMessageSection(
                 modifier = Modifier
                         .fillMaxWidth()
-                        .padding(all = 24.dp),
-                message = stringResource(id = R.string.summary_usage_and_diagnostics),
-                learnMoreText = stringResource(id = R.string.learn_more),
-                learnMoreUrl = AppLinks.PRIVACY_POLICY
+                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_usage_and_diagnostics) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.PRIVACY_POLICY
             )
         }
     }

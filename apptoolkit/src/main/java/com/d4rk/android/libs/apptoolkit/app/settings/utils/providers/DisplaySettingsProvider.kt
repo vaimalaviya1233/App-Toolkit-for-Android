@@ -19,7 +19,7 @@ interface DisplaySettingsProvider {
      *
      * @return `true` if the component supports a startup page, `false` otherwise.
      */
-    val supportsStartupPage: Boolean
+    val supportsStartupPage : Boolean
         get() = false
 
     /**
@@ -38,8 +38,7 @@ interface DisplaySettingsProvider {
      */
     @Composable
     fun StartupPageDialog(
-        onDismiss: () -> Unit,
-        onStartupSelected: (String) -> Unit
+        onDismiss : () -> Unit , onStartupSelected : (String) -> Unit
     ) {
 
     }
@@ -58,8 +57,7 @@ interface DisplaySettingsProvider {
      */
     @Composable
     fun LanguageSelectionDialog(
-        onDismiss: () -> Unit,
-        onLanguageSelected: (String) -> Unit
+        onDismiss : () -> Unit , onLanguageSelected : (String) -> Unit
     ) {
 
     }

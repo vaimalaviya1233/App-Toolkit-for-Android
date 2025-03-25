@@ -28,19 +28,19 @@ class SettingsViewModel(private val settingsProvider : SettingsProvider , privat
     fun loadSettings(context : Context) {
         viewModelScope.launch {
             flowOf(settingsProvider.provideSettingsConfig(context)).flowOn(context = dispatcherProvider.io).collect { result ->
-                        when {
-                            result.categories.isNotEmpty() -> {
-                                _screenState.updateData(newDataState = ScreenState.Success()) { current ->
-                                    current.copy(title = result.title , categories = result.categories)
-                                }
-                            }
-
-                            else -> {
-                                _screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
-                                _screenState.updateState(ScreenState.NoData())
-                            }
+                when {
+                    result.categories.isNotEmpty() -> {
+                        _screenState.updateData(newDataState = ScreenState.Success()) { current ->
+                            current.copy(title = result.title , categories = result.categories)
                         }
                     }
+
+                    else -> {
+                        _screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
+                        _screenState.updateState(ScreenState.NoData())
+                    }
+                }
+            }
         }
     }
 }

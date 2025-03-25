@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun NavigationHost(navController : NavHostController, startDestination : String , navGraphBuilder : NavGraphBuilder.() -> Unit) {
+fun NavigationHost(navController : NavHostController , startDestination : String , navGraphBuilder : NavGraphBuilder.() -> Unit) {
     val enterAnimation : EnterTransition = remember {
         fadeIn() + scaleIn(animationSpec = tween(durationMillis = 200))
     }

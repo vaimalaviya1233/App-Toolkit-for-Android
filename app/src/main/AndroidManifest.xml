@@ -2,8 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+
+        <package android:name="com.d4rk.cartcalculator" />
+        <package android:name="com.d4rk.cleaner" />
+        <package android:name="com.d4rk.androidtutorials" />
+        <package android:name="com.d4rk.qrcodescanner.plus" />
+        <package android:name="com.d4rk.qrcodescanner" />
+        <package android:name="com.d4rk.netprobe" />
+        <package android:name="com.d4rk.androidtutorials.java" />
+        <package android:name="com.d4rk.musicsleeptimer.plus" />
+        <package android:name="com.d4rk.musicsleeptimer" />
+        <package android:name="com.d4rk.englishwithlidia.plus" />
+        <package android:name="com.d4rk.englishwithlidia" />
+        <package android:name="com.d4rk.lowbrightness" />
+        <package android:name="com.d4rk.android.apps.weddix" />
+        <package android:name="com.google.android.apps.bard" />
+    </queries>
 
     <application
         android:name=".AppToolkit"

@@ -24,14 +24,14 @@ val Context.commonDataStore by preferencesDataStore(name = DataStoreNamesConstan
  *
  * @property dataStore The DataStore instance for storing preferences.
  */
-open class CommonDataStore(context: Context) {
+open class CommonDataStore(context : Context) {
     val dataStore = context.commonDataStore
 
     companion object {
         @Volatile
-        private var instance: CommonDataStore? = null
+        private var instance : CommonDataStore? = null
 
-        fun getInstance(context: Context): CommonDataStore {
+        fun getInstance(context : Context) : CommonDataStore {
             return instance ?: synchronized(this) {
                 instance ?: CommonDataStore(context.applicationContext).also { instance = it }
             }
@@ -39,8 +39,7 @@ open class CommonDataStore(context: Context) {
     }
 
     // Last used app notifications
-    private val lastUsedKey =
-            longPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LAST_USED)
+    private val lastUsedKey = longPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LAST_USED)
     val lastUsed : Flow<Long> = dataStore.data.map { preferences ->
         preferences[lastUsedKey] ?: 0
     }
@@ -52,8 +51,7 @@ open class CommonDataStore(context: Context) {
     }
 
     // Startup
-    private val startupKey =
-            booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP)
+    private val startupKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP)
     val startup : Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[startupKey] != false
     }
@@ -66,8 +64,7 @@ open class CommonDataStore(context: Context) {
 
     // Display
     val themeModeState = mutableStateOf(value = "follow_system")
-    private val themeModeKey =
-            stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_THEME_MODE)
+    private val themeModeKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_THEME_MODE)
     val themeMode : Flow<String> = dataStore.data.map { preferences ->
         preferences[themeModeKey] ?: "follow_system"
     }
@@ -78,8 +75,7 @@ open class CommonDataStore(context: Context) {
         }
     }
 
-    private val amoledModeKey =
-            booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_AMOLED_MODE)
+    private val amoledModeKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_AMOLED_MODE)
     val amoledMode : Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[amoledModeKey] == true
     }
@@ -90,8 +86,7 @@ open class CommonDataStore(context: Context) {
         }
     }
 
-    private val dynamicColorsKey =
-            booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_DYNAMIC_COLORS)
+    private val dynamicColorsKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_DYNAMIC_COLORS)
     val dynamicColors : Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[dynamicColorsKey] != false
     }
@@ -102,8 +97,7 @@ open class CommonDataStore(context: Context) {
         }
     }
 
-    private val bouncyButtonsKey =
-            booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_BOUNCY_BUTTONS)
+    private val bouncyButtonsKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_BOUNCY_BUTTONS)
     val bouncyButtons : Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[bouncyButtonsKey] != false
     }
@@ -114,8 +108,7 @@ open class CommonDataStore(context: Context) {
         }
     }
 
-    private val languageKey =
-            stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LANGUAGE)
+    private val languageKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LANGUAGE)
 
     fun getLanguage() : Flow<String> = dataStore.data.map { preferences ->
         preferences[languageKey] ?: "en"
@@ -128,8 +121,7 @@ open class CommonDataStore(context: Context) {
     }
 
     // Usage and Diagnostics
-    private val usageAndDiagnosticsKey =
-            booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_USAGE_AND_DIAGNOSTICS)
+    private val usageAndDiagnosticsKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_USAGE_AND_DIAGNOSTICS)
     val usageAndDiagnostics : Flow<Boolean> = dataStore.data.map { preferences ->
         preferences[usageAndDiagnosticsKey] ?: ! BuildConfig.DEBUG
     }

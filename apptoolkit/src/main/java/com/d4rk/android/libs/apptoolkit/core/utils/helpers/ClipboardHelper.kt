@@ -21,8 +21,7 @@ object ClipboardHelper {
      *                     This callback is typically used to display a visual confirmation (e.g., a Snackbar).
      */
     fun copyTextToClipboard(context : Context , label : String , text : String , onShowSnackbar : () -> Unit = {}) {
-        val clipboard : ClipboardManager =
-                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard : ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip : ClipData = ClipData.newPlainText(label , text)
         clipboard.setPrimaryClip(clip)
 

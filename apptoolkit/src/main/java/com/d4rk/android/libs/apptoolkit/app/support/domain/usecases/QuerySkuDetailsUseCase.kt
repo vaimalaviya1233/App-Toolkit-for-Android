@@ -25,7 +25,7 @@ class QuerySkuDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<Str
                 param.querySkuDetailsAsync(params) { billingResult , skuDetailsList ->
                     println("Billing result: ${billingResult.responseCode}, skuDetailsList: $skuDetailsList")
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                        val detailsMap : Map<String, SkuDetails> = skuDetailsList.associateBy { it.sku }
+                        val detailsMap : Map<String , SkuDetails> = skuDetailsList.associateBy { it.sku }
                         continuation.resume(detailsMap)
                     }
                     else {

@@ -24,38 +24,32 @@ import kotlinx.coroutines.runBlocking
  * @property workerParams The parameters for this worker instance.
  */
 class AppUsageNotificationWorker(
-    context: Context,
-    workerParams: WorkerParameters
-) : Worker(context, workerParams) {
-    private val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
-    private val appUsageChannelId: String = "app_usage_channel"
-    private val appUsageNotificationId: Int = 0
+    context : Context , workerParams : WorkerParameters
+) : Worker(context , workerParams) {
+    private val dataStore : CommonDataStore = CommonDataStore.getInstance(context)
+    private val appUsageChannelId : String = "app_usage_channel"
+    private val appUsageNotificationId : Int = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun doWork(): Result {
+    override fun doWork() : Result {
         val currentTimestamp = System.currentTimeMillis()
         val notificationThreshold = 3 * 24 * 60 * 60 * 1000
         val lastUsedTimestamp = runBlocking { dataStore.lastUsed.first() }
 
         if (currentTimestamp - lastUsedTimestamp > notificationThreshold) {
-            val notificationSummary =
-                    inputData.getInt("notification_summary", R.string.default_notification_summary)
+            val notificationSummary = inputData.getInt("notification_summary" , R.string.default_notification_summary)
 
             val notificationManager = applicationContext.getSystemService(NotificationManager::class.java)
             val appUsageChannel = NotificationChannel(
-                appUsageChannelId,
-                applicationContext.getString(R.string.app_usage_notifications),
-                NotificationManager.IMPORTANCE_HIGH
+                appUsageChannelId , applicationContext.getString(R.string.app_usage_notifications) , NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(appUsageChannel)
 
-            val notificationBuilder = NotificationCompat.Builder(applicationContext, appUsageChannelId)
-                    .setSmallIcon(R.drawable.ic_notification_important)
-                    .setContentTitle(applicationContext.getString(R.string.notification_last_time_used_title))
-                    .setContentText(applicationContext.getString(notificationSummary))
-                    .setAutoCancel(true)
+            val notificationBuilder =
+                    NotificationCompat.Builder(applicationContext , appUsageChannelId).setSmallIcon(R.drawable.ic_notification_important).setContentTitle(applicationContext.getString(R.string.notification_last_time_used_title)).setContentText(applicationContext.getString(notificationSummary))
+                            .setAutoCancel(true)
 
-            notificationManager.notify(appUsageNotificationId, notificationBuilder.build())
+            notificationManager.notify(appUsageNotificationId , notificationBuilder.build())
         }
 
         runBlocking { dataStore.saveLastUsed(timestamp = currentTimestamp) }

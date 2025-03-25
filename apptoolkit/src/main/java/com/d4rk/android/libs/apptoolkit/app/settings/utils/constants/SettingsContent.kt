@@ -8,7 +8,7 @@ object SettingsContent {
     const val THEME = "theme"
     const val USAGE_AND_DIAGNOSTICS = "usage_and_diagnostics"
 
-    fun isLibraryContent(key: String): Boolean {
+    fun isLibraryContent(key : String) : Boolean {
         return key in setOf(ABOUT , ADVANCED , DISPLAY , SECURITY_AND_PRIVACY , THEME , USAGE_AND_DIAGNOSTICS)
     }
 }

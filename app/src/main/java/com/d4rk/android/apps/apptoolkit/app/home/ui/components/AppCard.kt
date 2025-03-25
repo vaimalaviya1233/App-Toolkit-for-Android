@@ -1,7 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.home.ui.components
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +25,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 
 @Composable
 fun AppCard(appInfo : AppInfo , modifier : Modifier) {
@@ -37,12 +37,16 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
                 if (appInfo.packageName.isNotEmpty()) {
-                    "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
-                        Intent(Intent.ACTION_VIEW , marketUri).run {
-                            runCatching { context.startActivity(this) }.getOrElse {
-                                val webUri : Uri = "${AppLinks.PLAY_STORE_MAIN}${appInfo.packageName}".toUri()
-                                context.startActivity(Intent(Intent.ACTION_VIEW , webUri))
+                    if (AppInfoHelper().isAppInstalled(context , appInfo.packageName)) {
+                        if (! AppInfoHelper().openApp(context , appInfo.packageName)) {
+                            "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
+                                context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
                             }
+                        }
+                    }
+                    else {
+                        "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
+                            context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
                         }
                     }
                 }

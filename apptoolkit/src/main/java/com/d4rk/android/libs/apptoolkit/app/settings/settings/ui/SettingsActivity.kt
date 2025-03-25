@@ -15,9 +15,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
     private val contentProvider : GeneralSettingsContentProvider by inject()
-    private val viewModel: SettingsViewModel by viewModel()
+    private val viewModel : SettingsViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
@@ -26,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    SettingsScreen(viewModel, contentProvider)
+                    SettingsScreen(viewModel , contentProvider)
                 }
             }
         }

@@ -49,7 +49,7 @@ import org.koin.core.qualifier.named
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig: AdsConfig = koinInject(qualifier = named(name = "supportScreen"))) {
+fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig : AdsConfig = koinInject(qualifier = named(name = "supportScreen"))) {
     val context : Context = LocalContext.current
     val billingClient : BillingClient = rememberBillingClient(context = context , viewModel = viewModel)
     val screenState : UiStateScreen<UiSupportScreen> by viewModel.screenState.collectAsState()

@@ -19,7 +19,7 @@ fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : Bi
 
     DisposableEffect(billingClient) {
         billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
+            override fun onBillingSetupFinished(billingResult : BillingResult) {
                 println("Billing setup finished with response code: ${billingResult.responseCode}")
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     viewModel.querySkuDetails(billingClient)

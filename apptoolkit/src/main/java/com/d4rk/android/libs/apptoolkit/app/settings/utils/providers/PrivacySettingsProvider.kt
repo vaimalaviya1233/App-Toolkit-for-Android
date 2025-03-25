@@ -7,31 +7,31 @@ interface PrivacySettingsProvider {
     /**
      * URL for the privacy policy.
      */
-    val privacyPolicyUrl: String
+    val privacyPolicyUrl : String
         get() = AppLinks.PRIVACY_POLICY
 
     /**
      * URL for the terms of service.
      */
-    val termsOfServiceUrl: String
+    val termsOfServiceUrl : String
         get() = AppLinks.TERMS_OF_SERVICE
 
     /**
      * URL for the code of conduct.
      */
-    val codeOfConductUrl: String
+    val codeOfConductUrl : String
         get() = AppLinks.CODE_OF_CONDUCT
 
     /**
      * URL for the legal notices.
      */
-    val legalNoticesUrl: String
+    val legalNoticesUrl : String
         get() = AppLinks.LEGAL_NOTICES
 
     /**
      * URL for the license (GPLv3).
      */
-    val licenseUrl: String
+    val licenseUrl : String
         get() = AppLinks.GPL_V3
 
     fun openPermissionsScreen()

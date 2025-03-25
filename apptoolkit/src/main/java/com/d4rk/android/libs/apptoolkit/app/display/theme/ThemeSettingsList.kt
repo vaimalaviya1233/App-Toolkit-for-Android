@@ -69,9 +69,11 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 }
             }
             item {
-                InfoMessageSection(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme))
+                InfoMessageSection(
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
+                )
             }
         }
     }

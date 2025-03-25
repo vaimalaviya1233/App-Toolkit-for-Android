@@ -13,9 +13,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PermissionsActivity : AppCompatActivity() {
 
-    private val viewModel: PermissionsViewModel by viewModel()
+    private val viewModel : PermissionsViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 

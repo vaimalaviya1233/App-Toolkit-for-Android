@@ -37,5 +37,5 @@ package com.d4rk.android.libs.apptoolkit.core.utils.constants.error
  *        and more specific error types should be created instead to provide better error context.
  */
 enum class ErrorType {
-    SECURITY_EXCEPTION , IO_EXCEPTION , ACTIVITY_NOT_FOUND , ILLEGAL_ARGUMENT , SQLITE_EXCEPTION , FILE_NOT_FOUND, UNKNOWN_ERROR ,
+    SECURITY_EXCEPTION , IO_EXCEPTION , ACTIVITY_NOT_FOUND , ILLEGAL_ARGUMENT , SQLITE_EXCEPTION , FILE_NOT_FOUND , UNKNOWN_ERROR ,
 }

@@ -57,8 +57,7 @@ fun LargeTopAppBarWithScaffold(
         topBar = {
             LargeTopAppBar(title = { Text(text = title) } , navigationIcon = {
                 AnimatedButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
-            } , actions = actions , scrollBehavior = scrollBehavior
-            )
+            } , actions = actions , scrollBehavior = scrollBehavior)
         } ,
         floatingActionButton = floatingActionButton ?: {} ,
     ) { paddingValues ->

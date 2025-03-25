@@ -40,7 +40,7 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
     val context : Context = LocalContext.current
     val uiState : UiStateScreen<AdsSettingsData> by viewModel.screenState.collectAsState()
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val switchState: Boolean by dataStore.ads.collectAsState(initial = !buildInfoProvider.isDebugBuild)
+    val switchState : Boolean by dataStore.ads.collectAsState(initial = ! buildInfoProvider.isDebugBuild)
 
     ScreenStateHandler(screenState = uiState , onLoading = {
         LoadingScreen()
@@ -50,7 +50,7 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
         })
     } , onSuccess = { data : AdsSettingsData ->
         AdSettingsScreenContent(
-            context = context , data = data , viewModel = viewModel , activity = activity , dataStore = dataStore, switchState = switchState
+            context = context , data = data , viewModel = viewModel , activity = activity , dataStore = dataStore , switchState = switchState
         )
     })
 }

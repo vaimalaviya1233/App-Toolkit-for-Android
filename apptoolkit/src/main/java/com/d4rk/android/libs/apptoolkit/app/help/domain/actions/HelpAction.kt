@@ -6,5 +6,5 @@ import com.google.android.play.core.review.ReviewInfo
 sealed class HelpAction {
     data object LoadHelp : HelpAction()
     data object RequestReview : HelpAction()
-    data class LaunchReviewFlow(val activity: Activity , val reviewInfo: ReviewInfo) : HelpAction()
+    data class LaunchReviewFlow(val activity : Activity , val reviewInfo : ReviewInfo) : HelpAction()
 }

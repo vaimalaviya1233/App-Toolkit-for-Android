@@ -28,11 +28,11 @@ private val defaultLightScheme : ColorScheme = lightColorScheme()
 private val defaultDarkScheme : ColorScheme = darkColorScheme()
 
 object AppThemeConfig {
-    var customLightScheme: ColorScheme? = null
-    var customDarkScheme: ColorScheme? = null
+    var customLightScheme : ColorScheme? = null
+    var customDarkScheme : ColorScheme? = null
 }
 
-private fun getColorScheme(isDarkTheme: Boolean, isAmoledMode: Boolean, isDynamicColors: Boolean, context: Context): ColorScheme {
+private fun getColorScheme(isDarkTheme : Boolean , isAmoledMode : Boolean , isDynamicColors : Boolean , context : Context) : ColorScheme {
     val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
     val isBatterySaverOn = powerManager.isPowerSaveMode
 
@@ -40,54 +40,52 @@ private fun getColorScheme(isDarkTheme: Boolean, isAmoledMode: Boolean, isDynami
     val baseDarkScheme = AppThemeConfig.customDarkScheme ?: defaultDarkScheme
 
 
-    val dynamicDark: ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-        dynamicDarkColorScheme(context) else baseDarkScheme
-    val dynamicLight: ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-        dynamicLightColorScheme(context) else baseLightScheme
+    val dynamicDark : ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) dynamicDarkColorScheme(context) else baseDarkScheme
+    val dynamicLight : ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) dynamicLightColorScheme(context) else baseLightScheme
 
     val shouldUseDarkTheme = isDarkTheme || isBatterySaverOn
 
     return when {
         isAmoledMode && shouldUseDarkTheme && isDynamicColors -> dynamicDark.copy(
-            surface = Color.Black,
-            background = Color.Black,
+            surface = Color.Black ,
+            background = Color.Black ,
         )
+
         isAmoledMode && shouldUseDarkTheme -> baseDarkScheme.copy(
-            surface = Color.Black,
-            background = Color.Black,
+            surface = Color.Black ,
+            background = Color.Black ,
         )
+
         isDynamicColors -> if (shouldUseDarkTheme) dynamicDark else dynamicLight
         else -> if (shouldUseDarkTheme) baseDarkScheme else baseLightScheme
     }
 }
 
 @Composable
-fun AppTheme(content: @Composable () -> Unit) {
-    val context: Context = LocalContext.current
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val themeMode: String = dataStore.themeMode.collectAsState(initial = "follow_system").value
-    val isDynamicColors: Boolean = dataStore.dynamicColors.collectAsState(initial = true).value
-    val isAmoledMode: Boolean = dataStore.amoledMode.collectAsState(initial = false).value
+fun AppTheme(content : @Composable () -> Unit) {
+    val context : Context = LocalContext.current
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
+    val isDynamicColors : Boolean = dataStore.dynamicColors.collectAsState(initial = true).value
+    val isAmoledMode : Boolean = dataStore.amoledMode.collectAsState(initial = false).value
 
-    val isSystemDarkTheme: Boolean = isSystemInDarkTheme()
-    val isDarkTheme: Boolean = when (themeMode) {
+    val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
+    val isDarkTheme : Boolean = when (themeMode) {
         stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.dark_mode) -> true
         stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.light_mode) -> false
         else -> isSystemDarkTheme
     }
 
-    val colorScheme: ColorScheme = getColorScheme(isDarkTheme, isAmoledMode, isDynamicColors, context)
+    val colorScheme : ColorScheme = getColorScheme(isDarkTheme , isAmoledMode , isDynamicColors , context)
 
-    val view: View = LocalView.current
-    if (!view.isInEditMode) {
+    val view : View = LocalView.current
+    if (! view.isInEditMode) {
         SideEffect {
-            val window: Window = (view.context as Activity).window
-            @Suppress("DEPRECATION")
-            window.statusBarColor = Color.Transparent.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                    !isDarkTheme
+            val window : Window = (view.context as Activity).window
+            @Suppress("DEPRECATION") window.statusBarColor = Color.Transparent.toArgb()
+            WindowCompat.getInsetsController(window , view).isAppearanceLightStatusBars = ! isDarkTheme
         }
     }
 
-    MaterialTheme(colorScheme = colorScheme, content = content)
+    MaterialTheme(colorScheme = colorScheme , content = content)
 }

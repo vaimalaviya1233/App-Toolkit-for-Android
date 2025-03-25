@@ -82,11 +82,11 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
                     }
                 }
             } , {
-                onConsentFormLoaded()
-            })
+                                                      onConsentFormLoaded()
+                                                  })
         } , {
-            onConsentFormLoaded()
-        })
+                                                 onConsentFormLoaded()
+                                             })
     }
 
     private fun onConsentFormLoaded() {

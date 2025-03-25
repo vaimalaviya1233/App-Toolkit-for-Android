@@ -55,10 +55,12 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onSwitchToggled(! switchState.value)
                 }) {
-        Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically) {
-            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Row(
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis)
             Switch(checked = switchState.value , onCheckedChange = { isChecked ->
                 onSwitchToggled(isChecked)
             } , thumbContent = {

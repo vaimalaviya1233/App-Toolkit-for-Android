@@ -61,9 +61,8 @@ fun AnimatedButtonDirection(
 
     AnimatedVisibility(
         visible = animatedVisibility.value && visible ,
-        enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) + slideInHorizontally(initialOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis)) ,
-        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) + slideOutHorizontally(targetOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis))
-    ) {
+                       enter = fadeIn(animationSpec = tween(durationMillis = durationMillis)) + slideInHorizontally(initialOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis)) ,
+                       exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) + slideOutHorizontally(targetOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis))) {
         IconButton(modifier = modifier.bounceClick() , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
             onClick()

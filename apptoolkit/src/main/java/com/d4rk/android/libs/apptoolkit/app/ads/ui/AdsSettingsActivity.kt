@@ -14,15 +14,15 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsSettingsActivity : AppCompatActivity() {
-    private val viewModel: AdsSettingsViewModel by viewModel()
+    private val viewModel : AdsSettingsViewModel by viewModel()
     private val buildInfoProvider : BuildInfoProvider by inject()
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    AdsSettingsScreen(viewModel = viewModel, activity = this@AdsSettingsActivity, buildInfoProvider = buildInfoProvider)
+                Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
+                    AdsSettingsScreen(viewModel = viewModel , activity = this@AdsSettingsActivity , buildInfoProvider = buildInfoProvider)
                 }
             }
         }

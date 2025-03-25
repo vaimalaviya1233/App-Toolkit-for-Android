@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class LaunchReviewFlowUseCase {
-    operator fun invoke(param: Pair<Activity, ReviewInfo>): Flow<DataState<Unit, Errors>> = flow {
+    operator fun invoke(param : Pair<Activity , ReviewInfo>) : Flow<DataState<Unit , Errors>> = flow {
         runCatching {
             val (activity : Activity , reviewInfo : ReviewInfo) = param
             val reviewManager : ReviewManager = ReviewManagerFactory.create(activity)
-            reviewManager.launchReviewFlow(activity, reviewInfo)
+            reviewManager.launchReviewFlow(activity , reviewInfo)
         }.onSuccess {
             emit(value = DataState.Success(data = Unit))
         }.onFailure { throwable ->

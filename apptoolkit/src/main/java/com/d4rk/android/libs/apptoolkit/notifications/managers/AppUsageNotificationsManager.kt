@@ -16,27 +16,20 @@ import java.util.concurrent.TimeUnit
  *
  * @property context The application context used for scheduling app usage checks.
  */
-class AppUsageNotificationsManager(private val context: Context) {
-    private val alarmManager: AlarmManager =
-            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+class AppUsageNotificationsManager(private val context : Context) {
+    private val alarmManager : AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    fun scheduleAppUsageCheck(@StringRes notificationSummary: Int) {
-        val intent = Intent(context, AppUsageNotificationReceiver::class.java).apply {
-            putExtra("notification_summary", notificationSummary)
+    fun scheduleAppUsageCheck(@StringRes notificationSummary : Int) {
+        val intent = Intent(context , AppUsageNotificationReceiver::class.java).apply {
+            putExtra("notification_summary" , notificationSummary)
         }
         val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
+            context , 0 , intent , PendingIntent.FLAG_IMMUTABLE
         )
 
         val triggerTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3)
         alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            triggerTime,
-            TimeUnit.DAYS.toMillis(3),
-            pendingIntent
+            AlarmManager.RTC_WAKEUP , triggerTime , TimeUnit.DAYS.toMillis(3) , pendingIntent
         )
     }
 }

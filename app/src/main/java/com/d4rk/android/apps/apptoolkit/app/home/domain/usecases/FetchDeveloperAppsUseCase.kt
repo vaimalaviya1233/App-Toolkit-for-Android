@@ -35,12 +35,12 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
 
             val dataCallbackRegex = Regex(pattern = "AF_initDataCallback\\((.*?)\\);" , option = RegexOption.DOT_MATCHES_ALL)
             val dataCallbackJson = dataCallbackRegex.findAll(developerPageContent).firstNotNullOfOrNull { match ->
-                        val dataCallbackContent = match.groupValues[1]
-                        if (dataCallbackContent.contains("\"ds:3\"") || dataCallbackContent.contains("key: 'ds:3'")) {
-                            Regex("data\\s*:\\s*(\\[.*?])\\s*,\\s*sideChannel" , RegexOption.DOT_MATCHES_ALL).find(dataCallbackContent)?.groupValues?.getOrNull(1)
-                        }
-                        else null
-                    } ?: throw Exception("Failed to extract JSON data from the page.")
+                val dataCallbackContent = match.groupValues[1]
+                if (dataCallbackContent.contains("\"ds:3\"") || dataCallbackContent.contains("key: 'ds:3'")) {
+                    Regex("data\\s*:\\s*(\\[.*?])\\s*,\\s*sideChannel" , RegexOption.DOT_MATCHES_ALL).find(dataCallbackContent)?.groupValues?.getOrNull(1)
+                }
+                else null
+            } ?: throw Exception("Failed to extract JSON data from the page.")
 
             val dataContentJson : JsonElement = Json.parseToJsonElement(string = dataCallbackJson)
             val foundApps : List<AppInfo> = searchForApps(jsonElement = dataContentJson).sortedBy { it.name.lowercase() }
