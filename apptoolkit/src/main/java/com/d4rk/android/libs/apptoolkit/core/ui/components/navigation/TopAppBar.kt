@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.navigation
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
@@ -55,7 +56,7 @@ fun LargeTopAppBarWithScaffold(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) ,
         topBar = {
-            LargeTopAppBar(title = { Text(text = title) } , navigationIcon = {
+            LargeTopAppBar(title = { Text(modifier = Modifier.animateContentSize() , text = title) } , navigationIcon = {
                 AnimatedButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
             } , actions = actions , scrollBehavior = scrollBehavior)
         } ,
@@ -98,7 +99,7 @@ fun TopAppBarScaffold(title : String , content : @Composable (PaddingValues) -> 
     val scrollBehaviorState : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
 
     Scaffold(modifier = Modifier.nestedScroll(connection = scrollBehaviorState.nestedScrollConnection) , topBar = {
-        LargeTopAppBar(title = { Text(text = title) } , scrollBehavior = scrollBehaviorState)
+        LargeTopAppBar(title = { Text(modifier = Modifier.animateContentSize() , text = title) } , scrollBehavior = scrollBehaviorState)
     }) { paddingValues ->
         content(paddingValues)
     }
