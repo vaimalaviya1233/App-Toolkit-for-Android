@@ -32,8 +32,8 @@ class AppUsageNotificationReceiver : BroadcastReceiver() {
         val notificationSummary = intent?.getIntExtra("notification_summary" , - 1) ?: return
 
         val workRequest = OneTimeWorkRequestBuilder<AppUsageNotificationWorker>().setInputData(
-                    workDataOf("notification_summary" to notificationSummary)
-                ).build()
+            workDataOf("notification_summary" to notificationSummary)
+        ).build()
         WorkManager.getInstance(context).enqueue(workRequest)
     }
 }

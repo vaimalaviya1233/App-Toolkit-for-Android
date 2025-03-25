@@ -15,7 +15,6 @@ import com.d4rk.android.libs.apptoolkit.app.display.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -32,15 +31,6 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             handleStartup()
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        MaterialAlertDialogBuilder(this).setTitle(com.d4rk.android.libs.apptoolkit.R.string.close).setMessage(com.d4rk.android.libs.apptoolkit.R.string.summary_close).setPositiveButton(android.R.string.yes) { _ , _ ->
-            super.onBackPressed()
-            moveTaskToBack(true)
-        }.setNegativeButton(android.R.string.no , null).apply { show() }
     }
 
     private suspend fun handleStartup() {

@@ -10,8 +10,8 @@ import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LoadConsentInfoUseCase(private val context: Context) : RepositoryWithoutParam<Flow<DataState<ConsentInformation , Errors>>> {
-    override suspend operator fun invoke(): Flow<DataState<ConsentInformation, Errors>> = flow {
+class LoadConsentInfoUseCase(private val context : Context) : RepositoryWithoutParam<Flow<DataState<ConsentInformation , Errors>>> {
+    override suspend operator fun invoke() : Flow<DataState<ConsentInformation , Errors>> = flow {
         runCatching {
             val consentInformation : ConsentInformation = UserMessagingPlatform.getConsentInformation(context)
             emit(value = DataState.Success(data = consentInformation))

@@ -23,6 +23,8 @@ fun BasicAlertDialog(
     content : @Composable () -> Unit = {} ,
     confirmButtonText : String? = null ,
     dismissButtonText : String? = null ,
+    confirmEnabled : Boolean = true ,
+    dismissEnabled : Boolean = true
 ) {
     val view : View = LocalView.current
 
@@ -37,19 +39,17 @@ fun BasicAlertDialog(
     } , text = {
         content()
     } , confirmButton = {
-        TextButton(
-            modifier = Modifier.bounceClick() , onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
-                onConfirm()
-            }) {
+        TextButton(modifier = Modifier.bounceClick() , onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            onConfirm()
+        } , enabled = confirmEnabled) {
             Text(text = confirmButtonText ?: stringResource(id = android.R.string.ok))
         }
     } , dismissButton = {
-        TextButton(
-            modifier = Modifier.bounceClick() , onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
-                onCancel()
-            }) {
+        TextButton(modifier = Modifier.bounceClick() , onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            onCancel()
+        } , enabled = dismissEnabled) {
             Text(text = dismissButtonText ?: stringResource(id = android.R.string.cancel))
         }
     })

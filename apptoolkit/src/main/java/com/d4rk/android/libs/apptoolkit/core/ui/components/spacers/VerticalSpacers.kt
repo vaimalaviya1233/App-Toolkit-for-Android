@@ -1,29 +1,22 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.spacers
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
- * A composable function that creates a vertical spacer with a predefined height.
- *
- * This function provides a convenient way to add a consistent 16dp vertical space between
- * UI elements in your composable layouts. It helps improve readability and maintain a
- * uniform visual spacing throughout your application.
- *
- * @sample
- * ```kotlin
- * Column {
- *   Text("Item 1")
- *   LargeVerticalSpacer()
- *   Text("Item 2")
- * }
- * ```
- *
- * @see Spacer
+ * Creates a vertical spacer with extra-large height (28p).
+ */
+@Composable
+fun ExtraLargeVerticalSpacer() {
+    Spacer(modifier = Modifier.height(height = SizeConstants.ExtraLargeSize))
+}
+
+/**
+ * Creates a vertical spacer with large height (16dp).
  */
 @Composable
 fun LargeVerticalSpacer() {
@@ -31,24 +24,7 @@ fun LargeVerticalSpacer() {
 }
 
 /**
- * A composable function that provides a vertical space with a fixed height of 12 dp.
- *
- * This composable is useful for creating consistent, medium-sized gaps between
- * elements within a vertical layout, enhancing the visual structure and
- * readability of your UI. It leverages the standard `Spacer` composable with a
- * pre-defined height, promoting code reusability and uniformity in spacing.
- *
- * @sample
- * ```kotlin
- * Column {
- *   Text("First Item")
- *   MediumVerticalSpacer()
- *   Text("Second Item")
- * }
- * ```
- *
- * @see Spacer
- * @see Modifier.height
+ * Creates a vertical spacer with medium height (12dp).
  */
 @Composable
 fun MediumVerticalSpacer() {
@@ -56,18 +32,7 @@ fun MediumVerticalSpacer() {
 }
 
 /**
- * A composable function that creates a small vertical space of 8 dp.
- *
- * This is often used to add visual separation between elements in a layout.
- *
- * Example Usage:
- * ```
- * Column {
- *   Text("First Item")
- *   SmallVerticalSpacer()
- *   Text("Second Item")
- * }
- * ```
+ * Creates a vertical spacer with small height (8dp).
  */
 @Composable
 fun SmallVerticalSpacer() {
@@ -75,26 +40,23 @@ fun SmallVerticalSpacer() {
 }
 
 /**
- * `SizeConstants` object is assumed to be defined elsewhere in your code.
- * For example:
- * ```kotlin
- * object SizeConstants {
- *     val ExtraSmallSize = 4.dp
- * }
- * ```
+ * Creates a vertical spacer with extra small height (4dp).
  */
 @Composable
 fun ExtraSmallVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.ExtraSmallSize))
 }
 
+/**
+ * Creates a vertical spacer with extra tiny height (2dp).
+ */
 @Composable
 fun ExtraTinyVerticalSpacer() {
     Spacer(modifier = Modifier.height(height = SizeConstants.ExtraTinySize))
 }
 
 /**
- * A composable function that creates a spacer with padding for the navigation bars.
+ * Creates a vertical spacer with navigation bars padding.
  */
 @Composable
 fun NavigationBarsVerticalSpacer() {

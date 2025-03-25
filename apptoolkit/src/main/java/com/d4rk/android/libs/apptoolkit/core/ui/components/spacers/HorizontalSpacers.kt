@@ -7,18 +7,15 @@ import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
- *  A composable function that creates a horizontal space with a width of 16 dp.
- *
- *  This can be used to provide consistent spacing between elements in a layout.
- *
- * @sample
- * ```kotlin
- * Row {
- *   Text("Item 1")
- *   LargeHorizontalSpacer()
- *   Text("Item 2")
- * }
- * ```
+ * Creates a horizontal spacer with extra-large width (28dp).
+ */
+@Composable
+fun ExtraLargeHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.ExtraLargeSize))
+}
+
+/**
+ * Creates a horizontal spacer with large width (16dp).
  */
 @Composable
 fun LargeHorizontalSpacer() {
@@ -26,22 +23,7 @@ fun LargeHorizontalSpacer() {
 }
 
 /**
- * A composable function that provides a horizontal space of medium size (12 dp).
- *
- * This function creates a [Spacer] with a fixed width of 12 density-independent pixels
- * (dp). It is useful for creating consistent spacing between elements in a horizontal layout.
- *
- * @see Spacer
- * @see Modifier.width
- *
- * Example usage:
- * ```
- * Row {
- *   Text("Item 1")
- *   MediumHorizontalSpacer()
- *   Text("Item 2")
- * }
- * ```
+ * Creates a horizontal spacer with medium width (12dp).
  */
 @Composable
 fun MediumHorizontalSpacer() {
@@ -49,16 +31,7 @@ fun MediumHorizontalSpacer() {
 }
 
 /**
- * A small horizontal spacer with a width of 8dp.
- *
- * This composable can be used to add a small gap between elements arranged horizontally.
- *
- * @sample
- *  Row {
- *      Text("Item 1")
- *      SmallHorizontalSpacer()
- *      Text("Item 2")
- *  }
+ * Creates a horizontal spacer with small width (8dp).
  */
 @Composable
 fun SmallHorizontalSpacer() {
@@ -66,9 +39,17 @@ fun SmallHorizontalSpacer() {
 }
 
 /**
- * Object containing constant sizes for UI elements.
+ * Creates a horizontal spacer with extra small width (4dp).
  */
 @Composable
 fun ExtraSmallHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = SizeConstants.ExtraSmallSize))
+}
+
+/**
+ * Creates a horizontal spacer with extra tiny height (2dp).
+ */
+@Composable
+fun ExtraTinyHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.ExtraTinySize))
 }

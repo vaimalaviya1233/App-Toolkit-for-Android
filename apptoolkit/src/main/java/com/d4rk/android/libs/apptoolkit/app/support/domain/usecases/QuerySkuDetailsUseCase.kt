@@ -37,7 +37,7 @@ class QuerySkuDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<Str
                     }
                 }
             }
-        }.onSuccess { skuMap : Map<String, SkuDetails> ->
+        }.onSuccess { skuMap : Map<String , SkuDetails> ->
             emit(value = DataState.Success(data = skuMap))
         }.onFailure { throwable : Throwable ->
             emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS)))
