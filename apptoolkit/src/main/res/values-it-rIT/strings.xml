@@ -33,7 +33,7 @@
     <string name="initialization_error">Inizializzazione fallita. Riprova più tardi.</string>
 
     <string name="settings">Impostazioni</string>
-    <string name="long_settings_label">Impostazioni dell'applicazione</string>
+    <string name="long_settings_label">Impostazioni dell\'applicazione</string>
     <string name="settings_disabled_message">Le impostazioni non sono attualmente disponibili.</string>
     <string name="settings_placeholder_description">Nessuna impostazione selezionata. Scegli un\'opzione per visualizzare i dettagli qui.</string>
     <string name="get_help">Ottieni aiuto</string>
