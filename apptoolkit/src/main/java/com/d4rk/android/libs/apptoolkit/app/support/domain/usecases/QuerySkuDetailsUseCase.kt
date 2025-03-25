@@ -3,6 +3,7 @@
 package com.d4rk.android.libs.apptoolkit.app.support.domain.usecases
 
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
@@ -22,22 +23,24 @@ class QuerySkuDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<Str
                 val skuList : List<String> = listOf("low_donation" , "normal_donation" , "high_donation" , "extreme_donation")
                 val params : SkuDetailsParams = SkuDetailsParams.newBuilder().setSkusList(skuList).setType(BillingClient.SkuType.INAPP).build()
 
-                param.querySkuDetailsAsync(params) { billingResult , skuDetailsList ->
-                    println("Billing result: ${billingResult.responseCode}, skuDetailsList: $skuDetailsList")
-                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                        val detailsMap : Map<String , SkuDetails> = skuDetailsList.associateBy { it.sku }
-                        continuation.resume(detailsMap)
+                param.querySkuDetailsAsync(params) { billingResult : BillingResult , skuDetailsList : MutableList<SkuDetails>? ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        skuDetailsList?.let {
+                            val detailsMap : Map<String , SkuDetails> = it.associateBy { skuId -> skuId.sku }
+                            continuation.resume(value = detailsMap)
+                        } ?: run {
+                            continuation.resumeWithException(exception = Exception(message = "SkuDetailsList was null"))
+                        }
                     }
                     else {
-                        println("Failed to query SKU details, reason: ${billingResult.debugMessage}")
-                        continuation.resumeWithException(Exception("Failed to query SKU details: ${billingResult.debugMessage}"))
+                        continuation.resumeWithException(exception = Exception(message = "Failed to query SKU details: ${billingResult.debugMessage}"))
                     }
                 }
             }
-        }.onSuccess { skuMap ->
-            emit(DataState.Success(data = skuMap))
-        }.onFailure { throwable ->
-            emit(DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS)))
+        }.onSuccess { skuMap : Map<String, SkuDetails> ->
+            emit(value = DataState.Success(data = skuMap))
+        }.onFailure { throwable : Throwable ->
+            emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS)))
         }
     }
 }

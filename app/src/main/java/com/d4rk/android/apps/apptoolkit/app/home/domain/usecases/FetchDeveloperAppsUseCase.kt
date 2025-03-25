@@ -53,8 +53,8 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
     }
 
     private fun searchForApps(jsonElement : JsonElement) : List<AppInfo> {
-        val appInfos = mutableListOf<AppInfo>()
-        val knownPackages = mutableSetOf<String>()
+        val appInfos : MutableList<AppInfo> = mutableListOf()
+        val knownPackages : MutableSet<String> = mutableSetOf()
 
         fun JsonElement.flattenStrings() : List<String> = when (this) {
             is JsonPrimitive -> listOf(this.content)
@@ -66,26 +66,26 @@ class FetchDeveloperAppsUseCase(private val client : HttpClient) : RepositoryWit
         fun traverse(jsonElement : JsonElement) {
             when (jsonElement) {
                 is JsonArray -> {
-                    val strings = jsonElement.flattenStrings()
-                    val packageName = strings.firstOrNull { it.startsWith("com.") } ?: ""
+                    val strings : List<String> = jsonElement.flattenStrings()
+                    val packageName : String = strings.firstOrNull { it.startsWith(prefix = "com.") } ?: ""
                     if (packageName.isNotEmpty() && packageName !in knownPackages) {
-                        val appIconUrl = strings.firstOrNull { it.startsWith("https://") } ?: PlayStoreUrls.DEFAULT_ICON_URL
-                        val suggestedName = (jsonElement.getOrNull(3) as? JsonPrimitive)?.content?.takeIf { it != "null" && it.any(Char::isLetter) && it.length < 50 }
-                        val alternativeName = jsonElement.flattenStrings().firstOrNull {
-                            it != packageName && ! it.startsWith("https://") && it.any(Char::isLetter) && it.length < 50
+                        val appIconUrl : String = strings.firstOrNull { it.startsWith(prefix = "https://") } ?: PlayStoreUrls.DEFAULT_ICON_URL
+                        val suggestedName : String? = (jsonElement.getOrNull(3) as? JsonPrimitive)?.content?.takeIf { it != "null" && it.any(Char::isLetter) && it.length < 50 }
+                        val alternativeName : String? = jsonElement.flattenStrings().firstOrNull {
+                            it != packageName && ! it.startsWith(prefix = "https://") && it.any(Char::isLetter) && it.length < 50
                         }
-                        val appName = suggestedName ?: alternativeName ?: packageName
+                        val appName : String = suggestedName ?: alternativeName ?: packageName
                         appInfos.add(AppInfo(name = appName , iconUrl = appIconUrl , packageName = packageName))
                         knownPackages.add(packageName)
                     }
-                    jsonElement.forEach { traverse(it) }
+                    jsonElement.forEach { traverse(jsonElement = it) }
                 }
 
-                is JsonObject -> jsonElement.values.forEach { traverse(it) }
+                is JsonObject -> jsonElement.values.forEach { traverse(jsonElement = it) }
                 else -> {}
             }
         }
-        traverse(jsonElement)
+        traverse(jsonElement = jsonElement)
         return appInfos
     }
 }
