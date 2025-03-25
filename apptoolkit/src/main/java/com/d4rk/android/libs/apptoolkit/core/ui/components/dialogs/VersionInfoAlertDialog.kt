@@ -39,9 +39,7 @@ fun VersionInfoAlertDialog(
     AlertDialog(
         onDismissRequest = onDismiss ,
         text = {
-            VersionInfoAlertDialogContent(
-                copyrightString = copyrightString , appName = appName , versionName = versionName , versionString = versionString
-            )
+            VersionInfoAlertDialogContent(copyrightString = copyrightString , appName = appName , versionName = versionName , versionString = versionString)
         } ,
         confirmButton = {} ,
     )
@@ -58,31 +56,19 @@ fun VersionInfoAlertDialog(
  * @param versionString The resource ID of the version string format (e.g., "Version %s").
  */
 @Composable
-fun VersionInfoAlertDialogContent(
-    copyrightString : Int , appName : Int , versionName : String , versionString : Int
-) {
+fun VersionInfoAlertDialogContent(copyrightString : Int , appName : Int , versionName : String , versionString : Int) {
     val context : Context = LocalContext.current
     val appIcon : Drawable = context.packageManager.getApplicationIcon(context.packageName)
     val imageLoader : ImageLoader = ImageLoader.Builder(context = context).build()
 
-    Row(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        AsyncImage(
-            model = appIcon , contentDescription = null , modifier = Modifier.size(size = 48.dp) , imageLoader = imageLoader
-        )
+    Row(modifier = Modifier.fillMaxWidth()) {
+        AsyncImage(model = appIcon , contentDescription = null , modifier = Modifier.size(size = 48.dp) , imageLoader = imageLoader)
         LargeHorizontalSpacer()
         Column {
-            Text(
-                text = context.getString(appName) , style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = stringResource(versionString , versionName) , style = MaterialTheme.typography.bodyMedium
-            )
+            Text(text = context.getString(appName) , style = MaterialTheme.typography.titleLarge)
+            Text(text = stringResource(versionString , versionName) , style = MaterialTheme.typography.bodyMedium)
             LargeVerticalSpacer()
-            Text(
-                text = stringResource(id = copyrightString) , style = MaterialTheme.typography.bodyMedium
-            )
+            Text(text = stringResource(id = copyrightString) , style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
