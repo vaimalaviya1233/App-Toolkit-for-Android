@@ -29,11 +29,11 @@ class QuerySkuDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<Str
                             val detailsMap : Map<String , SkuDetails> = it.associateBy { skuId -> skuId.sku }
                             continuation.resume(value = detailsMap)
                         } ?: run {
-                            continuation.resumeWithException(exception = Exception(message = "SkuDetailsList was null"))
+                            continuation.resumeWithException(exception = Exception("SkuDetailsList was null"))
                         }
                     }
                     else {
-                        continuation.resumeWithException(exception = Exception(message = "Failed to query SKU details: ${billingResult.debugMessage}"))
+                        continuation.resumeWithException(exception = Exception("Failed to query SKU details: ${billingResult.debugMessage}"))
                     }
                 }
             }
