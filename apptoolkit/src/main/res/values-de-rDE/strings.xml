@@ -33,6 +33,8 @@
     <string name="initialization_error">Die Initialisierung ist fehlgeschlagen. Bitte versuchen Sie es später erneut.</string>
 
     <string name="settings">Einstellungen</string>
+    <string name="long_settings_label">Anwendungseinstellungen</string>
+    <string name="settings_disabled_message">Einstellungen sind derzeit nicht verfügbar.</string>
     <string name="settings_placeholder_description">Keine Einstellungen ausgewählt. Wählen Sie eine Option, um Details anzuzeigen.</string>
     <string name="get_help">Hilfe erhalten</string>
 

@@ -33,6 +33,8 @@
     <string name="initialization_error">La inicialización falló. Inténtalo más tarde.</string>
 
     <string name="settings">Configuración</string>
+    <string name="long_settings_label">Configuración de la aplicación</string>
+    <string name="settings_disabled_message">La configuración no está disponible actualmente.</string>
     <string name="settings_placeholder_description">No se seleccionaron configuraciones. Elige una opción para ver los detalles aquí.</string>
     <string name="get_help">Obtener ayuda</string>
 

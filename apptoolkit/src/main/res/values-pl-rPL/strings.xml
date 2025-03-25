@@ -33,6 +33,8 @@
     <string name="initialization_error">Inicjalizacja nie powiodła się. Spróbuj ponownie później.</string>
 
     <string name="settings">Ustawienia</string>
+    <string name="long_settings_label">Ustawienia aplikacji</string>
+    <string name="settings_disabled_message">Ustawienia są obecnie niedostępne.</string>
     <string name="settings_placeholder_description">Nie wybrano żadnych ustawień. Wybierz opcję, aby wyświetlić jej szczegóły tutaj.</string>
     <string name="get_help">Uzyskaj pomoc</string>
 

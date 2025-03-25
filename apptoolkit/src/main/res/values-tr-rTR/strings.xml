@@ -33,6 +33,8 @@
     <string name="initialization_error">Başlatma başarısız oldu. Lütfen daha sonra tekrar deneyin.</string>
 
     <string name="settings">Ayarlar</string>
+    <string name="long_settings_label">Uygulama Ayarları</string>
+    <string name="settings_disabled_message">Ayarlar şu anda kullanılamıyor.</string>
     <string name="settings_placeholder_description">Seçilen bir ayar yok. Ayrıntıları görüntülemek için bir seçenek seçin.</string>
     <string name="get_help">Yardım al</string>
 

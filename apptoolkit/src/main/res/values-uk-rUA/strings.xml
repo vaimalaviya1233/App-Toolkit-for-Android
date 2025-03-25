@@ -33,6 +33,8 @@
     <string name="initialization_error">Ініціалізація не вдалася. Будь ласка, спробуйте пізніше.</string>
 
     <string name="settings">Налаштування</string>
+    <string name="long_settings_label">Налаштування додатку</string>
+    <string name="settings_disabled_message">Наразі налаштування недоступні.</string>
     <string name="settings_placeholder_description">Налаштування не вибрано. Виберіть опцію, щоб переглянути її деталі.</string>
     <string name="get_help">Отримати допомогу</string>
 

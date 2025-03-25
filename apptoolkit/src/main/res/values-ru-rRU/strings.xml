@@ -33,6 +33,8 @@
     <string name="initialization_error">Не удалось инициализировать приложение. Попробуйте позже.</string>
 
     <string name="settings">Настройки</string>
+    <string name="long_settings_label">Настройки приложения</string>
+    <string name="settings_disabled_message">Настройки в данный момент недоступны.</string>
     <string name="settings_placeholder_description">Настройки не выбраны. Выберите опцию, чтобы увидеть её детали.</string>
     <string name="get_help">Получить помощь</string>
 

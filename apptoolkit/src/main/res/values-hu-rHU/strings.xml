@@ -33,6 +33,8 @@
     <string name="initialization_error">Az inicializálás sikertelen. Próbáld újra később.</string>
 
     <string name="settings">Beállítások</string>
+    <string name="long_settings_label">Alkalmazás beállításai</string>
+    <string name="settings_disabled_message">A beállítások jelenleg nem érhetők el.</string>
     <string name="settings_placeholder_description">Nincs kiválasztott beállítás. Válassz egy lehetőséget a részletek megtekintéséhez.</string>
     <string name="get_help">Segítség kérése</string>
 

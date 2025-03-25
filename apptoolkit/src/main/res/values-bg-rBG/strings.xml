@@ -33,6 +33,8 @@
     <string name="initialization_error">Инициализацията не бе успешна. Опитайте отново по-късно.</string>
 
     <string name="settings">Настройки</string>
+    <string name="long_settings_label">Настройки на приложението</string>
+    <string name="settings_disabled_message">Настройките не са налични в момента.</string>
     <string name="settings_placeholder_description">Няма избрани настройки. Изберете опция, за да видите подробностите тук.</string>
     <string name="get_help">Получете помощ</string>
 

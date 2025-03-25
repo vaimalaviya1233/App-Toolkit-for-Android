@@ -33,6 +33,8 @@
     <string name="initialization_error">Initialiseringen misslyckades. Försök igen senare.</string>
 
     <string name="settings">Inställningar</string>
+    <string name="long_settings_label">Appinställningar</string>
+    <string name="settings_disabled_message">Inställningarna är för närvarande inte tillgängliga.</string>
     <string name="settings_placeholder_description">Inga inställningar valda. Välj ett alternativ för att se detaljer här.</string>
     <string name="get_help">Få hjälp</string>
 

@@ -33,6 +33,8 @@
     <string name="initialization_error">L\'initialisation a échoué. Veuillez réessayer plus tard.</string>
 
     <string name="settings">Paramètres</string>
+    <string name="long_settings_label">Paramètres de l\'application</string>
+    <string name="settings_disabled_message">Les paramètres ne sont pas disponibles pour le moment.</string>
     <string name="settings_placeholder_description">Aucun paramètre sélectionné. Choisissez une option pour afficher les détails ici.</string>
     <string name="get_help">Obtenir de l\'aide</string>
 

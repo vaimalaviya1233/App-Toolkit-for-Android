@@ -33,6 +33,8 @@
     <string name="initialization_error">Inițializarea a eșuat. Încearcă din nou mai târziu.</string>
 
     <string name="settings">Setări</string>
+    <string name="long_settings_label">Setări aplicație</string>
+    <string name="settings_disabled_message">Setările nu sunt disponibile momentan.</string>
     <string name="settings_placeholder_description">Nicio setare selectată. Alege o opțiune pentru a vedea detalii aici.</string>
     <string name="get_help">Obține ajutor</string>
 
