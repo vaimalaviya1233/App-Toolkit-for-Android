@@ -35,10 +35,11 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
     val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
 
+    val defaultThemeMode : String = stringResource(id = R.string.follow_system)
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
+    val themeMode : String = dataStore.themeMode.collectAsState(initial = defaultThemeMode).value
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
-    val themeOptions : List<String> = listOf(stringResource(id = R.string.follow_system) , stringResource(id = R.string.dark_mode) , stringResource(id = R.string.light_mode))
+    val themeOptions : List<String> = listOf(defaultThemeMode , stringResource(id = R.string.dark_mode) , stringResource(id = R.string.light_mode))
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxSize()) {
@@ -50,30 +51,27 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 }
             }
             item {
-                Column(
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(all = 24.dp)
-                ) {
+                Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 24.dp)) {
                     themeOptions.forEach { text ->
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
-                                coroutineScope.launch {
-                                    dataStore.saveThemeMode(mode = text)
-                                    dataStore.themeModeState.value = text
-                                }
-                            })
+                            RadioButton(
+                                modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
+                                    coroutineScope.launch {
+                                        dataStore.saveThemeMode(mode = text)
+                                        dataStore.themeModeState.value = text
+                                    }
+                                })
                             Text(text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize))
                         }
                     }
                 }
             }
             item {
-                InfoMessageSection(
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
-                )
+                InfoMessageSection(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme))
             }
         }
     }

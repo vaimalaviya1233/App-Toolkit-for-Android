@@ -8,6 +8,7 @@ import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
 import com.d4rk.android.libs.apptoolkit.app.startup.domain.model.StartupUiData
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 
 class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(value = UiStateScreen(data = StartupUiData()))
+    private val _screenState : MutableStateFlow<UiStateScreen<StartupUiData>> = MutableStateFlow(value = UiStateScreen(data = StartupUiData()))
     val screenState : StateFlow<UiStateScreen<StartupUiData>> = _screenState.asStateFlow()
 
     init {
@@ -43,15 +44,12 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
 
     private fun loadConsentInfo() {
         viewModelScope.launch {
-            loadConsentInfoUseCase().flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
+            loadConsentInfoUseCase().flowOn(dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ConsentInformation , Errors> ->
                 when (result) {
                     is DataState.Success -> {
                         val consentInfo : ConsentInformation = result.data
-                        if (consentInfo.isConsentFormAvailable && consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED) {
-                            _screenState.updateData(newDataState = ScreenState.Success()) { it.copy(consentRequired = true) }
-                        }
-                        else {
-                            _screenState.updateData(newDataState = ScreenState.Success()) { it.copy(consentRequired = false) }
+                        _screenState.updateData(ScreenState.Success()) { current ->
+                            current.copy(consentRequired = consentInfo.isConsentFormAvailable && consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED , consentInformation = consentInfo)
                         }
                     }
 
@@ -59,7 +57,9 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
                         _screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.DynamicString(content = result.error.toString()))))
                     }
 
-                    else -> _screenState.setLoading()
+                    is DataState.Loading -> _screenState.setLoading()
+
+                    else -> {}
                 }
             }
         }
@@ -91,7 +91,9 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
 
     private fun onConsentFormLoaded() {
         viewModelScope.launch {
-            _screenState.updateData(newDataState = _screenState.value.screenState) { it.copy(consentFormLoaded = true) }
+            _screenState.updateData(_screenState.value.screenState) { current : StartupUiData ->
+                current.copy(consentFormLoaded = true)
+            }
         }
     }
 }

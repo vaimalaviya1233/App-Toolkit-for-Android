@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
@@ -42,27 +41,40 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
     val uiStateScreen : UiStateScreen<StartupUiData> by viewModel.screenState.collectAsState()
 
-    TopAppBarScaffold(title = stringResource(R.string.welcome)) { paddingValues ->
+    TopAppBarScaffold(title = stringResource(R.string.welcome) , content = { paddingValues ->
         ScreenStateHandler(screenState = uiStateScreen , onLoading = {
             LoadingScreen()
         } , onEmpty = {
             NoDataScreen()
-        } , onSuccess = { data ->
-            StartupScreenContent(paddingValues = paddingValues , activity = activity , data = data)
+        } , onSuccess = {
+            StartupScreenContent(paddingValues = paddingValues)
         })
-    }
+    } , floatingActionButton = {
+        ExtendedFloatingActionButton(
+            modifier = Modifier.bounceClick() , containerColor = if (uiStateScreen.data?.consentFormLoaded == true) {
+            FloatingActionButtonDefaults.containerColor
+        }
+        else {
+            Gray
+        } , text = { Text(text = stringResource(id = R.string.agree)) } , onClick = {
+            activity.navigateToNext()
+        } , icon = {
+            Icon(
+                Icons.Outlined.CheckCircle , contentDescription = null
+            )
+        })
+    })
 }
 
 @Composable
-fun StartupScreenContent(paddingValues : PaddingValues , activity : StartupActivity , data : StartupUiData) {
+fun StartupScreenContent(paddingValues : PaddingValues) {
     val context = LocalContext.current
-    val fabEnabled = data.consentFormLoaded
 
     Box(
         modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(24.dp)
+                .padding(paddingValues = paddingValues)
+                .padding(all = 24.dp)
                 .safeDrawingPadding()
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -93,21 +105,5 @@ fun StartupScreenContent(paddingValues : PaddingValues , activity : StartupActiv
                             })
             }
         }
-
-        ExtendedFloatingActionButton(
-            modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .bounceClick() , containerColor = if (fabEnabled) {
-            FloatingActionButtonDefaults.containerColor
-        }
-        else {
-            Gray
-        } , text = { Text(text = stringResource(id = R.string.agree)) } , onClick = {
-            activity.navigateToNext()
-        } , icon = {
-            Icon(
-                Icons.Outlined.CheckCircle , contentDescription = null
-            )
-        })
     }
 }
