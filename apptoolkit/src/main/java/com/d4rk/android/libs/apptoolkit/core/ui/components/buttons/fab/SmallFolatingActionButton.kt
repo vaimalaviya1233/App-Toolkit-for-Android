@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.core.ui.components.buttons
+package com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab
 
 import android.view.SoundEffectConstants
 import android.view.View

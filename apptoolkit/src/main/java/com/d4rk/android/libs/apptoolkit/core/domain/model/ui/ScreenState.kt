@@ -7,41 +7,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 /**
- * Represents the UI state of a screen.
+ * Encapsulates the UI state for a screen, including status, data, errors, and snackbar messages.
  *
- * This class encapsulates the different states a screen can be in, including loading, success, error, and no data,
- * along with any associated data, snackbar messages, and a list of errors. It is designed to simplify state management
- * for UI screens in a reactive and predictable way.
- *
- * @param T The type of the data associated with the screen.
- * @property screenState The current state of the screen, represented by the [ScreenState] enum. Defaults to [ScreenState.NoData].
- * @property errors A list of [UiSnackbar] representing any errors that occurred.  This allows presenting multiple error messages
- * simultaneously or in sequence. Defaults to an empty list.
- * @property snackbar A single [UiSnackbar] to be displayed. Useful for showing informational or success messages.
- * Can be used instead of `errors` or alongside it. Defaults to null.
- * @property data The data associated with the screen. This is only populated when the screen is in a success state.
- * Defaults to null.
+ * @param T The type of the screen's data.
+ * @property screenState The current [ScreenState] (e.g., loading, success, error). Defaults to [ScreenState.IsLoading].
+ * @property errors List of [UiSnackbar] errors. Defaults to empty list.
+ * @property snackbar Optional single [UiSnackbar] for non-error messages. Defaults to null.
+ * @property data The screen-specific data of type [T]. Defaults to null.
  */
 data class UiStateScreen<T>(
     val screenState : ScreenState = ScreenState.IsLoading() , var errors : List<UiSnackbar> = emptyList() , val snackbar : UiSnackbar? = null , val data : T? = null
 )
 
 /**
- * Represents a snackbar to be displayed in the UI.
+ * Represents a snackbar message to be shown in the UI.
  *
- * This data class encapsulates the information needed to display a snackbar, including its type,
- * message content, whether it represents an error, and a timestamp for tracking.
- *
- * @property type The type of the snackbar. Defaults to [ScreenMessageType.NONE].
- *                  This can be used to differentiate between different categories of messages.
- *                  See [ScreenMessageType] for possible values.
- * @property message The message content to be displayed in the snackbar.
- *                   It uses [UiTextHelper] to handle both dynamic strings and string resources.
- *                   Defaults to an empty dynamic string.
- * @property isError A boolean indicating whether the snackbar represents an error condition.
- *                   Defaults to `true`. This can be used for visual styling (e.g., red background).
- * @property timeStamp A timestamp (in milliseconds) representing when the snackbar was created.
- *                     Defaults to 0. This can be used for features like automatic dismissal after a certain time, or to identify unique messages.
+ * @property type Message category string, see [ScreenMessageType]. Defaults to [ScreenMessageType.NONE].
+ * @property message The text content using [UiTextHelper]. Defaults to empty.
+ * @property isError True if this is an error message. Defaults to `true`.
+ * @property timeStamp Creation timestamp (milliseconds). Defaults to 0.
  */
 data class UiSnackbar(
     var type : String = ScreenMessageType.NONE ,
@@ -51,12 +35,10 @@ data class UiSnackbar(
 )
 
 /**
- * Updates the data and state of a [MutableStateFlow] of [UiStateScreen].
+ * Updates the [UiStateScreen.data] and [UiStateScreen.screenState] within the flow.
  *
- * This function allows modifying the data within the [UiStateScreen] and updating its state simultaneously.
- *
- * @param newDataState The new [ScreenState] to set.
- * @param newValues A lambda function that takes the current data of type [T] and returns a modified version of it.
+ * @param newDataState The new [ScreenState].
+ * @param newValues Lambda to transform the existing data `(T) -> T`.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(newDataState : ScreenState , newValues : (T) -> T) {
     update { current ->
@@ -65,11 +47,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(newDataState : ScreenState
 }
 
 /**
- * Updates the state of a [MutableStateFlow] of [UiStateScreen].
+ * Updates the [UiStateScreen.screenState] within the flow.
  *
- * This function updates only the screenState property of the [UiStateScreen].
- *
- * @param newValues The new [ScreenState] to set.
+ * @param newValues The new [ScreenState].
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateState(newValues : ScreenState) {
     update { current ->
@@ -78,11 +58,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.updateState(newValues : ScreenState) 
 }
 
 /**
- * Sets a list of errors in a [MutableStateFlow] of [UiStateScreen].
+ * Updates the [UiStateScreen.errors] list within the flow.
  *
- * This function updates the errors property of the [UiStateScreen].
- *
- * @param errors The list of [UiSnackbar] to set as errors.
+ * @param errors The new list of error [UiSnackbar]s.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) {
     update { current ->
@@ -91,11 +69,9 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) 
 }
 
 /**
- * Shows a snackbar in a [MutableStateFlow] of [UiStateScreen].
+ * Sets the [UiStateScreen.snackbar] within the flow to display a message.
  *
- * This function updates the snackbar property of the [UiStateScreen].
- *
- * @param snackbar The [UiSnackbar] to display.
+ * @param snackbar The [UiSnackbar] to show.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) {
     update { current ->
@@ -103,11 +79,7 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) {
     }
 }
 
-/**
- * Dismisses the currently displayed snackbar in a [MutableStateFlow] of [UiStateScreen].
- *
- * This function sets the snackbar property of the [UiStateScreen] to null.
- */
+/** Sets the [UiStateScreen.snackbar] to null within the flow, dismissing it. */
 fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
     update { current ->
         current.copy(snackbar = null)
@@ -115,72 +87,53 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
 }
 
 /**
- * Sets a list of errors and updates the state to [ScreenState.Error] in a [MutableStateFlow] of [UiStateScreen].
+ * Sets [UiStateScreen.errors] and updates [UiStateScreen.screenState] to [ScreenState.Error] within the flow.
  *
- * This function updates both the state and the errors property of the [UiStateScreen].
- *
- * @param errors The list of [UiSnackbar] to set as errors. If null, an empty list is used.
+ * @param errors The list of error [UiSnackbar]s. Null becomes an empty list.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : ArrayList<UiSnackbar>?) {
     update { current ->
-        current.copy(
-            screenState = ScreenState.Error() , errors = errors ?: ArrayList()
-        )
+        current.copy(screenState = ScreenState.Error() , errors = errors ?: ArrayList())
     }
 }
 
-/**
- * Sets the state to [ScreenState.IsLoading] in a [MutableStateFlow] of [UiStateScreen].
- *
- * This function updates the state to indicate that the screen is loading.
- */
+/** Sets the [UiStateScreen.screenState] to [ScreenState.IsLoading] within the flow. */
 fun <T> MutableStateFlow<UiStateScreen<T>>.setLoading() {
     update { current ->
-        current.copy(
-            screenState = ScreenState.IsLoading()
-        )
+        current.copy(screenState = ScreenState.IsLoading())
     }
 }
 
 /**
- * Retrieves the data from a [MutableStateFlow] of [UiStateScreen].
- *
- * This function returns the data property of the [UiStateScreen].
+ * Gets the current [UiStateScreen.data] from the flow's value.
  *
  * @return The data of type [T].
- * @throws IllegalStateException if the data is null.
+ * @throws IllegalStateException if data is null.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.getData() : T {
-    return value.data ?: throw IllegalStateException("Data is not of expected type.")
+    return value.data ?: throw IllegalStateException("Data is not available or null.") // Slightly modified exception message
 }
 
 /**
- * Retrieves the list of errors from a [MutableStateFlow] of [UiStateScreen].
+ * Gets the current [UiStateScreen.errors] list from the flow's value.
  *
- * This function returns the errors property of the [UiStateScreen].
- *
- * @return The list of [UiSnackbar] representing the errors.
+ * @return The list of error [UiSnackbar]s.
  */
 fun <T> MutableStateFlow<UiStateScreen<T>>.getErrors() : List<UiSnackbar> {
     return value.errors
 }
 
-/**
- * Represents the different states a screen can be in.
- *
- * This sealed class provides a type-safe way to represent the various states of a screen,
- * such as no data, loading, success, or error.
- */
+/** Sealed class representing distinct UI screen states. */
 sealed class ScreenState {
-    /** Represents the state when there is no data to display. */
+    /** State: No data available. [data] defaults to [ScreenDataStatus.NO_DATA]. */
     data class NoData(val data : String = ScreenDataStatus.NO_DATA) : ScreenState()
 
-    /** Represents the state when the screen is loading data. */
+    /** State: Currently loading data. [data] defaults to [ScreenDataStatus.LOADING]. */
     data class IsLoading(val data : String = ScreenDataStatus.LOADING) : ScreenState()
 
-    /** Represents the state when data has been successfully loaded. */
+    /** State: Data loaded successfully. [data] defaults to [ScreenDataStatus.HAS_DATA]. */
     data class Success(val data : String = ScreenDataStatus.HAS_DATA) : ScreenState()
 
-    /** Represents the state when an error has occurred. */
+    /** State: An error occurred. [data] defaults to [ScreenDataStatus.ERROR]. */
     data class Error(val data : String = ScreenDataStatus.ERROR) : ScreenState()
 }

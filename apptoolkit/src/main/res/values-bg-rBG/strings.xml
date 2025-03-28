@@ -14,6 +14,7 @@
     <string name="go_back">Назад</string>
 
     <string name="error">Грешка</string>
+    <string name="sort_by">Сортиране по:</string>
     <string name="app_not_installed">Приложението не е инсталирано</string>
     <string name="snack_app_updated">Приложението беше успешно актуализирано</string>
     <string name="snack_update_failed">Възникна проблем при актуализацията</string>

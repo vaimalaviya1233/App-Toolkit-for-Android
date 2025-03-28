@@ -14,6 +14,7 @@
     <string name="go_back">Kembali</string>
 
     <string name="error">Kesalahan</string>
+    <string name="sort_by">Urutkan berdasarkan:</string>
     <string name="app_not_installed">Aplikasi tidak terpasang</string>
     <string name="snack_app_updated">Aplikasi berhasil diperbarui</string>
     <string name="snack_update_failed">Proses pembaruan mengalami masalah</string>

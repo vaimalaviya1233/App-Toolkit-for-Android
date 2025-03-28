@@ -14,6 +14,7 @@
     <string name="go_back">Înapoi</string>
 
     <string name="error">Eroare</string>
+    <string name="sort_by">Sortează după:</string>
     <string name="app_not_installed">Aplicația nu este instalată</string>
     <string name="snack_app_updated">Aplicația a fost actualizată cu succes</string>
     <string name="snack_update_failed">A apărut o problemă în timpul actualizării</string>

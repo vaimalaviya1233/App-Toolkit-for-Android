@@ -50,6 +50,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                     }
                 }
             }
+
             item {
                 Column(modifier = Modifier
                         .fillMaxWidth()
@@ -68,6 +69,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                     }
                 }
             }
+
             item {
                 InfoMessageSection(modifier = Modifier
                         .fillMaxWidth()
