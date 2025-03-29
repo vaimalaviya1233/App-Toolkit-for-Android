@@ -58,9 +58,9 @@ fun InfoMessageSection(message : String , modifier : Modifier = Modifier , learn
 
         if (! learnMoreText.isNullOrEmpty() && ! learnMoreUrl.isNullOrEmpty()) {
             val annotatedString : AnnotatedString = buildAnnotatedString {
-                val startIndex = length
+                val startIndex : Int = length
                 withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary , textDecoration = TextDecoration.Underline)) {
-                    append(learnMoreText)
+                    append(text = learnMoreText)
                 }
                 val endIndex : Int = length
 
@@ -72,7 +72,7 @@ fun InfoMessageSection(message : String , modifier : Modifier = Modifier , learn
                     .clickable {
                         annotatedString.getStringAnnotations(
                             tag = "URL" , start = 0 , end = annotatedString.length
-                        ).firstOrNull()?.let { annotation ->
+                        ).firstOrNull()?.let { annotation : AnnotatedString.Range<String> ->
                             IntentsHelper.openUrl(context = context , url = annotation.item)
                         }
                     })
