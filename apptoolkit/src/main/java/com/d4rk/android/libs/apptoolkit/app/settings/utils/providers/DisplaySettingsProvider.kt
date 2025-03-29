@@ -44,25 +44,6 @@ interface DisplaySettingsProvider {
     }
 
     /**
-     * A composable dialog for selecting a language.
-     *
-     * This dialog presents the user with a list of available languages to choose from.
-     * When a language is selected, the `onLanguageSelected` callback is invoked with the
-     * selected language's string identifier (e.g., "en", "es", "fr").
-     *
-     * @param onDismiss A callback invoked when the dialog is dismissed, either by
-     *                  clicking outside the dialog or by pressing the back button.
-     * @param onLanguageSelected A callback invoked when a language is selected from the list.
-     *                           It receives the string identifier of the selected language.
-     */
-    @Composable
-    fun LanguageSelectionDialog(
-        onDismiss : () -> Unit , onLanguageSelected : (String) -> Unit
-    ) {
-
-    }
-
-    /**
      * Opens the theme settings screen or activity.
      *
      * This function is responsible for initiating the navigation or display of

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.os.LocaleListCompat
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.display.components.dialogs.SelectLanguageAlertDialog
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
@@ -86,7 +89,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                             dataStore.themeModeState.value = lightModeString
                         }
                     }
-                } , onSwitchClick = { isChecked ->
+                } , onSwitchClick = { isChecked : Boolean ->
                     coroutineScope.launch {
                         if (isChecked) {
                             dataStore.saveThemeMode(mode = darkModeString)
@@ -199,7 +202,9 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             }
 
             if (showLanguageDialog) {
-                provider.LanguageSelectionDialog(onDismiss = { showLanguageDialog = false }) { }
+                SelectLanguageAlertDialog(onDismiss = { showLanguageDialog = true } , onLanguageSelected = { newLanguageCode : String ->
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(newLanguageCode))
+                })
             }
         }
     }
