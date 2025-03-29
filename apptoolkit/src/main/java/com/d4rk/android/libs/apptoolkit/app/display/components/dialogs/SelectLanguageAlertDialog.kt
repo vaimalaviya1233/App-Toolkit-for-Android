@@ -23,11 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.flow.firstOrNull
@@ -79,11 +79,8 @@ fun SelectLanguageAlertDialogContent(selectedLanguage : MutableState<String> , d
                 }
             }
         }
-        InfoMessageSection(
-            modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 24.dp) , message = stringResource(id = R.string.dialog_info_language)
-        )
+        MediumVerticalSpacer()
+        InfoMessageSection(message = stringResource(id = R.string.dialog_info_language))
     }
 
     LaunchedEffect(key1 = selectedLanguage.value) {
