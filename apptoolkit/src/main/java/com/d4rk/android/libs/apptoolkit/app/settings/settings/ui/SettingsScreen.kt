@@ -47,7 +47,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsV
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsContent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen

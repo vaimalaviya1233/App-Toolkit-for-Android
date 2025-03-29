@@ -22,24 +22,24 @@ class PerformInAppUpdateUseCase(private val appUpdateManager : AppUpdateManager 
         runCatching {
             val appUpdateInfo : AppUpdateInfo = appUpdateManager.appUpdateInfo.await()
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                val stalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
-                val updateType = if (stalenessDays > 90) {
+                val stalenessDays : Int = appUpdateInfo.clientVersionStalenessDays() ?: 0
+                val updateType : Int = if (stalenessDays > 90) {
                     AppUpdateType.IMMEDIATE
                 }
                 else {
                     AppUpdateType.FLEXIBLE
                 }
-                val appUpdateOptions = AppUpdateOptions.newBuilder(updateType).build()
-                val didStart = appUpdateManager.startUpdateFlowForResult(
+                val appUpdateOptions : AppUpdateOptions = AppUpdateOptions.newBuilder(updateType).build()
+                val didStart : Boolean = appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo , updateResultLauncher , appUpdateOptions
                 )
                 if (didStart) return@runCatching Activity.RESULT_OK
             }
             Activity.RESULT_CANCELED
         }.onSuccess { result ->
-            emit(DataState.Success(data = result))
+            emit(value = DataState.Success(data = result))
         }.onFailure { throwable ->
-            emit(DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_UPDATE_APP)))
+            emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_UPDATE_APP)))
         }
     }
 }
