@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Виберіть бажану початкову сторінку:</string>
     <string name="dialog_info_startup">Налаштуйте початковий екран, який буде відображатися при запуску додатка.</string>
 
+    <string name="select_language_title">Виберіть мову</string>
     <string name="dialog_language_subtitle">Виберіть бажану мову</string>
     <string name="dialog_info_language">Персоналізуйте свій досвід, використовуючи бажану мову</string>
 

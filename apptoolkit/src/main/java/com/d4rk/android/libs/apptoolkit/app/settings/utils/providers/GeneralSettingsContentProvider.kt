@@ -6,7 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutSettingsList
 import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsList
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.UsageAndDiagnosticsList
 import com.d4rk.android.libs.apptoolkit.app.display.DisplaySettingsList
-import com.d4rk.android.libs.apptoolkit.app.display.theme.ThemeSettingsList
+import com.d4rk.android.libs.apptoolkit.app.theme.ThemeSettingsList
 import com.d4rk.android.libs.apptoolkit.app.privacy.ui.PrivacySettingsList
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsContent
 

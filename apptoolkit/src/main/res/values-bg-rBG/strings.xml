@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Изберете предпочитаната начална страница:</string>
     <string name="dialog_info_startup">Конфигурира началния екран, показван на потребителите при стартиране на приложението. Тази настройка може да се персонализира според специфични потребителски сегменти или продуктови цели.</string>
 
+    <string name="select_language_title">Изберете език</string>
     <string name="dialog_language_subtitle">Изберете предпочитания език</string>
     <string name="dialog_info_language">Персонализирайте изживяването си с предпочитания език. Промените в езика се прилагат незабавно.</string>
 

@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.display.theme
+package com.d4rk.android.libs.apptoolkit.app.theme
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box

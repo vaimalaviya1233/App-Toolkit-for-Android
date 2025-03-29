@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Wählen Sie Ihre bevorzugte Startseite:</string>
     <string name="dialog_info_startup">Konfiguriert den Startbildschirm, der Nutzern beim Starten der Anwendung präsentiert wird. Diese Einstellung beeinflusst die erste Benutzerinteraktion mit der App.</string>
 
+    <string name="select_language_title">Sprache auswählen</string>
     <string name="dialog_language_subtitle">Wählen Sie Ihre bevorzugte Sprache</string>
     <string name="dialog_info_language">Passen Sie Ihre Erfahrung mit Ihrer bevorzugten Sprache an. Änderungen werden sofort wirksam.</string>
 

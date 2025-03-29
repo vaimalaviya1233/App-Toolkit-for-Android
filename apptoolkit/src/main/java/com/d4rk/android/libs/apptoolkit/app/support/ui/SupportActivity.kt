@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.SkuDetails
-import com.d4rk.android.libs.apptoolkit.app.display.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SupportActivity : AppCompatActivity() {

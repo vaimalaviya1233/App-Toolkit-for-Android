@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Scegli la tua pagina di avvio preferita:</string>
     <string name="dialog_info_startup">Configura la schermata iniziale presentata agli utenti al momento dell\'apertura dell\'app. Questa impostazione influenza la prima interazione degli utenti con l\'app.</string>
 
+    <string name="select_language_title">Seleziona lingua</string>
     <string name="dialog_language_subtitle">Seleziona la tua lingua preferita</string>
     <string name="dialog_info_language">Personalizza la tua esperienza con la lingua preferita. Le modifiche alla lingua avranno effetto immediato.</string>
 

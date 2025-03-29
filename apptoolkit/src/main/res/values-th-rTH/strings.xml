@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">เลือกหน้าจอเริ่มต้นที่คุณต้องการ:</string>
     <string name="dialog_info_startup">กำหนดหน้าจอแรกที่จะแสดงเมื่อเปิดแอปครั้งแรก</string>
 
+    <string name="select_language_title">เลือกภาษา</string>
     <string name="dialog_language_subtitle">เลือกภาษาที่คุณต้องการ</string>
     <string name="dialog_info_language">ปรับแต่งประสบการณ์ของคุณด้วยภาษาที่คุณต้องการ</string>
 

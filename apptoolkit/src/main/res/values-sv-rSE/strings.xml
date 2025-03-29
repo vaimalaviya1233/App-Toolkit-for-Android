@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Välj din föredragna startsida:</string>
     <string name="dialog_info_startup">Konfigurerar den första skärmen som presenteras för användarna vid appstart.</string>
 
+    <string name="select_language_title">Välj språk</string>
     <string name="dialog_language_subtitle">Välj ditt föredragna språk</string>
     <string name="dialog_info_language">Anpassa din upplevelse med ditt föredragna språk. Ändringarna träder i kraft omedelbart.</string>
 

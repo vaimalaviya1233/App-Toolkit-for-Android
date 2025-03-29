@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
-import com.d4rk.android.libs.apptoolkit.app.display.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.ads.MobileAds

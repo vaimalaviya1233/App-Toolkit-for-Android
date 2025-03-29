@@ -153,15 +153,10 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
 fun SettingsDetail(preference : SettingsPreference , paddingValues : PaddingValues , contentProvider : GeneralSettingsContentProvider) {
     val viewModel : GeneralSettingsViewModel = koinViewModel()
 
-    if (SettingsContent.isLibraryContent(preference.key.orEmpty())) {
-        LaunchedEffect(key1 = preference.key) {
-            viewModel.loadContent(contentKey = preference.key)
-        }
-        GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues)
+    LaunchedEffect(key1 = preference.key) {
+        viewModel.loadContent(contentKey = preference.key)
     }
-    else {
-        LaunchedEffect(key1 = preference) { preference.action() }
-    }
+    GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues)
 }
 
 @Composable

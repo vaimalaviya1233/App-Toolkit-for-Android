@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun CommonFilterChip(selected : Boolean , onClick : () -> Unit , label : String , modifier : Modifier = Modifier , leadingIcon : (@Composable (() -> Unit))? = null) {
@@ -22,5 +23,5 @@ fun CommonFilterChip(selected : Boolean , onClick : () -> Unit , label : String 
                 }
             }
         }
-    } , modifier = modifier)
+    } , modifier = modifier.bounceClick())
 }

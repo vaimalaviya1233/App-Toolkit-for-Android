@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Tercih ettiğiniz başlangıç sayfasını seçin:</string>
     <string name="dialog_info_startup">Uygulamanın açılışında kullanıcılara sunulan başlangıç ekranını yapılandırır.</string>
 
+    <string name="select_language_title">Dil Seç</string>
     <string name="dialog_language_subtitle">Tercih ettiğiniz dili seçin</string>
     <string name="dialog_info_language">Tercih ettiğiniz dille deneyiminizi kişiselleştirin</string>
 

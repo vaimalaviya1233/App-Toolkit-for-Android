@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.display.theme.style
+package com.d4rk.android.libs.apptoolkit.app.theme.style
 
 import android.app.Activity
 import android.content.Context

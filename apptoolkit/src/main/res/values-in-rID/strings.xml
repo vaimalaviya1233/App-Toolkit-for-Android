@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Pilih halaman awal yang Anda sukai:</string>
     <string name="dialog_info_startup">Mengonfigurasi layar awal yang disajikan kepada pengguna saat meluncurkan aplikasi. Pengaturan ini memengaruhi interaksi pertama pengguna dengan aplikasi.</string>
 
+    <string name="select_language_title">Pilih Bahasa</string>
     <string name="dialog_language_subtitle">Pilih bahasa pilihan Anda</string>
     <string name="dialog_info_language">Personalisasi pengalaman Anda dengan bahasa pilihan Anda. Perubahan bahasa yang Anda buat akan langsung berlaku.</string>
 

@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Wybierz preferowaną stronę startową:</string>
     <string name="dialog_info_startup">Konfiguruje ekran początkowy wyświetlany użytkownikom przy uruchamianiu aplikacji. To ustawienie wpływa na pierwszą interakcję użytkownika z aplikacją.</string>
 
+    <string name="select_language_title">Wybierz język</string>
     <string name="dialog_language_subtitle">Wybierz preferowany język</string>
     <string name="dialog_info_language">Spersonalizuj swoje doświadczenie za pomocą preferowanego języka. Wszelkie zmiany języka zostaną zastosowane natychmiast.</string>
 

@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">選擇您偏好的啟動頁面：</string>
     <string name="dialog_info_startup">設定應用程式啟動時呈現給使用者的初始畫面。</string>
 
+    <string name="select_language_title">選擇語言</string>
     <string name="dialog_language_subtitle">選擇您偏好的語言</string>
     <string name="dialog_info_language">使用您偏好的語言個性化您的體驗。任何語言更改將立即生效。</string>
 

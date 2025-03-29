@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">Válaszd ki a kedvenc indítóoldaladat:</string>
     <string name="dialog_info_startup">Az indítóképernyő beállításai, amelyek befolyásolják a felhasználók első interakcióját az alkalmazással.</string>
 
+    <string name="select_language_title">Nyelv kiválasztása</string>
     <string name="dialog_language_subtitle">Válaszd ki a kívánt nyelvet</string>
     <string name="dialog_info_language">Személyre szabhatod a tapasztalataidat a választott nyelveddel. A nyelvi változtatások azonnal érvénybe lépnek.</string>
 

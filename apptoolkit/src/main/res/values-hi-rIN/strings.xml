@@ -69,6 +69,7 @@
     <string name="dialog_startup_subtitle">अपना पसंदीदा स्टार्टअप पेज चुनें:</string>
     <string name="dialog_info_startup">यह प्रारंभिक स्क्रीन को कॉन्फ़िगर करता है जो उपयोगकर्ता को ऐप लॉन्च करते समय प्रस्तुत की जाती है।</string>
 
+    <string name="select_language_title">भाषा चुनें</string>
     <string name="dialog_language_subtitle">अपनी पसंदीदा भाषा चुनें</string>
     <string name="dialog_info_language">अपनी पसंदीदा भाषा के साथ अपना अनुभव वैयक्तिकृत करें। कोई भी भाषा परिवर्तन तुरंत प्रभाव में आता है।</string>
 
