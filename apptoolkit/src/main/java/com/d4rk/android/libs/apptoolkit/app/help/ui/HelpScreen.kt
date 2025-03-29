@@ -66,8 +66,6 @@ fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpSc
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
     }
 
-    println(message = "screenState is: $screenState")
-
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
         HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , view = view , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
