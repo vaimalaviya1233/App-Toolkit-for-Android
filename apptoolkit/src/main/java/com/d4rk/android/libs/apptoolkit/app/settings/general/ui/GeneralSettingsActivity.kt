@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.GeneralSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
@@ -41,8 +42,7 @@ class GeneralSettingsActivity : AppCompatActivity() {
 
         val title : String = intent.getStringExtra(EXTRA_TITLE) ?: getString(com.d4rk.android.libs.apptoolkit.R.string.settings)
         val contentKey : String? = intent.getStringExtra(EXTRA_CONTENT)
-
-        viewModel.loadContent(contentKey = contentKey)
+        viewModel.onEvent(GeneralSettingsEvent.Load(contentKey = contentKey))
 
         setContent {
             AppTheme {

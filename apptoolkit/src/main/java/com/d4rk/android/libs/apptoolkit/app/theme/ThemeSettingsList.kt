@@ -52,9 +52,11 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
             }
 
             item {
-                Column(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 24.dp)) {
+                Column(
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(all = 24.dp)
+                ) {
                     themeOptions.forEach { text ->
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
@@ -71,9 +73,11 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
             }
 
             item {
-                InfoMessageSection(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme))
+                InfoMessageSection(
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
+                )
             }
         }
     }

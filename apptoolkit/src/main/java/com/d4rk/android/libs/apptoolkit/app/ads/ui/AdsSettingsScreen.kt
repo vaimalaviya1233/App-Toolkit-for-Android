@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
-    val uiState : UiStateScreen<AdsSettingsData> by viewModel.screenState.collectAsState()
+    val uiState : UiStateScreen<AdsSettingsData> by viewModel.uiState.collectAsState()
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val switchState : Boolean by dataStore.ads.collectAsState(initial = ! buildInfoProvider.isDebugBuild)
 
@@ -46,7 +46,7 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
         LoadingScreen()
     } , onEmpty = {
         NoDataScreen(showRetry = true , onRetry = {
-            viewModel.sendEvent(event = AdsSettingsEvent.LoadAdsSettings)
+            viewModel.onEvent(event = AdsSettingsEvent.LoadAdsSettings)
         })
     } , onSuccess = { data : AdsSettingsData ->
         AdSettingsScreenContent(
@@ -79,14 +79,14 @@ fun AdSettingsScreenContent(
                         coroutineScope.launch {
                             dataStore.saveAds(isChecked)
                         }
-                        viewModel.sendEvent(event = AdsSettingsEvent.AdsSettingChanged(isEnabled = isChecked))
+                        viewModel.onEvent(event = AdsSettingsEvent.AdsSettingChanged(isEnabled = isChecked))
                     }
                 }
                 item {
                     Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
                         PreferenceItem(
                             title = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.personalized_ads) , enabled = data.adsEnabled , summary = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.summary_ads_personalized_ads) , onClick = {
-                                viewModel.sendEvent(event = AdsSettingsEvent.OpenConsentForm(activity = activity as AdsSettingsActivity))
+                                viewModel.onEvent(event = AdsSettingsEvent.OpenConsentForm(activity = activity as AdsSettingsActivity))
                             })
                     }
                 }

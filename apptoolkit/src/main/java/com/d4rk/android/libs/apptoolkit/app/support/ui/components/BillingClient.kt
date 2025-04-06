@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 
 @Composable
@@ -20,9 +21,8 @@ fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : Bi
     DisposableEffect(billingClient) {
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult : BillingResult) {
-                println("Billing setup finished with response code: ${billingResult.responseCode}")
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    viewModel.querySkuDetails(billingClient)
+                    viewModel.onEvent(SupportEvent.QuerySkuDetails(billingClient))
                 }
             }
 

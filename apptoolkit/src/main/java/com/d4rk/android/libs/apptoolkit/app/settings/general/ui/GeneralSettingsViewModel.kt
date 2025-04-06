@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.GeneralSettingsAction
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.GeneralSettingsEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -9,26 +9,32 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
+import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
-class GeneralSettingsViewModel : ViewModel() {
+class GeneralSettingsViewModel : ScreenViewModel<String , GeneralSettingsEvent , GeneralSettingsAction>(
+    initialState = UiStateScreen(data = "")
+) {
 
-    private val _screenState : MutableStateFlow<UiStateScreen<String>> = MutableStateFlow(UiStateScreen(screenState = ScreenState.IsLoading() , data = ""))
-    val screenState : StateFlow<UiStateScreen<String>> = _screenState.asStateFlow()
+    override fun onEvent(event : GeneralSettingsEvent) {
+        when (event) {
+            is GeneralSettingsEvent.Load -> loadContent(event.contentKey)
+        }
+    }
 
-    fun loadContent(contentKey : String?) {
-        viewModelScope.launch {
-            _screenState.setLoading()
+    private fun loadContent(contentKey : String?) {
+        launch {
+            screenState.setLoading()
             if (! contentKey.isNullOrBlank()) {
-                _screenState.updateData(newDataState = ScreenState.Success()) { contentKey }
+                screenState.updateData(ScreenState.Success()) {
+                    contentKey
+                }
             }
             else {
-                _screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.DynamicString("Invalid content key!"))))
-                _screenState.updateState(newValues = ScreenState.NoData())
+                screenState.setErrors(
+                    listOf(UiSnackbar(message = UiTextHelper.DynamicString("Invalid content key!")))
+                )
+                screenState.updateState(ScreenState.NoData())
             }
         }
     }

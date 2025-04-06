@@ -42,8 +42,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.GeneralSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsContent
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
@@ -68,12 +70,14 @@ import org.koin.compose.viewmodel.koinViewModel
 fun SettingsScreen(
     viewModel : SettingsViewModel , contentProvider : GeneralSettingsContentProvider
 ) {
-    val screenState : UiStateScreen<SettingsConfig> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsState()
     val context : Context = LocalContext.current
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.settings) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
-            NoDataScreen(icon = Icons.Outlined.Settings , showRetry = true , onRetry = { viewModel.loadSettings(context) })
+            NoDataScreen(icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
+                viewModel.onEvent(SettingsEvent.Load(context = context))
+            })
         } , onSuccess = { config : SettingsConfig ->
             SettingsScreenContent(paddingValues = paddingValues , settingsConfig = config , contentProvider = contentProvider)
         })
@@ -153,7 +157,7 @@ fun SettingsDetail(preference : SettingsPreference , paddingValues : PaddingValu
     val viewModel : GeneralSettingsViewModel = koinViewModel()
 
     LaunchedEffect(key1 = preference.key) {
-        viewModel.loadContent(contentKey = preference.key)
+        viewModel.onEvent(GeneralSettingsEvent.Load(contentKey = preference.key))
     }
     GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues)
 }

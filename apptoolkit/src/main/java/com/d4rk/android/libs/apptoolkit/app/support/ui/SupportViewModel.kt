@@ -1,51 +1,31 @@
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.BillingClient
+import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportAction
+import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
 import com.d4rk.android.libs.apptoolkit.app.support.domain.usecases.QuerySkuDetailsUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
+import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
-class SupportViewModel(private val querySkuDetailsUseCase : QuerySkuDetailsUseCase , private val dispatcherProvider : DispatcherProvider) : ViewModel() {
+class SupportViewModel(private val querySkuDetailsUseCase : QuerySkuDetailsUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiSupportScreen , SupportEvent , SupportAction>(initialState = UiStateScreen(data = UiSupportScreen())) {
 
-    private val _screenState : MutableStateFlow<UiStateScreen<UiSupportScreen>> = MutableStateFlow(value = UiStateScreen(data = UiSupportScreen()))
-    val screenState : StateFlow<UiStateScreen<UiSupportScreen>> = _screenState.asStateFlow()
+    override fun onEvent(event : SupportEvent) {
+        when (event) {
+            is SupportEvent.QuerySkuDetails -> querySkuDetails(event.billingClient)
+        }
+    }
 
-    fun querySkuDetails(billingClient : BillingClient) {
-        viewModelScope.launch {
-            querySkuDetailsUseCase(billingClient).flowOn(context = dispatcherProvider.io).stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result ->
-                when (result) {
-                    is DataState.Success -> {
-                        _screenState.updateData(newDataState = ScreenState.Success()) { current ->
-                            current.copy(skuDetails = result.data)
-                        }
-                    }
-
-                    is DataState.Error -> {
-                        _screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.DynamicString(content = result.error.toString()))))
-                    }
-
-                    is DataState.Loading -> {
-                        _screenState.setLoading()
-                    }
-
-                    else -> {}
+    private fun querySkuDetails(billingClient : BillingClient) {
+        launch(dispatcherProvider.io) {
+            querySkuDetailsUseCase(billingClient).stateIn(this , SharingStarted.Lazily , DataState.Loading()).collect { result ->
+                screenState.applyResult(result , "Failed to load SKU details") { sku , current ->
+                    current.copy(skuDetails = sku)
                 }
             }
         }

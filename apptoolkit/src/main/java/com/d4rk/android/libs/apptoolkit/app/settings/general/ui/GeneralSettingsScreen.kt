@@ -22,7 +22,7 @@ fun GeneralSettingsScreen(title : String , viewModel : GeneralSettingsViewModel 
 
 @Composable
 fun GeneralSettingsContent(viewModel : GeneralSettingsViewModel , contentProvider : GeneralSettingsContentProvider , paddingValues : PaddingValues) {
-    val screenState : UiStateScreen<String> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<String> by viewModel.uiState.collectAsState()
 
     ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { contentKey ->
         contentProvider.ProvideContent(contentKey = contentKey , paddingValues = paddingValues)

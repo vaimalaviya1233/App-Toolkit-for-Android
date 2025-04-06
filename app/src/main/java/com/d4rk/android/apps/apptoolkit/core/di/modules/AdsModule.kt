@@ -8,7 +8,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val adsModule : Module = module {
-    single<AdsConfig>(named(name = "supportScreen")) {
+    single<AdsConfig>(named(name = "banner_medium_rectangle")) {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
     }
 

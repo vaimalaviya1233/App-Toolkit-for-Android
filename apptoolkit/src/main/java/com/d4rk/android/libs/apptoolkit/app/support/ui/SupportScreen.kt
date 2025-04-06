@@ -52,7 +52,7 @@ import org.koin.core.qualifier.named
 fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity , adsConfig : AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))) {
     val context : Context = LocalContext.current
     val billingClient : BillingClient = rememberBillingClient(context = context , viewModel = viewModel)
-    val screenState : UiStateScreen<UiSupportScreen> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<UiSupportScreen> by viewModel.uiState.collectAsState()
 
     println(message = "screen state is: $screenState")
 

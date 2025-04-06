@@ -95,12 +95,16 @@ fun LargeTopAppBarWithScaffold(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarScaffold(title : String , content : @Composable (PaddingValues) -> Unit,  floatingActionButton : @Composable (() -> Unit)? = null ,) {
+fun TopAppBarScaffold(title : String , content : @Composable (PaddingValues) -> Unit , floatingActionButton : @Composable (() -> Unit)? = null) {
     val scrollBehaviorState : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
 
-    Scaffold(modifier = Modifier.nestedScroll(connection = scrollBehaviorState.nestedScrollConnection) , topBar = {
-        LargeTopAppBar(title = { Text(modifier = Modifier.animateContentSize() , text = title) } , scrollBehavior = scrollBehaviorState)
-    },  floatingActionButton = floatingActionButton ?: {} ,) { paddingValues ->
+    Scaffold(
+        modifier = Modifier.nestedScroll(connection = scrollBehaviorState.nestedScrollConnection) ,
+        topBar = {
+            LargeTopAppBar(title = { Text(modifier = Modifier.animateContentSize() , text = title) } , scrollBehavior = scrollBehaviorState)
+        } ,
+        floatingActionButton = floatingActionButton ?: {} ,
+    ) { paddingValues ->
         content(paddingValues)
     }
 }

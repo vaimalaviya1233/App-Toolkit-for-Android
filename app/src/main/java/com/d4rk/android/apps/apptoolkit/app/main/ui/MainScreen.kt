@@ -47,7 +47,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MainScreen() {
     val viewModel : MainViewModel = koinViewModel()
-    val screenState : UiStateScreen<UiMainScreen> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
     val context : Context = LocalContext.current
     val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
 
@@ -94,7 +94,7 @@ fun MainScaffoldTabletContent() {
     val context : Context = LocalContext.current
 
     val viewModel : MainViewModel = koinViewModel()
-    val screenState : UiStateScreen<UiMainScreen> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
     val navController : NavHostController = rememberNavController()
     val navBackStackEntry : NavBackStackEntry? by navController.currentBackStackEntryAsState()

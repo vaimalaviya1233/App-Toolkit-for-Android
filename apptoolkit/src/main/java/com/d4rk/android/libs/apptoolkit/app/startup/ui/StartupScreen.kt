@@ -71,7 +71,7 @@ fun StartupScreenContent(paddingValues : PaddingValues) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
                 AsyncImage(model = R.drawable.il_startup , contentDescription = null)
-                InfoMessageSection(message = stringResource(R.string.summary_browse_terms_of_service_and_privacy_policy) , learnMoreText = stringResource(R.string.learn_more), learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy")
+                InfoMessageSection(message = stringResource(R.string.summary_browse_terms_of_service_and_privacy_policy) , learnMoreText = stringResource(R.string.learn_more) , learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy")
             }
         }
     }

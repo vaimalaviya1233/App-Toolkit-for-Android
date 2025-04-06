@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpAction
+import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpEvent
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
@@ -54,7 +54,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 @Composable
 fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpScreenConfig) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
-    val screenState : UiStateScreen<UiHelpScreen> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<UiHelpScreen> by viewModel.uiState.collectAsState()
     val context : Context = LocalContext.current
     val view : View = LocalView.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
@@ -70,7 +70,11 @@ fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpSc
         HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , view = view , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(visible = screenState.data?.reviewInfo != null , expanded = isFabExtended.value , onClick = {
-            screenState.data?.reviewInfo?.let { reviewInfo -> viewModel.sendEvent(HelpAction.LaunchReviewFlow(activity , reviewInfo)) }
+            screenState.data?.reviewInfo?.let { reviewInfo ->
+
+                viewModel.onEvent(HelpEvent.LaunchReviewFlow(activity , reviewInfo))
+
+            }
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
     }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = {

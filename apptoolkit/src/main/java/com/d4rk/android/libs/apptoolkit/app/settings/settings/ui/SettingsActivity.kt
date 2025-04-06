@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
@@ -20,8 +21,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        viewModel.loadSettings(this)
+        viewModel.onEvent(SettingsEvent.Load(context = this))
 
         setContent {
             AppTheme {

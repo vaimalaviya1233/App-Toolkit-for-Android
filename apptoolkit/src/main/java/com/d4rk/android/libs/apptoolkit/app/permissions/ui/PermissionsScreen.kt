@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -36,14 +37,16 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PermissionsScreen(viewModel : PermissionsViewModel) {
-    val screenState : UiStateScreen<SettingsConfig> by viewModel.screenState.collectAsState()
+    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.permissions) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
             NoDataScreen(
-                icon = Icons.Outlined.Settings , showRetry = true , onRetry = { viewModel.loadPermissions(context) })
+                icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
+                    viewModel.onEvent(PermissionsEvent.Load(context = context))
+                })
         } , onSuccess = { settingsConfig ->
             PermissionsContent(paddingValues , settingsConfig)
         })
