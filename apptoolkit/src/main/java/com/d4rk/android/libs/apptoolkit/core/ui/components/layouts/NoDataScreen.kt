@@ -56,7 +56,7 @@ fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.De
             if (showRetry) {
                 LargeVerticalSpacer()
                 Button(onClick = onRetry , modifier = Modifier.bounceClick()) {
-                    Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.IconSize))
+                    Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.ButtonIconSize))
                     ButtonIconSpacer()
                     Text(text = stringResource(id = R.string.try_again))
                 }

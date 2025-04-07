@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.constants.ui
 
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -15,5 +16,6 @@ object SizeConstants {
     val SmallSize : Dp = 8.dp
     val ExtraSmallSize : Dp = 4.dp
     val ExtraTinySize : Dp = 2.dp
-    val IconSize : Dp = ButtonDefaults.IconSize
+    val ButtonIconSize : Dp = ButtonDefaults.IconSize
+    val SwitchIconSize : Dp = SwitchDefaults.IconSize
 }

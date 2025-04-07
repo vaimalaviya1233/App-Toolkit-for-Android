@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -68,7 +69,7 @@ fun SwitchPreferenceItem(icon : ImageVector? = null , title : String , summary :
                         .padding(all = SizeConstants.LargeSize)
                         .weight(weight = 1f) ,
             ) {
-                Text(text = title , style = MaterialTheme.typography.titleLarge , maxLines = 1 , overflow = TextOverflow.Ellipsis)
+                Text(text = title , style = MaterialTheme.typography.titleMedium , fontWeight = FontWeight.Bold , maxLines = 1 , overflow = TextOverflow.Ellipsis)
                 summary?.let {
                     Text(text = it , style = MaterialTheme.typography.bodyMedium)
                 }

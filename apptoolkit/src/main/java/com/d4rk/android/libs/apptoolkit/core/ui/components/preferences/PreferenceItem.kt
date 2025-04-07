@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -54,7 +55,7 @@ fun PreferenceItem(icon : ImageVector? = null , title : String? = null , summary
             modifier = Modifier.padding(all = SizeConstants.LargeSize)
         ) {
             title?.let {
-                Text(text = it , style = MaterialTheme.typography.titleLarge , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current , maxLines = 1 , overflow = TextOverflow.Ellipsis)
+                Text(text = it , style = MaterialTheme.typography.titleMedium , fontWeight = FontWeight.Bold , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current , maxLines = 1 , overflow = TextOverflow.Ellipsis)
             }
             summary?.let {
                 Text(text = it , style = MaterialTheme.typography.bodyMedium , color = if (! enabled) LocalContentColor.current.copy(alpha = 0.38f) else LocalContentColor.current)

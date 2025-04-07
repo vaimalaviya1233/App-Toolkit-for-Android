@@ -76,7 +76,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SwitchPreferenceItemWithDivider(title = stringResource(id = R.string.dark_theme) , summary = themeSummary , checked = isDarkTheme , onCheckedChange = { isChecked ->
                     coroutineScope.launch {
@@ -126,7 +126,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SwitchPreferenceItem(
                     title = stringResource(id = R.string.bounce_buttons) ,
@@ -148,7 +148,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                 Column(
                     modifier = Modifier
                             .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     PreferenceItem(title = stringResource(id = R.string.startup_page) , summary = stringResource(id = R.string.summary_preference_settings_startup_page) , onClick = { showStartupDialog = true })
                     if (showStartupDialog) {
@@ -167,7 +167,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SettingsPreferenceItem(title = stringResource(id = R.string.language) , summary = stringResource(id = R.string.summary_preference_settings_language) , onClick = {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

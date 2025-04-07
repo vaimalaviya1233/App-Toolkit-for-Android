@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -51,7 +52,7 @@ fun ContactUsCard(onClick : () -> Unit) {
                         .weight(weight = 1f)
                         .fillMaxHeight()
             ) {
-                Text(text = stringResource(id = R.string.contact_us))
+                Text(text = stringResource(id = R.string.contact_us), fontWeight = FontWeight.Bold)
                 Text(text = stringResource(id = R.string.contact_us_description))
             }
         }

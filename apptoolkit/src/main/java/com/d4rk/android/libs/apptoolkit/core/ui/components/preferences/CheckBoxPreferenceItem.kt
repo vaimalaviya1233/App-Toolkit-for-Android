@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -50,7 +51,7 @@ fun CheckBoxPreferenceItem(icon : ImageVector? = null , title : String , summary
                     .padding(all = SizeConstants.LargeSize)
                     .weight(weight = 1f)
         ) {
-            Text(text = title , style = MaterialTheme.typography.titleLarge , maxLines = 1 , overflow = TextOverflow.Ellipsis)
+            Text(text = title , style = MaterialTheme.typography.titleMedium , maxLines = 1 , overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
             summary?.let {
                 Text(text = it , style = MaterialTheme.typography.bodyMedium)
             }

@@ -34,7 +34,7 @@ fun PrivacySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SettingsPreferenceItem(title = stringResource(id = R.string.privacy_policy) , summary = stringResource(id = R.string.summary_preference_settings_privacy_policy) , onClick = { IntentsHelper.openUrl(context , provider.privacyPolicyUrl) })
                 ExtraTinyVerticalSpacer()
@@ -55,7 +55,7 @@ fun PrivacySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SettingsPreferenceItem(title = stringResource(id = R.string.legal_notices) , summary = stringResource(id = R.string.summary_preference_settings_legal_notices) , onClick = { IntentsHelper.openUrl(context , provider.legalNoticesUrl) })
                 ExtraTinyVerticalSpacer()

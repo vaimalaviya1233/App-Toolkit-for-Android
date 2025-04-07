@@ -32,7 +32,7 @@ fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provi
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SettingsPreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openUrl(context = context , url = provider.bugReportUrl) })
             }
@@ -43,7 +43,7 @@ fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provi
             Column(
                 modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
                 SettingsPreferenceItem(title = stringResource(id = R.string.clear_cache) , summary = stringResource(id = R.string.summary_preference_settings_clear_cache) , onClick = { CleanHelper.clearApplicationCache(context = context) })
             }

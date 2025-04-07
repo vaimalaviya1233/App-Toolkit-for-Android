@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -60,7 +61,7 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                     .fillMaxWidth()
                     .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis)
+            Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
             Switch(checked = switchState.value , onCheckedChange = { isChecked ->
                 onSwitchToggled(isChecked)
             } , thumbContent = {

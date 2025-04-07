@@ -65,7 +65,7 @@ fun PermissionsContent(paddingValues : PaddingValues , settingsConfig : Settings
                 Column(
                     modifier = Modifier
                             .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     category.preferences.forEach { preference ->
                         SettingsPreferenceItem(icon = preference.icon , title = preference.title , summary = preference.summary , onClick = { preference.action.invoke() })

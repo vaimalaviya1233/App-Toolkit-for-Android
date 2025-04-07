@@ -52,7 +52,7 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
                 SmallVerticalSpacer()
                 Column(modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))) {
                     SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
                     ExtraTinyVerticalSpacer()
                     SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
@@ -76,7 +76,7 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
                 SmallVerticalSpacer()
                 Column(modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))) {
                     SettingsPreferenceItem(title = deviceInfo , summary = deviceProvider.deviceInfo , onClick = {
                         ClipboardHelper.copyTextToClipboard(context = context , label = deviceInfo , text = deviceProvider.deviceInfo , onShowSnackbar = {
                             showSnackbar = true
