@@ -25,7 +25,7 @@ class RequestReviewFlowUseCase(private val application : Application) {
                 val request : Task<ReviewInfo> = reviewManager.requestReviewFlow()
                 val packageName : String = application.packageName
 
-                request.addOnCompleteListener { task ->
+                request.addOnCompleteListener { task : Task<ReviewInfo> ->
                     if (task.isSuccessful) {
                         continuation.resume(value = task.result)
                     }

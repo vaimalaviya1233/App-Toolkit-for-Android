@@ -9,6 +9,7 @@
     <string name="welcome">Bienvenido</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lee y acepta nuestros Términos de servicio y Política de privacidad para continuar</string>
     <string name="agree">Aceptar</string>
+    <string name="error_loading_consent_info">Error al cargar la información de consentimiento</string>
 
     <string name="navigation_drawer_open">Abrir el menú de navegación</string>
     <string name="go_back">Volver</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">La configuración no está disponible actualmente.</string>
     <string name="settings_placeholder_description">No se seleccionaron configuraciones. Elige una opción para ver los detalles aquí.</string>
     <string name="get_help">Obtener ayuda</string>
+    <string name="error_no_settings_found">No se encontraron configuraciones</string>
+    <string name="error_invalid_content_key">¡Clave de contenido no válida!</string>
 
     <string name="display">Pantalla</string>
     <string name="summary_preference_settings_display">Personaliza el aspecto de la aplicación</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Anuncios personalizados</string>
     <string name="summary_ads_personalized_ads">Elige cómo personalizamos los anuncios en función de tus intereses</string>
     <string name="summary_ads">Ver anuncios relevantes para ti. Gestiona la información utilizada para mostrar anuncios personalizados en función de tu actividad en la aplicación.</string>
+    <string name="ads_enabled">Anuncios habilitados</string>
+    <string name="ads_disabled">Anuncios deshabilitados</string>
+    <string name="error_failed_to_load_ads_settings">Error al cargar la configuración de anuncios</string>
 
     <string name="usage_and_diagnostics">Uso y diagnóstico</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Comparte datos para ayudar a mejorar la experiencia en la aplicación</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">No importa cuánto dones, nos ayudarás a mantener nuestra aplicación y mejorar sus funciones. ¡Agradecemos tu generosidad y amabilidad!</string>
     <string name="non_paid_support">Soporte sin pago</string>
     <string name="web_ad">Anuncio web</string>
+    <string name="error_failed_to_load_sku_details">Error al cargar los detalles del SKU</string>
 </resources>

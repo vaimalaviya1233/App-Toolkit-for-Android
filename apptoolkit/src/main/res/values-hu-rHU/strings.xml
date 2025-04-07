@@ -9,6 +9,7 @@
     <string name="welcome">Üdvözlünk</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Olvasd el és fogadd el a Szolgáltatási feltételeinket és az Adatvédelmi irányelveinket a folytatáshoz</string>
     <string name="agree">Elfogadom</string>
+    <string name="error_loading_consent_info">A hozzájárulási információ betöltése sikertelen</string>
 
     <string name="navigation_drawer_open">Navigációs menü megnyitása</string>
     <string name="go_back">Vissza</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">A beállítások jelenleg nem érhetők el.</string>
     <string name="settings_placeholder_description">Nincs kiválasztott beállítás. Válassz egy lehetőséget a részletek megtekintéséhez.</string>
     <string name="get_help">Segítség kérése</string>
+    <string name="error_no_settings_found">Nincs beállítás található</string>
+    <string name="error_invalid_content_key">Érvénytelen tartalomkulcs!</string>
 
     <string name="display">Kijelző</string>
     <string name="summary_preference_settings_display">Személyre szabhatod az alkalmazás megjelenését</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Személyre szabott hirdetések</string>
     <string name="summary_ads_personalized_ads">Válaszd ki, hogyan személyre szabjuk a hirdetéseket az érdeklődési köreid alapján</string>
     <string name="summary_ads">Nézz meg számodra releváns hirdetéseket. A személyre szabást bármikor kikapcsolhatod itt.</string>
+    <string name="ads_enabled">Hirdetések engedélyezve</string>
+    <string name="ads_disabled">Hirdetések letiltva</string>
+    <string name="error_failed_to_load_ads_settings">A hirdetésbeállítások betöltése sikertelen</string>
 
     <string name="usage_and_diagnostics">Használat és diagnosztika</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Oszd meg az adatokat az alkalmazásélmény javítása érdekében</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Akármennyit adományozol, segítesz az alkalmazásunk működésének fenntartásában és a funkciók javításában. Nagyra értékeljük a nagylelkűségedet és kedvességedet!</string>
     <string name="non_paid_support">Nem fizetett támogatás</string>
     <string name="web_ad">Webes hirdetés</string>
+    <string name="error_failed_to_load_sku_details">Nem sikerült betölteni az SKU részleteit</string>
 </resources>

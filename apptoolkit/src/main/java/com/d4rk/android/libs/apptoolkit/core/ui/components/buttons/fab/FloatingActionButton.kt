@@ -6,9 +6,11 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalView
@@ -26,7 +28,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
  */
 @Composable
 fun AnimatedExtendedFloatingActionButton(
-    visible : Boolean = true , onClick : () -> Unit , icon : @Composable () -> Unit , text : (@Composable () -> Unit)? = null , expanded : Boolean = true , modifier : Modifier = Modifier
+    visible : Boolean = true , onClick : () -> Unit , icon : @Composable () -> Unit , text : (@Composable () -> Unit)? = null , expanded : Boolean = true , modifier : Modifier = Modifier , containerColor : Color = FloatingActionButtonDefaults.containerColor
 ) {
     val animatedScale : Float by animateFloatAsState(
         targetValue = if (visible) 1f else 0f , animationSpec = tween(durationMillis = 400 , easing = FastOutSlowInEasing) , label = "FAB Scale"
@@ -44,6 +46,6 @@ fun AnimatedExtendedFloatingActionButton(
                     scaleY = animatedScale
                     transformOrigin = TransformOrigin(pivotFractionX = 1f , pivotFractionY = 1f)
                 }
-                .bounceClick())
+                .bounceClick() , containerColor = containerColor)
     }
 }

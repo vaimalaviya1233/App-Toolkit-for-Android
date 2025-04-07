@@ -64,7 +64,7 @@ fun SelectLanguageAlertDialogContent(selectedLanguage : MutableState<String> , d
                     .weight(weight = 1f)
         ) {
             LazyColumn {
-                items(count = languageEntries.size) { index ->
+                items(count = languageEntries.size) { index : Int ->
                     Row(Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.Start) {
                         RadioButton(
                             selected = selectedLanguage.value == languageValues[index] , onClick = {

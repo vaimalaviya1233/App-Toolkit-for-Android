@@ -24,7 +24,7 @@ object CleanHelper {
 
     private fun deleteRecursive(fileOrDirectory : File) : Boolean {
         if (fileOrDirectory.isDirectory) {
-            fileOrDirectory.listFiles()?.let { children ->
+            fileOrDirectory.listFiles()?.let { children : Array<File> ->
                 for (child in children) {
                     if (! deleteRecursive(child)) {
                         return false

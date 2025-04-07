@@ -47,9 +47,7 @@ class GeneralSettingsActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    GeneralSettingsScreen(
-                        title = title , viewModel = viewModel , contentProvider = contentProvider
-                    ) { finish() }
+                    GeneralSettingsScreen(title = title , viewModel = viewModel , contentProvider = contentProvider) { finish() }
                 }
             }
         }

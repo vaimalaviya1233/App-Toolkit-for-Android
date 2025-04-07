@@ -41,6 +41,8 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
 
     var showSnackbar : Boolean by remember { mutableStateOf(value = false) }
 
+    val deviceInfo : String = stringResource(id = R.string.device_info)
+
     Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
         LazyColumn(
             modifier = Modifier.fillMaxHeight()
@@ -48,11 +50,9 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
                 SmallVerticalSpacer()
-                Column(
-                    modifier = Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
-                ) {
+                Column(modifier = Modifier
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
                     SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
                     ExtraTinyVerticalSpacer()
                     SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
@@ -72,15 +72,13 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
 
             }
             item {
-                PreferenceCategoryItem(title = stringResource(id = R.string.device_info))
+                PreferenceCategoryItem(title = deviceInfo)
                 SmallVerticalSpacer()
-                Column(
-                    modifier = Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
-                ) {
-                    SettingsPreferenceItem(title = stringResource(id = R.string.device_info) , summary = deviceProvider.deviceInfo , onClick = {
-                        ClipboardHelper.copyTextToClipboard(context = context , label = "Device Info" , text = deviceProvider.deviceInfo , onShowSnackbar = {
+                Column(modifier = Modifier
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))) {
+                    SettingsPreferenceItem(title = deviceInfo , summary = deviceProvider.deviceInfo , onClick = {
+                        ClipboardHelper.copyTextToClipboard(context = context , label = deviceInfo , text = deviceProvider.deviceInfo , onShowSnackbar = {
                             showSnackbar = true
                         })
                     })

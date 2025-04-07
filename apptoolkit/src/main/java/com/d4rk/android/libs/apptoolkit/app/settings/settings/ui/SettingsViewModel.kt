@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.settings.ui
 
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsAction
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
@@ -20,22 +21,20 @@ class SettingsViewModel(private val settingsProvider : SettingsProvider , privat
 
     override fun onEvent(event : SettingsEvent) {
         when (event) {
-            is SettingsEvent.Load -> loadSettings(event.context)
+            is SettingsEvent.Load -> loadSettings(context = event.context)
         }
     }
 
     private fun loadSettings(context : Context) {
-        launch(dispatcherProvider.io) {
-            flowOf(settingsProvider.provideSettingsConfig(context)).collect { result ->
+        launch(context = dispatcherProvider.io) {
+            flowOf(value = settingsProvider.provideSettingsConfig(context = context)).collect { result : SettingsConfig ->
                 if (result.categories.isNotEmpty()) {
                     screenState.successData {
                         copy(title = result.title , categories = result.categories)
                     }
                 }
                 else {
-                    screenState.setErrors(
-                        listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found")))
-                    )
+                    screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.StringResource(R.string.error_no_settings_found))))
                     screenState.updateState(ScreenState.NoData())
                 }
             }

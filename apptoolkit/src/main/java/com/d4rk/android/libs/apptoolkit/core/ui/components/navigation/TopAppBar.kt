@@ -8,6 +8,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -50,6 +52,7 @@ fun LargeTopAppBarWithScaffold(
     onBackClicked : () -> Unit ,
     actions : @Composable (RowScope.() -> Unit) = {} ,
     floatingActionButton : @Composable (() -> Unit)? = null ,
+    snackbarHostState : SnackbarHostState = SnackbarHostState() ,
     scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() ,
     content : @Composable (PaddingValues) -> Unit
 ) {
@@ -60,6 +63,7 @@ fun LargeTopAppBarWithScaffold(
                 AnimatedButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
             } , actions = actions , scrollBehavior = scrollBehavior)
         } ,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) } ,
         floatingActionButton = floatingActionButton ?: {} ,
     ) { paddingValues ->
         content(paddingValues)

@@ -9,6 +9,7 @@
     <string name="welcome">Bienvenue</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lisez et acceptez nos Conditions d\'utilisation et notre Politique de confidentialité pour continuer</string>
     <string name="agree">Accepter</string>
+    <string name="error_loading_consent_info">Échec du chargement des informations de consentement</string>
 
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="go_back">Retour</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Les paramètres ne sont pas disponibles pour le moment.</string>
     <string name="settings_placeholder_description">Aucun paramètre sélectionné. Choisissez une option pour afficher les détails ici.</string>
     <string name="get_help">Obtenir de l\'aide</string>
+    <string name="error_no_settings_found">Aucun paramètre trouvé</string>
+    <string name="error_invalid_content_key">Clé de contenu invalide !</string>
 
     <string name="display">Affichage</string>
     <string name="summary_preference_settings_display">Personnalisez l\'apparence de votre application</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Publicités personnalisées</string>
     <string name="summary_ads_personalized_ads">Choisissez comment nous personnalisons les publicités en fonction de vos intérêts</string>
     <string name="summary_ads">Voir des publicités pertinentes pour vous. Gérez les informations utilisées pour afficher des publicités personnalisées basées sur votre activité dans l\'application.</string>
+    <string name="ads_enabled">Publicités activées</string>
+    <string name="ads_disabled">Publicités désactivées</string>
+    <string name="error_failed_to_load_ads_settings">Échec du chargement des paramètres publicitaires</string>
 
     <string name="usage_and_diagnostics">Utilisation et diagnostics</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Partagez des données pour améliorer l\'expérience de l\'application</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Peu importe le montant que vous donnez, vous nous aiderez à maintenir notre application et à améliorer ses fonctionnalités. Nous apprécions votre générosité !</string>
     <string name="non_paid_support">Support non payant</string>
     <string name="web_ad">Publicité Web</string>
+    <string name="error_failed_to_load_sku_details">Échec du chargement des détails du SKU</string>
 </resources>

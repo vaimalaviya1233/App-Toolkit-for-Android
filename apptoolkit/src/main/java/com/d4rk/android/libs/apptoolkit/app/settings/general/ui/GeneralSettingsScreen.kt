@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.model.ui.UiGeneralSettingsScreen
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -22,9 +23,9 @@ fun GeneralSettingsScreen(title : String , viewModel : GeneralSettingsViewModel 
 
 @Composable
 fun GeneralSettingsContent(viewModel : GeneralSettingsViewModel , contentProvider : GeneralSettingsContentProvider , paddingValues : PaddingValues) {
-    val screenState : UiStateScreen<String> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiGeneralSettingsScreen> by viewModel.uiState.collectAsState()
 
-    ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { contentKey ->
-        contentProvider.ProvideContent(contentKey = contentKey , paddingValues = paddingValues)
+    ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { data : UiGeneralSettingsScreen ->
+        contentProvider.ProvideContent(contentKey = data.contentKey , paddingValues = paddingValues)
     })
 }

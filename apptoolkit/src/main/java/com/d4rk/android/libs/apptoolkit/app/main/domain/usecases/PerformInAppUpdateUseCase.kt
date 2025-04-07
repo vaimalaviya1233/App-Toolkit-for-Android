@@ -36,7 +36,7 @@ class PerformInAppUpdateUseCase(private val appUpdateManager : AppUpdateManager 
                 if (didStart) return@runCatching Activity.RESULT_OK
             }
             Activity.RESULT_CANCELED
-        }.onSuccess { result ->
+        }.onSuccess { result : Int ->
             emit(value = DataState.Success(data = result))
         }.onFailure { throwable ->
             emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_UPDATE_APP)))

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">App Toolkit</string>
+    <string name="error_failed_to_fetch_apps">Failed to fetch apps</string>
+
 </resources>

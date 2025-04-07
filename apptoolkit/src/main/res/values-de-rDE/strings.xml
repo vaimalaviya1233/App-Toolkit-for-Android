@@ -9,6 +9,7 @@
     <string name="welcome">Willkommen</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lesen und akzeptieren Sie unsere Nutzungsbedingungen und Datenschutzrichtlinien, um fortzufahren</string>
     <string name="agree">Zustimmen</string>
+    <string name="error_loading_consent_info">Fehler beim Laden der Einwilligungsinformationen</string>
 
     <string name="navigation_drawer_open">Navigationsmenü öffnen</string>
     <string name="go_back">Zurück</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Einstellungen sind derzeit nicht verfügbar.</string>
     <string name="settings_placeholder_description">Keine Einstellungen ausgewählt. Wählen Sie eine Option, um Details anzuzeigen.</string>
     <string name="get_help">Hilfe erhalten</string>
+    <string name="error_no_settings_found">Keine Einstellungen gefunden</string>
+    <string name="error_invalid_content_key">Ungültiger Inhaltsschlüssel!</string>
 
     <string name="display">Anzeige</string>
     <string name="summary_preference_settings_display">Passen Sie das Erscheinungsbild Ihrer App an</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Personalisierte Werbung</string>
     <string name="summary_ads_personalized_ads">Wählen Sie, wie Werbung für Sie personalisiert wird</string>
     <string name="summary_ads">Sehen Sie relevante Anzeigen. Verwalten Sie, welche Informationen verwendet werden, um personalisierte Anzeigen basierend auf Ihrer App-Nutzung anzuzeigen.</string>
+    <string name="ads_enabled">Werbung aktiviert</string>
+    <string name="ads_disabled">Werbung deaktiviert</string>
+    <string name="error_failed_to_load_ads_settings">Fehler beim Laden der Werbeeinstellungen</string>
 
     <string name="usage_and_diagnostics">Nutzung und Diagnostik</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Teilen Sie Daten, um die App-Erfahrung zu verbessern</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Unabhängig vom Betrag Ihrer Spende helfen Sie uns, die App am Laufen zu halten und die Funktionen zu verbessern. Vielen Dank für Ihre Großzügigkeit!</string>
     <string name="non_paid_support">Unbezahlte Unterstützung</string>
     <string name="web_ad">Webanzeige</string>
+    <string name="error_failed_to_load_sku_details">Fehler beim Laden der SKU-Details</string>
 </resources>

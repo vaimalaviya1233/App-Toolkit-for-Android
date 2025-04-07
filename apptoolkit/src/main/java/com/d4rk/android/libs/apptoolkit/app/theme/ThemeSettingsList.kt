@@ -57,7 +57,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                             .fillMaxWidth()
                             .padding(all = 24.dp)
                 ) {
-                    themeOptions.forEach { text ->
+                    themeOptions.forEach { text : String ->
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
                                 modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {

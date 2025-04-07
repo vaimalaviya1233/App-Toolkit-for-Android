@@ -9,6 +9,7 @@
     <string name="welcome">Witamy</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Przeczytaj i zaakceptuj nasze Warunki korzystania z usługi oraz Politykę prywatności, aby kontynuować</string>
     <string name="agree">Zgadzam się</string>
+    <string name="error_loading_consent_info">Nie udało się załadować informacji o zgodzie</string>
 
     <string name="navigation_drawer_open">Otwórz menu nawigacyjne</string>
     <string name="go_back">Wróć</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Ustawienia są obecnie niedostępne.</string>
     <string name="settings_placeholder_description">Nie wybrano żadnych ustawień. Wybierz opcję, aby wyświetlić jej szczegóły tutaj.</string>
     <string name="get_help">Uzyskaj pomoc</string>
+    <string name="error_no_settings_found">Nie znaleziono ustawień</string>
+    <string name="error_invalid_content_key">Nieprawidłowy klucz treści!</string>
 
     <string name="display">Wyświetlanie</string>
     <string name="summary_preference_settings_display">Spersonalizuj wygląd i działanie swojej aplikacji</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Spersonalizowane reklamy</string>
     <string name="summary_ads_personalized_ads">Wybierz sposób personalizacji reklam na podstawie swoich zainteresowań</string>
     <string name="summary_ads">Wyświetlaj reklamy dostosowane do Ciebie. Zarządzaj informacjami używanymi do wyświetlania spersonalizowanych reklam. Możesz zawsze wyłączyć personalizację tutaj.</string>
+    <string name="ads_enabled">Reklamy włączone</string>
+    <string name="ads_disabled">Reklamy wyłączone</string>
+    <string name="error_failed_to_load_ads_settings">Nie udało się załadować ustawień reklam</string>
 
     <string name="usage_and_diagnostics">Użycie i diagnostyka</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Udostępnij dane, aby pomóc ulepszyć doświadczenia w aplikacji</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Bez względu na kwotę darowizny, pomożesz nam utrzymać aplikację i ulepszać jej funkcje. Doceniamy Twoją hojność i życzliwość!</string>
     <string name="non_paid_support">Wsparcie bezpłatne</string>
     <string name="web_ad">Reklama internetowa</string>
+    <string name="error_failed_to_load_sku_details">Nie udało się załadować szczegółów SKU</string>
 </resources>

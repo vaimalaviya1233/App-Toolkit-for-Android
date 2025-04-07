@@ -9,6 +9,7 @@
     <string name="welcome">Добро пожаловать</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Прочтите и согласитесь с нашими Условиями использования и Политикой конфиденциальности, чтобы продолжить</string>
     <string name="agree">Согласен</string>
+    <string name="error_loading_consent_info">Не удалось загрузить информацию о согласии</string>
 
     <string name="navigation_drawer_open">Открыть меню навигации</string>
     <string name="go_back">Назад</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Настройки в данный момент недоступны.</string>
     <string name="settings_placeholder_description">Настройки не выбраны. Выберите опцию, чтобы увидеть её детали.</string>
     <string name="get_help">Получить помощь</string>
+    <string name="error_no_settings_found">Настройки не найдены</string>
+    <string name="error_invalid_content_key">Недопустимый ключ контента!</string>
 
     <string name="display">Дисплей</string>
     <string name="summary_preference_settings_display">Настройте внешний вид и поведение приложения</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Персонализированная реклама</string>
     <string name="summary_ads_personalized_ads">Выберите, как мы персонализируем рекламу на основе ваших интересов</string>
     <string name="summary_ads">Смотрите рекламу, которая вам подходит. Управляйте информацией, используемой для персонализации рекламы. Вы можете отключить её в любое время.</string>
+    <string name="ads_enabled">Реклама включена</string>
+    <string name="ads_disabled">Реклама отключена</string>
+    <string name="error_failed_to_load_ads_settings">Не удалось загрузить настройки рекламы</string>
 
     <string name="usage_and_diagnostics">Использование и диагностика</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Отправляйте данные для улучшения работы приложения</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Независимо от суммы пожертвования, вы поможете нам поддерживать работу приложения и улучшать его функции. Мы благодарны за вашу щедрость и доброту!</string>
     <string name="non_paid_support">Бесплатная поддержка</string>
     <string name="web_ad">Веб-реклама</string>
+    <string name="error_failed_to_load_sku_details">Не удалось загрузить сведения о SKU</string>
 </resources>

@@ -9,6 +9,7 @@
     <string name="welcome">歡迎</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">閱讀並同意我們的服務條款和隱私政策以繼續</string>
     <string name="agree">同意</string>
+    <string name="error_loading_consent_info">載入同意資訊失敗</string>
 
     <string name="navigation_drawer_open">打開導覽抽屜</string>
     <string name="go_back">返回</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">目前無法使用設定。</string>
     <string name="settings_placeholder_description">未選擇設定。選擇一個選項以在此查看詳細資訊。</string>
     <string name="get_help">獲取幫助</string>
+    <string name="error_no_settings_found">找不到設定</string>
+    <string name="error_invalid_content_key">內容金鑰無效！</string>
 
     <string name="display">顯示</string>
     <string name="summary_preference_settings_display">個性化您的應用程式外觀和感受</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">個性化廣告</string>
     <string name="summary_ads_personalized_ads">選擇我們如何根據您的興趣個性化廣告</string>
     <string name="summary_ads">查看與您相關的廣告。管理應用程式活動所用資訊。</string>
+    <string name="ads_enabled">廣告已啟用</string>
+    <string name="ads_disabled">廣告已停用</string>
+    <string name="error_failed_to_load_ads_settings">載入廣告設定失敗</string>
 
     <string name="usage_and_diagnostics">使用與診斷</string>
     <string name="summary_preference_settings_usage_and_diagnostics">分享數據以幫助改進應用程式體驗</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">無論您捐贈多少，都能幫助我們維持應用程式運行並改進功能。</string>
     <string name="non_paid_support">非付費支持</string>
     <string name="web_ad">網頁廣告</string>
+    <string name="error_failed_to_load_sku_details">載入 SKU 詳細資料失敗</string>
 </resources>

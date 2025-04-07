@@ -21,12 +21,12 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        viewModel.onEvent(SettingsEvent.Load(context = this))
+        viewModel.onEvent(event = SettingsEvent.Load(context = this))
 
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    SettingsScreen(viewModel , contentProvider)
+                    SettingsScreen(viewModel = viewModel , contentProvider = contentProvider)
                 }
             }
         }

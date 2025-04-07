@@ -17,30 +17,24 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.flow.flowOf
 
 
-class PermissionsViewModel(
-    private val settingsProvider : PermissionsProvider , private val dispatcherProvider : DispatcherProvider
-) : ScreenViewModel<SettingsConfig , PermissionsEvent , PermissionsAction>(
-    initialState = UiStateScreen(data = SettingsConfig(title = "" , categories = emptyList()))
-) {
+class PermissionsViewModel(private val settingsProvider : PermissionsProvider , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<SettingsConfig , PermissionsEvent , PermissionsAction>(initialState = UiStateScreen(data = SettingsConfig(title = "" , categories = emptyList()))) {
 
     override fun onEvent(event : PermissionsEvent) {
         when (event) {
-            is PermissionsEvent.Load -> loadPermissions(event.context)
+            is PermissionsEvent.Load -> loadPermissions(context = event.context)
         }
     }
 
     private fun loadPermissions(context : Context) {
-        launch(dispatcherProvider.io) {
-            flowOf(settingsProvider.providePermissionsConfig(context)).collect { result ->
+        launch(context = dispatcherProvider.io) {
+            flowOf(value = settingsProvider.providePermissionsConfig(context = context)).collect { result : SettingsConfig ->
                 if (result.categories.isNotEmpty()) {
                     screenState.successData {
                         copy(title = result.title , categories = result.categories)
                     }
                 }
                 else {
-                    screenState.setErrors(
-                        listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found")))
-                    )
+                    screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
                     screenState.updateState(ScreenState.NoData())
                 }
             }

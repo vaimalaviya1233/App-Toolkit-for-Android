@@ -9,6 +9,7 @@
     <string name="welcome">Välkommen</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Läs och godkänn våra användarvillkor och integritetspolicy för att fortsätta</string>
     <string name="agree">Godkänn</string>
+    <string name="error_loading_consent_info">Misslyckades med att läsa in samtyckesinformationen</string>
 
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
     <string name="go_back">Tillbaka</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Inställningarna är för närvarande inte tillgängliga.</string>
     <string name="settings_placeholder_description">Inga inställningar valda. Välj ett alternativ för att se detaljer här.</string>
     <string name="get_help">Få hjälp</string>
+    <string name="error_no_settings_found">Inga inställningar hittades</string>
+    <string name="error_invalid_content_key">Ogiltig innehållsnyckel!</string>
 
     <string name="display">Skärm</string>
     <string name="summary_preference_settings_display">Anpassa appens utseende och känsla</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Personliga annonser</string>
     <string name="summary_ads_personalized_ads">Välj hur vi personaliserar annonser baserat på dina intressen</string>
     <string name="summary_ads">Se annonser som är relevanta för dig. Hantera informationen som används för personaliserade annonser.</string>
+    <string name="ads_enabled">Annonser aktiverade</string>
+    <string name="ads_disabled">Annonser inaktiverade</string>
+    <string name="error_failed_to_load_ads_settings">Det gick inte att ladda annonsinställningarna</string>
 
     <string name="usage_and_diagnostics">Användning och diagnostik</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Dela data för att hjälpa till att förbättra appupplevelsen</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Oavsett hur mycket du donerar, hjälper du oss att hålla appen igång och förbättra funktionerna. Vi uppskattar din generositet och vänlighet!</string>
     <string name="non_paid_support">Obetalt stöd</string>
     <string name="web_ad">Webbannons</string>
+    <string name="error_failed_to_load_sku_details">Det gick inte att läsa in SKU-detaljer</string>
 </resources>

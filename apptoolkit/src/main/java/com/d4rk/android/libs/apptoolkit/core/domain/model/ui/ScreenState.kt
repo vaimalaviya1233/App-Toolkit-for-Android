@@ -46,7 +46,7 @@ inline fun <T> MutableStateFlow<UiStateScreen<T>>.successData(crossinline transf
 }
 
 inline fun <D , T , E : RootError> MutableStateFlow<UiStateScreen<T>>.applyResult(
-    result : DataState<D , E> , errorMessage : String = "Something went wrong" , crossinline transform : (D , T) -> T
+    result : DataState<D , E> ,   errorMessage: UiTextHelper = UiTextHelper.DynamicString("Something went wrong") , crossinline transform : (D , T) -> T
 ) {
     when (result) {
         is DataState.Success -> {
@@ -56,8 +56,8 @@ inline fun <D , T , E : RootError> MutableStateFlow<UiStateScreen<T>>.applyResul
         }
 
         is DataState.Error -> {
-            setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString(errorMessage))))
-            updateState(ScreenState.Error())
+            setErrors(errors = listOf(element = UiSnackbar(message = errorMessage)))
+            updateState(newValues = ScreenState.Error())
         }
 
         is DataState.Loading -> {
@@ -67,25 +67,25 @@ inline fun <D , T , E : RootError> MutableStateFlow<UiStateScreen<T>>.applyResul
 }
 
 fun <T> MutableStateFlow<UiStateScreen<T>>.updateState(newValues : ScreenState) {
-    update { current ->
+    update { current : UiStateScreen<T> ->
         current.copy(screenState = newValues)
     }
 }
 
 fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) {
-    update { current ->
+    update { current : UiStateScreen<T> ->
         current.copy(errors = errors)
     }
 }
 
 fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) { // FIXME: Function "showSnackbar" is never used
-    update { current ->
+    update { current : UiStateScreen<T> ->
         current.copy(snackbar = snackbar)
     }
 }
 
 fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() { // FIXME: Function "dismissSnackbar" is never used
-    update { current ->
+    update { current : UiStateScreen<T> ->
         current.copy(snackbar = null)
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -19,8 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
+import com.d4rk.android.libs.apptoolkit.app.ads.ui.components.AdsSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -37,10 +40,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , buildInfoProvider : BuildInfoProvider) {
-    val context : Context = LocalContext.current
+
     val uiState : UiStateScreen<AdsSettingsData> by viewModel.uiState.collectAsState()
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val switchState : Boolean by dataStore.ads.collectAsState(initial = ! buildInfoProvider.isDebugBuild)
+    val snackbarHostState : SnackbarHostState = remember { SnackbarHostState() }
 
     ScreenStateHandler(screenState = uiState , onLoading = {
         LoadingScreen()
@@ -50,34 +52,37 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
         })
     } , onSuccess = { data : AdsSettingsData ->
         AdSettingsScreenContent(
-            context = context , data = data , viewModel = viewModel , activity = activity , dataStore = dataStore , switchState = switchState
+            data = data , viewModel = viewModel , activity = activity , snackbarHostState = snackbarHostState , buildInfoProvider = buildInfoProvider
         )
     })
+
+    AdsSnackbarHandler(uiState = uiState , viewModel = viewModel , snackbarHostState = snackbarHostState)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdSettingsScreenContent(
-    context : Context , data : AdsSettingsData , viewModel : AdsSettingsViewModel , dataStore : CommonDataStore , activity : Activity , switchState : Boolean
-) {
+fun AdSettingsScreenContent(data : AdsSettingsData , viewModel : AdsSettingsViewModel , activity : Activity , snackbarHostState : SnackbarHostState , buildInfoProvider : BuildInfoProvider) {
+    val context : Context = LocalContext.current
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val switchState : Boolean by dataStore.ads.collectAsState(initial = ! buildInfoProvider.isDebugBuild)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val adsEnabledState : MutableState<Boolean> = remember { mutableStateOf(value = switchState) }
 
     LargeTopAppBarWithScaffold(
-        title = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.ads) , onBackClicked = { (context as? Activity)?.finish() }) { paddingValues ->
+        snackbarHostState = snackbarHostState , title = stringResource(id = R.string.ads) , onBackClicked = { (context as? Activity)?.finish() }) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues = paddingValues)
             ) {
-                item(key = "display_ads") {
+                item {
                     SwitchCardItem(
-                        title = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.display_ads) , switchState = adsEnabledState
-                    ) { isChecked ->
+                        title = stringResource(id = R.string.display_ads) , switchState = adsEnabledState
+                    ) { isChecked : Boolean ->
                         adsEnabledState.value = isChecked
                         coroutineScope.launch {
-                            dataStore.saveAds(isChecked)
+                            dataStore.saveAds(isChecked = isChecked)
                         }
                         viewModel.onEvent(event = AdsSettingsEvent.AdsSettingChanged(isEnabled = isChecked))
                     }
@@ -85,7 +90,7 @@ fun AdSettingsScreenContent(
                 item {
                     Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
                         PreferenceItem(
-                            title = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.personalized_ads) , enabled = data.adsEnabled , summary = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.summary_ads_personalized_ads) , onClick = {
+                            title = stringResource(id = R.string.personalized_ads) , enabled = data.adsEnabled , summary = stringResource(id = R.string.summary_ads_personalized_ads) , onClick = {
                                 viewModel.onEvent(event = AdsSettingsEvent.OpenConsentForm(activity = activity as AdsSettingsActivity))
                             })
                     }
@@ -95,10 +100,7 @@ fun AdSettingsScreenContent(
                     InfoMessageSection(
                         modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(all = 24.dp) ,
-                        message = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.summary_ads) ,
-                        learnMoreText = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.learn_more) ,
-                        learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/ads-help-center"
+                                .padding(all = 24.dp) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/ads-help-center"
                     )
                 }
             }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -23,6 +22,7 @@ import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.startup.domain.model.StartupUiData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
@@ -32,7 +32,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.TopAppBarS
 
 @Composable
 fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
-    val uiStateScreen : UiStateScreen<StartupUiData> by viewModel.screenState.collectAsState()
+    val uiStateScreen : UiStateScreen<StartupUiData> by viewModel.uiState.collectAsState()
+    val consentFormLoaded : Boolean = uiStateScreen.data?.consentFormLoaded == true
 
     TopAppBarScaffold(title = stringResource(R.string.welcome) , content = { paddingValues ->
         ScreenStateHandler(screenState = uiStateScreen , onLoading = {
@@ -43,19 +44,25 @@ fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
             StartupScreenContent(paddingValues = paddingValues)
         })
     } , floatingActionButton = {
-        ExtendedFloatingActionButton(
-            modifier = Modifier.bounceClick() , containerColor = if (uiStateScreen.data?.consentFormLoaded == true) {
-            FloatingActionButtonDefaults.containerColor
-        }
-        else {
-            Gray
-        } , text = { Text(text = stringResource(id = R.string.agree)) } , onClick = {
-            activity.navigateToNext()
-        } , icon = {
-            Icon(
-                Icons.Outlined.CheckCircle , contentDescription = null
-            )
-        })
+        AnimatedExtendedFloatingActionButton(
+            visible = consentFormLoaded,
+            modifier = Modifier.bounceClick(),
+            containerColor = if (consentFormLoaded) {
+                FloatingActionButtonDefaults.containerColor
+            } else {
+                Gray
+            },
+            text = { Text(text = stringResource(id = R.string.agree)) },
+            onClick = {
+                activity.navigateToNext()
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.CheckCircle,
+                    contentDescription = null
+                )
+            }
+        )
     })
 }
 

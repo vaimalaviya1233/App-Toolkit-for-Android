@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.display
 
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -38,13 +39,14 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVert
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provider : DisplaySettingsProvider) {
-    val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context)
+    val coroutineScope : CoroutineScope = rememberCoroutineScope()
+    val context : Context = LocalContext.current
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
     var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
 
@@ -66,9 +68,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
     val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
     val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
 
-    LazyColumn(
-        contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()
-    ) {
+    LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.appearance))
             SmallVerticalSpacer()

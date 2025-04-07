@@ -9,6 +9,7 @@
     <string name="welcome">Welcome</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Read and agree to our Terms of Service and Privacy Policy to continue</string>
     <string name="agree">Agree</string>
+    <string name="error_loading_consent_info">Failed to load consent information</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="go_back">Go back</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">Settings are currently unavailable.</string>
     <string name="settings_placeholder_description">No settings selected. Choose an option to view its details here.</string>
     <string name="get_help">Get help</string>
+    <string name="error_no_settings_found">No settings found</string>
+    <string name="error_invalid_content_key">Invalid content key!</string>
 
     <string name="display">Display</string>
     <string name="summary_preference_settings_display">Personalize your app\'s look and feel</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Personalized ads</string>
     <string name="summary_ads_personalized_ads">Choose how we personalize ads for you based on your interests</string>
     <string name="summary_ads">See ads that are relevant to you. Manage the information used to show personalized ads based on your app activity. You can always turn off personalization here.\n</string>
+    <string name="ads_enabled">Ads enabled</string>
+    <string name="ads_disabled">Ads disabled</string>
+    <string name="error_failed_to_load_ads_settings">Failed to load ads settings</string>
 
     <string name="usage_and_diagnostics">Usage and diagnostics</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve in-app experience</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">No matter how much you donate, you will help us keep our app running and improve our features. We appreciate your generosity and kindness!</string>
     <string name="non_paid_support">Non-Paid Support</string>
     <string name="web_ad">Web Ad</string>
+    <string name="error_failed_to_load_sku_details">Failed to load SKU details</string>
 </resources>

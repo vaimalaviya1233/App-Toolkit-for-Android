@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.startup.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StartupActivity : AppCompatActivity() {
     private val provider : StartupProvider by inject()
     private val viewModel : StartupViewModel by viewModel()
-    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { }
+    private val permissionLauncher : ActivityResultLauncher<Array<String>> = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { }
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +41,10 @@ class StartupActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (provider.requiredPermissions.isNotEmpty()) {
-            permissionLauncher.launch(provider.requiredPermissions)
+            permissionLauncher.launch(input = provider.requiredPermissions)
         }
 
-        viewModel.sendEvent(event = StartupEvent.OpenConsentForm , activity = this@StartupActivity)
+        viewModel.onEvent(event = StartupEvent.OpenConsentForm(activity = this@StartupActivity))
     }
 
     fun navigateToNext() {

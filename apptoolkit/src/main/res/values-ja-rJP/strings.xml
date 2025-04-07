@@ -9,6 +9,7 @@
     <string name="welcome">ようこそ</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">続行するには、利用規約およびプライバシーポリシーをお読みいただき、同意してください</string>
     <string name="agree">同意する</string>
+    <string name="error_loading_consent_info">同意情報の読み込みに失敗しました</string>
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="go_back">戻る</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">設定は現在利用できません。</string>
     <string name="settings_placeholder_description">設定が選択されていません。詳細を表示するにはオプションを選択してください。</string>
     <string name="get_help">ヘルプを取得</string>
+    <string name="error_no_settings_found">設定が見つかりません</string>
+    <string name="error_invalid_content_key">無効なコンテンツキーです！</string>
 
     <string name="display">ディスプレイ</string>
     <string name="summary_preference_settings_display">アプリの外観と操作感をカスタマイズする</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">パーソナライズ広告</string>
     <string name="summary_ads_personalized_ads">興味に基づいて広告をパーソナライズする方法を選択する</string>
     <string name="summary_ads">あなたに関連する広告を表示します。アプリのアクティビティに基づいた広告のパーソナライズを管理できます。ここでパーソナライズをいつでも無効にすることができます。</string>
+    <string name="ads_enabled">広告が有効です</string>
+    <string name="ads_disabled">広告が無効です</string>
+    <string name="error_failed_to_load_ads_settings">広告設定の読み込みに失敗しました</string>
 
     <string name="usage_and_diagnostics">使用状況と診断</string>
     <string name="summary_preference_settings_usage_and_diagnostics">アプリ内の体験向上に役立つデータを共有する</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">寄付額にかかわらず、アプリの運営を支援し、機能改善にご協力いただけます。あなたの寛大さと親切心に感謝します！</string>
     <string name="non_paid_support">無償サポート</string>
     <string name="web_ad">ウェブ広告</string>
+    <string name="error_failed_to_load_sku_details">SKU の詳細を読み込めませんでした</string>
 </resources>

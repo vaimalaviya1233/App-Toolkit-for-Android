@@ -9,6 +9,7 @@
     <string name="welcome">Bem-vindo</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Leia e concorde com nossos Termos de Serviço e Política de Privacidade para continuar</string>
     <string name="agree">Concordo</string>
+    <string name="error_loading_consent_info">Falha ao carregar as informações de consentimento</string>
 
     <string name="navigation_drawer_open">Abrir menu de navegação</string>
     <string name="go_back">Voltar</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">As configurações estão indisponíveis no momento.</string>
     <string name="settings_placeholder_description">Nenhuma configuração selecionada. Escolha uma opção para ver seus detalhes aqui.</string>
     <string name="get_help">Obter ajuda</string>
+    <string name="error_no_settings_found">Nenhuma configuração encontrada</string>
+    <string name="error_invalid_content_key">Chave de conteúdo inválida!</string>
 
     <string name="display">Tela</string>
     <string name="summary_preference_settings_display">Personalize a aparência e o comportamento do aplicativo</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">Anúncios personalizados</string>
     <string name="summary_ads_personalized_ads">Escolha como personalizamos anúncios para você com base em seus interesses</string>
     <string name="summary_ads">Veja anúncios relevantes para você. Gerencie as informações usadas para mostrar anúncios personalizados com base em sua atividade no aplicativo. Você pode desativar a personalização aqui a qualquer momento.</string>
+    <string name="ads_enabled">Anúncios ativados</string>
+    <string name="ads_disabled">Anúncios desativados</string>
+    <string name="error_failed_to_load_ads_settings">Falha ao carregar as configurações de anúncios</string>
 
     <string name="usage_and_diagnostics">Uso e diagnósticos</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Compartilhe dados para ajudar a melhorar a experiência no aplicativo</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">Independentemente do valor da sua doação, você nos ajudará a manter o aplicativo em funcionamento e melhorar seus recursos. Agradecemos por sua generosidade e gentileza!</string>
     <string name="non_paid_support">Suporte não pago</string>
     <string name="web_ad">Anúncio na web</string>
+    <string name="error_failed_to_load_sku_details">Falha ao carregar os detalhes do SKU</string>
 </resources>

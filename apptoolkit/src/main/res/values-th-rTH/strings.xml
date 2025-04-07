@@ -9,6 +9,7 @@
     <string name="welcome">ยินดีต้อนรับ</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">โปรดอ่านและยอมรับเงื่อนไขการให้บริการและนโยบายความเป็นส่วนตัวเพื่อดำเนินการต่อ</string>
     <string name="agree">ยอมรับ</string>
+    <string name="error_loading_consent_info">ไม่สามารถโหลดข้อมูลความยินยอมได้</string>
 
     <string name="navigation_drawer_open">เปิดเมนูนำทาง</string>
     <string name="go_back">กลับ</string>
@@ -38,6 +39,8 @@
     <string name="settings_disabled_message">ไม่สามารถใช้งานการตั้งค่าได้ในขณะนี้</string>
     <string name="settings_placeholder_description">ยังไม่มีการเลือกตั้งค่า เลือกตัวเลือกเพื่อดูรายละเอียดที่นี่</string>
     <string name="get_help">ขอความช่วยเหลือ</string>
+    <string name="error_no_settings_found">ไม่พบการตั้งค่า</string>
+    <string name="error_invalid_content_key">คีย์เนื้อหาไม่ถูกต้อง!</string>
 
     <string name="display">หน้าจอ</string>
     <string name="summary_preference_settings_display">ปรับแต่งรูปลักษณ์ของแอปตามที่คุณต้องการ</string>
@@ -115,6 +118,9 @@
     <string name="personalized_ads">โฆษณาเฉพาะบุคคล</string>
     <string name="summary_ads_personalized_ads">เลือกวิธีที่เราใช้ข้อมูลส่วนตัวในการปรับแต่งโฆษณา</string>
     <string name="summary_ads">ดูโฆษณาที่ตรงกับความสนใจของคุณ จัดการข้อมูลสำหรับโฆษณาที่ปรับแต่งได้</string>
+    <string name="ads_enabled">เปิดใช้งานโฆษณาแล้ว</string>
+    <string name="ads_disabled">ปิดใช้งานโฆษณาแล้ว</string>
+    <string name="error_failed_to_load_ads_settings">ไม่สามารถโหลดการตั้งค่าโฆษณาได้</string>
 
     <string name="usage_and_diagnostics">การใช้งานและการวินิจฉัย</string>
     <string name="summary_preference_settings_usage_and_diagnostics">แชร์ข้อมูลเพื่อช่วยปรับปรุงประสบการณ์การใช้งาน</string>
@@ -172,4 +178,5 @@
     <string name="summary_donations">ไม่ว่าคุณจะบริจาคเท่าไหร่ คุณจะช่วยให้เราดำเนินการแอปและพัฒนาฟีเจอร์ใหม่ ๆ ได้ต่อไป เราขอบคุณในความมีน้ำใจของคุณ!</string>
     <string name="non_paid_support">การสนับสนุนแบบไม่ชำระเงิน</string>
     <string name="web_ad">โฆษณาเว็บ</string>
+    <string name="error_failed_to_load_sku_details">ไม่สามารถโหลดรายละเอียด SKU ได้</string>
 </resources>

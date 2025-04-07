@@ -67,16 +67,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(
-    viewModel : SettingsViewModel , contentProvider : GeneralSettingsContentProvider
-) {
+fun SettingsScreen(viewModel : SettingsViewModel , contentProvider : GeneralSettingsContentProvider) {
     val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsState()
     val context : Context = LocalContext.current
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.settings) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
             NoDataScreen(icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
-                viewModel.onEvent(SettingsEvent.Load(context = context))
+                viewModel.onEvent(event = SettingsEvent.Load(context = context))
             })
         } , onSuccess = { config : SettingsConfig ->
             SettingsScreenContent(paddingValues = paddingValues , settingsConfig = config , contentProvider = contentProvider)
@@ -86,7 +84,7 @@ fun SettingsScreen(
 
 @Composable
 fun SettingsScreenContent(paddingValues : PaddingValues , settingsConfig : SettingsConfig , contentProvider : GeneralSettingsContentProvider) {
-    if (ScreenHelper.isLandscapeOrTablet(LocalContext.current)) {
+    if (ScreenHelper.isLandscapeOrTablet(context = LocalContext.current)) {
         TabletSettingsScreen(paddingValues = paddingValues , settingsConfig = settingsConfig , contentProvider = contentProvider)
     }
     else {

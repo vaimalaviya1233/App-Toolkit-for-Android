@@ -14,12 +14,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 
-class MainViewModel : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(
-    initialState = UiStateScreen(data = UiMainScreen())
-) {
+class MainViewModel : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
 
     init {
-        onEvent(MainEvent.LoadNavigation)
+        onEvent(event = MainEvent.LoadNavigation)
     }
 
     override fun onEvent(event : MainEvent) {

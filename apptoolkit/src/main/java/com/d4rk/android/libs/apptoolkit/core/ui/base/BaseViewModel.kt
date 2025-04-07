@@ -26,10 +26,6 @@ abstract class BaseViewModel<S : UiState , E : UiEvent , A : ActionEvent>(initia
     protected val currentState : S
         get() = uiState.value
 
-    protected fun sendActionEvent(actionEvent : A) { // FIXME: Function "sendActionEvent" is never used
-        viewModelScope.launch { _actionEvent.send(actionEvent) }
-    }
-
     protected fun launch(
         context : CoroutineContext = EmptyCoroutineContext , block : suspend CoroutineScope.() -> Unit
     ) = viewModelScope.launch(context = context , block = block)
