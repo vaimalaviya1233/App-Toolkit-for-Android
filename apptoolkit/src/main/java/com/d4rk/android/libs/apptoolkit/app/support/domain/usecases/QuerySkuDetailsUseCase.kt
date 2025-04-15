@@ -1,11 +1,8 @@
-@file:Suppress("DEPRECATION")
-
 package com.d4rk.android.libs.apptoolkit.app.support.domain.usecases
 
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.QueryProductDetailsParams
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.usecases.Repository
@@ -16,31 +13,34 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class QuerySkuDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<String , SkuDetails> , Errors>>> {
-    override suspend fun invoke(param : BillingClient) : Flow<DataState<Map<String , SkuDetails> , Errors>> = flow {
+class QueryProductDetailsUseCase : Repository<BillingClient , Flow<DataState<Map<String , ProductDetails> , Errors>>> {
+    override suspend fun invoke(param : BillingClient) : Flow<DataState<Map<String , ProductDetails> , Errors>> = flow {
         runCatching {
             suspendCancellableCoroutine { continuation ->
-                val skuList : List<String> = listOf("low_donation" , "normal_donation" , "high_donation" , "extreme_donation")
-                val params : SkuDetailsParams = SkuDetailsParams.newBuilder().setSkusList(skuList).setType(BillingClient.SkuType.INAPP).build()
+                val productList = listOf(
+                    "low_donation" , "normal_donation" , "high_donation" , "extreme_donation"
+                ).map {
+                    QueryProductDetailsParams.Product.newBuilder().setProductId(it).setProductType(BillingClient.ProductType.INAPP).build()
+                }
 
-                param.querySkuDetailsAsync(params) { billingResult : BillingResult , skuDetailsList : MutableList<SkuDetails>? ->
+                val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
+
+                param.queryProductDetailsAsync(params) { billingResult , productDetailsList ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        skuDetailsList?.let {
-                            val detailsMap : Map<String , SkuDetails> = it.associateBy { skuId -> skuId.sku }
-                            continuation.resume(value = detailsMap)
-                        } ?: run {
-                            continuation.resumeWithException(exception = Exception("SkuDetailsList was null"))
+                        productDetailsList.let {
+                            val resultMap = it.associateBy { pd -> pd.productId }
+                            continuation.resume(resultMap)
                         }
                     }
                     else {
-                        continuation.resumeWithException(exception = Exception("Failed to query SKU details: ${billingResult.debugMessage}"))
+                        continuation.resumeWithException(Exception("Failed to query: ${billingResult.debugMessage}"))
                     }
                 }
             }
-        }.onSuccess { skuMap : Map<String , SkuDetails> ->
-            emit(value = DataState.Success(data = skuMap))
-        }.onFailure { throwable : Throwable ->
-            emit(value = DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS)))
+        }.onSuccess { result ->
+            emit(value = DataState.Success(data = result))
+        }.onFailure { error ->
+            emit(value = DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS)))
         }
     }
 }

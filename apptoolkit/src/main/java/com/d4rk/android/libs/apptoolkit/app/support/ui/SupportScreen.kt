@@ -100,17 +100,11 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                             .fillMaxWidth()
                                             .bounceClick() , onClick = {
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
-                                        activity.initiatePurchase(
-                                            sku = "low_donation" , skuDetailsMap = supportData.skuDetails , billingClient = billingClient
-                                        )
+                                        activity.initiatePurchase(productId = "low_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
-                                    Icon(
-                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
-                                    )
+                                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize))
                                     ButtonIconSpacer()
-                                    Text(
-                                        text = supportData.skuDetails["low_donation"]?.price ?: ""
-                                    )
+                                    Text(text = supportData.productDetails["low_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                                 }
                             }
                             item {
@@ -119,17 +113,13 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                             .fillMaxWidth()
                                             .bounceClick() , onClick = {
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
-                                        activity.initiatePurchase(
-                                            sku = "normal_donation" , skuDetailsMap = supportData.skuDetails , billingClient = billingClient
-                                        )
+                                        activity.initiatePurchase(productId = "normal_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
                                         Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
                                     )
                                     ButtonIconSpacer()
-                                    Text(
-                                        text = supportData.skuDetails["normal_donation"]?.price ?: ""
-                                    )
+                                    Text(text = supportData.productDetails["normal_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                                 }
                             }
                         }
@@ -144,17 +134,13 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                             .fillMaxWidth()
                                             .bounceClick() , onClick = {
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
-                                        activity.initiatePurchase(
-                                            sku = "high_donation" , skuDetailsMap = supportData.skuDetails , billingClient = billingClient
-                                        )
+                                        activity.initiatePurchase(productId = "high_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
                                         Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
                                     )
                                     ButtonIconSpacer()
-                                    Text(
-                                        text = supportData.skuDetails["high_donation"]?.price ?: ""
-                                    )
+                                    Text(text = supportData.productDetails["high_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                                 }
                             }
                             item {
@@ -163,17 +149,13 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                             .fillMaxWidth()
                                             .bounceClick() , onClick = {
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
-                                        activity.initiatePurchase(
-                                            sku = "extreme_donation" , skuDetailsMap = supportData.skuDetails , billingClient = billingClient
-                                        )
+                                        activity.initiatePurchase(productId = "extreme_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
                                         Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
                                     )
                                     ButtonIconSpacer()
-                                    Text(
-                                        text = supportData.skuDetails["extreme_donation"]?.price ?: ""
-                                    )
+                                    Text(text = supportData.productDetails["extreme_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                                 }
                             }
                         }
@@ -190,16 +172,12 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
             item {
                 FilledTonalButton(onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
-                    IntentsHelper.openUrl(
-                        context = context , url = "https://direct-link.net/548212/agOqI7123501341"
-                    )
+                    IntentsHelper.openUrl(context = context , url = "https://direct-link.net/548212/agOqI7123501341")
                 } , modifier = Modifier
                         .fillMaxWidth()
                         .bounceClick()
                         .padding(all = SizeConstants.LargeSize)) {
-                    Icon(
-                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
+                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize))
                     ButtonIconSpacer()
                     Text(text = stringResource(id = R.string.web_ad))
                 }

@@ -27,16 +27,12 @@ import kotlinx.coroutines.launch
 fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val switchState : State<Boolean> = dataStore.usageAndDiagnostics.collectAsState(initial = ! configProvider.isDebugBuild)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
+    val switchState : State<Boolean> = dataStore.usageAndDiagnostics(default = ! configProvider.isDebugBuild).collectAsState(initial = ! configProvider.isDebugBuild)
 
-    LazyColumn(
-        contentPadding = paddingValues , modifier = Modifier.fillMaxSize()
-    ) {
+    LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxSize()) {
         item {
-            SwitchCardItem(
-                title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState
-            ) { isChecked ->
+            SwitchCardItem(title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState) { isChecked : Boolean ->
                 coroutineScope.launch {
                     dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
                 }
