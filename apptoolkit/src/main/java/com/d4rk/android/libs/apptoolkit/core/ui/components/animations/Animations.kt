@@ -47,7 +47,7 @@ fun rememberAnimatedVisibilityState(
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         val firstVisible : Int = listState.firstVisibleItemIndex
         val lastVisible : Int = (firstVisible + listState.layoutInfo.visibleItemsInfo.size - 1).coerceAtMost(maximumValue = itemCount - 1)
         for (index in firstVisible..lastVisible) {

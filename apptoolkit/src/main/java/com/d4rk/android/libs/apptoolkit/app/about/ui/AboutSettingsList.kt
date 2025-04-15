@@ -1,91 +1,92 @@
 package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.DefaultSnackbarHandler
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
-import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.Snackbar
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider) {
+fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider , snackbarHostState : SnackbarHostState) {
     val context : Context = LocalContext.current
-
-    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(packageName = configProvider.packageName , currentVersionName = configProvider.appVersion , context = context)
-    val changelogHtmlString : String? = htmlData.value.first
-    val eulaHtmlString : String? = htmlData.value.second
-
-    var showSnackbar : Boolean by remember { mutableStateOf(value = false) }
-
+    val viewModel : AboutViewModel = koinViewModel()
+    val screenState : UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsState()
     val deviceInfo : String = stringResource(id = R.string.device_info)
 
-    Box(modifier = Modifier.padding(paddingValues = paddingValues)) {
-        LazyColumn(
-            modifier = Modifier.fillMaxHeight()
-        ) {
-            item {
-                PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
-                SmallVerticalSpacer()
-                Column(modifier = Modifier
-                        .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))) {
-                    SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
-                    ExtraTinyVerticalSpacer()
-                    SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
-                    ExtraTinyVerticalSpacer()
-                    SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss) , onClick = {
-                        IntentsHelper.openLicensesScreen(
-                            context = context ,
-                            eulaHtmlString = eulaHtmlString ,
-                            changelogHtmlString = changelogHtmlString ,
-                            appName = context.getString(R.string.app_name) ,
-                            appVersion = configProvider.appVersion ,
-                            appVersionCode = configProvider.appVersionCode ,
-                            appShortDescription = R.string.app_short_description
-                        )
-                    })
-                }
+    LaunchedEffect(key1 = Unit) {
+        viewModel.onEvent(event = AboutEvents.LoadHtml(context = context , packageName = configProvider.packageName , versionName = configProvider.appVersion))
+    }
 
-            }
-            item {
-                PreferenceCategoryItem(title = deviceInfo)
-                SmallVerticalSpacer()
-                Column(modifier = Modifier
+    LazyColumn(modifier = Modifier.fillMaxHeight() , contentPadding = paddingValues) {
+        item {
+            PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
+            SmallVerticalSpacer()
+            Column(
+                modifier = Modifier
                         .padding(horizontal = SizeConstants.LargeSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))) {
-                    SettingsPreferenceItem(title = deviceInfo , summary = deviceProvider.deviceInfo , onClick = {
-                        ClipboardHelper.copyTextToClipboard(context = context , label = deviceInfo , text = deviceProvider.deviceInfo , onShowSnackbar = {
-                            showSnackbar = true
-                        })
-                    })
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+            ) {
+                SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
+                ExtraTinyVerticalSpacer()
+                SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
+                ExtraTinyVerticalSpacer()
+                SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss)) {
+                    IntentsHelper.openLicensesScreen(
+                        context = context ,
+                        eulaHtmlString = screenState.data?.eulaHtml ,
+                        changelogHtmlString = screenState.data?.changelogHtml ,
+                        appName = context.getString(R.string.app_name) ,
+                        appVersion = configProvider.appVersion ,
+                        appVersionCode = configProvider.appVersionCode ,
+                        appShortDescription = R.string.app_short_description
+                    )
                 }
             }
         }
 
-        Snackbar(message = stringResource(id = R.string.snack_device_info_copied) , showSnackbar = showSnackbar , onDismiss = { showSnackbar = false })
+        item {
+            PreferenceCategoryItem(title = deviceInfo)
+            SmallVerticalSpacer()
+            Column(
+                modifier = Modifier
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+            ) {
+                SettingsPreferenceItem(title = deviceInfo , summary = deviceProvider.deviceInfo) {
+                    ClipboardHelper.copyTextToClipboard(
+                        context = context , label = deviceInfo , text = deviceProvider.deviceInfo , onShowSnackbar = {
+                            viewModel.onEvent(event = AboutEvents.CopyDeviceInfo)
+                        })
+                }
+            }
+        }
     }
+
+    DefaultSnackbarHandler(screenState = screenState , snackbarHostState = snackbarHostState , getDismissEvent = { AboutEvents.DismissSnackbar } , onEvent = { viewModel.onEvent(it) })
 }

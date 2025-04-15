@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.data.core.ads
 
 import android.app.Activity
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.OnShowAdCompleteListener
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdError
@@ -12,10 +13,11 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import org.koin.compose.getKoin
+import org.koin.compose.koinInject
 import java.util.Date
 
-open class AdsCoreManager(protected val context : Context) {
-
+open class AdsCoreManager(protected val context : Context, val buildInfoProvider : BuildInfoProvider) {
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
@@ -74,7 +76,7 @@ open class AdsCoreManager(protected val context : Context) {
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
             val isAdsChecked : Boolean = runBlocking {
-                dataStore.ads.first()
+                dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
             }
 
             if (isShowingAd || ! isAdsChecked) {
