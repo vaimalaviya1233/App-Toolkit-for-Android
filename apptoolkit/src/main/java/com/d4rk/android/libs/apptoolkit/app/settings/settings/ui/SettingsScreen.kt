@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -153,11 +154,15 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
 @Composable
 fun SettingsDetail(preference : SettingsPreference , paddingValues : PaddingValues , contentProvider : GeneralSettingsContentProvider) {
     val viewModel : GeneralSettingsViewModel = koinViewModel()
+    val snackbarHostState : SnackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = preference.key) {
-        viewModel.onEvent(GeneralSettingsEvent.Load(contentKey = preference.key))
+        viewModel.onEvent(event = GeneralSettingsEvent.Load(contentKey = preference.key))
     }
-    GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues)
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues , snackbarHostState = snackbarHostState)
+    }
 }
 
 @Composable

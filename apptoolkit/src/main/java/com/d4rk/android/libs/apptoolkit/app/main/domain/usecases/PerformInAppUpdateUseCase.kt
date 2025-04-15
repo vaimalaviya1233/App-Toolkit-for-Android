@@ -22,13 +22,16 @@ class PerformInAppUpdateUseCase(private val appUpdateManager : AppUpdateManager 
         runCatching {
             val appUpdateInfo : AppUpdateInfo = appUpdateManager.appUpdateInfo.await()
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                /*
                 val stalenessDays : Int = appUpdateInfo.clientVersionStalenessDays() ?: 0
                 val updateType : Int = if (stalenessDays > 90) {
                     AppUpdateType.IMMEDIATE
                 }
                 else {
-                    AppUpdateType.FLEXIBLE
+                    AppUpdateType.IMMEDIATE
                 }
+                */
+                val updateType : Int = AppUpdateType.IMMEDIATE
                 val appUpdateOptions : AppUpdateOptions = AppUpdateOptions.newBuilder(updateType).build()
                 val didStart : Boolean = appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo , updateResultLauncher , appUpdateOptions

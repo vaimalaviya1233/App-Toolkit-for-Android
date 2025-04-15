@@ -1,7 +1,24 @@
 package com.d4rk.android.libs.apptoolkit.core.domain.model.ui
 
+import android.content.Context
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarData
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
+import com.d4rk.android.libs.apptoolkit.core.ui.base.handling.UiEvent
 import com.d4rk.android.libs.apptoolkit.core.ui.base.handling.UiState
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenDataStatus
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
@@ -78,13 +95,60 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.setErrors(errors : List<UiSnackbar>) 
     }
 }
 
-fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) { // FIXME: Function "showSnackbar" is never used
+@Composable
+fun <T, E : UiEvent> DefaultSnackbarHandler(
+    screenState: UiStateScreen<T>,
+    snackbarHostState: SnackbarHostState,
+    getDismissEvent: (() -> E)? = null,
+    onEvent: ((E) -> Unit)? = null
+) {
+    val context : Context = LocalContext.current
+
+    LaunchedEffect(key1 = screenState.snackbar?.timeStamp) {
+        screenState.snackbar?.let { snackbar : UiSnackbar ->
+            if (snackbarHostState.currentSnackbarData != null) {
+                snackbarHostState.currentSnackbarData?.dismiss()
+            }
+
+            val result : SnackbarResult = snackbarHostState.showSnackbar(
+                message = snackbar.message.asString(context = context) ,
+                withDismissAction = true ,
+                duration = if (snackbar.isError) SnackbarDuration.Long else SnackbarDuration.Short
+            )
+            if ((result == SnackbarResult.Dismissed || result == SnackbarResult.ActionPerformed) &&
+                getDismissEvent != null && onEvent != null
+            ) {
+                onEvent(getDismissEvent())
+            }
+        }
+    }
+
+    SnackbarHost(
+        hostState = snackbarHostState,
+        modifier = Modifier.fillMaxWidth(),
+        snackbar = { snackbarData : SnackbarData ->
+            Snackbar(
+                containerColor = if (screenState.snackbar?.isError == true) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface,
+                contentColor = if (screenState.snackbar?.isError == true) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurface,
+                action = {
+                    TextButton(onClick = { snackbarData.dismiss() }) {
+                        Text(text = stringResource(id = android.R.string.cancel))
+                    }
+                }
+            ) {
+                Text(text = snackbarData.visuals.message)
+            }
+        }
+    )
+}
+
+fun <T> MutableStateFlow<UiStateScreen<T>>.showSnackbar(snackbar : UiSnackbar) {
     update { current : UiStateScreen<T> ->
         current.copy(snackbar = snackbar)
     }
 }
 
-fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() { // FIXME: Function "dismissSnackbar" is never used
+fun <T> MutableStateFlow<UiStateScreen<T>>.dismissSnackbar() {
     update { current : UiStateScreen<T> ->
         current.copy(snackbar = null)
     }

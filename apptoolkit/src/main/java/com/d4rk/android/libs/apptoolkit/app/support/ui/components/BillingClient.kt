@@ -22,7 +22,7 @@ fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : Bi
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult : BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    viewModel.onEvent(SupportEvent.QuerySkuDetails(billingClient))
+                    viewModel.onEvent(event = SupportEvent.QueryProductDetails(billingClient = billingClient))
                 }
             }
 
