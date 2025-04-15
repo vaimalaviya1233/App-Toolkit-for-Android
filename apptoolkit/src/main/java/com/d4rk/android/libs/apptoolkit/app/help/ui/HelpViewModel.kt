@@ -2,8 +2,8 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui
 
 import android.app.Activity
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpAction
-import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpEvent
+import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpActions
+import com.d4rk.android.libs.apptoolkit.app.help.domain.events.HelpEvents
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.GetFAQsUseCase
@@ -24,17 +24,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
-class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHelpScreen , HelpEvent , HelpAction>(initialState = UiStateScreen(data = UiHelpScreen())) {
+class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHelpScreen , HelpEvents , HelpActions>(initialState = UiStateScreen(data = UiHelpScreen())) {
 
     init {
-        onEvent(event = HelpEvent.LoadHelp)
+        onEvent(event = HelpEvents.LoadHelp)
     }
 
-    override fun onEvent(event : HelpEvent) {
+    override fun onEvent(event : HelpEvents) {
         when (event) {
-            is HelpEvent.LoadHelp -> loadHelpData()
-            is HelpEvent.RequestReview -> requestReviewFlow()
-            is HelpEvent.LaunchReviewFlow -> launchReviewFlow(activity = event.activity , reviewInfo = event.reviewInfo)
+            is HelpEvents.LoadHelp -> loadHelpData()
+            is HelpEvents.RequestReview -> requestReviewFlow()
+            is HelpEvents.LaunchReviewFlow -> launchReviewFlow(activity = event.activity , reviewInfo = event.reviewInfo)
         }
     }
 

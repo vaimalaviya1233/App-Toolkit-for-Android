@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpEvent
+import com.d4rk.android.libs.apptoolkit.app.help.domain.events.HelpEvents
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
@@ -72,7 +72,7 @@ fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpSc
         AnimatedExtendedFloatingActionButton(visible = screenState.data?.reviewInfo != null , expanded = isFabExtended.value , onClick = {
             screenState.data?.reviewInfo?.let { reviewInfo ->
 
-                viewModel.onEvent(HelpEvent.LaunchReviewFlow(activity , reviewInfo))
+                viewModel.onEvent(HelpEvents.LaunchReviewFlow(activity , reviewInfo))
 
             }
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })

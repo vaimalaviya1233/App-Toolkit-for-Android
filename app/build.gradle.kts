@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(notation = libs.plugins.android.application)
     alias(notation = libs.plugins.kotlin.android)
@@ -13,24 +15,68 @@ android {
         applicationId = "com.d4rk.android.apps.apptoolkit"
         minSdk = 23
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
+        versionCode = 7
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        @Suppress("UnstableApiUsage")
+        androidResources.localeFilters += listOf(
+            "en" ,
+            "bg-rBG" ,
+            "de-rDE" ,
+            "es-rGQ" ,
+            "fr-rFR" ,
+            "hi-rIN" ,
+            "hu-rHU" ,
+            "in-rID" ,
+            "it-rIT" ,
+            "ja-rJP" ,
+            "pl-rPL" ,
+            "pt-rBR" ,
+            "ro-rRO" ,
+            "ru-rRU" ,
+            "sv-rSE" ,
+            "th-rTH" ,
+            "tr-rTR" ,
+            "uk-rUA" ,
+            "zh-rTW" ,
+        )
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        create("release")
+
+        val signingProps = Properties()
+        val signingFile = rootProject.file("signing.properties")
+
+        if (signingFile.exists()) {
+            signingProps.load(signingFile.inputStream())
+
+            signingConfigs.getByName("release").apply {
+                storeFile = file(signingProps["STORE_FILE"].toString())
+                storePassword = signingProps["STORE_PASSWORD"].toString()
+                keyAlias = signingProps["KEY_ALIAS"].toString()
+                keyPassword = signingProps["KEY_PASSWORD"].toString()
+            }
+        } else {
+            android.buildTypes.getByName("release").signingConfig = null
+        }
     }
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
         }
-
         debug {
             isDebuggable = true
         }
     }
 
     buildTypes.forEach { buildType ->
-        with(buildType) {
+        with(receiver = buildType) {
             multiDexEnabled = true
             isMinifyEnabled = false
             isShrinkResources = false
