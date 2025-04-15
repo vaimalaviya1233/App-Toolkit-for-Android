@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.utils.providers
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutSettingsList
 import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsList
@@ -19,9 +20,9 @@ class GeneralSettingsContentProvider(
     private val customScreens : Map<String , @Composable (PaddingValues) -> Unit> = emptyMap()
 ) {
     @Composable
-    fun ProvideContent(contentKey : String? , paddingValues : PaddingValues) {
+    fun ProvideContent(contentKey : String? , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
         when (contentKey) {
-            SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues , deviceProvider = deviceProvider , configProvider = configProvider)
+            SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues , deviceProvider = deviceProvider , configProvider = configProvider, snackbarHostState = snackbarHostState)
             SettingsContent.ADVANCED -> AdvancedSettingsList(paddingValues = paddingValues , provider = advancedProvider)
             SettingsContent.DISPLAY -> DisplaySettingsList(paddingValues = paddingValues , provider = displayProvider)
             SettingsContent.SECURITY_AND_PRIVACY -> PrivacySettingsList(paddingValues = paddingValues , provider = privacyProvider)

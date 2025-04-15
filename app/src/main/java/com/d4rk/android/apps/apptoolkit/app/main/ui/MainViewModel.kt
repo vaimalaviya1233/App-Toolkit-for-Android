@@ -9,20 +9,31 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.PerformInAppUpdateUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 
-class MainViewModel : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
+class MainViewModel(private val performInAppUpdateUseCase : PerformInAppUpdateUseCase) : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
 
     init {
         onEvent(event = MainEvent.LoadNavigation)
+        onEvent(event = MainEvent.CheckForUpdates)
     }
 
     override fun onEvent(event : MainEvent) {
         when (event) {
             is MainEvent.LoadNavigation -> loadNavigationItems()
+            is MainEvent.CheckForUpdates -> checkAppUpdate()
+        }
+    }
+
+    private fun checkAppUpdate() {
+        launch {
+            performInAppUpdateUseCase(param = Unit).collect { _ : DataState<Int , Errors> -> }
         }
     }
 

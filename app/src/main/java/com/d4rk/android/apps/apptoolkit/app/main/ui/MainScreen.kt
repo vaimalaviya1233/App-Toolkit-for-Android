@@ -37,6 +37,7 @@ import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.Naviga
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.handleNavigationItemClick
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNavigationRail
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
+import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.StatusSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
@@ -89,7 +90,7 @@ fun MainScaffoldContent(drawerState : DrawerState) {
 @Composable
 fun MainScaffoldTabletContent() {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    var isRailExpanded by remember { mutableStateOf(false) }
+    var isRailExpanded by remember { mutableStateOf(value = false) }
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val context : Context = LocalContext.current
 
@@ -98,14 +99,14 @@ fun MainScaffoldTabletContent() {
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
     val navController : NavHostController = rememberNavController()
     val navBackStackEntry : NavBackStackEntry? by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute : String? = navBackStackEntry?.destination?.route
 
     Scaffold(
         modifier = Modifier.fillMaxSize() , topBar = {
             MainTopAppBar(navigationIcon = if (isRailExpanded) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu , onNavigationIconClick = { coroutineScope.launch { isRailExpanded = ! isRailExpanded } } , scrollBehavior = scrollBehavior)
         }) { paddingValues ->
-        LeftNavigationRail(drawerItems = uiState.navigationDrawerItems , currentRoute = currentRoute , isRailExpanded = isRailExpanded , paddingValues = paddingValues , onDrawerItemClick = { item ->
+        LeftNavigationRail(drawerItems = uiState.navigationDrawerItems , currentRoute = currentRoute , isRailExpanded = isRailExpanded , paddingValues = paddingValues , onDrawerItemClick = { item : NavigationDrawerItem ->
             handleNavigationItemClick(context = context , item = item)
-        } , content = { HomeScreen(paddingValues) })
+        } , content = { HomeScreen(paddingValues = paddingValues) })
     }
 }
