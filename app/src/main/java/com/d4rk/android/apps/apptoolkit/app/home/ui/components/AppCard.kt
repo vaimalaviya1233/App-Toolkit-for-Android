@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
     Card(modifier = modifier
             .bounceClick()
             .fillMaxSize()
+            .aspectRatio(ratio = 1f)
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
                 if (appInfo.packageName.isNotEmpty()) {
