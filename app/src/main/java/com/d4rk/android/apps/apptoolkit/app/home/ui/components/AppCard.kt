@@ -1,8 +1,11 @@
 package com.d4rk.android.apps.apptoolkit.app.home.ui.components
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,23 +32,23 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 
 @Composable
 fun AppCard(appInfo : AppInfo , modifier : Modifier) {
-    val context = LocalContext.current
+    val context : Context = LocalContext.current
 
     Card(modifier = modifier
             .bounceClick()
-            .fillMaxWidth()
+            .fillMaxSize()
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
                 if (appInfo.packageName.isNotEmpty()) {
-                    if (AppInfoHelper().isAppInstalled(context , appInfo.packageName)) {
-                        if (! AppInfoHelper().openApp(context , appInfo.packageName)) {
-                            "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
+                    if (AppInfoHelper().isAppInstalled(context = context , packageName = appInfo.packageName)) {
+                        if (! AppInfoHelper().openApp(context = context , packageName = appInfo.packageName)) {
+                            "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri : Uri ->
                                 context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
                             }
                         }
                     }
                     else {
-                        "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri ->
+                        "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri : Uri ->
                             context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
                         }
                     }
