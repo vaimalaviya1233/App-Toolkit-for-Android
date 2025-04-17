@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = getViewModel { parametersOf(updateResultLauncher) }
 
         handleStartup()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onEvent(event = MainEvent.CheckForUpdates)
     }
 
     private fun handleStartup() {

@@ -7,14 +7,13 @@ import com.d4rk.android.libs.apptoolkit.app.about.domain.model.events.AboutActio
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AboutLibrariesHelper
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 
 open class AboutViewModel : ScreenViewModel<UiAboutScreen , AboutEvents , AboutActions>(
     initialState = UiStateScreen(data = UiAboutScreen())

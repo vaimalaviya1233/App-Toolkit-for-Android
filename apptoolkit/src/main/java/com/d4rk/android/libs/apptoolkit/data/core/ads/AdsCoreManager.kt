@@ -13,8 +13,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.koin.compose.getKoin
-import org.koin.compose.koinInject
 import java.util.Date
 
 open class AdsCoreManager(protected val context : Context, val buildInfoProvider : BuildInfoProvider) {

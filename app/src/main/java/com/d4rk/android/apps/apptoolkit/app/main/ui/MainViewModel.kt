@@ -21,7 +21,6 @@ class MainViewModel(private val performInAppUpdateUseCase : PerformInAppUpdateUs
 
     init {
         onEvent(event = MainEvent.LoadNavigation)
-        onEvent(event = MainEvent.CheckForUpdates)
     }
 
     override fun onEvent(event : MainEvent) {

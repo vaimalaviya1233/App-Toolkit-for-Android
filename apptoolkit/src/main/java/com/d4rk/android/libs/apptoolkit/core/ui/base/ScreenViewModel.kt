@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.base
 
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.handling.ActionEvent
 import com.d4rk.android.libs.apptoolkit.core.ui.base.handling.UiEvent

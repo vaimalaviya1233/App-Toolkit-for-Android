@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainScaffoldContent
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationDrawerItemContent
+import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
     ModalNavigationDrawer(drawerState = drawerState , drawerContent = {
         ModalDrawerSheet {
             LargeVerticalSpacer()
-            uiState.navigationDrawerItems.forEach { item ->
+            uiState.navigationDrawerItems.forEach { item : NavigationDrawerItem ->
                 NavigationDrawerItemContent(item = item , handleNavigationItemClick = {
                     handleNavigationItemClick(context = context , item = item , drawerState = drawerState , coroutineScope = coroutineScope)
                 })
