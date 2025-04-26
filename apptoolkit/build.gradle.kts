@@ -57,7 +57,7 @@ dependencies {
     api(dependencyNotation = libs.androidx.ui.tooling.preview)
     api(dependencyNotation = libs.androidx.material3)
     api(dependencyNotation = libs.androidx.material.icons.extended)
-    api(dependencyNotation = libs.datastore.preferences)
+    api(dependencyNotation = libs.androidx.datastore.core)
     api(dependencyNotation = libs.androidx.datastore.preferences)
     api(dependencyNotation = libs.androidx.foundation)
     api(dependencyNotation = libs.androidx.navigation.compose)
