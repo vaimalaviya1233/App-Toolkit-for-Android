@@ -16,29 +16,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.take
 
-/**
- * Remembers and manages the visibility states of items in a lazy list along with the visibility state of a floating action button (FAB).
- *
- * This composable function orchestrates the animation of items appearing in a `LazyList` and the visibility of a FAB.
- * It uses a `SnapshotStateList` to track the individual visibility of each item in the list, and a `MutableState` to control the FAB's visibility.
- *
- * **Functionality:**
- * 1. **Initialization:**
- *    - Creates a `SnapshotStateList` (`visibilityStates`) to store the visibility state (true/false) for each item in the list. Initially, all items are set to invisible (false).
- *    - Creates a `MutableState` (`isFabVisible`) to control the FAB's visibility, initially set to invisible (false).
- *    - Initializes a boolean flag `initialAnimationPlayed` to `false`, tracking if the initial animation has completed.
- * 2. **Item Count Change Handling:**
- *    - When the `itemCount` changes, the `LaunchedEffect` clears the `visibilityStates` and recreates it with the new size, setting all items to invisible (false).
- *    - If `itemCount` is 0, it immediately sets the FAB to visible.
- * 3. **Initial Animation:**
- *    - A `LaunchedEffect` with `Unit` as the key triggers the initial animation sequence once when the composable is first composed.
- *    - It iterates through the currently visible items in the `LazyList` (from `firstVisibleItemIndex` to the last visible item).
- *    - For each visible item, it adds a small delay (increasing with index) and then sets the corresponding `visibilityStates` to `true`, effectively revealing the item.
- */
 @Composable
-fun rememberAnimatedVisibilityState(
-    listState : LazyListState , itemCount : Int
-) : Pair<SnapshotStateList<Boolean> , MutableState<Boolean>> {
+fun rememberAnimatedVisibilityState(listState : LazyListState , itemCount : Int) : Pair<SnapshotStateList<Boolean> , MutableState<Boolean>> {
     val visibilityStates : SnapshotStateList<Boolean> = remember { mutableStateListOf() }
     val isFabVisible : MutableState<Boolean> = remember { mutableStateOf(value = false) }
     var initialAnimationPlayed : Boolean by remember { mutableStateOf(value = false) }
@@ -51,17 +30,10 @@ fun rememberAnimatedVisibilityState(
         }
     }
 
-    LaunchedEffect(key1 = Unit) {
-        val firstVisible = listState.firstVisibleItemIndex
-        val visibleCount = listState.layoutInfo.visibleItemsInfo.size
-        val lastVisible = (firstVisible + visibleCount - 1).coerceAtMost(itemCount - 1)
-
-        println("Tag → initial firstVisible = $firstVisible, visibleCount = $visibleCount, lastVisible = $lastVisible")
-        listState.layoutInfo.visibleItemsInfo.forEach {
-            println("Tag → composed item index = ${it.index}")
-        }
-
-        for (index in firstVisible..lastVisible) {
+    LaunchedEffect(Unit) {
+        val firstVisible : Int = listState.firstVisibleItemIndex
+        val lastVisible : Int = (firstVisible + listState.layoutInfo.visibleItemsInfo.size - 1).coerceAtMost(maximumValue = itemCount - 1)
+        (firstVisible..lastVisible).forEach { index : Int ->
             delay(timeMillis = index * 8L)
             visibilityStates[index] = true
         }
@@ -71,10 +43,8 @@ fun rememberAnimatedVisibilityState(
     }
 
     if (initialAnimationPlayed) {
-        for (index in 0 until itemCount) {
-            if (index < visibilityStates.size && ! visibilityStates[index]) {
-                visibilityStates[index] = true
-            }
+        visibilityStates.forEachIndexed { index : Int , isVisible : Boolean ->
+            if (! isVisible) visibilityStates[index] = true
         }
     }
 
@@ -113,10 +83,8 @@ fun rememberAnimatedVisibilityStateForGrids(gridState : LazyGridState , itemCoun
     }
 
     if (initialAnimationPlayed) {
-        for (i in visibilityStates.indices) {
-            if (! visibilityStates[i]) {
-                visibilityStates[i] = true
-            }
+        visibilityStates.forEachIndexed { index : Int , isVisible : Boolean ->
+            if (! isVisible) visibilityStates[index] = true
         }
     }
 

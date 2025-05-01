@@ -25,7 +25,7 @@ fun HelpQuestionsList(questions : List<UiHelpQuestion>) {
             val isExpanded = expandedStates[index] ?: false
             QuestionCard(title = question.question , summary = question.answer , isExpanded = isExpanded , onToggleExpand = {
                 expandedStates[index] = ! isExpanded
-            } , modifier = Modifier.animateVisibility(visible = visibilityStates.getOrElse(index) { false } , index = index))
+            } , modifier = Modifier.animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index))
         }
     }
 }
