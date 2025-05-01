@@ -2,4 +2,23 @@
     <string name="app_name" translatable="false">App Toolkit</string>
     <string name="error_failed_to_fetch_apps">Failed to fetch apps</string>
 
+    <!-- Help screen -->
+    <string name="question_1">What is Cart Calculator?</string>
+    <string name="summary_preference_faq_1">Cart Calculator is a simple, generic and free shopping cart manager and total due calculator that replaces the ordinary device\’s calculator for when you are at the grocery store or at the market.</string>
+    <string name="question_2">How does Cart Calculator work?</string>
+    <string name="summary_preference_faq_2">Cart Calculator allows you to manage your shopping cart by adding products and increasing or decreasing their quantities. At any time, the Cart Calculator displays the total due of the products in your cart based on their prices and quantities.</string>
+    <string name="question_3">Why should I use Cart Calculator?</string>
+    <string name="summary_preference_faq_3">Cart Calculator helps you to always be aware of how much you’re spending even before reaching the checkout. This is especially useful for when you have to go shopping on a budget.</string>
+    <string name="question_4">Can I use Cart Calculator outside of grocery stores or markets?</string>
+    <string name="summary_preference_faq_4">Yes! Since Cart Calculator is shockingly simple and generic, you can also use it in pubs, restaurants, the movies etc.</string>
+    <string name="question_5">How do I add an item to my cart using Cart Calculator?</string>
+    <string name="summary_preference_faq_5">Open your cart and press the \"Add item\" button in the Action Bar to add a new product to your cart. You inform its name, price and quantity and then click on the \"Add\" button.</string>
+    <string name="question_6">How do I increase or decrease the quantity of an item in my cart using Cart Calculator?</string>
+    <string name="summary_preference_faq_6">Simply find the item in the list and then press the \"+ (plus)\" button to increase its quantity or the \"- (less)\" button to decrease its quantity.</string>
+    <string name="question_7">How do I remove an item from my cart using Cart Calculator?</string>
+    <string name="summary_preference_faq_7">To remove a product from your cart, simply swipe right or left or drop its quantity to zero and then select the \"Delete item\" button.</string>
+    <string name="question_8">Is Cart Calculator free software?</string>
+    <string name="summary_preference_faq_8">Yes! Cart Calculator is proudly free software distributed under the GNU General Public License version 3.</string>
+    <string name="question_9">How can I contribute to Cart Calculator?</string>
+    <string name="summary_preference_faq_9">The best way to contribute to Cart Calculator is through its <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> repository. From there, you can fork it and work on your contributions, and later send them back via pull request. You can also use the issue tracker to report bugs, propose new features or enhancements, or get ideas for how you could help.</string>
 </resources>

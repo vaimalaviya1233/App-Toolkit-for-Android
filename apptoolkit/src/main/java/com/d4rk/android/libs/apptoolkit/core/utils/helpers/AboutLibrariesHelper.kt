@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AboutLibrariesHelper.fetchMarkdownFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.commonmark.node.Node

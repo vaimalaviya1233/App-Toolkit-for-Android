@@ -45,24 +45,18 @@ fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
         })
     } , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(
-            visible = consentFormLoaded,
-            modifier = Modifier.bounceClick(),
-            containerColor = if (consentFormLoaded) {
-                FloatingActionButtonDefaults.containerColor
-            } else {
-                Gray
-            },
-            text = { Text(text = stringResource(id = R.string.agree)) },
-            onClick = {
-                activity.navigateToNext()
-            },
-            icon = {
-                Icon(
-                    imageVector = Icons.Outlined.CheckCircle,
-                    contentDescription = null
-                )
-            }
-        )
+            visible = consentFormLoaded , modifier = Modifier.bounceClick() , containerColor = if (consentFormLoaded) {
+            FloatingActionButtonDefaults.containerColor
+        }
+        else {
+            Gray
+        } , text = { Text(text = stringResource(id = R.string.agree)) } , onClick = {
+            activity.navigateToNext()
+        } , icon = {
+            Icon(
+                imageVector = Icons.Outlined.CheckCircle , contentDescription = null
+            )
+        })
     })
 }
 

@@ -5,6 +5,6 @@ data class UiHomeScreen(
 )
 
 sealed interface AppListItem {
-    data class App(val appInfo: AppInfo) : AppListItem
+    data class App(val appInfo : AppInfo) : AppListItem
     data object Ad : AppListItem
 }

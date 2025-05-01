@@ -5,5 +5,5 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.google.android.ump.ConsentInformation
 
 interface ConsentRepository {
-    suspend fun loadConsentInfo(): DataState<ConsentInformation , Errors>
+    suspend fun loadConsentInfo() : DataState<ConsentInformation , Errors>
 }

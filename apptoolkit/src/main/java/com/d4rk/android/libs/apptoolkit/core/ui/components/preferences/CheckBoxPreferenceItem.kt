@@ -51,7 +51,7 @@ fun CheckBoxPreferenceItem(icon : ImageVector? = null , title : String , summary
                     .padding(all = SizeConstants.LargeSize)
                     .weight(weight = 1f)
         ) {
-            Text(text = title , style = MaterialTheme.typography.titleMedium , maxLines = 1 , overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
+            Text(text = title , style = MaterialTheme.typography.titleMedium , maxLines = 1 , overflow = TextOverflow.Ellipsis , fontWeight = FontWeight.Bold)
             summary?.let {
                 Text(text = it , style = MaterialTheme.typography.bodyMedium)
             }

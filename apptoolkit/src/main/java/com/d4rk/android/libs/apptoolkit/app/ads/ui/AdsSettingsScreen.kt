@@ -87,9 +87,11 @@ fun AdSettingsScreenContent(viewModel : AdsSettingsViewModel , activity : Activi
             }
 
             item {
-                InfoMessageSection(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 24.dp) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.ADS_HELP_CENTER)
+                InfoMessageSection(
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.ADS_HELP_CENTER
+                )
             }
         }
     }

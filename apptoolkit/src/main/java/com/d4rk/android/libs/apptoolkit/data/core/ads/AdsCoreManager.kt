@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import java.util.Date
 
-open class AdsCoreManager(protected val context : Context, val buildInfoProvider : BuildInfoProvider) {
+open class AdsCoreManager(protected val context : Context , val buildInfoProvider : BuildInfoProvider) {
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
@@ -74,7 +74,7 @@ open class AdsCoreManager(protected val context : Context, val buildInfoProvider
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
             val isAdsChecked : Boolean = runBlocking {
-                dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
+                dataStore.ads(default = ! buildInfoProvider.isDebugBuild).first()
             }
 
             if (isShowingAd || ! isAdsChecked) {

@@ -24,7 +24,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
-class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHelpScreen , HelpEvents , HelpActions>(initialState = UiStateScreen(data = UiHelpScreen())) {
+class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val requestReviewFlowUseCase : RequestReviewFlowUseCase , private val launchReviewFlowUseCase : LaunchReviewFlowUseCase , private val dispatcherProvider : DispatcherProvider) :
+    ScreenViewModel<UiHelpScreen , HelpEvents , HelpActions>(initialState = UiStateScreen(data = UiHelpScreen())) {
 
     init {
         onEvent(event = HelpEvents.LoadHelp)
@@ -40,7 +41,10 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
 
     private fun loadHelpData() {
         launch(context = dispatcherProvider.io) {
-            combine(flow = getFAQsUseCase().flowOn(context = dispatcherProvider.io) , flow2 = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io)) { faqResult : DataState<List<UiHelpQuestion>, Errors> , reviewResult : DataState<ReviewInfo, Errors> -> faqResult to reviewResult }.collect { (faqResult : DataState<List<UiHelpQuestion>, Errors> , reviewResult : DataState<ReviewInfo, Errors>) ->
+            combine(
+                flow = getFAQsUseCase().flowOn(context = dispatcherProvider.io) ,
+                flow2 = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io)
+            ) { faqResult : DataState<List<UiHelpQuestion> , Errors> , reviewResult : DataState<ReviewInfo , Errors> -> faqResult to reviewResult }.collect { (faqResult : DataState<List<UiHelpQuestion> , Errors> , reviewResult : DataState<ReviewInfo , Errors>) ->
                 when {
                     faqResult is DataState.Success && reviewResult is DataState.Success -> {
                         screenState.successData {
@@ -58,7 +62,7 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
 
     private fun requestReviewFlow() {
         launch(context = dispatcherProvider.io) {
-            requestReviewFlowUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ReviewInfo, Errors> ->
+            requestReviewFlowUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ReviewInfo , Errors> ->
                 screenState.applyResult(result = result) { reviewInfo : ReviewInfo , current : UiHelpScreen ->
                     current.copy(reviewInfo = reviewInfo)
                 }

@@ -22,7 +22,7 @@ class GeneralSettingsContentProvider(
     @Composable
     fun ProvideContent(contentKey : String? , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
         when (contentKey) {
-            SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues , deviceProvider = deviceProvider , configProvider = configProvider, snackbarHostState = snackbarHostState)
+            SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues , deviceProvider = deviceProvider , configProvider = configProvider , snackbarHostState = snackbarHostState)
             SettingsContent.ADVANCED -> AdvancedSettingsList(paddingValues = paddingValues , provider = advancedProvider)
             SettingsContent.DISPLAY -> DisplaySettingsList(paddingValues = paddingValues , provider = displayProvider)
             SettingsContent.SECURITY_AND_PRIVACY -> PrivacySettingsList(paddingValues = paddingValues , provider = privacyProvider)

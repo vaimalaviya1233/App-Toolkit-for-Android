@@ -1,7 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.main.ui
 
 import android.content.Context
-import android.view.View
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.icons.Icons
@@ -25,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,7 +37,7 @@ import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNa
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.StatusSnackbarHost
+import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -69,7 +67,6 @@ fun MainScaffoldContent(drawerState : DrawerState) {
     val isFabVisible : MutableState<Boolean> = remember { mutableStateOf(value = false) }
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val navController : NavHostController = rememberNavController()
-    val view : View = LocalView.current
 
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
@@ -80,7 +77,7 @@ fun MainScaffoldContent(drawerState : DrawerState) {
             .nestedScroll(connection = scrollBehavior.nestedScrollConnection) , topBar = {
         MainTopAppBar(navigationIcon = if (drawerState.isOpen) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu , onNavigationIconClick = { coroutineScope.launch { drawerState.open() } } , scrollBehavior = scrollBehavior)
     } , snackbarHost = {
-        StatusSnackbarHost(snackBarHostState = snackBarHostState , view = view , navController = navController)
+        DefaultSnackbarHost(snackbarState = snackBarHostState)
     }) { paddingValues ->
         AppNavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = { isFabVisible.value = it } , paddingValues = paddingValues)
     }

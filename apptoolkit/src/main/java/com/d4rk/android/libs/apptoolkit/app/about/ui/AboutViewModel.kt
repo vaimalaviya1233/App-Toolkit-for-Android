@@ -19,27 +19,23 @@ open class AboutViewModel : ScreenViewModel<UiAboutScreen , AboutEvents , AboutA
     initialState = UiStateScreen(data = UiAboutScreen())
 ) {
 
-    override fun onEvent(event: AboutEvents) {
+    override fun onEvent(event : AboutEvents) {
         when (event) {
             is AboutEvents.CopyDeviceInfo -> copyDeviceInfo()
             is AboutEvents.DismissSnackbar -> screenState.dismissSnackbar()
             is AboutEvents.LoadHtml -> loadHtmlData(
-                context = event.context,
-                packageName = event.packageName,
-                versionName = event.versionName
+                context = event.context , packageName = event.packageName , versionName = event.versionName
             )
         }
     }
 
-    protected open fun loadHtmlData(context: Context, packageName: String, versionName: String) {
+    protected open fun loadHtmlData(context : Context , packageName : String , versionName : String) {
         launch {
-            val (changelog, eula) = AboutLibrariesHelper.loadHtmlData(
-                packageName = packageName,
-                currentVersionName = versionName,
-                context = context
+            val (changelog , eula) = AboutLibrariesHelper.loadHtmlData(
+                packageName = packageName , currentVersionName = versionName , context = context
             )
             updateUi {
-                copy(changelogHtml = changelog, eulaHtml = eula)
+                copy(changelogHtml = changelog , eulaHtml = eula)
             }
         }
     }
@@ -48,15 +44,12 @@ open class AboutViewModel : ScreenViewModel<UiAboutScreen , AboutEvents , AboutA
         updateUi { copy(showDeviceInfoCopiedSnackbar = true) }
         screenState.showSnackbar(
             snackbar = UiSnackbar(
-                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
-                isError = false,
-                timeStamp = System.currentTimeMillis(),
-                type = ScreenMessageType.SNACKBAR
+                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied) , isError = false , timeStamp = System.currentTimeMillis() , type = ScreenMessageType.SNACKBAR
             )
         )
     }
 
-    private inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
+    private inline fun updateUi(crossinline transform : UiAboutScreen.() -> UiAboutScreen) {
         launch {
             screenState.updateData(newState = screenState.value.screenState) { current -> transform(current) }
         }

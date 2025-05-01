@@ -61,7 +61,7 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                     .fillMaxWidth()
                     .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
+            Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis , fontWeight = FontWeight.Bold)
             Switch(checked = switchState.value , onCheckedChange = { isChecked ->
                 onSwitchToggled(isChecked)
             } , thumbContent = {

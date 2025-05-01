@@ -18,8 +18,7 @@ android {
         versionCode = 12
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        @Suppress("UnstableApiUsage")
-        androidResources.localeFilters += listOf(
+        @Suppress("UnstableApiUsage") androidResources.localeFilters += listOf(
             "en" ,
             "bg-rBG" ,
             "de-rDE" ,

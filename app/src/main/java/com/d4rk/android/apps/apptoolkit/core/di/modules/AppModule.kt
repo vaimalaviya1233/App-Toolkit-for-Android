@@ -18,7 +18,7 @@ import org.koin.dsl.module
 
 val appModule : Module = module {
     single<DataStore> { DataStore.getInstance(context = get()) }
-    single<AdsCoreManager> { AdsCoreManager(context = get(), get()) }
+    single<AdsCoreManager> { AdsCoreManager(context = get() , get()) }
     single { KtorClient().createClient() }
 
     // App Update
