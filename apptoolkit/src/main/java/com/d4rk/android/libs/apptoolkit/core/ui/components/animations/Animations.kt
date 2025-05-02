@@ -35,7 +35,9 @@ fun rememberAnimatedVisibilityState(listState : LazyListState , itemCount : Int)
         val lastVisible : Int = (firstVisible + listState.layoutInfo.visibleItemsInfo.size - 1).coerceAtMost(maximumValue = itemCount - 1)
         (firstVisible..lastVisible).forEach { index : Int ->
             delay(timeMillis = index * 8L)
-            visibilityStates[index] = true
+            if (index < visibilityStates.size) {
+                visibilityStates[index] = true
+            }
         }
         initialAnimationPlayed = true
         delay(timeMillis = 50L)
@@ -44,7 +46,9 @@ fun rememberAnimatedVisibilityState(listState : LazyListState , itemCount : Int)
 
     if (initialAnimationPlayed) {
         visibilityStates.forEachIndexed { index : Int , isVisible : Boolean ->
-            if (! isVisible) visibilityStates[index] = true
+            if (! isVisible && index < visibilityStates.size) {
+                visibilityStates[index] = true
+            }
         }
     }
 

@@ -19,6 +19,8 @@ import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -26,7 +28,7 @@ import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataStore by lazy { DataStore.getInstance(context = application) }
+    private val dataStore : DataStore by lazy { DataStore.getInstance(context = application) }
     private lateinit var updateResultLauncher : ActivityResultLauncher<IntentSenderRequest>
     private lateinit var viewModel : MainViewModel
 
@@ -34,12 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
-        MobileAds.initialize(this)
-
-        updateResultLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
-
-        viewModel = getViewModel { parametersOf(updateResultLauncher) }
-
+        initializeDependencies()
         handleStartup()
     }
 
@@ -48,9 +45,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.onEvent(event = MainEvent.CheckForUpdates)
     }
 
+    private fun initializeDependencies() {
+        CoroutineScope(Dispatchers.IO).launch {
+            MobileAds.initialize(this@MainActivity) {}
+        }
+
+        updateResultLauncher = registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
+
+        viewModel = getViewModel { parametersOf(updateResultLauncher) }
+    }
+
     private fun handleStartup() {
         lifecycleScope.launch {
-            val isFirstLaunch = dataStore.startup.first()
+            val isFirstLaunch : Boolean = dataStore.startup.first()
             if (isFirstLaunch) {
                 startStartupActivity()
             }
