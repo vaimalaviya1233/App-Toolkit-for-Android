@@ -31,4 +31,10 @@ abstract class BaseViewModel<S : UiState , E : UiEvent , A : ActionEvent>(initia
     ) = viewModelScope.launch(context = context , block = block)
 
     abstract fun onEvent(event : E)
+
+    protected fun sendAction(action : A) {
+        launch {
+            _actionEvent.send(action)
+        }
+    }
 }
