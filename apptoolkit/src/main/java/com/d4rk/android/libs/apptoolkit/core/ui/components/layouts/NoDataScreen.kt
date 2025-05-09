@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -22,10 +23,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 /**
  * A composable function that displays a screen indicating that no data is available.
@@ -40,7 +45,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  * ```
  * NoDataScreen(text = R.string.no_items_found, icon = Icons.Default.Warning */
 @Composable
-fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.Default.Info , showRetry : Boolean = false , onRetry : () -> Unit = {}) {
+fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.Default.Info , showRetry : Boolean = false , onRetry : () -> Unit = {} , showAd : Boolean = true , adsConfig : AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))) {
     Box(
         modifier = Modifier
                 .fillMaxSize()
@@ -58,9 +63,17 @@ fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.De
                 Button(onClick = onRetry , modifier = Modifier.bounceClick()) {
                     Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.ButtonIconSize))
                     ButtonIconSpacer()
-                    Text(text = stringResource(id = R.string.try_again))
+                    Text(text = stringResource(id = text))
                 }
             }
+
+            LargeVerticalSpacer()
+
+            AdBanner(
+                modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = SizeConstants.MediumSize) , adsConfig = adsConfig
+            )
         }
     }
 }
