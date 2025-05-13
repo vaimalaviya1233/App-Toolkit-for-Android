@@ -41,12 +41,10 @@ fun BasicFullScreenDialog(title : String , onDismiss : () -> Unit , onConfirm : 
                         Icon(imageVector = Icons.Filled.Close , contentDescription = null)
                     }
                 } , title = { Text(text = title) } , actions = {
-                    TextButton(
-                        modifier = Modifier.bounceClick() , onClick = {
-                            view.playSoundEffect(SoundEffectConstants.CLICK)
-                            onConfirm()
-                        } , enabled = confirmEnabled
-                    ) {
+                    TextButton(modifier = Modifier.bounceClick() , onClick = {
+                        view.playSoundEffect(SoundEffectConstants.CLICK)
+                        onConfirm()
+                    } , enabled = confirmEnabled) {
                         Text(confirmButtonText)
                     }
                 })

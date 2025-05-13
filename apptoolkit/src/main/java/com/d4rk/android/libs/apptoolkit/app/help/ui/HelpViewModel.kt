@@ -42,8 +42,7 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
     private fun loadHelpData() {
         launch(context = dispatcherProvider.io) {
             combine(
-                flow = getFAQsUseCase().flowOn(context = dispatcherProvider.io) ,
-                flow2 = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io)
+                flow = getFAQsUseCase().flowOn(context = dispatcherProvider.io) , flow2 = requestReviewFlowUseCase().flowOn(context = dispatcherProvider.io)
             ) { faqResult : DataState<List<UiHelpQuestion> , Errors> , reviewResult : DataState<ReviewInfo , Errors> -> faqResult to reviewResult }.collect { (faqResult : DataState<List<UiHelpQuestion> , Errors> , reviewResult : DataState<ReviewInfo , Errors>) ->
                 when {
                     faqResult is DataState.Success && reviewResult is DataState.Success -> {

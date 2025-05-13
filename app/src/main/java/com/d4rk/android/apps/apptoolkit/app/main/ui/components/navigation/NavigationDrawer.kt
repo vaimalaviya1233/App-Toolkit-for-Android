@@ -8,12 +8,14 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainScaffoldContent
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationDrawerItemContent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticDrawerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import kotlinx.coroutines.CoroutineScope
 
@@ -24,16 +26,17 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
     val context : Context = LocalContext.current
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
 
-    ModalNavigationDrawer(drawerState = drawerState , drawerContent = {
-        ModalDrawerSheet {
-            LargeVerticalSpacer()
-            uiState.navigationDrawerItems.forEach { item : NavigationDrawerItem ->
-                NavigationDrawerItemContent(item = item , handleNavigationItemClick = {
-                    handleNavigationItemClick(context = context , item = item , drawerState = drawerState , coroutineScope = coroutineScope)
-                })
+    ModalNavigationDrawer(
+        modifier = Modifier.hapticDrawerSwipe(state = drawerState) , drawerState = drawerState , drawerContent = {
+            ModalDrawerSheet {
+                LargeVerticalSpacer()
+                uiState.navigationDrawerItems.forEach { item : NavigationDrawerItem ->
+                    NavigationDrawerItemContent(item = item , handleNavigationItemClick = {
+                        handleNavigationItemClick(context = context , item = item , drawerState = drawerState , coroutineScope = coroutineScope)
+                    })
+                }
             }
-        }
-    }) {
+        }) {
         MainScaffoldContent(drawerState = drawerState)
     }
 }
