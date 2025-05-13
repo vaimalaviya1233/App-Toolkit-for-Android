@@ -22,7 +22,7 @@ fun HelpQuestionsList(questions : List<UiHelpQuestion>) {
 
     Column {
         questions.forEachIndexed { index : Int , question : UiHelpQuestion ->
-            val isExpanded = expandedStates[index] ?: false
+            val isExpanded = expandedStates[index] == true
             QuestionCard(title = question.question , summary = question.answer , isExpanded = isExpanded , onToggleExpand = {
                 expandedStates[index] = ! isExpanded
             } , modifier = Modifier.animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index))

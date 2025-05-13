@@ -20,7 +20,7 @@ open class AppInfoHelper {
         context.packageManager.getLaunchIntentForPackage(packageName)?.let {
             context.startActivity(it)
             true
-        } ?: false
+        } == true
     }.getOrElse {
         Toast.makeText(context , context.getString(R.string.app_not_installed) , Toast.LENGTH_SHORT).show()
         false
