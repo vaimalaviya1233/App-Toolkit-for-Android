@@ -15,8 +15,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flowOn
 
 class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
 
@@ -32,15 +31,14 @@ class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUs
 
     private fun fetchDeveloperApps() {
         launch(context = dispatcherProvider.io) {
-            fetchDeveloperAppsUseCase().stateIn(scope = this , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<List<AppInfo> , RootError> ->
-                screenState.applyResult(result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_fetch_apps)) { apps : List<AppInfo> , current : UiHomeScreen ->
-                    if (apps.isNotEmpty()) {
-                        current.copy(apps = apps)
+            fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
+                screenState.applyResult(
+                    result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_fetch_apps)
+                ) { apps : List<AppInfo> , current : UiHomeScreen ->
+                    if (apps.isEmpty()) {
+                        screenState.updateState(ScreenState.NoData())
                     }
-                    else {
-                        screenState.updateState(newValues = ScreenState.NoData())
-                        current
-                    }
+                    current.copy(apps = apps)
                 }
             }
         }

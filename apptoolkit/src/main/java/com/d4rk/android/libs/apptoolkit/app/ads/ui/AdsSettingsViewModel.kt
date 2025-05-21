@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
-import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsActions
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.events.AdsSettingsEvents
@@ -17,8 +16,7 @@ import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flowOn
 
 class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<AdsSettingsData , AdsSettingsEvents , AdsSettingsActions>(initialState = UiStateScreen(data = AdsSettingsData())) {
 
@@ -35,8 +33,8 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
 
     private fun loadAdsSettings() {
         launch(context = dispatcherProvider.io) {
-            loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ConsentInformation , Errors> ->
-                screenState.applyResult(result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_load_ads_settings)) { consentInfo : ConsentInformation , current : AdsSettingsData ->
+            loadConsentInfoUseCase().flowOn(dispatcherProvider.default).collect { result : DataState<ConsentInformation , Errors> ->
+                screenState.applyResult(result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_load_ads_settings)) { consentInfo , current ->
                     current.copy(consentInformation = consentInfo)
                 }
             }

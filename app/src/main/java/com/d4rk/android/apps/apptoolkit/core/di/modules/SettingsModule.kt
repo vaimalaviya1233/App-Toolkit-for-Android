@@ -56,6 +56,6 @@ val settingsModule = module {
     }
 
     viewModel {
-        AboutViewModel()
+        AboutViewModel(dispatcherProvider = get())
     }
 }
