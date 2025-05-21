@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -74,16 +75,13 @@ fun SwitchPreferenceItem(icon : ImageVector? = null , title : String , summary :
                     Text(text = it , style = MaterialTheme.typography.bodyMedium)
                 }
             }
-            Switch(modifier = Modifier.padding(all = SizeConstants.LargeSize) , checked = checked , onCheckedChange = { isChecked ->
-                onCheckedChange(isChecked)
-            } , thumbContent = {
-                if (checked) {
-                    Icon(Icons.Filled.Check , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
-                }
-                else {
-                    Icon(Icons.Filled.Close , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
-                }
-            })
+            CustomSwitch(
+                checked = checked,
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
+                },
+                modifier = Modifier.padding(all = SizeConstants.LargeSize)
+            )
         }
     }
 }

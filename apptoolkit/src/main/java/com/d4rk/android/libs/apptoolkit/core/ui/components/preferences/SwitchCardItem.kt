@@ -7,17 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -28,6 +21,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -62,16 +56,13 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                     .padding(all = SizeConstants.LargeSize) , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = title , maxLines = 1 , overflow = TextOverflow.Ellipsis , fontWeight = FontWeight.Bold)
-            Switch(checked = switchState.value , onCheckedChange = { isChecked ->
-                onSwitchToggled(isChecked)
-            } , thumbContent = {
-                if (switchState.value) {
-                    Icon(Icons.Filled.Check , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
-                }
-                else {
-                    Icon(Icons.Filled.Close , contentDescription = null , modifier = Modifier.size(size = SwitchDefaults.IconSize))
-                }
-            })
+            CustomSwitch(
+                checked = switchState.value,
+                onCheckedChange = { isChecked ->
+                    onSwitchToggled(isChecked)
+                },
+                modifier = Modifier.padding(all = SizeConstants.LargeSize)
+            )
         }
     }
 }

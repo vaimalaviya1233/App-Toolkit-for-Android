@@ -12,12 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -31,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -87,17 +85,14 @@ fun SwitchPreferenceItemWithDivider(icon : ImageVector? = null , title : String 
                         .height(height = 36.dp)
                         .align(alignment = Alignment.CenterVertically) , color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) , thickness = 1.dp
             )
-            Switch(modifier = Modifier.padding(all = SizeConstants.LargeSize) , checked = checked , onCheckedChange = { isChecked ->
-                onCheckedChange(isChecked)
-                onSwitchClick(isChecked)
-            } , thumbContent = {
-                if (checked) {
-                    Icon(imageVector = Icons.Filled.Check , contentDescription = null , modifier = Modifier.size(size = SizeConstants.SwitchIconSize))
-                }
-                else {
-                    Icon(imageVector = Icons.Filled.Close , contentDescription = null , modifier = Modifier.size(size = SizeConstants.SwitchIconSize))
-                }
-            })
+            CustomSwitch(
+                checked = checked,
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
+                    onSwitchClick(isChecked)
+                },
+                modifier = Modifier.padding(all = SizeConstants.LargeSize)
+            )
         }
     }
 }
