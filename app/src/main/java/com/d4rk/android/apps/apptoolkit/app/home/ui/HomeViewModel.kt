@@ -30,11 +30,13 @@ class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUs
     }
 
     private fun fetchDeveloperApps() {
+        println("Fetching developer apps...")
         launch(context = dispatcherProvider.io) {
             fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
                 screenState.applyResult(
                     result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_fetch_apps)
                 ) { apps : List<AppInfo> , current : UiHomeScreen ->
+                    println("Fetched apps: $apps")
                     if (apps.isEmpty()) {
                         screenState.updateState(ScreenState.NoData())
                     }

@@ -54,8 +54,6 @@ fun SupportComposable(viewModel : SupportViewModel , activity : SupportActivity 
     val billingClient : BillingClient = rememberBillingClient(context = context , viewModel = viewModel)
     val screenState : UiStateScreen<UiSupportScreen> by viewModel.uiState.collectAsState()
 
-    println(message = "screen state is: $screenState")
-
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.support_us) , onBackClicked = { activity.finish() }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { supportData ->

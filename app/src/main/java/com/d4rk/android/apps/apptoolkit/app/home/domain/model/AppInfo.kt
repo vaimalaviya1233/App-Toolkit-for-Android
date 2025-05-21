@@ -1,7 +1,11 @@
 package com.d4rk.android.apps.apptoolkit.app.home.domain.model
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AppInfo(
-    val name : String = "" ,
-    val iconUrl : String = "" ,
-    val packageName : String = "" ,
+    @SerialName("name") val name: String,
+    @SerialName("packageName") val packageName: String,
+    @SerialName("iconLogo") val iconUrl: String
 )
