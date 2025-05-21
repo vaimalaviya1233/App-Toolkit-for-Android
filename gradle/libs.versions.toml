@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.3"
+agp = "8.10.0"
 appcompat = "1.7.0"
 aboutlibraries = "11.3.0"
 core = "4.6.2"
@@ -15,7 +15,7 @@ ktorBom = "3.1.2"
 coreSplashscreen = "1.0.1"
 koin = "4.0.1"
 appUpdateKtx = "2.1.0"
-kotlin = "2.1.0"
+kotlin = "2.1.20"
 coreKtx = "1.16.0"
 activityCompose = "1.10.1"
 composeUi = "1.8.1"
@@ -88,8 +88,8 @@ user-messaging-platform = { module = "com.google.android.ump:user-messaging-plat
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 googlePlayServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
