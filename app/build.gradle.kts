@@ -5,6 +5,8 @@ plugins {
     alias(notation = libs.plugins.kotlin.android)
     alias(notation = libs.plugins.compose.compiler)
     alias(notation = libs.plugins.about.libraries)
+    alias(notation = libs.plugins.googlePlayServices)
+    alias(notation = libs.plugins.googleFirebase)
 }
 
 android {
