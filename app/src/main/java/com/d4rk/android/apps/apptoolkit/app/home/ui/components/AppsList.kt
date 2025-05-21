@@ -11,12 +11,15 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.UiHomeScreen
+import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
@@ -30,19 +33,22 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues , adsCo
     val apps : List<AppInfo> = uiHomeScreen.apps
     val listState : LazyGridState = rememberLazyGridState()
     val adFrequency = 4
-    val items : List<AppListItem> = remember(key1 = apps) {
+    val dataStore : DataStore = koinInject()
+    val adsEnabled : Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
+    val items : List<AppListItem> = remember(key1 = apps , key2 = adsEnabled) {
         buildList {
             apps.forEachIndexed { index : Int , appInfo : AppInfo ->
                 add(element = AppListItem.App(appInfo = appInfo))
-                if ((index + 1) % adFrequency == 0) {
+                if (adsEnabled && (index + 1) % adFrequency == 0) {
                     add(element = AppListItem.Ad)
                 }
             }
+            if (adsEnabled && apps.isNotEmpty() && apps.size % adFrequency != 0) {
+                add(element = AppListItem.Ad)
+            }
         }
     }
-
     val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(gridState = listState , itemCount = items.size)
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 2) ,
         contentPadding = paddingValues ,

@@ -44,7 +44,7 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
             ) {
                 Icon(
                     imageVector = Icons.Outlined.QuestionAnswer , contentDescription = null , tint = MaterialTheme.colorScheme.primary , modifier = Modifier
-                            .size(size = 48.dp)
+                            .size(size = SizeConstants.ExtraExtraLargeSize)
                             .background(
                                 color = MaterialTheme.colorScheme.primaryContainer , shape = CircleShape
                             )

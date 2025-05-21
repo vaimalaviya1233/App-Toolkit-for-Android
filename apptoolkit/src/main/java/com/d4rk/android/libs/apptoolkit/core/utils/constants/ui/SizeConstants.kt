@@ -10,7 +10,10 @@ object SizeConstants {
     val ButtonIcon : Dp = ButtonDefaults.IconSpacing
 
     // Sizes
+    val ExtraExtraLargeSize : Dp = 48.dp
+    val ExtraLargeIncreasedSize : Dp = 32.dp
     val ExtraLargeSize : Dp = 28.dp
+    val LargeIncreasedSize : Dp = 20.dp
     val LargeSize : Dp = 16.dp
     val MediumSize : Dp = 12.dp
     val SmallSize : Dp = 8.dp

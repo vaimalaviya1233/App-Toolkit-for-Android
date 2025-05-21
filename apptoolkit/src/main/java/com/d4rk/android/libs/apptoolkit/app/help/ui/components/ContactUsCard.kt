@@ -42,7 +42,7 @@ fun ContactUsCard(onClick : () -> Unit) {
                     .fillMaxWidth()
                     .padding(all = SizeConstants.LargeSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.Center
         ) {
-            Box(contentAlignment = Alignment.Center , modifier = Modifier.size(size = 48.dp)) {
+            Box(contentAlignment = Alignment.Center , modifier = Modifier.size(size = SizeConstants.ExtraExtraLargeSize)) {
                 Icon(painter = painterResource(id = R.drawable.shape_scalloped) , contentDescription = null , modifier = Modifier.fillMaxSize() , tint = MaterialTheme.colorScheme.primaryContainer)
                 Icon(imageVector = Icons.Outlined.Support , contentDescription = null , tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }

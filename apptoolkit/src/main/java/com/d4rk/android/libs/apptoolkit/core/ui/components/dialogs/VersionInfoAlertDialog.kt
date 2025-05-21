@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
  * Displays an AlertDialog containing application version information.
@@ -62,7 +62,7 @@ fun VersionInfoAlertDialogContent(copyrightString : Int , appName : Int , versio
     val imageLoader : ImageLoader = ImageLoader.Builder(context = context).build()
 
     Row(modifier = Modifier.fillMaxWidth()) {
-        AsyncImage(model = appIcon , contentDescription = null , modifier = Modifier.size(size = 48.dp) , imageLoader = imageLoader)
+        AsyncImage(model = appIcon , contentDescription = null , modifier = Modifier.size(size = SizeConstants.ExtraExtraLargeSize) , imageLoader = imageLoader)
         LargeHorizontalSpacer()
         Column {
             Text(text = context.getString(appName) , style = MaterialTheme.typography.titleLarge)
