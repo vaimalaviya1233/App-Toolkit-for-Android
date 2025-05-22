@@ -20,16 +20,15 @@ import kotlinx.serialization.json.Json
 
 class FetchDeveloperAppsUseCase(private val client: HttpClient) : RepositoryWithoutParam<Flow<DataState<List<AppInfo>, RootError>>> {
 
-    private val appsApiUrl: String = BuildConfig.DEBUG.let { isDebug ->
-        val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
-        "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
-    }
-
     override suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> = flow {
         runCatching {
-            val jsonString = client.get(appsApiUrl).bodyAsText()
+            val jsonString = client.get(BuildConfig.DEBUG.let { isDebug ->
+                val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
+                "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
+            }).bodyAsText()
             val response: ApiResponse = Json.decodeFromString(jsonString)
             val sortedApps = response.data.apps.sortedBy { it.name.lowercase() }
+            println(message = "sortedApps: $sortedApps")
             sortedApps
         }.onSuccess { foundApps ->
             emit(DataState.Success(data = foundApps))

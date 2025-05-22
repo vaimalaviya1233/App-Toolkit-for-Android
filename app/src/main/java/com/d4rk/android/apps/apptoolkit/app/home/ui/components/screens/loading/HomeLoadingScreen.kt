@@ -16,7 +16,7 @@ fun HomeLoadingScreen(paddingValues : PaddingValues , itemAspectRatio : Float = 
     val placeholderCount = WindowItemFit.count(itemHeight = 180.dp , itemSpacing = SizeConstants.LargeSize , paddingValues = paddingValues)
     val actualItemCount = if (placeholderCount % 2 == 0) placeholderCount else placeholderCount + 1
 
-    LazyVerticalGrid(columns = GridCells.Fixed(count = 2) , contentPadding = paddingValues , horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(count = 2) , contentPadding = paddingValues , horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize), userScrollEnabled = false) {
         items(actualItemCount) {
             ShimmerPlaceholderAppCard(aspectRatio = itemAspectRatio)
         }

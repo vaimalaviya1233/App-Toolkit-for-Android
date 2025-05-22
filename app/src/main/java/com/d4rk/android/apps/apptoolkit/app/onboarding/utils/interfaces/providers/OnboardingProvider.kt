@@ -1,53 +1,60 @@
 package com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AttachMoney
-import androidx.compose.material.icons.outlined.BarChart
-import androidx.compose.material.icons.outlined.Palette
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Star
-import com.d4rk.android.apps.apptoolkit.BuildConfig
-import com.d4rk.android.apps.apptoolkit.R
+import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
+import com.d4rk.android.apps.apptoolkit.app.onboarding.ui.tabs.CustomFunOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
-
 
 class AppOnboardingProvider : OnboardingProvider {
 
     override fun getOnboardingPages(context: Context): List<OnboardingPage> {
         return listOf(
-            OnboardingPage(
+            OnboardingPage.DefaultPage(
                 key = "welcome",
-                title = context.getString(R.string.onboarding_welcome_title),
-                description = context.getString(R.string.onboarding_welcome_description),
-                imageVector = Icons.Outlined.Star,
-                isEnabled = true
+                title = "Welcome to App Toolkit!",
+                description = "Discover a powerful suite of tools to enhance your Android experience.",
+                imageVector = Icons.Outlined.Star
             ),
-            OnboardingPage(
-                key = "theme",
-                title = context.getString(R.string.onboarding_theme_title),
-                description = context.getString(R.string.onboarding_theme_description),
-                imageVector = Icons.Outlined.Palette,
-                isEnabled = true
+            OnboardingPage.DefaultPage(
+                key = "feature_highlight_1",
+                title = "Core Functionality",
+                description = "Learn about the essential tools that App Toolkit offers to simplify your tasks.",
+                imageVector = Icons.Outlined.Build
             ),
-            OnboardingPage(
-                key = "currency",
-                title = context.getString(R.string.onboarding_currency_title),
-                description = context.getString(R.string.onboarding_currency_description),
-                imageVector = Icons.Outlined.AttachMoney,
-                isEnabled = true
+            OnboardingPage.DefaultPage(
+                key = "personalization_options",
+                title = "Customize Your Experience",
+                description = "Tailor App Toolkit to your needs with various personalization settings.",
+                imageVector = Icons.Outlined.AccountCircle
             ),
-            OnboardingPage(
-                key = "analytics",
-                title = context.getString(R.string.onboarding_analytics_title),
-                description = context.getString(R.string.onboarding_analytics_description),
-                imageVector = Icons.Outlined.BarChart,
-                isEnabled = BuildConfig.DEBUG.not() // Disable for debug builds
+            OnboardingPage.DefaultPage(
+                key = "pro_features_teaser",
+                title = "Unlock More Power",
+                description = "Consider upgrading to access exclusive features and advanced capabilities.",
+                imageVector = Icons.Outlined.FavoriteBorder
+            ),
+            OnboardingPage.CustomPage(
+                key = "custom-fun",
+                content = {
+                    CustomFunOnboardingPageTab()
+                }
             )
-        ).filter { it.isEnabled }
+        ).filter {
+            when (it) {
+                is OnboardingPage.DefaultPage -> it.isEnabled
+                is OnboardingPage.CustomPage -> it.isEnabled
+            }
+        }
     }
 
     override fun onOnboardingFinished(context: Context) {
-
+        context.startActivity(Intent(context, MainActivity::class.java))
     }
 }

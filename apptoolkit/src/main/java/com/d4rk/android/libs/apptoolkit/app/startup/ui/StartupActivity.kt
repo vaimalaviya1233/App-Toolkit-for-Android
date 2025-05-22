@@ -15,7 +15,6 @@ import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,7 +48,6 @@ class StartupActivity : AppCompatActivity() {
 
     fun navigateToNext() {
         lifecycleScope.launch {
-            CommonDataStore.getInstance(context = this@StartupActivity).saveStartup(isFirstTime = false)
             IntentsHelper.openActivity(context = this@StartupActivity , activityClass = provider.getNextIntent(this@StartupActivity).component?.className?.let {
                 Class.forName(it)
             } ?: StartupActivity::class.java)

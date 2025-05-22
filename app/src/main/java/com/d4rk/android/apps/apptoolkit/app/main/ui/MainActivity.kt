@@ -62,7 +62,8 @@ class MainActivity : AppCompatActivity() {
                 startStartupActivity()
             }
             else {
-                setMainActivityContent()
+                startStartupActivity()
+                //setMainActivityContent()
             }
         }
     }
