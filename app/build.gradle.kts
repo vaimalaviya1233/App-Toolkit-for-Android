@@ -7,6 +7,7 @@ plugins {
     alias(notation = libs.plugins.about.libraries)
     alias(notation = libs.plugins.googlePlayServices)
     alias(notation = libs.plugins.googleFirebase)
+    alias(notation = libs.plugins.kotlin.serialization)
 }
 
 android {

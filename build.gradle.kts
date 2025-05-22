@@ -7,4 +7,5 @@ plugins {
     alias(notation = libs.plugins.about.libraries) apply true
     alias(notation = libs.plugins.googlePlayServices) apply false
     alias(notation = libs.plugins.googleFirebase) apply false
+    alias(notation = libs.plugins.kotlin.serialization) apply false
 }

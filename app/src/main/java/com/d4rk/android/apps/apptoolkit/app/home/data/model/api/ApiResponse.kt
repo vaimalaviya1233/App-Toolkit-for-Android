@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApiResponse(
-    @SerialName("data") val data: AppData
+    @SerialName("data") val data: AppDataWrapper
 )
 
 @Serializable
-data class AppData(
+data class AppDataWrapper(
     @SerialName("apps") val apps: List<AppInfo>
 )
