@@ -47,7 +47,7 @@ android {
         }
     }
 
-/*    signingConfigs {
+    signingConfigs {
         create("release")
 
         val signingProps = Properties()
@@ -62,14 +62,15 @@ android {
                 keyAlias = signingProps["KEY_ALIAS"].toString()
                 keyPassword = signingProps["KEY_PASSWORD"].toString()
             }
-        } else {
+        }
+        else {
             android.buildTypes.getByName("release").signingConfig = null
         }
-    }*/
+    }
 
     buildTypes {
         release {
-           //  signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
         }
         debug {

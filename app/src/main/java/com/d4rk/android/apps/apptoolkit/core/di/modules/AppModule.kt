@@ -5,8 +5,10 @@ import androidx.activity.result.IntentSenderRequest
 import com.d4rk.android.apps.apptoolkit.app.home.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.home.ui.HomeViewModel
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
+import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.PerformInAppUpdateUseCase
+import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -21,7 +23,8 @@ val appModule : Module = module {
     single<AdsCoreManager> { AdsCoreManager(context = get() , get()) }
     single { KtorClient().createClient() }
 
-    // App Update
+    single<OnboardingProvider> { AppOnboardingProvider() }
+
     single<AppUpdateManager> { AppUpdateManagerFactory.create(get()) }
     factory { (launcher : ActivityResultLauncher<IntentSenderRequest>) ->
         PerformInAppUpdateUseCase(appUpdateManager = get() , updateResultLauncher = launcher)

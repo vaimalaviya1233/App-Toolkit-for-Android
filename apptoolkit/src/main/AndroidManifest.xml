@@ -12,6 +12,11 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".app.oboarding.ui.OnboardingActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".app.settings.settings.ui.SettingsActivity"
             android:exported="true" />
 

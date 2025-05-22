@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.OnboardingActivity
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.google.android.ump.ConsentRequestParameters
 import javax.inject.Inject
@@ -17,5 +17,5 @@ class AppStartupProvider @Inject constructor() : StartupProvider {
         emptyArray()
     }
     override val consentRequestParameters : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
-    override fun getNextIntent(context : Context) = Intent(context , MainActivity::class.java)
+    override fun getNextIntent(context : Context) = Intent(context , OnboardingActivity::class.java)
 }

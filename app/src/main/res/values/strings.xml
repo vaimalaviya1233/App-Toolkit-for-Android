@@ -2,6 +2,19 @@
     <string name="app_name" translatable="false">App Toolkit</string>
     <string name="error_failed_to_fetch_apps">Failed to fetch apps</string>
 
+    <string name="onboarding_welcome_title">Welcome</string>
+    <string name="onboarding_welcome_description">Customize your experience in just a few steps.</string>
+
+    <string name="onboarding_theme_title">Theme</string>
+    <string name="onboarding_theme_description">Choose between light, dark, or dynamic color modes.</string>
+
+    <string name="onboarding_currency_title">Currency</string>
+    <string name="onboarding_currency_description">Set your preferred currency format.</string>
+
+    <string name="onboarding_analytics_title">Analytics</string>
+    <string name="onboarding_analytics_description">Help us improve by sharing anonymous usage data.</string>
+
+
     <!-- Help screen -->
     <string name="question_1">What is Cart Calculator?</string>
     <string name="summary_preference_faq_1">Cart Calculator is a simple, generic and free shopping cart manager and total due calculator that replaces the ordinary device\’s calculator for when you are at the grocery store or at the market.</string>
