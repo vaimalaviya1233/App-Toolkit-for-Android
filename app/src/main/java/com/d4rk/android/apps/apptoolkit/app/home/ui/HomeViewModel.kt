@@ -1,6 +1,5 @@
 package com.d4rk.android.apps.apptoolkit.app.home.ui
 
-import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.home.domain.action.HomeAction
 import com.d4rk.android.apps.apptoolkit.app.home.domain.action.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.AppInfo
@@ -11,11 +10,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.update
 
 class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
 
@@ -32,13 +30,22 @@ class HomeViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUs
     private fun fetchDeveloperApps() {
         launch(context = dispatcherProvider.io) {
             fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
-                screenState.applyResult(
-                    result = result , errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_fetch_apps)
-                ) { apps : List<AppInfo> , current : UiHomeScreen ->
-                    if (apps.isEmpty()) {
-                        screenState.updateState(ScreenState.NoData())
+                when (result) {
+                    is DataState.Success -> {
+                        val apps = result.data
+                        if (apps.isEmpty()) {
+                            screenState.update { currentState ->
+                                currentState.copy(screenState = ScreenState.NoData() , data = currentState.data?.copy(apps = emptyList()))
+                            }
+                        }
+                        else {
+                            screenState.updateData(ScreenState.Success()) { currentData ->
+                                currentData.copy(apps = apps)
+                            }
+                        }
                     }
-                    current.copy(apps = apps)
+
+                    else -> {}
                 }
             }
         }

@@ -18,7 +18,6 @@ fun HomeScreen(paddingValues : PaddingValues) {
     val viewModel : HomeViewModel = koinViewModel()
     val screenState : UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
 
-    // FIXME: Check the screen state and show the appropriate screen
     ScreenStateHandler(screenState = screenState , onLoading = {
         HomeLoadingScreen(paddingValues = paddingValues)
     } , onEmpty = {
