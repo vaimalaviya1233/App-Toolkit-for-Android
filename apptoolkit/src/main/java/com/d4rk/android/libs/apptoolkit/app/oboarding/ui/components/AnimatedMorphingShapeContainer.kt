@@ -43,7 +43,7 @@ private const val MORPH_ANIMATION_DURATION_MS = 600
 private const val INITIAL_DELAY_MS = 500L
 private const val PRE_MORPH_ROTATION_DURATION_MS = 800L
 private const val POST_MORPH_VIEW_DELAY_MS = 800L
-private const val SCALE_DOWN_FACTOR = 0.96f
+private const val SCALE_DOWN_FACTOR = 0.92f
 private const val BASE_ROTATION_SPEED_DPS = 120f
 private const val MORPH_SPIN_ROTATION_SPEED_DPS = 360f
 
