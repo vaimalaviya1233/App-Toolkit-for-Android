@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.graphics.shapes.RoundedPolygon
 
 sealed class OnboardingPage {
 
@@ -11,7 +10,6 @@ sealed class OnboardingPage {
         val title: String,
         val description: String,
         val imageVector: ImageVector,
-        val shape: RoundedPolygon? = null,
         val isEnabled: Boolean = true
     ) : OnboardingPage()
 

@@ -11,6 +11,21 @@
     <string name="agree">Agree</string>
     <string name="error_loading_consent_info">Failed to load consent information</string>
 
+    <string name="onboarding_theme_title">Choose Your Style</string>
+    <string name="onboarding_theme_subtitle">Select how you\'d like the app to look.</string>
+    <string name="onboarding_theme_light_desc">Bright and energetic.</string>
+    <string name="onboarding_theme_dark_desc">Easy on the eyes.</string>
+    <string name="onboarding_theme_system_desc">Matches your device.</string>
+    <string name="onboarding_amoled_mode_desc">Deeper blacks for OLED screens.</string>
+    <string name="selected">Selected</string>
+
+    <string name="onboarding_crashlytics_title">Help Us Improve</string>
+    <string name="onboarding_crashlytics_description">Allow the app to send anonymous usage data and crash reports. This helps us fix bugs and make your experience better. No personal information is ever collected.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Data reporting is active.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Data reporting is inactive.</string>
+    <string name="onboarding_crashlytics_privacy_info">Your privacy is important. We only use this data to fix bugs and improve features. For more details, please review our privacy policy.</string>
+    <string name="learn_more_privacy_policy">Review our Privacy Policy</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="go_back">Go back</string>
 

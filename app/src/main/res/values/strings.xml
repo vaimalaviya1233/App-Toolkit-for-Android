@@ -1,19 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">App Toolkit</string>
+
+    <string name="onboarding_welcome_title">Welcome to App Toolkit: Your Essential Android Companion</string>
+    <string name="onboarding_welcome_description">Step into a seamlessly optimized Android experience. App Toolkit is meticulously designed to unlock the full potential of your device, transforming everyday interactions into moments of efficiency and delight. Discover a powerful suite of intuitive tools crafted to simplify your digital life.</string>
+    <string name="onboarding_feature1_title">Unlock Core Functionality: Power at Your Fingertips</string>
+    <string name="onboarding_feature1_description">Dive into the essential tools that form the bedrock of App Toolkit. From streamlining routine tasks to enhancing performance, each feature is engineered for maximum utility and ease of use. Empower yourself with intelligent solutions designed to make your Android device truly work for you, every single day.</string>
+    <string name="onboarding_personalization_title">Tailor Your Experience: Personalization That Matters</string>
+    <string name="onboarding_personalization_description">Your Android experience should reflect you. App Toolkit offers a rich array of personalization settings, allowing you to fine-tune every aspect to match your unique preferences and workflow. Customize themes, notifications, and tool behaviors to create an environment that feels uniquely yours and evolves with your needs.</string>
+
     <string name="error_failed_to_fetch_apps">Failed to fetch apps</string>
-
-    <string name="onboarding_welcome_title">Welcome</string>
-    <string name="onboarding_welcome_description">Customize your experience in just a few steps.</string>
-
-    <string name="onboarding_theme_title">Theme</string>
-    <string name="onboarding_theme_description">Choose between light, dark, or dynamic color modes.</string>
-
-    <string name="onboarding_currency_title">Currency</string>
-    <string name="onboarding_currency_description">Set your preferred currency format.</string>
-
-    <string name="onboarding_analytics_title">Analytics</string>
-    <string name="onboarding_analytics_description">Help us improve by sharing anonymous usage data.</string>
-
 
     <!-- Help screen -->
     <string name="question_1">What is Cart Calculator?</string>

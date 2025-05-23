@@ -5,11 +5,13 @@ import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Build
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Star
+import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
-import com.d4rk.android.apps.apptoolkit.app.onboarding.ui.tabs.CustomFunOnboardingPageTab
+import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.constants.OnboardingKeys
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.CrashlyticsOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.ThemeOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
 
 class AppOnboardingProvider : OnboardingProvider {
@@ -17,33 +19,33 @@ class AppOnboardingProvider : OnboardingProvider {
     override fun getOnboardingPages(context: Context): List<OnboardingPage> {
         return listOf(
             OnboardingPage.DefaultPage(
-                key = "welcome",
-                title = "Welcome to App Toolkit!",
-                description = "Discover a powerful suite of tools to enhance your Android experience.",
+                key = OnboardingKeys.WELCOME,
+                title = context.getString(R.string.onboarding_welcome_title),
+                description = context.getString(R.string.onboarding_welcome_description),
                 imageVector = Icons.Outlined.Star
             ),
             OnboardingPage.DefaultPage(
-                key = "feature_highlight_1",
-                title = "Core Functionality",
-                description = "Learn about the essential tools that App Toolkit offers to simplify your tasks.",
-                imageVector = Icons.Outlined.Build
-            ),
-            OnboardingPage.DefaultPage(
-                key = "personalization_options",
-                title = "Customize Your Experience",
-                description = "Tailor App Toolkit to your needs with various personalization settings.",
+                key = OnboardingKeys.PERSONALIZATION_OPTIONS,
+                title = context.getString(R.string.onboarding_personalization_title),
+                description = context.getString(R.string.onboarding_personalization_description),
                 imageVector = Icons.Outlined.AccountCircle
             ),
+            OnboardingPage.CustomPage(
+                key = OnboardingKeys.THEME_OPTIONS,
+                content = {
+                    ThemeOnboardingPageTab()
+                }
+            ),
             OnboardingPage.DefaultPage(
-                key = "pro_features_teaser",
-                title = "Unlock More Power",
-                description = "Consider upgrading to access exclusive features and advanced capabilities.",
-                imageVector = Icons.Outlined.FavoriteBorder
+                key = OnboardingKeys.FEATURE_HIGHLIGHT_1,
+                title = context.getString(R.string.onboarding_feature1_title),
+                description = context.getString(R.string.onboarding_feature1_description),
+                imageVector = Icons.Outlined.Build
             ),
             OnboardingPage.CustomPage(
-                key = "custom-fun",
+                key = OnboardingKeys.CRASHLYTICS_OPTIONS,
                 content = {
-                    CustomFunOnboardingPageTab()
+                    CrashlyticsOnboardingPageTab()
                 }
             )
         ).filter {
