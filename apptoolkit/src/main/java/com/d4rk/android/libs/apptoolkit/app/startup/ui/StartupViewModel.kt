@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.startup.ui
 
+import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.usecases.LoadConsentInfoUseCase
@@ -44,7 +45,7 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
         }
     }
 
-    private fun openConsentForm(activity : StartupActivity) {
+    private fun openConsentForm(activity : Activity) {
         screenData?.consentInformation?.let { consentInfo : ConsentInformation ->
             launch(context = dispatcherProvider.io) {
                 val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()

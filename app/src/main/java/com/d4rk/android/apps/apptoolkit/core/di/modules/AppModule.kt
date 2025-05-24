@@ -33,6 +33,7 @@ val appModule : Module = module {
     viewModel { (launcher : ActivityResultLauncher<IntentSenderRequest>) ->
         MainViewModel(performInAppUpdateUseCase = get { parametersOf(launcher) } , dispatcherProvider = get())
     }
+
     single { FetchDeveloperAppsUseCase(client = get()) }
     viewModel {
         HomeViewModel(fetchDeveloperAppsUseCase = get() , dispatcherProvider = get())
