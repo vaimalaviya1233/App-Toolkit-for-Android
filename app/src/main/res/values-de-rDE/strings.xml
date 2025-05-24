@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Was ist der Warenkorb-Rechner?</string>
-    <string name="summary_preference_faq_1">Der Warenkorb-Rechner ist ein einfacher, generischer und kostenloser Warenkorbmanager und Gesamtrechner, der den gewöhnlichen Taschenrechner des Geräts ersetzt, wenn Sie im Supermarkt oder auf dem Markt sind.</string>
-    <string name="question_2">Wie funktioniert der Warenkorb-Rechner?</string>
-    <string name="summary_preference_faq_2">Mit dem Warenkorb-Rechner können Sie Ihren Warenkorb verwalten, indem Sie Produkte hinzufügen und deren Mengen erhöhen oder verringern. Der Warenkorb-Rechner zeigt jederzeit den fälligen Gesamtbetrag der Produkte in Ihrem Warenkorb basierend auf ihren Preisen und Mengen an.</string>
-    <string name="question_3">Warum sollte ich den Warenkorb-Rechner verwenden?</string>
-    <string name="summary_preference_faq_3">Der Warenkorb-Rechner hilft Ihnen, immer zu wissen, wie viel Sie ausgeben, noch bevor Sie zur Kasse gehen. Dies ist besonders nützlich, wenn Sie mit einem begrenzten Budget einkaufen müssen.</string>
-    <string name="question_4">Kann ich den Warenkorb-Rechner auch außerhalb von Supermärkten oder Märkten verwenden?</string>
-    <string name="summary_preference_faq_4">Ja! Da der Warenkorb-Rechner schockierend einfach und generisch ist, können Sie ihn auch in Kneipen, Restaurants, Kinos usw. verwenden.</string>
-    <string name="question_5">Wie füge ich mit dem Warenkorb-Rechner einen Artikel zu meinem Warenkorb hinzu?</string>
-    <string name="summary_preference_faq_5">Öffnen Sie Ihren Warenkorb und klicken Sie in der Aktionsleiste auf die Schaltfläche „Artikel hinzufügen“, um ein neues Produkt zu Ihrem Warenkorb hinzuzufügen. Geben Sie seinen Namen, Preis und Menge ein und klicken Sie dann auf die Schaltfläche „Hinzufügen“.</string>
-    <string name="question_6">Wie erhöhe oder verringere ich die Menge eines Artikels in meinem Warenkorb mit dem Warenkorb-Rechner?</string>
-    <string name="summary_preference_faq_6">Suchen Sie einfach den Artikel in der Liste und klicken Sie dann auf die Schaltfläche „+ (Plus)“, um seine Menge zu erhöhen, oder auf die Schaltfläche „- (Minus)“, um seine Menge zu verringern.</string>
-    <string name="question_7">Wie entferne ich mit dem Warenkorb-Rechner einen Artikel aus meinem Warenkorb?</string>
-    <string name="summary_preference_faq_7">Um ein Produkt aus Ihrem Warenkorb zu entfernen, wischen Sie einfach nach rechts oder links oder setzen Sie seine Menge auf Null und wählen Sie dann die Schaltfläche „Artikel löschen“.</string>
-    <string name="question_8">Ist der Warenkorb-Rechner kostenlose Software?</string>
-    <string name="summary_preference_faq_8">Ja! Der Warenkorb-Rechner ist stolz freie Software, die unter der GNU General Public License Version 3 vertrieben wird.</string>
-    <string name="question_9">Wie kann ich zum Warenkorb-Rechner beitragen?</string>
-    <string name="summary_preference_faq_9">Der beste Weg, zum Warenkorb-Rechner beizutragen, ist über sein <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-Repository. Von dort aus können Sie es forken und an Ihren Beiträgen arbeiten und diese später per Pull-Request zurücksenden. Sie können auch den Issue-Tracker verwenden, um Fehler zu melden, neue Funktionen oder Verbesserungen vorzuschlagen oder Ideen zu bekommen, wie Sie helfen könnten.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Willkommen bei App Toolkit</string>
+    <string name="onboarding_welcome_description">Entdecken Sie die Funktionen unserer AppToolkit-Bibliothek. Entdecken Sie unsere Anwendungen, die alle entwickelt wurden, um die Leistungsfähigkeit unserer AppToolkit-Bibliothek zu demonstrieren und zu nutzen und Ihre Android-Entwicklung und Benutzererfahrung zu verbessern.</string>
+    <string name="onboarding_feature1_title">Entdecken Sie unsere Anwendungen</string>
+    <string name="onboarding_feature1_description">App Toolkit stellt Ihnen eine Auswahl unserer Anwendungen vor, die jeweils darauf ausgelegt sind, verschiedene Aspekte unserer AppToolkit-Bibliothek hervorzuheben und Ihre Android-Erfahrung zu verbessern. Sehen Sie, was mit unserer AppToolkit-Bibliothek möglich ist!</string>
+    <string name="onboarding_personalization_title">Sehen Sie unsere AppToolkit-Bibliothek in Aktion</string>
+    <string name="onboarding_personalization_description">Diese App demonstriert, wie unsere AppToolkit-Bibliothek verwendet werden kann, um vielseitige und benutzerorientierte Anwendungen zu erstellen. Entdecken Sie unsere Apps, um verschiedene Funktionen und Implementierungen der Bibliothek zu sehen.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Fehler beim Abrufen unserer App-Listen</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Was ist App Toolkit?</string>
+    <string name="summary_preference_faq_1">App Toolkit ist eine Anwendung, die dazu dient, Apps vorzustellen und zu demonstrieren, die von uns unter Verwendung unserer AppToolkit-Bibliothek entwickelt wurden. Es ist Ihr Leitfaden zur Erkundung unseres Anwendungsökosystems und um unsere AppToolkit-Bibliothek in Aktion zu sehen.</string>
+    <string name="question_2">Wie greife ich auf die verschiedenen Apps zu, die in App Toolkit angezeigt werden?</string>
+    <string name="summary_preference_faq_2">App Toolkit listet unsere verschiedenen Anwendungen auf. Wenn Sie auf einen App-Eintrag tippen, erhalten Sie normalerweise weitere Informationen und einen Link zur Installation oder zum Öffnen aus dem Google Play Store, sodass Sie sie aus erster Hand erleben können.</string>
+    <string name="question_3">Sind die in App Toolkit vorgestellten Apps kostenlos?</string>
+    <string name="summary_preference_faq_3">Viele unserer in App Toolkit vorgestellten Apps bieten einen Kernsatz von Funktionen kostenlos an. Einige verfügen möglicherweise über erweiterte Funktionen, die über eine Premium-Version oder In-App-Käufe verfügbar sind. Details zu jeder App finden Sie auf der jeweiligen Play Store-Seite.</string>
+    <string name="question_4">Wie kann ich mehr über eine bestimmte aufgelistete App erfahren?</string>
+    <string name="summary_preference_faq_4">Für vollständige Details zu einer unserer Apps, ihren Funktionen und Benutzerbewertungen tippen Sie bitte auf die App in App Toolkit, um ihre Seite im Google Play Store zu besuchen.</string>
+    <string name="question_5">Wo finde ich Hilfe oder Support für eine Ihrer aufgelisteten Apps?</string>
+    <string name="summary_preference_faq_5">Support für unsere einzelnen Apps wird über ihre jeweiligen Kanäle bereitgestellt, die normalerweise auf ihrer Play Store-Seite oder in der App selbst detailliert beschrieben sind. App Toolkit dient zum Entdecken dieser Apps; bei app-spezifischen Problemen wenden Sie sich bitte an die Support-Optionen dieser App.</string>
+    <string name="question_6">Wie oft wird die Liste Ihrer Apps in App Toolkit aktualisiert?</string>
+    <string name="summary_preference_faq_6">Wir bemühen uns, App Toolkit mit unseren neuesten und relevantesten Anwendungen, die unsere AppToolkit-Bibliothek nutzen, auf dem neuesten Stand zu halten. Neue Apps oder wichtige Updates können hier vorgestellt werden.</string>
+    <string name="question_7">Warum benötigt App Toolkit Berechtigungen wie Internetzugang?</string>
+    <string name="summary_preference_faq_7">App Toolkit benötigt Internetzugang, um die neueste Liste unserer Anwendungen aus dem Google Play Store abzurufen und ihre Informationen korrekt anzuzeigen. Es erfordert normalerweise keine anderen invasiven Berechtigungen.</string>
+    <string name="question_8">Wie kann ich Feedback zu App Toolkit oder Ihren Apps geben?</string>
+    <string name="summary_preference_faq_8">Wir schätzen Ihr Feedback zu App Toolkit und unseren einzelnen Apps! Sie finden normalerweise eine Option \"Feedback\" oder \"Kontakt\" in den Einstellungen von App Toolkit oder auf unserer Entwicklerseite im Play Store. Feedback zu unserer AppToolkit-Bibliothek selbst ist ebenfalls über geeignete Kanäle willkommen.</string>
+    <string name="question_9">Sind meine Daten sicher, wenn ich App Toolkit verwende, um Ihre anderen Apps zu finden?</string>
+    <string name="summary_preference_faq_9">App Toolkit ruft hauptsächlich öffentlich verfügbare Informationen über unsere Apps ab. Wenn Sie sich entscheiden, eine unserer aufgelisteten Apps zu installieren oder zu verwenden, gilt die eigene Datenschutzrichtlinie dieser App. Wir empfehlen Ihnen, diese zu überprüfen. Die Datenverarbeitung von App Toolkit ist in unserer Datenschutzrichtlinie beschrieben.</string>
 </resources>

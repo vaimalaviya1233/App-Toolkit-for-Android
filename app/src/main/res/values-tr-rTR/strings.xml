@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Sepet Hesaplayıcı nedir?</string>
-    <string name="summary_preference_faq_1">Sepet Hesaplayıcı, markette veya pazarda olduğunuzda sıradan cihazın hesap makinesinin yerini alan basit, genel ve ücretsiz bir alışveriş sepeti yöneticisi ve toplam borç hesaplayıcısıdır.</string>
-    <string name="question_2">Sepet Hesaplayıcı nasıl çalışır?</string>
-    <string name="summary_preference_faq_2">Sepet Hesaplayıcı, ürünleri ekleyerek ve miktarlarını artırarak veya azaltarak alışveriş sepetinizi yönetmenize olanak tanır. Sepet Hesaplayıcı, herhangi bir zamanda, sepetinizdeki ürünlerin fiyatlarına ve miktarlarına göre toplam borcunu görüntüler.</string>
-    <string name="question_3">Neden Sepet Hesaplayıcı kullanmalıyım?</string>
-    <string name="summary_preference_faq_3">Sepet Hesaplayıcı, kasaya ulaşmadan önce bile ne kadar harcadığınızın her zaman farkında olmanıza yardımcı olur. Bu, özellikle bütçeyle alışveriş yapmanız gerektiğinde kullanışlıdır.</string>
-    <string name="question_4">Sepet Hesaplayıcı\'yı marketler veya pazarlar dışında kullanabilir miyim?</string>
-    <string name="summary_preference_faq_4">Evet! Sepet Hesaplayıcı şaşırtıcı derecede basit ve genel olduğundan, barlarda, restoranlarda, sinemalarda vb. de kullanabilirsiniz.</string>
-    <string name="question_5">Sepet Hesaplayıcı\'yı kullanarak sepeti</string>
-    <string name="summary_preference_faq_5">Sepetinizi açın ve sepetinize yeni bir ürün eklemek için Eylem Çubuğundaki "Ürün ekle" düğmesine basın. Adını, fiyatını ve miktarını girin ve ardından "Ekle" düğmesine tıklayın.</string>
-    <string name="question_6">Sepet Hesaplayıcı\'yı kullanarak sepetimdeki bir ürünün miktarını nasıl artırır veya azaltırım?</string>
-    <string name="summary_preference_faq_6">Listede ürünü bulun ve ardından miktarını artırmak için "+ (artı)" düğmesine veya miktarını azaltmak için "- (eksi)" düğmesine basın.</string>
-    <string name="question_7">Sepet Hesaplayıcı\'yı kullanarak sepetimden bir ürünü nasıl kaldırırım?</string>
-    <string name="summary_preference_faq_7">Sepetinizden bir ürünü kaldırmak için sağa veya sola kaydırın veya miktarını sıfıra düşürün ve ardından "Ürünü sil" düğmesini seçin.</string>
-    <string name="question_8">Sepet Hesaplayıcı ücretsiz bir yazılım mı?</string>
-    <string name="summary_preference_faq_8">Evet! Sepet Hesaplayıcı, GNU Genel Kamu Lisansı sürüm 3 kapsamında dağıtılan gurur verici bir ücretsiz yazılımdır.</string>
-    <string name="question_9">Sepet Hesaplayıcı\'ya nasıl katkıda bulunabilirim?</string>
-    <string name="summary_preference_faq_9">Sepet Hesaplayıcı\'ya katkıda bulunmanın en iyi yolu <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> deposudur. Oradan, onu çatallayabilir ve katkılarınız üzerinde çalışabilir ve daha sonra bunları çekme isteği yoluyla geri gönderebilirsiniz. Ayrıca hata izleyiciyi hataları bildirmek, yeni özellikler veya geliştirmeler önermek veya nasıl yardımcı olabileceğiniz konusunda fikir edinmek için de kullanabilirsiniz.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">App Toolkit\'e Hoş Geldiniz</string>
+    <string name="onboarding_welcome_description">AppToolkit kütüphanemizin yeteneklerini keşfedin. Android geliştirmenizi ve kullanıcı deneyiminizi geliştiren AppToolkit kütüphanemizin gücünü göstermek ve kullanmak için oluşturulmuş uygulamalarımızı keşfedin.</string>
+    <string name="onboarding_feature1_title">Uygulamalarımızı Keşfedin</string>
+    <string name="onboarding_feature1_description">App Toolkit, her biri AppToolkit kütüphanemizin farklı yönlerini vurgulamak ve Android deneyiminizi geliştirmek için tasarlanmış uygulamalarımızdan bir seçki sunar. AppToolkit kütüphanemizle nelerin mümkün olduğunu görün!</string>
+    <string name="onboarding_personalization_title">AppToolkit Kütüphanemizi Çalışırken Görün</string>
+    <string name="onboarding_personalization_description">Bu uygulama, AppToolkit kütüphanemizin çok yönlü ve kullanıcı odaklı uygulamalar oluşturmak için nasıl kullanılabileceğini gösterir. Kütüphanenin farklı özelliklerini ve uygulamalarını görmek için uygulamalarımızı keşfedin.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Uygulama listelerimiz alınamadı</string>
+
+    <!-- Help screen -->
+    <string name="question_1">App Toolkit nedir?</string>
+    <string name="summary_preference_faq_1">App Toolkit, AppToolkit kütüphanemizi kullanarak geliştirdiğimiz uygulamaları öne çıkarmak ve göstermek için tasarlanmış bir uygulamadır. Uygulama ekosistemimizi keşfetmeniz ve AppToolkit kütüphanemizi çalışırken görmeniz için rehberinizdir.</string>
+    <string name="question_2">App Toolkit\'te gösterilen farklı uygulamalara nasıl erişebilirim?</string>
+    <string name="summary_preference_faq_2">App Toolkit çeşitli uygulamalarımızı listeler. Bir uygulama listesine dokunmak genellikle daha fazla bilgi ve Google Play Store\'dan yüklemek veya açmak için bir bağlantı sağlar, böylece ilk elden deneyimleyebilirsiniz.</string>
+    <string name="question_3">App Toolkit\'te öne çıkan uygulamalar ücretsiz mi?</string>
+    <string name="summary_preference_faq_3">App Toolkit\'te öne çıkan uygulamalarımızın çoğu temel bir dizi özelliği ücretsiz olarak sunar. Bazıları premium bir sürüm veya uygulama içi satın alımlar yoluyla kullanılabilen gelişmiş işlevlere sahip olabilir. Her uygulama için ayrıntılar ilgili Play Store sayfasında bulunabilir.</string>
+    <string name="question_4">Listelenen belirli bir uygulama hakkında nasıl daha fazla bilgi edinebilirim?</string>
+    <string name="summary_preference_faq_4">Uygulamalarımızdan biri, özellikleri ve kullanıcı yorumları hakkında eksiksiz ayrıntılar için lütfen Google Play Store\'daki sayfasını ziyaret etmek üzere App Toolkit\'teki uygulamaya dokunun.</string>
+    <string name="question_5">Listelenen uygulamalarınızdan biri için yardımı veya desteği nerede bulabilirim?</string>
+    <string name="summary_preference_faq_5">Bireysel uygulamalarımız için destek, genellikle Play Store sayfalarında veya uygulamanın kendi içinde ayrıntılı olarak belirtilen ilgili kanalları aracılığıyla sağlanır. App Toolkit bu uygulamaları keşfetmek içindir; uygulamaya özgü sorunlar için lütfen o uygulamanın destek seçeneklerine başvurun.</string>
+    <string name="question_6">Uygulamalarınızın listesi App Toolkit\'te ne sıklıkla güncellenir?</string>
+    <string name="summary_preference_faq_6">AppToolkit kütüphanemizi kullanan en son ve en alakalı uygulamalarımızla App Toolkit\'i güncel tutmayı amaçlıyoruz. Yeni uygulamalar veya önemli güncellemeler burada öne çıkarılabilir.</string>
+    <string name="question_7">App Toolkit neden İnternet erişimi gibi izinlere ihtiyaç duyar?</string>
+    <string name="summary_preference_faq_7">App Toolkit, uygulamalarımızın en son listesini Google Play Store\'dan almak ve bilgilerini doğru bir şekilde görüntülemek için İnternet erişimi gerektirir. Genellikle başka müdahaleci izinler gerektirmez.</string>
+    <string name="question_8">App Toolkit veya uygulamalarınız hakkında nasıl geri bildirimde bulunabilirim?</string>
+    <string name="summary_preference_faq_8">App Toolkit ve bireysel uygulamalarımız hakkındaki geri bildirimlerinize değer veriyoruz! Genellikle App Toolkit\'in ayarlarında veya Play Store\'daki geliştirici sayfamızda bir \"Geri Bildirim\" veya \"Bize Ulaşın\" seçeneği bulabilirsiniz. AppToolkit kütüphanemiz hakkındaki geri bildirimler de uygun kanallar aracılığıyla memnuniyetle karşılanır.</string>
+    <string name="question_9">Diğer uygulamalarınızı bulmak için App Toolkit\'i kullanırken verilerim güvende mi?</string>
+    <string name="summary_preference_faq_9">App Toolkit öncelikle uygulamalarımız hakkında halka açık bilgileri alır. Listelenen uygulamalarımızdan birini yüklemeyi veya kullanmayı seçtiğinizde, o uygulamanın kendi Gizlilik Politikası geçerli olacaktır. Gözden geçirmenizi öneririz. App Toolkit\'in veri işleme şekli Gizlilik Politikamızda belirtilmiştir.</string>
 </resources>

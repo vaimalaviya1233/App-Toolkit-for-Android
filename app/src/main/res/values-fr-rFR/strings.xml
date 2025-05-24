@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Qu\'est-ce que Cart Calculator ?</string>
-    <string name="summary_preference_faq_1">Cart Calculator est un gestionnaire de panier d\'achat simple, générique et gratuit et un calculateur de total dû qui remplace la calculatrice ordinaire de l\'appareil lorsque vous êtes à l\'épicerie ou au marché.</string>
-    <string name="question_2">Comment fonctionne Cart Calculator ?</string>
-    <string name="summary_preference_faq_2">Cart Calculator vous permet de gérer votre panier d\'achat en ajoutant des produits et en augmentant ou en diminuant leurs quantités. À tout moment, Cart Calculator affiche le total dû des produits dans votre panier en fonction de leurs prix et de leurs quantités.</string>
-    <string name="question_3">Pourquoi devrais-je utiliser Cart Calculator ?</string>
-    <string name="summary_preference_faq_3">Cart Calculator vous aide à toujours savoir combien vous dépensez avant même d\'atteindre la caisse. Ceci est particulièrement utile lorsque vous devez faire des courses avec un budget limité.</string>
-    <string name="question_4">Puis-je utiliser Cart Calculator en dehors des épiceries ou des marchés ?</string>
-    <string name="summary_preference_faq_4">Oui ! Puisque Cart Calculator est étonnamment simple et générique, vous pouvez également l\'utiliser dans les pubs, les restaurants, les cinémas, etc.</string>
-    <string name="question_5">Comment ajouter un article à mon panier à l\'aide de Cart Calculator ?</string>
-    <string name="summary_preference_faq_5">Ouvrez votre panier et appuyez sur le bouton "Ajouter un article" dans la barre d\'action pour ajouter un nouveau produit à votre panier. Vous indiquez son nom, son prix et sa quantité, puis cliquez sur le bouton "Ajouter".</string>
-    <string name="question_6">Comment augmenter ou diminuer la quantité d\'un article dans mon panier à l\'aide de Cart Calculator ?</string>
-    <string name="summary_preference_faq_6">Trouvez simplement l\'article dans la liste, puis appuyez sur le bouton "+ (plus)" pour augmenter sa quantité ou sur le bouton "- (moins)" pour diminuer sa quantité.</string>
-    <string name="question_7">Comment supprimer un article de mon panier à l\'aide de Cart Calculator ?</string>
-    <string name="summary_preference_faq_7">Pour supprimer un produit de votre panier, faites simplement glisser votre doigt vers la droite ou la gauche ou baissez sa quantité à zéro, puis sélectionnez le bouton "Supprimer l\'article".</string>
-    <string name="question_8">Cart Calculator est-il un logiciel gratuit ?</string>
-    <string name="summary_preference_faq_8">Oui ! Cart Calculator est fièrement un logiciel gratuit distribué sous la licence publique générale GNU version 3.</string>
-    <string name="question_9">Comment puis-je contribuer à Cart Calculator ?</string>
-    <string name="summary_preference_faq_9">La meilleure façon de contribuer à Cart Calculator est de passer par son référentiel <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. De là, vous pouvez le forker et travailler sur vos contributions, puis les renvoyer via une demande d\'extraction. Vous pouvez également utiliser l\'outil de suivi des problèmes pour signaler des bogues, proposer de nouvelles fonctionnalités ou améliorations, ou obtenir des idées sur la façon dont vous pourriez aider.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Bienvenue dans App Toolkit</string>
+    <string name="onboarding_welcome_description">Explorez les capacités de notre bibliothèque AppToolkit. Découvrez nos applications, toutes conçues pour démontrer et utiliser la puissance de notre bibliothèque AppToolkit, améliorant ainsi votre développement Android et votre expérience utilisateur.</string>
+    <string name="onboarding_feature1_title">Découvrez Nos Applications</string>
+    <string name="onboarding_feature1_description">App Toolkit vous présente une sélection de nos applications, chacune conçue pour mettre en évidence différents aspects de notre bibliothèque AppToolkit et améliorer votre expérience Android. Voyez ce qu\'il est possible de faire avec notre bibliothèque AppToolkit !</string>
+    <string name="onboarding_personalization_title">Voyez Notre Bibliothèque AppToolkit en Action</string>
+    <string name="onboarding_personalization_description">Cette application démontre comment notre bibliothèque AppToolkit peut être utilisée pour créer des applications polyvalentes et centrées sur l\'utilisateur. Explorez nos applications pour découvrir différentes fonctionnalités et implémentations de la bibliothèque.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Échec de la récupération de nos listes d\'applications</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Qu\'est-ce qu\'App Toolkit ?</string>
+    <string name="summary_preference_faq_1">App Toolkit est une application conçue pour présenter et démontrer les applications que nous avons développées à l\'aide de notre bibliothèque AppToolkit. C\'est votre guide pour explorer notre écosystème d\'applications et voir notre bibliothèque AppToolkit en action.</string>
+    <string name="question_2">Comment accéder aux différentes applications affichées dans App Toolkit ?</string>
+    <string name="summary_preference_faq_2">App Toolkit répertorie nos différentes applications. En appuyant sur une liste d\'applications, vous obtiendrez généralement plus d\'informations et un lien pour l\'installer ou l\'ouvrir depuis le Google Play Store, vous permettant de l\'expérimenter directement.</string>
+    <string name="question_3">Les applications présentées dans App Toolkit sont-elles gratuites ?</string>
+    <string name="summary_preference_faq_3">Beaucoup de nos applications présentées dans App Toolkit offrent un ensemble de fonctionnalités de base gratuitement. Certaines peuvent avoir des fonctionnalités avancées disponibles via une version premium ou des achats intégrés. Les détails de chaque application se trouvent sur leur page respective du Play Store.</string>
+    <string name="question_4">Comment puis-je en savoir plus sur une application spécifiques listée ?</string>
+    <string name="summary_preference_faq_4">Pour des détails complets sur l\'une de nos applications, ses fonctionnalités et les avis des utilisateurs, veuillez appuyer sur l\'application dans App Toolkit pour visiter sa page sur le Google Play Store.</string>
+    <string name="question_5">Où puis-je trouver de l\'aide ou du support pour l\'une de vos applications listées ?</string>
+    <string name="summary_preference_faq_5">Le support pour nos applications individuelles est fourni via leurs canaux respectifs, généralement détaillés sur leur page du Play Store ou dans l\'application elle-même. App Toolkit sert à découvrir ces applications ; pour les problèmes spécifiques à une application, veuillez vous référer aux options de support de cette application.</string>
+    <string name="question_6">À quelle fréquence la liste de vos applications est-elle mise à jour dans App Toolkit ?</string>
+    <string name="summary_preference_faq_6">Nous nous efforçons de maintenir App Toolkit à jour avec nos applications les plus récentes et les plus pertinentes qui utilisent notre bibliothèque AppToolkit. De nouvelles applications ou des mises à jour importantes peuvent y être présentées.</string>
+    <string name="question_7">Pourquoi App Toolkit a-t-il besoin d\'autorisations telles que l\'accès à Internet ?</string>
+    <string name="summary_preference_faq_7">App Toolkit nécessite un accès à Internet pour récupérer la dernière liste de nos applications depuis le Google Play Store et afficher leurs informations avec précision. Il ne nécessite généralement pas d\'autres autorisations invasives.</string>
+    <string name="question_8">Comment puis-je fournir des commentaires sur App Toolkit ou vos applications ?</string>
+    <string name="summary_preference_faq_8">Nous apprécions vos commentaires sur App Toolkit et nos applications individuelles ! Vous pouvez généralement trouver une option \"Commentaires\" ou \"Contactez-nous\" dans les paramètres d\'App Toolkit ou sur notre page de développeur sur le Play Store. Les commentaires sur notre bibliothèque AppToolkit elle-même sont également les bienvenus via les canaux appropriés.</string>
+    <string name="question_9">Mes données sont-elles en sécurité lorsque j\'utilise App Toolkit pour trouver vos autres applications ?</string>
+    <string name="summary_preference_faq_9">App Toolkit récupère principalement des informations publiquement disponibles sur nos applications. Lorsque vous choisissez d\'installer ou d\'utiliser l\'une de nos applications listées, la propre Politique de Confidentialité de cette application s\'appliquera. Nous vous encourageons à la consulter. Le traitement des données par App Toolkit est décrit dans notre Politique de Confidentialité.</string>
 </resources>

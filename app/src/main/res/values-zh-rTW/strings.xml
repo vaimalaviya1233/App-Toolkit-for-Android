@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">什麼是購物車計算機？</string>
-    <string name="summary_preference_faq_1">購物車計算機是一個簡單、通用且免費的購物車管理器和總到期計算器，可在您在雜貨店或市場時取代普通設備的計算器。</string>
-    <string name="question_2">購物車計算機如何運作？</string>
-    <string name="summary_preference_faq_2">購物車計算機允許您通過添加產品和增加或減少其數量來管理您的購物車。購物車計算機隨時根據產品的價格和數量顯示購物車中產品的總到期金額。</string>
-    <string name="question_3">我為什麼要使用購物車計算機？</string>
-    <string name="summary_preference_faq_3">購物車計算機可幫助您始終了解您在到達結帳處之前的花費金額。這在您必須按預算購物時特別有用。</string>
-    <string name="question_4">我可以在雜貨店或市場之外使用購物車計算機嗎？</string>
-    <string name="summary_preference_faq_4">是的！由於購物車計算機非常簡單和通用，您還可以在酒吧、餐館、電影院等場所使用它。</string>
-    <string name="question_5">如何使用購物車計算機將商品添加到我的購物車？</string>
-    <string name="summary_preference_faq_5">打開您的購物車，然後按操作欄中的“添加商品”按鈕將新產品添加到您的購物車中。您告知其名稱、價格和數量，然後單擊“添加”按鈕。</string>
-    <string name="question_6">如何使用購物車計算機增加或減少購物車中商品的數量？</string>
-    <string name="summary_preference_faq_6">只需在列表中找到該商品，然後按“+（加號）”按鈕增加其數量或按“-（減號）”按鈕減少其數量。</string>
-    <string name="question_7">如何使用購物車計算機從我的購物車中刪除商品？</string>
-    <string name="summary_preference_faq_7">要從購物車中刪除產品，只需向右或向左滑動或將其數量降至零，然後選擇“刪除商品”按鈕。</string>
-    <string name="question_8">購物車計算機是免費軟體嗎？</string>
-    <string name="summary_preference_faq_8">是的！購物車計算機是自豪地根據 GNU 通用公共許可證版本 3 分發的免費軟體。</string>
-    <string name="question_9">我如何為購物車計算機做出貢獻？</string>
-    <string name="summary_preference_faq_9">為購物車計算機做出貢獻的最佳方式是通過其 <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> 存儲庫。從那裡，您可以分叉它並處理您的貢獻，然後通過拉取請求將它們發回。您還可以使用問題跟踪器來報告錯誤、提出新功能或增強功能，或獲取有關如何提供幫助的想法。</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">歡迎使用 App Toolkit</string>
+    <string name="onboarding_welcome_description">探索我們 AppToolkit 程式庫的功能。探索我們的應用程式，所有應用程式皆為展示並利用我們 AppToolkit 程式庫的強大功能而打造，可增強您的 Android 開發與使用者體驗。</string>
+    <string name="onboarding_feature1_title">探索我們的應用程式</string>
+    <string name="onboarding_feature1_description">App Toolkit 為您介紹我們精選的應用程式，每個應用程式都旨在突顯我們 AppToolkit 程式庫的不同面向，並提升您的 Android 體驗。看看我們的 AppToolkit 程式庫能實現哪些可能性！</string>
+    <string name="onboarding_personalization_title">查看我們的 AppToolkit 程式庫實際運作</string>
+    <string name="onboarding_personalization_description">此應用程式展示了如何使用我們的 AppToolkit 程式庫來建構多功能且以使用者為中心的應用程式。探索我們的應用程式，以了解程式庫的不同功能和實作方式。</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">無法擷取我們的應用程式清單</string>
+
+    <!-- Help screen -->
+    <string name="question_1">App Toolkit 是什麼？</string>
+    <string name="summary_preference_faq_1">App Toolkit 是一款旨在展示我們使用 AppToolkit 程式庫開發的應用程式的應用程式。它是您探索我們應用程式生態系統並查看我們 AppToolkit 程式庫實際運作的指南。</string>
+    <string name="question_2">我要如何存取 App Toolkit 中顯示的不同應用程式？</string>
+    <string name="summary_preference_faq_2">App Toolkit 會列出我們的各種應用程式。點選應用程式清單通常會提供更多資訊，以及從 Google Play 商店安裝或開啟該應用程式的連結，讓您親身體驗。</string>
+    <string name="question_3">App Toolkit 中推薦的應用程式是免費的嗎？</string>
+    <string name="summary_preference_faq_3">我們在 App Toolkit 中推薦的許多應用程式都免費提供一組核心功能。有些應用程式可能透過付費版本或應用程式內購買提供進階功能。每個應用程式的詳細資訊都可以在其各自的 Play 商店頁面上找到。</string>
+    <string name="question_4">我要如何進一步了解清單中特定的應用程式？</string>
+    <string name="summary_preference_faq_4">如需我們某個應用程式的完整詳細資訊、其功能和使用者評論，請在 App Toolkit 中點選該應用程式，以造訪其在 Google Play 商店上的頁面。</string>
+    <string name="question_5">我在哪裡可以找到您所列應用程式的說明或支援？</string>
+    <string name="summary_preference_faq_5">我們個別應用程式的支援是透過其各自的管道提供，通常會在其 Play 商店頁面或應用程式本身中詳細說明。App Toolkit 的用途是探索這些應用程式；若有應用程式特定問題，請參閱該應用程式的支援選項。</string>
+    <string name="question_6">您在 App Toolkit 中的應用程式清單多久更新一次？</string>
+    <string name="summary_preference_faq_6">我們的目標是讓 App Toolkit 隨時更新我們使用 AppToolkit 程式庫的最新且最相關的應用程式。新的應用程式或重大更新可能會在此處展示。</string>
+    <string name="question_7">為什麼 App Toolkit 需要網際網路存取等權限？</string>
+    <string name="summary_preference_faq_7">App Toolkit 需要網際網路存取權限，才能從 Google Play 商店擷取我們最新的應用程式清單並準確顯示其資訊。它通常不需要其他侵入性權限。</string>
+    <string name="question_8">我要如何針對 App Toolkit 或您的應用程式提供意見回饋？</string>
+    <string name="summary_preference_faq_8">我們非常重視您對 App Toolkit 和我們個別應用程式的意見回饋！您通常可以在 App Toolkit 的設定中或我們在 Play 商店上的開發者頁面找到「意見回饋」或「與我們聯絡」的選項。我們也歡迎透過適当管道提供關於我們 AppToolkit 程式庫本身的意見回饋。</string>
+    <string name="question_9">使用 App Toolkit 尋找您的其他應用程式時，我的資料是否安全？</string>
+    <string name="summary_preference_faq_9">App Toolkit 主要擷取關於我們應用程式的公開可用資訊。當您選擇安裝或使用我們所列的其中一個應用程式時，將適用該應用程式自己的隱私權政策。我們建議您檢閱該政策。App Toolkit 的資料處理方式已在我們的隱私權政策中概述。</string>
 </resources>

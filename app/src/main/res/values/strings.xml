@@ -1,32 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">App Toolkit</string>
 
-    <string name="onboarding_welcome_title">Welcome to App Toolkit: Your Essential Android Companion</string>
-    <string name="onboarding_welcome_description">Step into a seamlessly optimized Android experience. App Toolkit is meticulously designed to unlock the full potential of your device, transforming everyday interactions into moments of efficiency and delight. Discover a powerful suite of intuitive tools crafted to simplify your digital life.</string>
-    <string name="onboarding_feature1_title">Unlock Core Functionality: Power at Your Fingertips</string>
-    <string name="onboarding_feature1_description">Dive into the essential tools that form the bedrock of App Toolkit. From streamlining routine tasks to enhancing performance, each feature is engineered for maximum utility and ease of use. Empower yourself with intelligent solutions designed to make your Android device truly work for you, every single day.</string>
-    <string name="onboarding_personalization_title">Tailor Your Experience: Personalization That Matters</string>
-    <string name="onboarding_personalization_description">Your Android experience should reflect you. App Toolkit offers a rich array of personalization settings, allowing you to fine-tune every aspect to match your unique preferences and workflow. Customize themes, notifications, and tool behaviors to create an environment that feels uniquely yours and evolves with your needs.</string>
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to App Toolkit</string>
+    <string name="onboarding_welcome_description">Explore the capabilities of our AppToolkit library. Discover our applications, all built to demonstrate and utilize the power of our AppToolkit library, enhancing your Android development and user experience.</string>
+    <string name="onboarding_feature1_title">Discover Our Applications</string>
+    <string name="onboarding_feature1_description">App Toolkit introduces you to a selection of our applications, each designed to highlight different aspects of our AppToolkit library and enhance your Android experience. See what\'s possible with our AppToolkit library!</string>
+    <string name="onboarding_personalization_title">See Our AppToolkit Library in Action</string>
+    <string name="onboarding_personalization_description">This app demonstrates how our AppToolkit library can be used to build versatile and user-focused applications. Explore our apps to see different features and implementations of the library.</string>
 
-    <string name="error_failed_to_fetch_apps">Failed to fetch apps</string>
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Failed to fetch our app listings</string>
 
     <!-- Help screen -->
-    <string name="question_1">What is Cart Calculator?</string>
-    <string name="summary_preference_faq_1">Cart Calculator is a simple, generic and free shopping cart manager and total due calculator that replaces the ordinary device\’s calculator for when you are at the grocery store or at the market.</string>
-    <string name="question_2">How does Cart Calculator work?</string>
-    <string name="summary_preference_faq_2">Cart Calculator allows you to manage your shopping cart by adding products and increasing or decreasing their quantities. At any time, the Cart Calculator displays the total due of the products in your cart based on their prices and quantities.</string>
-    <string name="question_3">Why should I use Cart Calculator?</string>
-    <string name="summary_preference_faq_3">Cart Calculator helps you to always be aware of how much you’re spending even before reaching the checkout. This is especially useful for when you have to go shopping on a budget.</string>
-    <string name="question_4">Can I use Cart Calculator outside of grocery stores or markets?</string>
-    <string name="summary_preference_faq_4">Yes! Since Cart Calculator is shockingly simple and generic, you can also use it in pubs, restaurants, the movies etc.</string>
-    <string name="question_5">How do I add an item to my cart using Cart Calculator?</string>
-    <string name="summary_preference_faq_5">Open your cart and press the \"Add item\" button in the Action Bar to add a new product to your cart. You inform its name, price and quantity and then click on the \"Add\" button.</string>
-    <string name="question_6">How do I increase or decrease the quantity of an item in my cart using Cart Calculator?</string>
-    <string name="summary_preference_faq_6">Simply find the item in the list and then press the \"+ (plus)\" button to increase its quantity or the \"- (less)\" button to decrease its quantity.</string>
-    <string name="question_7">How do I remove an item from my cart using Cart Calculator?</string>
-    <string name="summary_preference_faq_7">To remove a product from your cart, simply swipe right or left or drop its quantity to zero and then select the \"Delete item\" button.</string>
-    <string name="question_8">Is Cart Calculator free software?</string>
-    <string name="summary_preference_faq_8">Yes! Cart Calculator is proudly free software distributed under the GNU General Public License version 3.</string>
-    <string name="question_9">How can I contribute to Cart Calculator?</string>
-    <string name="summary_preference_faq_9">The best way to contribute to Cart Calculator is through its <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> repository. From there, you can fork it and work on your contributions, and later send them back via pull request. You can also use the issue tracker to report bugs, propose new features or enhancements, or get ideas for how you could help.</string>
+    <string name="question_1">What is App Toolkit?</string>
+    <string name="summary_preference_faq_1">App Toolkit is an application designed to feature and demonstrate apps developed by us using our AppToolkit library. It\'s your guide to exploring our ecosystem of applications and seeing our AppToolkit library in action.</string>
+    <string name="question_2">How do I access the different apps shown in App Toolkit?</string>
+    <string name="summary_preference_faq_2">App Toolkit lists our various applications. Tapping on an app listing will typically provide more information and a link to install or open it from the Google Play Store, allowing you to experience it firsthand.</string>
+    <string name="question_3">Are the apps featured in App Toolkit free?</string>
+    <string name="summary_preference_faq_3">Many of our apps featured in App Toolkit offer a core set of features for free. Some may have advanced functionalities available through a premium version or in-app purchases. Details for each app can be found on its respective Play Store page.</string>
+    <string name="question_4">How can I learn more about a specific app listed?</string>
+    <string name="summary_preference_faq_4">For complete details about one of our apps, its features, and user reviews, please tap on the app in App Toolkit to visit its page on the Google Play Store.</string>
+    <string name="question_5">Where can I find help or support for one of your listed apps?</string>
+    <string name="summary_preference_faq_5">Support for our individual apps is provided through their respective channels, usually detailed on their Play Store page or within the app itself. App Toolkit is for discovering these apps; for app-specific issues, please refer to that app\'s support options.</string>
+    <string name="question_6">How often is the list of your apps updated in App Toolkit?</string>
+    <string name="summary_preference_faq_6">We aim to keep App Toolkit updated with our latest and most relevant applications that utilize our AppToolkit library. New apps or significant updates may be featured here.</string>
+    <string name="question_7">Why does App Toolkit need permissions like Internet access?</string>
+    <string name="summary_preference_faq_7">App Toolkit requires Internet access to fetch the latest list of our applications from the Google Play Store and display their information accurately. It doesn\'t typically require other invasive permissions.</string>
+    <string name="question_8">How can I provide feedback on App Toolkit or your apps?</string>
+    <string name="summary_preference_faq_8">We value your feedback on App Toolkit and our individual apps! You can usually find a "Feedback" or "Contact Us" option within App Toolkit\'s settings or on our developer page on the Play Store. Feedback on our AppToolkit library itself is also welcome through appropriate channels.</string>
+    <string name="question_9">Is my data safe when using App Toolkit to find your other apps?</string>
+    <string name="summary_preference_faq_9">App Toolkit primarily fetches publicly available information about our apps. When you choose to install or use one of our listed apps, that app\'s own Privacy Policy will apply. We encourage you to review it. App Toolkit\'s data handling is outlined in our Privacy Policy.</string>
 </resources>

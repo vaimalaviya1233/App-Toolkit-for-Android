@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Vad är Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_1">Varukorgsberäknaren är en enkel, generisk och gratis varukorgshanterare och totalsummeberäknare som ersätter den vanliga enhetens kalkylator när du är i mataffären eller på marknaden.</string>
-    <string name="question_2">Hur fungerar Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_2">Med Varukorgsberäknaren kan du hantera din varukorg genom att lägga till produkter och öka eller minska deras kvantiteter. Varukorgsberäknaren visar när som helst totalsumman för produkterna i din varukorg baserat på deras priser och kvantiteter.</string>
-    <string name="question_3">Varför ska jag använda Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_3">Varukorgsberäknaren hjälper dig att alltid vara medveten om hur mycket du spenderar redan innan du når kassan. Detta är särskilt användbart när du måste handla med en budget.</string>
-    <string name="question_4">Kan jag använda Varukorgsberäknaren utanför mataffärer eller marknader?</string>
-    <string name="summary_preference_faq_4">Ja! Eftersom Varukorgsberäknaren är chockerande enkel och generisk kan du också använda den på pubar, restauranger, biografer etc.</string>
-    <string name="question_5">Hur lägger jag till ett objekt i min varukorg med Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_5">Öppna din varukorg och tryck på knappen \"Lägg till objekt\" i åtgärdsfältet för att lägga till en ny produkt i din varukorg. Ange dess namn, pris och kvantitet och klicka sedan på knappen \"Lägg till\".</string>
-    <string name="question_6">Hur ökar eller minskar jag kvantiteten på ett objekt i min varukorg med Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_6">Hitta helt enkelt objektet i listan och tryck sedan på knappen \"+ (plus)\" för att öka dess kvantitet eller knappen \"- (minus)\" för att minska dess kvantitet.</string>
-    <string name="question_7">Hur tar jag bort ett objekt från min varukorg med Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_7">För att ta bort en produkt från din varukorg, svep helt enkelt åt höger eller vänster eller släpp dess kvantitet till noll och välj sedan knappen \"Ta bort objekt\".</string>
-    <string name="question_8">Är Varukorgsberäknaren gratis programvara?</string>
-    <string name="summary_preference_faq_8">Ja! Varukorgsberäknaren är stolt gratis programvara som distribueras under GNU General Public License version 3.</string>
-    <string name="question_9">Hur kan jag bidra till Varukorgsberäknaren?</string>
-    <string name="summary_preference_faq_9">Det bästa sättet att bidra till Varukorgsberäknaren är genom dess <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-lagringsplats. Därifrån kan du gaffla den och arbeta med dina bidrag och senare skicka tillbaka dem via pull-begäran. Du kan också använda problemspåraren för att rapportera fel, föreslå nya funktioner eller förbättringar, eller få idéer om hur du kan hjälpa till.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Välkommen till App Toolkit</string>
+    <string name="onboarding_welcome_description">Utforska funktionerna i vårt AppToolkit-bibliotek. Upptäck våra applikationer, alla byggda för att demonstrera och utnyttja kraften i vårt AppToolkit-bibliotek, vilket förbättrar din Android-utveckling och användarupplevelse.</string>
+    <string name="onboarding_feature1_title">Upptäck Våra Applikationer</string>
+    <string name="onboarding_feature1_description">App Toolkit presenterar ett urval av våra applikationer, var och en utformad för att belysa olika aspekter av vårt AppToolkit-bibliotek och förbättra din Android-upplevelse. Se vad som är möjligt med vårt AppToolkit-bibliotek!</string>
+    <string name="onboarding_personalization_title">Se Vårt AppToolkit-bibliotek i Aktion</string>
+    <string name="onboarding_personalization_description">Den här appen demonstrerar hur vårt AppToolkit-bibliotek kan användas för att bygga mångsidiga och användarfokuserade applikationer. Utforska våra appar för att se olika funktioner och implementeringar av biblioteket.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Kunde inte hämta våra applistningar</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Vad är App Toolkit?</string>
+    <string name="summary_preference_faq_1">App Toolkit är en applikation utformad för att presentera och demonstrera appar som utvecklats av oss med hjälp av vårt AppToolkit-bibliotek. Det är din guide för att utforska vårt ekosystem av applikationer och se vårt AppToolkit-bibliotek i aktion.</string>
+    <string name="question_2">Hur kommer jag åt de olika apparna som visas i App Toolkit?</string>
+    <string name="summary_preference_faq_2">App Toolkit listar våra olika applikationer. Genom att trycka på en applistning får du vanligtvis mer information och en länk för att installera eller öppna den från Google Play Butik, så att du kan uppleva den själv.</string>
+    <string name="question_3">Är apparna som visas i App Toolkit gratis?</string>
+    <string name="summary_preference_faq_3">Många av våra appar som visas i App Toolkit erbjuder en grundläggande uppsättning funktioner gratis. Vissa kan ha avancerade funktioner tillgängliga via en premiumversion eller köp i appen. Detaljer för varje app finns på respektive Play Butik-sida.</string>
+    <string name="question_4">Hur kan jag lära mig mer om en specifik listad app?</string>
+    <string name="summary_preference_faq_4">För fullständig information om en av våra appar, dess funktioner och användarrecensioner, tryck på appen i App Toolkit för att besöka dess sida på Google Play Butik.</string>
+    <string name="question_5">Var kan jag hitta hjälp eller support för en av era listade appar?</string>
+    <string name="summary_preference_faq_5">Support för våra enskilda appar tillhandahålls via deras respektive kanaler, vanligtvis specificerade på deras Play Butik-sida eller i själva appen. App Toolkit är till för att upptäcka dessa appar; för appspecifika problem, se den appens supportalternativ.</string>
+    <string name="question_6">Hur ofta uppdateras listan över era appar i App Toolkit?</string>
+    <string name="summary_preference_faq_6">Vi strävar efter att hålla App Toolkit uppdaterad med våra senaste och mest relevanta applikationer som använder vårt AppToolkit-bibliotek. Nya appar eller betydande uppdateringar kan visas här.</string>
+    <string name="question_7">Varför behöver App Toolkit behörigheter som internetåtkomst?</string>
+    <string name="summary_preference_faq_7">App Toolkit kräver internetåtkomst för att hämta den senaste listan över våra applikationer från Google Play Butik och visa deras information korrekt. Det kräver vanligtvis inga andra integritetskränkande behörigheter.</string>
+    <string name="question_8">Hur kan jag ge feedback om App Toolkit eller era appar?</string>
+    <string name="summary_preference_faq_8">Vi värdesätter din feedback om App Toolkit och våra enskilda appar! Du kan vanligtvis hitta ett alternativ för \"Återkoppling\" eller \"Kontakta oss\" i App Toolkits inställningar eller på vår utvecklarsida i Play Butik. Feedback om vårt AppToolkit-bibliotek i sig är också välkommen via lämpliga kanaler.</string>
+    <string name="question_9">Är mina data säkra när jag använder App Toolkit för att hitta era andra appar?</string>
+    <string name="summary_preference_faq_9">App Toolkit hämtar främst offentligt tillgänglig information om våra appar. När du väljer att installera eller använda en av våra listade appar gäller den appens egen integritetspolicy. Vi uppmuntrar dig att granska den. App Toolkits datahantering beskrivs i vår integritetspolicy.</string>
 </resources>

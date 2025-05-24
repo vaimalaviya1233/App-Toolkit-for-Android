@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Ce este Cart Calculator?</string>
-    <string name="summary_preference_faq_1">Cart Calculator este un manager de coș de cumpărături simplu, generic și gratuit și un calculator al totalului datorat care înlocuiește calculatorul obișnuit al dispozitivului pentru atunci când ești la magazinul alimentar sau la piață.</string>
-    <string name="question_2">Cum funcționează Cart Calculator?</string>
-    <string name="summary_preference_faq_2">Cart Calculator îți permite să îți gestionezi coșul de cumpărături adăugând produse și mărindu-le sau micșorându-le cantitățile. În orice moment, Cart Calculator afișează totalul datorat al produselor din coșul tău pe baza prețurilor și cantităților acestora.</string>
-    <string name="question_3">De ce ar trebui să folosesc Cart Calculator?</string>
-    <string name="summary_preference_faq_3">Cart Calculator te ajută să fii mereu conștient de cât cheltuiești chiar înainte de a ajunge la casa de marcat. Acest lucru este util mai ales atunci când trebuie să mergi la cumpărături cu un buget limitat.</string>
-    <string name="question_4">Pot folosi Cart Calculator în afara magazinelor alimentare sau a piețelor?</string>
-    <string name="summary_preference_faq_4">Da! Deoarece Cart Calculator este șocant de simplu și generic, îl poți folosi și în pub-uri, restaurante, cinematografe etc.</string>
-    <string name="question_5">Cum adaug un articol în coș folosind Cart Calculator?</string>
-    <string name="summary_preference_faq_5">Deschide-ți coșul și apasă butonul „Adaugă articol” din bara de acțiuni pentru a adăuga un nou produs în coș. Introduci numele, prețul și cantitatea acestuia, apoi dai clic pe butonul „Adaugă”.</string>
-    <string name="question_6">Cum măresc sau micșorez cantitatea unui articol din coș folosind Cart Calculator?</string>
-    <string name="summary_preference_faq_6">Găsește pur și simplu articolul în listă, apoi apasă butonul „+ (plus)” pentru a-i mări cantitatea sau butonul „- (minus)” pentru a-i micșora cantitatea.</string>
-    <string name="question_7">Cum elimin un articol din coș folosind Cart Calculator?</string>
-    <string name="summary_preference_faq_7">Pentru a elimina un produs din coș, glisează pur și simplu spre dreapta sau spre stânga sau redu-i cantitatea la zero, apoi selectează butonul „Șterge articol”.</string>
-    <string name="question_8">Cart Calculator este un software gratuit?</string>
-    <string name="summary_preference_faq_8">Da! Cart Calculator este cu mândrie un software gratuit distribuit sub licența GNU General Public License versiunea 3.</string>
-    <string name="question_9">Cum pot contribui la Cart Calculator?</string>
-    <string name="summary_preference_faq_9">Cea mai bună modalitate de a contribui la Cart Calculator este prin intermediul depozitului său <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. De acolo, îl poți bifurca (fork) și poți lucra la contribuțiile tale, iar mai târziu le poți trimite înapoi printr-o solicitare de extragere (pull request). De asemenea, poți utiliza instrumentul de urmărire a problemelor pentru a raporta erori, a propune noi funcții sau îmbunătățiri sau pentru a obține idei despre cum ai putea ajuta.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Bun venit la App Toolkit</string>
+    <string name="onboarding_welcome_description">Explorați capabilitățile bibliotecii noastre AppToolkit. Descoperiți aplicațiile noastre, toate construite pentru a demonstra și utiliza puterea bibliotecii noastre AppToolkit, îmbunătățindu-vă dezvoltarea Android și experiența utilizatorului.</string>
+    <string name="onboarding_feature1_title">Descoperiți Aplicațiile Noastre</string>
+    <string name="onboarding_feature1_description">App Toolkit vă prezintă o selecție a aplicațiilor noastre, fiecare concepută pentru a evidenția diferite aspecte ale bibliotecii noastre AppToolkit și pentru a vă îmbunătăți experiența Android. Vedeți ce este posibil cu biblioteca noastră AppToolkit!</string>
+    <string name="onboarding_personalization_title">Vedeți Biblioteca Noastră AppToolkit în Acțiune</string>
+    <string name="onboarding_personalization_description">Această aplicație demonstrează cum biblioteca noastră AppToolkit poate fi utilizată pentru a construi aplicații versatile și axate pe utilizator. Explorați aplicațiile noastre pentru a vedea diferite caracteristici și implementări ale bibliotecii.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Nu s-au putut prelua listele aplicațiilor noastre</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Ce este App Toolkit?</string>
+    <string name="summary_preference_faq_1">App Toolkit este o aplicație concepută pentru a prezenta și demonstra aplicații dezvoltate de noi folosind biblioteca noastră AppToolkit. Este ghidul dumneavoastră pentru explorarea ecosistemului nostru de aplicații și pentru a vedea biblioteca noastră AppToolkit în acțiune.</string>
+    <string name="question_2">Cum accesez diferitele aplicații afișate în App Toolkit?</string>
+    <string name="summary_preference_faq_2">App Toolkit listează diversele noastre aplicații. Atingerea unei liste de aplicații va oferi de obicei mai multe informații și un link pentru a o instala sau deschide din Magazinul Google Play, permițându-vă să o experimentați direct.</string>
+    <string name="question_3">Aplicațiile prezentate în App Toolkit sunt gratuite?</string>
+    <string name="summary_preference_faq_3">Multe dintre aplicațiile noastre prezentate în App Toolkit oferă gratuit un set de funcții de bază. Unele pot avea funcționalități avansate disponibile printr-o versiune premium sau achiziții în aplicație. Detalii pentru fiecare aplicație pot fi găsite pe pagina sa respectivă din Magazinul Play.</string>
+    <string name="question_4">Cum pot afla mai multe despre o anumită aplicație listată?</string>
+    <string name="summary_preference_faq_4">Pentru detalii complete despre una dintre aplicațiile noastre, caracteristicile sale și recenziile utilizatorilor, vă rugăm să atingeți aplicația în App Toolkit pentru a vizita pagina sa din Magazinul Google Play.</string>
+    <string name="question_5">Unde pot găsi ajutor sau suport pentru una dintre aplicațiile dvs. listate?</string>
+    <string name="summary_preference_faq_5">Suportul pentru aplicațiile noastre individuale este furnizat prin canalele lor respective, de obicei detaliate pe pagina lor din Magazinul Play sau în cadrul aplicației în sine. App Toolkit este pentru descoperirea acestor aplicații; pentru probleme specifice aplicației, vă rugăm să consultați opțiunile de suport ale acelei aplicații.</string>
+    <string name="question_6">Cât de des este actualizată lista aplicațiilor dvs. în App Toolkit?</string>
+    <string name="summary_preference_faq_6">Ne propunem să menținem App Toolkit actualizat cu cele mai recente și relevante aplicații ale noastre care utilizează biblioteca noastră AppToolkit. Aplicații noi sau actualizări semnificative pot fi prezentate aici.</string>
+    <string name="question_7">De ce App Toolkit are nevoie de permisiuni precum accesul la Internet?</string>
+    <string name="summary_preference_faq_7">App Toolkit necesită acces la Internet pentru a prelua cea mai recentă listă a aplicațiilor noastre din Magazinul Google Play și pentru a afișa informațiile acestora cu acuratețe. De obicei, nu necesită alte permisiuni invazive.</string>
+    <string name="question_8">Cum pot oferi feedback despre App Toolkit sau aplicațiile dvs.?</string>
+    <string name="summary_preference_faq_8">Apreciem feedback-ul dumneavoastră despre App Toolkit și aplicațiile noastre individuale! De obicei, puteți găsi o opțiune \"Feedback\" sau \"Contactați-ne\" în setările App Toolkit sau pe pagina noastră de dezvoltator din Magazinul Play. Feedback-ul despre biblioteca noastră AppToolkit în sine este, de asemenea, binevenit prin canalele corespunzătoare.</string>
+    <string name="question_9">Sunt datele mele în siguranță când utilizez App Toolkit pentru a găsi celelalte aplicații ale dvs.?</string>
+    <string name="summary_preference_faq_9">App Toolkit preia în principal informații disponibile public despre aplicațiile noastre. Când alegeți să instalați sau să utilizați una dintre aplicațiile noastre listate, se va aplica Politica de Confidențialitate proprie a acelei aplicații. Vă încurajăm să o revizuiți. Gestionarea datelor de către App Toolkit este prezentată în Politica noastră de Confidențialitate.</string>
 </resources>

@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Mi az a Kosár Kalkulátor?</string>
-    <string name="summary_preference_faq_1">A Kosár Kalkulátor egy egyszerű, általános és ingyenes bevásárlókosár-kezelő és végösszeg-kalkulátor, amely helyettesíti a hagyományos eszköz kalkulátorát, amikor Ön a boltban vagy a piacon van.</string>
-    <string name="question_2">Hogyan működik a Kosár Kalkulátor?</string>
-    <string name="summary_preference_faq_2">A Kosár Kalkulátor lehetővé teszi a bevásárlókosár kezelését termékek hozzáadásával, valamint mennyiségük növelésével vagy csökkentésével. A Kosár Kalkulátor bármikor megjeleníti a kosárban lévő termékek árai és mennyiségei alapján számított végösszeget.</string>
-    <string name="question_3">Miért érdemes használni a Kosár Kalkulátort?</string>
-    <string name="summary_preference_faq_3">A Kosár Kalkulátor segít abban, hogy mindig tisztában legyen azzal, mennyit költ, még mielőtt a pénztárhoz érne. Ez különösen akkor hasznos, ha szűkös költségvetéssel kell vásárolnia.</string>
-    <string name="question_4">Használhatom a Kosár Kalkulátort a boltokon vagy piacokon kívül is?</string>
-    <string name="summary_preference_faq_4">Igen! Mivel a Kosár Kalkulátor meglepően egyszerű és általános, használhatja kocsmákban, éttermekben, mozikban stb. is.</string>
-    <string name="question_5">Hogyan adhatok hozzá tételt a kosaramhoz a Kosár Kalkulátor használatával?</string>
-    <string name="summary_preference_faq_5">Nyissa meg a kosarát, és nyomja meg a \"Tétel hozzáadása\" gombot a Műveletsávon, hogy új terméket adjon a kosarához. Adja meg a nevét, árát és mennyiségét, majd kattintson a \"Hozzáadás\" gombra.</string>
-    <string name="question_6">Hogyan növelhetem vagy csökkenthetem egy tétel mennyiségét a kosaramban a Kosár Kalkulátor használatával?</string>
-    <string name="summary_preference_faq_6">Egyszerűen keresse meg a tételt a listában, majd nyomja meg a \"+ (plusz)\" gombot a mennyiség növeléséhez, vagy a \"- (mínusz)\" gombot a mennyiség csökkentéséhez.</string>
-    <string name="question_7">Hogyan távolíthatok el egy tételt a kosaramból a Kosár Kalkulátor használatával?</string>
-    <string name="summary_preference_faq_7">Egy termék eltávolításához a kosárból egyszerűen húzza jobbra vagy balra, vagy csökkentse a mennyiségét nullára, majd válassza a \"Tétel törlése\" gombot.</string>
-    <string name="question_8">A Kosár Kalkulátor ingyenes szoftver?</string>
-    <string name="summary_preference_faq_8">Igen! A Kosár Kalkulátor büszkén ingyenes szoftver, amelyet a GNU General Public License 3-as verziója alatt terjesztenek.</string>
-    <string name="question_9">Hogyan járulhatok hozzá a Kosár Kalkulátorhoz?</string>
-    <string name="summary_preference_faq_9">A Kosár Kalkulátorhoz a <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-tárhelyén keresztül járulhat hozzá a legjobban. Innen elágaztathatja (fork), dolgozhat a hozzájárulásain, majd beküldheti őket egy pull-kérés formájában. A hibakövetőt is használhatja hibák jelentésére, új funkciók vagy fejlesztések javaslatára, vagy ötleteket szerezhet, hogyan segíthet.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Üdvözli az App Toolkit</string>
+    <string name="onboarding_welcome_description">Fedezze fel AppToolkit könyvtárunk képességeit. Fedezze fel alkalmazásainkat, melyek mindegyike az AppToolkit könyvtárunk erejének bemutatására és kihasználására készült, javítva ezzel Android fejlesztési és felhasználói élményét.</string>
+    <string name="onboarding_feature1_title">Fedezze Fel Alkalmazásainkat</string>
+    <string name="onboarding_feature1_description">Az App Toolkit bemutatja Önnek alkalmazásaink válogatását, melyek mindegyike az AppToolkit könyvtárunk különböző aspektusainak kiemelésére és Android élményének javítására lett tervezve. Nézze meg, mi minden lehetséges AppToolkit könyvtárunkkal!</string>
+    <string name="onboarding_personalization_title">Tekintse Meg AppToolkit Könyvtárunkat Működés Közben</string>
+    <string name="onboarding_personalization_description">Ez az alkalmazás bemutatja, hogyan használható AppToolkit könyvtárunk sokoldalú és felhasználó-központú alkalmazások készítésére. Fedezze fel alkalmazásainkat, hogy megtekinthesse a könyvtár különböző funkcióit és implementációit.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Nem sikerült lekérni alkalmazáslistáinkat</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Mi az App Toolkit?</string>
+    <string name="summary_preference_faq_1">Az App Toolkit egy olyan alkalmazás, amelyet az általunk fejlesztett, AppToolkit könyvtárunkat használó alkalmazások bemutatására és demonstrálására terveztek. Ez az Ön útmutatója alkalmazás-ökoszisztémánk felfedezéséhez és AppToolkit könyvtárunk működés közbeni megtekintéséhez.</string>
+    <string name="question_2">Hogyan érhetem el az App Toolkitben megjelenített különböző alkalmazásokat?</string>
+    <string name="summary_preference_faq_2">Az App Toolkit felsorolja különböző alkalmazásainkat. Egy alkalmazáslistára koppintva általában több információt és egy linket kap a Google Play Áruházból történő telepítéshez vagy megnyitáshoz, lehetővé téve, hogy első kézből tapasztalja meg.</string>
+    <string name="question_3">Ingyenesek az App Toolkitben szereplő alkalmazások?</string>
+    <string name="summary_preference_faq_3">Sok, az App Toolkitben szereplő alkalmazásunk alapvető funkciókat kínál ingyenesen. Néhányuk rendelkezhet prémium verzióban vagy alkalmazáson belüli vásárlások révén elérhető fejlett funkciókkal. Az egyes alkalmazások részletei a megfelelő Play Áruház oldalukon találhatók.</string>
+    <string name="question_4">Hogyan tudhatok meg többet egy adott listázott alkalmazásról?</string>
+    <string name="summary_preference_faq_4">Egyik alkalmazásunkkal, annak funkcióival és felhasználói véleményeivel kapcsolatos teljes részletekért kérjük, koppintson az alkalmazásra az App Toolkitben, hogy meglátogassa annak oldalát a Google Play Áruházban.</string>
+    <string name="question_5">Hol találok segítséget vagy támogatást valamelyik listázott alkalmazásához?</string>
+    <string name="summary_preference_faq_5">Egyedi alkalmazásainkhoz a támogatást a megfelelő csatornáikon keresztül biztosítjuk, általában a Play Áruház oldalukon vagy magában az alkalmazásban részletezve. Az App Toolkit ezeknek az alkalmazásoknak a felfedezésére szolgál; alkalmazás-specifikus problémák esetén kérjük, forduljon az adott alkalmazás támogatási lehetőségeihez.</string>
+    <string name="question_6">Milyen gyakran frissül az alkalmazásai listája az App Toolkitben?</string>
+    <string name="summary_preference_faq_6">Célunk, hogy az App Toolkitet naprakészen tartsuk legújabb és legrelevánsabb alkalmazásainkkal, amelyek AppToolkit könyvtárunkat használják. Itt új alkalmazások vagy jelentős frissítések jelenhetnek meg.</string>
+    <string name="question_7">Miért van szüksége az App Toolkitnek olyan engedélyekre, mint az internet-hozzáférés?</string>
+    <string name="summary_preference_faq_7">Az App Toolkitnek internet-hozzáférésre van szüksége ahhoz, hogy lekérje alkalmazásaink legfrissebb listáját a Google Play Áruházból, és pontosan megjelenítse azok információit. Általában nem igényel más invazív engedélyeket.</string>
+    <string name="question_8">Hogyan adhatok visszajelzést az App Toolkitről vagy az alkalmazásairól?</string>
+    <string name="summary_preference_faq_8">Nagyra értékeljük visszajelzését az App Toolkitről és egyedi alkalmazásainkról! Általában talál egy \"Visszajelzés\" vagy \"Kapcsolatfelvétel\" opciót az App Toolkit beállításaiban vagy fejlesztői oldalunkon a Play Áruházban. Magáról az AppToolkit könyvtárunkról szóló visszajelzést is szívesen fogadjuk a megfelelő csatornákon keresztül.</string>
+    <string name="question_9">Biztonságban vannak az adataim, amikor az App Toolkitet használom más alkalmazásai megkeresésére?</string>
+    <string name="summary_preference_faq_9">Az App Toolkit elsősorban nyilvánosan elérhető információkat kér le alkalmazásainkról. Amikor úgy dönt, hogy telepíti vagy használja valamelyik listázott alkalmazásunkat, az adott alkalmazás saját Adatvédelmi Irányelvei érvényesülnek. Javasoljuk, hogy olvassa el. Az App Toolkit adatkezelését Adatvédelmi Irányelveink ismertetik.</string>
 </resources>

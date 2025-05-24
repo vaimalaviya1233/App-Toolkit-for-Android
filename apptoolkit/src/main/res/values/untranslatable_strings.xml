@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">AppToolkit</string>
-    <string name="app_full_name" translatable="false">AppToolkit</string>
+    <string name="app_full_name" translatable="false">AppToolkit for Android</string>
     <string name="bulgarian" translatable="false">Български</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">Français</string>

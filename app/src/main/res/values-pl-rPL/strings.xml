@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_1">Co to jest Kalkulator Koszyka?</string>
-    <string name="summary_preference_faq_1">Kalkulator Koszyka to prosty, ogólny i darmowy menedżer koszyka zakupów i kalkulator sumy należności, który zastępuje zwykły kalkulator urządzenia, gdy jesteś w sklepie spożywczym lub na targu.</string>
-    <string name="question_2">Jak działa Kalkulator Koszyka?</string>
-    <string name="summary_preference_faq_2">Kalkulator Koszyka umożliwia zarządzanie koszykiem zakupów poprzez dodawanie produktów oraz zwiększanie lub zmniejszanie ich ilości. W dowolnym momencie Kalkulator Koszyka wyświetla sumę należności za produkty w koszyku na podstawie ich cen i ilości.</string>
-    <string name="question_3">Dlaczego warto korzystać z Kalkulatora Koszyka?</string>
-    <string name="summary_preference_faq_3">Kalkulator Koszyka pomaga Ci zawsze wiedzieć, ile wydajesz, jeszcze przed dotarciem do kasy. Jest to szczególnie przydatne, gdy musisz robić zakupy z ograniczonym budżetem.</string>
-    <string name="question_4">Czy mogę używać Kalkulatora Koszyka poza sklepami spożywczymi lub targowiskami?</string>
-    <string name="summary_preference_faq_4">Tak! Ponieważ Kalkulator Koszyka jest szokująco prosty i ogólny, możesz go używać również w pubach, restauracjach, kinach itp.</string>
-    <string name="question_5">Jak dodać produkt do koszyka za pomocą Kalkulatora Koszyka?</string>
-    <string name="summary_preference_faq_5">Otwórz koszyk i naciśnij przycisk „Dodaj produkt” na pasku akcji, aby dodać nowy produkt do koszyka. Podaj jego nazwę, cenę i ilość, a następnie kliknij przycisk „Dodaj”.</string>
-    <string name="question_6">Jak zwiększyć lub zmniejszyć ilość produktu w koszyku za pomocą Kalkulatora Koszyka?</string>
-    <string name="summary_preference_faq_6">Po prostu znajdź produkt na liście, a następnie naciśnij przycisk „+ (plus)”, aby zwiększyć jego ilość, lub przycisk „- (minus)”, aby ją zmniejszyć.</string>
-    <string name="question_7">Jak usunąć produkt z koszyka za pomocą Kalkulatora Koszyka?</string>
-    <string name="summary_preference_faq_7">Aby usunąć produkt z koszyka, po prostu przesuń palcem w prawo lub w lewo lub zmniejsz jego ilość do zera, a następnie wybierz przycisk „Usuń produkt”.</string>
-    <string name="question_8">Czy Kalkulator Koszyka jest darmowym oprogramowaniem?</string>
-    <string name="summary_preference_faq_8">Tak! Kalkulator Koszyka to z dumą darmowe oprogramowanie rozpowszechniane na licencji GNU General Public License w wersji 3.</string>
-    <string name="question_9">Jak mogę przyczynić się do rozwoju Kalkulatora Koszyka?</string>
-    <string name="summary_preference_faq_9">Najlepszym sposobem na wniesienie wkładu w rozwój Kalkulatora Koszyka jest jego repozytorium <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Stamtąd możesz go rozwidlić i pracować nad swoim wkładem, a następnie odesłać go za pośrednictwem żądania ściągnięcia. Możesz również skorzystać z narzędzia do śledzenia problemów, aby zgłaszać błędy, proponować nowe funkcje lub ulepszenia lub uzyskać pomysły, w jaki sposób możesz pomóc.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Witamy w App Toolkit</string>
+    <string name="onboarding_welcome_description">Poznaj możliwości naszej biblioteki AppToolkit. Odkryj nasze aplikacje, wszystkie stworzone, aby demonstrować i wykorzystywać moc naszej biblioteki AppToolkit, usprawniając rozwój Androida i wrażenia użytkownika.</string>
+    <string name="onboarding_feature1_title">Odkryj Nasze Aplikacje</string>
+    <string name="onboarding_feature1_description">App Toolkit przedstawia wybór naszych aplikacji, z których każda została zaprojektowana, aby podkreślić różne aspekty naszej biblioteki AppToolkit i poprawić Twoje wrażenia z Androida. Zobacz, co jest możliwe dzięki naszej bibliotece AppToolkit!</string>
+    <string name="onboarding_personalization_title">Zobacz Naszą Bibliotekę AppToolkit w Akcji</string>
+    <string name="onboarding_personalization_description">Ta aplikacja demonstruje, jak nasza biblioteka AppToolkit może być używana do tworzenia wszechstronnych i zorientowanych na użytkownika aplikacji. Przeglądaj nasze aplikacje, aby zobaczyć różne funkcje i implementacje biblioteki.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Nie udało się pobrać list naszych aplikacji</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Czym jest App Toolkit?</string>
+    <string name="summary_preference_faq_1">App Toolkit to aplikacja zaprojektowana do prezentowania i demonstrowania aplikacji opracowanych przez nas przy użyciu naszej biblioteki AppToolkit. To Twój przewodnik po odkrywaniu naszego ekosystemu aplikacji i oglądaniu naszej biblioteki AppToolkit w akcji.</string>
+    <string name="question_2">Jak uzyskać dostęp do różnych aplikacji wyświetlanych w App Toolkit?</string>
+    <string name="summary_preference_faq_2">App Toolkit wyświetla listę naszych różnych aplikacji. Stuknięcie w listę aplikacji zazwyczaj dostarczy więcej informacji oraz link do zainstalowania lub otwarcia jej ze sklepu Google Play, co pozwoli Ci doświadczyć jej na własnej skórze.</string>
+    <string name="question_3">Czy aplikacje prezentowane w App Toolkit są darmowe?</string>
+    <string name="summary_preference_faq_3">Wiele naszych aplikacji prezentowanych w App Toolkit oferuje podstawowy zestaw funkcji za darmo. Niektóre mogą mieć zaawansowane funkcje dostępne w wersji premium lub poprzez zakupy w aplikacji. Szczegóły dotyczące каждой aplikacji można znaleźć na jej stronie w Sklepie Play.</string>
+    <string name="question_4">Jak mogę dowiedzieć się więcej o konkretnej wymienionej aplikacji?</string>
+    <string name="summary_preference_faq_4">Aby uzyskać pełne informacje o jednej z naszych aplikacji, jej funkcjach i opiniach użytkowników, stuknij w aplikację w App Toolkit, aby odwiedzić jej stronę w sklepie Google Play.</string>
+    <string name="question_5">Gdzie mogę znaleźć pomoc lub wsparcie dla jednej z wymienionych aplikacji?</string>
+    <string name="summary_preference_faq_5">Wsparcie dla naszych indywidualnych aplikacji jest świadczone za pośrednictwem ich odpowiednich kanałów, zwykle szczegółowo opisanych na ich stronie w Sklepie Play lub w samej aplikacji. App Toolkit służy do odkrywania tych aplikacji; w przypadku problemów specyficznych dla aplikacji, zapoznaj się z opcjami wsparcia tej aplikacji.</string>
+    <string name="question_6">Jak często aktualizowana jest lista Twoich aplikacji w App Toolkit?</string>
+    <string name="summary_preference_faq_6">Staramy się, aby App Toolkit był aktualizowany o nasze najnowsze i najistotniejsze aplikacje, które wykorzystują naszą bibliotekę AppToolkit. Nowe aplikacje lub znaczące aktualizacje mogą być tutaj prezentowane.</string>
+    <string name="question_7">Dlaczego App Toolkit potrzebuje uprawnień takich jak dostęp do Internetu?</string>
+    <string name="summary_preference_faq_7">App Toolkit wymaga dostępu do Internetu, aby pobrać najnowszą listę naszych aplikacji ze sklepu Google Play i dokładnie wyświetlić ich informacje. Zazwyczaj nie wymaga innych inwazyjnych uprawnień.</string>
+    <string name="question_8">Jak mogę przekazać opinię na temat App Toolkit lub Twoich aplikacji?</string>
+    <string name="summary_preference_faq_8">Cenimy Twoją opinię na temat App Toolkit i naszych indywidualnych aplikacji! Zazwyczaj możesz znaleźć opcję \"Opinia\" lub \"Skontaktuj się z nami\" w ustawieniach App Toolkit lub na naszej stronie dewelopera w Sklepie Play. Opinie na temat samej naszej biblioteki AppToolkit są również mile widziane za pośrednictwem odpowiednich kanałów.</string>
+    <string name="question_9">Czy moje dane są bezpieczne podczas korzystania z App Toolkit do wyszukiwania innych aplikacji?</string>
+    <string name="summary_preference_faq_9">App Toolkit pobiera głównie publicznie dostępne informacje o naszych aplikacjach. Kiedy zdecydujesz się zainstalować lub używać jednej z naszych wymienionych aplikacji, zastosowanie będzie miała Polityka Prywatności tej aplikacji. Zachęcamy do jej przejrzenia. Sposób przetwarzania danych przez App Toolkit jest opisany w naszej Polityce Prywatności.</string>
 </resources>
