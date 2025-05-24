@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Paid
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -100,7 +99,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                         view.playSoundEffect(SoundEffectConstants.CLICK)
                                         activity.initiatePurchase(productId = "low_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
-                                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize))
+                                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize))
                                     ButtonIconSpacer()
                                     Text(text = supportData.productDetails["low_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                                 }
@@ -114,7 +113,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                         activity.initiatePurchase(productId = "normal_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
-                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
+                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                     )
                                     ButtonIconSpacer()
                                     Text(text = supportData.productDetails["normal_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
@@ -135,7 +134,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                         activity.initiatePurchase(productId = "high_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
-                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
+                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                     )
                                     ButtonIconSpacer()
                                     Text(text = supportData.productDetails["high_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
@@ -150,7 +149,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                                         activity.initiatePurchase(productId = "extreme_donation" , productDetailsMap = supportData.productDetails , billingClient = billingClient)
                                     }) {
                                     Icon(
-                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize)
+                                        Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                     )
                                     ButtonIconSpacer()
                                     Text(text = supportData.productDetails["extreme_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
@@ -175,7 +174,7 @@ fun SupportScreenContent(paddingValues : PaddingValues , activity : SupportActiv
                         .fillMaxWidth()
                         .bounceClick()
                         .padding(all = SizeConstants.LargeSize)) {
-                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(ButtonDefaults.IconSize))
+                    Icon(imageVector = Icons.Outlined.Paid , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize))
                     ButtonIconSpacer()
                     Text(text = stringResource(id = R.string.web_ad))
                 }

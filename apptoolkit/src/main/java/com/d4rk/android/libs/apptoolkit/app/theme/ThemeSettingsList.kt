@@ -32,11 +32,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ThemeSettingsList(paddingValues : PaddingValues) {
-    val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-
     val defaultThemeMode : String = stringResource(id = R.string.follow_system)
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val themeMode : String = dataStore.themeMode.collectAsState(initial = defaultThemeMode).value
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
     val themeOptions : List<String> = listOf(defaultThemeMode , stringResource(id = R.string.dark_mode) , stringResource(id = R.string.light_mode))

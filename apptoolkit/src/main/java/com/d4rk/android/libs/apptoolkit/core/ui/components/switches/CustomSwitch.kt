@@ -8,10 +8,10 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun CustomSwitch(
@@ -33,13 +33,13 @@ fun CustomSwitch(
                 Icon(
                     Icons.Filled.Check,
                     contentDescription = null,
-                    modifier = Modifier.size(size = SwitchDefaults.IconSize)
+                    modifier = Modifier.size(size = SizeConstants.SwitchIconSize)
                 )
             } else {
                 Icon(
                     Icons.Filled.Close,
                     contentDescription = null,
-                    modifier = Modifier.size(size = SwitchDefaults.IconSize)
+                    modifier = Modifier.size(size = SizeConstants.SwitchIconSize)
                 )
             }
         }

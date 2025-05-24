@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun CustomFunOnboardingPageTab() {
@@ -22,7 +23,7 @@ fun CustomFunOnboardingPageTab() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
+            .padding(SizeConstants.ExtraLargeIncreasedSize),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

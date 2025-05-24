@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Какво е Cart Calculator?</string>
+    <string name="summary_preference_faq_1">Cart Calculator е прост, общ и безплатен мениджър на пазарски колички и калкулатор за обща дължима сума, който замества обикновения калкулатор на устройството, когато сте в магазина за хранителни стоки или на пазара.</string>
+    <string name="question_2">Как работи Cart Calculator?</string>
+    <string name="summary_preference_faq_2">Cart Calculator ви позволява да управлявате вашата пазарска количка, като добавяте продукти и увеличавате или намалявате техните количества. По всяко време Cart Calculator показва общата дължима сума на продуктите в вашата количка въз основа на техните цени и количества.</string>
+    <string name="question_3">Защо да използвам Cart Calculator?</string>
+    <string name="summary_preference_faq_3">Cart Calculator ви помага винаги да сте наясно колко харчите, още преди да стигнете до касата. Това е особено полезно, когато трябва да пазарувате с ограничен бюджет.</string>
+    <string name="question_4">Мога ли да използвам Cart Calculator извън магазини за хранителни стоки или пазари?</string>
+    <string name="summary_preference_faq_4">Да! Тъй като Cart Calculator е шокиращо прост и общ, можете да го използвате и в заведения, ресторанти, кина и др.</string>
+    <string name="question_5">Как да добавя артикул към моята количка с помощта на Cart Calculator?</string>
+    <string name="summary_preference_faq_5">Отворете вашата количка и натиснете бутона „Добавяне на артикул“ в лентата с действия, за да добавите нов продукт към вашата количка. Въведете неговото име, цена и количество и след това щракнете върху бутона „Добавяне“.</string>
+    <string name="question_6">Как да увелича или намаля количеството на артикул в моята количка с помощта на Cart Calculator?</string>
+    <string name="summary_preference_faq_6">Просто намерете артикула в списъка и след това натиснете бутона „+ (плюс)“, за да увеличите неговото количество, или бутона „- (минус)“, за да намалите неговото количество.</string>
+    <string name="question_7">Как да премахна артикул от моята количка с помощта на Cart Calculator?</string>
+    <string name="summary_preference_faq_7">За да премахнете продукт от вашата количка, просто плъзнете надясно или наляво или намалете количеството му до нула и след това изберете бутона „Изтриване на артикул“.</string>
+    <string name="question_8">Cart Calculator безплатен софтуер ли е?</string>
+    <string name="summary_preference_faq_8">Да! Cart Calculator е горд безплатен софтуер, разпространяван под GNU General Public License версия 3.</string>
+    <string name="question_9">Как мога да допринеса за Cart Calculator?</string>
+    <string name="summary_preference_faq_9">Най-добрият начин да допринесете за Cart Calculator е чрез неговото хранилище <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Оттам можете да го разклоните и да работите върху вашите приноси, а по-късно да ги изпратите обратно чрез заявка за изтегляне. Можете също да използвате тракера за проблеми, за да докладвате за грешки, да предлагате нови функции или подобрения или да получавате идеи как бихте могли да помогнете.</string>
+</resources>

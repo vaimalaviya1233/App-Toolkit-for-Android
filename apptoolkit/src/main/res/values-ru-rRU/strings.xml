@@ -11,6 +11,31 @@
     <string name="agree">Согласен</string>
     <string name="error_loading_consent_info">Не удалось загрузить информацию о согласии</string>
 
+    <string name="skip_button_text">ПРОПУСТИТЬ</string>
+    <string name="skip_button_content_description">Пропустить</string>
+    <string name="back_button_content_description">Назад</string>
+    <string name="back_button_text">НАЗАД</string>
+    <string name="done_button_content_description">Готово</string>
+    <string name="done_button_text">ГОТОВО</string>
+    <string name="next_button_content_description">Далее</string>
+    <string name="next_button_text">ДАЛЕЕ</string>
+    <string name="onboarding_theme_title">Выберите свой стиль</string>
+    <string name="onboarding_theme_subtitle">Выберите, как должно выглядеть приложение.</string>
+    <string name="onboarding_theme_light_desc">Яркий и энергичный.</string>
+    <string name="onboarding_theme_dark_desc">Приятный для глаз.</string>
+    <string name="onboarding_theme_system_desc">Соответствует настройкам вашего устройства.</string>
+    <string name="onboarding_amoled_mode_desc">Более глубокие чёрные для OLED-экранов.</string>
+    <string name="selected">Выбрано</string>
+    <string name="onboarding_crashlytics_title">Помогите нам стать лучше</string>
+    <string name="onboarding_crashlytics_description">Разрешите приложению отправлять анонимные данные об использовании и отчёты о сбоях. Это помогает нам исправлять ошибки и улучшать ваш опыт. Личная информация никогда не собирается.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Отправка данных активна.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Отправка данных неактивна.</string>
+    <string name="onboarding_crashlytics_privacy_info">Ваша конфиденциальность важна. Мы используем эти данные только для исправления ошибок и улучшения функций. Для получения более подробной информации, пожалуйста, ознакомьтесь с нашей политикой конфиденциальности.</string>
+    <string name="learn_more_privacy_policy">Ознакомиться с нашей Политикой конфиденциальности</string>
+    <string name="onboarding_complete_icon_desc">Начальная настройка завершена</string>
+    <string name="onboarding_final_title">Всё готово!</string>
+    <string name="onboarding_final_description">Спасибо за персонализацию вашего опыта. Теперь вы готовы исследовать все функции. Наслаждайтесь!</string>
+
     <string name="navigation_drawer_open">Открыть меню навигации</string>
     <string name="go_back">Назад</string>
 

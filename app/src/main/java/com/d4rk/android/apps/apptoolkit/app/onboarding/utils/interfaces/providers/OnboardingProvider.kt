@@ -11,6 +11,7 @@ import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.constants.OnboardingKeys
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.CrashlyticsOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.FinalOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.ThemeOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
 
@@ -47,7 +48,14 @@ class AppOnboardingProvider : OnboardingProvider {
                 content = {
                     CrashlyticsOnboardingPageTab()
                 }
-            )
+            ),
+            OnboardingPage.CustomPage(
+                key = OnboardingKeys.ONBOARDING_COMPLETE,
+                content = {
+                    FinalOnboardingPageTab()
+                }
+            ),
+
         ).filter {
             when (it) {
                 is OnboardingPage.DefaultPage -> it.isEnabled

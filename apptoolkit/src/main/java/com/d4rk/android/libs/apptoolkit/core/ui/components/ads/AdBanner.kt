@@ -19,8 +19,8 @@ import org.koin.compose.koinInject
 
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoProvider : BuildInfoProvider = koinInject()) {
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val showAds : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsState(initial = true)
 
     if (showAds) {

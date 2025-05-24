@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.AnimatedMorphingShapeContainer
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun OnboardingDefaultPageLayout(page: OnboardingPage.DefaultPage) {
@@ -39,7 +40,7 @@ fun OnboardingDefaultPageLayout(page: OnboardingPage.DefaultPage) {
             text = page.description,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 32.dp)
+            modifier = Modifier.padding(horizontal = SizeConstants.ExtraLargeIncreasedSize)
         )
     }
 }

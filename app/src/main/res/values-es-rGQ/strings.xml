@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">¿Qué es la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_1">La Calculadora de Carrito es un administrador de carrito de compras simple, genérico y gratuito y una calculadora de total adeudado que reemplaza a la calculadora ordinaria del dispositivo para cuando estás en la tienda de comestibles o en el mercado.</string>
+    <string name="question_2">¿Cómo funciona la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_2">La Calculadora de Carrito le permite administrar su carrito de compras agregando productos y aumentando o disminuyendo sus cantidades. En cualquier momento, la Calculadora de Carrito muestra el total adeudado de los productos en su carrito en función de sus precios y cantidades.</string>
+    <string name="question_3">¿Por qué debería utilizar la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_3">La Calculadora de Carrito le ayuda a estar siempre al tanto de cuánto está gastando incluso antes de llegar a la caja. Esto es especialmente útil cuando tiene que ir de compras con un presupuesto limitado.</string>
+    <string name="question_4">¿Puedo usar la Calculadora de Carrito fuera de las tiendas de comestibles o los mercados?</string>
+    <string name="summary_preference_faq_4">¡Sí! Dado que la Calculadora de Carrito es sorprendentemente simple y genérica, también puede usarla en bares, restaurantes, cines, etc.</string>
+    <string name="question_5">¿Cómo agrego un artículo a mi carrito usando la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_5">Abra su carrito y presione el botón "Agregar artículo" en la barra de acciones para agregar un nuevo producto a su carrito. Informe su nombre, precio y cantidad y luego haga clic en el botón "Agregar".</string>
+    <string name="question_6">¿Cómo aumento o disminuyo la cantidad de un artículo en mi carrito usando la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_6">Simplemente busque el artículo en la lista y luego presione el botón "+ (más)" para aumentar su cantidad o el botón "- (menos)" para disminuir su cantidad.</string>
+    <string name="question_7">¿Cómo elimino un artículo de mi carrito usando la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_7">Para eliminar un producto de su carrito, simplemente deslice el dedo hacia la derecha o hacia la izquierda o reduzca su cantidad a cero y luego seleccione el botón "Eliminar artículo".</string>
+    <string name="question_8">¿Es la Calculadora de Carrito un software gratuito?</string>
+    <string name="summary_preference_faq_8">¡Sí! La Calculadora de Carrito es un software orgullosamente gratuito distribuido bajo la Licencia Pública General GNU versión 3.</string>
+    <string name="question_9">¿Cómo puedo contribuir a la Calculadora de Carrito?</string>
+    <string name="summary_preference_faq_9">La mejor manera de contribuir a la Calculadora de Carrito es a través de su repositorio <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Desde allí, puede bifurcarlo y trabajar en sus contribuciones, y luego enviarlas de vuelta a través de una solicitud de extracción. También puede usar el rastreador de problemas para informar errores, proponer nuevas funciones o mejoras, u obtener ideas sobre cómo podría ayudar.</string>
+</resources>

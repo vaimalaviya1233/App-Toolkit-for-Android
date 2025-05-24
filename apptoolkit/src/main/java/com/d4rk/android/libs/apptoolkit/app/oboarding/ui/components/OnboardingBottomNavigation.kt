@@ -33,8 +33,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -64,10 +67,10 @@ fun OnboardingBottomNavigation(
                                       } , modifier = Modifier.bounceClick()
                         ) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft , contentDescription = "Back" , modifier = Modifier.size(ButtonDefaults.IconSize)
+                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft , contentDescription = stringResource(id = R.string.back_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                             )
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                            Text("BACK")
+                            Text(text = stringResource(id = R.string.back_button_text))
                         }
                     }
                 }
@@ -82,20 +85,20 @@ fun OnboardingBottomNavigation(
             ) {
                 val isLastPage = pagerState.currentPage == pageCount - 1
                 Button(
-                    onClick = onNextClicked , modifier = Modifier.bounceClick()
+                    onClick = onNextClicked , modifier = Modifier.animateContentSize().bounceClick()
                 ) {
                     if (isLastPage) {
                         Icon(
-                            imageVector = Icons.Filled.Check , contentDescription = "Done" , modifier = Modifier.size(ButtonDefaults.IconSize)
+                            imageVector = Icons.Filled.Check , contentDescription = stringResource(id = R.string.done_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                        Text("DONE")
+                        Text(text = stringResource(id = R.string.done_button_text))
                     }
                     else {
-                        Text("NEXT")
+                        Text(text = stringResource(id = R.string.next_button_text))
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight , contentDescription = "Next" , modifier = Modifier.size(ButtonDefaults.IconSize)
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight , contentDescription = stringResource(id = R.string.next_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                         )
                     }
                 }

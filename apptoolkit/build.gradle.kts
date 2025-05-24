@@ -99,6 +99,9 @@ dependencies {
     // Koin
     api(dependencyNotation = libs.bundles.koin)
 
+    // Konfetti
+    api(dependencyNotation = libs.konfetti.compose)
+
     // Lifecycle
     api(dependencyNotation = libs.androidx.lifecycle.runtime.ktx)
     api(dependencyNotation = libs.androidx.lifecycle.livedata.ktx)

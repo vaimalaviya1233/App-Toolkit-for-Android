@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Apa itu Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_1">Kalkulator Keranjang adalah pengelola keranjang belanja dan kalkulator total tagihan yang sederhana, umum, dan gratis yang menggantikan kalkulator perangkat biasa saat Anda berada di toko kelontong atau di pasar.</string>
+    <string name="question_2">Bagaimana cara kerja Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_2">Kalkulator Keranjang memungkinkan Anda untuk mengelola keranjang belanja Anda dengan menambahkan produk dan menambah atau mengurangi jumlahnya. Setiap saat, Kalkulator Keranjang menampilkan total tagihan produk di keranjang Anda berdasarkan harga dan jumlahnya.</string>
+    <string name="question_3">Mengapa saya harus menggunakan Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_3">Kalkulator Keranjang membantu Anda untuk selalu mengetahui berapa banyak yang Anda belanjakan bahkan sebelum mencapai kasir. Ini sangat berguna ketika Anda harus berbelanja dengan anggaran terbatas.</string>
+    <string name="question_4">Bisakah saya menggunakan Kalkulator Keranjang di luar toko kelontong atau pasar?</string>
+    <string name="summary_preference_faq_4">Ya! Karena Kalkulator Keranjang sangat sederhana dan umum, Anda juga dapat menggunakannya di pub, restoran, bioskop, dll.</string>
+    <string name="question_5">Bagaimana cara menambahkan item ke keranjang saya menggunakan Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_5">Buka keranjang Anda dan tekan tombol \"Tambahkan item\" di Bilah Tindakan untuk menambahkan produk baru ke keranjang Anda. Anda menginformasikan nama, harga, dan jumlahnya, lalu klik tombol \"Tambahkan\".</string>
+    <string name="question_6">Bagaimana cara menambah atau mengurangi jumlah item di keranjang saya menggunakan Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_6">Cukup temukan item dalam daftar lalu tekan tombol \"+ (plus)\" untuk menambah jumlahnya atau tombol \"- (minus)\" untuk mengurangi jumlahnya.</string>
+    <string name="question_7">Bagaimana cara menghapus item dari keranjang saya menggunakan Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_7">Untuk menghapus produk dari keranjang Anda, cukup geser ke kanan atau ke kiri atau turunkan jumlahnya menjadi nol lalu pilih tombol \"Hapus item\".</string>
+    <string name="question_8">Apakah Kalkulator Keranjang merupakan perangkat lunak gratis?</string>
+    <string name="summary_preference_faq_8">Ya! Kalkulator Keranjang dengan bangga merupakan perangkat lunak gratis yang didistribusikan di bawah Lisensi Publik Umum GNU versi 3.</string>
+    <string name="question_9">Bagaimana saya dapat berkontribusi pada Kalkulator Keranjang?</string>
+    <string name="summary_preference_faq_9">Cara terbaik untuk berkontribusi pada Kalkulator Keranjang adalah melalui repositori <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-nya. Dari sana, Anda dapat melakukan fork dan mengerjakan kontribusi Anda, dan kemudian mengirimkannya kembali melalui pull request. Anda juga dapat menggunakan pelacak masalah untuk melaporkan bug, mengusulkan fitur atau penyempurnaan baru, atau mendapatkan ide tentang bagaimana Anda dapat membantu.</string>
+</resources>

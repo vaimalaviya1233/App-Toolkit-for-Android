@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">カート計算機とは何ですか？</string>
+    <string name="summary_preference_faq_1">カート計算機は、食料品店や市場にいるときに通常のデバイスの計算機に取って代わる、シンプルで一般的で無料のショッピングカートマネージャーおよび合計期日計算機です。</string>
+    <string name="question_2">カート計算機はどのように機能しますか？</string>
+    <string name="summary_preference_faq_2">カート計算機を使用すると、製品を追加したり、数量を増やしたり減らしたりして、ショッピングカートを管理できます。カート計算機は、いつでも、カート内の製品の価格と数量に基づいて、合計期日を表示します。</string>
+    <string name="question_3">なぜカート計算機を使用する必要があるのですか？</string>
+    <string name="summary_preference_faq_3">カート計算機は、チェックアウトに到達する前でも、常に自分がいくら使っているかを認識するのに役立ちます。これは、予算内で買い物をする必要がある場合に特に役立ちます。</string>
+    <string name="question_4">食料品店や市場以外でカート計算機を使用できますか？</string>
+    <string name="summary_preference_faq_4">はい！カート計算機は驚くほどシンプルで一般的であるため、パブ、レストラン、映画館などでも使用できます。</string>
+    <string name="question_5">カート計算機を使用してカートにアイテムを追加するにはどうすればよいですか？</string>
+    <string name="summary_preference_faq_5">カートを開き、アクションバーの[アイテムを追加]ボタンを押して、カートに新しい製品を追加します。名前、価格、数量を入力してから、[追加]ボタンをクリックします。</string>
+    <string name="question_6">カート計算機を使用してカート内のアイテムの数量を増減するにはどうすればよいですか？</string>
+    <string name="summary_preference_faq_6">リスト内のアイテムを見つけて、[+（プラス）]ボタンを押して数量を増やすか、[-（マイナス）]ボタンを押して数量を減らします。</string>
+    <string name="question_7">カート計算機を使用してカートからアイテムを削除するにはどうすればよいですか？</string>
+    <string name="summary_preference_faq_7">カートから製品を削除するには、右または左にスワイプするか、数量をゼロにしてから、[アイテムを削除]ボタンを選択します。</string>
+    <string name="question_8">カート計算機は無料のソフトウェアですか？</string>
+    <string name="summary_preference_faq_8">はい！カート計算機は、GNU General Public Licenseバージョン3の下で配布されている誇り高いフリーソフトウェアです。</string>
+    <string name="question_9">カート計算機に貢献するにはどうすればよいですか？</string>
+    <string name="summary_preference_faq_9">カート計算機に貢献する最善の方法は、<a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>リポジトリを使用することです。そこから、フォークして貢献に取り組み、後でプルリクエストを介して送り返すことができます。課題トラッカーを使用して、バグを報告したり、新機能や機能強化を提案したり、どのように役立つかについてのアイデアを得たりすることもできます。</string>
+</resources>

@@ -11,6 +11,31 @@
     <string name="agree">Accepter</string>
     <string name="error_loading_consent_info">Échec du chargement des informations de consentement</string>
 
+    <string name="skip_button_text">PASSER</string>
+    <string name="skip_button_content_description">Passer</string>
+    <string name="back_button_content_description">Retour</string>
+    <string name="back_button_text">RETOUR</string>
+    <string name="done_button_content_description">Terminé</string>
+    <string name="done_button_text">TERMINÉ</string>
+    <string name="next_button_content_description">Suivant</string>
+    <string name="next_button_text">SUIVANT</string>
+    <string name="onboarding_theme_title">Choisissez votre style</string>
+    <string name="onboarding_theme_subtitle">Sélectionnez l\'apparence de l\'application.</string>
+    <string name="onboarding_theme_light_desc">Lumineux et énergique.</string>
+    <string name="onboarding_theme_dark_desc">Agréable pour les yeux.</string>
+    <string name="onboarding_theme_system_desc">Correspond à votre appareil.</string>
+    <string name="onboarding_amoled_mode_desc">Noirs plus profonds pour les écrans OLED.</string>
+    <string name="selected">Sélectionné</string>
+    <string name="onboarding_crashlytics_title">Aidez-nous à améliorer</string>
+    <string name="onboarding_crashlytics_description">Autorisez l\'application à envoyer des données d\'utilisation anonymes et des rapports d\'erreur. Cela nous aide à corriger les bugs et à améliorer votre expérience. Aucune information personnelle n\'est jamais collectée.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Le rapport de données est actif.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Le rapport de données est inactif.</string>
+    <string name="onboarding_crashlytics_privacy_info">Votre confidentialité est importante. Nous utilisons ces données uniquement pour corriger les bugs et améliorer les fonctionnalités. Pour plus de détails, veuillez consulter notre politique de confidentialité.</string>
+    <string name="learn_more_privacy_policy">Consultez notre politique de confidentialité</string>
+    <string name="onboarding_complete_icon_desc">Intégration terminée</string>
+    <string name="onboarding_final_title">Vous êtes prêt !</string>
+    <string name="onboarding_final_description">Merci d\'avoir personnalisé votre expérience. Vous êtes maintenant prêt à explorer toutes les fonctionnalités. Amusez-vous !</string>
+
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="go_back">Retour</string>
 

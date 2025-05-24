@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Vad är Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_1">Varukorgsberäknaren är en enkel, generisk och gratis varukorgshanterare och totalsummeberäknare som ersätter den vanliga enhetens kalkylator när du är i mataffären eller på marknaden.</string>
+    <string name="question_2">Hur fungerar Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_2">Med Varukorgsberäknaren kan du hantera din varukorg genom att lägga till produkter och öka eller minska deras kvantiteter. Varukorgsberäknaren visar när som helst totalsumman för produkterna i din varukorg baserat på deras priser och kvantiteter.</string>
+    <string name="question_3">Varför ska jag använda Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_3">Varukorgsberäknaren hjälper dig att alltid vara medveten om hur mycket du spenderar redan innan du når kassan. Detta är särskilt användbart när du måste handla med en budget.</string>
+    <string name="question_4">Kan jag använda Varukorgsberäknaren utanför mataffärer eller marknader?</string>
+    <string name="summary_preference_faq_4">Ja! Eftersom Varukorgsberäknaren är chockerande enkel och generisk kan du också använda den på pubar, restauranger, biografer etc.</string>
+    <string name="question_5">Hur lägger jag till ett objekt i min varukorg med Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_5">Öppna din varukorg och tryck på knappen \"Lägg till objekt\" i åtgärdsfältet för att lägga till en ny produkt i din varukorg. Ange dess namn, pris och kvantitet och klicka sedan på knappen \"Lägg till\".</string>
+    <string name="question_6">Hur ökar eller minskar jag kvantiteten på ett objekt i min varukorg med Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_6">Hitta helt enkelt objektet i listan och tryck sedan på knappen \"+ (plus)\" för att öka dess kvantitet eller knappen \"- (minus)\" för att minska dess kvantitet.</string>
+    <string name="question_7">Hur tar jag bort ett objekt från min varukorg med Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_7">För att ta bort en produkt från din varukorg, svep helt enkelt åt höger eller vänster eller släpp dess kvantitet till noll och välj sedan knappen \"Ta bort objekt\".</string>
+    <string name="question_8">Är Varukorgsberäknaren gratis programvara?</string>
+    <string name="summary_preference_faq_8">Ja! Varukorgsberäknaren är stolt gratis programvara som distribueras under GNU General Public License version 3.</string>
+    <string name="question_9">Hur kan jag bidra till Varukorgsberäknaren?</string>
+    <string name="summary_preference_faq_9">Det bästa sättet att bidra till Varukorgsberäknaren är genom dess <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-lagringsplats. Därifrån kan du gaffla den och arbeta med dina bidrag och senare skicka tillbaka dem via pull-begäran. Du kan också använda problemspåraren för att rapportera fel, föreslå nya funktioner eller förbättringar, eller få idéer om hur du kan hjälpa till.</string>
+</resources>

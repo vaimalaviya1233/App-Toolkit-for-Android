@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">什麼是購物車計算機？</string>
+    <string name="summary_preference_faq_1">購物車計算機是一個簡單、通用且免費的購物車管理器和總到期計算器，可在您在雜貨店或市場時取代普通設備的計算器。</string>
+    <string name="question_2">購物車計算機如何運作？</string>
+    <string name="summary_preference_faq_2">購物車計算機允許您通過添加產品和增加或減少其數量來管理您的購物車。購物車計算機隨時根據產品的價格和數量顯示購物車中產品的總到期金額。</string>
+    <string name="question_3">我為什麼要使用購物車計算機？</string>
+    <string name="summary_preference_faq_3">購物車計算機可幫助您始終了解您在到達結帳處之前的花費金額。這在您必須按預算購物時特別有用。</string>
+    <string name="question_4">我可以在雜貨店或市場之外使用購物車計算機嗎？</string>
+    <string name="summary_preference_faq_4">是的！由於購物車計算機非常簡單和通用，您還可以在酒吧、餐館、電影院等場所使用它。</string>
+    <string name="question_5">如何使用購物車計算機將商品添加到我的購物車？</string>
+    <string name="summary_preference_faq_5">打開您的購物車，然後按操作欄中的“添加商品”按鈕將新產品添加到您的購物車中。您告知其名稱、價格和數量，然後單擊“添加”按鈕。</string>
+    <string name="question_6">如何使用購物車計算機增加或減少購物車中商品的數量？</string>
+    <string name="summary_preference_faq_6">只需在列表中找到該商品，然後按“+（加號）”按鈕增加其數量或按“-（減號）”按鈕減少其數量。</string>
+    <string name="question_7">如何使用購物車計算機從我的購物車中刪除商品？</string>
+    <string name="summary_preference_faq_7">要從購物車中刪除產品，只需向右或向左滑動或將其數量降至零，然後選擇“刪除商品”按鈕。</string>
+    <string name="question_8">購物車計算機是免費軟體嗎？</string>
+    <string name="summary_preference_faq_8">是的！購物車計算機是自豪地根據 GNU 通用公共許可證版本 3 分發的免費軟體。</string>
+    <string name="question_9">我如何為購物車計算機做出貢獻？</string>
+    <string name="summary_preference_faq_9">為購物車計算機做出貢獻的最佳方式是通過其 <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> 存儲庫。從那裡，您可以分叉它並處理您的貢獻，然後通過拉取請求將它們發回。您還可以使用問題跟踪器來報告錯誤、提出新功能或增強功能，或獲取有關如何提供幫助的想法。</string>
+</resources>

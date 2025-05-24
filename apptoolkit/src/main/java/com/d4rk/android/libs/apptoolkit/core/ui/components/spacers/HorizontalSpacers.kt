@@ -6,6 +6,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
+@Composable
+fun ExtraExtraLargeHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.ExtraExtraLargeSize))
+}
+
+@Composable
+fun ExtraLargeIncreasedHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.ExtraLargeIncreasedSize))
+}
+
 /**
  * Creates a horizontal spacer with extra-large width (28dp).
  */

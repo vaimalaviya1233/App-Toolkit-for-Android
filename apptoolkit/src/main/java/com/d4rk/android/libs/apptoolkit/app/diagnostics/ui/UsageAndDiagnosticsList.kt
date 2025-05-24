@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : BuildInfoProvider) {
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val switchState : State<Boolean> = dataStore.usageAndDiagnostics(default = ! configProvider.isDebugBuild).collectAsState(initial = ! configProvider.isDebugBuild)
 

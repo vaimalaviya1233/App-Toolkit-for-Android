@@ -11,6 +11,31 @@
     <string name="agree">Elfogadom</string>
     <string name="error_loading_consent_info">A hozzájárulási információ betöltése sikertelen</string>
 
+    <string name="skip_button_text">KIHAGYÁS</string>
+    <string name="skip_button_content_description">Kihagyás</string>
+    <string name="back_button_content_description">Vissza</string>
+    <string name="back_button_text">VISSZA</string>
+    <string name="done_button_content_description">Kész</string>
+    <string name="done_button_text">KÉSZ</string>
+    <string name="next_button_content_description">Tovább</string>
+    <string name="next_button_text">TOVÁBB</string>
+    <string name="onboarding_theme_title">Válassza ki a stílusát</string>
+    <string name="onboarding_theme_subtitle">Válassza ki, hogyan nézzen ki az alkalmazás.</string>
+    <string name="onboarding_theme_light_desc">Világos és energikus.</string>
+    <string name="onboarding_theme_dark_desc">Kíméletes a szemnek.</string>
+    <string name="onboarding_theme_system_desc">Megfelel az eszközének.</string>
+    <string name="onboarding_amoled_mode_desc">Mélyebb feketék OLED képernyőkhöz.</string>
+    <string name="selected">Kiválasztva</string>
+    <string name="onboarding_crashlytics_title">Segítsen nekünk fejlődni</string>
+    <string name="onboarding_crashlytics_description">Engedélyezze az alkalmazásnak, hogy névtelen használati adatokat és összeomlási jelentéseket küldjön. Ez segít nekünk kijavítani a hibákat és javítani az élményét. Soha nem gyűjtünk személyes adatokat.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Az adatok jelentése aktív.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Az adatok jelentése inaktív.</string>
+    <string name="onboarding_crashlytics_privacy_info">Az Ön adatvédelme fontos. Ezeket az adatokat csak hibajavításra és funkciófejlesztésre használjuk. További részletekért kérjük, tekintse át adatvédelmi irányelveinket.</string>
+    <string name="learn_more_privacy_policy">Tekintse át adatvédelmi irányelveinket</string>
+    <string name="onboarding_complete_icon_desc">Bevezetés befejezve</string>
+    <string name="onboarding_final_title">Minden készen áll!</string>
+    <string name="onboarding_final_description">Köszönjük, hogy személyre szabta az élményét. Most már készen áll az összes funkció felfedezésére. Jó szórakozást!</string>
+
     <string name="navigation_drawer_open">Navigációs menü megnyitása</string>
     <string name="go_back">Vissza</string>
 

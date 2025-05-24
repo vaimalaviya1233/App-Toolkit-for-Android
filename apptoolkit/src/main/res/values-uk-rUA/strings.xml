@@ -11,6 +11,31 @@
     <string name="agree">Погодитися</string>
     <string name="error_loading_consent_info">Не вдалося завантажити інформацію про згоду</string>
 
+    <string name="skip_button_text">ПРОПУСТИТИ</string>
+    <string name="skip_button_content_description">Пропустити</string>
+    <string name="back_button_content_description">Назад</string>
+    <string name="back_button_text">НАЗАД</string>
+    <string name="done_button_content_description">Готово</string>
+    <string name="done_button_text">ГОТОВО</string>
+    <string name="next_button_content_description">Далі</string>
+    <string name="next_button_text">ДАЛІ</string>
+    <string name="onboarding_theme_title">Оберіть свій стиль</string>
+    <string name="onboarding_theme_subtitle">Виберіть, як має виглядати додаток.</string>
+    <string name="onboarding_theme_light_desc">Яскравий та енергійний.</string>
+    <string name="onboarding_theme_dark_desc">Приємний для очей.</string>
+    <string name="onboarding_theme_system_desc">Відповідає налаштуванням вашого пристрою.</string>
+    <string name="onboarding_amoled_mode_desc">Глибші чорні кольори для OLED екранів.</string>
+    <string name="selected">Вибрано</string>
+    <string name="onboarding_crashlytics_title">Допоможіть нам покращити</string>
+    <string name="onboarding_crashlytics_description">Дозвольте додатку надсилати анонімні дані про використання та звіти про збої. Це допомагає нам виправляти помилки та покращувати ваш досвід. Особиста інформація ніколи не збирається.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Звітність даних активна.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Звітність даних неактивна.</string>
+    <string name="onboarding_crashlytics_privacy_info">Ваша конфіденційність важлива. Ми використовуємо ці дані лише для виправлення помилок та покращення функцій. Для отримання додаткової інформації, будь ласка, перегляньте нашу політику конфіденційності.</string>
+    <string name="learn_more_privacy_policy">Переглянути нашу Політику конфіденційності</string>
+    <string name="onboarding_complete_icon_desc">Початкове налаштування завершено</string>
+    <string name="onboarding_final_title">Ви все налаштували!</string>
+    <string name="onboarding_final_description">Дякуємо за персоналізацію вашого досвіду. Тепер ви готові досліджувати всі функції. Насолоджуйтесь!</string>
+
     <string name="navigation_drawer_open">Відкрити меню навігації</string>
     <string name="go_back">Повернутися</string>
 

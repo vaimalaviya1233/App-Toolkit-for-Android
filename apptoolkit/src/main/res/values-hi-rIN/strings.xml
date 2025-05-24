@@ -11,6 +11,31 @@
     <string name="agree">सहमत</string>
     <string name="error_loading_consent_info">सहमति जानकारी लोड करने में विफल</string>
 
+    <string name="skip_button_text">छोड़ें</string>
+    <string name="skip_button_content_description">छोड़ें</string>
+    <string name="back_button_content_description">वापस</string>
+    <string name="back_button_text">वापस</string>
+    <string name="done_button_content_description">हो गया</string>
+    <string name="done_button_text">हो गया</string>
+    <string name="next_button_content_description">अगला</string>
+    <string name="next_button_text">अगला</string>
+    <string name="onboarding_theme_title">अपनी शैली चुनें</string>
+    <string name="onboarding_theme_subtitle">चुनें कि आप ऐप को कैसा दिखाना चाहते हैं।</string>
+    <string name="onboarding_theme_light_desc">उज्ज्वल और ऊर्जावान।</string>
+    <string name="onboarding_theme_dark_desc">आंखों के लिए आसान।</string>
+    <string name="onboarding_theme_system_desc">आपके डिवाइस से मेल खाता है।</string>
+    <string name="onboarding_amoled_mode_desc">OLED स्क्रीन के लिए गहरे काले रंग।</string>
+    <string name="selected">चयनित</string>
+    <string name="onboarding_crashlytics_title">हमें सुधारने में मदद करें</string>
+    <string name="onboarding_crashlytics_description">ऐप को अनाम उपयोग डेटा और क्रैश रिपोर्ट भेजने की अनुमति दें। यह हमें बग्स को ठीक करने और आपके अनुभव को बेहतर बनाने में मदद करता है। कोई भी व्यक्तिगत जानकारी कभी एकत्र नहीं की जाती है।</string>
+    <string name="onboarding_crashlytics_enabled_desc">डेटा रिपोर्टिंग सक्रिय है।</string>
+    <string name="onboarding_crashlytics_disabled_desc">डेटा रिपोर्टिंग निष्क्रिय है।</string>
+    <string name="onboarding_crashlytics_privacy_info">आपकी गोपनीयता महत्वपूर्ण है। हम इस डेटा का उपयोग केवल बग्स को ठीक करने और सुविधाओं को बेहतर बनाने के लिए करते हैं। अधिक जानकारी के लिए, कृपया हमारी गोपनीयता नीति की समीक्षा करें।</string>
+    <string name="learn_more_privacy_policy">हमारी गोपनीयता नीति की समीक्षा करें</string>
+    <string name="onboarding_complete_icon_desc">ऑनबोर्डिंग पूर्ण</string>
+    <string name="onboarding_final_title">आप पूरी तरह तैयार हैं!</string>
+    <string name="onboarding_final_description">अपने अनुभव को वैयक्तिकृत करने के लिए धन्यवाद। अब आप सभी सुविधाओं का पता लगाने के लिए तैयार हैं। आनंद लें!</string>
+
     <string name="navigation_drawer_open">नेविगेशन ड्रॉअर खोलें</string>
     <string name="go_back">वापस जाओ</string>
 

@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers
 
+import android.content.Context
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -36,8 +37,8 @@ fun Modifier.bounceClick(
     animationEnabled : Boolean = true ,
 ) : Modifier = composed {
     var buttonState : ButtonState by remember { mutableStateOf(value = ButtonState.Idle) }
-    val context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val bouncyButtonsEnabled : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
     val scale : Float by animateFloatAsState(
         if (buttonState == ButtonState.Pressed && animationEnabled && bouncyButtonsEnabled) 0.96f else 1f , label = "Button Press Scale Animation"

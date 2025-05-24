@@ -11,6 +11,31 @@
     <string name="agree">Setuju</string>
     <string name="error_loading_consent_info">Gagal memuat informasi persetujuan</string>
 
+    <string name="skip_button_text">LEWATI</string>
+    <string name="skip_button_content_description">Lewati</string>
+    <string name="back_button_content_description">Kembali</string>
+    <string name="back_button_text">KEMBALI</string>
+    <string name="done_button_content_description">Selesai</string>
+    <string name="done_button_text">SELESAI</string>
+    <string name="next_button_content_description">Selanjutnya</string>
+    <string name="next_button_text">SELANJUTNYA</string>
+    <string name="onboarding_theme_title">Pilih Gaya Anda</string>
+    <string name="onboarding_theme_subtitle">Pilih bagaimana Anda ingin tampilan aplikasi.</string>
+    <string name="onboarding_theme_light_desc">Terang dan energik.</string>
+    <string name="onboarding_theme_dark_desc">Nyaman di mata.</string>
+    <string name="onboarding_theme_system_desc">Sesuai dengan perangkat Anda.</string>
+    <string name="onboarding_amoled_mode_desc">Hitam lebih pekat untuk layar OLED.</string>
+    <string name="selected">Terpilih</string>
+    <string name="onboarding_crashlytics_title">Bantu Kami Meningkatkan</string>
+    <string name="onboarding_crashlytics_description">Izinkan aplikasi mengirim data penggunaan anonim dan laporan kerusakan. Ini membantu kami memperbaiki bug dan membuat pengalaman Anda lebih baik. Tidak ada informasi pribadi yang pernah dikumpulkan.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Pelaporan data aktif.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Pelaporan data tidak aktif.</string>
+    <string name="onboarding_crashlytics_privacy_info">Privasi Anda penting. Kami hanya menggunakan data ini untuk memperbaiki bug dan meningkatkan fitur. Untuk lebih jelasnya, harap tinjau kebijakan privasi kami.</string>
+    <string name="learn_more_privacy_policy">Tinjau Kebijakan Privasi kami</string>
+    <string name="onboarding_complete_icon_desc">Orientasi Selesai</string>
+    <string name="onboarding_final_title">Anda Siap!</string>
+    <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati!</string>
+
     <string name="navigation_drawer_open">Buka menu navigasi</string>
     <string name="go_back">Kembali</string>
 

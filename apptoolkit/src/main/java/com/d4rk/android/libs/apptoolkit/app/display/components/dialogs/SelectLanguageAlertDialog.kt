@@ -34,8 +34,8 @@ import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun SelectLanguageAlertDialog(onDismiss : () -> Unit , onLanguageSelected : (String) -> Unit) {
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val selectedLanguage = remember { mutableStateOf(value = "") }
     val languageEntries : List<String> = stringArrayResource(id = R.array.preference_language_entries).toList()
     val languageValues : List<String> = stringArrayResource(id = R.array.preference_language_values).toList()

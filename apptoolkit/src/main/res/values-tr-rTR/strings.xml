@@ -11,6 +11,31 @@
     <string name="agree">Kabul et</string>
     <string name="error_loading_consent_info">Onay bilgileri yüklenemedi</string>
 
+    <string name="skip_button_text">ATLA</string>
+    <string name="skip_button_content_description">Atla</string>
+    <string name="back_button_content_description">Geri</string>
+    <string name="back_button_text">GERİ</string>
+    <string name="done_button_content_description">Bitti</string>
+    <string name="done_button_text">BİTTİ</string>
+    <string name="next_button_content_description">İleri</string>
+    <string name="next_button_text">İLERİ</string>
+    <string name="onboarding_theme_title">Tarzınızı Seçin</string>
+    <string name="onboarding_theme_subtitle">Uygulamanın nasıl görünmesini istediğinizi seçin.</string>
+    <string name="onboarding_theme_light_desc">Parlak ve enerjik.</string>
+    <string name="onboarding_theme_dark_desc">Gözleri yormaz.</string>
+    <string name="onboarding_theme_system_desc">Cihazınızla eşleşir.</string>
+    <string name="onboarding_amoled_mode_desc">OLED ekranlar için daha derin siyahlar.</string>
+    <string name="selected">Seçili</string>
+    <string name="onboarding_crashlytics_title">Geliştirmemize Yardım Edin</string>
+    <string name="onboarding_crashlytics_description">Uygulamanın anonim kullanım verileri ve kilitlenme raporları göndermesine izin verin. Bu, hataları düzeltmemize ve deneyiminizi iyileştirmemize yardımcı olur. Hiçbir kişisel bilgi toplanmaz.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Veri raporlama aktif.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Veri raporlama pasif.</string>
+    <string name="onboarding_crashlytics_privacy_info">Gizliliğiniz önemlidir. Bu verileri yalnızca hataları düzeltmek ve özellikleri geliştirmek için kullanırız. Daha fazla ayrıntı için lütfen gizlilik politikamızı inceleyin.</string>
+    <string name="learn_more_privacy_policy">Gizlilik Politikamızı İnceleyin</string>
+    <string name="onboarding_complete_icon_desc">Başlangıç Tamamlandı</string>
+    <string name="onboarding_final_title">Her Şey Hazır!</string>
+    <string name="onboarding_final_description">Deneyiminizi kişiselleştirdiğiniz için teşekkürler. Artık tüm özellikleri keşfetmeye hazırsınız. Keyfini çıkarın!</string>
+
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
     <string name="go_back">Geri dön</string>
 

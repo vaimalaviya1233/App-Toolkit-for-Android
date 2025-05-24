@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Що таке Cart Calculator?</string>
+    <string name="summary_preference_faq_1">Cart Calculator – це простий, універсальний і безкоштовний менеджер кошика для покупок і калькулятор загальної суми, який замінює звичайний калькулятор пристрою, коли ви перебуваєте в продуктовому магазині чи на ринку.</string>
+    <string name="question_2">Як працює Cart Calculator?</string>
+    <string name="summary_preference_faq_2">Cart Calculator дозволяє вам керувати своїм кошиком, додаючи товари та збільшуючи або зменшуючи їх кількість. У будь-який час Cart Calculator відображає загальну вартість товарів у вашому кошику на основі їхніх цін і кількості.</string>
+    <string name="question_3">Навіщо мені використовувати Cart Calculator?</string>
+    <string name="summary_preference_faq_3">Cart Calculator допомагає вам завжди бути в курсі того, скільки ви витрачаєте, ще до того, як дійдете до каси. Це особливо корисно, коли вам потрібно робити покупки в рамках бюджету.</string>
+    <string name="question_4">Чи можу я використовувати Cart Calculator за межами продуктових магазинів чи ринків?</string>
+    <string name="summary_preference_faq_4">Так! Оскільки Cart Calculator напрочуд простий і універсальний, ви також можете використовувати його в пабах, ресторанах, кінотеатрах тощо.</string>
+    <string name="question_5">Як додати товар до кошика за допомогою Cart Calculator?</string>
+    <string name="summary_preference_faq_5">Відкрийте кошик і натисніть кнопку «Додати товар» на панелі дій, щоб додати новий товар до кошика. Введіть його назву, ціну та кількість, а потім натисніть кнопку «Додати».</string>
+    <string name="question_6">Як збільшити або зменшити кількість товару в кошику за допомогою Cart Calculator?</string>
+    <string name="summary_preference_faq_6">Просто знайдіть товар у списку, а потім натисніть кнопку «+ (плюс)», щоб збільшити його кількість, або кнопку «- (мінус)», щоб зменшити його кількість.</string>
+    <string name="question_7">Як видалити товар із кошика за допомогою Cart Calculator?</string>
+    <string name="summary_preference_faq_7">Щоб видалити товар із кошика, просто проведіть пальцем праворуч або ліворуч або зменште його кількість до нуля, а потім виберіть кнопку «Видалити товар».</string>
+    <string name="question_8">Чи є Cart Calculator безкоштовним програмним забезпеченням?</string>
+    <string name="summary_preference_faq_8">Так! Cart Calculator є безкоштовним програмним забезпеченням, яке розповсюджується за ліцензією GNU General Public License версії 3.</string>
+    <string name="question_9">Як я можу зробити внесок у Cart Calculator?</string>
+    <string name="summary_preference_faq_9">Найкращий спосіб зробити внесок у Cart Calculator – це через його репозиторій <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Звідти ви можете зробити форк і працювати над своїми внесками, а потім надіслати їх назад через запит на злиття. Ви також можете використовувати трекер проблем, щоб повідомляти про помилки, пропонувати нові функції чи вдосконалення або отримувати ідеї щодо того, як ви можете допомогти.</string>
+</resources>

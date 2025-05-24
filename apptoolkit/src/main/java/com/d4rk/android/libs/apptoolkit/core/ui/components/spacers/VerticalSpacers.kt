@@ -7,6 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
+@Composable
+fun ExtraExtraLargeVerticalSpacer() {
+    Spacer(modifier = Modifier.height(height = SizeConstants.ExtraExtraLargeSize))
+}
+
+@Composable
+fun ExtraLargeIncreasedVerticalSpacer() {
+    Spacer(modifier = Modifier.height(height = SizeConstants.ExtraLargeIncreasedSize))
+}
+
 /**
  * Creates a vertical spacer with extra-large height (28p).
  */

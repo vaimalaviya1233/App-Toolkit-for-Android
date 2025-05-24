@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provider : DisplaySettingsProvider) {
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
     var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
 

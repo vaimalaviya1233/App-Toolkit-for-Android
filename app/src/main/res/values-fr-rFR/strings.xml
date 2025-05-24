@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Qu\'est-ce que Cart Calculator ?</string>
+    <string name="summary_preference_faq_1">Cart Calculator est un gestionnaire de panier d\'achat simple, générique et gratuit et un calculateur de total dû qui remplace la calculatrice ordinaire de l\'appareil lorsque vous êtes à l\'épicerie ou au marché.</string>
+    <string name="question_2">Comment fonctionne Cart Calculator ?</string>
+    <string name="summary_preference_faq_2">Cart Calculator vous permet de gérer votre panier d\'achat en ajoutant des produits et en augmentant ou en diminuant leurs quantités. À tout moment, Cart Calculator affiche le total dû des produits dans votre panier en fonction de leurs prix et de leurs quantités.</string>
+    <string name="question_3">Pourquoi devrais-je utiliser Cart Calculator ?</string>
+    <string name="summary_preference_faq_3">Cart Calculator vous aide à toujours savoir combien vous dépensez avant même d\'atteindre la caisse. Ceci est particulièrement utile lorsque vous devez faire des courses avec un budget limité.</string>
+    <string name="question_4">Puis-je utiliser Cart Calculator en dehors des épiceries ou des marchés ?</string>
+    <string name="summary_preference_faq_4">Oui ! Puisque Cart Calculator est étonnamment simple et générique, vous pouvez également l\'utiliser dans les pubs, les restaurants, les cinémas, etc.</string>
+    <string name="question_5">Comment ajouter un article à mon panier à l\'aide de Cart Calculator ?</string>
+    <string name="summary_preference_faq_5">Ouvrez votre panier et appuyez sur le bouton "Ajouter un article" dans la barre d\'action pour ajouter un nouveau produit à votre panier. Vous indiquez son nom, son prix et sa quantité, puis cliquez sur le bouton "Ajouter".</string>
+    <string name="question_6">Comment augmenter ou diminuer la quantité d\'un article dans mon panier à l\'aide de Cart Calculator ?</string>
+    <string name="summary_preference_faq_6">Trouvez simplement l\'article dans la liste, puis appuyez sur le bouton "+ (plus)" pour augmenter sa quantité ou sur le bouton "- (moins)" pour diminuer sa quantité.</string>
+    <string name="question_7">Comment supprimer un article de mon panier à l\'aide de Cart Calculator ?</string>
+    <string name="summary_preference_faq_7">Pour supprimer un produit de votre panier, faites simplement glisser votre doigt vers la droite ou la gauche ou baissez sa quantité à zéro, puis sélectionnez le bouton "Supprimer l\'article".</string>
+    <string name="question_8">Cart Calculator est-il un logiciel gratuit ?</string>
+    <string name="summary_preference_faq_8">Oui ! Cart Calculator est fièrement un logiciel gratuit distribué sous la licence publique générale GNU version 3.</string>
+    <string name="question_9">Comment puis-je contribuer à Cart Calculator ?</string>
+    <string name="summary_preference_faq_9">La meilleure façon de contribuer à Cart Calculator est de passer par son référentiel <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. De là, vous pouvez le forker et travailler sur vos contributions, puis les renvoyer via une demande d\'extraction. Vous pouvez également utiliser l\'outil de suivi des problèmes pour signaler des bogues, proposer de nouvelles fonctionnalités ou améliorations, ou obtenir des idées sur la façon dont vous pourriez aider.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Co to jest Kalkulator Koszyka?</string>
+    <string name="summary_preference_faq_1">Kalkulator Koszyka to prosty, ogólny i darmowy menedżer koszyka zakupów i kalkulator sumy należności, który zastępuje zwykły kalkulator urządzenia, gdy jesteś w sklepie spożywczym lub na targu.</string>
+    <string name="question_2">Jak działa Kalkulator Koszyka?</string>
+    <string name="summary_preference_faq_2">Kalkulator Koszyka umożliwia zarządzanie koszykiem zakupów poprzez dodawanie produktów oraz zwiększanie lub zmniejszanie ich ilości. W dowolnym momencie Kalkulator Koszyka wyświetla sumę należności za produkty w koszyku na podstawie ich cen i ilości.</string>
+    <string name="question_3">Dlaczego warto korzystać z Kalkulatora Koszyka?</string>
+    <string name="summary_preference_faq_3">Kalkulator Koszyka pomaga Ci zawsze wiedzieć, ile wydajesz, jeszcze przed dotarciem do kasy. Jest to szczególnie przydatne, gdy musisz robić zakupy z ograniczonym budżetem.</string>
+    <string name="question_4">Czy mogę używać Kalkulatora Koszyka poza sklepami spożywczymi lub targowiskami?</string>
+    <string name="summary_preference_faq_4">Tak! Ponieważ Kalkulator Koszyka jest szokująco prosty i ogólny, możesz go używać również w pubach, restauracjach, kinach itp.</string>
+    <string name="question_5">Jak dodać produkt do koszyka za pomocą Kalkulatora Koszyka?</string>
+    <string name="summary_preference_faq_5">Otwórz koszyk i naciśnij przycisk „Dodaj produkt” na pasku akcji, aby dodać nowy produkt do koszyka. Podaj jego nazwę, cenę i ilość, a następnie kliknij przycisk „Dodaj”.</string>
+    <string name="question_6">Jak zwiększyć lub zmniejszyć ilość produktu w koszyku za pomocą Kalkulatora Koszyka?</string>
+    <string name="summary_preference_faq_6">Po prostu znajdź produkt na liście, a następnie naciśnij przycisk „+ (plus)”, aby zwiększyć jego ilość, lub przycisk „- (minus)”, aby ją zmniejszyć.</string>
+    <string name="question_7">Jak usunąć produkt z koszyka za pomocą Kalkulatora Koszyka?</string>
+    <string name="summary_preference_faq_7">Aby usunąć produkt z koszyka, po prostu przesuń palcem w prawo lub w lewo lub zmniejsz jego ilość do zera, a następnie wybierz przycisk „Usuń produkt”.</string>
+    <string name="question_8">Czy Kalkulator Koszyka jest darmowym oprogramowaniem?</string>
+    <string name="summary_preference_faq_8">Tak! Kalkulator Koszyka to z dumą darmowe oprogramowanie rozpowszechniane na licencji GNU General Public License w wersji 3.</string>
+    <string name="question_9">Jak mogę przyczynić się do rozwoju Kalkulatora Koszyka?</string>
+    <string name="summary_preference_faq_9">Najlepszym sposobem na wniesienie wkładu w rozwój Kalkulatora Koszyka jest jego repozytorium <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Stamtąd możesz go rozwidlić i pracować nad swoim wkładem, a następnie odesłać go za pośrednictwem żądania ściągnięcia. Możesz również skorzystać z narzędzia do śledzenia problemów, aby zgłaszać błędy, proponować nowe funkcje lub ulepszenia lub uzyskać pomysły, w jaki sposób możesz pomóc.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Sepet Hesaplayıcı nedir?</string>
+    <string name="summary_preference_faq_1">Sepet Hesaplayıcı, markette veya pazarda olduğunuzda sıradan cihazın hesap makinesinin yerini alan basit, genel ve ücretsiz bir alışveriş sepeti yöneticisi ve toplam borç hesaplayıcısıdır.</string>
+    <string name="question_2">Sepet Hesaplayıcı nasıl çalışır?</string>
+    <string name="summary_preference_faq_2">Sepet Hesaplayıcı, ürünleri ekleyerek ve miktarlarını artırarak veya azaltarak alışveriş sepetinizi yönetmenize olanak tanır. Sepet Hesaplayıcı, herhangi bir zamanda, sepetinizdeki ürünlerin fiyatlarına ve miktarlarına göre toplam borcunu görüntüler.</string>
+    <string name="question_3">Neden Sepet Hesaplayıcı kullanmalıyım?</string>
+    <string name="summary_preference_faq_3">Sepet Hesaplayıcı, kasaya ulaşmadan önce bile ne kadar harcadığınızın her zaman farkında olmanıza yardımcı olur. Bu, özellikle bütçeyle alışveriş yapmanız gerektiğinde kullanışlıdır.</string>
+    <string name="question_4">Sepet Hesaplayıcı\'yı marketler veya pazarlar dışında kullanabilir miyim?</string>
+    <string name="summary_preference_faq_4">Evet! Sepet Hesaplayıcı şaşırtıcı derecede basit ve genel olduğundan, barlarda, restoranlarda, sinemalarda vb. de kullanabilirsiniz.</string>
+    <string name="question_5">Sepet Hesaplayıcı\'yı kullanarak sepeti</string>
+    <string name="summary_preference_faq_5">Sepetinizi açın ve sepetinize yeni bir ürün eklemek için Eylem Çubuğundaki "Ürün ekle" düğmesine basın. Adını, fiyatını ve miktarını girin ve ardından "Ekle" düğmesine tıklayın.</string>
+    <string name="question_6">Sepet Hesaplayıcı\'yı kullanarak sepetimdeki bir ürünün miktarını nasıl artırır veya azaltırım?</string>
+    <string name="summary_preference_faq_6">Listede ürünü bulun ve ardından miktarını artırmak için "+ (artı)" düğmesine veya miktarını azaltmak için "- (eksi)" düğmesine basın.</string>
+    <string name="question_7">Sepet Hesaplayıcı\'yı kullanarak sepetimden bir ürünü nasıl kaldırırım?</string>
+    <string name="summary_preference_faq_7">Sepetinizden bir ürünü kaldırmak için sağa veya sola kaydırın veya miktarını sıfıra düşürün ve ardından "Ürünü sil" düğmesini seçin.</string>
+    <string name="question_8">Sepet Hesaplayıcı ücretsiz bir yazılım mı?</string>
+    <string name="summary_preference_faq_8">Evet! Sepet Hesaplayıcı, GNU Genel Kamu Lisansı sürüm 3 kapsamında dağıtılan gurur verici bir ücretsiz yazılımdır.</string>
+    <string name="question_9">Sepet Hesaplayıcı\'ya nasıl katkıda bulunabilirim?</string>
+    <string name="summary_preference_faq_9">Sepet Hesaplayıcı\'ya katkıda bulunmanın en iyi yolu <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a> deposudur. Oradan, onu çatallayabilir ve katkılarınız üzerinde çalışabilir ve daha sonra bunları çekme isteği yoluyla geri gönderebilirsiniz. Ayrıca hata izleyiciyi hataları bildirmek, yeni özellikler veya geliştirmeler önermek veya nasıl yardımcı olabileceğiniz konusunda fikir edinmek için de kullanabilirsiniz.</string>
+</resources>

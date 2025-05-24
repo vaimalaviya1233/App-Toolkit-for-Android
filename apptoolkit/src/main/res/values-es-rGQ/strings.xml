@@ -11,6 +11,31 @@
     <string name="agree">Aceptar</string>
     <string name="error_loading_consent_info">Error al cargar la información de consentimiento</string>
 
+    <string name="skip_button_text">OMITIR</string>
+    <string name="skip_button_content_description">Omitir</string>
+    <string name="back_button_content_description">Atrás</string>
+    <string name="back_button_text">ATRÁS</string>
+    <string name="done_button_content_description">Hecho</string>
+    <string name="done_button_text">HECHO</string>
+    <string name="next_button_content_description">Siguiente</string>
+    <string name="next_button_text">SIGUIENTE</string>
+    <string name="onboarding_theme_title">Elige tu estilo</string>
+    <string name="onboarding_theme_subtitle">Selecciona cómo quieres que se vea la aplicación.</string>
+    <string name="onboarding_theme_light_desc">Brillante y enérgico.</string>
+    <string name="onboarding_theme_dark_desc">Suave para la vista.</string>
+    <string name="onboarding_theme_system_desc">Coincide con tu dispositivo.</string>
+    <string name="onboarding_amoled_mode_desc">Negros más profundos para pantallas OLED.</string>
+    <string name="selected">Seleccionado</string>
+    <string name="onboarding_crashlytics_title">Ayúdanos a mejorar</string>
+    <string name="onboarding_crashlytics_description">Permite que la aplicación envíe datos de uso anónimos e informes de fallos. Esto nos ayuda a corregir errores y mejorar tu experiencia. Nunca se recopila información personal.</string>
+    <string name="onboarding_crashlytics_enabled_desc">El envío de datos está activo.</string>
+    <string name="onboarding_crashlytics_disabled_desc">El envío de datos está inactivo.</string>
+    <string name="onboarding_crashlytics_privacy_info">Tu privacidad es importante. Solo usamos estos datos para corregir errores y mejorar funciones. Para más detalles, revisa nuestra política de privacidad.</string>
+    <string name="learn_more_privacy_policy">Revisar nuestra Política de Privacidad</string>
+    <string name="onboarding_complete_icon_desc">Proceso de incorporación completado</string>
+    <string name="onboarding_final_title">¡Todo listo!</string>
+    <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
+
     <string name="navigation_drawer_open">Abrir el menú de navegación</string>
     <string name="go_back">Volver</string>
 

@@ -35,19 +35,20 @@ import androidx.graphics.shapes.Cubic
 import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.star
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
-private const val MORPH_ANIMATION_DURATION_MS = 600
-private const val INITIAL_DELAY_MS = 500L
-private const val PRE_MORPH_ROTATION_DURATION_MS = 800L
+private const val MORPH_ANIMATION_DURATION_MS = 200
+private const val INITIAL_DELAY_MS = 400L
+private const val PRE_MORPH_ROTATION_DURATION_MS = 600L
 private const val POST_MORPH_VIEW_DELAY_MS = 800L
 private const val SCALE_DOWN_FACTOR = 0.92f
-private const val BASE_ROTATION_SPEED_DPS = 120f
+private const val BASE_ROTATION_SPEED_DPS = 144f
 private const val MORPH_SPIN_ROTATION_SPEED_DPS = 360f
 
-val defaultRounding : CornerRounding = CornerRounding(radius = 0.15f , smoothing = 1f)
+val defaultRounding : CornerRounding = CornerRounding(radius = 0.16f , smoothing = 1f)
 
 val shapePool : List<RoundedPolygon> = listOf(
     RoundedPolygon(numVertices = 3 , rounding = defaultRounding) ,
@@ -55,9 +56,10 @@ val shapePool : List<RoundedPolygon> = listOf(
     RoundedPolygon(numVertices = 5 , rounding = defaultRounding) ,
     RoundedPolygon(numVertices = 6 , rounding = defaultRounding) ,
     RoundedPolygon(numVertices = 8 , rounding = defaultRounding) ,
-    RoundedPolygon(numVertices = 12 , rounding = defaultRounding) ,
+    RoundedPolygon.star(numVerticesPerRadius = 2 , innerRadius = 0.5f , rounding = defaultRounding) ,
     RoundedPolygon.star(numVerticesPerRadius = 5 , innerRadius = 0.5f , rounding = defaultRounding) ,
     RoundedPolygon.star(numVerticesPerRadius = 7 , innerRadius = 0.6f , rounding = defaultRounding) ,
+    RoundedPolygon.star(numVerticesPerRadius = 9 , innerRadius = 0.5f , rounding = defaultRounding) ,
 )
 
 @Composable
@@ -155,7 +157,7 @@ fun AnimatedMorphingShapeContainer(imageVector : ImageVector) {
 
         Box(
             modifier = Modifier
-                    .padding(16.dp)
+                    .padding(SizeConstants.LargeSize)
                     .graphicsLayer {
                         rotationZ = - rotation.value
                     }) {

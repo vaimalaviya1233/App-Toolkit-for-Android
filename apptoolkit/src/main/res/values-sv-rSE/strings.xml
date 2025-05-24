@@ -11,6 +11,31 @@
     <string name="agree">Godkänn</string>
     <string name="error_loading_consent_info">Misslyckades med att läsa in samtyckesinformationen</string>
 
+    <string name="skip_button_text">HOPPA ÖVER</string>
+    <string name="skip_button_content_description">Hoppa över</string>
+    <string name="back_button_content_description">Tillbaka</string>
+    <string name="back_button_text">TILLBAKA</string>
+    <string name="done_button_content_description">Klar</string>
+    <string name="done_button_text">KLAR</string>
+    <string name="next_button_content_description">Nästa</string>
+    <string name="next_button_text">NÄSTA</string>
+    <string name="onboarding_theme_title">Välj din stil</string>
+    <string name="onboarding_theme_subtitle">Välj hur du vill att appen ska se ut.</string>
+    <string name="onboarding_theme_light_desc">Ljust och energiskt.</string>
+    <string name="onboarding_theme_dark_desc">Behagligt för ögonen.</string>
+    <string name="onboarding_theme_system_desc">Matchar din enhet.</string>
+    <string name="onboarding_amoled_mode_desc">Djupare svärta för OLED-skärmar.</string>
+    <string name="selected">Vald</string>
+    <string name="onboarding_crashlytics_title">Hjälp oss att förbättra</string>
+    <string name="onboarding_crashlytics_description">Tillåt appen att skicka anonym användningsdata och kraschrapporter. Detta hjälper oss att åtgärda buggar och förbättra din upplevelse. Ingen personlig information samlas in.</string>
+    <string name="onboarding_crashlytics_enabled_desc">Datarapportering är aktiv.</string>
+    <string name="onboarding_crashlytics_disabled_desc">Datarapportering är inaktiv.</string>
+    <string name="onboarding_crashlytics_privacy_info">Din integritet är viktig. Vi använder endast dessa data för att åtgärda buggar och förbättra funktioner. För mer information, läs vår integritetspolicy.</string>
+    <string name="learn_more_privacy_policy">Granska vår integritetspolicy</string>
+    <string name="onboarding_complete_icon_desc">Introduktion klar</string>
+    <string name="onboarding_final_title">Allt är klart!</string>
+    <string name="onboarding_final_description">Tack för att du anpassade din upplevelse. Du är nu redo att utforska alla funktioner. Ha så kul!</string>
+
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
     <string name="go_back">Tillbaka</string>
 

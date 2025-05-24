@@ -11,6 +11,31 @@
     <string name="agree">同意する</string>
     <string name="error_loading_consent_info">同意情報の読み込みに失敗しました</string>
 
+    <string name="skip_button_text">スキップ</string>
+    <string name="skip_button_content_description">スキップ</string>
+    <string name="back_button_content_description">戻る</string>
+    <string name="back_button_text">戻る</string>
+    <string name="done_button_content_description">完了</string>
+    <string name="done_button_text">完了</string>
+    <string name="next_button_content_description">次へ</string>
+    <string name="next_button_text">次へ</string>
+    <string name="onboarding_theme_title">スタイルを選択</string>
+    <string name="onboarding_theme_subtitle">アプリの見た目を設定します。</string>
+    <string name="onboarding_theme_light_desc">明るくエネルギッシュ。</string>
+    <string name="onboarding_theme_dark_desc">目に優しい。</string>
+    <string name="onboarding_theme_system_desc">デバイスに合わせる。</string>
+    <string name="onboarding_amoled_mode_desc">OLED画面でより深い黒を表現。</string>
+    <string name="selected">選択済み</string>
+    <string name="onboarding_crashlytics_title">改善にご協力ください</string>
+    <string name="onboarding_crashlytics_description">アプリが匿名の利用データとクラッシュレポートを送信することを許可します。これは、バグの修正とエクスペリエンスの向上に役立ちます。個人情報が収集されることはありません。</string>
+    <string name="onboarding_crashlytics_enabled_desc">データ報告は有効です。</string>
+    <string name="onboarding_crashlytics_disabled_desc">データ報告は無効です。</string>
+    <string name="onboarding_crashlytics_privacy_info">お客様のプライバシーは重要です。このデータは、バグの修正と機能の改善にのみ使用されます。詳細については、プライバシーポリシーをご確認ください。</string>
+    <string name="learn_more_privacy_policy">プライバシーポリシーを確認する</string>
+    <string name="onboarding_complete_icon_desc">オンボーディング完了</string>
+    <string name="onboarding_final_title">すべての準備ができました！</string>
+    <string name="onboarding_final_description">エクスペリエンスをパーソナライズしていただきありがとうございます。これで、すべての機能を探索する準備ができました。お楽しみください！</string>
+
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="go_back">戻る</string>
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Mi az a Kosár Kalkulátor?</string>
+    <string name="summary_preference_faq_1">A Kosár Kalkulátor egy egyszerű, általános és ingyenes bevásárlókosár-kezelő és végösszeg-kalkulátor, amely helyettesíti a hagyományos eszköz kalkulátorát, amikor Ön a boltban vagy a piacon van.</string>
+    <string name="question_2">Hogyan működik a Kosár Kalkulátor?</string>
+    <string name="summary_preference_faq_2">A Kosár Kalkulátor lehetővé teszi a bevásárlókosár kezelését termékek hozzáadásával, valamint mennyiségük növelésével vagy csökkentésével. A Kosár Kalkulátor bármikor megjeleníti a kosárban lévő termékek árai és mennyiségei alapján számított végösszeget.</string>
+    <string name="question_3">Miért érdemes használni a Kosár Kalkulátort?</string>
+    <string name="summary_preference_faq_3">A Kosár Kalkulátor segít abban, hogy mindig tisztában legyen azzal, mennyit költ, még mielőtt a pénztárhoz érne. Ez különösen akkor hasznos, ha szűkös költségvetéssel kell vásárolnia.</string>
+    <string name="question_4">Használhatom a Kosár Kalkulátort a boltokon vagy piacokon kívül is?</string>
+    <string name="summary_preference_faq_4">Igen! Mivel a Kosár Kalkulátor meglepően egyszerű és általános, használhatja kocsmákban, éttermekben, mozikban stb. is.</string>
+    <string name="question_5">Hogyan adhatok hozzá tételt a kosaramhoz a Kosár Kalkulátor használatával?</string>
+    <string name="summary_preference_faq_5">Nyissa meg a kosarát, és nyomja meg a \"Tétel hozzáadása\" gombot a Műveletsávon, hogy új terméket adjon a kosarához. Adja meg a nevét, árát és mennyiségét, majd kattintson a \"Hozzáadás\" gombra.</string>
+    <string name="question_6">Hogyan növelhetem vagy csökkenthetem egy tétel mennyiségét a kosaramban a Kosár Kalkulátor használatával?</string>
+    <string name="summary_preference_faq_6">Egyszerűen keresse meg a tételt a listában, majd nyomja meg a \"+ (plusz)\" gombot a mennyiség növeléséhez, vagy a \"- (mínusz)\" gombot a mennyiség csökkentéséhez.</string>
+    <string name="question_7">Hogyan távolíthatok el egy tételt a kosaramból a Kosár Kalkulátor használatával?</string>
+    <string name="summary_preference_faq_7">Egy termék eltávolításához a kosárból egyszerűen húzza jobbra vagy balra, vagy csökkentse a mennyiségét nullára, majd válassza a \"Tétel törlése\" gombot.</string>
+    <string name="question_8">A Kosár Kalkulátor ingyenes szoftver?</string>
+    <string name="summary_preference_faq_8">Igen! A Kosár Kalkulátor büszkén ingyenes szoftver, amelyet a GNU General Public License 3-as verziója alatt terjesztenek.</string>
+    <string name="question_9">Hogyan járulhatok hozzá a Kosár Kalkulátorhoz?</string>
+    <string name="summary_preference_faq_9">A Kosár Kalkulátorhoz a <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>-tárhelyén keresztül járulhat hozzá a legjobban. Innen elágaztathatja (fork), dolgozhat a hozzájárulásain, majd beküldheti őket egy pull-kérés formájában. A hibakövetőt is használhatja hibák jelentésére, új funkciók vagy fejlesztések javaslatára, vagy ötleteket szerezhet, hogyan segíthet.</string>
+</resources>

@@ -57,7 +57,7 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
 fun AdSettingsScreenContent(viewModel : AdsSettingsViewModel , activity : Activity , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context)
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val adsEnabled : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsState(initial = ! buildInfoProvider.isDebugBuild)
 
     LargeTopAppBarWithScaffold(

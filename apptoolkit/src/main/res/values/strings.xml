@@ -11,6 +11,14 @@
     <string name="agree">Agree</string>
     <string name="error_loading_consent_info">Failed to load consent information</string>
 
+    <string name="skip_button_text">SKIP</string>
+    <string name="skip_button_content_description">Skip"</string>
+    <string name="back_button_content_description">Back</string>
+    <string name="back_button_text">BACK</string>
+    <string name="done_button_content_description">Done</string>
+    <string name="done_button_text">DONE</string>
+    <string name="next_button_content_description">Next</string>
+    <string name="next_button_text">NEXT</string>
     <string name="onboarding_theme_title">Choose Your Style</string>
     <string name="onboarding_theme_subtitle">Select how you\'d like the app to look.</string>
     <string name="onboarding_theme_light_desc">Bright and energetic.</string>
@@ -18,13 +26,15 @@
     <string name="onboarding_theme_system_desc">Matches your device.</string>
     <string name="onboarding_amoled_mode_desc">Deeper blacks for OLED screens.</string>
     <string name="selected">Selected</string>
-
     <string name="onboarding_crashlytics_title">Help Us Improve</string>
     <string name="onboarding_crashlytics_description">Allow the app to send anonymous usage data and crash reports. This helps us fix bugs and make your experience better. No personal information is ever collected.</string>
     <string name="onboarding_crashlytics_enabled_desc">Data reporting is active.</string>
     <string name="onboarding_crashlytics_disabled_desc">Data reporting is inactive.</string>
     <string name="onboarding_crashlytics_privacy_info">Your privacy is important. We only use this data to fix bugs and improve features. For more details, please review our privacy policy.</string>
     <string name="learn_more_privacy_policy">Review our Privacy Policy</string>
+    <string name="onboarding_complete_icon_desc">Onboarding Complete</string>
+    <string name="onboarding_final_title">You\'re All Set!</string>
+    <string name="onboarding_final_description">Thanks for personalizing your experience. You\'re now ready to explore all the features. Enjoy!</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="go_back">Go back</string>

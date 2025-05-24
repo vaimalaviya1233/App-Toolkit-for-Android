@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_1">Che cos\'è Cart Calculator?</string>
+    <string name="summary_preference_faq_1">Cart Calculator è un gestore di carrelli della spesa semplice, generico e gratuito e un calcolatore del totale dovuto che sostituisce il normale calcolatore del dispositivo quando ti trovi al supermercato o al mercato.</string>
+    <string name="question_2">Come funziona Cart Calculator?</string>
+    <string name="summary_preference_faq_2">Cart Calculator ti consente di gestire il tuo carrello della spesa aggiungendo prodotti e aumentando o diminuendo le loro quantità. In qualsiasi momento, Cart Calculator visualizza il totale dovuto dei prodotti nel carrello in base ai loro prezzi e quantità.</string>
+    <string name="question_3">Perché dovrei usare Cart Calculator?</string>
+    <string name="summary_preference_faq_3">Cart Calculator ti aiuta a essere sempre consapevole di quanto stai spendendo anche prima di raggiungere la cassa. Ciò è particolarmente utile quando devi fare la spesa con un budget limitato.</string>
+    <string name="question_4">Posso usare Cart Calculator al di fuori dei negozi di alimentari o dei mercati?</string>
+    <string name="summary_preference_faq_4">Sì! Poiché Cart Calculator è sorprendentemente semplice e generico, puoi usarlo anche in pub, ristoranti, cinema, ecc.</string>
+    <string name="question_5">Come faccio ad aggiungere un articolo al carrello utilizzando Cart Calculator?</string>
+    <string name="summary_preference_faq_5">Apri il carrello e premi il pulsante \"Aggiungi articolo\" nella barra delle azioni per aggiungere un nuovo prodotto al carrello. Inserisci nome, prezzo e quantità, quindi fai clic sul pulsante \"Aggiungi\".</string>
+    <string name="question_6">Come faccio ad aumentare o diminuire la quantità di un articolo nel carrello utilizzando Cart Calculator?</string>
+    <string name="summary_preference_faq_6">Trova semplicemente l\'articolo nell\'elenco, quindi premi il pulsante \"+ (più)\" per aumentarne la quantità o il pulsante \"- (meno)\" per diminuirne la quantità.</string>
+    <string name="question_7">Come faccio a rimuovere un articolo dal carrello utilizzando Cart Calculator?</string>
+    <string name="summary_preference_faq_7">Per rimuovere un prodotto dal carrello, scorri semplicemente verso destra o sinistra o azzera la quantità, quindi seleziona il pulsante \"Elimina articolo\".</string>
+    <string name="question_8">Cart Calculator è un software gratuito?</string>
+    <string name="summary_preference_faq_8">Sì! Cart Calculator è orgogliosamente un software gratuito distribuito con licenza GNU General Public License versione 3.</string>
+    <string name="question_9">Come posso contribuire a Cart Calculator?</string>
+    <string name="summary_preference_faq_9">Il modo migliore per contribuire a Cart Calculator è tramite il suo repository <a href="https://github.com/D4rK7355608/com.d4rk.cartcalculator">GitHub</a>. Da lì, puoi eseguirne il fork e lavorare sui tuoi contributi, per poi inviarli tramite pull request. Puoi anche utilizzare il tracker dei problemi per segnalare bug, proporre nuove funzionalità o miglioramenti oppure ottenere idee su come potresti aiutare.</string>
+</resources>
