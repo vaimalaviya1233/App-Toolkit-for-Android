@@ -14,14 +14,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.DarkMode
@@ -53,6 +53,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -88,7 +89,9 @@ fun ThemeOnboardingPageTab() {
     Column(
         modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = SizeConstants.LargeSize) ,
+        horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = stringResource(R.string.onboarding_theme_title) , style = MaterialTheme.typography.headlineLarge.copy(
@@ -96,7 +99,7 @@ fun ThemeOnboardingPageTab() {
             ) , color = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        LargeVerticalSpacer()
 
         Text(
             text = stringResource(R.string.onboarding_theme_subtitle) , style = MaterialTheme.typography.bodyLarge , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
@@ -111,7 +114,7 @@ fun ThemeOnboardingPageTab() {
                     }
                 })
             if (index < themeChoices.lastIndex) {
-                Spacer(modifier = Modifier.height(16.dp))
+                LargeVerticalSpacer()
             }
         }
 
@@ -123,6 +126,8 @@ fun ThemeOnboardingPageTab() {
                     dataStore.saveAmoledMode(isChecked = isChecked)
                 }
             })
+
+        ExtraExtraLargeVerticalSpacer()
     }
 }
 

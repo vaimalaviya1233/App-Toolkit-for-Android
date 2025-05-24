@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.home.domain.model.UiHomeScreen
@@ -25,6 +26,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -48,9 +50,11 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues , adsCo
             }
         }
     }
+    val context = LocalContext.current
+    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
     val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(gridState = listState , itemCount = items.size)
     LazyVerticalGrid(
-        columns = GridCells.Fixed(count = 2) ,
+        columns = GridCells.Fixed(count = if(isTabletOrLandscape) 6 else 2) ,
         contentPadding = paddingValues ,
         state = listState ,
         horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) ,

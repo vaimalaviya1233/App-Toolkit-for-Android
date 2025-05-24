@@ -17,18 +17,20 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataStore : DataStore by lazy { DataStore.getInstance(context = application) }
+    private val dataStore : DataStore by inject()
     private lateinit var updateResultLauncher : ActivityResultLauncher<IntentSenderRequest>
     private lateinit var viewModel : MainViewModel
 
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         CoroutineScope(Dispatchers.IO).launch {
             MobileAds.initialize(this@MainActivity) {}
+            ConsentManagerHelper.applyInitialConsent(dataStore, defaultConsent = false)
         }
 
         updateResultLauncher = registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
@@ -62,8 +65,7 @@ class MainActivity : AppCompatActivity() {
                 startStartupActivity()
             }
             else {
-                startStartupActivity()
-                //setMainActivityContent()
+                setMainActivityContent()
             }
         }
     }

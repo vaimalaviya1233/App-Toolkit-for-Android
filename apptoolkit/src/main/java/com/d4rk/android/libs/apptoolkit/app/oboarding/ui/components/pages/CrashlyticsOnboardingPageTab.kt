@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.filled.Analytics
@@ -56,6 +58,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizont
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -72,7 +75,9 @@ fun CrashlyticsOnboardingPageTab() {
     Column(
         modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceBetween
+                .padding(horizontal = SizeConstants.LargeSize)
+                .verticalScroll(rememberScrollState()) ,
+        horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
@@ -101,6 +106,7 @@ fun CrashlyticsOnboardingPageTab() {
                 switchState = switchState.value , onCheckedChange = { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
+                        ConsentManagerHelper.updateConsent(usageAndDiagnosticsEnabled = isChecked)
                     }
                 })
 

@@ -19,6 +19,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ fun UsageAndDiagnosticsList(paddingValues : PaddingValues , configProvider : Bui
             SwitchCardItem(title = stringResource(id = R.string.usage_and_diagnostics) , switchState = switchState) { isChecked : Boolean ->
                 coroutineScope.launch {
                     dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
+                    ConsentManagerHelper.updateConsent(usageAndDiagnosticsEnabled = isChecked)
                 }
             }
         }
