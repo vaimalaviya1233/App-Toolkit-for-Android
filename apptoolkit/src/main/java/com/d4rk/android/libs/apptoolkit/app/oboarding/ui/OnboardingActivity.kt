@@ -9,13 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
-import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
-import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.getValue
 
 class OnboardingActivity : ComponentActivity() {
 
