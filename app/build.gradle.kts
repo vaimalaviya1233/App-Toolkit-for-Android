@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(notation = libs.plugins.android.application)
     alias(notation = libs.plugins.kotlin.android)
