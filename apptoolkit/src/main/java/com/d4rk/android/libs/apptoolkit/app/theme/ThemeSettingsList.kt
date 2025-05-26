@@ -20,30 +20,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+data class ThemeSettingOption(
+    val key : String , val displayName : String
+)
+
 @Composable
 fun ThemeSettingsList(paddingValues : PaddingValues) {
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val defaultThemeMode : String = stringResource(id = R.string.follow_system)
-    val context: Context = LocalContext.current
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = defaultThemeMode).value
+    val context : Context = LocalContext.current
+    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+
+    val currentThemeModeKey : String by dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
     val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
-    val themeOptions : List<String> = listOf(defaultThemeMode , stringResource(id = R.string.dark_mode) , stringResource(id = R.string.light_mode))
+
+    val themeOptions : List<ThemeSettingOption> = listOf(
+        ThemeSettingOption(
+            key = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM , displayName = stringResource(id = R.string.follow_system)
+        ) , ThemeSettingOption(
+            key = DataStoreNamesConstants.THEME_MODE_DARK , displayName = stringResource(id = R.string.dark_mode)
+        ) , ThemeSettingOption(
+            key = DataStoreNamesConstants.THEME_MODE_LIGHT , displayName = stringResource(id = R.string.light_mode)
+        )
+    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxSize()) {
             item {
-                SwitchCardItem(title = stringResource(id = R.string.amoled_mode) , switchState = isAmoledMode) { isChecked ->
+                SwitchCardItem(
+                    title = stringResource(id = R.string.amoled_mode) , switchState = isAmoledMode
+                ) { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveAmoledMode(isChecked = isChecked)
                     }
@@ -56,16 +74,16 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                             .fillMaxWidth()
                             .padding(all = 24.dp)
                 ) {
-                    themeOptions.forEach { text : String ->
+                    themeOptions.forEach { option : ThemeSettingOption ->
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
-                                modifier = Modifier.bounceClick() , selected = (text == themeMode) , onClick = {
+                                modifier = Modifier.bounceClick() , selected = (option.key == currentThemeModeKey) , onClick = {
                                     coroutineScope.launch {
-                                        dataStore.saveThemeMode(mode = text)
-                                        dataStore.themeModeState.value = text
+                                        dataStore.saveThemeMode(mode = option.key)
+                                        dataStore.themeModeState.value = option.key
                                     }
                                 })
-                            Text(text = text , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize))
+                            Text(text = option.displayName , style = MaterialTheme.typography.bodyMedium.merge() , modifier = Modifier.padding(start = SizeConstants.LargeSize))
                         }
                     }
                 }

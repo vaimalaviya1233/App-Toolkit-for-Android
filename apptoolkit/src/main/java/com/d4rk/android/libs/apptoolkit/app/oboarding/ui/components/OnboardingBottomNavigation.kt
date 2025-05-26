@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
@@ -70,7 +71,7 @@ fun OnboardingBottomNavigation(
                                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft , contentDescription = stringResource(id = R.string.back_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                             )
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                            Text(text = stringResource(id = R.string.back_button_text))
+                            Text(text = stringResource(id = R.string.back_button_text), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }
@@ -92,10 +93,10 @@ fun OnboardingBottomNavigation(
                             imageVector = Icons.Filled.Check , contentDescription = stringResource(id = R.string.done_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                        Text(text = stringResource(id = R.string.done_button_text))
+                        Text(text = stringResource(id = R.string.done_button_text), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     else {
-                        Text(text = stringResource(id = R.string.next_button_text))
+                        Text(text = stringResource(id = R.string.next_button_text), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight , contentDescription = stringResource(id = R.string.next_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)

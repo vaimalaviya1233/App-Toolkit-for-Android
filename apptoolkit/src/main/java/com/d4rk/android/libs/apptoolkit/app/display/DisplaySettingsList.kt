@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.display
 
-
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -37,6 +36,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPre
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPreferenceItemWithDivider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -50,19 +50,22 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
     var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
     var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
 
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
-    val darkModeString : String = stringResource(id = R.string.dark_mode)
-    val lightModeString : String = stringResource(id = R.string.light_mode)
+    val currentThemeModeKey : String by dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
     val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
-    val isDarkTheme : Boolean = when (themeMode) {
-        darkModeString -> true
-        lightModeString -> false
+
+    val isDarkThemeActive : Boolean = when (currentThemeModeKey) {
+        DataStoreNamesConstants.THEME_MODE_DARK -> true
+        DataStoreNamesConstants.THEME_MODE_LIGHT -> false
+
         else -> isSystemDarkTheme
     }
 
-    val themeSummary : String = when (themeMode) {
-        darkModeString , lightModeString -> stringResource(id = R.string.will_never_turn_on_automatically)
-        else -> stringResource(id = R.string.will_turn_on_automatically_by_system)
+    val themeSummary : String = when (currentThemeModeKey) {
+        DataStoreNamesConstants.THEME_MODE_DARK , DataStoreNamesConstants.THEME_MODE_LIGHT ->
+            stringResource(id = R.string.will_never_turn_on_automatically)
+
+        else ->
+            stringResource(id = R.string.will_turn_on_automatically_by_system)
     }
 
     val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
@@ -78,26 +81,30 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                         .padding(horizontal = SizeConstants.LargeSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
-                SwitchPreferenceItemWithDivider(title = stringResource(id = R.string.dark_theme) , summary = themeSummary , checked = isDarkTheme , onCheckedChange = { isChecked ->
+                SwitchPreferenceItemWithDivider(title = stringResource(id = R.string.dark_theme) , summary = themeSummary , checked = isDarkThemeActive , onCheckedChange = { isChecked ->
                     coroutineScope.launch {
                         if (isChecked) {
-                            dataStore.saveThemeMode(mode = darkModeString)
-                            dataStore.themeModeState.value = darkModeString
+                            dataStore.saveThemeMode(mode = DataStoreNamesConstants.THEME_MODE_DARK)
+                            dataStore.themeModeState.value = DataStoreNamesConstants.THEME_MODE_DARK
+
                         }
                         else {
-                            dataStore.saveThemeMode(mode = lightModeString)
-                            dataStore.themeModeState.value = lightModeString
+                            dataStore.saveThemeMode(mode = DataStoreNamesConstants.THEME_MODE_LIGHT)
+                            dataStore.themeModeState.value = DataStoreNamesConstants.THEME_MODE_LIGHT
+
                         }
                     }
                 } , onSwitchClick = { isChecked : Boolean ->
                     coroutineScope.launch {
                         if (isChecked) {
-                            dataStore.saveThemeMode(mode = darkModeString)
-                            dataStore.themeModeState.value = darkModeString
+                            dataStore.saveThemeMode(mode = DataStoreNamesConstants.THEME_MODE_DARK)
+                            dataStore.themeModeState.value = DataStoreNamesConstants.THEME_MODE_DARK
+
                         }
                         else {
-                            dataStore.saveThemeMode(mode = lightModeString)
-                            dataStore.themeModeState.value = lightModeString
+                            dataStore.saveThemeMode(mode = DataStoreNamesConstants.THEME_MODE_LIGHT)
+                            dataStore.themeModeState.value = DataStoreNamesConstants.THEME_MODE_LIGHT
+
                         }
                     }
                 } , onClick = {

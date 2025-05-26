@@ -20,8 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 
 private val defaultLightScheme : ColorScheme = lightColorScheme()
@@ -65,14 +65,14 @@ private fun getColorScheme(isDarkTheme : Boolean , isAmoledMode : Boolean , isDy
 fun AppTheme(content : @Composable () -> Unit) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = "follow_system").value
+    val themeMode : String = dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM).value
     val isDynamicColors : Boolean = dataStore.dynamicColors.collectAsState(initial = true).value
     val isAmoledMode : Boolean = dataStore.amoledMode.collectAsState(initial = false).value
 
     val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
     val isDarkTheme : Boolean = when (themeMode) {
-        stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.dark_mode) -> true
-        stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.light_mode) -> false
+        DataStoreNamesConstants.THEME_MODE_DARK -> true
+        DataStoreNamesConstants.THEME_MODE_LIGHT -> false
         else -> isSystemDarkTheme
     }
 

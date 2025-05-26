@@ -65,10 +65,10 @@ open class CommonDataStore(context : Context) {
     }
 
     // Display
-    val themeModeState = mutableStateOf(value = "follow_system")
+    val themeModeState = mutableStateOf(value = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
     private val themeModeKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_THEME_MODE)
     val themeMode : Flow<String> = dataStore.data.map { preferences : Preferences ->
-        preferences[themeModeKey] ?: "follow_system"
+        preferences[themeModeKey] ?: DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM
     }
 
     suspend fun saveThemeMode(mode : String) {

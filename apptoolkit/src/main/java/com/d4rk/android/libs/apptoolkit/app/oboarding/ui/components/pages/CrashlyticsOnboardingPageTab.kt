@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
@@ -62,15 +63,14 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
-fun CrashlyticsOnboardingPageTab() {
+fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject()) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-
-    val initialSwitchState = true
-    val switchState : State<Boolean> = dataStore.usageAndDiagnostics(default = initialSwitchState).collectAsState(initial = initialSwitchState)
+    val switchState : State<Boolean> = dataStore.usageAndDiagnostics(default = ! configProvider.isDebugBuild).collectAsState(initial = ! configProvider.isDebugBuild)
 
     Column(
         modifier = Modifier
