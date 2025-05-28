@@ -28,7 +28,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.d4rk.android.apps.apptoolkit.app.home.ui.HomeScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListScreen
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.AppNavigationHost
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.NavigationDrawer
@@ -104,6 +104,6 @@ fun MainScaffoldTabletContent() {
         }) { paddingValues ->
         LeftNavigationRail(drawerItems = uiState.navigationDrawerItems , currentRoute = currentRoute , isRailExpanded = isRailExpanded , paddingValues = paddingValues , onDrawerItemClick = { item : NavigationDrawerItem ->
             handleNavigationItemClick(context = context , item = item)
-        } , content = { HomeScreen(paddingValues = paddingValues) })
+        } , content = { AppsListScreen(paddingValues = paddingValues) })
     }
 }

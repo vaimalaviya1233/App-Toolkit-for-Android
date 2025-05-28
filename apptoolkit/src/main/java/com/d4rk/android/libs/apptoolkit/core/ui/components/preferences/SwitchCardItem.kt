@@ -61,7 +61,6 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                 onCheckedChange = { isChecked ->
                     onSwitchToggled(isChecked)
                 },
-                modifier = Modifier.padding(all = SizeConstants.LargeSize)
             )
         }
     }

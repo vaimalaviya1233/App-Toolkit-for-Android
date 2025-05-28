@@ -10,6 +10,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity"
-            android:targetPackage="com.d4rk.android.apps.weddix" />
+            android:targetPackage="com.d4rk.android.apps.apptoolkit" />
     </shortcut>
 </shortcuts>
