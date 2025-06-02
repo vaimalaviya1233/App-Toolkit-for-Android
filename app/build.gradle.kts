@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(notation = libs.plugins.android.application)
     alias(notation = libs.plugins.kotlin.android)
@@ -27,7 +29,7 @@ android {
         }
     }
 
-    /*signingConfigs {
+    signingConfigs {
         create("release")
 
         val signingProps = Properties()
@@ -46,11 +48,16 @@ android {
         else {
             android.buildTypes.getByName("release").signingConfig = null
         }
-    }*/
+    }
 
     buildTypes {
         release {
-            //signingConfig = signingConfigs.getByName("release")
+            val signingFile = rootProject.file("signing.properties")
+            signingConfig = if (signingFile.exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                null
+            }
             isDebuggable = false
         }
         debug {

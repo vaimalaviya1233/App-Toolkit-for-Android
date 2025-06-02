@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Maligayang pagdating sa App Toolkit</string>
+    <string name="onboarding_welcome_description">Galugarin ang mga kakayahan ng aming AppToolkit library. Tuklasin ang aming mga application, lahat ay binuo upang ipakita at gamitin ang kapangyarihan ng aming AppToolkit library, na nagpapahusay sa iyong Android development at karanasan ng gumagamit.</string>
+    <string name="onboarding_feature1_title">Tuklasin ang Aming mga Application</string>
+    <string name="onboarding_feature1_description">Ipinapakilala sa iyo ng App Toolkit ang isang seleksyon ng aming mga application, bawat isa ay dinisenyo upang i-highlight ang iba\'t ibang aspeto ng aming AppToolkit library at pagandahin ang iyong karanasan sa Android. Tingnan kung ano ang posible sa aming AppToolkit library!</string>
+    <string name="onboarding_personalization_title">Tingnan ang Aming AppToolkit Library sa Aksyon</string>
+    <string name="onboarding_personalization_description">Ipinapakita ng app na ito kung paano magagamit ang aming AppToolkit library upang bumuo ng mga versatile at user-focused na application. Galugarin ang aming mga app upang makita ang iba\'t ibang feature at implementasyon ng library.</string>
+
+    <!-- Home screen -->
+    <string name="error_failed_to_fetch_our_apps">Nabigong makuha ang aming mga listahan ng app</string>
+
+    <!-- Help screen -->
+    <string name="question_1">Ano ang App Toolkit?</string>
+    <string name="summary_preference_faq_1">Ang App Toolkit ay isang application na idinisenyo upang itampok at ipakita ang mga app na binuo namin gamit ang aming AppToolkit library. Ito ang iyong gabay sa paggalugad ng aming ecosystem ng mga application at makita ang aming AppToolkit library sa aksyon.</string>
+    <string name="question_2">Paano ko maa-access ang iba\'t ibang app na ipinapakita sa App Toolkit?</string>
+    <string name="summary_preference_faq_2">Inililista ng App Toolkit ang aming iba\'t ibang application. Ang pag-tap sa isang listahan ng app ay karaniwang magbibigay ng karagdagang impormasyon at isang link upang i-install o buksan ito mula sa Google Play Store, na nagbibigay-daan sa iyong maranasan ito mismo.</string>
+    <string name="question_3">Libre ba ang mga app na itinampok sa App Toolkit?</string>
+    <string name="summary_preference_faq_3">Marami sa aming mga app na itinampok sa App Toolkit ay nag-aalok ng isang pangunahing hanay ng mga feature nang libre. Ang ilan ay maaaring may mga advanced na functionality na available sa pamamagitan ng isang premium na bersyon o mga in-app na pagbili. Ang mga detalye para sa bawat app ay matatagpuan sa kani-kanilang pahina sa Play Store.</string>
+    <string name="question_4">Paano ako makakakuha ng karagdagang impormasyon tungkol sa isang partikular na app na nakalista?</string>
+    <string name="summary_preference_faq_4">Para sa kumpletong detalye tungkol sa isa sa aming mga app, mga feature nito, at mga review ng user, mangyaring i-tap ang app sa App Toolkit upang bisitahin ang pahina nito sa Google Play Store.</string>
+    <string name="question_5">Saan ako makakahanap ng tulong o suporta para sa isa sa iyong mga nakalistang app?</string>
+    <string name="summary_preference_faq_5">Ang suporta para sa aming mga indibidwal na app ay ibinibigay sa pamamagitan ng kani-kanilang mga channel, karaniwang detalyado sa kanilang pahina sa Play Store o sa loob mismo ng app. Ang App Toolkit ay para sa pagtuklas ng mga app na ito; para sa mga isyu na partikular sa app, mangyaring sumangguni sa mga opsyon sa suporta ng app na iyon.</string>
+    <string name="question_6">Gaano kadalas ina-update ang listahan ng iyong mga app sa App Toolkit?</string>
+    <string name="summary_preference_faq_6">Layunin naming panatilihing updated ang App Toolkit sa aming pinakabago at pinaka-kaugnay na mga application na gumagamit ng aming AppToolkit library. Ang mga bagong app o makabuluhang update ay maaaring itampok dito.</string>
+    <string name="question_7">Bakit kailangan ng App Toolkit ng mga pahintulot tulad ng Internet access?</string>
+    <string name="summary_preference_faq_7">Nangangailangan ang App Toolkit ng Internet access upang makuha ang pinakabagong listahan ng aming mga application mula sa Google Play Store at ipakita nang tumpak ang kanilang impormasyon. Karaniwan itong hindi nangangailangan ng iba pang mga invasive na pahintulot.</string>
+    <string name="question_8">Paano ako makakapagbigay ng feedback sa App Toolkit o sa iyong mga app?</string>
+    <string name="summary_preference_faq_8">Pinahahalagahan namin ang iyong feedback sa App Toolkit at sa aming mga indibidwal na app! Karaniwan kang makakahanap ng opsyon na "Feedback" o "Makipag-ugnayan sa Amin" sa loob ng mga setting ng App Toolkit o sa aming pahina ng developer sa Play Store. Ang feedback sa aming AppToolkit library mismo ay malugod ding tinatanggap sa pamamagitan ng naaangkop na mga channel.</string>
+    <string name="question_9">Ligtas ba ang aking data kapag gumagamit ng App Toolkit upang mahanap ang iyong iba pang mga app?</string>
+    <string name="summary_preference_faq_9">Pangunahing kinukuha ng App Toolkit ang impormasyong pampublikong available tungkol sa aming mga app. Kapag pinili mong i-install o gamitin ang isa sa aming mga nakalistang app, ang sariling Patakaran sa Privacy ng app na iyon ang ilalapat. Hinihikayat ka naming suriin ito. Ang paghawak ng data ng App Toolkit ay nakabalangkas sa aming Patakaran sa Privacy.</string>
+</resources>

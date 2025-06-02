@@ -30,7 +30,7 @@ open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) :
 
     protected open fun loadHtmlData(context : Context , packageName : String , versionName : String) {
         launch(dispatcherProvider.default) {
-            val (changelog , eula) = AboutLibrariesHelper.loadHtmlData(
+            val (changelog: String?, eula: String?) = AboutLibrariesHelper.loadHtmlData(
                 packageName = packageName , currentVersionName = versionName , context = context
             )
             updateUi {
@@ -43,12 +43,14 @@ open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) :
         updateUi {
             copy(showDeviceInfoCopiedSnackbar = true)
         }
-        screenState.showSnackbar(UiSnackbar(message = UiTextHelper.StringResource(R.string.snack_device_info_copied) , isError = false , timeStamp = System.currentTimeMillis() , type = ScreenMessageType.SNACKBAR))
+        screenState.showSnackbar<UiAboutScreen>(snackbar = UiSnackbar(message = UiTextHelper.StringResource(
+            resourceId = R.string.snack_device_info_copied
+        ) , isError = false , timeStamp = System.currentTimeMillis() , type = ScreenMessageType.SNACKBAR))
     }
 
     private inline fun updateUi(crossinline transform : UiAboutScreen.() -> UiAboutScreen) {
         launch {
-            screenState.updateData(newState = screenState.value.screenState) { current -> transform(current) }
+            screenState.updateData<UiAboutScreen>(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
         }
     }
 }
