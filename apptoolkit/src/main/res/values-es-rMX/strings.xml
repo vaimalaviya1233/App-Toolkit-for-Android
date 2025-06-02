@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_short_description">Diseñada para optimizar tu flujo de trabajo, esta aplicación proporciona herramientas y funciones esenciales para ayudarte a mantenerte organizado y eficiente en cualquier tarea. 📱</string>
+    <string name="notification_update_title">¡Nueva actualización disponible!</string>
+    <string name="summary_notification_update">Hay una nueva versión de la aplicación disponible. ¡Haz clic para actualizar!</string>
+    <string name="notification_last_time_used_title">¡Ha pasado un tiempo!</string>
+    <string name="default_notification_summary">Hay muchas funciones esperándote. ¡Abre la aplicación!</string>
+
+    <string name="welcome">Bienvenido</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Lee y acepta nuestros Términos de Servicio y Política de Privacidad para continuar</string>
+    <string name="agree">Aceptar</string>
+    <string name="error_loading_consent_info">Error al cargar la información de consentimiento</string>
+
+    <string name="skip_button_text">OMITIR</string>
+    <string name="skip_button_content_description">Omitir</string>
+    <string name="back_button_content_description">Atrás</string>
+    <string name="back_button_text">ATRÁS</string>
+    <string name="done_button_content_description">Hecho</string>
+    <string name="done_button_text">HECHO</string>
+    <string name="next_button_content_description">Siguiente</string>
+    <string name="next_button_text">SIGUIENTE</string>
+    <string name="onboarding_theme_title">Elige tu estilo</string>
+    <string name="onboarding_theme_subtitle">Selecciona cómo te gustaría que se viera la aplicación.</string>
+    <string name="onboarding_theme_light_desc">Brillante y energético.</string>
+    <string name="onboarding_theme_dark_desc">Agradable a la vista.</string>
+    <string name="onboarding_theme_system_desc">Coincide con tu dispositivo.</string>
+    <string name="onboarding_amoled_mode_desc">Negros más profundos para pantallas OLED.</string>
+    <string name="selected">Seleccionado</string>
+    <string name="onboarding_crashlytics_title">Ayúdanos a mejorar</string>
+    <string name="onboarding_crashlytics_description">Permite que la aplicación envíe datos de uso anónimos e informes de fallos. Esto nos ayuda a corregir errores y mejorar tu experiencia. Nunca se recopila información personal.</string>
+    <string name="onboarding_crashlytics_enabled_desc">El informe de datos está activo.</string>
+    <string name="onboarding_crashlytics_disabled_desc">El informe de datos está inactivo.</string>
+    <string name="onboarding_crashlytics_privacy_info">Tu privacidad es importante. Solo usamos estos datos para corregir errores y mejorar funciones. Para más detalles, revisa nuestra política de privacidad.</string>
+    <string name="learn_more_privacy_policy">Revisa nuestra Política de Privacidad</string>
+    <string name="onboarding_complete_icon_desc">Integración completada</string>
+    <string name="onboarding_final_title">¡Todo listo!</string>
+    <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
+
+    <string name="navigation_drawer_open">Abrir menú de navegación</string>
+    <string name="go_back">Regresar</string>
+
+    <string name="sort_by">Ordenar por:</string>
+    <string name="error">Error</string>
+    <string name="app_not_installed">Aplicación no instalada</string>
+    <string name="snack_app_updated">La aplicación se ha actualizado correctamente</string>
+    <string name="snack_update_failed">El proceso de actualización encontró un problema</string>
+    <string name="try_again">Intentar de nuevo</string>
+    <string name="summary_share_message">¡Mira esta increíble aplicación que estoy usando! Tiene algunas funciones geniales que podrían interesarte. Puedes descargarla desde Play Store en: %1$s</string>
+    <string name="learn_more">Más información</string>
+    <string name="close">¿Cerrar?</string>
+    <string name="summary_close">¿Estás seguro de que quieres salir?</string>
+
+    <string name="home">Inicio</string>
+
+    <string name="activity_not_found">Actividad no encontrada.</string>
+    <string name="security_error">Ocurrió un error de seguridad. Por favor, inténtalo de nuevo más tarde.</string>
+    <string name="io_error">Ocurrió un error de entrada/salida. Por favor, revisa tu conexión de red o almacenamiento e inténtalo de nuevo.</string>
+    <string name="illegal_argument_error">Entrada o argumento no válido. Por favor, revisa la información e inténtalo de nuevo.</string>
+    <string name="unknown_error">Ocurrió un error desconocido.</string>
+    <string name="initialization_error">Falló la inicialización. Por favor, inténtalo de nuevo más tarde.</string>
+
+    <string name="settings">Configuración</string>
+    <string name="long_settings_label">Configuración de la aplicación</string>
+    <string name="settings_disabled_message">La configuración no está disponible actualmente.</string>
+    <string name="settings_placeholder_description">No hay configuraciones seleccionadas. Elige una opción para ver sus detalles aquí.</string>
+    <string name="get_help">Obtener ayuda</string>
+    <string name="error_no_settings_found">No se encontraron configuraciones</string>
+    <string name="error_invalid_content_key">¡Clave de contenido no válida!</string>
+
+    <string name="display">Pantalla</string>
+    <string name="summary_preference_settings_display">Personaliza el aspecto y la sensación de tu aplicación</string>
+
+    <string name="appearance">Apariencia</string>
+    <string name="dark_theme">Tema oscuro</string>
+    <string name="will_turn_on_automatically_by_system">Se activará automáticamente por el sistema</string>
+    <string name="will_never_turn_on_automatically">Nunca se activará automáticamente</string>
+    <string name="amoled_mode">Modo AMOLED</string>
+    <string name="follow_system">Seguir modo del sistema</string>
+    <string name="light_mode">Modo claro</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="summary_dark_theme">El tema oscuro usa un fondo profundo para ayudar a que tu batería dure más</string>
+
+    <string name="dynamic_colors">Colores dinámicos</string>
+    <string name="summary_preference_settings_dynamic_colors">Aplicar colores de los fondos de pantalla al tema de la aplicación</string>
+
+    <string name="app_behavior">Comportamiento de la aplicación</string>
+    <string name="bounce_buttons">Clic con rebote</string>
+    <string name="summary_preference_settings_bounce_buttons">Aplica una sutil animación de rebote a todos los elementos clicables al hacer clic</string>
+
+    <string name="navigation">Navegación</string>
+    <string name="startup_page">Página de inicio</string>
+    <string name="summary_preference_settings_startup_page">Elige la pantalla que se mostrará cuando se inicie la aplicación.</string>
+
+    <string name="language">Idioma</string>
+    <string name="summary_preference_settings_language">Cambia el idioma utilizado en la aplicación</string>
+
+    <string name="dialog_startup_subtitle">Elige tu página de inicio preferida:</string>
+    <string name="dialog_info_startup">Configura la pantalla inicial que se presenta a los usuarios al iniciar la aplicación. Esta configuración influye en la primera interacción del usuario con la aplicación y puede adaptarse a segmentos de usuarios específicos u objetivos del producto.</string>
+
+    <string name="select_language_title">Seleccionar idioma</string>
+    <string name="dialog_language_subtitle">Selecciona tu idioma preferido</string>
+    <string name="dialog_info_language">Personaliza tu experiencia con tu idioma preferido. Cualquier cambio de idioma que realices surtirá efecto de inmediato, garantizando una experiencia fluida en el idioma elegido.</string>
+
+    <string name="notifications">Notificaciones</string>
+    <string name="summary_preference_settings_notifications">Administrar notificaciones de la aplicación</string>
+
+    <string name="app_usage_notifications">Notificaciones de uso de la aplicación</string>
+    <string name="update_notifications">Notificaciones de actualización</string>
+
+    <string name="advanced">Avanzado</string>
+    <string name="summary_preference_settings_advanced">Explora configuraciones más avanzadas</string>
+
+    <string name="error_reporting">Informe de errores</string>
+    <string name="bug_report">Informe de error</string>
+    <string name="summary_preference_settings_bug_report">Envía informes de errores y solicitudes de funciones a la página de incidencias del repositorio de GitHub de la aplicación</string>
+    <string name="cache_management">Gestión de caché</string>
+    <string name="clear_cache">Borrar caché</string>
+    <string name="summary_preference_settings_clear_cache">Borrar datos temporales de la aplicación.</string>
+    <string name="cache_cleared_success">Caché borrado correctamente</string>
+    <string name="cache_cleared_error">Caché borrado con algunos errores</string>
+
+    <string name="security_and_privacy">Seguridad &amp; privacidad</string>
+    <string name="summary_preference_settings_privacy_and_security">Administra tu configuración de privacidad</string>
+
+    <string name="privacy">Privacidad</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="summary_preference_settings_privacy_policy">Consulta la política que rige cómo manejamos tus datos</string>
+    <string name="terms_of_service">Términos de Servicio</string>
+    <string name="summary_preference_settings_terms_of_service">Revisa los términos que aceptas al usar nuestro servicio</string>
+    <string name="code_of_conduct">Código de Conducta</string>
+    <string name="summary_preference_settings_code_of_conduct">Comprende las reglas y directrices de comportamiento dentro de nuestro servicio</string>
+
+    <string name="permissions">Permisos</string>
+    <string name="summary_preference_settings_permissions">Administra los permisos otorgados a nuestro servicio</string>
+    <string name="normal">Normal</string>
+    <string name="runtime">Tiempo de ejecución</string>
+    <string name="storage">Almacenamiento</string>
+
+    <string name="ads">Anuncios</string>
+    <string name="summary_preference_settings_ads">Controla cómo usamos tu información para mostrarte anuncios relevantes</string>
+
+    <string name="display_ads">Mostrar anuncios</string>
+    <string name="personalized_ads">Anuncios personalizados</string>
+    <string name="summary_ads_personalized_ads">Elige cómo personalizamos los anuncios para ti según tus intereses</string>
+    <string name="summary_ads">Ve anuncios que son relevantes para ti. Administra la información utilizada para mostrar anuncios personalizados según la actividad de tu aplicación. Siempre puedes desactivar la personalización aquí.\n</string>
+    <string name="ads_enabled">Anuncios habilitados</string>
+    <string name="ads_disabled">Anuncios deshabilitados</string>
+    <string name="error_failed_to_load_ads_settings">Error al cargar la configuración de anuncios</string>
+
+    <string name="usage_and_diagnostics">Uso y diagnósticos</string>
+    <string name="summary_preference_settings_usage_and_diagnostics">Comparte datos para ayudar a mejorar la experiencia en la aplicación</string>
+    <string name="summary_usage_and_diagnostics">Ayuda a mejorar tu experiencia enviándonos automáticamente datos de diagnóstico, del dispositivo y de uso de la aplicación. Esto ayudará a mejorar el rendimiento de la aplicación, la estabilidad y otras mejoras. Algunos datos agregados también ayudarán a nuestras aplicaciones.\n\nEsta es información general sobre tu dispositivo y cómo usas nuestras aplicaciones (como el nivel de batería, la actividad del sistema y de la aplicación, y errores). Los datos se utilizarán para mejorar nuestras aplicaciones.\n\nDesactivar esta función no afecta la capacidad de tu dispositivo para enviar la información necesaria para servicios esenciales como actualizaciones de aplicaciones y seguridad.\n</string>
+
+    <string name="legal">Legal</string>
+    <string name="legal_notices">Avisos legales</string>
+    <string name="summary_preference_settings_legal_notices">Ver información legal sobre nuestro servicio</string>
+    <string name="license">Licencia</string>
+
+    <string name="about">Acerca de</string>
+    <string name="summary_preference_settings_about">Más información sobre la aplicación</string>
+
+    <string name="app_info">Información de la aplicación</string>
+    <string name="app_build_version">Versión de compilación de la aplicación</string>
+    <string name="oss_license_title">Licencias de código abierto</string>
+    <string name="summary_preference_settings_oss">Detalles de licencia para software de código abierto</string>
+
+    <string name="eula_title">EULA</string>
+    <string name="changelog_title">Registro de cambios de la aplicación</string>
+    <string name="loading_eula_message">Recuperando Acuerdo de Licencia de Usuario Final…</string>
+    <string name="loading_changelog_message">Obteniendo registro de cambios de la aplicación…</string>
+    <string name="error_loading_eula_message">No se pudo cargar el Acuerdo de Licencia de Usuario Final. Por favor, inténtalo de nuevo.</string>
+    <string name="error_loading_changelog_message">No se pudo cargar el registro de cambios de la aplicación. Por favor, inténtalo de nuevo.</string>
+
+    <string name="device_info">Información del dispositivo</string>
+    <string name="app_build">Compilación de la App: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="debug">Depuración</string>
+    <string name="release">Lanzamiento</string>
+    <string name="manufacturer">Fabricante:</string>
+    <string name="device_model">Modelo del dispositivo:</string>
+    <string name="android_version">Versión de Android:</string>
+    <string name="api_level">Nivel de API:</string>
+    <string name="snack_device_info_copied">Información del dispositivo copiada al portapapeles</string>
+
+    <string name="help_and_feedback">Ayuda &amp; comentarios</string>
+    <string name="help">Ayuda</string>
+    <string name="faq">Preguntas frecuentes</string>
+    <string name="popular_help_resources">Recursos de ayuda populares</string>
+    <string name="contact_us">Contáctanos</string>
+    <string name="contact_us_description">Cuéntanos más y te ayudaremos a lograrlo</string>
+    <string name="view_in_google_play_store">Ver en Google Play Store</string>
+    <string name="version_info">Información de la versión</string>
+    <string name="version">Versión %1$s</string>
+    <string name="beta_program">Programa beta</string>
+
+    <string name="feedback">Comentarios</string>
+
+    <string name="updates">Actualizaciones</string>
+
+    <string name="share">Compartir</string>
+
+    <string name="support_us">Apóyanos</string>
+    <string name="paid_support">Soporte de pago</string>
+    <string name="summary_donations">No importa cuánto dones, nos ayudarás a mantener nuestra aplicación en funcionamiento y mejorar nuestras funciones. ¡Apreciamos tu generosidad y amabilidad!</string>
+    <string name="non_paid_support">Soporte gratuito</string>
+    <string name="web_ad">Anuncio web</string>
+    <string name="error_failed_to_load_sku_details">Error al cargar los detalles del SKU</string>
+</resources>

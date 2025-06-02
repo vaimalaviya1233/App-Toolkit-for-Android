@@ -26,7 +26,16 @@
 
         <activity
             android:name=".app.permissions.ui.PermissionsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE_FOR_PERIOD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".app.ads.ui.AdsSettingsActivity"
