@@ -81,43 +81,56 @@ import org.koin.compose.koinInject
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject()) {
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val switchState : State<Boolean> = dataStore.usageAndDiagnostics(default = ! configProvider.isDebugBuild).collectAsState(initial = ! configProvider.isDebugBuild)
+fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject()) {
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val switchState: State<Boolean> =
+        dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
+            .collectAsState(initial = !configProvider.isDebugBuild)
     val showCrashlyticsDialog = CrashlyticsOnboardingStateManager.showCrashlyticsDialog
 
     Column(
         modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = SizeConstants.LargeSize)
-                .verticalScroll(rememberScrollState()) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceBetween
+            .fillMaxSize()
+            .padding(horizontal = SizeConstants.LargeSize)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
-                imageVector = Icons.Outlined.Analytics , contentDescription = null , modifier = Modifier.size(size = 64.dp) , tint = MaterialTheme.colorScheme.primary
+                imageVector = Icons.Outlined.Analytics,
+                contentDescription = null,
+                modifier = Modifier.size(size = 64.dp),
+                tint = MaterialTheme.colorScheme.primary
             )
 
             ExtraLargeVerticalSpacer()
 
             Text(
-                text = stringResource(R.string.onboarding_crashlytics_title) , style = MaterialTheme.typography.headlineLarge.copy(
-                    fontWeight = FontWeight.Bold , fontSize = 30.sp , textAlign = TextAlign.Center
-                ) , color = MaterialTheme.colorScheme.onSurface
+                text = stringResource(R.string.onboarding_crashlytics_title),
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center
+                ),
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             LargeVerticalSpacer()
 
             Text(
-                text = stringResource(R.string.onboarding_crashlytics_description) , style = MaterialTheme.typography.bodyLarge , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
+                text = stringResource(R.string.onboarding_crashlytics_description),
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
             )
 
             ExtraLargeIncreasedVerticalSpacer()
             SmallVerticalSpacer()
 
             UsageAndDiagnosticsToggleCard(
-                switchState = switchState.value , onCheckedChange = { isChecked ->
+                switchState = switchState.value, onCheckedChange = { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
                     }
@@ -125,11 +138,14 @@ fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject
 
             LargeVerticalSpacer()
 
-            OutlinedButton(onClick = { CrashlyticsOnboardingStateManager.openDialog() } , modifier = Modifier
+            OutlinedButton(onClick = { CrashlyticsOnboardingStateManager.openDialog() },
+                modifier = Modifier
                     .fillMaxWidth()
                     .bounceClick()) {
                 Icon(
-                    Icons.Outlined.PrivacyTip , contentDescription = stringResource(id = R.string.onboarding_crashlytics_show_details_button_cd) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
+                    Icons.Outlined.PrivacyTip,
+                    contentDescription = stringResource(id = R.string.onboarding_crashlytics_show_details_button_cd),
+                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
                 )
                 ButtonIconSpacer()
                 Text(text = stringResource(id = R.string.onboarding_crashlytics_show_details_button))
@@ -142,82 +158,105 @@ fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject
     }
 
     if (showCrashlyticsDialog) {
-        CrashlyticsConsentDialog(onDismissRequest = { CrashlyticsOnboardingStateManager.dismissDialog() } , onAcknowledge = { CrashlyticsOnboardingStateManager.dismissDialog() })
+        CrashlyticsConsentDialog(onDismissRequest = { CrashlyticsOnboardingStateManager.dismissDialog() },
+            onAcknowledge = { CrashlyticsOnboardingStateManager.dismissDialog() })
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun UsageAndDiagnosticsToggleCard(
-    switchState : Boolean , onCheckedChange : (Boolean) -> Unit
+    switchState: Boolean, onCheckedChange: (Boolean) -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth() , shape = MaterialTheme.shapes.large , colors = CardDefaults.cardColors(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-        ) , elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCheckedChange(! switchState) }
+                .clickable { onCheckedChange(!switchState) }
                 .padding(
-                    horizontal = SizeConstants.LargeIncreasedSize , vertical = SizeConstants.LargeSize
-                ) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
+                    horizontal = SizeConstants.LargeIncreasedSize,
+                    vertical = SizeConstants.LargeSize
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
             Column(modifier = Modifier.weight(weight = 1f)) {
                 Text(
-                    text = stringResource(id = R.string.usage_and_diagnostics) , style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold) , color = MaterialTheme.colorScheme.onSurface
+                    text = stringResource(id = R.string.usage_and_diagnostics),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    modifier = Modifier.animateContentSize() , text = if (switchState) stringResource(id = R.string.onboarding_crashlytics_enabled_desc)
-                    else stringResource(id = R.string.onboarding_crashlytics_disabled_desc) , style = MaterialTheme.typography.bodySmall , color = MaterialTheme.colorScheme.onSurfaceVariant
+                    modifier = Modifier.animateContentSize(),
+                    text = if (switchState) stringResource(id = R.string.onboarding_crashlytics_enabled_desc)
+                    else stringResource(id = R.string.onboarding_crashlytics_disabled_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             LargeHorizontalSpacer()
-            Switch(checked = switchState , onCheckedChange = onCheckedChange , thumbContent = {
-                AnimatedContent(targetState = switchState , transitionSpec = {
+            Switch(checked = switchState, onCheckedChange = onCheckedChange, thumbContent = {
+                AnimatedContent(targetState = switchState, transitionSpec = {
                     if (targetState) {
-                        slideInVertically { height : Int -> height } + fadeIn() togetherWith slideOutVertically { height : Int -> - height } + fadeOut()
-                    }
-                    else {
-                        slideInVertically { height : Int -> - height } + fadeIn() togetherWith slideOutVertically { height : Int -> height } + fadeOut()
+                        slideInVertically { height: Int -> height } + fadeIn() togetherWith slideOutVertically { height: Int -> -height } + fadeOut()
+                    } else {
+                        slideInVertically { height: Int -> -height } + fadeIn() togetherWith slideOutVertically { height: Int -> height } + fadeOut()
                     } using SizeTransform(clip = false)
-                } , label = "SwitchIconAnimation") { targetChecked : Boolean ->
+                }, label = "SwitchIconAnimation") { targetChecked: Boolean ->
                     Icon(
-                        imageVector = if (targetChecked) Icons.Filled.Analytics else Icons.Filled.Policy ,
-                        contentDescription = null ,
-                        modifier = Modifier.size(size = SizeConstants.SwitchIconSize) ,
+                        imageVector = if (targetChecked) Icons.Filled.Analytics else Icons.Filled.Policy,
+                        contentDescription = null,
+                        modifier = Modifier.size(size = SizeConstants.SwitchIconSize),
                         tint = if (targetChecked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-            } , colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary , checkedTrackColor = MaterialTheme.colorScheme.primaryContainer , uncheckedThumbColor = MaterialTheme.colorScheme.outline , uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+            }, colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
+                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
             ))
         }
     }
 }
 
 @Composable
-fun LearnMoreSection(context : Context) {
+fun LearnMoreSection(context: Context) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         HorizontalDivider(
-            modifier = Modifier.padding(vertical = SizeConstants.LargeSize) , thickness = 0.5.dp
+            modifier = Modifier.padding(vertical = SizeConstants.LargeSize), thickness = 0.5.dp
         )
         Text(
-            text = stringResource(R.string.onboarding_crashlytics_privacy_info) , style = MaterialTheme.typography.bodySmall , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant ,
+            text = stringResource(R.string.onboarding_crashlytics_privacy_info),
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
 
             modifier = Modifier.padding(horizontal = SizeConstants.LargeIncreasedSize + SizeConstants.ExtraSmallSize)
         )
 
         MediumVerticalSpacer()
         TextButton(onClick = {
-            val intent = Intent(Intent.ACTION_VIEW , AppLinks.PRIVACY_POLICY.toUri())
+            val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
             context.startActivity(intent)
-        } , modifier = Modifier.bounceClick() , colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)) {
+        },
+            modifier = Modifier.bounceClick(),
+            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)) {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.Launch , contentDescription = null , modifier = Modifier.size(SizeConstants.ButtonIconSize)
+                imageVector = Icons.AutoMirrored.Filled.Launch,
+                contentDescription = null,
+                modifier = Modifier.size(SizeConstants.ButtonIconSize)
             )
             ButtonIconSpacer()
             Text(
-                text = stringResource(id = R.string.learn_more_privacy_policy) , textDecoration = TextDecoration.Underline
+                text = stringResource(id = R.string.learn_more_privacy_policy),
+                textDecoration = TextDecoration.Underline
             )
         }
     }
@@ -225,141 +264,213 @@ fun LearnMoreSection(context : Context) {
 
 @Composable
 fun CrashlyticsConsentDialog(
-    onDismissRequest : () -> Unit , onAcknowledge : () -> Unit , configProvider : BuildInfoProvider = koinInject()
+    onDismissRequest: () -> Unit,
+    onAcknowledge: () -> Unit,
+    configProvider: BuildInfoProvider = koinInject()
 ) {
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
-    val initialConsentValue : Boolean = ! configProvider.isDebugBuild
+    val initialConsentValue: Boolean = !configProvider.isDebugBuild
 
-    val analyticsState : State<Boolean> = dataStore.analyticsConsent.collectAsState(initial = initialConsentValue)
-    val adStorageState : State<Boolean> = dataStore.adStorageConsent.collectAsState(initial = initialConsentValue)
-    val adUserDataState : State<Boolean> = dataStore.adUserDataConsent.collectAsState(initial = initialConsentValue)
-    val adPersonalizationState : State<Boolean> = dataStore.adPersonalizationConsent.collectAsState(initial = initialConsentValue)
+    val analyticsState: State<Boolean> =
+        dataStore.analyticsConsent(default = false).collectAsState(initial = initialConsentValue)
+    val adStorageState: State<Boolean> =
+        dataStore.adStorageConsent(default = false).collectAsState(initial = initialConsentValue)
+    val adUserDataState: State<Boolean> =
+        dataStore.adUserDataConsent(default = false).collectAsState(initial = initialConsentValue)
+    val adPersonalizationState: State<Boolean> =
+        dataStore.adPersonalizationConsent(default = false)
+            .collectAsState(initial = initialConsentValue)
 
-    fun updateConsentState(type : String , value : Boolean) {
+    fun updateConsentState(type: String, value: Boolean) {
         coroutineScope.launch {
             when (type) {
-                DataStoreNamesConstants.DATA_STORE_ANALYTICS_CONSENT -> dataStore.saveAnalyticsConsent(isGranted = value)
-                DataStoreNamesConstants.DATA_STORE_AD_STORAGE_CONSENT -> dataStore.saveAdStorageConsent(isGranted = value)
-                DataStoreNamesConstants.DATA_STORE_AD_USER_DATA_CONSENT -> dataStore.saveAdUserDataConsent(isGranted = value)
-                DataStoreNamesConstants.DATA_STORE_AD_PERSONALIZATION_CONSENT -> dataStore.saveAdPersonalizationConsent(value)
+                DataStoreNamesConstants.DATA_STORE_ANALYTICS_CONSENT -> dataStore.saveAnalyticsConsent(
+                    isGranted = value
+                )
+
+                DataStoreNamesConstants.DATA_STORE_AD_STORAGE_CONSENT -> dataStore.saveAdStorageConsent(
+                    isGranted = value
+                )
+
+                DataStoreNamesConstants.DATA_STORE_AD_USER_DATA_CONSENT -> dataStore.saveAdUserDataConsent(
+                    isGranted = value
+                )
+
+                DataStoreNamesConstants.DATA_STORE_AD_PERSONALIZATION_CONSENT -> dataStore.saveAdPersonalizationConsent(
+                    value
+                )
             }
         }
     }
 
     AlertDialog(
-        onDismissRequest = onDismissRequest ,
-        properties = DialogProperties(dismissOnClickOutside = false , dismissOnBackPress = false) ,
+        onDismissRequest = onDismissRequest,
+        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
         icon = {
             Icon(
-                imageVector = Icons.Outlined.Analytics , contentDescription = null , tint = MaterialTheme.colorScheme.primary
+                imageVector = Icons.Outlined.Analytics,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
             )
-        } ,
+        },
         title = {
             Text(
-                text = stringResource(id = R.string.onboarding_crashlytics_title_dialog) , style = MaterialTheme.typography.headlineSmall.copy(
-                    fontWeight = FontWeight.Bold , textAlign = TextAlign.Center
-                ) , modifier = Modifier.fillMaxWidth()
+                text = stringResource(id = R.string.onboarding_crashlytics_title_dialog),
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold, textAlign = TextAlign.Center
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
-        } ,
+        },
         text = {
             Column(
-                modifier = Modifier.verticalScroll(state = rememberScrollState()) , horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.verticalScroll(state = rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(id = R.string.onboarding_crashlytics_description_dialog) , style = MaterialTheme.typography.bodyMedium , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(
-                        horizontal = SizeConstants.SmallSize , vertical = SizeConstants.SmallSize
+                    text = stringResource(id = R.string.onboarding_crashlytics_description_dialog),
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(
+                        horizontal = SizeConstants.SmallSize, vertical = SizeConstants.SmallSize
                     )
                 )
 
                 SmallVerticalSpacer()
 
                 ConsentToggleItem(
-                    title = stringResource(id = R.string.consent_analytics_storage_title) ,
-                    description = stringResource(id = R.string.consent_analytics_storage_description_short) ,
-                    icon = Icons.Outlined.Analytics ,
-                    switchState = analyticsState.value ,
-                    onCheckedChange = { updateConsentState(type = DataStoreNamesConstants.DATA_STORE_ANALYTICS_CONSENT , value = it) })
+                    title = stringResource(id = R.string.consent_analytics_storage_title),
+                    description = stringResource(id = R.string.consent_analytics_storage_description_short),
+                    icon = Icons.Outlined.Analytics,
+                    switchState = analyticsState.value,
+                    onCheckedChange = {
+                        updateConsentState(
+                            type = DataStoreNamesConstants.DATA_STORE_ANALYTICS_CONSENT,
+                            value = it
+                        )
+                    })
                 SmallVerticalSpacer()
                 ConsentToggleItem(
-                    title = stringResource(id = R.string.consent_ad_storage_title) ,
-                    description = stringResource(id = R.string.consent_ad_storage_description_short) ,
-                    icon = Icons.Outlined.Storage ,
-                    switchState = adStorageState.value ,
-                    onCheckedChange = { updateConsentState(type = DataStoreNamesConstants.DATA_STORE_AD_STORAGE_CONSENT , value = it) })
+                    title = stringResource(id = R.string.consent_ad_storage_title),
+                    description = stringResource(id = R.string.consent_ad_storage_description_short),
+                    icon = Icons.Outlined.Storage,
+                    switchState = adStorageState.value,
+                    onCheckedChange = {
+                        updateConsentState(
+                            type = DataStoreNamesConstants.DATA_STORE_AD_STORAGE_CONSENT,
+                            value = it
+                        )
+                    })
                 SmallVerticalSpacer()
                 ConsentToggleItem(
-                    title = stringResource(id = R.string.consent_ad_user_data_title) ,
-                    description = stringResource(id = R.string.consent_ad_user_data_description_short) ,
-                    icon = Icons.AutoMirrored.Outlined.Send ,
-                    switchState = adUserDataState.value ,
-                    onCheckedChange = { updateConsentState(type = DataStoreNamesConstants.DATA_STORE_AD_USER_DATA_CONSENT , value = it) })
+                    title = stringResource(id = R.string.consent_ad_user_data_title),
+                    description = stringResource(id = R.string.consent_ad_user_data_description_short),
+                    icon = Icons.AutoMirrored.Outlined.Send,
+                    switchState = adUserDataState.value,
+                    onCheckedChange = {
+                        updateConsentState(
+                            type = DataStoreNamesConstants.DATA_STORE_AD_USER_DATA_CONSENT,
+                            value = it
+                        )
+                    })
                 SmallVerticalSpacer()
                 ConsentToggleItem(
-                    title = stringResource(id = R.string.consent_ad_personalization_title) ,
-                    description = stringResource(id = R.string.consent_ad_personalization_description_short) ,
-                    icon = Icons.Outlined.Campaign ,
-                    switchState = adPersonalizationState.value ,
-                    onCheckedChange = { updateConsentState(type = DataStoreNamesConstants.DATA_STORE_AD_PERSONALIZATION_CONSENT , value = it) })
+                    title = stringResource(id = R.string.consent_ad_personalization_title),
+                    description = stringResource(id = R.string.consent_ad_personalization_description_short),
+                    icon = Icons.Outlined.Campaign,
+                    switchState = adPersonalizationState.value,
+                    onCheckedChange = {
+                        updateConsentState(
+                            type = DataStoreNamesConstants.DATA_STORE_AD_PERSONALIZATION_CONSENT,
+                            value = it
+                        )
+                    })
             }
-        } ,
+        },
         confirmButton = {
             TextButton(
-                modifier = Modifier.bounceClick() , onClick = {
+                modifier = Modifier.bounceClick(), onClick = {
                     coroutineScope.launch {
-                        val overallConsent : Boolean = analyticsState.value && adStorageState.value && adUserDataState.value && adPersonalizationState.value
+                        val overallConsent: Boolean =
+                            analyticsState.value && adStorageState.value && adUserDataState.value && adPersonalizationState.value
                         dataStore.saveUsageAndDiagnostics(isChecked = overallConsent)
 
                         ConsentManagerHelper.updateConsent(
-                            analyticsGranted = analyticsState.value , adStorageGranted = adStorageState.value , adUserDataGranted = adUserDataState.value , adPersonalizationGranted = adPersonalizationState.value
+                            analyticsGranted = analyticsState.value,
+                            adStorageGranted = adStorageState.value,
+                            adUserDataGranted = adUserDataState.value,
+                            adPersonalizationGranted = adPersonalizationState.value
                         )
                     }
                     onAcknowledge()
                 }) {
                 Text(text = stringResource(id = R.string.button_acknowledge_consents))
             }
-        } ,
-        containerColor = MaterialTheme.colorScheme.surface ,
+        },
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }
 
 @Composable
 fun ConsentToggleItem(
-    title : String , description : String , icon : ImageVector , switchState : Boolean , onCheckedChange : (Boolean) -> Unit , modifier : Modifier = Modifier
+    title: String,
+    description: String,
+    icon: ImageVector,
+    switchState: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = SizeConstants.ExtraSmallSize) , shape = MaterialTheme.shapes.medium , colors = CardDefaults.cardColors(
+            .fillMaxWidth()
+            .padding(vertical = SizeConstants.ExtraSmallSize),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-        ) , elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCheckedChange(! switchState) }
+                .clickable { onCheckedChange(!switchState) }
                 .padding(
-                    horizontal = SizeConstants.MediumSize ,
+                    horizontal = SizeConstants.MediumSize,
 
                     vertical = SizeConstants.SmallSize + SizeConstants.ExtraTinySize
-                ) , verticalAlignment = Alignment.CenterVertically) {
+                ), verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                imageVector = icon , contentDescription = null , tint = MaterialTheme.colorScheme.primary , modifier = Modifier.size(SizeConstants.ExtraLargeSize)
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(SizeConstants.ExtraLargeSize)
             )
             MediumHorizontalSpacer()
             Column(modifier = Modifier.weight(weight = 1f)) {
                 Text(
-                    text = title , style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold) , color = MaterialTheme.colorScheme.onSurface
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = description , style = MaterialTheme.typography.bodySmall , color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             MediumHorizontalSpacer()
             Switch(
-                checked = switchState , onCheckedChange = onCheckedChange , colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.primary , checkedTrackColor = MaterialTheme.colorScheme.primaryContainer , uncheckedThumbColor = MaterialTheme.colorScheme.outline , uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                checked = switchState,
+                onCheckedChange = onCheckedChange,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                    uncheckedThumbColor = MaterialTheme.colorScheme.outline,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             )
         }

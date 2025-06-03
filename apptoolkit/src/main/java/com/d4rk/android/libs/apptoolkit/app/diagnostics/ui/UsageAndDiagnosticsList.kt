@@ -52,12 +52,15 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
         dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
             .collectAsState(initial = !configProvider.isDebugBuild)
 
-    val analyticsState: State<Boolean> = dataStore.analyticsConsent.collectAsState(initial = false)
-    val adStorageState: State<Boolean> = dataStore.adStorageConsent.collectAsState(initial = false)
-    val adUserDataState: State<Boolean> =
-        dataStore.adUserDataConsent.collectAsState(initial = false)
-    val adPersonalizationState: State<Boolean> =
-        dataStore.adPersonalizationConsent.collectAsState(initial = false)
+    val analyticsState: State<Boolean> = dataStore.analyticsConsent(default = false)
+        .collectAsState(initial = configProvider.isDebugBuild)
+    val adStorageState: State<Boolean> = dataStore.adStorageConsent(default = false)
+        .collectAsState(initial = configProvider.isDebugBuild)
+    val adUserDataState: State<Boolean> = dataStore.adUserDataConsent(default = false)
+        .collectAsState(initial = configProvider.isDebugBuild)
+    val adPersonalizationState: State<Boolean> = dataStore.adPersonalizationConsent(default = false)
+        .collectAsState(initial = configProvider.isDebugBuild)
+
 
     var advancedSettingsExpanded: Boolean by remember { mutableStateOf<Boolean>(value = false) }
 
