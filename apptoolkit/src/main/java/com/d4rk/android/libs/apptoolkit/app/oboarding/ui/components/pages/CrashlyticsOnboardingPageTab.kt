@@ -106,7 +106,7 @@ fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject
                 switchState = switchState.value , onCheckedChange = { isChecked ->
                     coroutineScope.launch {
                         dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
-                        ConsentManagerHelper.updateConsent(usageAndDiagnosticsEnabled = isChecked)
+                        //ConsentManagerHelper.updateConsent(usageAndDiagnosticsEnabled = isChecked)
                     }
                 })
 
@@ -114,7 +114,6 @@ fun CrashlyticsOnboardingPageTab(configProvider : BuildInfoProvider = koinInject
 
             LearnMoreSection(context)
         }
-
     }
 }
 

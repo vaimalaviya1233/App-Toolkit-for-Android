@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         CoroutineScope(Dispatchers.IO).launch {
             MobileAds.initialize(this@MainActivity) {}
-            ConsentManagerHelper.applyInitialConsent(dataStore, defaultConsent = false)
+            ConsentManagerHelper.applyInitialConsent(dataStore)
         }
 
         updateResultLauncher = registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}

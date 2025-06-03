@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
+import android.util.Log
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -17,22 +18,32 @@ object ConsentManagerHelper {
      * you MUST adjust the logic below to correctly set only the relevant consent types
      * and decide how the other types are managed (e.g., separate toggles, manifest defaults).
      *
-     * @param usageAndDiagnosticsEnabled True if the user has consented to usage and diagnostics, false otherwise.
      */
-    fun updateConsent(usageAndDiagnosticsEnabled: Boolean) {
+    fun updateConsent(
+        analyticsGranted: Boolean,
+        adStorageGranted: Boolean,
+        adUserDataGranted: Boolean,
+        adPersonalizationGranted: Boolean
+    ) {
         val firebaseAnalytics = Firebase.analytics
         val consentSettings =
-            mutableMapOf<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus>()
+                mutableMapOf<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus>()
 
-        val status =
-            if (usageAndDiagnosticsEnabled) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
+        consentSettings[FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE] =
+                if (analyticsGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
 
-        consentSettings[FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE] = status
-        consentSettings[FirebaseAnalytics.ConsentType.AD_STORAGE] = status
-        consentSettings[FirebaseAnalytics.ConsentType.AD_USER_DATA] = status
-        consentSettings[FirebaseAnalytics.ConsentType.AD_PERSONALIZATION] = status
+        consentSettings[FirebaseAnalytics.ConsentType.AD_STORAGE] =
+                if (adStorageGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
+
+        consentSettings[FirebaseAnalytics.ConsentType.AD_USER_DATA] =
+                if (adUserDataGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
+
+        consentSettings[FirebaseAnalytics.ConsentType.AD_PERSONALIZATION] =
+                if (adPersonalizationGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
 
         firebaseAnalytics.setConsent(consentSettings)
+        // Log the settings being applied for debugging
+        Log.d("ConsentHelper" , "Updated Firebase Consent: $consentSettings")
     }
 
     /**
@@ -40,14 +51,18 @@ object ConsentManagerHelper {
      * it to Firebase Analytics consent settings on app startup.
      *
      * @param dataStore Your instance of CommonDataStore.
-     * @param defaultConsent The default value to assume if no preference is found in DataStore.
-     *                       This should align with your app's initial desired state
-     *                       (e.g., true for opt-out by default regions,
-     *                       false for opt-in by default regions before user interaction,
-     *                       especially for AD_STORAGE, AD_USER_DATA, and AD_PERSONALIZATION in EEA).
      */
-    suspend fun applyInitialConsent(dataStore: CommonDataStore, defaultConsent: Boolean = true) {
-        val isEnabled = dataStore.usageAndDiagnostics(default = defaultConsent).first()
-        updateConsent(usageAndDiagnosticsEnabled = isEnabled)
+    suspend fun applyInitialConsent(dataStore: CommonDataStore) {
+        val analyticsGranted = dataStore.analyticsConsent.first()
+        val adStorageGranted = dataStore.adStorageConsent.first()
+        val adUserDataGranted = dataStore.adUserDataConsent.first()
+        val adPersonalizationGranted = dataStore.adPersonalizationConsent.first()
+
+        updateConsent(
+            analyticsGranted = analyticsGranted,
+            adStorageGranted = adStorageGranted,
+            adUserDataGranted = adUserDataGranted,
+            adPersonalizationGranted = adPersonalizationGranted
+        )
     }
 }

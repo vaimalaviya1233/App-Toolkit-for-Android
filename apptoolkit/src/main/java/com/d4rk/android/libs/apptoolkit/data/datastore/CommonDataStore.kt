@@ -134,6 +134,50 @@ open class CommonDataStore(context : Context) {
         }
     }
 
+    // Analytics Consent
+    val analyticsConsentKey = booleanPreferencesKey("consent_analytics")
+    val analyticsConsent: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[analyticsConsentKey] == true
+    }
+    suspend fun saveAnalyticsConsent(isGranted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[analyticsConsentKey] = isGranted
+        }
+    }
+
+    // Ad Storage Consent
+    val adStorageConsentKey = booleanPreferencesKey("consent_ad_storage")
+    val adStorageConsent: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[adStorageConsentKey] == true
+    }
+    suspend fun saveAdStorageConsent(isGranted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[adStorageConsentKey] = isGranted
+        }
+    }
+
+    // Ad User Data Consent
+    val adUserDataConsentKey = booleanPreferencesKey("consent_ad_user_data")
+    val adUserDataConsent: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[adUserDataConsentKey] == true
+    }
+    suspend fun saveAdUserDataConsent(isGranted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[adUserDataConsentKey] = isGranted
+        }
+    }
+
+    // Ad Personalization Consent
+    val adPersonalizationConsentKey = booleanPreferencesKey("consent_ad_personalization")
+    val adPersonalizationConsent: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[adPersonalizationConsentKey] == true
+    }
+    suspend fun saveAdPersonalizationConsent(isGranted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[adPersonalizationConsentKey] = isGranted
+        }
+    }
+
     // Ads
     private val adsKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_ADS)
     fun ads(default : Boolean) : Flow<Boolean> = dataStore.data.map { prefs : Preferences ->

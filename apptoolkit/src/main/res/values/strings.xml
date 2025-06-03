@@ -150,6 +150,32 @@
     <string name="usage_and_diagnostics">Usage and diagnostics</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve in-app experience</string>
     <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data to us. This will help improve app performance, stability, and other enhancements. Some aggregate data will also help our apps.\n\nThis is general information about your device and how you use our apps (such as battery level, system and app activity, and errors). The data will be used to improve our apps\n\nTurning off this feature doesn\'t affect your device\'s ability to send the information needed for essential services such as app updates and security.\n</string>
+    <string name="privacy_settings_title">Privacy Settings</string>
+    <string name="consent_category_analytics_title">Analytics</string>
+    <string name="consent_category_analytics_description">Helps us understand how you use the app to improve your experience. Anonymous data is collected.</string>
+    <string name="consent_category_advertising_title">Personalized Advertising</string>
+    <string name="consent_category_advertising_description">Allows us to show you ads that are more relevant to your interests. This may involve sharing some data with advertising partners.</string>
+    <string name="consent_analytics_storage_title">Store Analytics Data</string>
+    <string name="consent_analytics_storage_description_on">Analytics data storage is enabled.</string>
+    <string name="consent_analytics_storage_description_off">Analytics data storage is disabled.</string>
+    <string name="consent_ad_storage_title">Store Advertising Data</string>
+    <string name="consent_ad_storage_description_on">Storage for advertising purposes (like cookies) is enabled.</string>
+    <string name="consent_ad_storage_description_off">Storage for advertising purposes is disabled.</string>
+    <string name="consent_ad_user_data_title">Send Data for Ads</string>
+    <string name="consent_ad_user_data_description_on">Sending user data to Google for advertising purposes is enabled.</string>
+    <string name="consent_ad_user_data_description_off">Sending user data to Google for advertising purposes is disabled.</string>
+    <string name="consent_ad_personalization_title">Personalized Ads</string>
+    <string name="consent_ad_personalization_description_on">Personalized advertising based on your data is enabled.</string>
+    <string name="consent_ad_personalization_description_off">Personalized advertising is disabled. You may still see ads, but they will be less relevant.</string>
+    <string name="privacy_settings_info">Manage your data preferences below. You can change these settings at any time. For more details, please see our <a href="%s">Privacy Policy</a>.</string>
+    <string name="consent_ad_user_data_detailed_explanation">This allows us to share data with advertising services to measure ad performance and show you relevant ads.</string>
+    <string name="consent_ad_personalization_detailed_explanation">Enable this to see ads tailored to your interests based on your activity. Disable to see generic, non-personalized ads.</string>
+    <string name="learn_more_privacy_policy_settings">Learn more in our Privacy Policy</string>
+    <string name="advanced_privacy_settings">Advanced Privacy Settings</string>
+    <string name="icon_desc_expand_more">Expand more</string>
+    <string name="icon_desc_expand_less">Expand less</string>
+    <string name="icon_desc_consent_category">Consent category icon</string>
+    <string name="icon_desc_switch_status">Switch status icon</string>
 
     <string name="legal">Legal</string>
     <string name="legal_notices">Legal notices</string>

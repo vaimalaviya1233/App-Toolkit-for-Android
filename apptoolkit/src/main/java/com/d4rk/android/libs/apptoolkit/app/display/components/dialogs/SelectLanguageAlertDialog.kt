@@ -43,7 +43,9 @@ fun SelectLanguageAlertDialog(onDismiss : () -> Unit , onLanguageSelected : (Str
     BasicAlertDialog(onDismiss = onDismiss , onConfirm = {
         onLanguageSelected(selectedLanguage.value)
         onDismiss()
-    } , onCancel = onDismiss , icon = Icons.Outlined.Language , title = stringResource(id = R.string.select_language_title) , content = {
+    } , onCancel = {
+        onDismiss()
+    } , icon = Icons.Outlined.Language , title = stringResource(id = R.string.select_language_title) , content = {
         SelectLanguageAlertDialogContent(
             selectedLanguage = selectedLanguage , dataStore = dataStore , languageEntries = languageEntries , languageValues = languageValues
         )
