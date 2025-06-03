@@ -37,12 +37,12 @@ sealed class UiTextHelper {
     }
 
     /**
-     * Converts a [StringWrapper] to a plain String.
+     * Converts a [UiTextHelper] to a plain String.
      *
-     * This function is a Composable extension function on the [StringWrapper] sealed class.
-     * It provides a way to get the actual string value represented by the [StringWrapper].
+     * This function is a Composable extension function on the [UiTextHelper] sealed class.
+     * It provides a way to get the actual string value represented by the [UiTextHelper].
      *
-     * There are two types of [StringWrapper] supported:
+     * There are two types of [UiTextHelper] supported:
      * - [DynamicString]: Represents a string that is directly provided.
      * - [StringResource]: Represents a string that is loaded from Android resources.
      *
@@ -50,7 +50,7 @@ sealed class UiTextHelper {
      * For [StringResource], it uses the Android Context to fetch the string from the resources
      * using the provided resource ID and arguments.
      *
-     * @return The String representation of the [StringWrapper].
+     * @return The String representation of the [UiTextHelper].
      *
      * @throws android.content.res.Resources.NotFoundException if a [StringResource] is used and the resource ID does not exist.
      * @throws java.util.MissingFormatArgumentException if a [StringResource] is used with format arguments and not all of them are provided.
