@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId = "com.d4rk.android.apps.apptoolkit"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 22
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
