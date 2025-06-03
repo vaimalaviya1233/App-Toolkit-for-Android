@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
-import android.util.Log
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -25,8 +24,8 @@ object ConsentManagerHelper {
         adUserDataGranted: Boolean,
         adPersonalizationGranted: Boolean
     ) {
-        val firebaseAnalytics = Firebase.analytics
-        val consentSettings =
+        val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+        val consentSettings: MutableMap<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus> =
                 mutableMapOf<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus>()
 
         consentSettings[FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE] =
@@ -42,8 +41,6 @@ object ConsentManagerHelper {
                 if (adPersonalizationGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
 
         firebaseAnalytics.setConsent(consentSettings)
-        // Log the settings being applied for debugging
-        Log.d("ConsentHelper" , "Updated Firebase Consent: $consentSettings")
     }
 
     /**
@@ -53,10 +50,10 @@ object ConsentManagerHelper {
      * @param dataStore Your instance of CommonDataStore.
      */
     suspend fun applyInitialConsent(dataStore: CommonDataStore) {
-        val analyticsGranted = dataStore.analyticsConsent.first()
-        val adStorageGranted = dataStore.adStorageConsent.first()
-        val adUserDataGranted = dataStore.adUserDataConsent.first()
-        val adPersonalizationGranted = dataStore.adPersonalizationConsent.first()
+        val analyticsGranted: Boolean = dataStore.analyticsConsent.first()
+        val adStorageGranted: Boolean = dataStore.adStorageConsent.first()
+        val adUserDataGranted: Boolean = dataStore.adUserDataConsent.first()
+        val adPersonalizationGranted: Boolean = dataStore.adPersonalizationConsent.first()
 
         updateConsent(
             analyticsGranted = analyticsGranted,
