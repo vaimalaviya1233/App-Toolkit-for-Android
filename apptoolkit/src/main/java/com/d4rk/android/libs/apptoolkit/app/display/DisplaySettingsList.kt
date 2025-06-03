@@ -209,7 +209,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             }
 
             if (showLanguageDialog) {
-                SelectLanguageAlertDialog(onDismiss = { showLanguageDialog = true } , onLanguageSelected = { newLanguageCode : String ->
+                SelectLanguageAlertDialog(onDismiss = { showLanguageDialog = false } , onLanguageSelected = { newLanguageCode : String ->
                     AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(newLanguageCode))
                 })
             }
