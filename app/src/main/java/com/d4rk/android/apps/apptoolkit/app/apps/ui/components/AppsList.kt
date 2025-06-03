@@ -31,9 +31,15 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues , adsConfig : AdsConfig = koinInject(qualifier = named("banner_medium_rectangle"))) {
+fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
     val apps : List<AppInfo> = uiHomeScreen.apps
     val listState : LazyGridState = rememberLazyGridState()
+    val context = LocalContext.current
+    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
+
+    val bannerType : String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
+    val adsConfig : AdsConfig = koinInject(qualifier = named(bannerType))
+
     val adFrequency = 4
     val dataStore : DataStore = koinInject()
     val adsEnabled : Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
@@ -50,11 +56,9 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues , adsCo
             }
         }
     }
-    val context = LocalContext.current
-    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
     val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(gridState = listState , itemCount = items.size)
     LazyVerticalGrid(
-        columns = GridCells.Fixed(count = if(isTabletOrLandscape) 6 else 2) ,
+        columns = GridCells.Fixed(count = if(isTabletOrLandscape) 4 else 2) ,
         contentPadding = paddingValues ,
         state = listState ,
         horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) ,

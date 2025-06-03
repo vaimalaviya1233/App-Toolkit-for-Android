@@ -12,12 +12,16 @@ val adsModule : Module = module {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
     }
 
-    single<AdsConfig>(named(name = "mainScreen")) {
+    single<AdsConfig>(named(name = "banner")) {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.BANNER)
     }
 
+    single<AdsConfig>(named(name = "full_banner")) {
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.FULL_BANNER)
+    }
+
     // You can keep a default if you want
-    single<AdsConfig> {
+    single<AdsConfig>(named(name = "large_banner")) {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.LARGE_BANNER)
     }
 }
