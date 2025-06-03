@@ -5,9 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -30,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers.FinalOnboardingKonfettiState
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeIncreasedVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import kotlinx.coroutines.delay
@@ -41,47 +41,38 @@ import nl.dionsegijn.konfetti.core.Spread
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import java.util.concurrent.TimeUnit
 
-object FinalOnboardingKonfettiState {
-    var hasKonfettiBeenShownGlobally by mutableStateOf(false)
-}
-
 @Composable
 fun FinalOnboardingPageTab() {
 
-    var showKonfettiAnimationForThisInstance by remember { mutableStateOf(false) }
-    var iconVisible by remember { mutableStateOf(false) } // State to control icon animation
+    var showKonfettiAnimationForThisInstance : Boolean by remember { mutableStateOf<Boolean>(value = false) }
+    var iconVisible : Boolean by remember { mutableStateOf<Boolean>(value = false) }
 
-    val party = Party(speed = 0f , maxSpeed = 30f , damping = 0.9f , spread = Spread.ROUND , position = Position.Relative(0.5 , 0.3) , emitter = Emitter(duration = 200 , TimeUnit.MILLISECONDS).max(100))
-    val partyRain = Party(emitter = Emitter(duration = 3 , TimeUnit.SECONDS).perSecond(60) , angle = Angle.BOTTOM , spread = Spread.SMALL , speed = 5f , maxSpeed = 15f , timeToLive = 3000L , position = Position.Relative(0.0 , 0.0).between(Position.Relative(1.0 , 0.0)))
+    val party = Party(speed = 0f , maxSpeed = 30f , damping = 0.9f , spread = Spread.ROUND , position = Position.Relative(0.5 , 0.3) , emitter = Emitter(duration = 200 , TimeUnit.MILLISECONDS).max(amount = 100))
+    val partyRain =
+            Party(emitter = Emitter(duration = 3 , TimeUnit.SECONDS).perSecond(amount = 60) , angle = Angle.BOTTOM , spread = Spread.SMALL , speed = 5f , maxSpeed = 15f , timeToLive = 3000L , position = Position.Relative(x = 0.0 , y = 0.0).between(value = Position.Relative(x = 1.0 , y = 0.0)))
 
-    // Animation for icon scale (settle back) - Scale down from 1.2 to 1
-    val iconSettleScale by animateFloatAsState(
-        targetValue = if (iconVisible) 1f else 1.2f, // Settle back to 1
-        animationSpec = tween(durationMillis = 200, delayMillis = 400), label = "Icon Settle Scale" // Delay to start after initial scale up
+    val iconSettleScale : Float by animateFloatAsState(
+        targetValue = if (iconVisible) 1f else 1.2f , animationSpec = tween(durationMillis = 200 , delayMillis = 400) , label = "Icon Settle Scale"
     )
 
-    // Animation for icon alpha (fade-in)
-    val iconAlpha by animateFloatAsState(
-        targetValue = if (iconVisible) 1f else 0f,
-        animationSpec = tween(durationMillis = 300), label = "Icon Alpha"
+    val iconAlpha : Float by animateFloatAsState(
+        targetValue = if (iconVisible) 1f else 0f , animationSpec = tween(durationMillis = 300) , label = "Icon Alpha"
     )
 
-    // Animation for icon translationY (bounce)
-    val iconTranslateY by animateFloatAsState(
-        targetValue = if (iconVisible) 0f else 30f, // Start slightly lower and move up
-        animationSpec = tween(durationMillis = 400, delayMillis = 200), label = "Icon TranslateY" // Delay bounce slightly
+    val iconTranslateY : Float by animateFloatAsState(
+        targetValue = if (iconVisible) 0f else 30f , animationSpec = tween(durationMillis = 400 , delayMillis = 200) , label = "Icon TranslateY"
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         if (! FinalOnboardingKonfettiState.hasKonfettiBeenShownGlobally) {
-            iconVisible = true // Trigger icon animation
+            iconVisible = true
             delay(300)
             showKonfettiAnimationForThisInstance = true
             FinalOnboardingKonfettiState.hasKonfettiBeenShownGlobally = true
             delay(4000)
-        } else {
-            // If konfetti has been shown, just make the icon visible without animation
-            // or with a faster, simpler animation if desired.
+        }
+        else {
+
             iconVisible = true
         }
     }
@@ -89,34 +80,32 @@ fun FinalOnboardingPageTab() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = Icons.Filled.CheckCircle ,
-                contentDescription = stringResource(R.string.onboarding_complete_icon_desc) ,
-                modifier = Modifier
-                    .size(80.dp)
+            Icon(imageVector = Icons.Filled.CheckCircle , contentDescription = stringResource(id = R.string.onboarding_complete_icon_desc) , modifier = Modifier
+                    .size(size = 80.dp)
                     .graphicsLayer {
-                        scaleX = iconSettleScale // Applies the settle scale
-                        scaleY = iconSettleScale // Applies the settle scale
-                        translationY = iconTranslateY // Applies the bounce
+                        scaleX = iconSettleScale
+                        scaleY = iconSettleScale
+                        translationY = iconTranslateY
                         alpha = iconAlpha
-                    }
-                ,
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(text = stringResource(R.string.onboarding_final_title) , style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold , fontSize = 30.sp , textAlign = TextAlign.Center) , color = MaterialTheme.colorScheme.onSurface)
+                    } , tint = MaterialTheme.colorScheme.primary)
+
+            ExtraLargeIncreasedVerticalSpacer()
+            Text(text = stringResource(id = R.string.onboarding_final_title) , style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold , fontSize = 30.sp , textAlign = TextAlign.Center) , color = MaterialTheme.colorScheme.onSurface)
+
             LargeVerticalSpacer()
-            Text(text = stringResource(R.string.onboarding_final_description) , style = MaterialTheme.typography.bodyLarge , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize))
+            Text(
+                text = stringResource(id = R.string.onboarding_final_description) , style = MaterialTheme.typography.bodyLarge , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
+            )
 
         }
 
         if (showKonfettiAnimationForThisInstance) {
             KonfettiView(
                 modifier = Modifier.fillMaxSize() ,
-                parties = listOf(party , partyRain) ,
+                parties = listOf<Party>(party , partyRain) ,
             )
         }
     }

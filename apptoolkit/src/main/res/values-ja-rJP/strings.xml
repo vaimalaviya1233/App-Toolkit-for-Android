@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">データ報告は無効です。</string>
     <string name="onboarding_crashlytics_privacy_info">お客様のプライバシーは重要です。このデータは、バグの修正と機能の改善にのみ使用されます。詳細については、プライバシーポリシーをご確認ください。</string>
     <string name="learn_more_privacy_policy">プライバシーポリシーを確認する</string>
+    <string name="onboarding_crashlytics_title_dialog">データ利用に関する同意設定</string>
+    <string name="onboarding_crashlytics_description_dialog">同意設定をご確認ください。このデータはアプリの改善に役立ち、当社のプライバシーポリシーに従って取り扱われます。</string>
+    <string name="consent_analytics_storage_description_short">アプリ利用状況分析のためのデータ収集を許可します。</string>
+    <string name="consent_ad_storage_description_short">広告目的でのデータ保存を許可します。</string>
+    <string name="consent_ad_user_data_description_short">広告のためのユーザーデータの送信を許可します。</string>
+    <string name="consent_ad_personalization_description_short">パーソナライズド広告を有効にします。</string>
+    <string name="onboarding_crashlytics_show_details_button">詳細情報を表示</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">使用状況と診断に関する詳細情報を表示</string>
+    <string name="button_acknowledge_consents">保存して続行</string>
+    <string name="button_continue">続行</string>
     <string name="onboarding_complete_icon_desc">オンボーディング完了</string>
     <string name="onboarding_final_title">すべての準備ができました！</string>
     <string name="onboarding_final_description">エクスペリエンスをパーソナライズしていただきありがとうございます。これで、すべての機能を探索する準備ができました。お楽しみください！</string>
@@ -135,6 +145,22 @@
     <string name="normal">通常</string>
     <string name="runtime">ランタイム</string>
     <string name="storage">ストレージ</string>
+    <string name="ad_id">広告ID [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">アプリがユーザーのデバイスに関連付けられた広告識別子を取得して使用し、パーソナライズされた広告の提供、広告効果の測定、Android 13以降のデバイスでの広告表示を許可します。</string>
+    <string name="internet">インターネット [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">アプリがエラーレポートの送信や更新の確認のためにインターネット接続を確立することを許可します。</string>
+    <string name="post_notifications">通知の投稿 [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">アプリがAndroid 13以降のデバイスで通知を表示することを許可します。</string>
+    <string name="access_network_state">ネットワーク状態へのアクセス [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">アプリがネットワーク接続を確認し、有効状態や接続されたWi-Fiデバイス名などのWi-Fiに関する情報を取得することを許可します。</string>
+    <string name="access_notification_policy">通知ポリシーへのアクセス [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">アプリがデバイスの通知ポリシーにアクセスして変更し、ユーザーに通知が表示される方法とタイミングを制御し、カスタム通知管理機能を提供することを許可します。</string>
+    <string name="billing">請求 [BILLING]</string>
+    <string name="summary_preference_permissions_billing">アプリがアプリ内購入や寄付を処理するためにGoogle Play Billing Libraryを使用することを許可します。</string>
+    <string name="check_license">ライセンスの確認 [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">アプリがライセンス契約への準拠を確認し、知的財産を保護するためにライセンス条項を施行することを許可します。</string>
+    <string name="foreground_service">フォアグラウンドサービス [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">アプリがフォアグラウンドで実行されるサービスを作成して使用し、他のバックグラウンドプロセスよりも優先度を高め、パフォーマンスと信頼性を向上させることを許可します。</string>
 
     <string name="ads">広告</string>
     <string name="summary_preference_settings_ads">関連性のある広告を表示するために情報をどのように使用するかを制御する</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">使用状況と診断</string>
     <string name="summary_preference_settings_usage_and_diagnostics">アプリ内の体験向上に役立つデータを共有する</string>
     <string name="summary_usage_and_diagnostics">診断、デバイス、およびアプリの使用データを自動的に送信することで、体験を向上させる手助けをしてください。</string>
+    <string name="privacy_settings_title">プライバシー設定</string>
+    <string name="consent_category_analytics_title">アナリティクス</string>
+    <string name="consent_category_advertising_title">パーソナライズド広告</string>
+    <string name="consent_analytics_storage_title">アナリティクス データを保存</string>
+    <string name="consent_analytics_storage_description">アプリの使用状況やアクセス時間などのデータを保存して、アナリティクスとアプリのパフォーマンスを改善することを許可します。</string>
+    <string name="consent_ad_storage_title">広告データを保存</string>
+    <string name="consent_ad_storage_description">広告のパフォーマンス測定や関連性の高い広告の表示のため、データ（デバイス ID や Cookie など）の保存を有効にします。</string>
+    <string name="consent_ad_user_data_title">広告用のデータを送信</string>
+    <string name="consent_ad_user_data_description">コンバージョンやキャンペーンの最適化など、広告関連機能をサポートするために、使用状況データとデバイスデータを Google に送信することを許可します。</string>
+    <string name="consent_ad_personalization_title">パーソナライズド広告</string>
+    <string name="consent_ad_personalization_description">Google のサービスやアプリ全体でのアクティビティや設定に基づいて、パーソナライズド広告を有効にします。</string>
+    <string name="privacy_settings_info">以下でデータ設定を管理します。これらの設定はいつでも変更できます。詳細については、<a href="%s">プライバシー ポリシー</a>をご覧ください。</string>
+    <string name="learn_more_privacy_policy_settings">プライバシー ポリシーで詳細を確認</string>
+    <string name="advanced_privacy_settings">詳細なプライバシー設定</string>
+    <string name="icon_desc_expand_more">展開</string>
+    <string name="icon_desc_expand_less">折りたたむ</string>
+    <string name="icon_desc_consent_category">同意カテゴリのアイコン</string>
+    <string name="icon_desc_switch_status">切り替えステータス アイコン</string>
 
     <string name="legal">法的情報</string>
     <string name="legal_notices">法的通知</string>

@@ -24,6 +24,10 @@ open class DataStoreNamesConstants {
         const val DATA_STORE_BOUNCY_BUTTONS = "bouncy_buttons"
         const val DATA_STORE_LANGUAGE = "language"
         const val DATA_STORE_USAGE_AND_DIAGNOSTICS = "usage_and_diagnostics"
+        const val DATA_STORE_ANALYTICS_CONSENT = "consent_analytics"
+        const val DATA_STORE_AD_STORAGE_CONSENT = "consent_ad_storage"
+        const val DATA_STORE_AD_USER_DATA_CONSENT = "consent_ad_user_data"
+        const val DATA_STORE_AD_PERSONALIZATION_CONSENT = "consent_ad_personalization"
         const val DATA_STORE_ADS = "ads"
     }
 }

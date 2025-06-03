@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">Звітність даних неактивна.</string>
     <string name="onboarding_crashlytics_privacy_info">Ваша конфіденційність важлива. Ми використовуємо ці дані лише для виправлення помилок та покращення функцій. Для отримання додаткової інформації, будь ласка, перегляньте нашу політику конфіденційності.</string>
     <string name="learn_more_privacy_policy">Переглянути нашу Політику конфіденційності</string>
+    <string name="onboarding_crashlytics_title_dialog">Керування згодою на використання даних</string>
+    <string name="onboarding_crashlytics_description_dialog">Будь ласка, перегляньте та підтвердьте ваші налаштування згоди. Ці дані допомагають нам покращувати застосунок та обробляються згідно з нашою Політикою конфіденційності.</string>
+    <string name="consent_analytics_storage_description_short">Дозволяє збір даних для аналізу використання застосунку.</string>
+    <string name="consent_ad_storage_description_short">Дозволяє зберігання даних для рекламних цілей.</string>
+    <string name="consent_ad_user_data_description_short">Дозволяє надсилання даних користувача для реклами.</string>
+    <string name="consent_ad_personalization_description_short">Вмикає персоналізовану рекламу.</string>
+    <string name="onboarding_crashlytics_show_details_button">Показати детальну інформацію</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">Показати детальну інформацію про використання та діагностику</string>
+    <string name="button_acknowledge_consents">Зберегти та продовжити</string>
+    <string name="button_continue">Продовжити</string>
     <string name="onboarding_complete_icon_desc">Початкове налаштування завершено</string>
     <string name="onboarding_final_title">Ви все налаштували!</string>
     <string name="onboarding_final_description">Дякуємо за персоналізацію вашого досвіду. Тепер ви готові досліджувати всі функції. Насолоджуйтесь!</string>
@@ -135,6 +145,22 @@
     <string name="normal">Нормальні</string>
     <string name="runtime">Час виконання</string>
     <string name="storage">Сховище</string>
+    <string name="ad_id">Ідентифікатор реклами [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">Дозволяє додатку отримувати та використовувати рекламний ідентифікатор, пов\'язаний з пристроєм користувача, надаючи персоналізовану рекламу, вимірюючи ефективність реклами та показуючи рекламу на пристроях з Android 13 або новіших версій.</string>
+    <string name="internet">Інтернет [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">Дозволяє додатку встановлювати інтернет-з\'єднання для надсилання звітів про помилки або перевірки оновлень.</string>
+    <string name="post_notifications">Публікувати сповіщення [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">Дозволяє додатку відображати сповіщення на пристроях з Android 13 або новіших версій.</string>
+    <string name="access_network_state">Доступ до стану мережі [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">Дозволяє додатку перевіряти підключення до мережі та отримувати інформацію про Wi-Fi, включаючи стан увімкнення та назви підключених пристроїв Wi-Fi.</string>
+    <string name="access_notification_policy">Доступ до політики сповіщень [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">Дозволяє додатку отримувати доступ та змінювати політику сповіщень пристрою, контролюючи, як і коли сповіщення відображаються користувачеві, та надаючи власні функції керування сповіщеннями.</string>
+    <string name="billing">Платежі [BILLING]</string>
+    <string name="summary_preference_permissions_billing">Дозволяє додатку використовувати бібліотеку Google Play Billing для обробки покупок у додатку та пожертв.</string>
+    <string name="check_license">Перевірка ліцензії [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">Дозволяє додатку перевіряти його відповідність ліцензійній угоді та застосовувати умови ліцензування для захисту інтелектуальної власності.</string>
+    <string name="foreground_service">Служба переднього плану [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">Дозволяє додатку створювати та використовувати служби, що працюють на передньому плані, надаючи їм пріоритет над іншими фоновими процесами та покращуючи продуктивність і надійність.</string>
 
     <string name="ads">Реклама</string>
     <string name="summary_preference_settings_ads">Керуйте інформацією для показу реклами</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">Використання та діагностика</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Поділіться даними для покращення роботи додатка</string>
     <string name="summary_usage_and_diagnostics">Автоматично надсилайте діагностичні дані для покращення роботи додатка</string>
+    <string name="privacy_settings_title">Налаштування конфіденційності</string>
+    <string name="consent_category_analytics_title">Аналітика</string>
+    <string name="consent_category_advertising_title">Персоналізована реклама</string>
+    <string name="consent_analytics_storage_title">Зберігати дані аналітики</string>
+    <string name="consent_analytics_storage_description">Дозволити зберігання даних, таких як використання додатка та тривалість відвідування, для покращення аналітики та продуктивності додатка.</string>
+    <string name="consent_ad_storage_title">Зберігати рекламні дані</string>
+    <string name="consent_ad_storage_description">Увімкнути зберігання даних (наприклад, ідентифікаторів пристрою або файлів cookie) для вимірювання ефективності реклами та показу релевантних оголошень.</string>
+    <string name="consent_ad_user_data_title">Надсилати дані для реклами</string>
+    <string name="consent_ad_user_data_description">Дозволити надсилання даних про використання та пристрій до Google для підтримки функцій, пов’язаних із рекламою, таких як конверсії та оптимізація кампаній.</string>
+    <string name="consent_ad_personalization_title">Персоналізовані оголошення</string>
+    <string name="consent_ad_personalization_description">Увімкнути персоналізовані оголошення на основі вашої активності та вподобань у сервісах і додатках Google.</string>
+    <string name="privacy_settings_info">Керуйте своїми параметрами даних нижче. Ви можете змінити ці налаштування будь-коли. Щоб дізнатися більше, перегляньте нашу <a href="%s">Політику конфіденційності</a>.</string>
+    <string name="learn_more_privacy_policy_settings">Дізнайтеся більше в нашій Політиці конфіденційності</string>
+    <string name="advanced_privacy_settings">Розширені налаштування конфіденційності</string>
+    <string name="icon_desc_expand_more">Розгорнути</string>
+    <string name="icon_desc_expand_less">Згорнути</string>
+    <string name="icon_desc_consent_category">Значок категорії згоди</string>
+    <string name="icon_desc_switch_status">Значок стану перемикача</string>
 
     <string name="legal">Юридична інформація</string>
     <string name="legal_notices">Юридичні повідомлення</string>

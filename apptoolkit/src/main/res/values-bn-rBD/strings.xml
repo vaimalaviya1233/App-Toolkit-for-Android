@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">ডেটা রিপোর্টিং নিষ্ক্রিয় আছে।</string>
     <string name="onboarding_crashlytics_privacy_info">আপনার গোপনীয়তা গুরুত্বপূর্ণ। আমরা শুধুমাত্র বাগ সংশোধন এবং বৈশিষ্ট্য উন্নত করতে এই ডেটা ব্যবহার করি। আরো বিস্তারিত জানার জন্য, অনুগ্রহ করে আমাদের গোপনীয়তা নীতি পর্যালোচনা করুন।</string>
     <string name="learn_more_privacy_policy">আমাদের গোপনীয়তা নীতি পর্যালোচনা করুন</string>
+    <string name="onboarding_crashlytics_title_dialog">ডেটা সম্মতি পরিচালনা করুন</string>
+    <string name="onboarding_crashlytics_description_dialog">অনুগ্রহ করে আপনার সম্মতির পছন্দগুলি পর্যালোচনা এবং নিশ্চিত করুন। এই ডেটা আমাদের অ্যাপ উন্নত করতে সাহায্য করে এবং আমাদের গোপনীয়তা নীতি অনুযায়ী পরিচালিত হয়।</string>
+    <string name="consent_analytics_storage_description_short">অ্যাপ ব্যবহারের বিশ্লেষণের জন্য ডেটা সংগ্রহের অনুমতি দেয়।</string>
+    <string name="consent_ad_storage_description_short">বিজ্ঞাপনের উদ্দেশ্যে ডেটা সংরক্ষণের অনুমতি দেয়।</string>
+    <string name="consent_ad_user_data_description_short">বিজ্ঞাপনের জন্য ব্যবহারকারীর ডেটা পাঠানোর অনুমতি দেয়।</string>
+    <string name="consent_ad_personalization_description_short">ব্যক্তিগতকৃত বিজ্ঞাপন সক্ষম করে।</string>
+    <string name="onboarding_crashlytics_show_details_button">বিস্তারিত তথ্য দেখুন</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">ব্যবহার এবং ডায়াগনস্টিকস সম্পর্কে বিস্তারিত তথ্য দেখুন</string>
+    <string name="button_acknowledge_consents">সংরক্ষণ করুন এবং চালিয়ে যান</string>
+    <string name="button_continue">চালিয়ে যান</string>
     <string name="onboarding_complete_icon_desc">অনবোর্ডিং সম্পন্ন</string>
     <string name="onboarding_final_title">আপনি পুরোপুরি প্রস্তুত!</string>
     <string name="onboarding_final_description">আপনার অভিজ্ঞতা ব্যক্তিগতকৃত করার জন্য ধন্যবাদ। আপনি এখন সমস্ত বৈশিষ্ট্য অন্বেষণ করতে প্রস্তুত। উপভোগ করুন!</string>
@@ -135,6 +145,22 @@
     <string name="normal">সাধারণ</string>
     <string name="runtime">রানটাইম</string>
     <string name="storage">স্টোরেজ</string>
+    <string name="ad_id">বিজ্ঞাপন আইডি [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">অ্যাপটিকে ব্যবহারকারীর ডিভাইসের সাথে যুক্ত বিজ্ঞাপন শনাক্তকারী পুনরুদ্ধার এবং ব্যবহার করার অনুমতি দেয়, যা ব্যক্তিগতকৃত বিজ্ঞাপন সরবরাহ করে, বিজ্ঞাপনের কার্যকারিতা পরিমাপ করে এবং অ্যান্ড্রয়েড ১৩ বা তার পরের ডিভাইসগুলোতে বিজ্ঞাপন দেখায়।</string>
+    <string name="internet">ইন্টারনেট [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">অ্যাপটিকে ত্রুটির প্রতিবেদন পাঠাতে অথবা আপডেটের জন্য পরীক্ষা করতে ইন্টারনেট সংযোগ স্থাপন করার অনুমতি দেয়।</string>
+    <string name="post_notifications">পোস্ট নোটিফিকেশন [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">অ্যাপটিকে অ্যান্ড্রয়েড ১৩ বা তার পরের ডিভাইসগুলোতে বিজ্ঞপ্তি প্রদর্শন করার অনুমতি দেয়।</string>
+    <string name="access_network_state">নেটওয়ার্কের অবস্থা অ্যাক্সেস [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">অ্যাপটিকে নেটওয়ার্ক সংযোগ পরীক্ষা করতে এবং ওয়াই-ফাই সম্পর্কিত তথ্য পুনরুদ্ধার করার অনুমতি দেয়, যার মধ্যে সক্রিয় অবস্থা এবং সংযুক্ত ওয়াই-ফাই ডিভাইসের নাম অন্তর্ভুক্ত।</string>
+    <string name="access_notification_policy">বিজ্ঞপ্তি নীতি অ্যাক্সেস [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">অ্যাপটিকে ডিভাইসের বিজ্ঞপ্তি নীতি অ্যাক্সেস এবং পরিবর্তন করার অনুমতি দেয়, যা ব্যবহারকারীর কাছে কীভাবে এবং কখন বিজ্ঞপ্তি প্রদর্শিত হবে তা নিয়ন্ত্রণ করে এবং কাস্টম বিজ্ঞপ্তি পরিচালনার বৈশিষ্ট্য সরবরাহ করে।</string>
+    <string name="billing">বিলিং [BILLING]</string>
+    <string name="summary_preference_permissions_billing">অ্যাপটিকে গুগল প্লে বিলিং লাইব্রেরি ব্যবহার করে অ্যাপ-মধ্যস্থ কেনাকাটা এবং অনুদান পরিচালনা করার অনুমতি দেয়।</string>
+    <string name="check_license">লাইসেন্স যাচাই [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">অ্যাপটিকে লাইসেন্স চুক্তির সাথে তার সম্মতি যাচাই করতে এবং মেধা সম্পত্তির সুরক্ষার জন্য লাইসেন্সের শর্তাবলী প্রয়োগ করার অনুমতি দেয়।</string>
+    <string name="foreground_service">ফোরগ্রাউন্ড পরিষেবা [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">অ্যাপটিকে ফোরগ্রাউন্ডে চালিত পরিষেবা তৈরি এবং ব্যবহার করার অনুমতি দেয়, যা অন্যান্য ব্যাকগ্রাউন্ড প্রসেসের উপর তাদের অগ্রাধিকার দেয় এবং কার্যকারিতা ও নির্ভরযোগ্যতা উন্নত করে।</string>
 
     <string name="ads">বিজ্ঞাপন</string>
     <string name="summary_preference_settings_ads">আপনাকে প্রাসঙ্গিক বিজ্ঞাপন দেখাতে আমরা কীভাবে আপনার তথ্য ব্যবহার করি তা নিয়ন্ত্রণ করুন</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">ব্যবহার এবং ডায়াগনস্টিকস</string>
     <string name="summary_preference_settings_usage_and_diagnostics">অ্যাপ-মধ্যস্থ অভিজ্ঞতা উন্নত করতে ডেটা শেয়ার করুন</string>
     <string name="summary_usage_and_diagnostics">স্বয়ংক্রিয়ভাবে ডায়াগনস্টিক, ডিভাইস এবং অ্যাপ ব্যবহারের ডেটা আমাদের কাছে পাঠিয়ে আপনার অভিজ্ঞতা উন্নত করতে সাহায্য করুন। এটি অ্যাপের কর্মক্ষমতা, স্থিতিশীলতা এবং অন্যান্য উন্নতিতে সাহায্য করবে। কিছু সামগ্রিক ডেটাও আমাদের অ্যাপগুলিকে সাহায্য করবে।\n\nএটি আপনার ডিভাইস এবং আপনি কীভাবে আমাদের অ্যাপগুলি ব্যবহার করেন (যেমন ব্যাটারির স্তর, সিস্টেম এবং অ্যাপ কার্যকলাপ এবং ত্রুটি) সে সম্পর্কে সাধারণ তথ্য। ডেটা আমাদের অ্যাপগুলির উন্নতিতে ব্যবহৃত হবে।\n\nএই বৈশিষ্ট্যটি বন্ধ করলে অ্যাপ আপডেট এবং নিরাপত্তার মতো প্রয়োজনীয় পরিষেবাগুলির জন্য প্রয়োজনীয় তথ্য পাঠানোর ক্ষেত্রে আপনার ডিভাইসের ক্ষমতা প্রভাবিত হবে না।\n</string>
+    <string name="privacy_settings_title">গোপনীয়তা সেটিংস</string>
+    <string name="consent_category_analytics_title">অ্যানালিটিক্স</string>
+    <string name="consent_category_advertising_title">ব্যক্তিগতকৃত বিজ্ঞাপন</string>
+    <string name="consent_analytics_storage_title">অ্যানালিটিক্স ডেটা সংরক্ষণ করুন</string>
+    <string name="consent_analytics_storage_description">অ্যাপের ব্যবহার এবং পরিদর্শনের সময়কালের মতো ডেটা সংরক্ষণ করার অনুমতি দিন, যাতে অ্যানালিটিক্স এবং অ্যাপের পারফরম্যান্স উন্নত করা যায়।</string>
+    <string name="consent_ad_storage_title">বিজ্ঞাপনের ডেটা সংরক্ষণ করুন</string>
+    <string name="consent_ad_storage_description">বিজ্ঞাপনের পারফরম্যান্স পরিমাপ করতে এবং প্রাসঙ্গিক বিজ্ঞাপন দেখানোর জন্য ডেটা (যেমন ডিভাইস শনাক্তকারী বা কুকিজ) সংরক্ষণ সক্ষম করুন।</string>
+    <string name="consent_ad_user_data_title">বিজ্ঞাপনের জন্য ডেটা পাঠান</string>
+    <string name="consent_ad_user_data_description">ব্যবহার এবং ডিভাইসের ডেটা Google-কে পাঠানোর অনুমতি দিন, যাতে রূপান্তর এবং প্রচারাভিযান অপ্টিমাইজেশনের মতো বিজ্ঞাপন-সম্পর্কিত বৈশিষ্ট্যগুলি সমর্থন করা যায়।</string>
+    <string name="consent_ad_personalization_title">ব্যক্তিগতকৃত বিজ্ঞাপন</string>
+    <string name="consent_ad_personalization_description">Google পরিষেবা এবং অ্যাপ জুড়ে আপনার কার্যকলাপ এবং পছন্দের উপর ভিত্তি করে ব্যক্তিগতকৃত বিজ্ঞাপন সক্রিয় করুন।</string>
+    <string name="privacy_settings_info">নিচে আপনার ডেটা পছন্দগুলি পরিচালনা করুন। আপনি যেকোনো সময় এই সেটিংস পরিবর্তন করতে পারেন। আরও বিস্তারিত জানতে, অনুগ্রহ করে আমাদের <a href="%s">গোপনীয়তা নীতি</a> দেখুন।</string>
+    <string name="learn_more_privacy_policy_settings">আমাদের গোপনীয়তা নীতিতে আরও জানুন</string>
+    <string name="advanced_privacy_settings">উন্নত গোপনীয়তা সেটিংস</string>
+    <string name="icon_desc_expand_more">আরও প্রসারিত করুন</string>
+    <string name="icon_desc_expand_less">সংকুচিত করুন</string>
+    <string name="icon_desc_consent_category">সম্মতি বিভাগের আইকন</string>
+    <string name="icon_desc_switch_status">সুইচের স্ট্যাটাস আইকন</string>
 
     <string name="legal">আইনি</string>
     <string name="legal_notices">আইনি নোটিশ</string>

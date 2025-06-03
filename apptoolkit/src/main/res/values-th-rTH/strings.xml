@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">การรายงานข้อมูลไม่ทำงาน</string>
     <string name="onboarding_crashlytics_privacy_info">ความเป็นส่วนตัวของคุณเป็นสิ่งสำคัญ เราใช้ข้อมูลนี้เพื่อแก้ไขข้อบกพร่องและปรับปรุงคุณสมบัติเท่านั้น สำหรับรายละเอียดเพิ่มเติม โปรดอ่านนโยบายความเป็นส่วนตัวของเรา</string>
     <string name="learn_more_privacy_policy">อ่านนโยบายความเป็นส่วนตัวของเรา</string>
+    <string name="onboarding_crashlytics_title_dialog">จัดการการให้ความยินยอมเกี่ยวกับข้อมูล</string>
+    <string name="onboarding_crashlytics_description_dialog">โปรดตรวจสอบและยืนยันการตั้งค่าการให้ความยินยอมของคุณ ข้อมูลนี้ช่วยให้เราปรับปรุงแอปและจะได้รับการจัดการตามนโยบายความเป็นส่วนตัวของเรา</string>
+    <string name="consent_analytics_storage_description_short">อนุญาตการเก็บรวบรวมข้อมูลสำหรับการวิเคราะห์การใช้งานแอป</string>
+    <string name="consent_ad_storage_description_short">อนุญาตการจัดเก็บข้อมูลเพื่อวัตถุประสงค์ในการโฆษณา</string>
+    <string name="consent_ad_user_data_description_short">อนุญาตการส่งข้อมูลผู้ใช้สำหรับโฆษณา</string>
+    <string name="consent_ad_personalization_description_short">เปิดใช้งานการโฆษณาที่ปรับให้เหมาะกับแต่ละบุคคล</string>
+    <string name="onboarding_crashlytics_show_details_button">แสดงข้อมูลโดยละเอียด</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">แสดงข้อมูลโดยละเอียดเกี่ยวกับการใช้งานและการวินิจฉัย</string>
+    <string name="button_acknowledge_consents">บันทึกและดำเนินการต่อ</string>
+    <string name="button_continue">ดำเนินการต่อ</string>
     <string name="onboarding_complete_icon_desc">การเริ่มต้นใช้งานเสร็จสมบูรณ์</string>
     <string name="onboarding_final_title">คุณพร้อมแล้ว!</string>
     <string name="onboarding_final_description">ขอบคุณสำหรับการปรับแต่งประสบการณ์ของคุณ ตอนนี้คุณพร้อมที่จะสำรวจคุณสมบัติทั้งหมดแล้ว ขอให้สนุก!</string>
@@ -135,6 +145,22 @@
     <string name="normal">ปกติ</string>
     <string name="runtime">ระหว่างการทำงาน</string>
     <string name="storage">พื้นที่เก็บข้อมูล</string>
+    <string name="ad_id">รหัสโฆษณา [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">อนุญาตให้แอปเรียกดูและใช้ตัวระบุโฆษณาที่เชื่อมโยงกับอุปกรณ์ของผู้ใช้ เพื่อให้โฆษณาที่ปรับให้เหมาะกับแต่ละบุคคล วัดประสิทธิภาพโฆษณา และแสดงโฆษณาบนอุปกรณ์ Android 13 หรือใหม่กว่า</string>
+    <string name="internet">อินเทอร์เน็ต [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">อนุญาตให้แอปสร้างการเชื่อมต่ออินเทอร์เน็ตเพื่อส่งรายงานข้อผิดพลาดหรือตรวจสอบการอัปเดต</string>
+    <string name="post_notifications">โพสต์การแจ้งเตือน [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">อนุญาตให้แอปแสดงการแจ้งเตือนบนอุปกรณ์ที่ใช้ Android 13 หรือใหม่กว่า</string>
+    <string name="access_network_state">เข้าถึงสถานะเครือข่าย [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">อนุญาตให้แอปตรวจสอบการเชื่อมต่อเครือข่ายและเรียกดูข้อมูลเกี่ยวกับ Wi-Fi รวมถึงสถานะที่เปิดใช้งานและชื่ออุปกรณ์ Wi-Fi ที่เชื่อมต่อ</string>
+    <string name="access_notification_policy">เข้าถึงนโยบายการแจ้งเตือน [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">อนุญาตให้แอปเข้าถึงและแก้ไขนโยบายการแจ้งเตือนของอุปกรณ์ ควบคุมวิธีและเวลาที่การแจ้งเตือนจะแสดงต่อผู้ใช้ และให้คุณลักษณะการจัดการการแจ้งเตือนที่กำหนดเอง</string>
+    <string name="billing">การเรียกเก็บเงิน [BILLING]</string>
+    <string name="summary_preference_permissions_billing">อนุญาตให้แอปใช้ไลบรารี Google Play Billing เพื่อจัดการการซื้อในแอปและการบริจาค</string>
+    <string name="check_license">ตรวจสอบใบอนุญาต [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">อนุญาตให้แอปตรวจสอบการปฏิบัติตามข้อตกลงใบอนุญาตและบังคับใช้เงื่อนไขการอนุญาตให้ใช้สิทธิ์เพื่อปกป้องทรัพย์สินทางปัญญา</string>
+    <string name="foreground_service">บริการเบื้องหน้า [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">อนุญาตให้แอปสร้างและใช้บริการที่ทำงานในเบื้องหน้า โดยให้ความสำคัญกับบริการเหล่านั้นมากกว่ากระบวนการเบื้องหลังอื่นๆ และปรับปรุงประสิทธิภาพและความน่าเชื่อถือ</string>
 
     <string name="ads">โฆษณา</string>
     <string name="summary_preference_settings_ads">ควบคุมวิธีการใช้ข้อมูลของคุณสำหรับแสดงโฆษณา</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">การใช้งานและการวินิจฉัย</string>
     <string name="summary_preference_settings_usage_and_diagnostics">แชร์ข้อมูลเพื่อช่วยปรับปรุงประสบการณ์การใช้งาน</string>
     <string name="summary_usage_and_diagnostics">ช่วยปรับปรุงแอปโดยส่งข้อมูลการใช้งานและข้อผิดพลาด</string>
+    <string name="privacy_settings_title">การตั้งค่าความเป็นส่วนตัว</string>
+    <string name="consent_category_analytics_title">การวิเคราะห์</string>
+    <string name="consent_category_advertising_title">โฆษณาส่วนบุคคล</string>
+    <string name="consent_analytics_storage_title">จัดเก็บข้อมูลการวิเคราะห์</string>
+    <string name="consent_analytics_storage_description">อนุญาตให้จัดเก็บข้อมูล เช่น การใช้งานแอปและระยะเวลาการเข้าชม เพื่อปรับปรุงการวิเคราะห์และประสิทธิภาพของแอป</string>
+    <string name="consent_ad_storage_title">จัดเก็บข้อมูลโฆษณา</string>
+    <string name="consent_ad_storage_description">เปิดใช้งานการจัดเก็บข้อมูล (เช่น ตัวระบุอุปกรณ์หรือคุกกี้) เพื่อวัดประสิทธิภาพโฆษณาและแสดงโฆษณาที่เกี่ยวข้อง</string>
+    <string name="consent_ad_user_data_title">ส่งข้อมูลสำหรับโฆษณา</string>
+    <string name="consent_ad_user_data_description">อนุญาตให้ส่งข้อมูลการใช้งานและข้อมูลอุปกรณ์ไปยัง Google เพื่อสนับสนุนฟีเจอร์ที่เกี่ยวข้องกับโฆษณา เช่น คอนเวอร์ชันและการเพิ่มประสิทธิภาพแคมเปญ</string>
+    <string name="consent_ad_personalization_title">โฆษณาส่วนบุคคล</string>
+    <string name="consent_ad_personalization_description">เปิดใช้งานโฆษณาส่วนบุคคลตามกิจกรรมและค่ากำหนดของคุณในบริการและแอปต่างๆ ของ Google</string>
+    <string name="privacy_settings_info">จัดการค่ากำหนดข้อมูลของคุณด้านล่าง คุณสามารถเปลี่ยนการตั้งค่าเหล่านี้ได้ตลอดเวลา สำหรับรายละเอียดเพิ่มเติม โปรดดู <a href="%s">นโยบายความเป็นส่วนตัว</a> ของเรา</string>
+    <string name="learn_more_privacy_policy_settings">เรียนรู้เพิ่มเติมในนโยบายความเป็นส่วนตัวของเรา</string>
+    <string name="advanced_privacy_settings">การตั้งค่าความเป็นส่วนตัวขั้นสูง</string>
+    <string name="icon_desc_expand_more">ขยาย</string>
+    <string name="icon_desc_expand_less">ยุบ</string>
+    <string name="icon_desc_consent_category">ไอคอนหมวดหมู่การยินยอม</string>
+    <string name="icon_desc_switch_status">ไอคอนสถานะสวิตช์</string>
 
     <string name="legal">ข้อมูลทางกฎหมาย</string>
     <string name="legal_notices">ประกาศทางกฎหมาย</string>

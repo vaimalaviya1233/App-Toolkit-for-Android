@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">Raportarea datelor este inactivă.</string>
     <string name="onboarding_crashlytics_privacy_info">Confidențialitatea ta este importantă. Utilizăm aceste date doar pentru a remedia erorile și a îmbunătăți funcționalitățile. Pentru mai multe detalii, te rugăm să consulți politica noastră de confidențialitate.</string>
     <string name="learn_more_privacy_policy">Revizuiește Politica noastră de confidențialitate</string>
+    <string name="onboarding_crashlytics_title_dialog">Gestionați consimțământul privind datele</string>
+    <string name="onboarding_crashlytics_description_dialog">Vă rugăm să examinați și să confirmați preferințele dvs. de consimțământ. Aceste date ne ajută să îmbunătățim aplicația și sunt gestionate conform Politicii noastre de confidențialitate.</string>
+    <string name="consent_analytics_storage_description_short">Permite colectarea datelor pentru analiza utilizării aplicației.</string>
+    <string name="consent_ad_storage_description_short">Permite stocarea datelor în scopuri publicitare.</string>
+    <string name="consent_ad_user_data_description_short">Permite trimiterea datelor utilizatorului pentru reclame.</string>
+    <string name="consent_ad_personalization_description_short">Activează publicitatea personalizată.</string>
+    <string name="onboarding_crashlytics_show_details_button">Afișați informații detaliate</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">Afișați informații detaliate despre utilizare și diagnosticare</string>
+    <string name="button_acknowledge_consents">Salvați și continuați</string>
+    <string name="button_continue">Continuați</string>
     <string name="onboarding_complete_icon_desc">Integrare completă</string>
     <string name="onboarding_final_title">Ești Gata!</string>
     <string name="onboarding_final_description">Mulțumim că ți-ai personalizat experiența. Acum ești gata să explorezi toate funcționalitățile. Bucură-te!</string>
@@ -135,6 +145,22 @@
     <string name="normal">Normal</string>
     <string name="runtime">Timp de rulare</string>
     <string name="storage">Stocare</string>
+    <string name="ad_id">ID reclamă [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">Permite aplicației să acceseze identificatorul de publicitate asociat dispozitivului pentru a oferi reclame personalizate, a măsura eficiența acestora și a afișa reclame pe dispozitivele cu Android 13 sau mai nou.</string>
+    <string name="internet">Internet [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">Permite aplicației să stabilească o conexiune la internet pentru a trimite rapoarte de eroare sau a verifica actualizări.</string>
+    <string name="post_notifications">Afișează notificări [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">Permite aplicației să afișeze notificări pe dispozitivele cu Android 13 sau mai nou.</string>
+    <string name="access_network_state">Acces la starea rețelei [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">Permite aplicației să verifice conexiunea la rețea și să obțină informații despre Wi-Fi, inclusiv starea și numele dispozitivelor conectate.</string>
+    <string name="access_notification_policy">Acces la politica de notificări [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">Permite aplicației să acceseze și să modifice politica de notificări a dispozitivului, controlând modul și momentul afișării notificărilor.</string>
+    <string name="billing">Plăți [BILLING]</string>
+    <string name="summary_preference_permissions_billing">Permite aplicației să utilizeze Google Play Billing pentru a gestiona achizițiile și donațiile în aplicație.</string>
+    <string name="check_license">Verificare licență [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">Permite aplicației să verifice respectarea acordului de licență și să aplice termenii pentru protejarea proprietății intelectuale.</string>
+    <string name="foreground_service">Serviciu în prim-plan [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">Permite aplicației să creeze și să utilizeze servicii care rulează în prim-plan, oferindu-le prioritate și îmbunătățind performanța.</string>
 
     <string name="ads">Reclame</string>
     <string name="summary_preference_settings_ads">Controlează modul în care folosim informațiile tale pentru a afișa reclame relevante</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">Utilizare și diagnoză</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Partajează date pentru a ajuta la îmbunătățirea experienței în aplicație</string>
     <string name="summary_usage_and_diagnostics">Ajută la îmbunătățirea experienței trimițând automat date de diagnosticare, utilizare a dispozitivului și a aplicației.</string>
+    <string name="privacy_settings_title">Setări de confidențialitate</string>
+    <string name="consent_category_analytics_title">Analiză</string>
+    <string name="consent_category_advertising_title">Publicitate personalizată</string>
+    <string name="consent_analytics_storage_title">Stocare date de analiză</string>
+    <string name="consent_analytics_storage_description">Permiteți stocarea datelor, cum ar fi utilizarea aplicației și durata vizitei, pentru a îmbunătăți analiza și performanța aplicației.</string>
+    <string name="consent_ad_storage_title">Stocare date publicitare</string>
+    <string name="consent_ad_storage_description">Activați stocarea datelor (cum ar fi identificatorii de dispozitiv sau modulele cookie) pentru măsurarea performanței anunțurilor și afișarea de anunțuri relevante.</string>
+    <string name="consent_ad_user_data_title">Trimitere date pentru anunțuri</string>
+    <string name="consent_ad_user_data_description">Permiteți trimiterea datelor de utilizare și despre dispozitiv către Google pentru a sprijini funcțiile legate de anunțuri, cum ar fi conversiile și optimizarea campaniilor.</string>
+    <string name="consent_ad_personalization_title">Anunțuri personalizate</string>
+    <string name="consent_ad_personalization_description">Activați anunțurile personalizate pe baza activității și preferințelor dvs. în serviciile și aplicațiile Google.</string>
+    <string name="privacy_settings_info">Gestionați preferințele dvs. de date mai jos. Puteți modifica aceste setări oricând. Pentru mai multe detalii, consultați <a href="%s">Politica noastră de confidențialitate</a>.</string>
+    <string name="learn_more_privacy_policy_settings">Aflați mai multe în Politica noastră de confidențialitate</string>
+    <string name="advanced_privacy_settings">Setări avansate de confidențialitate</string>
+    <string name="icon_desc_expand_more">Extindeți</string>
+    <string name="icon_desc_expand_less">Restrângeți</string>
+    <string name="icon_desc_consent_category">Pictogramă categorie consimțământ</string>
+    <string name="icon_desc_switch_status">Pictogramă stare comutator</string>
 
     <string name="legal">Informații legale</string>
     <string name="legal_notices">Avertismente legale</string>

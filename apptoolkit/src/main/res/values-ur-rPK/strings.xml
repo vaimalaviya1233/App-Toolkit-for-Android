@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">ڈیٹا رپورٹنگ غیر فعال ہے۔</string>
     <string name="onboarding_crashlytics_privacy_info">آپ کی رازداری اہم ہے۔ ہم اس ڈیٹا کو صرف کیڑے ٹھیک کرنے اور خصوصیات کو بہتر بنانے کے لیے استعمال کرتے ہیں۔ مزید تفصیلات کے لیے، براہ کرم ہماری رازداری کی پالیسی کا جائزہ لیں۔</string>
     <string name="learn_more_privacy_policy">ہماری رازداری کی پالیسی کا جائزہ لیں</string>
+    <string name="onboarding_crashlytics_title_dialog">ڈیٹا کی رضامندی کا نظم کریں</string>
+    <string name="onboarding_crashlytics_description_dialog">براہ کرم اپنی رضامندی کی ترجیحات کا جائزہ لیں اور تصدیق کریں۔ یہ ڈیٹا ہمیں ایپ کو بہتر بنانے میں مدد کرتا ہے اور اسے ہماری پرائیویسی پالیسی کے مطابق ہینڈل کیا جاتا ہے۔</string>
+    <string name="consent_analytics_storage_description_short">ایپ کے استعمال کے تجزیے کے لیے ڈیٹا اکٹھا کرنے کی اجازت دیتا ہے۔</string>
+    <string name="consent_ad_storage_description_short">اشتہاری مقاصد کے لیے ڈیٹا ذخیرہ کرنے کی اجازت دیتا ہے۔</string>
+    <string name="consent_ad_user_data_description_short">اشتہارات کے لیے صارف کا ڈیٹا بھیجنے کی اجازت دیتا ہے۔</string>
+    <string name="consent_ad_personalization_description_short">ذاتی نوعیت کی تشہیر کو فعال کرتا ہے۔</string>
+    <string name="onboarding_crashlytics_show_details_button">تفصیلی معلومات دکھائیں</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">استعمال اور تشخیص کے بارے میں تفصیلی معلومات دکھائیں</string>
+    <string name="button_acknowledge_consents">محفوظ کریں اور جاری رکھیں</string>
+    <string name="button_continue">جاری رکھیں</string>
     <string name="onboarding_complete_icon_desc">آن بورڈنگ مکمل</string>
     <string name="onboarding_final_title">آپ پوری طرح تیار ہیں!</string>
     <string name="onboarding_final_description">اپنے تجربے کو ذاتی بنانے کا شکریہ۔ اب آپ تمام خصوصیات کو دریافت کرنے کے لیے تیار ہیں۔ لطف اٹھائیں!</string>
@@ -135,6 +145,22 @@
     <string name="normal">عام</string>
     <string name="runtime">رن ٹائم</string>
     <string name="storage">اسٹوریج</string>
+    <string name="ad_id">اشتہار کی شناخت [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">ایپ کو صارف کے آلے سے وابستہ اشتہاری شناخت کنندہ کو بازیافت کرنے اور استعمال کرنے کی اجازت دیتا ہے، ذاتی نوعیت کے اشتہارات فراہم کرتا ہے، اشتہار کی تاثیر کی پیمائش کرتا ہے، اور Android 13 یا بعد کے آلات پر اشتہارات دکھاتا ہے۔</string>
+    <string name="internet">انٹرنیٹ [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">ایپ کو غلطی کی رپورٹس بھیجنے یا اپ ڈیٹس چیک کرنے کے لیے انٹرنیٹ کنکشن قائم کرنے کی اجازت دیتا ہے۔</string>
+    <string name="post_notifications">اطلاعات پوسٹ کریں [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">ایپ کو Android 13 یا اس کے بعد والے آلات پر اطلاعات دکھانے کی اجازت دیتا ہے۔</string>
+    <string name="access_network_state">نیٹ ورک کی حالت تک رسائی [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">ایپ کو نیٹ ورک کنیکٹیویٹی چیک کرنے اور وائی فائی کے بارے میں معلومات بازیافت کرنے کی اجازت دیتا ہے، بشمول فعال حیثیت اور منسلک وائی فائی ڈیوائس کے نام۔</string>
+    <string name="access_notification_policy">اطلاعاتی پالیسی تک رسائی [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">ایپ کو آلے کی اطلاعاتی پالیسی تک رسائی حاصل کرنے اور اس میں ترمیم کرنے، صارف کو اطلاعات کب اور کیسے دکھائی جائیں اس کو کنٹرول کرنے، اور حسب ضرورت اطلاعات کے انتظام کی خصوصیات فراہم کرنے کی اجازت دیتا ہے۔</string>
+    <string name="billing">بلنگ [BILLING]</string>
+    <string name="summary_preference_permissions_billing">ایپ کو ایپ میں خریداریوں اور عطیات کو سنبھالنے کے لیے گوگل پلے بلنگ لائبریری استعمال کرنے کی اجازت دیتا ہے۔</string>
+    <string name="check_license">لائسنس چیک کریں [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">ایپ کو لائسنس کے معاہدے کی تعمیل کی توثیق کرنے اور دانشورانہ املاک کے تحفظ کے لیے لائسنس کی شرائط نافذ کرنے کی اجازت دیتا ہے۔</string>
+    <string name="foreground_service">پیش منظر سروس [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">ایپ کو پیش منظر میں چلنے والی خدمات بنانے اور استعمال کرنے کی اجازت دیتا ہے، جس سے انہیں دیگر پس منظر کے عمل پر فوقیت ملتی ہے اور کارکردگی اور وشوسنییتا بہتر ہوتی ہے۔</string>
 
     <string name="ads">اشتہارات</string>
     <string name="summary_preference_settings_ads">کنٹرول کریں کہ ہم آپ کو متعلقہ اشتہارات دکھانے کے لیے آپ کی معلومات کیسے استعمال کرتے ہیں</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">استعمال اور تشخیص</string>
     <string name="summary_preference_settings_usage_and_diagnostics">ایپ میں تجربے کو بہتر بنانے میں مدد کے لیے ڈیٹا شیئر کریں</string>
     <string name="summary_usage_and_diagnostics">تشخیصی، ڈیوائس، اور ایپ کے استعمال کا ڈیٹا خود بخود ہمیں بھیج کر اپنے تجربے کو بہتر بنانے میں مدد کریں۔ اس سے ایپ کی کارکردگی، استحکام، اور دیگر اضافہ جات کو بہتر بنانے میں مدد ملے گی۔ کچھ مجموعی ڈیٹا ہماری ایپس کی بھی مدد کرے گا۔\n\nیہ آپ کے ڈیوائس اور آپ ہماری ایپس کو کیسے استعمال کرتے ہیں (جیسے بیٹری لیول، سسٹم اور ایپ کی سرگرمی، اور خرابیاں) کے بارے میں عمومی معلومات ہیں۔ ڈیٹا ہماری ایپس کو بہتر بنانے کے لیے استعمال کیا جائے گا\n\nاس خصوصیت کو بند کرنے سے آپ کے ڈیوائس کی ضروری خدمات جیسے ایپ اپ ڈیٹس اور سیکیورٹی کے لیے درکار معلومات بھیجنے کی صلاحیت متاثر نہیں ہوتی۔\n</string>
+    <string name="privacy_settings_title">رازداری کی ترتیبات</string>
+    <string name="consent_category_analytics_title">تجزیات</string>
+    <string name="consent_category_advertising_title">ذاتی نوعیت کے اشتہارات</string>
+    <string name="consent_analytics_storage_title">تجزیاتی ڈیٹا اسٹور کریں</string>
+    <string name="consent_analytics_storage_description">ایپ کے استعمال اور وزٹ کے دورانیے جیسے ڈیٹا کو اسٹور کرنے کی اجازت دیں تاکہ تجزیات اور ایپ کی کارکردگی کو بہتر بنایا جا سکے۔</string>
+    <string name="consent_ad_storage_title">اشتہاری ڈیٹا اسٹور کریں</string>
+    <string name="consent_ad_storage_description">اشتہار کی کارکردگی کی پیمائش کرنے اور متعلقہ اشتہارات دکھانے کے لیے ڈیٹا (جیسے ڈیوائس شناخت کنندگان یا کوکیز) کو اسٹور کرنا فعال کریں۔</string>
+    <string name="consent_ad_user_data_title">اشتہارات کے لیے ڈیٹا بھیجیں</string>
+    <string name="consent_ad_user_data_description">استعمال اور ڈیوائس کا ڈیٹا Google کو بھیجنے کی اجازت دیں تاکہ اشتہار سے متعلق خصوصیات جیسے تبادلوں اور مہم کی اصلاح میں مدد مل سکے۔</string>
+    <string name="consent_ad_personalization_title">ذاتی نوعیت کے اشتہارات</string>
+    <string name="consent_ad_personalization_description">Google سروسز اور ایپس پر آپ کی سرگرمی اور ترجیحات کی بنیاد پر ذاتی نوعیت کے اشتہارات فعال کریں۔</string>
+    <string name="privacy_settings_info">نیچے اپنی ڈیٹا ترجیحات کا نظم کریں۔ آپ کسی بھی وقت یہ ترتیبات تبدیل کر سکتے ہیں۔ مزید تفصیلات کے لیے، براہ کرم ہماری <a href="%s">رازداری کی پالیسی</a> دیکھیں۔</string>
+    <string name="learn_more_privacy_policy_settings">ہماری رازداری کی پالیسی میں مزید جانیں</string>
+    <string name="advanced_privacy_settings">اعلیٰ رازداری کی ترتیبات</string>
+    <string name="icon_desc_expand_more">مزید پھیلائیں</string>
+    <string name="icon_desc_expand_less">سکیڑیں</string>
+    <string name="icon_desc_consent_category">رضامندی کے زمرے کا آئیکن</string>
+    <string name="icon_desc_switch_status">سوئچ اسٹیٹس آئیکن</string>
 
     <string name="legal">قانونی</string>
     <string name="legal_notices">قانونی نوٹس</string>

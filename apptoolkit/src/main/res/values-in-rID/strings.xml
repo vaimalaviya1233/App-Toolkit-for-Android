@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">Pelaporan data tidak aktif.</string>
     <string name="onboarding_crashlytics_privacy_info">Privasi Anda penting. Kami hanya menggunakan data ini untuk memperbaiki bug dan meningkatkan fitur. Untuk lebih jelasnya, harap tinjau kebijakan privasi kami.</string>
     <string name="learn_more_privacy_policy">Tinjau Kebijakan Privasi kami</string>
+    <string name="onboarding_crashlytics_title_dialog">Kelola Izin Data</string>
+    <string name="onboarding_crashlytics_description_dialog">Harap tinjau dan konfirmasi preferensi izin Anda. Data ini membantu kami meningkatkan aplikasi dan ditangani sesuai Kebijakan Privasi kami.</string>
+    <string name="consent_analytics_storage_description_short">Mengizinkan pengumpulan data untuk analisis penggunaan aplikasi.</string>
+    <string name="consent_ad_storage_description_short">Mengizinkan penyimpanan data untuk tujuan periklanan.</string>
+    <string name="consent_ad_user_data_description_short">Mengizinkan pengiriman data pengguna untuk iklan.</string>
+    <string name="consent_ad_personalization_description_short">Mengaktifkan iklan yang dipersonalisasi.</string>
+    <string name="onboarding_crashlytics_show_details_button">Tampilkan Informasi Detail</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">Tampilkan informasi detail tentang penggunaan dan diagnostik</string>
+    <string name="button_acknowledge_consents">Simpan dan Lanjutkan</string>
+    <string name="button_continue">Lanjutkan</string>
     <string name="onboarding_complete_icon_desc">Orientasi Selesai</string>
     <string name="onboarding_final_title">Anda Siap!</string>
     <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati!</string>
@@ -135,6 +145,22 @@
     <string name="normal">Normal</string>
     <string name="runtime">Runtime</string>
     <string name="storage">Penyimpanan</string>
+    <string name="ad_id">Id iklan [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">Memungkinkan aplikasi untuk mengambil dan menggunakan pengidentifikasi iklan yang terkait dengan perangkat pengguna, menyediakan iklan yang dipersonalisasi, mengukur efektivitas iklan, dan menampilkan iklan di perangkat Android 13 atau yang lebih baru.</string>
+    <string name="internet">Internet [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">Memungkinkan aplikasi untuk membuat koneksi internet untuk mengirim laporan kesalahan atau memeriksa pembaruan.</string>
+    <string name="post_notifications">Posting notifikasi [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">Memungkinkan aplikasi untuk menampilkan notifikasi di perangkat dengan Android 13 atau yang lebih baru.</string>
+    <string name="access_network_state">Akses status jaringan [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">Memungkinkan aplikasi untuk memeriksa konektivitas jaringan dan mengambil informasi tentang Wi-Fi, termasuk status diaktifkan dan nama perangkat Wi-Fi yang terhubung.</string>
+    <string name="access_notification_policy">Akses kebijakan notifikasi [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">Memungkinkan aplikasi untuk mengakses dan mengubah kebijakan notifikasi perangkat, mengontrol bagaimana dan kapan notifikasi ditampilkan kepada pengguna dan menyediakan fitur manajemen notifikasi khusus.</string>
+    <string name="billing">Penagihan [BILLING]</string>
+    <string name="summary_preference_permissions_billing">Memungkinkan aplikasi untuk menggunakan Google Play Billing Library untuk menangani pembelian dalam aplikasi dan donasi</string>
+    <string name="check_license">Periksa lisensi [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">Memungkinkan aplikasi untuk memverifikasi kepatuhannya terhadap perjanjian lisensi dan memberlakukan persyaratan lisensi untuk melindungi kekayaan intelektual.</string>
+    <string name="foreground_service">Layanan latar depan [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">Memungkinkan aplikasi untuk membuat dan menggunakan layanan yang berjalan di latar depan, memberi mereka prioritas di atas proses latar belakang lainnya dan meningkatkan kinerja dan keandalan.</string>
 
     <string name="ads">Iklan</string>
     <string name="summary_preference_settings_ads">Kendalikan bagaimana kami menggunakan informasi Anda untuk menampilkan iklan yang relevan</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">Penggunaan dan diagnostik</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Bagikan data untuk membantu meningkatkan pengalaman dalam aplikasi</string>
     <string name="summary_usage_and_diagnostics">Bantu tingkatkan pengalaman Anda dengan mengirimkan data diagnostik, perangkat, dan penggunaan aplikasi secara otomatis kepada kami.</string>
+    <string name="privacy_settings_title">Pengaturan Privasi</string>
+    <string name="consent_category_analytics_title">Analitik</string>
+    <string name="consent_category_advertising_title">Iklan yang Dipersonalisasi</string>
+    <string name="consent_analytics_storage_title">Simpan Data Analitik</string>
+    <string name="consent_analytics_storage_description">Izinkan penyimpanan data seperti penggunaan aplikasi dan durasi kunjungan untuk meningkatkan analitik dan performa aplikasi.</string>
+    <string name="consent_ad_storage_title">Simpan Data Iklan</string>
+    <string name="consent_ad_storage_description">Aktifkan penyimpanan data (seperti ID perangkat atau cookie) untuk mengukur performa iklan dan menampilkan iklan yang relevan.</string>
+    <string name="consent_ad_user_data_title">Kirim Data untuk Iklan</string>
+    <string name="consent_ad_user_data_description">Izinkan pengiriman data penggunaan dan perangkat ke Google untuk mendukung fitur terkait iklan seperti konversi dan optimalisasi kampanye.</string>
+    <string name="consent_ad_personalization_title">Iklan yang Dipersonalisasi</string>
+    <string name="consent_ad_personalization_description">Aktifkan iklan yang dipersonalisasi berdasarkan aktivitas dan preferensi Anda di seluruh layanan dan aplikasi Google.</string>
+    <string name="privacy_settings_info">Kelola preferensi data Anda di bawah ini. Anda dapat mengubah setelan ini kapan saja. Untuk detail selengkapnya, lihat <a href="%s">Kebijakan Privasi</a> kami.</string>
+    <string name="learn_more_privacy_policy_settings">Pelajari lebih lanjut di Kebijakan Privasi kami</string>
+    <string name="advanced_privacy_settings">Pengaturan Privasi Lanjutan</string>
+    <string name="icon_desc_expand_more">Perluas</string>
+    <string name="icon_desc_expand_less">Ciutkan</string>
+    <string name="icon_desc_consent_category">Ikon kategori izin</string>
+    <string name="icon_desc_switch_status">Ikon status tombol</string>
 
     <string name="legal">Hukum</string>
     <string name="legal_notices">Pemberitahuan hukum</string>

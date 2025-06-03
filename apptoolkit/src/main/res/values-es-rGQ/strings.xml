@@ -32,6 +32,16 @@
     <string name="onboarding_crashlytics_disabled_desc">El envío de datos está inactivo.</string>
     <string name="onboarding_crashlytics_privacy_info">Tu privacidad es importante. Solo usamos estos datos para corregir errores y mejorar funciones. Para más detalles, revisa nuestra política de privacidad.</string>
     <string name="learn_more_privacy_policy">Revisar nuestra Política de Privacidad</string>
+    <string name="onboarding_crashlytics_title_dialog">Gestionar consentimiento de datos</string>
+    <string name="onboarding_crashlytics_description_dialog">Por favor, revisa y confirma tus preferencias de consentimiento. Estos datos nos ayudan a mejorar la aplicación y se tratan según nuestra Política de Privacidad.</string>
+    <string name="consent_analytics_storage_description_short">Permite la recopilación de datos para el análisis del uso de la aplicación.</string>
+    <string name="consent_ad_storage_description_short">Permite almacenar datos con fines publicitarios.</string>
+    <string name="consent_ad_user_data_description_short">Permite enviar datos de usuario para anuncios.</string>
+    <string name="consent_ad_personalization_description_short">Habilita la publicidad personalizada.</string>
+    <string name="onboarding_crashlytics_show_details_button">Mostrar información detallada</string>
+    <string name="onboarding_crashlytics_show_details_button_cd">Mostrar información detallada sobre el uso y los diagnósticos</string>
+    <string name="button_acknowledge_consents">Guardar y Continuar</string>
+    <string name="button_continue">Continuar</string>
     <string name="onboarding_complete_icon_desc">Proceso de incorporación completado</string>
     <string name="onboarding_final_title">¡Todo listo!</string>
     <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
@@ -135,6 +145,22 @@
     <string name="normal">Normal</string>
     <string name="runtime">En tiempo de ejecución</string>
     <string name="storage">Almacenamiento</string>
+    <string name="ad_id">ID de anuncio [AD_ID]</string>
+    <string name="summary_preference_permissions_ad_id">Permite a la aplicación recuperar y usar el identificador de publicidad asociado con el dispositivo del usuario, proporcionando anuncios personalizados, midiendo la efectividad de los anuncios y mostrando anuncios en dispositivos con Android 13 o posterior.</string>
+    <string name="internet">Internet [INTERNET]</string>
+    <string name="summary_preference_permissions_internet">Permite a la aplicación establecer una conexión a internet para enviar informes de error o buscar actualizaciones.</string>
+    <string name="post_notifications">Publicar notificaciones [POST_NOTIFICATIONS]</string>
+    <string name="summary_preference_permissions_post_notifications">Permite a la aplicación mostrar notificaciones en dispositivos con Android 13 o posterior.</string>
+    <string name="access_network_state">Acceder al estado de la red [ACCESS_NETWORK_STATE]</string>
+    <string name="summary_preference_permissions_access_network_state">Permite a la aplicación verificar la conectividad de la red y recuperar información sobre Wi-Fi, incluido el estado de activación y los nombres de los dispositivos Wi-Fi conectados.</string>
+    <string name="access_notification_policy">Acceder a la política de notificaciones [ACCESS_NOTIFICATION_POLICY]</string>
+    <string name="summary_preference_permissions_access_notification_policy">Permite a la aplicación acceder y modificar la política de notificaciones del dispositivo, controlando cómo y cuándo se muestran las notificaciones al usuario y proporcionando funciones personalizadas de gestión de notificaciones.</string>
+    <string name="billing">Facturación [BILLING]</string>
+    <string name="summary_preference_permissions_billing">Permite a la aplicación usar la Biblioteca de Facturación de Google Play para gestionar compras dentro de la aplicación y donaciones.</string>
+    <string name="check_license">Verificar licencia [CHECK_LICENSE]</string>
+    <string name="summary_preference_permissions_check_license">Permite a la aplicación verificar su cumplimiento con el acuerdo de licencia y hacer cumplir los términos de la licencia para proteger la propiedad intelectual.</string>
+    <string name="foreground_service">Servicio en primer plano [FOREGROUND_SERVICE]</string>
+    <string name="summary_preference_permissions_foreground_service">Permite a la aplicación crear y usar servicios que se ejecutan en primer plano, dándoles prioridad sobre otros procesos en segundo plano y mejorando el rendimiento y la fiabilidad.</string>
 
     <string name="ads">Anuncios</string>
     <string name="summary_preference_settings_ads">Controla cómo usamos tu información para mostrarte anuncios relevantes</string>
@@ -150,6 +176,24 @@
     <string name="usage_and_diagnostics">Uso y diagnóstico</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Comparte datos para ayudar a mejorar la experiencia en la aplicación</string>
     <string name="summary_usage_and_diagnostics">Ayuda a mejorar tu experiencia enviando automáticamente datos de diagnóstico y uso.</string>
+    <string name="privacy_settings_title">Configuración de privacidad</string>
+    <string name="consent_category_analytics_title">Análisis</string>
+    <string name="consent_category_advertising_title">Publicidad personalizada</string>
+    <string name="consent_analytics_storage_title">Almacenar datos de análisis</string>
+    <string name="consent_analytics_storage_description">Permitir el almacenamiento de datos como el uso de la aplicación y la duración de la visita para mejorar el análisis y el rendimiento de la aplicación.</string>
+    <string name="consent_ad_storage_title">Almacenar datos de publicidad</string>
+    <string name="consent_ad_storage_description">Habilitar el almacenamiento de datos (como identificadores de dispositivo o cookies) para medir el rendimiento de los anuncios y mostrar anuncios relevantes.</string>
+    <string name="consent_ad_user_data_title">Enviar datos para anuncios</string>
+    <string name="consent_ad_user_data_description">Permitir el envío de datos de uso y del dispositivo a Google para admitir funciones relacionadas con anuncios, como conversiones y optimización de campañas.</string>
+    <string name="consent_ad_personalization_title">Anuncios personalizados</string>
+    <string name="consent_ad_personalization_description">Habilitar anuncios personalizados basados en tu actividad y preferencias en los servicios y aplicaciones de Google.</string>
+    <string name="privacy_settings_info">Administra tus preferencias de datos a continuación. Puedes cambiar esta configuración en cualquier momento. Para más detalles, consulta nuestra <a href="%s">Política de Privacidad</a>.</string>
+    <string name="learn_more_privacy_policy_settings">Más información en nuestra Política de Privacidad</string>
+    <string name="advanced_privacy_settings">Configuración avanzada de privacidad</string>
+    <string name="icon_desc_expand_more">Expandir más</string>
+    <string name="icon_desc_expand_less">Contraer</string>
+    <string name="icon_desc_consent_category">Icono de categoría de consentimiento</string>
+    <string name="icon_desc_switch_status">Icono de estado del interruptor</string>
 
     <string name="legal">Legal</string>
     <string name="legal_notices">Avisos legales</string>
