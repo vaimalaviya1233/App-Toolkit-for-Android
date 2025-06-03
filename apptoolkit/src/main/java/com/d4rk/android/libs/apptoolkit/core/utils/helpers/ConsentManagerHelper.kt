@@ -1,12 +1,18 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.first
+import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinComponent
 
-object ConsentManagerHelper {
+object ConsentManagerHelper : KoinComponent {
+
+    val configProvider: BuildInfoProvider by inject()
+    val defaultAnalyticsGranted = configProvider.isDebugBuild
 
     /**
      * Updates the user's consent settings in Firebase Analytics.
@@ -43,6 +49,8 @@ object ConsentManagerHelper {
         firebaseAnalytics.setConsent(consentSettings)
     }
 
+
+
     /**
      * Reads the persisted "Usage and Diagnostics" setting from DataStore and applies
      * it to Firebase Analytics consent settings on app startup.
@@ -50,10 +58,10 @@ object ConsentManagerHelper {
      * @param dataStore Your instance of CommonDataStore.
      */
     suspend fun applyInitialConsent(dataStore: CommonDataStore) {
-        val analyticsGranted: Boolean = dataStore.analyticsConsent.first()
-        val adStorageGranted: Boolean = dataStore.adStorageConsent.first()
-        val adUserDataGranted: Boolean = dataStore.adUserDataConsent.first()
-        val adPersonalizationGranted: Boolean = dataStore.adPersonalizationConsent.first()
+        val analyticsGranted: Boolean = dataStore.analyticsConsent(defaultAnalyticsGranted).first()
+        val adStorageGranted: Boolean = dataStore.adStorageConsent(defaultAnalyticsGranted).first()
+        val adUserDataGranted: Boolean = dataStore.adUserDataConsent(defaultAnalyticsGranted).first()
+        val adPersonalizationGranted: Boolean = dataStore.adPersonalizationConsent(defaultAnalyticsGranted).first()
 
         updateConsent(
             analyticsGranted = analyticsGranted,
@@ -61,5 +69,13 @@ object ConsentManagerHelper {
             adUserDataGranted = adUserDataGranted,
             adPersonalizationGranted = adPersonalizationGranted
         )
+
+        updateAnalyticsCollectionFromDatastore(dataStore = dataStore)
+    }
+
+    fun updateAnalyticsCollectionFromDatastore(dataStore: CommonDataStore) {
+        val usageAndDiagnosticsGranted: Boolean = dataStore.usageAndDiagnostics(defaultAnalyticsGranted).first()
+        Firebase.analytics.setAnalyticsCollectionEnabled(usageAndDiagnosticsGranted)
+        Firebase.analytics.setAnalyticsCollectionEnabled(usageAndDiagnosticsGranted)
     }
 }
