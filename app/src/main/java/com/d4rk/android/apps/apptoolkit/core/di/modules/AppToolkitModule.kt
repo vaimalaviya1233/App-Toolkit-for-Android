@@ -9,6 +9,7 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.RequestReviewFl
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpViewModel
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.OnboardingViewModel
 import com.d4rk.android.libs.apptoolkit.app.support.domain.usecases.QueryProductDetailsUseCase
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import org.koin.core.module.Module
@@ -20,6 +21,10 @@ val appToolkitModule : Module = module {
 
     viewModel {
         StartupViewModel(loadConsentInfoUseCase = get() , dispatcherProvider = get())
+    }
+
+    viewModel {
+        OnboardingViewModel(loadConsentInfoUseCase = get() , dispatcherProvider = get())
     }
 
     single<QueryProductDetailsUseCase> { QueryProductDetailsUseCase() }
