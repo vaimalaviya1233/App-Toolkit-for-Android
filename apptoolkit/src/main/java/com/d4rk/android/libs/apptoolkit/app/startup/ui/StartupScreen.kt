@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.startup.domain.model.StartupUiData
@@ -66,7 +65,7 @@ fun StartupScreenContent(paddingValues : PaddingValues) {
         modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = paddingValues)
-                .padding(all = 24.dp)
+                .padding(all = SizeConstants.MediumSize * 2)
                 .safeDrawingPadding()
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {

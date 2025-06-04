@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
@@ -82,8 +81,8 @@ fun SwitchPreferenceItemWithDivider(icon : ImageVector? = null , title : String 
             ExtraSmallHorizontalSpacer()
             VerticalDivider(
                 modifier = Modifier
-                        .height(height = 36.dp)
-                        .align(alignment = Alignment.CenterVertically) , color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) , thickness = 1.dp
+                        .height(height = SizeConstants.MediumSize * 3)
+                        .align(alignment = Alignment.CenterVertically) , color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) , thickness = SizeConstants.ExtraTinySize / 2
             )
             CustomSwitch(
                 checked = checked,

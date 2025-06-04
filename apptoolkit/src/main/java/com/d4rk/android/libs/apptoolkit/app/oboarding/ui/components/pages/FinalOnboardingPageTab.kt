@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers.FinalOnboardingKonfettiState
@@ -81,10 +80,10 @@ fun FinalOnboardingPageTab() {
         Column(
             modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
+                    .padding(horizontal = SizeConstants.MediumSize * 2 , vertical = SizeConstants.ExtraLargeIncreasedSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
         ) {
             Icon(imageVector = Icons.Filled.CheckCircle , contentDescription = stringResource(id = R.string.onboarding_complete_icon_desc) , modifier = Modifier
-                    .size(size = 80.dp)
+                    .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.ExtraLargeIncreasedSize)
                     .graphicsLayer {
                         scaleX = iconSettleScale
                         scaleY = iconSettleScale

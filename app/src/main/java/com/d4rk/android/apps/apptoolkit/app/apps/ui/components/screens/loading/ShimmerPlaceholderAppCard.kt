@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.shimmerEffect
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -32,7 +31,7 @@ fun ShimmerPlaceholderAppCard(modifier : Modifier = Modifier , aspectRatio : Flo
             LargeVerticalSpacer()
             Box(
                 modifier = Modifier
-                        .size(72.dp)
+                        .size(SizeConstants.ExtraExtraLargeSize + SizeConstants.LargeSize + SizeConstants.SmallSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
                         .shimmerEffect()
             )

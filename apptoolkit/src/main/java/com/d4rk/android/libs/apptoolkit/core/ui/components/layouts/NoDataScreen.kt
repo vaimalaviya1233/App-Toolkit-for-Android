@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
@@ -54,7 +53,7 @@ fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.De
         Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
             Icon(
                 imageVector = icon , contentDescription = null , modifier = Modifier
-                        .size(size = 58.dp)
+                        .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize)
                         .padding(bottom = SizeConstants.LargeSize) , tint = MaterialTheme.colorScheme.primary
             )
             Text(text = stringResource(id = text) , style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center) , color = MaterialTheme.colorScheme.onBackground)

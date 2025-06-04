@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -57,7 +56,7 @@ fun ConsentToggleCard(
                     imageVector = icon,
                     contentDescription = stringResource(R.string.icon_desc_consent_category),
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(SizeConstants.LargeIncreasedSize + SizeConstants.ExtraSmallSize)
                 )
                 LargeHorizontalSpacer()
                 Column(modifier = Modifier.weight(weight = 1f)) {

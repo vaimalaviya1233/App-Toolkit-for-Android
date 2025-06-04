@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.OnboardingThemeChoice
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
@@ -57,18 +56,18 @@ fun ThemeChoiceCard(
         BorderStroke(SizeConstants.ExtraTinySize , MaterialTheme.colorScheme.primary)
     }
     else {
-        BorderStroke(1.dp , MaterialTheme.colorScheme.outlineVariant)
+        BorderStroke(SizeConstants.ExtraTinySize / 2 , MaterialTheme.colorScheme.outlineVariant)
     }
 
     Card(
         modifier = Modifier
                 .fillMaxWidth()
                 .bounceClick()
-                .clickable(onClick = onClick) , shape = RoundedCornerShape(16.dp) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 4.dp else 1.dp) , border = border
+                .clickable(onClick = onClick) , shape = RoundedCornerShape(SizeConstants.LargeSize) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2) , border = border
     ) {
         Row(
             modifier = Modifier
-                    .padding(horizontal = 24.dp , vertical = SizeConstants.LargeIncreasedSize)
+                    .padding(horizontal = SizeConstants.MediumSize * 2 , vertical = SizeConstants.LargeIncreasedSize)
                     .fillMaxWidth() , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -97,7 +96,7 @@ fun ThemeChoiceCard(
                             .background(MaterialTheme.colorScheme.primary) , contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Tonality , contentDescription = stringResource(R.string.selected) , tint = MaterialTheme.colorScheme.onPrimary , modifier = Modifier.size(18.dp)
+                        imageVector = Icons.Filled.Tonality , contentDescription = stringResource(R.string.selected) , tint = MaterialTheme.colorScheme.onPrimary , modifier = Modifier.size(SizeConstants.SmallSize * 2 + SizeConstants.ExtraTinySize)
                     )
                 }
             }

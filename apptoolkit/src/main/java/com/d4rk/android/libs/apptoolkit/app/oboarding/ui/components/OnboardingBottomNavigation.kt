@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -51,7 +50,7 @@ fun OnboardingBottomNavigation(
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp , vertical = 8.dp) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(horizontal = SizeConstants.LargeSize , vertical = SizeConstants.SmallSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 this@Row.AnimatedVisibility(visible = pagerState.currentPage > 0 , modifier = Modifier.fillMaxWidth() , enter = slideInHorizontally(initialOffsetX = { - it } , animationSpec = spring(

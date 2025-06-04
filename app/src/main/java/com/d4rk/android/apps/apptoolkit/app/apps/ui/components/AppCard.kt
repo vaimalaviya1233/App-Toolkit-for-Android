@@ -21,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
@@ -60,7 +59,7 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
             LargeVerticalSpacer()
             AsyncImage(
                 model = appInfo.iconUrl , contentDescription = appInfo.name , modifier = Modifier
-                        .size(size = 72.dp)
+                        .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.LargeSize + SizeConstants.SmallSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)) , contentScale = ContentScale.Fit
             )
             LargeVerticalSpacer()

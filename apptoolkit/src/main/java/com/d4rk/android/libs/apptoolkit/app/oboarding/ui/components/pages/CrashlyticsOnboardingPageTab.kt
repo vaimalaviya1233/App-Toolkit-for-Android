@@ -54,7 +54,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.net.toUri
@@ -102,7 +101,7 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
             Icon(
                 imageVector = Icons.Outlined.Analytics,
                 contentDescription = null,
-                modifier = Modifier.size(size = 64.dp),
+                modifier = Modifier.size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.LargeSize),
                 tint = MaterialTheme.colorScheme.primary
             )
 
@@ -174,7 +173,7 @@ fun UsageAndDiagnosticsToggleCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = SizeConstants.ExtraSmallSize - SizeConstants.ExtraTinySize / 2)
     ) {
         Row(
             modifier = Modifier
@@ -230,7 +229,7 @@ fun UsageAndDiagnosticsToggleCard(
 fun LearnMoreSection(context: Context) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         HorizontalDivider(
-            modifier = Modifier.padding(vertical = SizeConstants.LargeSize), thickness = 0.5.dp
+            modifier = Modifier.padding(vertical = SizeConstants.LargeSize), thickness = SizeConstants.ExtraTinySize / 4
         )
         Text(
             text = stringResource(R.string.onboarding_crashlytics_privacy_info),
@@ -435,7 +434,7 @@ fun ConsentToggleItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = SizeConstants.ExtraTinySize / 2)
     ) {
         Row(
             modifier = Modifier
