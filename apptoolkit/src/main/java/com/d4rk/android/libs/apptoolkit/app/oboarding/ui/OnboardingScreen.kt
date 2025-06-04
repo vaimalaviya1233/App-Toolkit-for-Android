@@ -53,8 +53,8 @@ fun OnboardingScreen() {
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
+            onboardingProvider.onOnboardingFinished(context = context)
         }
-        onboardingProvider.onOnboardingFinished(context = context)
     }
 
     Scaffold(topBar = {
@@ -86,8 +86,8 @@ fun OnboardingScreen() {
                 else {
                     coroutineScope.launch {
                         dataStore.saveStartup(isFirstTime = false)
+                        onboardingProvider.onOnboardingFinished(context)
                     }
-                    onboardingProvider.onOnboardingFinished(context)
                 }
             } , onBackClicked = {
                 if (pagerState.currentPage > 0) {

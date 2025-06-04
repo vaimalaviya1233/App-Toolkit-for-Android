@@ -33,10 +33,12 @@ class MainActivity : AppCompatActivity() {
     private val dataStore : DataStore by inject()
     private lateinit var updateResultLauncher : ActivityResultLauncher<IntentSenderRequest>
     private lateinit var viewModel : MainViewModel
+    private var keepSplashVisible : Boolean = true
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition { keepSplashVisible }
         enableEdgeToEdge()
         initializeDependencies()
         handleStartup()
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleStartup() {
         lifecycleScope.launch {
             val isFirstLaunch : Boolean = dataStore.startup.first()
+            keepSplashVisible = false
             if (isFirstLaunch) {
                 startStartupActivity()
             }
