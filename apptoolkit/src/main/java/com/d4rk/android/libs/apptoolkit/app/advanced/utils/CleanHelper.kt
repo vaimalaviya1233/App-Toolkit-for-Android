@@ -12,7 +12,7 @@ object CleanHelper {
 
         var allDeleted = true
         for (directory in cacheDirectories) {
-            if (! deleteRecursive(fileOrDirectory = directory)) {
+            if (! directory.deleteRecursively()) {
                 allDeleted = false
             }
         }
@@ -20,18 +20,5 @@ object CleanHelper {
         val messageResId : Int = if (allDeleted) R.string.cache_cleared_success else R.string.cache_cleared_error
 
         Toast.makeText(context , context.getString(messageResId) , Toast.LENGTH_SHORT).show()
-    }
-
-    private fun deleteRecursive(fileOrDirectory : File) : Boolean {
-        if (fileOrDirectory.isDirectory) {
-            fileOrDirectory.listFiles()?.let { children : Array<File> ->
-                for (child in children) {
-                    if (! deleteRecursive(child)) {
-                        return false
-                    }
-                }
-            }
-        }
-        return fileOrDirectory.delete()
     }
 }
