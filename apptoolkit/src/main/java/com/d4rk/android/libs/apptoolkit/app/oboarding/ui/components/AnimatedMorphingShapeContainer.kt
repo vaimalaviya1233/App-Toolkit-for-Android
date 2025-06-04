@@ -37,6 +37,7 @@ import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.star
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.min
 
@@ -76,7 +77,7 @@ fun AnimatedMorphingShapeContainer(imageVector : ImageVector) {
 
     LaunchedEffect(Unit) {
         delay(INITIAL_DELAY_MS)
-        while (true) {
+        while (isActive) {
             progress.snapTo(0f)
             isMorphing = false
 
@@ -112,7 +113,7 @@ fun AnimatedMorphingShapeContainer(imageVector : ImageVector) {
 
             startShape = endShape
             var nextShapeCandidate = shapePool.random()
-            while (nextShapeCandidate === startShape) {
+            while (isActive && nextShapeCandidate === startShape) {
                 nextShapeCandidate = shapePool.random()
             }
             endShape = nextShapeCandidate
@@ -129,7 +130,7 @@ fun AnimatedMorphingShapeContainer(imageVector : ImageVector) {
         }
 
         var lastFrameTime = withFrameNanos { it }
-        while (true) {
+        while (isActive) {
             val currentFrameTime = withFrameNanos { it }
             val deltaTimeMs = (currentFrameTime - lastFrameTime) / 1_000_000L
             if (deltaTimeMs > 0) {
