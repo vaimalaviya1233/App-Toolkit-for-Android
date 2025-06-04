@@ -275,13 +275,16 @@ fun CrashlyticsConsentDialog(
     val initialConsentValue: Boolean = !configProvider.isDebugBuild
 
     val analyticsState: State<Boolean> =
-        dataStore.analyticsConsent(default = false).collectAsState(initial = initialConsentValue)
+        dataStore.analyticsConsent(default = initialConsentValue)
+            .collectAsState(initial = initialConsentValue)
     val adStorageState: State<Boolean> =
-        dataStore.adStorageConsent(default = false).collectAsState(initial = initialConsentValue)
+        dataStore.adStorageConsent(default = initialConsentValue)
+            .collectAsState(initial = initialConsentValue)
     val adUserDataState: State<Boolean> =
-        dataStore.adUserDataConsent(default = false).collectAsState(initial = initialConsentValue)
+        dataStore.adUserDataConsent(default = initialConsentValue)
+            .collectAsState(initial = initialConsentValue)
     val adPersonalizationState: State<Boolean> =
-        dataStore.adPersonalizationConsent(default = false)
+        dataStore.adPersonalizationConsent(default = initialConsentValue)
             .collectAsState(initial = initialConsentValue)
 
     fun updateConsentState(type: String, value: Boolean) {
