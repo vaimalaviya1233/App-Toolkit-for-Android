@@ -12,7 +12,7 @@ import org.koin.core.component.inject
 object ConsentManagerHelper : KoinComponent {
 
     private val configProvider: BuildInfoProvider by inject()
-    val defaultAnalyticsGranted: Boolean by lazy { configProvider.isDebugBuild }
+    val defaultAnalyticsGranted: Boolean by lazy { !configProvider.isDebugBuild }
 
     /**
      * Updates the user's consent settings in Firebase Analytics.
