@@ -15,10 +15,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
-import com.google.android.ump.ConsentRequestParameters
-import com.google.android.ump.UserMessagingPlatform
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
@@ -53,18 +51,9 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
     private fun openConsentForm(activity : Activity) {
         screenData?.consentInformation?.let { consentInfo : ConsentInformation ->
             launch(context = dispatcherProvider.io) {
-                val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
-
-                consentInfo.requestConsentInfoUpdate(activity , params , {
-                    UserMessagingPlatform.loadConsentForm(activity , { consentForm : ConsentForm ->
-                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
-                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN) {
-                            consentForm.show(activity) {
-                                onConsentFormLoaded()
-                            }
-                        }
-                    } , {})
-                } , {})
+                ConsentFormHelper.loadAndShow(activity = activity , consentInfo = consentInfo) {
+                    onConsentFormLoaded()
+                }
             }
         } ?: return onConsentFormLoaded()
     }

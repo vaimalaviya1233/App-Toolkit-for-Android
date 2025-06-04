@@ -20,10 +20,9 @@ import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.gms.ads.MobileAds
-import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
-import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -95,18 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkUserConsent() {
         val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        val params = ConsentRequestParameters.Builder()
-            .setTagForUnderAgeOfConsent(false)
-            .build()
-        consentInfo.requestConsentInfoUpdate(this, params, {
-            if (consentInfo.isConsentFormAvailable &&
-                (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
-                    consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN)
-            ) {
-                UserMessagingPlatform.loadConsentForm(this, { form: ConsentForm ->
-                    form.show(this) {}
-                }, {})
-            }
-        }, {})
+        ConsentFormHelper.loadAndShow(activity = this , consentInfo = consentInfo)
     }
 }
