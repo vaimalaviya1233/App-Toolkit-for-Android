@@ -20,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
@@ -44,7 +43,7 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer) ,
         modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 24.dp)
+                .padding(all = SizeConstants.MediumSize * 2)
                 .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
                 .clickable {
                     view.playSoundEffect(SoundEffectConstants.CLICK)

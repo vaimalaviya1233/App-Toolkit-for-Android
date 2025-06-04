@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.events.AdsSettingsEvents
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
@@ -90,7 +89,7 @@ fun AdSettingsScreenContent(viewModel : AdsSettingsViewModel , activity : Activi
                 InfoMessageSection(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.ADS_HELP_CENTER
+                            .padding(all = SizeConstants.MediumSize * 2) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.ADS_HELP_CENTER
                 )
             }
         }

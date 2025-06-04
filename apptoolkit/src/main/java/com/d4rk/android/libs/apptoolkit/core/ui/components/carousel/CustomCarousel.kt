@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import kotlin.math.absoluteValue
@@ -41,10 +40,10 @@ fun <T> CustomCarousel(
         DotsIndicator(
             modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = 8.dp) ,
+                    .padding(bottom = SizeConstants.SmallSize) ,
             totalDots = items.size ,
             selectedIndex = pagerState.currentPage ,
-            dotSize = 6.dp ,
+            dotSize = SizeConstants.MediumSize / 2 ,
         )
     }
 }

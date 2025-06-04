@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
@@ -72,7 +71,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 Column(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 24.dp)
+                            .padding(all = SizeConstants.MediumSize * 2)
                 ) {
                     themeOptions.forEach { option : ThemeSettingOption ->
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
@@ -93,7 +92,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 InfoMessageSection(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 24.dp) , message = stringResource(id = R.string.summary_dark_theme)
+                            .padding(all = SizeConstants.MediumSize * 2) , message = stringResource(id = R.string.summary_dark_theme)
                 )
             }
         }

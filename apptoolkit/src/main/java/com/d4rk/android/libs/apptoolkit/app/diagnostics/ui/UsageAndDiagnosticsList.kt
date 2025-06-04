@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components.ConsentSectionHeader
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components.ConsentToggleCard
@@ -163,7 +162,7 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
             InfoMessageSection(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 24.dp),
+                    .padding(all = SizeConstants.MediumSize * 2),
                 message = stringResource(id = R.string.summary_usage_and_diagnostics),
                 learnMoreText = stringResource(id = R.string.learn_more),
                 learnMoreUrl = AppLinks.PRIVACY_POLICY

@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -28,7 +27,7 @@ fun PageIndicatorDots(
 ) {
     Row(
         modifier = modifier.animateContentSize(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(pageCount) { index ->
@@ -43,7 +42,7 @@ fun PageIndicatorDots(
             )
             val color = if (isSelected) MaterialTheme.colorScheme.primary
             else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-            val baseDotSize = 8.dp
+            val baseDotSize = SizeConstants.SmallSize
 
             Box(
                 modifier = Modifier

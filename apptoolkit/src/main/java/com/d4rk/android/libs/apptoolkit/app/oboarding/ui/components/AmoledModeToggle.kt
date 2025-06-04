@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -31,12 +30,12 @@ fun AmoledModeToggle(
     isAmoledMode : Boolean , onCheckedChange : (Boolean) -> Unit
 ) {
     Surface(
-        modifier = Modifier.fillMaxWidth() , shape = RoundedCornerShape(16.dp) , color = MaterialTheme.colorScheme.surfaceContainerHighest , tonalElevation = 3.dp , shadowElevation = 3.dp
+        modifier = Modifier.fillMaxWidth() , shape = RoundedCornerShape(SizeConstants.LargeSize) , color = MaterialTheme.colorScheme.surfaceContainerHighest , tonalElevation = SizeConstants.ExtraSmallSize , shadowElevation = SizeConstants.ExtraSmallSize
     ) {
         Row(modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onCheckedChange(! isAmoledMode) }
-                .padding(horizontal = 24.dp , vertical = SizeConstants.LargeIncreasedSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
+                .padding(horizontal = SizeConstants.MediumSize * 2 , vertical = SizeConstants.LargeIncreasedSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(id = R.string.amoled_mode) , style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold) , color = MaterialTheme.colorScheme.onSurface

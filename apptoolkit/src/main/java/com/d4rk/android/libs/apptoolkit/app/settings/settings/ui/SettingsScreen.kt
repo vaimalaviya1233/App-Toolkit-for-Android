@@ -127,7 +127,7 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
                         .fillMaxSize()
                         .wrapContentHeight() , shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
             ) {
-                Column(modifier = Modifier.padding(all = 24.dp) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
+                Column(modifier = Modifier.padding(all = SizeConstants.MediumSize * 2) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
                     AsyncImage(
                         model = R.drawable.il_settings , contentDescription = null , modifier = Modifier
                                 .size(size = 258.dp)
@@ -139,7 +139,7 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
                     Text(text = stringResource(id = R.string.settings_placeholder_description) , style = MaterialTheme.typography.bodyMedium , textAlign = TextAlign.Center)
                 }
                 OutlinedButton(modifier = Modifier
-                        .padding(all = 24.dp)
+                        .padding(all = SizeConstants.MediumSize * 2)
                         .align(alignment = Alignment.Start)
                         .bounceClick() , onClick = { IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java) }) {
                     Icon(imageVector = Icons.AutoMirrored.Outlined.ContactSupport , contentDescription = null)

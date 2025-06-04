@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun NonLazyGrid(
@@ -25,7 +24,7 @@ fun NonLazyGrid(
                         Box(
                             modifier = Modifier
                                     .weight(weight = 1f)
-                                    .padding(all = 8.dp)
+                                    .padding(all = SizeConstants.SmallSize)
                                     .aspectRatio(ratio = 1f)
                         ) {
                             content(index)

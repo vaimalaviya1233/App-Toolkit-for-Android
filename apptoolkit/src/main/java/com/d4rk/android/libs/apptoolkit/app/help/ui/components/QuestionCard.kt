@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -58,7 +57,7 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
                 )
 
                 Icon(
-                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore , contentDescription = null , tint = MaterialTheme.colorScheme.primary , modifier = Modifier.size(size = 24.dp)
+                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore , contentDescription = null , tint = MaterialTheme.colorScheme.primary , modifier = Modifier.size(size = SizeConstants.LargeIncreasedSize + SizeConstants.ExtraSmallSize)
                 )
             }
             if (isExpanded) {

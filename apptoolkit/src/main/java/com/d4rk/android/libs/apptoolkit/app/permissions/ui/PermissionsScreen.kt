@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
@@ -72,7 +71,7 @@ fun PermissionsContent(paddingValues : PaddingValues , settingsConfig : Settings
                         ExtraTinyVerticalSpacer()
                     }
                 }
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(SizeConstants.MediumSize * 2))
             }
         }
     }

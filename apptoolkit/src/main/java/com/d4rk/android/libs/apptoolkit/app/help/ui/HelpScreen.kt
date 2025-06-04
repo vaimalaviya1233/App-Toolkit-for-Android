@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.events.HelpEvents
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.HelpScreenConfig
@@ -105,7 +104,7 @@ fun HelpScreenContent(helpData : UiHelpScreen , paddingValues : PaddingValues , 
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 IntentsHelper.sendEmailToDeveloper(context = activity , applicationNameRes = R.string.app_name)
             })
-            Spacer(modifier = Modifier.height(height = 96.dp))
+            Spacer(modifier = Modifier.height(height = SizeConstants.ExtraExtraLargeSize * 2))
         }
     }
 }
