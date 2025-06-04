@@ -53,7 +53,10 @@ class OnboardingViewModel(
                 ) { consentInfo: ConsentInformation, current: OnboardingUiData ->
                     current.copy(
                         consentRequired = consentInfo.isConsentFormAvailable &&
-                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED,
+                            (
+                                consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
+                                    consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN
+                                ),
                         consentInformation = consentInfo
                     )
                 }
@@ -71,7 +74,7 @@ class OnboardingViewModel(
                 consentInfo.requestConsentInfoUpdate(activity, params, {
                     UserMessagingPlatform.loadConsentForm(activity, { consentForm: ConsentForm ->
                         if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
-                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.OBTAINED
+                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN
                         ) {
                             consentForm.show(activity) {
                                 onConsentFormLoaded()

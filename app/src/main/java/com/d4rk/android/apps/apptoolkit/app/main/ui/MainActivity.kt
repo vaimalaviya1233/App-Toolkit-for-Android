@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity() {
             .build()
         consentInfo.requestConsentInfoUpdate(this, params, {
             if (consentInfo.isConsentFormAvailable &&
-                consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED
+                (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
+                    consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN)
             ) {
                 UserMessagingPlatform.loadConsentForm(this, { form: ConsentForm ->
                     form.show(this) {}
