@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun NonLazyGrid(
@@ -18,7 +19,7 @@ fun NonLazyGrid(
 
         (0 until rows).forEach { row ->
             Row {
-                (0 until columns).forEachIndexed { col , _ ->
+                (0 until columns).forEachIndexed { col: Int, _: Int ->
                     val index : Int = row * columns + col
                     if (index < itemCount) {
                         Box(
