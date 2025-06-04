@@ -55,16 +55,16 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
             launch(context = dispatcherProvider.io) {
                 val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
 
-                consentInfo.requestConsentInfoUpdate(activity , params , {
-                    UserMessagingPlatform.loadConsentForm(activity , { consentForm : ConsentForm ->
+                consentInfo.requestConsentInfoUpdate(activity, params, {
+                    UserMessagingPlatform.loadConsentForm(activity, { consentForm: ConsentForm ->
                         if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
                             consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN) {
                             consentForm.show(activity) {
                                 onConsentFormLoaded()
                             }
                         }
-                    } , {})
-                } , {})
+                    }, {})
+                }, {})
             }
         } ?: return onConsentFormLoaded()
     }

@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity() {
                 (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
                     consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN)
             ) {
-                UserMessagingPlatform.loadConsentForm(this, { form: ConsentForm ->
-                    form.show(this) {}
+                UserMessagingPlatform.loadConsentForm(this, { consentForm: ConsentForm ->
+                    consentForm.show(this) {}
                 }, {})
             }
         }, {})
