@@ -39,7 +39,12 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
         launch(context = dispatcherProvider.io) {
             loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ConsentInformation , Errors> ->
                 screenState.applyResult(result = result , errorMessage = UiTextHelper.StringResource(R.string.error_loading_consent_info)) { consentInfo : ConsentInformation , current : StartupUiData ->
-                    current.copy(consentRequired = consentInfo.isConsentFormAvailable && consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED , consentInformation = consentInfo)
+                    current.copy(
+                        consentRequired = consentInfo.isConsentFormAvailable &&
+                            (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
+                                consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN),
+                        consentInformation = consentInfo
+                    )
                 }
             }
         }
@@ -52,7 +57,8 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
 
                 consentInfo.requestConsentInfoUpdate(activity , params , {
                     UserMessagingPlatform.loadConsentForm(activity , { consentForm : ConsentForm ->
-                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED || consentInfo.consentStatus == ConsentInformation.ConsentStatus.OBTAINED) {
+                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
+                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN) {
                             consentForm.show(activity) {
                                 onConsentFormLoaded()
                             }

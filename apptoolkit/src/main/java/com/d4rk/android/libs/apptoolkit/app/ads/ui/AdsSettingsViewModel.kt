@@ -48,7 +48,8 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
 
                 consentInfo.requestConsentInfoUpdate(activity , params , {
                     UserMessagingPlatform.loadConsentForm(activity , { consentForm : ConsentForm ->
-                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED || consentInfo.consentStatus == ConsentInformation.ConsentStatus.OBTAINED) {
+                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
+                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN) {
                             consentForm.show(activity) {
                                 onEvent(event = AdsSettingsEvents.LoadAdsSettings)
                             }
