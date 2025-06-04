@@ -53,8 +53,8 @@ fun OnboardingScreen() {
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
-            onboardingProvider.onOnboardingFinished(context = context)
         }
+        onboardingProvider.onOnboardingFinished(context = context)
     }
 
     Scaffold(topBar = {
