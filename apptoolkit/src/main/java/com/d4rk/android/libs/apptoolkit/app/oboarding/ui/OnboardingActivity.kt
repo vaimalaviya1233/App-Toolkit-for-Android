@@ -8,14 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
-import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
+import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.actions.OnboardingEvent
+import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.OnboardingViewModel
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OnboardingActivity : ComponentActivity() {
 
-    private val viewModel : StartupViewModel by viewModel()
+    private val viewModel : OnboardingViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,6 @@ class OnboardingActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onEvent(event = StartupEvent.OpenConsentForm(activity = this@OnboardingActivity))
+        viewModel.onEvent(event = OnboardingEvent.OpenConsentForm(activity = this@OnboardingActivity))
     }
 }
