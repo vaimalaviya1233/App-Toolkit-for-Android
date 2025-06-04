@@ -12,10 +12,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
-import com.google.android.ump.ConsentRequestParameters
-import com.google.android.ump.UserMessagingPlatform
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import kotlinx.coroutines.flow.flowOn
 
 class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<AdsSettingsData , AdsSettingsEvents , AdsSettingsActions>(initialState = UiStateScreen(data = AdsSettingsData())) {
@@ -44,18 +42,9 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
     private fun openConsentForm(activity : AdsSettingsActivity) {
         screenData?.consentInformation?.let { consentInfo : ConsentInformation ->
             launch(context = dispatcherProvider.io) {
-                val params : ConsentRequestParameters = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
-
-                consentInfo.requestConsentInfoUpdate(activity, params, {
-                    UserMessagingPlatform.loadConsentForm(activity, { consentForm: ConsentForm ->
-                        if (consentInfo.consentStatus == ConsentInformation.ConsentStatus.REQUIRED ||
-                            consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN) {
-                            consentForm.show(activity) {
-                                onEvent(event = AdsSettingsEvents.LoadAdsSettings)
-                            }
-                        }
-                    }, {})
-                }, {})
+                ConsentFormHelper.loadAndShow(activity = activity , consentInfo = consentInfo) {
+                    onEvent(event = AdsSettingsEvents.LoadAdsSettings)
+                }
             }
         } ?: return onEvent(event = AdsSettingsEvents.LoadAdsSettings)
     }
