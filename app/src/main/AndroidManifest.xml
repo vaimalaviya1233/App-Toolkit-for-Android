@@ -82,15 +82,15 @@
 
         <meta-data
             android:name="google_analytics_default_allow_analytics_storage"
-            android:value="false" />
+            android:value="true" />
         <meta-data
             android:name="google_analytics_default_allow_ad_storage"
-            android:value="false" />
+            android:value="true" />
         <meta-data
             android:name="google_analytics_default_allow_ad_user_data"
-            android:value="false" />
+            android:value="eu_consent_policy" />
         <meta-data
             android:name="google_analytics_default_allow_ad_personalization_signals"
-            android:value="false" />
+            android:value="eu_consent_policy" />
     </application>
 </manifest>
