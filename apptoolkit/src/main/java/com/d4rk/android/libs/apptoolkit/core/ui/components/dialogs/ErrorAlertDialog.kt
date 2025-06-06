@@ -1,9 +1,13 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 
@@ -17,8 +21,12 @@ import com.d4rk.android.libs.apptoolkit.R
 fun ErrorAlertDialog(
     errorMessage : String , onDismiss : () -> Unit
 ) {
+    val view : View = LocalView.current
     AlertDialog(onDismissRequest = onDismiss , title = { Text(text = stringResource(id = R.string.error)) } , text = { Text(text = errorMessage) } , confirmButton = {
-        TextButton(onClick = onDismiss) {
+        TextButton(modifier = Modifier.bounceClick(), onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            onDismiss()
+        }) {
             Text(text = stringResource(id = android.R.string.ok))
         }
     })

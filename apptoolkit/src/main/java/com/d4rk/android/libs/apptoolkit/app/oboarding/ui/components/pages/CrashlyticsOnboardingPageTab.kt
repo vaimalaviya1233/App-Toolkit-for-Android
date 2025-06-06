@@ -188,6 +188,7 @@ fun UsageAndDiagnosticsToggleCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .bounceClick()
                 .clickable {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onCheckedChange(!switchState)
@@ -458,6 +459,7 @@ fun ConsentToggleItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .bounceClick()
                 .clickable {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onCheckedChange(!switchState)

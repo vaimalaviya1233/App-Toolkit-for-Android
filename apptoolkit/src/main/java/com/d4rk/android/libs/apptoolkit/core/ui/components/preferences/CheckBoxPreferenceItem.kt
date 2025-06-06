@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.preferences
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -35,10 +39,13 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  */
 @Composable
 fun CheckBoxPreferenceItem(icon : ImageVector? = null , title : String , summary : String? = null , checked : Boolean , onCheckedChange : (Boolean) -> Unit) {
+    val view : View = LocalView.current
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+            .bounceClick()
             .clickable {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
                 onCheckedChange(! checked)
             } , verticalAlignment = Alignment.CenterVertically) {
         icon?.let {

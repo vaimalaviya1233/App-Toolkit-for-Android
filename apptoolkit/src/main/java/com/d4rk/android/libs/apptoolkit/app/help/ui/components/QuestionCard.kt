@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -36,6 +37,7 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
 
     Card(modifier = modifier
             .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
+            .bounceClick()
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onToggleExpand()
