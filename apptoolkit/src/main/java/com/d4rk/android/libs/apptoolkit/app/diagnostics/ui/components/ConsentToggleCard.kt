@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -22,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
@@ -43,6 +45,12 @@ fun ConsentToggleCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .bounceClick()
+            .clip(shape = RoundedCornerShape(SizeConstants.LargeSize))
+            .clickable {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onCheckedChange(!switchState)
+            }
             .padding(vertical = SizeConstants.ExtraSmallSize),
         shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -52,11 +60,6 @@ fun ConsentToggleCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .bounceClick()
-                    .clickable {
-                        view.playSoundEffect(SoundEffectConstants.CLICK)
-                        onCheckedChange(!switchState)
-                    }
                     .padding(
                         horizontal = SizeConstants.LargeSize,
                         vertical = SizeConstants.MediumSize
