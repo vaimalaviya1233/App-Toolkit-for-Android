@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -43,7 +42,6 @@ fun PreferenceItem(icon : ImageVector? = null , title : String? = null , summary
         modifier = Modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(size = rippleEffectDp))
-                .bounceClick()
                 .clickable(enabled = enabled , onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onClick()

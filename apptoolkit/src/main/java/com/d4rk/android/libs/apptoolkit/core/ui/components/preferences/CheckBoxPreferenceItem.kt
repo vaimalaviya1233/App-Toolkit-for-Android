@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -43,7 +42,6 @@ fun CheckBoxPreferenceItem(icon : ImageVector? = null , title : String , summary
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            .bounceClick()
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onCheckedChange(! checked)

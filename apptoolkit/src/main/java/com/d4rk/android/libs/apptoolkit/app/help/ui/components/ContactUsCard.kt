@@ -37,8 +37,8 @@ fun ContactUsCard(onClick : () -> Unit) {
     val view : View = LocalView.current
     Card(modifier = Modifier
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
             .bounceClick()
+            .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onClick()

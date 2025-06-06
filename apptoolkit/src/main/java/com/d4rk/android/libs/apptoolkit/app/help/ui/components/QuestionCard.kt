@@ -36,8 +36,8 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
     val view: View = LocalView.current
 
     Card(modifier = modifier
+        .bounceClick()
             .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
-            .bounceClick()
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onToggleExpand()

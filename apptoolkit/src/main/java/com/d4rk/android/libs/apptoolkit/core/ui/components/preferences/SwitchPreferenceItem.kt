@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -49,7 +48,6 @@ fun SwitchPreferenceItem(icon : ImageVector? = null , title : String , summary :
         Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .bounceClick()
                     .clickable(onClick = {
                         view.playSoundEffect(SoundEffectConstants.CLICK)
                         onCheckedChange(! checked)

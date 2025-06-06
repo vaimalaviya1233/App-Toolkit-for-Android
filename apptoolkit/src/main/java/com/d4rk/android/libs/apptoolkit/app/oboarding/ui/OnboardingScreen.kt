@@ -34,6 +34,7 @@ import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.OnboardingBo
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.OnboardingDefaultPageLayout
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -41,15 +42,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalFoundationApi::class , ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen() {
-    val context : Context = LocalContext.current
-    val onboardingProvider : OnboardingProvider = koinInject()
-    val pages : List<OnboardingPage> = remember { onboardingProvider.getOnboardingPages(context = context) }
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val pagerState : PagerState = rememberPagerState { pages.size }
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val context: Context = LocalContext.current
+    val onboardingProvider: OnboardingProvider = koinInject()
+    val pages: List<OnboardingPage> =
+        remember { onboardingProvider.getOnboardingPages(context = context) }
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val pagerState: PagerState = rememberPagerState { pages.size }
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
@@ -59,15 +61,19 @@ fun OnboardingScreen() {
 
     Scaffold(topBar = {
         if (pages.isNotEmpty()) {
-            TopAppBar(title = { } , actions = {
+            TopAppBar(title = { }, actions = {
                 AnimatedVisibility(
-                    visible = pagerState.currentPage < pages.size - 1 , enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn() , exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
+                    visible = pagerState.currentPage < pages.size - 1,
+                    enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(),
+                    exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
                 ) {
                     TextButton(
-                        onClick = onSkipRequested , modifier = Modifier.bounceClick()
+                        onClick = onSkipRequested, modifier = Modifier.bounceClick()
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.SkipNext , contentDescription = stringResource(id = R.string.skip_button_content_description) , modifier = Modifier.size(SizeConstants.ButtonIconSize)
+                            imageVector = Icons.Filled.SkipNext,
+                            contentDescription = stringResource(id = R.string.skip_button_content_description),
+                            modifier = Modifier.size(SizeConstants.ButtonIconSize)
                         )
                         ButtonIconSpacer()
                         Text(text = stringResource(id = R.string.skip_button_text))
@@ -75,34 +81,38 @@ fun OnboardingScreen() {
                 }
             })
         }
-    } , bottomBar = {
+    }, bottomBar = {
         if (pages.isNotEmpty()) {
-            OnboardingBottomNavigation(pagerState = pagerState , pageCount = pages.size , onNextClicked = {
-                if (pagerState.currentPage < pages.size - 1) {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+            OnboardingBottomNavigation(
+                pagerState = pagerState,
+                pageCount = pages.size,
+                onNextClicked = {
+                    if (pagerState.currentPage < pages.size - 1) {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        }
+                    } else {
+                        coroutineScope.launch {
+                            dataStore.saveStartup(isFirstTime = false)
+                            onboardingProvider.onOnboardingFinished(context)
+                        }
                     }
-                }
-                else {
-                    coroutineScope.launch {
-                        dataStore.saveStartup(isFirstTime = false)
-                        onboardingProvider.onOnboardingFinished(context)
+                },
+                onBackClicked = {
+                    if (pagerState.currentPage > 0) {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
                     }
-                }
-            } , onBackClicked = {
-                if (pagerState.currentPage > 0) {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                    }
-                }
-            })
+                })
         }
-    }) { paddingValues : PaddingValues ->
+    }) { paddingValues: PaddingValues ->
         HorizontalPager(
-            state = pagerState , modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = paddingValues)
-        ) { pageIndex : Int ->
+            state = pagerState, modifier = Modifier
+                .fillMaxSize()
+                .hapticPagerSwipe(pagerState = pagerState)
+                .padding(paddingValues = paddingValues)
+        ) { pageIndex: Int ->
             when (val page = pages[pageIndex]) {
                 is OnboardingPage.DefaultPage -> OnboardingDefaultPageLayout(page = page)
                 is OnboardingPage.CustomPage -> page.content()

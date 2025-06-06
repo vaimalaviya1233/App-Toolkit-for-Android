@@ -12,56 +12,81 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tonality
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun AmoledModeToggle(
-    isAmoledMode : Boolean , onCheckedChange : (Boolean) -> Unit
+    isAmoledMode: Boolean, onCheckedChange: (Boolean) -> Unit
 ) {
+    val view: View = LocalView.current
 
-    val view : View = LocalView.current
-
-    Surface(
-        modifier = Modifier.fillMaxWidth() , shape = RoundedCornerShape(SizeConstants.LargeSize) , color = MaterialTheme.colorScheme.surfaceContainerHighest , tonalElevation = SizeConstants.ExtraSmallSize , shadowElevation = SizeConstants.ExtraSmallSize
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .bounceClick()
+            .clip(RoundedCornerShape(SizeConstants.LargeSize))
+            .clickable(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onCheckedChange(!isAmoledMode)
+            }),
+        shape = RoundedCornerShape(SizeConstants.LargeSize),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = if (isAmoledMode) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2)
     ) {
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .bounceClick()
-                .clickable {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(! isAmoledMode)
-                }
-                .padding(horizontal = SizeConstants.MediumSize * 2 , vertical = SizeConstants.LargeIncreasedSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
+                .padding(
+                    horizontal = SizeConstants.MediumSize * 2,
+                    vertical = SizeConstants.LargeIncreasedSize
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(id = R.string.amoled_mode) , style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold) , color = MaterialTheme.colorScheme.onSurface
+                    text = stringResource(id = R.string.amoled_mode),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = stringResource(id = R.string.onboarding_amoled_mode_desc) , style = MaterialTheme.typography.bodySmall , color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = stringResource(id = R.string.onboarding_amoled_mode_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             LargeHorizontalSpacer()
-            Switch(checked = isAmoledMode , onCheckedChange = onCheckedChange , thumbContent = {
+            Switch(checked = isAmoledMode, onCheckedChange = onCheckedChange, thumbContent = {
                 Icon(
-                    imageVector = Icons.Filled.Tonality , contentDescription = null , modifier = Modifier.size(SizeConstants.SwitchIconSize) , tint = if (isAmoledMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                    imageVector = Icons.Filled.Tonality,
+                    contentDescription = null,
+                    modifier = Modifier.size(SizeConstants.SwitchIconSize),
+                    tint = if (isAmoledMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
-            } , colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary , checkedTrackColor = MaterialTheme.colorScheme.primaryContainer , uncheckedThumbColor = MaterialTheme.colorScheme.outline , uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+            }, colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
+                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
             ))
         }
     }

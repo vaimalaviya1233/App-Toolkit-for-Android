@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,45 +39,62 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ThemeOnboardingPageTab() {
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val context : Context = LocalContext.current
-    val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val context: Context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
 
-    val defaultThemeModeName : String = stringResource(id = R.string.follow_system)
-    val currentThemeMode : String by dataStore.themeMode.collectAsState<String , String>(initial = defaultThemeModeName)
-    val isAmoledMode : Boolean by dataStore.amoledMode.collectAsState<Boolean , Boolean>(initial = false)
+    val defaultThemeModeName: String = stringResource(id = R.string.follow_system)
+    val currentThemeMode: String by dataStore.themeMode.collectAsState<String, String>(initial = defaultThemeModeName)
+    val isAmoledMode: Boolean by dataStore.amoledMode.collectAsState<Boolean, Boolean>(initial = false)
 
-    val themeChoices : List<OnboardingThemeChoice> = listOf(
+    val themeChoices: List<OnboardingThemeChoice> = listOf(
         OnboardingThemeChoice(
-            key = DataStoreNamesConstants.THEME_MODE_LIGHT , displayName = stringResource(id = R.string.light_mode) , icon = Icons.Filled.LightMode , description = stringResource(R.string.onboarding_theme_light_desc)
-        ) , OnboardingThemeChoice(
-            key = DataStoreNamesConstants.THEME_MODE_DARK , displayName = stringResource(id = R.string.dark_mode) , icon = Icons.Filled.DarkMode , description = stringResource(R.string.onboarding_theme_dark_desc)
-        ) , OnboardingThemeChoice(
-            key = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM , displayName = stringResource(id = R.string.follow_system) , icon = Icons.Filled.BrightnessAuto , description = stringResource(R.string.onboarding_theme_system_desc)
+            key = DataStoreNamesConstants.THEME_MODE_LIGHT,
+            displayName = stringResource(id = R.string.light_mode),
+            icon = Icons.Filled.LightMode,
+            description = stringResource(R.string.onboarding_theme_light_desc)
+        ), OnboardingThemeChoice(
+            key = DataStoreNamesConstants.THEME_MODE_DARK,
+            displayName = stringResource(id = R.string.dark_mode),
+            icon = Icons.Filled.DarkMode,
+            description = stringResource(R.string.onboarding_theme_dark_desc)
+        ), OnboardingThemeChoice(
+            key = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM,
+            displayName = stringResource(id = R.string.follow_system),
+            icon = Icons.Filled.BrightnessAuto,
+            description = stringResource(R.string.onboarding_theme_system_desc)
         )
     )
 
     Column(
         modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(state = rememberScrollState())
-                .padding(horizontal = SizeConstants.LargeSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
+            .padding(horizontal = SizeConstants.LargeSize),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = stringResource(R.string.onboarding_theme_title) , style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold , fontSize = 30.sp , textAlign = TextAlign.Center
-            ) , color = MaterialTheme.colorScheme.onSurface
+            text = stringResource(R.string.onboarding_theme_title),
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center
+            ),
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         LargeVerticalSpacer()
 
         Text(
-            text = stringResource(R.string.onboarding_theme_subtitle) , style = MaterialTheme.typography.bodyLarge , textAlign = TextAlign.Center , color = MaterialTheme.colorScheme.onSurfaceVariant , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
+            text = stringResource(R.string.onboarding_theme_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
         )
 
-        themeChoices.forEachIndexed { index , choice ->
+        themeChoices.forEachIndexed { index, choice ->
             ThemeChoiceCard(
-                choice = choice , isSelected = currentThemeMode == choice.key , onClick = {
+                choice = choice, isSelected = currentThemeMode == choice.key, onClick = {
                     coroutineScope.launch {
                         dataStore.saveThemeMode(mode = choice.key)
 
@@ -87,10 +105,17 @@ fun ThemeOnboardingPageTab() {
             }
         }
 
-        ExtraExtraLargeVerticalSpacer()
+        LargeVerticalSpacer()
+
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = SizeConstants.LargeSize),
+            thickness = SizeConstants.ExtraTinySize / 4
+        )
+
+        LargeVerticalSpacer()
 
         AmoledModeToggle(
-            isAmoledMode = isAmoledMode , onCheckedChange = { isChecked ->
+            isAmoledMode = isAmoledMode, onCheckedChange = { isChecked ->
                 coroutineScope.launch {
                     dataStore.saveAmoledMode(isChecked = isChecked)
                 }

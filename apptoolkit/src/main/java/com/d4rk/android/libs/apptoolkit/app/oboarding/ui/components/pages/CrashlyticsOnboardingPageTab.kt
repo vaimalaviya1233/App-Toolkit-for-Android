@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
@@ -50,6 +51,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -178,8 +180,15 @@ fun UsageAndDiagnosticsToggleCard(
     val view : View = LocalView.current
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
+        modifier = Modifier
+            .fillMaxWidth()
+            .bounceClick()
+            .clip(RoundedCornerShape(SizeConstants.LargeSize))
+            .clickable(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onCheckedChange(!switchState)
+            }),
+        shape = RoundedCornerShape(SizeConstants.LargeSize),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
         ),
@@ -188,11 +197,6 @@ fun UsageAndDiagnosticsToggleCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClick()
-                .clickable {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(!switchState)
-                }
                 .padding(
                     horizontal = SizeConstants.LargeIncreasedSize,
                     vertical = SizeConstants.LargeSize
@@ -449,8 +453,13 @@ fun ConsentToggleItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = SizeConstants.ExtraSmallSize),
-        shape = MaterialTheme.shapes.medium,
+            .bounceClick()
+            .clip(RoundedCornerShape(SizeConstants.MediumSize))
+            .clickable(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onCheckedChange(!switchState)
+            }),
+        shape = RoundedCornerShape(SizeConstants.MediumSize),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
         ),
@@ -459,11 +468,6 @@ fun ConsentToggleItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClick()
-                .clickable {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(!switchState)
-                }
                 .padding(
                     horizontal = SizeConstants.MediumSize,
 

@@ -68,6 +68,7 @@ fun ThemeChoiceCard(
         modifier = Modifier
             .fillMaxWidth()
             .bounceClick()
+            .clip(RoundedCornerShape(SizeConstants.LargeSize))
             .clickable(onClick = {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onClick() }) , shape = RoundedCornerShape(SizeConstants.LargeSize) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2) , border = border

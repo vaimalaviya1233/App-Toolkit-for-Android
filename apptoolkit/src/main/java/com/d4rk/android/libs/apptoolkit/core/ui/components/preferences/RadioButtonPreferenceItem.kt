@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 /**
  * A composable function that creates a radio button preference item.
@@ -34,7 +33,6 @@ fun RadioButtonPreferenceItem(text : String , isChecked : Boolean , onCheckedCha
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            .bounceClick()
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onCheckedChange(! isChecked)
