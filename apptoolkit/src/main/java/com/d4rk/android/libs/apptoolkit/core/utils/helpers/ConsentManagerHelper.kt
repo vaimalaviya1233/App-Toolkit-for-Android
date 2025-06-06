@@ -6,6 +6,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.FirebasePerformance
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -81,5 +82,6 @@ object ConsentManagerHelper : KoinComponent {
         val usageAndDiagnosticsGranted: Boolean = dataStore.usageAndDiagnostics(default = defaultAnalyticsGranted).first()
         Firebase.analytics.setAnalyticsCollectionEnabled(usageAndDiagnosticsGranted)
         FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = usageAndDiagnosticsGranted
+        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = usageAndDiagnosticsGranted
     }
 }
