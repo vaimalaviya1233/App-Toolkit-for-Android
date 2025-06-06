@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.preferences
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 /**
  * A composable function that creates a radio button preference item.
@@ -26,10 +30,15 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  */
 @Composable
 fun RadioButtonPreferenceItem(text : String , isChecked : Boolean , onCheckedChange : (Boolean) -> Unit) {
+    val view : View = LocalView.current
     Row(modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            .clickable { onCheckedChange(! isChecked) } , verticalAlignment = Alignment.CenterVertically) {
+            .bounceClick()
+            .clickable {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onCheckedChange(! isChecked)
+            } , verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = text , style = MaterialTheme.typography.titleLarge , modifier = Modifier
                     .weight(weight = 1f)

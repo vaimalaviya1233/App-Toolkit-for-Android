@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 /**
@@ -45,6 +46,7 @@ fun SwitchCardItem(title : String , switchState : State<Boolean> , onSwitchToggl
                 .fillMaxWidth()
                 .padding(all = SizeConstants.MediumSize * 2)
                 .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                .bounceClick()
                 .clickable {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     onSwitchToggled(! switchState.value)
