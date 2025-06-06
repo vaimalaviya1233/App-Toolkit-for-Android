@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -29,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.d4rk.android.libs.apptoolkit.R
@@ -59,16 +62,23 @@ fun ThemeChoiceCard(
         BorderStroke(SizeConstants.ExtraTinySize / 2 , MaterialTheme.colorScheme.outlineVariant)
     }
 
+    val view : View = LocalView.current
+
     Card(
         modifier = Modifier
-                .fillMaxWidth()
-                .bounceClick()
-                .clickable(onClick = onClick) , shape = RoundedCornerShape(SizeConstants.LargeSize) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2) , border = border
+            .fillMaxWidth()
+            .bounceClick()
+            .clickable(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onClick() }) , shape = RoundedCornerShape(SizeConstants.LargeSize) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2) , border = border
     ) {
         Row(
             modifier = Modifier
-                    .padding(horizontal = SizeConstants.MediumSize * 2 , vertical = SizeConstants.LargeIncreasedSize)
-                    .fillMaxWidth() , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
+                .padding(
+                    horizontal = SizeConstants.MediumSize * 2,
+                    vertical = SizeConstants.LargeIncreasedSize
+                )
+                .fillMaxWidth() , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -91,9 +101,9 @@ fun ThemeChoiceCard(
             ) {
                 Box(
                     modifier = Modifier
-                            .size(SizeConstants.ExtraLargeSize)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary) , contentAlignment = Alignment.Center
+                        .size(SizeConstants.ExtraLargeSize)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary) , contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Tonality , contentDescription = stringResource(R.string.selected) , tint = MaterialTheme.colorScheme.onPrimary , modifier = Modifier.size(SizeConstants.SmallSize * 2 + SizeConstants.ExtraTinySize)

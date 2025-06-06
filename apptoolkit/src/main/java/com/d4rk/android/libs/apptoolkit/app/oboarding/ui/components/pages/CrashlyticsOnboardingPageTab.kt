@@ -2,6 +2,8 @@ package com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages
 
 import android.content.Context
 import android.content.Intent
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
@@ -50,6 +52,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -88,6 +91,7 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
         dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
             .collectAsState(initial = !configProvider.isDebugBuild)
     val showCrashlyticsDialog = CrashlyticsOnboardingStateManager.showCrashlyticsDialog
+    val view : View = LocalView.current
 
     Column(
         modifier = Modifier
@@ -137,7 +141,10 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
 
             LargeVerticalSpacer()
 
-            OutlinedButton(onClick = { CrashlyticsOnboardingStateManager.openDialog() },
+            OutlinedButton(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                CrashlyticsOnboardingStateManager.openDialog()
+                                     },
                 modifier = Modifier
                     .fillMaxWidth()
                     .bounceClick()) {
@@ -167,6 +174,9 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
 fun UsageAndDiagnosticsToggleCard(
     switchState: Boolean, onCheckedChange: (Boolean) -> Unit
 ) {
+
+    val view : View = LocalView.current
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
@@ -178,7 +188,10 @@ fun UsageAndDiagnosticsToggleCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCheckedChange(!switchState) }
+                .clickable {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onCheckedChange(!switchState)
+                }
                 .padding(
                     horizontal = SizeConstants.LargeIncreasedSize,
                     vertical = SizeConstants.LargeSize
@@ -308,6 +321,8 @@ fun CrashlyticsConsentDialog(
         }
     }
 
+    val view : View = LocalView.current
+
     AlertDialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
@@ -396,6 +411,7 @@ fun CrashlyticsConsentDialog(
         confirmButton = {
             TextButton(
                 modifier = Modifier.bounceClick(), onClick = {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
                     coroutineScope.launch {
                         val overallConsent: Boolean =
                             analyticsState.value && adStorageState.value && adUserDataState.value && adPersonalizationState.value
@@ -426,6 +442,9 @@ fun ConsentToggleItem(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val view : View = LocalView.current
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -439,7 +458,10 @@ fun ConsentToggleItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCheckedChange(!switchState) }
+                .clickable {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onCheckedChange(!switchState)
+                }
                 .padding(
                     horizontal = SizeConstants.MediumSize,
 

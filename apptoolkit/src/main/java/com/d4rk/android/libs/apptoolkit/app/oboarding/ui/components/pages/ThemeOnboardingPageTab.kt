@@ -59,7 +59,7 @@ fun ThemeOnboardingPageTab() {
     Column(
         modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(state = rememberScrollState())
                 .padding(horizontal = SizeConstants.LargeSize) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center
     ) {
         Text(

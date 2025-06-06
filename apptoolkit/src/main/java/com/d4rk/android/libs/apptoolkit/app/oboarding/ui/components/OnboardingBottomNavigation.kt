@@ -49,8 +49,8 @@ fun OnboardingBottomNavigation(
     BottomAppBar {
         Row(
             modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SizeConstants.LargeSize , vertical = SizeConstants.SmallSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth()
+                .padding(horizontal = SizeConstants.LargeSize, vertical = SizeConstants.SmallSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 this@Row.AnimatedVisibility(visible = pagerState.currentPage > 0 , modifier = Modifier.fillMaxWidth() , enter = slideInHorizontally(initialOffsetX = { - it } , animationSpec = spring(
@@ -80,12 +80,17 @@ fun OnboardingBottomNavigation(
 
             Box(
                 modifier = Modifier
-                        .weight(1f)
-                        .animateContentSize() , contentAlignment = Alignment.CenterEnd
+                    .weight(1f)
+                    .animateContentSize() , contentAlignment = Alignment.CenterEnd
             ) {
                 val isLastPage = pagerState.currentPage == pageCount - 1
                 Button(
-                    onClick = onNextClicked , modifier = Modifier.animateContentSize().bounceClick()
+                    onClick = {
+                        view.playSoundEffect(SoundEffectConstants.CLICK)
+                        onNextClicked()
+                              } , modifier = Modifier
+                        .animateContentSize()
+                        .bounceClick()
                 ) {
                     if (isLastPage) {
                         Icon(
