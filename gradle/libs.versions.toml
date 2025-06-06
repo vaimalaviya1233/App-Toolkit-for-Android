@@ -30,7 +30,7 @@ navigationCompose = "2.9.0"
 userMessagingPlatform = "3.2.0"
 workRuntimeKtx = "2.10.1"
 google-services = "4.4.2"
-google-firebase-crashlytics = "3.0.3"
+google-firebase-crashlytics = "3.0.4"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
