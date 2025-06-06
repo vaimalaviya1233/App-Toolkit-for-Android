@@ -1,6 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.app.theme
 
 import android.content.Context
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
@@ -39,6 +42,7 @@ data class ThemeSettingOption(
 fun ThemeSettingsList(paddingValues : PaddingValues) {
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val context : Context = LocalContext.current
+    val view: View = LocalView.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
 
     val currentThemeModeKey : String by dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
@@ -76,6 +80,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                         Row(modifier = Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
                                 modifier = Modifier.bounceClick() , selected = (option.key == currentThemeModeKey) , onClick = {
+                                    view.playSoundEffect(SoundEffectConstants.CLICK)
                                     coroutineScope.launch {
                                         dataStore.saveThemeMode(mode = option.key)
                                         dataStore.themeModeState.value = option.key

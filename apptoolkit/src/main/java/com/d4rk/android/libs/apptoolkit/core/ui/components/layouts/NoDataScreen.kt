@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.d4rk.android.libs.apptoolkit.R
@@ -44,23 +47,48 @@ import org.koin.core.qualifier.named
  * ```
  * NoDataScreen(text = R.string.no_items_found, icon = Icons.Default.Warning */
 @Composable
-fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.Default.Info , showRetry : Boolean = false , onRetry : () -> Unit = {} , showAd : Boolean = true , adsConfig : AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))) {
+fun NoDataScreen(
+    text: Int = R.string.try_again,
+    icon: ImageVector = Icons.Default.Info,
+    showRetry: Boolean = false,
+    onRetry: () -> Unit = {},
+    showAd: Boolean = true,
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
+) {
+    val view: View = LocalView.current
     Box(
         modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(align = Alignment.Center)
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.Center)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Icon(
-                imageVector = icon , contentDescription = null , modifier = Modifier
-                        .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize)
-                        .padding(bottom = SizeConstants.LargeSize) , tint = MaterialTheme.colorScheme.primary
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize)
+                    .padding(bottom = SizeConstants.LargeSize),
+                tint = MaterialTheme.colorScheme.primary
             )
-            Text(text = stringResource(id = text) , style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center) , color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                text = stringResource(id = text),
+                style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
+                color = MaterialTheme.colorScheme.onBackground
+            )
             if (showRetry) {
                 LargeVerticalSpacer()
-                Button(onClick = onRetry , modifier = Modifier.bounceClick()) {
-                    Icon(imageVector = Icons.Filled.Refresh , contentDescription = null , modifier = Modifier.size(size = SizeConstants.ButtonIconSize))
+                Button(onClick = {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onRetry()
+                }, modifier = Modifier.bounceClick()) {
+                    Icon(
+                        imageVector = Icons.Filled.Refresh,
+                        contentDescription = null,
+                        modifier = Modifier.size(size = SizeConstants.ButtonIconSize)
+                    )
                     ButtonIconSpacer()
                     Text(text = stringResource(id = text))
                 }
@@ -68,11 +96,13 @@ fun NoDataScreen(text : Int = R.string.try_again , icon : ImageVector = Icons.De
 
             LargeVerticalSpacer()
 
-            AdBanner(
-                modifier = Modifier
+            if(showAd) {
+                AdBanner(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = SizeConstants.MediumSize) , adsConfig = adsConfig
-            )
+                        .padding(bottom = SizeConstants.MediumSize), adsConfig = adsConfig
+                )
+            }
         }
     }
 }

@@ -3,6 +3,8 @@ package com.d4rk.android.apps.apptoolkit.app.apps.ui.components
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.net.toUri
@@ -33,13 +36,14 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 @Composable
 fun AppCard(appInfo : AppInfo , modifier : Modifier) {
     val context : Context = LocalContext.current
-
+    val view: View = LocalView.current
     Card(modifier = modifier
             .bounceClick()
             .fillMaxSize()
             .aspectRatio(ratio = 1f)
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
                 if (appInfo.packageName.isNotEmpty()) {
                     if (AppInfoHelper().isAppInstalled(context = context , packageName = appInfo.packageName)) {
                         if (! AppInfoHelper().openApp(context = context , packageName = appInfo.packageName)) {

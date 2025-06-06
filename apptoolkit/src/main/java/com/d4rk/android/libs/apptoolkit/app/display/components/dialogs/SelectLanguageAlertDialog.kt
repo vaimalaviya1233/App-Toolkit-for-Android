@@ -1,6 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.app.display.components.dialogs
 
 import android.content.Context
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
@@ -54,6 +57,8 @@ fun SelectLanguageAlertDialog(onDismiss : () -> Unit , onLanguageSelected : (Str
 
 @Composable
 fun SelectLanguageAlertDialogContent(selectedLanguage : MutableState<String> , dataStore : CommonDataStore , languageEntries : List<String> , languageValues : List<String>) {
+    val view: View = LocalView.current
+
     LaunchedEffect(key1 = Unit) {
         selectedLanguage.value = dataStore.getLanguage().firstOrNull() ?: ""
     }
@@ -70,6 +75,7 @@ fun SelectLanguageAlertDialogContent(selectedLanguage : MutableState<String> , d
                     Row(Modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.Start) {
                         RadioButton(
                             selected = selectedLanguage.value == languageValues[index] , onClick = {
+                                view.playSoundEffect(SoundEffectConstants.CLICK)
                                 selectedLanguage.value = languageValues[index]
                             })
                         Text(

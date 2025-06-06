@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.help.ui.components
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,15 +25,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit , modifier : Modifier = Modifier) {
+    val view: View = LocalView.current
+
     Card(modifier = modifier
             .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
-            .clickable { onToggleExpand() }
+            .clickable {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                onToggleExpand()
+            }
             .padding(all = SizeConstants.LargeSize)
             .animateContentSize()
             .fillMaxWidth()) {

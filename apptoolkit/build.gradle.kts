@@ -120,7 +120,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "1.0.21"
+            version = "1.0.22"
 
             afterEvaluate {
                 from(components["release"])
