@@ -5,14 +5,14 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
 sealed interface Errors : Error {
 
     enum class Network : Errors {
-        REQUEST_TIMEOUT , NO_INTERNET , SERVER_ERROR , SERIALIZATION
+        REQUEST_TIMEOUT , NO_INTERNET , SERIALIZATION
     }
 
     enum class UseCase : Errors {
-        NO_DATA , EMPTY_CART , COMPRESSION_FAILED , CART_NOT_FOUND , FAILED_TO_IMPORT_CART , FAILED_TO_LOAD_APPS , FAILED_TO_DECRYPT_CART , ILLEGAL_ARGUMENT , FAILED_TO_LOAD_CART , FAILED_TO_UPDATE_CART_ITEM , FAILED_TO_DELETE_CART_ITEM , FAILED_TO_ADD_CART_ITEM ,
+        NO_DATA , FAILED_TO_LOAD_APPS , ILLEGAL_ARGUMENT ,
     }
 
     enum class Database : Errors {
-        DATABASE_OPERATION_FAILED , CART_NOT_FOUND
+        DATABASE_OPERATION_FAILED
     }
 }
