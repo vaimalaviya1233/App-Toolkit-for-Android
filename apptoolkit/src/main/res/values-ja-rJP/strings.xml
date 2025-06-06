@@ -145,6 +145,7 @@
     <string name="normal">通常</string>
     <string name="runtime">ランタイム</string>
     <string name="storage">ストレージ</string>
+    <string name="special">特別</string>
     <string name="ad_id">広告ID [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">アプリがユーザーのデバイスに関連付けられた広告識別子を取得して使用し、パーソナライズされた広告の提供、広告効果の測定、Android 13以降のデバイスでの広告表示を許可します。</string>
     <string name="internet">インターネット [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">アプリがライセンス契約への準拠を確認し、知的財産を保護するためにライセンス条項を施行することを許可します。</string>
     <string name="foreground_service">フォアグラウンドサービス [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">アプリがフォアグラウンドで実行されるサービスを作成して使用し、他のバックグラウンドプロセスよりも優先度を高め、パフォーマンスと信頼性を向上させることを許可します。</string>
+    <string name="wake_lock">デバイスをスリープさせない [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">アプリが重要な操作中にデバイスがスリープ状態（例：画面の減光やプロセッサのスリープ）になるのを防ぎ、中断なく完了できるようにします。これはバッテリーを節約するために控えめに使用されます。</string>
 
     <string name="ads">広告</string>
     <string name="summary_preference_settings_ads">関連性のある広告を表示するために情報をどのように使用するかを制御する</string>

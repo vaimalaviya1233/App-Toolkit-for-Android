@@ -145,6 +145,7 @@
     <string name="normal">Bình thường</string>
     <string name="runtime">Thời gian chạy</string>
     <string name="storage">Bộ nhớ</string>
+    <string name="special">Đặc biệt</string>
     <string name="ad_id">ID quảng cáo [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">Cho phép ứng dụng truy xuất và sử dụng mã nhận dạng quảng cáo được liên kết với thiết bị của người dùng, cung cấp quảng cáo được cá nhân hóa, đo lường hiệu quả quảng cáo và hiển thị quảng cáo trên các thiết bị Android 13 trở lên.</string>
     <string name="internet">Internet [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">Cho phép ứng dụng xác minh việc tuân thủ thỏa thuận cấp phép và thực thi các điều khoản cấp phép để bảo vệ tài sản trí tuệ.</string>
     <string name="foreground_service">Dịch vụ nền trước [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">Cho phép ứng dụng tạo và sử dụng các dịch vụ chạy trên nền trước, ưu tiên chúng hơn các quy trình nền khác và cải thiện hiệu suất cũng như độ tin cậy.</string>
+    <string name="wake_lock">Giữ thiết bị luôn bật [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">Cho phép ứng dụng ngăn thiết bị chuyển sang chế độ ngủ (ví dụ: làm mờ màn hình hoặc bộ xử lý ngủ) trong các hoạt động quan trọng để đảm bảo chúng hoàn thành mà không bị gián đoạn. Điều này được sử dụng một cách tiết kiệm để bảo tồn pin.</string>
 
     <string name="ads">Quảng cáo</string>
     <string name="summary_preference_settings_ads">Kiểm soát cách chúng tôi sử dụng thông tin của bạn để hiển thị quảng cáo phù hợp</string>

@@ -145,6 +145,7 @@
     <string name="normal">일반</string>
     <string name="runtime">런타임</string>
     <string name="storage">저장 공간</string>
+    <string name="special">특별</string>
     <string name="ad_id">광고 ID [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">앱이 사용자의 기기와 연결된 광고 식별자를 검색하고 사용하여 맞춤 광고를 제공하고, 광고 효과를 측정하며, Android 13 이상 기기에 광고를 표시하도록 허용합니다.</string>
     <string name="internet">인터넷 [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">앱이 라이선스 계약 준수 여부를 확인하고 지적 재산권을 보호하기 위해 라이선스 조건을 시행하도록 허용합니다.</string>
     <string name="foreground_service">포그라운드 서비스 [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">앱이 포그라운드에서 실행되는 서비스를 만들고 사용하여 다른 백그라운드 프로세스보다 우선순위를 부여하고 성능과 안정성을 향상시키도록 허용합니다.</string>
+    <string name="wake_lock">기기를 절전 모드로 전환하지 않음 [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">앱이 중요한 작업을 수행하는 동안 기기가 절전 모드(예: 화면 어두워짐 또는 프로세서 절전)로 전환되는 것을 방지하여 중단 없이 완료되도록 합니다. 배터리를 절약하기 위해 최소한으로 사용됩니다.</string>
 
     <string name="ads">광고</string>
     <string name="summary_preference_settings_ads">관련 광고를 표시하기 위해 귀하의 정보를 사용하는 방법 제어</string>

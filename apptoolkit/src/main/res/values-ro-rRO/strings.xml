@@ -145,6 +145,7 @@
     <string name="normal">Normal</string>
     <string name="runtime">Timp de rulare</string>
     <string name="storage">Stocare</string>
+    <string name="special">Special</string>
     <string name="ad_id">ID reclamă [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">Permite aplicației să acceseze identificatorul de publicitate asociat dispozitivului pentru a oferi reclame personalizate, a măsura eficiența acestora și a afișa reclame pe dispozitivele cu Android 13 sau mai nou.</string>
     <string name="internet">Internet [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">Permite aplicației să verifice respectarea acordului de licență și să aplice termenii pentru protejarea proprietății intelectuale.</string>
     <string name="foreground_service">Serviciu în prim-plan [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">Permite aplicației să creeze și să utilizeze servicii care rulează în prim-plan, oferindu-le prioritate și îmbunătățind performanța.</string>
+    <string name="wake_lock">Menține dispozitivul activ [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">Permite aplicației să împiedice dispozitivul să intre în modul de repaus (de ex., estomparea ecranului sau repausul procesorului) în timpul operațiunilor critice pentru a se asigura că acestea se finalizează fără întrerupere. Aceasta este utilizată cu moderație pentru a conserva bateria.</string>
 
     <string name="ads">Reclame</string>
     <string name="summary_preference_settings_ads">Controlează modul în care folosim informațiile tale pentru a afișa reclame relevante</string>

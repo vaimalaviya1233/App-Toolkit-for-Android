@@ -145,6 +145,7 @@
     <string name="normal">一般</string>
     <string name="runtime">執行時</string>
     <string name="storage">儲存空間</string>
+    <string name="special">特別</string>
     <string name="ad_id">廣告 ID [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">允許應用程式擷取並使用與使用者裝置相關聯的廣告識別碼，提供個人化廣告、衡量廣告成效，以及在 Android 13 或更新版本的裝置上顯示廣告。</string>
     <string name="internet">網際網路 [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">允許應用程式驗證其是否符合授權協議，並強制執行授權條款以保護智慧財產權。</string>
     <string name="foreground_service">前景服務 [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">允許應用程式建立並使用在前景執行的服務，賦予它們優先於其他背景處理程序的權限，並改善效能和可靠性。</string>
+    <string name="wake_lock">保持裝置喚醒 [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">允許應用程式在關鍵作業期間防止裝置進入休眠狀態 (例如螢幕變暗或處理器休眠)，以確保作業不中斷並順利完成。此功能會謹慎使用以節省電池電量。</string>
 
     <string name="ads">廣告</string>
     <string name="summary_preference_settings_ads">管理我們如何使用您的資訊來顯示相關廣告</string>

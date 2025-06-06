@@ -145,6 +145,7 @@
     <string name="normal">Normal</string>
     <string name="runtime">Körningstid</string>
     <string name="storage">Lagring</string>
+    <string name="special">Speciell</string>
     <string name="ad_id">Annons-ID [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">Tillåter appen att hämta och använda annonseringsidentifieraren som är kopplad till användarens enhet, för att tillhandahålla personliga annonser, mäta annonseffektivitet och visa annonser på Android 13-enheter eller senare.</string>
     <string name="internet">Internet [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">Tillåter appen att verifiera sin överensstämmelse med licensavtalet och upprätthålla licensvillkor för att skydda immateriella rättigheter.</string>
     <string name="foreground_service">Förgrundstjänst [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">Tillåter appen att skapa och använda tjänster som körs i förgrunden, vilket ger dem prioritet över andra bakgrundsprocesser och förbättrar prestanda och tillförlitlighet.</string>
+    <string name="wake_lock">Håll enheten vaken [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">Tillåter appen att förhindra att enheten går i viloläge (t.ex. skärmdimning или processorvila) under kritiska operationer för att säkerställa att de slutförs utan avbrott. Detta används sparsamt för att spara batteri.</string>
 
     <string name="ads">Reklam</string>
     <string name="summary_preference_settings_ads">Kontrollera hur vi använder din information för att visa relevanta annonser</string>

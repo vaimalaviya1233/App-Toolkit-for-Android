@@ -145,6 +145,7 @@
     <string name="normal">Normal</string>
     <string name="runtime">En tiempo de ejecución</string>
     <string name="storage">Almacenamiento</string>
+    <string name="special">Especial</string>
     <string name="ad_id">ID de anuncio [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">Permite a la aplicación recuperar y usar el identificador de publicidad asociado con el dispositivo del usuario, proporcionando anuncios personalizados, midiendo la efectividad de los anuncios y mostrando anuncios en dispositivos con Android 13 o posterior.</string>
     <string name="internet">Internet [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">Permite a la aplicación verificar su cumplimiento con el acuerdo de licencia y hacer cumplir los términos de la licencia para proteger la propiedad intelectual.</string>
     <string name="foreground_service">Servicio en primer plano [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">Permite a la aplicación crear y usar servicios que se ejecutan en primer plano, dándoles prioridad sobre otros procesos en segundo plano y mejorando el rendimiento y la fiabilidad.</string>
+    <string name="wake_lock">Mantener dispositivo activo [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">Permite que la aplicación evite que el dispositivo entre en modo de suspensión (por ejemplo, atenuación de la pantalla o suspensión del procesador) durante operaciones críticas para garantizar que se completen sin interrupción. Esto se usa con moderación para conservar la batería.</string>
 
     <string name="ads">Anuncios</string>
     <string name="summary_preference_settings_ads">Controla cómo usamos tu información para mostrarte anuncios relevantes</string>

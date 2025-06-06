@@ -145,6 +145,7 @@
     <string name="normal">عادي</string>
     <string name="runtime">وقت التشغيل</string>
     <string name="storage">التخزين</string>
+    <string name="special">خاص</string>
     <string name="ad_id">معرّف الإعلان [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">يسمح للتطبيق باسترجاع واستخدام معرّف الإعلانات المرتبط بجهاز المستخدم، مما يوفر إعلانات مخصصة، ويقيس فعالية الإعلانات، ويعرض الإعلانات على أجهزة أندرويد 13 أو الأحدث.</string>
     <string name="internet">الإنترنت [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">يسمح للتطبيق بالتحقق من امتثاله لاتفاقية الترخيص وفرض شروط الترخيص لحماية الملكية الفكرية.</string>
     <string name="foreground_service">خدمة تعمل في المقدمة [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">يسمح للتطبيق بإنشاء واستخدام خدمات تعمل في المقدمة، مما يمنحها الأولوية على عمليات الخلفية الأخرى ويحسن الأداء والموثوقية.</string>
+    <string name="wake_lock">إبقاء الجهاز مستيقظًا [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">يسمح للتطبيق بمنع الجهاز من الدخول في وضع السكون (على سبيل المثال، تعتيم الشاشة أو وضع سكون المعالج) أثناء العمليات الحرجة لضمان إكمالها دون انقطاع. يُستخدم هذا بشكل مقتصد للحفاظ على طاقة البطارية.</string>
 
     <string name="ads">الإعلانات</string>
     <string name="summary_preference_settings_ads">تحكم في كيفية استخدامنا لمعلوماتك لعرض إعلانات ذات صلة بك</string>

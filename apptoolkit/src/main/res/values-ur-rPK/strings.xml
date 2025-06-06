@@ -145,6 +145,7 @@
     <string name="normal">عام</string>
     <string name="runtime">رن ٹائم</string>
     <string name="storage">اسٹوریج</string>
+    <string name="special">خاص</string>
     <string name="ad_id">اشتہار کی شناخت [AD_ID]</string>
     <string name="summary_preference_permissions_ad_id">ایپ کو صارف کے آلے سے وابستہ اشتہاری شناخت کنندہ کو بازیافت کرنے اور استعمال کرنے کی اجازت دیتا ہے، ذاتی نوعیت کے اشتہارات فراہم کرتا ہے، اشتہار کی تاثیر کی پیمائش کرتا ہے، اور Android 13 یا بعد کے آلات پر اشتہارات دکھاتا ہے۔</string>
     <string name="internet">انٹرنیٹ [INTERNET]</string>
@@ -161,6 +162,8 @@
     <string name="summary_preference_permissions_check_license">ایپ کو لائسنس کے معاہدے کی تعمیل کی توثیق کرنے اور دانشورانہ املاک کے تحفظ کے لیے لائسنس کی شرائط نافذ کرنے کی اجازت دیتا ہے۔</string>
     <string name="foreground_service">پیش منظر سروس [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">ایپ کو پیش منظر میں چلنے والی خدمات بنانے اور استعمال کرنے کی اجازت دیتا ہے، جس سے انہیں دیگر پس منظر کے عمل پر فوقیت ملتی ہے اور کارکردگی اور وشوسنییتا بہتر ہوتی ہے۔</string>
+    <string name="wake_lock">ڈیوائس کو بیدار رکھیں [WAKE_LOCK]</string>
+    <string name="summary_preference_permissions_wake_lock">ایپ کو اہم کارروائیوں کے دوران ڈیوائس کو سلیپ موڈ (مثلاً، اسکرین کا مدھم ہونا یا پروسیسر کا سلیپ موڈ) میں جانے سے روکنے کی اجازت دیتا ہے تاکہ یہ یقینی بنایا جا سکے کہ وہ بغیر کسی رکاوٹ کے مکمل ہوں۔ بیٹری بچانے کے لیے اسے किफایت سے استعمال کیا جاتا ہے۔</string>
 
     <string name="ads">اشتہارات</string>
     <string name="summary_preference_settings_ads">کنٹرول کریں کہ ہم آپ کو متعلقہ اشتہارات دکھانے کے لیے آپ کی معلومات کیسے استعمال کرتے ہیں</string>
