@@ -3,9 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -71,7 +69,6 @@ fun PermissionsContent(paddingValues : PaddingValues , settingsConfig : Settings
                         ExtraTinyVerticalSpacer()
                     }
                 }
-                Spacer(modifier = Modifier.height(SizeConstants.MediumSize * 2))
             }
         }
     }
