@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components
 
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.d4rk.android.libs.apptoolkit.R
@@ -35,6 +38,7 @@ fun ConsentToggleCard(
     icon: ImageVector,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    val view: View = LocalView.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +51,10 @@ fun ConsentToggleCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onCheckedChange(!switchState) }
+                    .clickable {
+                        view.playSoundEffect(SoundEffectConstants.CLICK)
+                        onCheckedChange(!switchState)
+                    }
                     .padding(
                         horizontal = SizeConstants.LargeSize,
                         vertical = SizeConstants.MediumSize
