@@ -50,8 +50,7 @@ fun ConsentToggleCard(
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 onCheckedChange(!switchState)
-            }
-            .padding(vertical = SizeConstants.ExtraSmallSize),
+            },
         shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )

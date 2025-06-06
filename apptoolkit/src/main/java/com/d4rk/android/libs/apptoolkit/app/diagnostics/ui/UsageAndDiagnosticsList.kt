@@ -96,7 +96,7 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
             AnimatedVisibility(
                 visible = advancedSettingsExpanded,
                 enter = expandVertically(expandFrom = Alignment.Top),
-                exit = shrinkVertically(shrinkTowards = Alignment.Top)
+                exit = shrinkVertically(shrinkTowards = Alignment.Top),
             ) {
                 Column(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
                     ConsentSectionHeader(title = stringResource(id = R.string.consent_category_analytics_title))
