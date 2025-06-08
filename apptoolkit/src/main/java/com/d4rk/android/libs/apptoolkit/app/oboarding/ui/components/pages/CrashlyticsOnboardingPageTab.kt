@@ -218,7 +218,13 @@ fun UsageAndDiagnosticsToggleCard(
                 )
             }
             LargeHorizontalSpacer()
-            Switch(checked = switchState, onCheckedChange = onCheckedChange, thumbContent = {
+            Switch(
+                checked = switchState,
+                onCheckedChange = {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onCheckedChange(it)
+                },
+                thumbContent = {
                 AnimatedContent(targetState = switchState, transitionSpec = {
                     if (targetState) {
                         slideInVertically { height: Int -> height } + fadeIn() togetherWith slideOutVertically { height: Int -> -height } + fadeOut()
@@ -259,12 +265,15 @@ fun LearnMoreSection(context: Context) {
         )
 
         MediumVerticalSpacer()
-        TextButton(onClick = {
-            val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
-            context.startActivity(intent)
-        },
+        TextButton(
+            onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
+                context.startActivity(intent)
+            },
             modifier = Modifier.bounceClick(),
-            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)) {
+            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+        ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Launch,
                 contentDescription = null,
@@ -495,7 +504,10 @@ fun ConsentToggleItem(
             MediumHorizontalSpacer()
             Switch(
                 checked = switchState,
-                onCheckedChange = onCheckedChange,
+                onCheckedChange = {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onCheckedChange(it)
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = MaterialTheme.colorScheme.primary,
                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
