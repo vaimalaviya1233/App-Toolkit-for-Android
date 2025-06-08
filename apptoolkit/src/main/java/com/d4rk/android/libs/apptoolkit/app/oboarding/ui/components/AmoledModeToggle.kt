@@ -75,7 +75,13 @@ fun AmoledModeToggle(
                 )
             }
             LargeHorizontalSpacer()
-            Switch(checked = isAmoledMode, onCheckedChange = onCheckedChange, thumbContent = {
+            Switch(
+                checked = isAmoledMode,
+                onCheckedChange = {
+                    view.playSoundEffect(SoundEffectConstants.CLICK)
+                    onCheckedChange(it)
+                },
+                thumbContent = {
                 Icon(
                     imageVector = Icons.Filled.Tonality,
                     contentDescription = null,

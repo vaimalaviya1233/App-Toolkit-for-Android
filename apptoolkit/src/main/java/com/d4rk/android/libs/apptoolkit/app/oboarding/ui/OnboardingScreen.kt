@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
@@ -41,6 +42,7 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import android.view.SoundEffectConstants
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +54,7 @@ fun OnboardingScreen() {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val pagerState: PagerState = rememberPagerState { pages.size }
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    val view = LocalView.current
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
@@ -68,7 +71,11 @@ fun OnboardingScreen() {
                     exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
                 ) {
                     TextButton(
-                        onClick = onSkipRequested, modifier = Modifier.bounceClick()
+                        onClick = {
+                            view.playSoundEffect(SoundEffectConstants.CLICK)
+                            onSkipRequested()
+                        },
+                        modifier = Modifier.bounceClick()
                     ) {
                         Icon(
                             imageVector = Icons.Filled.SkipNext,

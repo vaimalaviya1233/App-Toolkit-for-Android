@@ -29,6 +29,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.Info
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.TopAppBarScaffold
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 
 @Composable
 fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
@@ -72,7 +73,11 @@ fun StartupScreenContent(paddingValues : PaddingValues) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
                 AsyncImage(model = R.drawable.il_startup , contentDescription = null)
-                InfoMessageSection(message = stringResource(R.string.summary_browse_terms_of_service_and_privacy_policy) , learnMoreText = stringResource(R.string.learn_more) , learnMoreUrl = "https://sites.google.com/view/d4rk7355608/more/apps/privacy-policy")
+                InfoMessageSection(
+                    message = stringResource(R.string.summary_browse_terms_of_service_and_privacy_policy),
+                    learnMoreText = stringResource(R.string.learn_more),
+                    learnMoreUrl = AppLinks.PRIVACY_POLICY
+                )
             }
         }
     }
