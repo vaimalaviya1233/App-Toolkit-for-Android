@@ -18,13 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.ads.domain.events.AdsSettingsEvents
-import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
@@ -38,23 +32,9 @@ import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Composable
-fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , buildInfoProvider : BuildInfoProvider) {
-    val uiState : UiStateScreen<AdsSettingsData> by viewModel.uiState.collectAsState()
-    ScreenStateHandler(screenState = uiState , onLoading = {
-        LoadingScreen()
-    } , onEmpty = {
-        NoDataScreen(showRetry = true , onRetry = {
-            viewModel.onEvent(event = AdsSettingsEvents.LoadAdsSettings)
-        })
-    } , onSuccess = {
-        AdSettingsScreenContent(activity = activity , buildInfoProvider = buildInfoProvider)
-    })
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdSettingsScreenContent(activity : Activity , buildInfoProvider : BuildInfoProvider) {
+fun AdsSettingsScreen(activity : Activity , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)

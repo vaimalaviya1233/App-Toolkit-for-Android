@@ -34,6 +34,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun LeftNavigationRail(
+    modifier : Modifier = Modifier,
     bottomItems : List<BottomNavigationItem> = emptyList() ,
     drawerItems : List<NavigationDrawerItem> = emptyList() ,
     currentRoute : String? ,
@@ -42,7 +43,6 @@ fun LeftNavigationRail(
     onBottomItemClick : (BottomNavigationItem) -> Unit = {} ,
     onDrawerItemClick : (NavigationDrawerItem) -> Unit = {} ,
     content : @Composable () -> Unit ,
-    modifier : Modifier = Modifier
 ) {
     val railWidth : Dp by animateDpAsState(targetValue = if (isRailExpanded) 200.dp else 72.dp , animationSpec = tween(durationMillis = 300))
     val textEntryAnimation : EnterTransition = fadeIn(animationSpec = tween(durationMillis = 300)) + expandHorizontally() + expandVertically()

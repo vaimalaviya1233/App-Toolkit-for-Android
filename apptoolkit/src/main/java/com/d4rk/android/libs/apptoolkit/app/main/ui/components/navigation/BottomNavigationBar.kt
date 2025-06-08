@@ -14,7 +14,7 @@ import com.d4rk.android.libs.apptoolkit.app.main.utils.interfaces.BottomNavigati
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
-fun BottomNavigationBar(items : List<BottomNavigationItem> , currentRoute : String? , onItemSelected : (BottomNavigationItem) -> Unit , showLabels : Boolean = true , modifier : Modifier = Modifier) {
+fun BottomNavigationBar(modifier : Modifier = Modifier, items : List<BottomNavigationItem> , currentRoute : String? , onItemSelected : (BottomNavigationItem) -> Unit , showLabels : Boolean = true) {
     Column(modifier = modifier) {
         NavigationBar {
             items.forEach { item ->

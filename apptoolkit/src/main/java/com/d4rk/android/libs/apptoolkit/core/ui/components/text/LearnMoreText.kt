@@ -23,7 +23,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
-fun LearnMoreText(text : String = stringResource(R.string.learn_more) , url : String , modifier : Modifier = Modifier) {
+fun LearnMoreText(modifier : Modifier = Modifier, text : String = stringResource(R.string.learn_more) , url : String) {
     val context : Context = LocalContext.current
     val view: View = LocalView.current
     val textColor : Color = MaterialTheme.colorScheme.primary
