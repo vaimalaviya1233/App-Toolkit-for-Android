@@ -1,8 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.ui.components
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.SoundEffectConstants
 import android.view.View
 import androidx.compose.foundation.clickable
@@ -24,12 +22,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 
@@ -47,15 +44,17 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
                 if (appInfo.packageName.isNotEmpty()) {
                     if (AppInfoHelper().isAppInstalled(context = context , packageName = appInfo.packageName)) {
                         if (! AppInfoHelper().openApp(context = context , packageName = appInfo.packageName)) {
-                            "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri : Uri ->
-                                context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
-                            }
+                            IntentsHelper.openPlayStoreForApp(
+                                context = context ,
+                                packageName = appInfo.packageName
+                            )
                         }
                     }
                     else {
-                        "${AppLinks.MARKET_APP_PAGE}${appInfo.packageName}".toUri().let { marketUri : Uri ->
-                            context.startActivity(Intent(Intent.ACTION_VIEW , marketUri))
-                        }
+                        IntentsHelper.openPlayStoreForApp(
+                            context = context ,
+                            packageName = appInfo.packageName
+                        )
                     }
                 }
             }) {

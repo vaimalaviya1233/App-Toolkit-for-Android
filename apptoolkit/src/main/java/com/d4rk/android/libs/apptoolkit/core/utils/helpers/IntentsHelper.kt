@@ -76,6 +76,28 @@ object IntentsHelper {
     }
 
     /**
+     * Opens the specified application's Play Store page. If the Play Store
+     * application is not available, it falls back to opening the web version
+     * of the Play Store.
+     *
+     * @param context The context used to start the intent.
+     * @param packageName The package name of the application to display.
+     */
+    fun openPlayStoreForApp(context : Context , packageName : String) {
+        val marketIntent = Intent(
+            Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}$packageName".toUri()
+        ).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        if (marketIntent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(marketIntent)
+        }
+        else {
+            openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
+        }
+    }
+
+    /**
      * Opens the app's share sheet, allowing users to share a message about the app.
      *
      * This function constructs a share message using a provided string resource and the app's Play Store link.
