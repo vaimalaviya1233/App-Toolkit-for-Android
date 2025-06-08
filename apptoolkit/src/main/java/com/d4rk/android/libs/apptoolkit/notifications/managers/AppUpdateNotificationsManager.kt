@@ -33,12 +33,20 @@ class AppUpdateNotificationsManager(private val context : Context , private val 
                     channelId , context.getString(R.string.update_notifications) , NotificationManager.IMPORTANCE_HIGH
                 )
                 notificationManager.createNotificationChannel(updateChannel)
+                val marketIntent = Intent(
+                    Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}${context.packageName}".toUri()
+                )
+                val finalIntent = if (marketIntent.resolveActivity(context.packageManager) != null) {
+                    marketIntent
+                } else {
+                    Intent(
+                        Intent.ACTION_VIEW , "${AppLinks.PLAY_STORE_APP}${context.packageName}".toUri()
+                    )
+                }
                 val updateBuilder : NotificationCompat.Builder =
                         NotificationCompat.Builder(context , channelId).setSmallIcon(R.drawable.ic_notification_update).setContentTitle(context.getString(R.string.notification_update_title)).setContentText(context.getString(R.string.summary_notification_update)).setAutoCancel(true).setContentIntent(
                             PendingIntent.getActivity(
-                                context , 0 , Intent(
-                                    Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}${context.packageName}".toUri()
-                                ) , PendingIntent.FLAG_IMMUTABLE
+                                context , 0 , finalIntent , PendingIntent.FLAG_IMMUTABLE
                             )
                         )
                 notificationManager.notify(updateNotificationId , updateBuilder.build())
