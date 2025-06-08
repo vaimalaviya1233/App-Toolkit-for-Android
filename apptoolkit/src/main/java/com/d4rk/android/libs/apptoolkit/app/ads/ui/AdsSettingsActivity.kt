@@ -11,10 +11,8 @@ import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsSettingsActivity : AppCompatActivity() {
-    private val viewModel : AdsSettingsViewModel by viewModel()
     private val buildInfoProvider : BuildInfoProvider by inject()
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +20,7 @@ class AdsSettingsActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    AdsSettingsScreen(viewModel = viewModel , activity = this@AdsSettingsActivity , buildInfoProvider = buildInfoProvider)
+                    AdsSettingsScreen(activity = this@AdsSettingsActivity , buildInfoProvider = buildInfoProvider)
                 }
             }
         }
