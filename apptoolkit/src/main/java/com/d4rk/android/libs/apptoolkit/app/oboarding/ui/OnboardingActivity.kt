@@ -33,6 +33,6 @@ class OnboardingActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onEvent(event = OnboardingEvent.OpenConsentForm(activity = this@OnboardingActivity))
+        viewModel.onEvent(event = OnboardingEvent.LoadConsentInfo(activity = this@OnboardingActivity))
     }
 }
