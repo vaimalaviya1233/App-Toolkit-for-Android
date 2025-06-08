@@ -23,17 +23,17 @@ import kotlinx.coroutines.flow.stateIn
 class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<StartupUiData , StartupEvent , StartupAction>(initialState = UiStateScreen(data = StartupUiData())) {
 
     init {
-        onEvent(event = StartupEvent.LoadConsentInfo)
+        onEvent(event = StartupEvent.LoadConsentInfo())
     }
 
     override fun onEvent(event : StartupEvent) {
         when (event) {
             is StartupEvent.OpenConsentForm -> openConsentForm(activity = event.activity)
-            is StartupEvent.LoadConsentInfo -> loadConsentInfo()
+            is StartupEvent.LoadConsentInfo -> loadConsentInfo(activity = event.activity)
         }
     }
 
-    private fun loadConsentInfo() {
+    private fun loadConsentInfo(activity: Activity? = null) {
         launch(context = dispatcherProvider.io) {
             loadConsentInfoUseCase().stateIn(scope = viewModelScope , started = SharingStarted.Lazily , initialValue = DataState.Loading()).collect { result : DataState<ConsentInformation , Errors> ->
                 screenState.applyResult(result = result , errorMessage = UiTextHelper.StringResource(R.string.error_loading_consent_info)) { consentInfo : ConsentInformation , current : StartupUiData ->
@@ -43,6 +43,9 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
                                 consentInfo.consentStatus == ConsentInformation.ConsentStatus.UNKNOWN),
                         consentInformation = consentInfo
                     )
+                }
+                if (result is DataState.Success && activity != null) {
+                    openConsentForm(activity = activity)
                 }
             }
         }

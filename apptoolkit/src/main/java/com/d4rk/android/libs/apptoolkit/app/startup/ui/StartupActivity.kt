@@ -43,7 +43,7 @@ class StartupActivity : AppCompatActivity() {
             permissionLauncher.launch(input = provider.requiredPermissions)
         }
 
-        viewModel.onEvent(event = StartupEvent.OpenConsentForm(activity = this@StartupActivity))
+        viewModel.onEvent(event = StartupEvent.LoadConsentInfo(activity = this@StartupActivity))
     }
 
     fun navigateToNext() {

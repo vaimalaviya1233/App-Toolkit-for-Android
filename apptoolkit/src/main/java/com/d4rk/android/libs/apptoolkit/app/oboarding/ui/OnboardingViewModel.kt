@@ -28,17 +28,17 @@ class OnboardingViewModel(
 ) {
 
     init {
-        onEvent(event = OnboardingEvent.LoadConsentInfo)
+        onEvent(event = OnboardingEvent.LoadConsentInfo())
     }
 
     override fun onEvent(event: OnboardingEvent) {
         when (event) {
             is OnboardingEvent.OpenConsentForm -> openConsentForm(activity = event.activity)
-            is OnboardingEvent.LoadConsentInfo -> loadConsentInfo()
+            is OnboardingEvent.LoadConsentInfo -> loadConsentInfo(activity = event.activity)
         }
     }
 
-    private fun loadConsentInfo() {
+    private fun loadConsentInfo(activity: Activity? = null) {
         launch(context = dispatcherProvider.io) {
             loadConsentInfoUseCase().stateIn(
                 scope = viewModelScope,
@@ -57,6 +57,9 @@ class OnboardingViewModel(
                                 ),
                         consentInformation = consentInfo
                     )
+                }
+                if (result is DataState.Success && activity != null) {
+                    openConsentForm(activity = activity)
                 }
             }
         }
