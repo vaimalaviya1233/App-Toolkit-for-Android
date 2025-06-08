@@ -11,17 +11,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : AppCompatActivity() {
     private val provider : StartupProvider by inject()
-    private val viewModel : StartupViewModel by viewModel()
+    var consentFormLoaded : Boolean = false
     private val permissionLauncher : ActivityResultLauncher<Array<String>> = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { }
 
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -31,7 +32,7 @@ class StartupActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    StartupScreen(activity = this , viewModel = viewModel)
+                    StartupScreen(activity = this)
                 }
             }
         }
@@ -43,7 +44,7 @@ class StartupActivity : AppCompatActivity() {
             permissionLauncher.launch(input = provider.requiredPermissions)
         }
 
-        viewModel.onEvent(event = StartupEvent.OpenConsentForm(activity = this@StartupActivity))
+        checkUserConsent()
     }
 
     fun navigateToNext() {
@@ -53,5 +54,11 @@ class StartupActivity : AppCompatActivity() {
             } ?: StartupActivity::class.java)
             finish()
         }
+    }
+
+    private fun checkUserConsent() {
+        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
+        ConsentFormHelper.showConsentFormIfRequired(activity = this , consentInfo = consentInfo)
+        consentFormLoaded = true
     }
 }

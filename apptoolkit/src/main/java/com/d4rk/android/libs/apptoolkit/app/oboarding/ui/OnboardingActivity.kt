@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.actions.OnboardingEvent
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.UserMessagingPlatform
 
 class OnboardingActivity : ComponentActivity() {
-
-    private val viewModel : OnboardingViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +32,11 @@ class OnboardingActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onEvent(event = OnboardingEvent.OpenConsentForm(activity = this@OnboardingActivity))
+        checkUserConsent()
+    }
+
+    private fun checkUserConsent() {
+        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
+        ConsentFormHelper.showConsentFormIfRequired(activity = this , consentInfo = consentInfo)
     }
 }

@@ -26,7 +26,6 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
     override fun onEvent(event : AdsSettingsEvents) {
         when (event) {
             is AdsSettingsEvents.LoadAdsSettings -> loadAdsSettings()
-            is AdsSettingsEvents.OpenConsentForm -> openConsentForm(activity = event.activity)
         }
     }
 
@@ -38,14 +37,5 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
                 }
             }
         }
-    }
-
-    private fun openConsentForm(activity: AdsSettingsActivity) {
-        screenData?.consentInformation.loadAndShowIfNeeded(
-            scope = viewModelScope,
-            dispatcherProvider = dispatcherProvider,
-            activity = activity,
-            onFormShown = { onEvent(event = AdsSettingsEvents.LoadAdsSettings) },
-        )
     }
 }

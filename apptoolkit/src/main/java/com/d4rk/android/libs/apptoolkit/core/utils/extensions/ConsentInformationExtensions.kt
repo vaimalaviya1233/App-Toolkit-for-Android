@@ -24,8 +24,8 @@ fun ConsentInformation?.loadAndShowIfNeeded(
     onFormShown: () -> Unit = {},
 ) {
     this?.let { info ->
-        scope.launch(context = dispatcherProvider.io) {
-            ConsentFormHelper.loadAndShow(activity = activity, consentInfo = info) {
+        scope.launch(context = dispatcherProvider.main) {
+            ConsentFormHelper.showConsentFormIfRequired(activity = activity, consentInfo = info) {
                 onFormShown()
             }
         }

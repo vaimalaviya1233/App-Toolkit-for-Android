@@ -12,41 +12,26 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.startup.domain.model.StartupUiData
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.TopAppBarScaffold
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
-fun StartupScreen(activity : StartupActivity , viewModel : StartupViewModel) {
-    val uiStateScreen : UiStateScreen<StartupUiData> by viewModel.uiState.collectAsState()
-    val consentFormLoaded : Boolean = uiStateScreen.data?.consentFormLoaded == true
+fun StartupScreen(activity : StartupActivity) {
 
     TopAppBarScaffold(title = stringResource(R.string.welcome) , content = { paddingValues ->
-        ScreenStateHandler(screenState = uiStateScreen , onLoading = {
-            LoadingScreen()
-        } , onEmpty = {
-            NoDataScreen()
-        } , onSuccess = {
-            StartupScreenContent(paddingValues = paddingValues)
-        })
+        StartupScreenContent(paddingValues = paddingValues)
     } , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(
-            visible = consentFormLoaded , modifier = Modifier.bounceClick() , containerColor = if (consentFormLoaded) {
+            visible = activity.consentFormLoaded , modifier = Modifier.bounceClick() , containerColor = if (activity.consentFormLoaded) {
             FloatingActionButtonDefaults.containerColor
         }
         else {

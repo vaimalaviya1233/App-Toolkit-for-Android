@@ -31,7 +31,10 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.Preferenc
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -45,15 +48,13 @@ fun AdsSettingsScreen(activity : Activity , viewModel : AdsSettingsViewModel , b
             viewModel.onEvent(event = AdsSettingsEvents.LoadAdsSettings)
         })
     } , onSuccess = {
-        AdSettingsScreenContent(
-            viewModel = viewModel , activity = activity , buildInfoProvider = buildInfoProvider
-        )
+        AdSettingsScreenContent(activity = activity , buildInfoProvider = buildInfoProvider)
     })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdSettingsScreenContent(viewModel : AdsSettingsViewModel , activity : Activity , buildInfoProvider : BuildInfoProvider) {
+fun AdSettingsScreenContent(activity : Activity , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
@@ -80,7 +81,8 @@ fun AdSettingsScreenContent(viewModel : AdsSettingsViewModel , activity : Activi
                 Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
                     PreferenceItem(
                         title = stringResource(id = R.string.personalized_ads) , enabled = adsEnabled , summary = stringResource(id = R.string.summary_ads_personalized_ads) , onClick = {
-                            viewModel.onEvent(event = AdsSettingsEvents.OpenConsentForm(activity = activity as AdsSettingsActivity))
+                            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
+                            ConsentFormHelper.showConsentForm(activity = activity , consentInfo = consentInfo)
                         })
                 }
             }
