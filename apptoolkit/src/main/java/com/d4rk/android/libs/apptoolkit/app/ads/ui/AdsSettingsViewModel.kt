@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
 import com.d4rk.android.libs.apptoolkit.R
+import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsActions
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.events.AdsSettingsEvents
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.AdsSettingsData
@@ -11,7 +12,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.loadAndShowIfNeeded
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.android.ump.ConsentInformation
 import kotlinx.coroutines.flow.flowOn
@@ -39,13 +40,12 @@ class AdsSettingsViewModel(private val loadConsentInfoUseCase : LoadConsentInfoU
         }
     }
 
-    private fun openConsentForm(activity : AdsSettingsActivity) {
-        screenData?.consentInformation?.let { consentInfo : ConsentInformation ->
-            launch(context = dispatcherProvider.io) {
-                ConsentFormHelper.loadAndShow(activity = activity , consentInfo = consentInfo) {
-                    onEvent(event = AdsSettingsEvents.LoadAdsSettings)
-                }
-            }
-        } ?: return onEvent(event = AdsSettingsEvents.LoadAdsSettings)
+    private fun openConsentForm(activity: AdsSettingsActivity) {
+        screenData?.consentInformation.loadAndShowIfNeeded(
+            scope = viewModelScope,
+            dispatcherProvider = dispatcherProvider,
+            activity = activity,
+            onFormShown = { onEvent(event = AdsSettingsEvents.LoadAdsSettings) },
+        )
     }
 }

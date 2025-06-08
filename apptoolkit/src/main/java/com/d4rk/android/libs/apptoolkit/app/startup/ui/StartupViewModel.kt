@@ -14,7 +14,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.loadAndShowIfNeeded
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.android.ump.ConsentInformation
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,14 +48,13 @@ class StartupViewModel(private val loadConsentInfoUseCase : LoadConsentInfoUseCa
         }
     }
 
-    private fun openConsentForm(activity : Activity) {
-        screenData?.consentInformation?.let { consentInfo : ConsentInformation ->
-            launch(context = dispatcherProvider.io) {
-                ConsentFormHelper.loadAndShow(activity = activity , consentInfo = consentInfo) {
-                    onConsentFormLoaded()
-                }
-            }
-        } ?: return onConsentFormLoaded()
+    private fun openConsentForm(activity: Activity) {
+        screenData?.consentInformation.loadAndShowIfNeeded(
+            scope = viewModelScope,
+            dispatcherProvider = dispatcherProvider,
+            activity = activity,
+            onFormShown = { onConsentFormLoaded() },
+        )
     }
 
     private fun onConsentFormLoaded() {
