@@ -251,6 +251,8 @@ fun UsageAndDiagnosticsToggleCard(
 
 @Composable
 fun LearnMoreSection(context: Context) {
+    val view : View = LocalView.current
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         HorizontalDivider(
             modifier = Modifier.padding(vertical = SizeConstants.LargeSize), thickness = SizeConstants.ExtraTinySize / 4
