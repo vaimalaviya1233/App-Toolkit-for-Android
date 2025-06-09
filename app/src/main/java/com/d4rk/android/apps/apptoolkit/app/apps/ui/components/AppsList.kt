@@ -1,20 +1,16 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
@@ -23,8 +19,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
-import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import org.koin.compose.koinInject
@@ -33,7 +27,6 @@ import org.koin.core.qualifier.named
 @Composable
 fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
     val apps : List<AppInfo> = uiHomeScreen.apps
-    val listState : LazyGridState = rememberLazyGridState()
     val context = LocalContext.current
     val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
 
@@ -56,21 +49,15 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
             }
         }
     }
-    val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(gridState = listState , itemCount = items.size)
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(count = if(isTabletOrLandscape) 4 else 2) ,
-        contentPadding = paddingValues ,
-        state = listState ,
-        horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) ,
-        verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) ,
-        modifier = Modifier.padding(horizontal = SizeConstants.LargeSize)
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .verticalScroll(scrollState)
+            .padding(horizontal = SizeConstants.LargeSize),
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize)
     ) {
-        itemsIndexed(items , span = { _ : Int , item : AppListItem ->
-            when (item) {
-                is AppListItem.Ad -> GridItemSpan(currentLineSpan = maxLineSpan)
-                is AppListItem.App -> GridItemSpan(currentLineSpan = 1)
-            }
-        }) { index : Int , item : AppListItem ->
+        items.forEach { item : AppListItem ->
             when (item) {
                 is AppListItem.Ad -> {
                     AdBanner(
@@ -81,9 +68,7 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
                 }
 
                 is AppListItem.App -> {
-                    AppCard(appInfo = item.appInfo , modifier = Modifier
-                            .animateItem()
-                            .animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index))
+                    AppCard(appInfo = item.appInfo , modifier = Modifier.fillMaxWidth())
                 }
             }
         }
