@@ -1,4 +1,4 @@
-# Version 1.0.1 (code 26)
+# Version 1.0.1
 - Added Play Store fallback intent handling.
 - Improved manifest meta-data ordering and added per-app language service.
 - Enabled Firebase Performance Logcat and updated dependencies.
