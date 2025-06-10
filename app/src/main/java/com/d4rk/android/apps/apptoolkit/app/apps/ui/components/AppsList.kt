@@ -31,21 +31,21 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
-    val apps : List<AppInfo> = uiHomeScreen.apps
+fun AppsList(uiHomeScreen: UiHomeScreen, paddingValues: PaddingValues) {
+    val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
-    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
-    val columnCount = if (isTabletOrLandscape) 4 else 2
+    val isTabletOrLandscape: Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
+    val columnCount: Int = if (isTabletOrLandscape) 4 else 2
 
-    val bannerType : String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
-    val adsConfig : AdsConfig = koinInject(qualifier = named(bannerType))
-    val listState : LazyGridState = rememberLazyGridState()
+    val bannerType: String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
+    val adsConfig: AdsConfig = koinInject(qualifier = named(bannerType))
+    val listState: LazyGridState = rememberLazyGridState()
     val adFrequency = 4
-    val dataStore : DataStore = koinInject()
-    val adsEnabled : Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
-    val items : List<AppListItem> = remember(key1 = apps , key2 = adsEnabled) {
+    val dataStore: DataStore = koinInject()
+    val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
+    val items: List<AppListItem> = remember(key1 = apps, key2 = adsEnabled) {
         buildList {
-            apps.forEachIndexed { index : Int , appInfo : AppInfo ->
+            apps.forEachIndexed { index: Int, appInfo: AppInfo ->
                 add(element = AppListItem.App(appInfo = appInfo))
                 if (adsEnabled && (index + 1) % adFrequency == 0) {
                     add(element = AppListItem.Ad)
@@ -57,7 +57,9 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
         }
     }
 
-    val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(gridState = listState , itemCount = items.size)
+    val (visibilityStates: SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(
+        gridState = listState, itemCount = items.size
+    )
 
     Column(
         modifier = Modifier
@@ -67,44 +69,47 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
             .padding(horizontal = SizeConstants.LargeSize)
     ) {
         val appItemsBuffer = mutableListOf<AppListItem.App>()
-        items.forEach { item ->
+        items.forEach { item: AppListItem ->
             when (item) {
                 is AppListItem.Ad -> {
-                    // Render any buffered app items first in a NonLazyGrid
                     if (appItemsBuffer.isNotEmpty()) {
                         NonLazyGrid(
                             columns = columnCount,
                             itemCount = appItemsBuffer.size,
                             modifier = Modifier.fillMaxWidth()
                         ) { index ->
-                            AppCard(appInfo = appItemsBuffer[index].appInfo,  modifier = Modifier
-                                .animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index)
+                            AppCard(
+                                appInfo = appItemsBuffer[index].appInfo,
+                                modifier = Modifier.animateVisibility(
+                                    visible = visibilityStates.getOrElse(index = index) { false },
+                                    index = index
+                                )
                             )
                         }
-                        appItemsBuffer.clear() // Clear buffer after rendering
+                        appItemsBuffer.clear()
                     }
-                    // Then render the full-width Ad
                     AdBanner(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize),
-                        adsConfig = adsConfig
+                            .padding(vertical = SizeConstants.MediumSize), adsConfig = adsConfig
                     )
                 }
+
                 is AppListItem.App -> {
                     appItemsBuffer.add(item)
                 }
             }
         }
-        // Render any remaining app items in the buffer
         if (appItemsBuffer.isNotEmpty()) {
             NonLazyGrid(
                 columns = columnCount,
                 itemCount = appItemsBuffer.size,
                 modifier = Modifier.fillMaxWidth()
-            ) { index ->
-                AppCard(appInfo = appItemsBuffer[index].appInfo,  modifier = Modifier
-                    .animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index)
+            ) { index: Int ->
+                AppCard(
+                    appInfo = appItemsBuffer[index].appInfo, modifier = Modifier.animateVisibility(
+                        visible = visibilityStates.getOrElse(index = index) { false }, index = index
+                    )
                 )
             }
         }
