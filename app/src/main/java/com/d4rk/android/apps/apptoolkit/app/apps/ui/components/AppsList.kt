@@ -1,7 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
@@ -19,6 +20,8 @@ import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForStaticGrid
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import org.koin.compose.koinInject
@@ -50,14 +53,17 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
         }
     }
     val scrollState = rememberScrollState()
-    Column(
+    val visibilityStates : SnapshotStateList<Boolean> = rememberAnimatedVisibilityStateForStaticGrid(itemCount = items.size)
+    FlowRow(
+        maxItemsInEachRow = if (isTabletOrLandscape) 4 else 2,
         modifier = Modifier
             .padding(paddingValues)
             .verticalScroll(scrollState)
             .padding(horizontal = SizeConstants.LargeSize),
+        horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize)
     ) {
-        items.forEach { item : AppListItem ->
+        items.forEachIndexed { index : Int , item : AppListItem ->
             when (item) {
                 is AppListItem.Ad -> {
                     AdBanner(
@@ -68,7 +74,15 @@ fun AppsList(uiHomeScreen : UiHomeScreen , paddingValues : PaddingValues) {
                 }
 
                 is AppListItem.App -> {
-                    AppCard(appInfo = item.appInfo , modifier = Modifier.fillMaxWidth())
+                    AppCard(
+                        appInfo = item.appInfo,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateVisibility(
+                                visible = visibilityStates.getOrElse(index = index) { false },
+                                index = index
+                            )
+                    )
                 }
             }
         }

@@ -90,3 +90,34 @@ fun rememberAnimatedVisibilityStateForGrids(gridState : LazyGridState , itemCoun
 
     return visibilityStates to isFabVisible
 }
+
+@Composable
+fun rememberAnimatedVisibilityStateForStaticGrid(itemCount : Int) : SnapshotStateList<Boolean> {
+    val visibilityStates : SnapshotStateList<Boolean> = remember { mutableStateListOf() }
+    var initialAnimationPlayed : Boolean by remember { mutableStateOf(value = false) }
+
+    LaunchedEffect(key1 = itemCount) {
+        visibilityStates.clear()
+        visibilityStates.addAll(List(size = itemCount) { false })
+    }
+
+    LaunchedEffect(Unit) {
+        (0 until itemCount).forEach { index : Int ->
+            delay(timeMillis = index * 8L)
+            if (index < visibilityStates.size) {
+                visibilityStates[index] = true
+            }
+        }
+        initialAnimationPlayed = true
+    }
+
+    if (initialAnimationPlayed) {
+        visibilityStates.forEachIndexed { index : Int , isVisible : Boolean ->
+            if (! isVisible && index < visibilityStates.size) {
+                visibilityStates[index] = true
+            }
+        }
+    }
+
+    return visibilityStates
+}
