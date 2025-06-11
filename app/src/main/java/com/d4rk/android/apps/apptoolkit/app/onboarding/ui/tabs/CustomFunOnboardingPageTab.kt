@@ -1,12 +1,12 @@
 package com.d4rk.android.apps.apptoolkit.app.onboarding.ui.tabs
 
 import android.content.Intent
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import android.view.SoundEffectConstants
-import android.view.View
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

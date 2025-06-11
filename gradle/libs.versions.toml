@@ -8,6 +8,7 @@ datastorePreferences = "1.1.7"
 firebaseBom = "33.15.0"
 composeBom = "2025.06.00"
 graphicsShapes = "1.0.1"
+integrity = "1.4.0"
 konfettiCompose = "2.0.5"
 lifecycle = "2.9.1"
 kotlinxSerializationJson = "1.8.1"
@@ -50,6 +51,7 @@ androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "mult
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+integrity = { module = "com.google.android.play:integrity", version.ref = "integrity" }
 konfetti-compose = { module = "nl.dionsegijn:konfetti-compose", version.ref = "konfettiCompose" }
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktorBom" }
 ktor-client-android = { module = "io.ktor:ktor-client-android" }

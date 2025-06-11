@@ -26,9 +26,9 @@ import coil3.compose.AsyncImage
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
 fun AppCard(appInfo : AppInfo , modifier : Modifier) {

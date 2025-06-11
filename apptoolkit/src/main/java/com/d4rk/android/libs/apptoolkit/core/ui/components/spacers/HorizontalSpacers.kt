@@ -24,6 +24,11 @@ fun ExtraLargeHorizontalSpacer() {
     Spacer(modifier = Modifier.width(width = SizeConstants.ExtraLargeSize))
 }
 
+@Composable
+fun LargeIncreasedHorizontalSpacer() {
+    Spacer(modifier = Modifier.width(width = SizeConstants.LargeIncreasedSize))
+}
+
 /**
  * Creates a horizontal spacer with large width (16dp).
  */

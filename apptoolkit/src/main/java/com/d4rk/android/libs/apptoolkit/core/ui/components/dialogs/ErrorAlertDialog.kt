@@ -8,9 +8,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 /**
  * Displays an error dialog with a given error message.

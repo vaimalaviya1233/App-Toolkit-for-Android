@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui
 import android.app.Activity
 import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpActions
 import com.d4rk.android.libs.apptoolkit.app.help.domain.events.HelpEvents
+import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.GetFAQsUseCase
 import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.LaunchReviewFlowUseCase
@@ -37,7 +38,10 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
 
     private fun loadHelpData() {
         launch(context = dispatcherProvider.io) {
-            combine(getFAQsUseCase() , requestReviewFlowUseCase()) { faqResult , reviewResult ->
+            combine(
+                flow = getFAQsUseCase(),
+                flow2 = requestReviewFlowUseCase()
+            ) { faqResult: DataState<List<UiHelpQuestion>, Errors>, reviewResult: DataState<ReviewInfo, Errors> ->
                 faqResult to reviewResult
             }.flowOn(context = dispatcherProvider.default).collect { (faqResult , reviewResult) ->
                 when {
@@ -58,7 +62,7 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
     private fun requestReviewFlow() {
         launch(context = dispatcherProvider.io) {
             requestReviewFlowUseCase().collect { result : DataState<ReviewInfo , Errors> ->
-                screenState.applyResult(result) { reviewInfo , current ->
+                screenState.applyResult<ReviewInfo, UiHelpScreen, Errors>(result = result) { reviewInfo: ReviewInfo, current: UiHelpScreen ->
                     current.copy(reviewInfo = reviewInfo)
                 }
             }
@@ -67,7 +71,7 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val re
 
     private fun launchReviewFlow(activity : Activity , reviewInfo : ReviewInfo) {
         launch(context = dispatcherProvider.io) {
-            launchReviewFlowUseCase(activity to reviewInfo).collect {
+            launchReviewFlowUseCase(param = activity to reviewInfo).collect {
                 // Optional: Handle review flow result
             }
         }

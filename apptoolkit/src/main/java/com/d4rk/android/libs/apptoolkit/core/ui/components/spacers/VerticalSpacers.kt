@@ -26,6 +26,14 @@ fun ExtraLargeVerticalSpacer() {
 }
 
 /**
+ * Creates a vertical spacer with large increased height (20dp).
+ */
+@Composable
+fun LargeIncreasedVerticalSpacer() {
+    Spacer(modifier = Modifier.height(height = SizeConstants.LargeIncreasedSize))
+}
+
+/**
  * Creates a vertical spacer with large height (16dp).
  */
 @Composable

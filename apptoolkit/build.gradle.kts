@@ -78,6 +78,7 @@ dependencies {
     api(dependencyNotation = libs.app.update.ktx)
     api(dependencyNotation = libs.billing)
     api(dependencyNotation = libs.review.ktx)
+    api(dependencyNotation = libs.integrity)
 
     // Images
     api(dependencyNotation = libs.coil.compose)
@@ -120,7 +121,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "1.0.25"
+            version = "1.0.26"
 
             afterEvaluate {
                 from(components["release"])
