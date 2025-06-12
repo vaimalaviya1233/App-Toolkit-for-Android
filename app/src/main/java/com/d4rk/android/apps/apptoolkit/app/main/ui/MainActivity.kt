@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
@@ -51,6 +52,18 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.onEvent(event = MainEvent.CheckForUpdates)
         checkUserConsent()
+        lifecycleScope.launch {
+            val sessionCount = dataStore.sessionCount.first()
+            val hasPrompted = dataStore.hasPromptedReview.first()
+            ReviewHelper.launchInAppReviewIfEligible(
+                activity = this@MainActivity,
+                sessionCount = sessionCount,
+                hasPromptedBefore = hasPrompted
+            ) {
+                lifecycleScope.launch { dataStore.setHasPromptedReview(true) }
+            }
+            dataStore.incrementSessionCount()
+        }
     }
 
     private fun initializeDependencies() {
