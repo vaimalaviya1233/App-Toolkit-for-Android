@@ -16,11 +16,11 @@ import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.google.android.gms.ads.MobileAds
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
@@ -34,12 +34,12 @@ import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataStore : DataStore by inject()
-    private lateinit var updateResultLauncher : ActivityResultLauncher<IntentSenderRequest>
-    private lateinit var viewModel : MainViewModel
-    private var keepSplashVisible : Boolean = true
+    private val dataStore: DataStore by inject()
+    private lateinit var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+    private lateinit var viewModel: MainViewModel
+    private var keepSplashVisible: Boolean = true
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition { keepSplashVisible }
@@ -52,9 +52,60 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.onEvent(event = MainEvent.CheckForUpdates)
         checkUserConsent()
+        checkInAppReview()
+    }
+
+    private fun initializeDependencies() {
+        CoroutineScope(context = Dispatchers.IO).launch {
+            MobileAds.initialize(this@MainActivity) {}
+            ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
+        }
+
+        updateResultLauncher =
+            registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
+
+        viewModel = getViewModel { parametersOf(updateResultLauncher) }
+    }
+
+    private fun handleStartup() {
         lifecycleScope.launch {
-            val sessionCount = dataStore.sessionCount.first()
-            val hasPrompted = dataStore.hasPromptedReview.first()
+            val isFirstLaunch: Boolean = dataStore.startup.first()
+            keepSplashVisible = false
+            if (isFirstLaunch) {
+                startStartupActivity()
+            } else {
+                setMainActivityContent()
+            }
+        }
+    }
+
+    private fun startStartupActivity() {
+        IntentsHelper.openActivity(context = this, activityClass = StartupActivity::class.java)
+        finish()
+    }
+
+    private fun setMainActivityContent() {
+        setContent {
+            AppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    MainScreen()
+                }
+            }
+        }
+    }
+
+    private fun checkUserConsent() {
+        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
+        ConsentFormHelper.showConsentFormIfRequired(activity = this, consentInfo = consentInfo)
+    }
+
+    private fun checkInAppReview() {
+        lifecycleScope.launch {
+            val sessionCount: Int = dataStore.sessionCount.first()
+            val hasPrompted: Boolean = dataStore.hasPromptedReview.first()
             ReviewHelper.launchInAppReviewIfEligible(
                 activity = this@MainActivity,
                 sessionCount = sessionCount,
@@ -64,49 +115,5 @@ class MainActivity : AppCompatActivity() {
             }
             dataStore.incrementSessionCount()
         }
-    }
-
-    private fun initializeDependencies() {
-        CoroutineScope(context = Dispatchers.IO).launch {
-            MobileAds.initialize(this@MainActivity) {}
-            ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
-        }
-
-        updateResultLauncher = registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
-
-        viewModel = getViewModel { parametersOf(updateResultLauncher) }
-    }
-
-    private fun handleStartup() {
-        lifecycleScope.launch {
-            val isFirstLaunch : Boolean = dataStore.startup.first()
-            keepSplashVisible = false
-            if (isFirstLaunch) {
-                startStartupActivity()
-            }
-            else {
-                setMainActivityContent()
-            }
-        }
-    }
-
-    private fun startStartupActivity() {
-        IntentsHelper.openActivity(context = this , activityClass = StartupActivity::class.java)
-        finish()
-    }
-
-    private fun setMainActivityContent() {
-        setContent {
-            AppTheme {
-                Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    MainScreen()
-                }
-            }
-        }
-    }
-
-    private fun checkUserConsent() {
-        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        ConsentFormHelper.showConsentFormIfRequired(activity = this , consentInfo = consentInfo)
     }
 }

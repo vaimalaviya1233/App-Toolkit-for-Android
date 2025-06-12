@@ -12,7 +12,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.compose.koinInject
 
 @Composable
 fun AppsListScreen(paddingValues : PaddingValues) {

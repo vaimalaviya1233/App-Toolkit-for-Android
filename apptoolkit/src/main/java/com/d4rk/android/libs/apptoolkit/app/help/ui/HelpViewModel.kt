@@ -8,9 +8,9 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.GetFAQsUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
@@ -36,10 +36,12 @@ class HelpViewModel(private val getFAQsUseCase : GetFAQsUseCase , private val di
                     is DataState.Success -> screenState.successData {
                         copy(questions = ArrayList(faqResult.data))
                     }
-                    is DataState.Error -> screenState.updateState(newValues = ScreenState.Error())
+                    is DataState.Error -> screenState.updateState(newValues = Error())
+                    is DataState.Loading -> {
+                        screenState.setLoading()
+                    }
                 }
             }
         }
     }
-
 }
