@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.UiHelpQuestion
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityState
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 

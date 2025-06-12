@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.help.ui.model
+package com.d4rk.android.libs.apptoolkit.app.help.domain.data.model
 
 /** Simple representation of a FAQ item */
 data class UiHelpQuestion(

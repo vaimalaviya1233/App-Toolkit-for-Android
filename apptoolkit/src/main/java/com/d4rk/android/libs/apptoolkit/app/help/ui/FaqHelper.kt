@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.UiHelpQuestion
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 
 @Composable
 fun rememberFaqList(): List<UiHelpQuestion> {

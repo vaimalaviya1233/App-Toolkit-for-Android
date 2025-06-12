@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
 

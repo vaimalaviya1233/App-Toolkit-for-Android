@@ -25,7 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.VersionInfoAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick

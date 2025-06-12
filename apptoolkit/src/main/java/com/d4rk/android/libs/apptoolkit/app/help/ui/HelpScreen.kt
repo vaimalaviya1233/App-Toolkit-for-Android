@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,8 +30,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.HelpScreenConfig
-import com.d4rk.android.libs.apptoolkit.app.help.ui.model.UiHelpQuestion
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
