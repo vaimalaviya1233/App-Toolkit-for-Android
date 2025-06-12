@@ -47,6 +47,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAp
 import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,12 +69,8 @@ fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpSc
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
         HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , view = view , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
-        AnimatedExtendedFloatingActionButton(visible = screenState.data?.reviewInfo != null , expanded = isFabExtended.value , onClick = {
-            screenState.data?.reviewInfo?.let { reviewInfo ->
-
-                viewModel.onEvent(HelpEvents.LaunchReviewFlow(activity , reviewInfo))
-
-            }
+        AnimatedExtendedFloatingActionButton(visible = true , expanded = isFabExtended.value , onClick = {
+            ReviewHelper.forceLaunchInAppReview(activity = activity)
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
     }) { paddingValues ->
         ScreenStateHandler(screenState = screenState , onLoading = {

@@ -183,4 +183,40 @@ open class CommonDataStore(context : Context) {
             preferences[adsKey] = isChecked
         }
     }
+
+    // App Review
+    private val reviewDoneKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_REVIEW_DONE)
+    val reviewDone : Flow<Boolean> = dataStore.data.map { prefs : Preferences ->
+        prefs[reviewDoneKey] == true
+    }
+
+    suspend fun saveReviewDone(isDone : Boolean) {
+        dataStore.edit { preferences : MutablePreferences ->
+            preferences[reviewDoneKey] = isDone
+        }
+    }
+
+    // Review Prompt
+    private val sessionCountKey = longPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_SESSION_COUNT)
+    val sessionCount : Flow<Int> = dataStore.data.map { prefs : Preferences ->
+        (prefs[sessionCountKey] ?: 0L).toInt()
+    }
+
+    private val reviewPromptedKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_REVIEW_PROMPTED)
+    val hasPromptedReview : Flow<Boolean> = dataStore.data.map { prefs : Preferences ->
+        prefs[reviewPromptedKey] == true
+    }
+
+    suspend fun incrementSessionCount() {
+        dataStore.edit { prefs : MutablePreferences ->
+            val current : Long = prefs[sessionCountKey] ?: 0L
+            prefs[sessionCountKey] = current + 1L
+        }
+    }
+
+    suspend fun setHasPromptedReview(value : Boolean) {
+        dataStore.edit { prefs : MutablePreferences ->
+            prefs[reviewPromptedKey] = value
+        }
+    }
 }

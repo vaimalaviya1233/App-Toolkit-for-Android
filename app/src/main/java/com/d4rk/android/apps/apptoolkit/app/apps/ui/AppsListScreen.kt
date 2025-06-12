@@ -12,11 +12,13 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun AppsListScreen(paddingValues : PaddingValues) {
     val viewModel : AppsListViewModel = koinViewModel()
     val screenState : UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
+    // Content does not trigger in-app review directly; handled in MainActivity
 
     ScreenStateHandler(screenState = screenState , onLoading = {
         HomeLoadingScreen(paddingValues = paddingValues)
