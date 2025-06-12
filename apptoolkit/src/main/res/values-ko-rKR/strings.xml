@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">탐색 창 열기</string>
     <string name="go_back">뒤로 가기</string>
+    <string name="toast_review_already_done">평가 주셔서 감사합니다!</string>
 
     <string name="sort_by">정렬 기준:</string>
     <string name="error">오류</string>

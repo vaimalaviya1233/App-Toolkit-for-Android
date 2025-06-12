@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
     <string name="go_back">Quay lại</string>
+    <string name="toast_review_already_done">Cảm ơn đã đánh giá!</string>
 
     <string name="sort_by">Sắp xếp theo:</string>
     <string name="error">Lỗi</string>

@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="go_back">戻る</string>
+    <string name="toast_review_already_done">評価してくれてありがとう！</string>
 
     <string name="error">エラー</string>
     <string name="sort_by">並び替え:</string>

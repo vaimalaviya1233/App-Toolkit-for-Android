@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">নেভিগেশন ড্রয়ার খুলুন</string>
     <string name="go_back">ফিরে যান</string>
+    <string name="toast_review_already_done">রেটিং জন্য ধন্যবাদ!</string>
 
     <string name="sort_by">সাজান:</string>
     <string name="error">ত্রুটি</string>

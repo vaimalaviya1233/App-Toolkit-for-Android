@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">打開導覽抽屜</string>
     <string name="go_back">返回</string>
+    <string name="toast_review_already_done">感謝您的評分！</string>
 
     <string name="error">錯誤</string>
     <string name="sort_by">排序依據：</string>

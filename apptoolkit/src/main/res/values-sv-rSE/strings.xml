@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
     <string name="go_back">Tillbaka</string>
+    <string name="toast_review_already_done">Tack för betyg!</string>
 
     <string name="error">Fel</string>
     <string name="sort_by">Sortera efter:</string>

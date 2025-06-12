@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">เปิดเมนูนำทาง</string>
     <string name="go_back">กลับ</string>
+    <string name="toast_review_already_done">ขอบคุณสำหรับการให้คะแนน!</string>
 
     <string name="error">ข้อผิดพลาด</string>
     <string name="sort_by">เรียงตาม:</string>

@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Отворете навигационното меню</string>
     <string name="go_back">Назад</string>
+    <string name="toast_review_already_done">Благодаря за оценката!</string>
 
     <string name="error">Грешка</string>
     <string name="sort_by">Сортиране по:</string>

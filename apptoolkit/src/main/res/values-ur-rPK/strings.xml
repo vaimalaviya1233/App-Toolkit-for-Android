@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">نیویگیشن دراز کھولیں</string>
     <string name="go_back">پیچھے جائیں</string>
+    <string name="toast_review_already_done">درجہ بندی کے لئے شکریہ!</string>
 
     <string name="sort_by">ترتیب دیں:</string>
     <string name="error">خرابی</string>

@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Buksan ang navigation drawer</string>
     <string name="go_back">Bumalik</string>
+    <string name="toast_review_already_done">Salamat sa rating!</string>
 
     <string name="sort_by">Pagbukud-bukurin ayon sa:</string>
     <string name="error">Error</string>
