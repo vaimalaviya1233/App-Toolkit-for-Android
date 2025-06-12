@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">فتح قائمة التنقل</string>
     <string name="go_back">العودة</string>
+    <string name="toast_review_already_done">شكرا على التصنيف!</string>
 
     <string name="sort_by">فرز حسب:</string>
     <string name="error">خطأ</string>

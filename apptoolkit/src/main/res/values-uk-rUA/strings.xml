@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Відкрити меню навігації</string>
     <string name="go_back">Повернутися</string>
+    <string name="toast_review_already_done">Дякую за рейтинг!</string>
 
     <string name="error">Помилка</string>
     <string name="sort_by">Сортувати за:</string>

@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Buka menu navigasi</string>
     <string name="go_back">Kembali</string>
+    <string name="toast_review_already_done">Terima kasih atas peringkatnya!</string>
 
     <string name="error">Kesalahan</string>
     <string name="sort_by">Urutkan berdasarkan:</string>

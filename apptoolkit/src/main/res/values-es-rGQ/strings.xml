@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Abrir el menú de navegación</string>
     <string name="go_back">Volver</string>
+    <string name="toast_review_already_done">¡Gracias por la calificación!</string>
 
     <string name="error">Error</string>
     <string name="sort_by">Ordenar por:</string>

@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Deschide meniul de navigare</string>
     <string name="go_back">Înapoi</string>
+    <string name="toast_review_already_done">Mulțumesc pentru evaluare!</string>
 
     <string name="error">Eroare</string>
     <string name="sort_by">Sortează după:</string>

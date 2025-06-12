@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
     <string name="go_back">Geri dön</string>
+    <string name="toast_review_already_done">Derecelendirdiğiniz için teşekkürler!</string>
 
     <string name="error">Hata</string>
     <string name="sort_by">Sırala:</string>
