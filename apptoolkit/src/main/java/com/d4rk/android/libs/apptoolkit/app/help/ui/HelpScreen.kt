@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,17 +31,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.help.domain.events.HelpEvents
-import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.HelpScreenConfig
-import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
+import com.d4rk.android.libs.apptoolkit.app.help.ui.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.help.ui.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
@@ -52,12 +46,12 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpScreenConfig) {
+fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
-    val screenState : UiStateScreen<UiHelpScreen> by viewModel.uiState.collectAsState()
     val context : Context = LocalContext.current
     val view : View = LocalView.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
+    val faqList: List<UiHelpQuestion> = rememberFaqList()
     val htmlData : State<Pair<String? , String?>> = rememberHtmlData(context = context , currentVersionName = config.versionName , packageName = activity.packageName)
     val changelogHtmlString : String? = htmlData.value.first
     val eulaHtmlString : String? = htmlData.value.second
@@ -73,18 +67,12 @@ fun HelpScreen(activity : Activity , viewModel : HelpViewModel , config : HelpSc
             ReviewHelper.forceLaunchInAppReview(activity = activity)
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
     }) { paddingValues ->
-        ScreenStateHandler(screenState = screenState , onLoading = {
-            LoadingScreen()
-        } , onEmpty = {
-            NoDataScreen()
-        } , onSuccess = { helpData ->
-            HelpScreenContent(helpData = helpData , paddingValues = paddingValues , activity = activity , view = view)
-        })
+        HelpScreenContent(questions = faqList , paddingValues = paddingValues , activity = activity , view = view)
     }
 }
 
 @Composable
-fun HelpScreenContent(helpData : UiHelpScreen , paddingValues : PaddingValues , activity : Activity , view : View) {
+fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : Activity , view : View) {
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
@@ -94,7 +82,7 @@ fun HelpScreenContent(helpData : UiHelpScreen , paddingValues : PaddingValues , 
             Text(text = stringResource(id = R.string.popular_help_resources))
             MediumVerticalSpacer()
             Card(modifier = Modifier.fillMaxWidth()) {
-                HelpQuestionsList(questions = helpData.questions)
+                HelpQuestionsList(questions = questions)
             }
             MediumVerticalSpacer()
             ContactUsCard(onClick = {
