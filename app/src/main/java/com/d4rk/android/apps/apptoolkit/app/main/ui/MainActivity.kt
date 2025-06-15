@@ -15,6 +15,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.libs.apptoolkit.notifications.managers.AppUsageNotificationsManager
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.onEvent(event = MainEvent.CheckForUpdates)
+        scheduleAppUsageReminder()
+        updateLastUsedTimestamp()
         checkUserConsent()
         checkInAppReview()
     }
@@ -114,6 +117,18 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch { dataStore.setHasPromptedReview(true) }
             }
             dataStore.incrementSessionCount()
+        }
+    }
+
+    private fun scheduleAppUsageReminder() {
+        AppUsageNotificationsManager(context = this).scheduleAppUsageCheck(
+            notificationSummary = com.d4rk.android.libs.apptoolkit.R.string.default_notification_summary
+        )
+    }
+
+    private fun updateLastUsedTimestamp() {
+        lifecycleScope.launch {
+            dataStore.saveLastUsed(System.currentTimeMillis())
         }
     }
 }
