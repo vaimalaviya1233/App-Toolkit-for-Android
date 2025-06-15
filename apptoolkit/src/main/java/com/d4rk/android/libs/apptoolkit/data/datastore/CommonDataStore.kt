@@ -219,4 +219,16 @@ open class CommonDataStore(context : Context) {
             prefs[reviewPromptedKey] = value
         }
     }
+
+    // Cached Apps List
+    private val cachedAppsKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_CACHED_APPS)
+    val cachedApps: Flow<String?> = dataStore.data.map { prefs: Preferences ->
+        prefs[cachedAppsKey]
+    }
+
+    suspend fun saveCachedApps(json: String) {
+        dataStore.edit { prefs: MutablePreferences ->
+            prefs[cachedAppsKey] = json
+        }
+    }
 }

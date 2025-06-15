@@ -36,6 +36,6 @@ val appModule : Module = module {
 
     single { FetchDeveloperAppsUseCase(client = get()) }
     viewModel {
-        AppsListViewModel(fetchDeveloperAppsUseCase = get() , dispatcherProvider = get())
+        AppsListViewModel(fetchDeveloperAppsUseCase = get() , dispatcherProvider = get() , dataStore = get())
     }
 }

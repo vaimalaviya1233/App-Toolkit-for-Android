@@ -32,5 +32,6 @@ open class DataStoreNamesConstants {
         const val DATA_STORE_REVIEW_DONE = "review_done"
         const val DATA_STORE_SESSION_COUNT = "session_count"
         const val DATA_STORE_REVIEW_PROMPTED = "review_prompted"
+        const val DATA_STORE_CACHED_APPS = "cached_apps"
     }
 }

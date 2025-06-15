@@ -15,6 +15,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivit
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.apps.apptoolkit.app.catalog.ComponentsCatalogActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,8 @@ fun AppNavigationHost(
 
 fun handleNavigationItemClick(context : Context , item : NavigationDrawerItem , drawerState : DrawerState? = null , coroutineScope : CoroutineScope? = null) {
     when (item.title) {
+        com.d4rk.android.libs.apptoolkit.R.string.components_catalog ->
+            IntentsHelper.openActivity(context = context , activityClass = ComponentsCatalogActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.settings -> IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.updates -> IntentsHelper.openUrl(context = context , url = AppLinks.githubChangelog(context.packageName))

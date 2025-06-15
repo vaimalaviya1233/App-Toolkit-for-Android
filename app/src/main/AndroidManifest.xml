@@ -70,6 +70,11 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
+        <activity
+            android:name=".app.catalog.ComponentsCatalogActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"

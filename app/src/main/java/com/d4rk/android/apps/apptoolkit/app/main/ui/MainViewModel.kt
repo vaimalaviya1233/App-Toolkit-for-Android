@@ -5,6 +5,7 @@ import androidx.compose.material.icons.automirrored.outlined.EventNote
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.LibraryBooks
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.UiMainScreen
@@ -51,6 +52,9 @@ class MainViewModel(private val performInAppUpdateUseCase : PerformInAppUpdateUs
             screenState.successData<UiMainScreen> {
                 copy(
                     navigationDrawerItems = listOf(
+                        NavigationDrawerItem(
+                            title = com.d4rk.android.libs.apptoolkit.R.string.components_catalog , selectedIcon = Icons.Outlined.LibraryBooks
+                        ) ,
                         NavigationDrawerItem(
                             title = R.string.settings , selectedIcon = Icons.Outlined.Settings
                         ) , NavigationDrawerItem(
