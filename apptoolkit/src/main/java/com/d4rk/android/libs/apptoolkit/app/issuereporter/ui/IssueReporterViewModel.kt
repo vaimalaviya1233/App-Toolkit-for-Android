@@ -38,6 +38,7 @@ class IssueReporterViewModel(
             is IssueReporterEvent.UpdateTitle -> updateTitle(event.value)
             is IssueReporterEvent.UpdateDescription -> updateDescription(event.value)
             is IssueReporterEvent.UpdateEmail -> updateEmail(event.value)
+            is IssueReporterEvent.SetAnonymous -> setAnonymous(event.anonymous)
             is IssueReporterEvent.Send -> sendReport(event.context)
             IssueReporterEvent.DismissSnackbar -> screenState.dismissSnackbar()
         }
@@ -58,6 +59,12 @@ class IssueReporterViewModel(
     private fun updateEmail(value: String) {
         screenState.updateData(newState = screenState.value.screenState) { current ->
             current.copy(email = value)
+        }
+    }
+
+    private fun setAnonymous(value: Boolean) {
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            current.copy(anonymous = value)
         }
     }
 

@@ -6,5 +6,6 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui
 data class UiIssueReporterScreen(
     val title: String = "",
     val description: String = "",
-    val email: String = ""
+    val email: String = "",
+    val anonymous: Boolean = false
 )

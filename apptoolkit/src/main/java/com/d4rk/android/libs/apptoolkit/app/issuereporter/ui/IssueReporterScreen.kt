@@ -2,11 +2,11 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,14 +17,12 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.Title
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -44,6 +42,9 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui.UiIssu
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -64,26 +65,28 @@ fun IssueReporterScreen(activity : Activity) {
         snackbarHostState = snackbarHostState ,
         scrollBehavior = scrollBehavior ,
         floatingActionButton = {
-            // TODO: Here will be placed the sent button as fab
-            // TODO: The redirect button as well will be plaed on top of the sent button fab as small fab like this:
-
-            /*
-            // TODO: it will be needed a a column like this one (modified of course) to make that
-@Composable
-fun FloatingActionButtonsColumn(mainScreenState : MainScreenState) {
-    Column(horizontalAlignment = Alignment.End) {
-        SmallFloatingActionButton(modifier = Modifier.padding(bottom = SizeConstants.MediumSize) , isVisible = mainScreenState.isFabVisible.value , isExtended = mainScreenState.isFabExtended.value , icon = Icons.Outlined.ImportExport , onClick = {
-            mainScreenState.navController.currentBackStackEntry?.savedStateHandle?.set("toggleImportDialog" , true)
-        })
-
-        AnimatedExtendedFloatingActionButton(visible = mainScreenState.isFabVisible.value , onClick = {
-            mainScreenState.navController.currentBackStackEntry?.savedStateHandle?.set("openNewCartDialog" , true)
-        } , text = { Text(text = stringResource(id = R.string.add_new_cart)) } , icon = { Icon(imageVector = Icons.Outlined.AddShoppingCart , contentDescription = null) } , modifier = Modifier.bounceClick() , expanded = mainScreenState.isFabExtended.value)
-    }
-}
-
-            */
-
+            val context = LocalContext.current
+            Column(horizontalAlignment = Alignment.End) {
+                SmallFloatingActionButton(
+                    modifier = Modifier.padding(bottom = SizeConstants.MediumSize) ,
+                    isVisible = true ,
+                    isExtended = true ,
+                    icon = Icons.Outlined.Link ,
+                    onClick = {
+                        IntentsHelper.openUrl(
+                            context = context ,
+                            url = "https://github.com/${target.username}/${target.repository}/issues"
+                        )
+                    }
+                )
+                AnimatedExtendedFloatingActionButton(
+                    visible = true ,
+                    onClick = { viewModel.onEvent(IssueReporterEvent.Send(context)) } ,
+                    text = { Text(text = stringResource(id = R.string.issue_send)) } ,
+                    icon = { Icon(imageVector = Icons.Outlined.BugReport , contentDescription = null) } ,
+                    expanded = true
+                )
+            }
         }
     ) { paddingValues : PaddingValues ->
         IssueReporterScreenContent(paddingValues = paddingValues , viewModel = viewModel , uiStateScreen = uiStateScreen , target = target)
@@ -110,7 +113,7 @@ fun IssueReporterScreenContent(
 
         Text(text = stringResource(id = R.string.issue_section_label) , style = MaterialTheme.typography.titleMedium)
 
-        Surface(
+        Card(
             tonalElevation = 1.dp , shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -152,38 +155,19 @@ fun IssueReporterScreenContent(
 
         Text(text = stringResource(id = R.string.login_section_label) , style = MaterialTheme.typography.titleMedium)
 
-        Surface(
+        Card(
             tonalElevation = 1.dp , shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier.padding(16.dp) , verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 RadioOption(
-                    selected = ! data.anonymous , text = stringResource(id = R.string.use_github_account) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(false)) }) // FIXME: Unresolved reference 'SetAnonymous'.
+                    selected = ! data.anonymous , text = stringResource(id = R.string.use_github_account) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(false)) })
                 RadioOption(
-                    selected = data.anonymous , text = stringResource(id = R.string.send_anonymously) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(true)) }) // FIXME: Unresolved reference 'anonymous'.
+                    selected = data.anonymous , text = stringResource(id = R.string.send_anonymously) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(true)) })
             }
         }
 
-        Button(
-            onClick = { viewModel.onEvent(IssueReporterEvent.Send(context)) } , modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
-        ) {
-            Icon(Icons.Outlined.BugReport , contentDescription = null , modifier = Modifier.padding(end = 8.dp))
-            Text(stringResource(id = R.string.issue_send))
-        }
-
-        FilledTonalButton(
-            onClick = {
-                IntentsHelper.openUrl(context , "https://github.com/${target.username}/${target.repository}/issues")
-            } , modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
-        ) {
-            Icon(Icons.Outlined.Link , contentDescription = null , modifier = Modifier.padding(end = 8.dp))
-            Text(stringResource(id = R.string.view_on_github))
-        }
     }
 }
 
