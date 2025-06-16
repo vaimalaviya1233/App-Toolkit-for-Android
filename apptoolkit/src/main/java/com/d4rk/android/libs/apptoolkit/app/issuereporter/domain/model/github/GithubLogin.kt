@@ -1,5 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github
 
+@Deprecated(
+    message = "No longer used since the Compose rework of IssueReporter.",
+    level = DeprecationLevel.WARNING
+)
+// TODO: Remove this class once legacy IssueReporter logic is fully deleted.
 class GithubLogin {
     val username: String?
     val password: String?
