@@ -138,8 +138,10 @@
     <string name="snack_report_success">Report sent successfully</string>
     <string name="snack_report_failed">Failed to send report</string>
     <string name="error_invalid_report">Title and description cannot be empty</string>
+    <string name="issue_submitted_successfully">Issue submitted successfully</string>
+    <string name="open_issue_in_browser">Open in browser</string>
+    <string name="open_button_label">Open issue</string>
     <string name="issue_submitted">Your issue was submitted!</string>
-    <string name="copy_url">Copy URL</string>
     <string name="error_unauthorized">Unauthorized: Invalid token</string>
     <string name="error_forbidden">Forbidden: insufficient permissions</string>
     <string name="error_gone">API endpoint removed</string>

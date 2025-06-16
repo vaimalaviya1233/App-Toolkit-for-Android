@@ -11,13 +11,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.BugReport
-import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
@@ -25,6 +27,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -49,7 +53,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo
@@ -61,10 +67,12 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloa
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -113,7 +121,8 @@ fun IssueReporterScreen(activity: Activity) {
                             contentDescription = null
                         )
                     },
-                    expanded = isFabExtended.value)
+                    expanded = isFabExtended.value
+                )
             }
         }) { paddingValues: PaddingValues ->
         IssueReporterScreenContent(
@@ -148,41 +157,50 @@ fun IssueReporterScreenContent(
 
         item {
             if (!data.issueUrl.isNullOrEmpty()) {
-                val context = LocalContext.current
-                Card(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(SizeConstants.MediumSize),
+                            .padding(SizeConstants.LargeSize),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = stringResource(id = R.string.issue_submitted))
+                        Icon(
+                            imageVector = Icons.Outlined.CheckCircleOutline,
+                            contentDescription = stringResource(id = R.string.issue_submitted_successfully),
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(48.dp)
+                        )
+                        SmallVerticalSpacer()
+                        Text(
+                            text = stringResource(id = R.string.issue_submitted),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        SmallVerticalSpacer()
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.End
                         ) {
                             val uriHandler = LocalUriHandler.current
-                            Text(
-                                text = data.issueUrl,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable { uriHandler.openUri(data.issueUrl) },
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            SmallHorizontalSpacer()
-                            SmallFloatingActionButton(
-                                isVisible = true,
-                                isExtended = false, // Keep it compact
-                                icon = Icons.Outlined.ContentCopy,
-                                onClick = {
-                                    ClipboardHelper.copyTextToClipboard(
-                                        context = context,
-                                        label = "Issue URL",
-                                        text = data.issueUrl
-                                    )
-                                }
-                            )
+
+                            TextButton(
+                                onClick = { uriHandler.openUri(data.issueUrl) },
+
+                                modifier = Modifier.bounceClick()
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
+                                    contentDescription = stringResource(R.string.open_issue_in_browser),
+                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
+                                )
+                                ButtonIconSpacer()
+                                Text(stringResource(R.string.open_button_label))
+                            }
                         }
                     }
                 }
@@ -213,7 +231,8 @@ fun IssueReporterScreenContent(
                         leadingIcon = { Icon(Icons.Outlined.Title, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next))
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+                    )
 
                     OutlinedTextField(
                         value = data.description,
@@ -221,7 +240,8 @@ fun IssueReporterScreenContent(
                         label = { Text(stringResource(id = R.string.issue_description_label)) },
                         leadingIcon = { Icon(Icons.Outlined.Info, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
-                        minLines = 4)
+                        minLines = 4
+                    )
 
                     OutlinedTextField(
                         value = data.email,
@@ -231,7 +251,8 @@ fun IssueReporterScreenContent(
                         leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done))
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+                    )
                 }
             }
         }
@@ -248,13 +269,13 @@ fun IssueReporterScreenContent(
                 shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(SizeConstants.MediumSize)
+                    modifier = Modifier.padding(SizeConstants.LargeSize)
                 ) {
-                    // TODO: implement GitHub authentication
+
                     RadioOption(
                         selected = !data.anonymous,
                         text = stringResource(id = R.string.use_github_account),
-                        onClick = { /* Disabled until auth is implemented */ },
+                        onClick = { },
                         enabled = false
                     )
                     RadioOption(
@@ -272,15 +293,22 @@ fun IssueReporterScreenContent(
 
             Card(shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { deviceExpanded = !deviceExpanded }, verticalAlignment = Alignment.CenterVertically) {
+                    LargeHorizontalSpacer()
+                    Row(
+                        modifier = Modifier
+                            .clickable { deviceExpanded = !deviceExpanded }
+                            .fillMaxWidth()
+                            .padding(vertical = SizeConstants.LargeSize),
+                        verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = stringResource(id = R.string.device_info),
                             style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = SizeConstants.LargeSize)
                         )
                         Icon(
+                            modifier = Modifier.padding(end = SizeConstants.LargeSize),
                             imageVector = if (deviceExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
                             contentDescription = stringResource(id = R.string.cd_expand_device_info)
                         )
@@ -309,14 +337,22 @@ fun IssueReporterScreenContent(
 }
 
 @Composable
-private fun RadioOption(selected: Boolean, text: String, onClick: () -> Unit, enabled: Boolean = true) {
+private fun RadioOption(
+    selected: Boolean,
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .let { base ->
                 if (enabled) {
-                    base.bounceClick().clip(CircleShape).clickable(onClick = onClick)
+                    base
+                        .bounceClick()
+                        .clip(CircleShape)
+                        .clickable(onClick = onClick)
                 } else base
             }
     ) {
