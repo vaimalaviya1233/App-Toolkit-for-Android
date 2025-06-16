@@ -9,39 +9,39 @@ class ExtraInfo {
         extraInfo[key] = value
     }
 
-    fun put(key: String, value: Boolean) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Boolean) {
         extraInfo[key] = value.toString()
     }
 
-    fun put(key: String, value: Double) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Double) {
         extraInfo[key] = value.toString()
     }
 
-    fun put(key: String, value: Float) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Float) {
         extraInfo[key] = value.toString()
     }
 
-    fun put(key: String, value: Long) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Long) {
         extraInfo[key] = value.toString()
     }
 
-    fun put(key: String, value: Int) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Int) {
         extraInfo[key] = value.toString()
     }
 
-    fun put(key: String, value: Any?) { // FIXME: Function "put" is never used
+    fun put(key: String, value: Any?) {
         extraInfo[key] = value.toString()
     }
 
-    fun putAll(extraInfo: ExtraInfo) { // FIXME: Function "putAll" is never used
+    fun putAll(extraInfo: ExtraInfo) {
         this.extraInfo.putAll(extraInfo.extraInfo)
     }
 
-    fun remove(key: String) { // FIXME: Function "remove" is never used
+    fun remove(key: String) {
         extraInfo.remove(key)
     }
 
-    fun isEmpty(): Boolean = extraInfo.isEmpty() // FIXME: Function "isEmpty" is never used
+    fun isEmpty(): Boolean = extraInfo.isEmpty()
 
     fun toMarkdown(): String {
         if (extraInfo.isEmpty()) return ""
@@ -62,7 +62,7 @@ class ExtraInfo {
         return output.toString()
     }
 
-    fun toBundle(): Bundle { // FIXME: Function "toBundle" is never used
+    fun toBundle(): Bundle {
         val bundle = Bundle(extraInfo.size)
         for (key in extraInfo.keys) {
             bundle.putString(key, extraInfo[key])
@@ -71,7 +71,7 @@ class ExtraInfo {
     }
 
     companion object {
-        fun fromBundle(bundle: Bundle?): ExtraInfo { // FIXME: Function "fromBundle" is never used
+        fun fromBundle(bundle: Bundle?): ExtraInfo {
             val extraInfo = ExtraInfo()
             if (bundle == null || bundle.isEmpty) return extraInfo
             for (key in bundle.keySet()) {

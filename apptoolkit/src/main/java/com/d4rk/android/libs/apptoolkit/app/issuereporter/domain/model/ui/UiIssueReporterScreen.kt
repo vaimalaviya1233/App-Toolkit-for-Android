@@ -7,5 +7,6 @@ data class UiIssueReporterScreen(
     val title: String = "",
     val description: String = "",
     val email: String = "",
-    val anonymous: Boolean = false
+    val anonymous: Boolean = true,
+    val issueUrl: String? = null
 )
