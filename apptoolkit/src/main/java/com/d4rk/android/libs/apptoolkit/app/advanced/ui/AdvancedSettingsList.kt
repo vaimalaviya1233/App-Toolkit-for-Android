@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.advanced.utils.CleanHelper
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.IssueReporterActivity
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AdvancedSettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
@@ -34,7 +35,7 @@ fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provi
                         .padding(horizontal = SizeConstants.LargeSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
-                SettingsPreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openUrl(context = context , url = provider.bugReportUrl) })
+                SettingsPreferenceItem(title = stringResource(id = R.string.bug_report) , summary = stringResource(id = R.string.summary_preference_settings_bug_report) , onClick = { IntentsHelper.openActivity(context = context , activityClass = IssueReporterActivity::class.java) })
             }
         }
         item {
