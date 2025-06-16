@@ -25,7 +25,7 @@ import io.ktor.client.HttpClient
 
 class IssueReporterViewModel(
     private val dispatcherProvider: DispatcherProvider,
-    private val httpClient: HttpClient
+    httpClient: HttpClient
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
     initialState = UiStateScreen(data = UiIssueReporterScreen())
 ) {
