@@ -35,7 +35,8 @@ import org.koin.core.parameter.parametersOf
 class MainActivity : AppCompatActivity() {
 
     private val dataStore: DataStore by inject()
-    private lateinit var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+    private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
+        registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private lateinit var viewModel: MainViewModel
     private var keepSplashVisible: Boolean = true
 
@@ -46,13 +47,13 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         initializeDependencies()
         handleStartup()
+        checkInAppReview()
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.onEvent(event = MainEvent.CheckForUpdates)
         checkUserConsent()
-        checkInAppReview()
     }
 
     private fun initializeDependencies() {
@@ -60,9 +61,6 @@ class MainActivity : AppCompatActivity() {
             MobileAds.initialize(this@MainActivity) {}
             ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
         }
-
-        updateResultLauncher =
-            registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
 
         viewModel = getViewModel { parametersOf(updateResultLauncher) }
     }
@@ -111,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 sessionCount = sessionCount,
                 hasPromptedBefore = hasPrompted
             ) {
-                lifecycleScope.launch { dataStore.setHasPromptedReview(true) }
+                lifecycleScope.launch { dataStore.setHasPromptedReview(value = true) }
             }
             dataStore.incrementSessionCount()
         }
