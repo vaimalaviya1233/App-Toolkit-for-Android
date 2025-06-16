@@ -120,6 +120,22 @@
 
     <string name="advanced">Erweitert</string>
     <string name="summary_preference_settings_advanced">Erkunden Sie erweiterte Einstellungen</string>
+    <string name="issue_title_label">Titel</string>
+    <string name="issue_description_label">Beschreibung</string>
+    <string name="issue_section_label">Problem</string>
+    <string name="login_section_label">Anmeldung</string>
+    <string name="use_github_account">Über GitHub-Konto senden</string>
+    <string name="send_anonymously">Anonym senden</string>
+    <string name="optional_placeholder">(Optional)</string>
+    <string name="issue_username_label">Benutzername</string>
+    <string name="issue_password_label">Passwort</string>
+    <string name="issue_email_label">E-Mail</string>
+    <string name="issue_send">Senden</string>
+    <string name="cd_expand_device_info">Geräteinformationen ein- oder ausblenden</string>
+    <string name="view_on_github">Zu GitHub weiterleiten</string>
+    <string name="snack_report_success">Bericht erfolgreich gesendet</string>
+    <string name="snack_report_failed">Senden des Berichts fehlgeschlagen</string>
+    <string name="error_invalid_report">Titel und Beschreibung dürfen nicht leer sein</string>
 
     <string name="error_reporting">Fehlerberichte</string>
     <string name="bug_report">Fehlerbericht</string>

@@ -120,6 +120,22 @@
 
     <string name="advanced">Avancé</string>
     <string name="summary_preference_settings_advanced">Explorez des paramètres avancés</string>
+    <string name="issue_title_label">Titre</string>
+    <string name="issue_description_label">Description</string>
+    <string name="issue_section_label">Problème</string>
+    <string name="login_section_label">Connexion</string>
+    <string name="use_github_account">Envoyer avec le compte GitHub</string>
+    <string name="send_anonymously">Envoyer anonymement</string>
+    <string name="optional_placeholder">(Facultatif)</string>
+    <string name="issue_username_label">Nom d'utilisateur</string>
+    <string name="issue_password_label">Mot de passe</string>
+    <string name="issue_email_label">E-mail</string>
+    <string name="issue_send">Envoyer</string>
+    <string name="cd_expand_device_info">Développer ou réduire les informations de l'appareil</string>
+    <string name="view_on_github">Rediriger vers GitHub</string>
+    <string name="snack_report_success">Rapport envoyé avec succès</string>
+    <string name="snack_report_failed">Échec de l'envoi du rapport</string>
+    <string name="error_invalid_report">Le titre et la description ne peuvent pas être vides</string>
 
     <string name="error_reporting">Rapport d\'erreurs</string>
     <string name="bug_report">Rapport de bug</string>

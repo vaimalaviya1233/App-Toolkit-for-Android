@@ -120,6 +120,22 @@
 
     <string name="advanced">詳細設定</string>
     <string name="summary_preference_settings_advanced">さらに高度な設定を探索する</string>
+    <string name="issue_title_label">タイトル</string>
+    <string name="issue_description_label">説明</string>
+    <string name="issue_section_label">問題</string>
+    <string name="login_section_label">ログイン</string>
+    <string name="use_github_account">GitHubアカウントで送信</string>
+    <string name="send_anonymously">匿名で送信</string>
+    <string name="optional_placeholder">(任意)</string>
+    <string name="issue_username_label">ユーザー名</string>
+    <string name="issue_password_label">パスワード</string>
+    <string name="issue_email_label">メール</string>
+    <string name="issue_send">送信</string>
+    <string name="cd_expand_device_info">デバイス情報を展開/折りたたむ</string>
+    <string name="view_on_github">GitHubにリダイレクト</string>
+    <string name="snack_report_success">レポートが送信されました</string>
+    <string name="snack_report_failed">レポートの送信に失敗しました</string>
+    <string name="error_invalid_report">タイトルと説明は空にできません</string>
 
     <string name="error_reporting">エラー報告</string>
     <string name="bug_report">バグ報告</string>

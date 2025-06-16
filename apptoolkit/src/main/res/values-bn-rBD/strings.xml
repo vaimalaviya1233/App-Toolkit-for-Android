@@ -120,6 +120,22 @@
 
     <string name="advanced">অ্যাডভান্সড</string>
     <string name="summary_preference_settings_advanced">আরও অ্যাডভান্সড সেটিংস অন্বেষণ করুন</string>
+    <string name="issue_title_label">শিরোনাম</string>
+    <string name="issue_description_label">বর্ণনা</string>
+    <string name="issue_section_label">সমস্যা</string>
+    <string name="login_section_label">লগইন</string>
+    <string name="use_github_account">GitHub অ্যাকাউন্ট ব্যবহার করে পাঠান</string>
+    <string name="send_anonymously">গোপনভাবে পাঠান</string>
+    <string name="optional_placeholder">(ঐচ্ছিক)</string>
+    <string name="issue_username_label">ব্যবহারকারীর নাম</string>
+    <string name="issue_password_label">পাসওয়ার্ড</string>
+    <string name="issue_email_label">ইমেল</string>
+    <string name="issue_send">পাঠান</string>
+    <string name="cd_expand_device_info">ডিভাইসের তথ্য প্রসারিত বা সংকুচিত করুন</string>
+    <string name="view_on_github">GitHub-এ পুনঃনির্দেশ করুন</string>
+    <string name="snack_report_success">রিপোর্ট সফলভাবে পাঠানো হয়েছে</string>
+    <string name="snack_report_failed">রিপোর্ট পাঠাতে ব্যর্থ হয়েছে</string>
+    <string name="error_invalid_report">শিরোনাম ও বর্ণনা খালি হতে পারে না</string>
 
     <string name="error_reporting">ত্রুটি প্রতিবেদন</string>
     <string name="bug_report">বাগ রিপোর্ট</string>

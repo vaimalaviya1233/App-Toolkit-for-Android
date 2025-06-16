@@ -120,6 +120,22 @@
 
     <string name="advanced">Avansat</string>
     <string name="summary_preference_settings_advanced">Explorează mai multe setări avansate</string>
+    <string name="issue_title_label">Titlu</string>
+    <string name="issue_description_label">Descriere</string>
+    <string name="issue_section_label">Problemă</string>
+    <string name="login_section_label">Autentificare</string>
+    <string name="use_github_account">Trimite folosind contul GitHub</string>
+    <string name="send_anonymously">Trimite anonim</string>
+    <string name="optional_placeholder">(Opțional)</string>
+    <string name="issue_username_label">Nume de utilizator</string>
+    <string name="issue_password_label">Parolă</string>
+    <string name="issue_email_label">Email</string>
+    <string name="issue_send">Trimite</string>
+    <string name="cd_expand_device_info">Extinde sau restrânge informațiile dispozitivului</string>
+    <string name="view_on_github">Redirecționează către GitHub</string>
+    <string name="snack_report_success">Raport trimis cu succes</string>
+    <string name="snack_report_failed">Trimiterea raportului a eșuat</string>
+    <string name="error_invalid_report">Titlul și descrierea nu pot fi goale</string>
 
     <string name="error_reporting">Raportare erori</string>
     <string name="bug_report">Raportare bug</string>

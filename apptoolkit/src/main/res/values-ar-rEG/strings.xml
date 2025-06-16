@@ -120,6 +120,22 @@
 
     <string name="advanced">متقدم</string>
     <string name="summary_preference_settings_advanced">استكشف المزيد من الإعدادات المتقدمة</string>
+    <string name="issue_title_label">العنوان</string>
+    <string name="issue_description_label">الوصف</string>
+    <string name="issue_section_label">المشكلة</string>
+    <string name="login_section_label">تسجيل الدخول</string>
+    <string name="use_github_account">أرسل باستخدام حساب GitHub</string>
+    <string name="send_anonymously">أرسل مجهولاً</string>
+    <string name="optional_placeholder">(اختياري)</string>
+    <string name="issue_username_label">اسم المستخدم</string>
+    <string name="issue_password_label">كلمة المرور</string>
+    <string name="issue_email_label">البريد الإلكتروني</string>
+    <string name="issue_send">إرسال</string>
+    <string name="cd_expand_device_info">توسيع أو طي معلومات الجهاز</string>
+    <string name="view_on_github">إعادة التوجيه إلى GitHub</string>
+    <string name="snack_report_success">تم إرسال التقرير بنجاح</string>
+    <string name="snack_report_failed">فشل في إرسال التقرير</string>
+    <string name="error_invalid_report">لا يمكن أن يكون العنوان والوصف فارغين</string>
 
     <string name="error_reporting">الإبلاغ عن الأخطاء</string>
     <string name="bug_report">تقرير خطأ</string>

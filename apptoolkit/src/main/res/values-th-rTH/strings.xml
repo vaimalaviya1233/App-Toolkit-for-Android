@@ -120,6 +120,22 @@
 
     <string name="advanced">ขั้นสูง</string>
     <string name="summary_preference_settings_advanced">สำรวจการตั้งค่าขั้นสูงเพิ่มเติม</string>
+    <string name="issue_title_label">ชื่อเรื่อง</string>
+    <string name="issue_description_label">คำอธิบาย</string>
+    <string name="issue_section_label">ปัญหา</string>
+    <string name="login_section_label">เข้าสู่ระบบ</string>
+    <string name="use_github_account">ส่งโดยใช้บัญชี GitHub</string>
+    <string name="send_anonymously">ส่งแบบไม่ระบุตัวตน</string>
+    <string name="optional_placeholder">(ไม่บังคับ)</string>
+    <string name="issue_username_label">ชื่อผู้ใช้</string>
+    <string name="issue_password_label">รหัสผ่าน</string>
+    <string name="issue_email_label">อีเมล</string>
+    <string name="issue_send">ส่ง</string>
+    <string name="cd_expand_device_info">ขยายหรือลดข้อมูลอุปกรณ์</string>
+    <string name="view_on_github">เปลี่ยนเส้นทางไปยัง GitHub</string>
+    <string name="snack_report_success">ส่งรายงานสำเร็จ</string>
+    <string name="snack_report_failed">ส่งรายงานไม่สำเร็จ</string>
+    <string name="error_invalid_report">หัวเรื่องและคำอธิบายต้องไม่ว่างเปล่า</string>
 
     <string name="error_reporting">การรายงานข้อผิดพลาด</string>
     <string name="bug_report">รายงานข้อผิดพลาด</string>
