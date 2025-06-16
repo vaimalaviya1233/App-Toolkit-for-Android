@@ -112,7 +112,7 @@ dependencies {
     api(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
 
     // About
-    api(dependencyNotation = libs.aboutlibraries)
+    api(dependencyNotation = libs.aboutlibraries.compose.m3)
     api(dependencyNotation = libs.core)
 }
 

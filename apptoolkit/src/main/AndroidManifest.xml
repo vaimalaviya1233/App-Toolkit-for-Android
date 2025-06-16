@@ -49,6 +49,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".app.licenses.LicensesActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".app.support.ui.SupportActivity"
             android:exported="true" />
 

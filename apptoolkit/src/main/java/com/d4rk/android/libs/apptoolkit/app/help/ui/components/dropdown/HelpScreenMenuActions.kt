@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.VersionInfoAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
@@ -34,7 +35,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
 fun HelpScreenMenuActions(
-    context : Context , activity : Activity , showDialog : MutableState<Boolean> , eulaHtmlString : String? , changelogHtmlString : String? , view : View , config : HelpScreenConfig
+    context : Context , activity : Activity , showDialog : MutableState<Boolean> , view : View , config : HelpScreenConfig
 ) {
     var showMenu : Boolean by remember { mutableStateOf(value = false) }
 
@@ -66,9 +67,7 @@ fun HelpScreenMenuActions(
         })
         DropdownMenuItem(modifier = Modifier.bounceClick() , text = { Text(text = stringResource(id = R.string.oss_license_title)) } , leadingIcon = { Icon(Icons.Outlined.Balance , contentDescription = null) } , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
-            IntentsHelper.openLicensesScreen(
-                context = context , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , appName = context.getString(R.string.app_name) , appVersion = config.versionName , appVersionCode = config.versionCode , appShortDescription = R.string.app_short_description
-            )
+            IntentsHelper.openActivity(context = context, activityClass = LicensesActivity::class.java)
         })
     }
 
