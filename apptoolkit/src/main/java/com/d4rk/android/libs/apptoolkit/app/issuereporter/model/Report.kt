@@ -1,13 +1,12 @@
-package com.heinrichreimersoftware.androidissuereporter.model
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.model
 
-import android.text.TextUtils
-import com.heinrichreimersoftware.androidissuereporter.model.github.ExtraInfo
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github.ExtraInfo
 
 class Report(
-    val title: String,
-    private val description: String,
-    private val deviceInfo: DeviceInfo,
-    private val extraInfo: ExtraInfo,
+    val title: String ,
+    private val description: String ,
+    private val deviceInfo: DeviceInfo ,
+    private val extraInfo: ExtraInfo ,
     private val email: String?
 ) {
     fun getDescription(): String {

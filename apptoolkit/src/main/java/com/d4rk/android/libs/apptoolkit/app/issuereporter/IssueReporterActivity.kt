@@ -1,11 +1,11 @@
-package com.heinrichreimersoftware.androidissuereporter
+package com.d4rk.android.libs.apptoolkit.app.issuereporter
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -15,18 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.d4rk.android.libs.apptoolkit.R
 
-class IssueReporterActivity : ComponentActivity() {
+open class IssueReporterActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val extras = intent.extras
-
         setContent {
             IssueReporterScreen()
         }
@@ -44,8 +40,7 @@ fun IssueReporterScreen() {
 
     Scaffold { padding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8f)
+            modifier = Modifier.fillMaxSize().padding(padding),
         ) {
             TextField(value = title.value, onValueChange = { title.value = it }, label = { Text(stringResource(id = R.string.issue_title_label)) })
             TextField(value = description.value, onValueChange = { description.value = it }, label = { Text(stringResource(id = R.string.issue_description_label)) })
@@ -57,10 +52,4 @@ fun IssueReporterScreen() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun PreviewIssueReporter() {
-    IssueReporterScreen()
 }

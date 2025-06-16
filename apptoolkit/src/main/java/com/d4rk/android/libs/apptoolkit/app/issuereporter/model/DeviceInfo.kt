@@ -1,4 +1,4 @@
-package com.heinrichreimersoftware.androidissuereporter.model
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.model
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,25 +21,13 @@ class DeviceInfo(context: Context) {
 
     @SuppressLint("NewApi")
     @Suppress("DEPRECATION")
-    private val abis: Array<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        Build.SUPPORTED_ABIS
-    } else {
-        arrayOf(Build.CPU_ABI, Build.CPU_ABI2)
-    }
+    private val abis: Array<String> = Build.SUPPORTED_ABIS
 
     @SuppressLint("NewApi")
-    private val abis32Bits: Array<String>? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        Build.SUPPORTED_32_BIT_ABIS
-    } else {
-        null
-    }
+    private val abis32Bits: Array<String>? = Build.SUPPORTED_32_BIT_ABIS
 
     @SuppressLint("NewApi")
-    private val abis64Bits: Array<String>? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        Build.SUPPORTED_64_BIT_ABIS
-    } else {
-        null
-    }
+    private val abis64Bits: Array<String>? = Build.SUPPORTED_64_BIT_ABIS
 
     init {
         val packageInfo = try {

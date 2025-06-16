@@ -1,4 +1,4 @@
-package com.heinrichreimersoftware.androidissuereporter.model.github
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github
 
 import android.os.Bundle
 
