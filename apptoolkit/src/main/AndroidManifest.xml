@@ -56,6 +56,11 @@
             android:name=".app.support.ui.SupportActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".app.issuereporter.IssueReporterActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
