@@ -136,6 +136,14 @@
     <string name="snack_report_success">レポートが送信されました</string>
     <string name="snack_report_failed">レポートの送信に失敗しました</string>
     <string name="error_invalid_report">タイトルと説明は空にできません</string>
+    <string name="issue_submitted_successfully">問題が正常に提出されました</string>
+    <string name="open_issue_in_browser">ブラウザで開きます</string>
+    <string name="open_button_label">開かれた問題</string>
+    <string name="issue_submitted">あなたの問題が提出されました！</string>
+    <string name="error_unauthorized">不正：無効なトークン</string>
+    <string name="error_forbidden">禁止：不十分な権限</string>
+    <string name="error_gone">APIエンドポイントが削除されました</string>
+    <string name="error_unprocessable">問題作成のための無効なデータ</string>
 
     <string name="error_reporting">エラー報告</string>
     <string name="bug_report">バグ報告</string>

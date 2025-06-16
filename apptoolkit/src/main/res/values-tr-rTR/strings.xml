@@ -136,6 +136,14 @@
     <string name="snack_report_success">Rapor başarıyla gönderildi</string>
     <string name="snack_report_failed">Rapor gönderilemedi</string>
     <string name="error_invalid_report">Başlık ve açıklama boş olamaz</string>
+    <string name="issue_submitted_successfully">Başarılı bir şekilde gönderilen sorun</string>
+    <string name="open_issue_in_browser">Tarayıcıda açın</string>
+    <string name="open_button_label">Açık sorun</string>
+    <string name="issue_submitted">Sorununuz gönderildi!</string>
+    <string name="error_unauthorized">Yetkisiz: Geçersiz jeton</string>
+    <string name="error_forbidden">Yasak: Yetersiz izinler</string>
+    <string name="error_gone">API uç noktası kaldırıldı</string>
+    <string name="error_unprocessable">Sorun oluşturma için geçersiz veriler</string>
 
     <string name="error_reporting">Hata raporlama</string>
     <string name="bug_report">Hata raporu</string>

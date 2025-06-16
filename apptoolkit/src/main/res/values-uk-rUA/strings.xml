@@ -136,6 +136,14 @@
     <string name="snack_report_success">Звіт успішно надіслано</string>
     <string name="snack_report_failed">Не вдалося надіслати звіт</string>
     <string name="error_invalid_report">Заголовок і опис не можуть бути порожніми</string>
+    <string name="issue_submitted_successfully">Проблема подано успішно</string>
+    <string name="open_issue_in_browser">Відкрито в браузері</string>
+    <string name="open_button_label">Відкритий випуск</string>
+    <string name="issue_submitted">Ваше питання було подано!</string>
+    <string name="error_unauthorized">Несанкціонований: Недійсний маркер</string>
+    <string name="error_forbidden">Заборонено: недостатньо дозволів</string>
+    <string name="error_gone">Кінцева точка API видалена</string>
+    <string name="error_unprocessable">Недійсні дані для створення випусків</string>
 
     <string name="error_reporting">Звіт про помилки</string>
     <string name="bug_report">Звіт про помилку</string>

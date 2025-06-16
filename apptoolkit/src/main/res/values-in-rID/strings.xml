@@ -136,6 +136,14 @@
     <string name="snack_report_success">Laporan berhasil dikirim</string>
     <string name="snack_report_failed">Gagal mengirim laporan</string>
     <string name="error_invalid_report">Judul dan deskripsi tidak boleh kosong</string>
+    <string name="issue_submitted_successfully">Masalah yang berhasil diserahkan</string>
+    <string name="open_issue_in_browser">Buka di browser</string>
+    <string name="open_button_label">Masalah terbuka</string>
+    <string name="issue_submitted">Masalah Anda telah diajukan!</string>
+    <string name="error_unauthorized">Tidak sah: token tidak valid</string>
+    <string name="error_forbidden">Terlarang: Izin yang tidak mencukupi</string>
+    <string name="error_gone">Titik akhir API dihapus</string>
+    <string name="error_unprocessable">Data tidak valid untuk pembuatan masalah</string>
 
     <string name="error_reporting">Pelaporan kesalahan</string>
     <string name="bug_report">Laporan bug</string>

@@ -136,6 +136,14 @@
     <string name="snack_report_success">Отчет успешно отправлен</string>
     <string name="snack_report_failed">Не удалось отправить отчет</string>
     <string name="error_invalid_report">Заголовок и описание не могут быть пустыми</string>
+    <string name="issue_submitted_successfully">Выпуск успешно</string>
+    <string name="open_issue_in_browser">Открыт в браузере</string>
+    <string name="open_button_label">Открытая проблема</string>
+    <string name="issue_submitted">Ваша проблема была отправлена!</string>
+    <string name="error_unauthorized">Несанкционированный: недействительный токен</string>
+    <string name="error_forbidden">Запрещено: недостаточные разрешения</string>
+    <string name="error_gone">Конечная точка API удалена</string>
+    <string name="error_unprocessable">Неверные данные для создания выпуска</string>
 
     <string name="error_reporting">Отчёт об ошибках</string>
     <string name="bug_report">Отчёт о баге</string>

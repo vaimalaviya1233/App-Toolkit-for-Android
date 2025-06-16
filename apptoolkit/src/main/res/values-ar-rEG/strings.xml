@@ -136,6 +136,14 @@
     <string name="snack_report_success">تم إرسال التقرير بنجاح</string>
     <string name="snack_report_failed">فشل في إرسال التقرير</string>
     <string name="error_invalid_report">لا يمكن أن يكون العنوان والوصف فارغين</string>
+    <string name="issue_submitted_successfully">تم تقديم القضية بنجاح</string>
+    <string name="open_issue_in_browser">مفتوح في المتصفح</string>
+    <string name="open_button_label">قضية مفتوحة</string>
+    <string name="issue_submitted">تم تقديم مشكلتك!</string>
+    <string name="error_unauthorized">غير مصرح به: رمز غير صالح</string>
+    <string name="error_forbidden">ممنوع: أذونات غير كافية</string>
+    <string name="error_gone">أزياء نقطة نهاية API</string>
+    <string name="error_unprocessable">بيانات غير صالحة لإنشاء المشكلات</string>
 
     <string name="error_reporting">الإبلاغ عن الأخطاء</string>
     <string name="bug_report">تقرير خطأ</string>

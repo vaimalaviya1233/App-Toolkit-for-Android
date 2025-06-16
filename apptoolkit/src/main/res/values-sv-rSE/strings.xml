@@ -136,6 +136,14 @@
     <string name="snack_report_success">Rapporten skickades</string>
     <string name="snack_report_failed">Det gick inte att skicka rapporten</string>
     <string name="error_invalid_report">Titel och beskrivning får inte vara tomma</string>
+    <string name="issue_submitted_successfully">Utfärdas framgångsrikt</string>
+    <string name="open_issue_in_browser">Öppet i webbläsaren</string>
+    <string name="open_button_label">Öppen fråga</string>
+    <string name="issue_submitted">Ditt problem lämnades in!</string>
+    <string name="error_unauthorized">Obehörig: Ogiltig token</string>
+    <string name="error_forbidden">Förbjudet: Otillräckliga behörigheter</string>
+    <string name="error_gone">API -slutpunkten borttagen</string>
+    <string name="error_unprocessable">Ogiltiga data för skapande av problem</string>
 
     <string name="error_reporting">Felrapportering</string>
     <string name="bug_report">Felrapport</string>

@@ -136,6 +136,14 @@
     <string name="snack_report_success">ส่งรายงานสำเร็จ</string>
     <string name="snack_report_failed">ส่งรายงานไม่สำเร็จ</string>
     <string name="error_invalid_report">หัวเรื่องและคำอธิบายต้องไม่ว่างเปล่า</string>
+    <string name="issue_submitted_successfully">ปัญหาส่งสำเร็จ</string>
+    <string name="open_issue_in_browser">เปิดในเบราว์เซอร์</string>
+    <string name="open_button_label">ปัญหาเปิด</string>
+    <string name="issue_submitted">ปัญหาของคุณถูกส่ง!</string>
+    <string name="error_unauthorized">ไม่ได้รับอนุญาต: โทเค็นไม่ถูกต้อง</string>
+    <string name="error_forbidden">ต้องห้าม: การอนุญาตไม่เพียงพอ</string>
+    <string name="error_gone">ลบจุดสิ้นสุด API</string>
+    <string name="error_unprocessable">ข้อมูลที่ไม่ถูกต้องสำหรับการสร้างปัญหา</string>
 
     <string name="error_reporting">การรายงานข้อผิดพลาด</string>
     <string name="bug_report">รายงานข้อผิดพลาด</string>

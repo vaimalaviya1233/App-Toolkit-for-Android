@@ -136,6 +136,14 @@
     <string name="snack_report_success">Báo cáo đã được gửi thành công</string>
     <string name="snack_report_failed">Gửi báo cáo thất bại</string>
     <string name="error_invalid_report">Tiêu đề và mô tả không được để trống</string>
+    <string name="issue_submitted_successfully">Vấn đề được gửi thành công</string>
+    <string name="open_issue_in_browser">Mở trong trình duyệt</string>
+    <string name="open_button_label">Vấn đề mở</string>
+    <string name="issue_submitted">Vấn đề của bạn đã được gửi!</string>
+    <string name="error_unauthorized">Nhập học: Mã thông báo không hợp lệ</string>
+    <string name="error_forbidden">Cấm: Không đủ quyền</string>
+    <string name="error_gone">Đã xóa điểm cuối API</string>
+    <string name="error_unprocessable">Dữ liệu không hợp lệ để tạo ra vấn đề</string>
 
     <string name="error_reporting">Báo cáo lỗi</string>
     <string name="bug_report">Báo cáo lỗi</string>

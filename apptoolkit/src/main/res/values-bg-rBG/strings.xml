@@ -136,6 +136,14 @@
     <string name="snack_report_success">Докладът е изпратен успешно</string>
     <string name="snack_report_failed">Неуспешно изпращане на доклада</string>
     <string name="error_invalid_report">Заглавието и описанието не могат да бъдат празни</string>
+    <string name="issue_submitted_successfully">Емисия, изпратена успешно</string>
+    <string name="open_issue_in_browser">Отворен в браузъра</string>
+    <string name="open_button_label">Отворен брой</string>
+    <string name="issue_submitted">Проблемът ви беше изпратен!</string>
+    <string name="error_unauthorized">Неправомерен: Невалиден жетон</string>
+    <string name="error_forbidden">Забранено: Недостатъчни разрешения</string>
+    <string name="error_gone">API крайната точка е отстранена</string>
+    <string name="error_unprocessable">Невалидни данни за създаване на издания</string>
 
     <string name="error_reporting">Докладване на грешки</string>
     <string name="bug_report">Доклад за грешка</string>

@@ -136,6 +136,14 @@
     <string name="snack_report_success">رپورٹ کامیابی سے بھیج دی گئی</string>
     <string name="snack_report_failed">رپورٹ بھیجنے میں ناکام</string>
     <string name="error_invalid_report">عنوان اور تفصیل خالی نہیں ہوسکتے</string>
+    <string name="issue_submitted_successfully">مسئلہ کامیابی کے ساتھ جمع کرایا گیا</string>
+    <string name="open_issue_in_browser">براؤزر میں کھلا</string>
+    <string name="open_button_label">کھلا مسئلہ</string>
+    <string name="issue_submitted">آپ کا مسئلہ پیش کیا گیا تھا!</string>
+    <string name="error_unauthorized">غیر مجاز: غلط ٹوکن</string>
+    <string name="error_forbidden">ممنوع: ناکافی اجازتیں</string>
+    <string name="error_gone">API اختتامی نقطہ ہٹا دیا گیا</string>
+    <string name="error_unprocessable">جاری کرنے کے لئے غلط ڈیٹا</string>
 
     <string name="error_reporting">خرابی کی اطلاع دینا</string>
     <string name="bug_report">بگ رپورٹ</string>

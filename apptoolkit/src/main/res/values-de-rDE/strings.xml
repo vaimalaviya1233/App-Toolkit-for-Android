@@ -136,6 +136,14 @@
     <string name="snack_report_success">Bericht erfolgreich gesendet</string>
     <string name="snack_report_failed">Senden des Berichts fehlgeschlagen</string>
     <string name="error_invalid_report">Titel und Beschreibung dürfen nicht leer sein</string>
+    <string name="issue_submitted_successfully">Ausgabe erfolgreich eingereicht</string>
+    <string name="open_issue_in_browser">Im Browser geöffnet</string>
+    <string name="open_button_label">Offene Ausgabe</string>
+    <string name="issue_submitted">Ihr Problem wurde eingereicht!</string>
+    <string name="error_unauthorized">Nicht autorisiert: Ungültiges Token</string>
+    <string name="error_forbidden">Verboten: unzureichende Berechtigungen</string>
+    <string name="error_gone">API -Endpunkt entfernt</string>
+    <string name="error_unprocessable">Ungültige Daten zur Erstellung von Problemen</string>
 
     <string name="error_reporting">Fehlerberichte</string>
     <string name="bug_report">Fehlerbericht</string>

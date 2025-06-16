@@ -136,6 +136,14 @@
     <string name="snack_report_success">Zgłoszenie wysłane pomyślnie</string>
     <string name="snack_report_failed">Nie udało się wysłać zgłoszenia</string>
     <string name="error_invalid_report">Tytuł i opis nie mogą być puste</string>
+    <string name="issue_submitted_successfully">Problem złożony pomyślnie</string>
+    <string name="open_issue_in_browser">Otwarte w przeglądarce</string>
+    <string name="open_button_label">Problem otwarty</string>
+    <string name="issue_submitted">Twój problem został przesłany!</string>
+    <string name="error_unauthorized">Nieautoryzowany: Nieprawidłowy token</string>
+    <string name="error_forbidden">Zakazane: niewystarczające uprawnienia</string>
+    <string name="error_gone">Usunięty punkt końcowy API</string>
+    <string name="error_unprocessable">Nieprawidłowe dane dotyczące tworzenia problemów</string>
 
     <string name="error_reporting">Zgłaszanie błędów</string>
     <string name="bug_report">Raport o błędzie</string>
