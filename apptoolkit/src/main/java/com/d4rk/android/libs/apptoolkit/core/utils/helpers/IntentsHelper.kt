@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
-import com.mikepenz.aboutlibraries.LibsBuilder
+import com.d4rk.android.libs.apptoolkit.app.about.ui.LicensesActivity
 import java.net.URLEncoder
 
 /**
@@ -186,18 +186,22 @@ object IntentsHelper {
      * @see LibsBuilder for more details about the underlying library.
      */
     fun openLicensesScreen(
-        context : Context , eulaHtmlString : String? , changelogHtmlString : String? , appName : String , appVersion : String , appVersionCode : Int , appShortDescription : Int
+        context: Context,
+        eulaHtmlString: String?,
+        changelogHtmlString: String?,
+        appName: String,
+        appVersion: String,
+        appVersionCode: Int,
+        appShortDescription: Int,
     ) {
-        LibsBuilder().withActivityTitle(
-            activityTitle = context.getString(R.string.oss_license_title)
-        ).withEdgeToEdge(asEdgeToEdge = true).withShowLoadingProgress(showLoadingProgress = true).withSearchEnabled(searchEnabled = true).withAboutIconShown(aboutShowIcon = true).withAboutAppName(aboutAppName = appName).withVersionShown(showVersion = true)
-                .withAboutVersionString(aboutVersionString = "$appVersion ($appVersionCode)").withLicenseShown(showLicense = true).withAboutVersionShown(aboutShowVersion = true).withAboutVersionShownName(aboutShowVersion = true).withAboutVersionShownCode(aboutShowVersion = true)
-                .withAboutSpecial1(aboutAppSpecial1 = context.getString(R.string.eula_title)).withAboutSpecial1Description(
-                    aboutAppSpecial1Description = eulaHtmlString ?: context.getString(R.string.loading_eula_message)
-                ).withAboutSpecial2(aboutAppSpecial2 = context.getString(R.string.changelog_title)).withAboutSpecial2Description(
-                    aboutAppSpecial2Description = changelogHtmlString ?: context.getString(
-                        R.string.loading_changelog_message
-                    )
-                ).withAboutDescription(aboutDescription = context.getString(appShortDescription)).activity(ctx = context)
+        Intent(context, LicensesActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            putExtra("eula", eulaHtmlString)
+            putExtra("changelog", changelogHtmlString)
+            putExtra("appName", appName)
+            putExtra("appVersion", appVersion)
+            putExtra("appVersionCode", appVersionCode)
+            putExtra("appShortDesc", appShortDescription)
+        }.let(context::startActivity)
     }
 }
