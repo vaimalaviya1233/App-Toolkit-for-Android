@@ -160,7 +160,7 @@ fun IssueReporterScreenContent(
             shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize)
+                modifier = Modifier.padding(SizeConstants.MediumSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize)
             ) {
                 RadioOption(
                     selected = ! data.anonymous , text = stringResource(id = R.string.use_github_account) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(false)) })

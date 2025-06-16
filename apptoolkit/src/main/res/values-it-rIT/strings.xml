@@ -124,7 +124,7 @@
     <string name="issue_description_label">Descrizione</string>
     <string name="issue_section_label">Problema</string>
     <string name="login_section_label">Accesso</string>
-    <string name="use_github_account">Invia con l'account GitHub</string>
+    <string name="use_github_account">Invia con l\'account GitHub</string>
     <string name="send_anonymously">Invia in modo anonimo</string>
     <string name="optional_placeholder">(Opzionale)</string>
     <string name="issue_username_label">Nome utente</string>

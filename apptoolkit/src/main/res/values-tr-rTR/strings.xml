@@ -132,7 +132,7 @@
     <string name="issue_email_label">E-posta</string>
     <string name="issue_send">Gönder</string>
     <string name="cd_expand_device_info">Cihaz bilgisini genişlet veya daralt</string>
-    <string name="view_on_github">GitHub'a yönlendir</string>
+    <string name="view_on_github">GitHub\'a yönlendir</string>
     <string name="snack_report_success">Rapor başarıyla gönderildi</string>
     <string name="snack_report_failed">Rapor gönderilemedi</string>
     <string name="error_invalid_report">Başlık ve açıklama boş olamaz</string>

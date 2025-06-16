@@ -126,8 +126,8 @@
     <string name="login_section_label">Увійти</string>
     <string name="use_github_account">Надіслати через обліковий запис GitHub</string>
     <string name="send_anonymously">Надіслати анонімно</string>
-    <string name="optional_placeholder">(Необов'язково)</string>
-    <string name="issue_username_label">Ім'я користувача</string>
+    <string name="optional_placeholder">(Необов\'язково)</string>
+    <string name="issue_username_label">Ім\'я користувача</string>
     <string name="issue_password_label">Пароль</string>
     <string name="issue_email_label">Електронна пошта</string>
     <string name="issue_send">Надіслати</string>

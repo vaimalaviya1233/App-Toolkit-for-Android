@@ -92,7 +92,13 @@ class IssueReporterViewModel(
                 extraInfo = extraInfo,
                 email = data.email.ifBlank { null }
             )
-            val success = runCatching { repository.sendReport(report, githubTarget) }.getOrDefault(false)
+
+            val success = runCatching {
+                repository.sendReport(report, githubTarget)
+            }.onFailure { throwable ->
+                throwable.printStackTrace()
+            }.getOrDefault(false)
+
             if (success) {
                 screenState.showSnackbar<UiIssueReporterScreen>(
                     snackbar = UiSnackbar(
