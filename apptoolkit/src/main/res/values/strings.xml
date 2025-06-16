@@ -259,4 +259,7 @@
     <string name="issue_password_label">Password</string>
     <string name="issue_email_label">Email</string>
     <string name="issue_send">Send</string>
+    <string name="snack_report_success">Report sent successfully</string>
+    <string name="snack_report_failed">Failed to send report</string>
+    <string name="error_invalid_report">Title and description cannot be empty</string>
 </resources>
