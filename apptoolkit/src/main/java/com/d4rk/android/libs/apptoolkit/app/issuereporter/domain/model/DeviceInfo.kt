@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter.model
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -255,6 +255,11 @@
     <!-- Issue Reporter -->
     <string name="issue_title_label">Title</string>
     <string name="issue_description_label">Description</string>
+    <string name="issue_section_label">Issue</string>
+    <string name="login_section_label">Login</string>
+    <string name="use_github_account">Send using GitHub account</string>
+    <string name="send_anonymously">Send anonymously</string>
+    <string name="optional_placeholder">(Optional)</string>
     <string name="issue_username_label">Username</string>
     <string name="issue_password_label">Password</string>
     <string name="issue_email_label">Email</string>

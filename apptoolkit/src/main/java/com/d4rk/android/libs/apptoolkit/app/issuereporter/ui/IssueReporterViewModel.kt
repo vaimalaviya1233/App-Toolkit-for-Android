@@ -5,11 +5,11 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterAction
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.UiIssueReporterScreen
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.DeviceInfo
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.Report
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github.ExtraInfo
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github.GithubTarget
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui.UiIssueReporterScreen
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar

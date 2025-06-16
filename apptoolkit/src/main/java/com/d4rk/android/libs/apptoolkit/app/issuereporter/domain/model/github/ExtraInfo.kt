@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github
 
 import android.os.Bundle
 

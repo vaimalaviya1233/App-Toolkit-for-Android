@@ -1,6 +1,6 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter.model
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
 
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github.ExtraInfo
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
 
 class Report(
     val title: String ,

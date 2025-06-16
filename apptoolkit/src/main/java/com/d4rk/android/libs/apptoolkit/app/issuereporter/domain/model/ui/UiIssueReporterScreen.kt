@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui
 
 /**
  * UI state holder for the Issue Reporter screen.
