@@ -136,6 +136,14 @@
     <string name="snack_report_success">보고서가 성공적으로 전송되었습니다</string>
     <string name="snack_report_failed">보고서 전송 실패</string>
     <string name="error_invalid_report">제목과 설명은 비워 둘 수 없습니다</string>
+    <string name="issue_submitted_successfully">문제가 성공적으로 제출되었습니다</string>
+    <string name="open_issue_in_browser">브라우저에서 열립니다</string>
+    <string name="open_button_label">열린 문제</string>
+    <string name="issue_submitted">귀하의 문제가 제출되었습니다!</string>
+    <string name="error_unauthorized">무단 : 유효하지 않은 토큰</string>
+    <string name="error_forbidden">금지 : 불충분 한 권한</string>
+    <string name="error_gone">API 엔드 포인트가 제거되었습니다</string>
+    <string name="error_unprocessable">이슈 생성을위한 잘못된 데이터</string>
 
     <string name="error_reporting">오류 보고</string>
     <string name="bug_report">버그 신고</string>

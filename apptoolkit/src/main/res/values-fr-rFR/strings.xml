@@ -136,6 +136,14 @@
     <string name="snack_report_success">Rapport envoyé avec succès</string>
     <string name="snack_report_failed">Échec de l\'envoi du rapport</string>
     <string name="error_invalid_report">Le titre et la description ne peuvent pas être vides</string>
+    <string name="issue_submitted_successfully">Numéro soumis avec succès</string>
+    <string name="open_issue_in_browser">Ouvert dans le navigateur</string>
+    <string name="open_button_label">Problème d'ouverture</string>
+    <string name="issue_submitted">Votre problème a été soumis!</string>
+    <string name="error_unauthorized">Non autorisé: jeton non valide</string>
+    <string name="error_forbidden">Interdit: autorisation insuffisante</string>
+    <string name="error_gone">Point de terminaison API supprimé</string>
+    <string name="error_unprocessable">Données non valides pour la création de problèmes</string>
 
     <string name="error_reporting">Rapport d\'erreurs</string>
     <string name="bug_report">Rapport de bug</string>

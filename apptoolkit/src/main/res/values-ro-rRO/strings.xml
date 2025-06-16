@@ -136,6 +136,14 @@
     <string name="snack_report_success">Raport trimis cu succes</string>
     <string name="snack_report_failed">Trimiterea raportului a eșuat</string>
     <string name="error_invalid_report">Titlul și descrierea nu pot fi goale</string>
+    <string name="issue_submitted_successfully">Problema depusă cu succes</string>
+    <string name="open_issue_in_browser">Deschis în browser</string>
+    <string name="open_button_label">Problemă deschisă</string>
+    <string name="issue_submitted">Problema dvs. a fost trimisă!</string>
+    <string name="error_unauthorized">Neautorizat: jeton nevalid</string>
+    <string name="error_forbidden">Interzis: permisiuni insuficiente</string>
+    <string name="error_gone">Punctul final API eliminat</string>
+    <string name="error_unprocessable">Date nevalide pentru crearea problemelor</string>
 
     <string name="error_reporting">Raportare erori</string>
     <string name="bug_report">Raportare bug</string>

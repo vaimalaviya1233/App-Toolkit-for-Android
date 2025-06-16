@@ -136,6 +136,14 @@
     <string name="snack_report_success">報告已成功送出</string>
     <string name="snack_report_failed">無法傳送報告</string>
     <string name="error_invalid_report">標題和描述不能為空</string>
+    <string name="issue_submitted_successfully">問題成功提交</string>
+    <string name="open_issue_in_browser">在瀏覽器中打開</string>
+    <string name="open_button_label">公開問題</string>
+    <string name="issue_submitted">您的問題已提交！</string>
+    <string name="error_unauthorized">未經授權：無效令牌</string>
+    <string name="error_forbidden">禁止：權限不足</string>
+    <string name="error_gone">刪除了API端點</string>
+    <string name="error_unprocessable">發行創建的無效數據</string>
 
     <string name="error_reporting">錯誤回報</string>
     <string name="bug_report">錯誤回報</string>

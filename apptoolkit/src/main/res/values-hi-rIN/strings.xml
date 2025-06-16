@@ -136,6 +136,14 @@
     <string name="snack_report_success">रिपोर्ट सफलतापूर्वक भेजी गई</string>
     <string name="snack_report_failed">रिपोर्ट भेजने में विफल</string>
     <string name="error_invalid_report">शीर्षक और विवरण खाली नहीं हो सकते</string>
+    <string name="issue_submitted_successfully">मुद्दा सफलतापूर्वक प्रस्तुत किया गया</string>
+    <string name="open_issue_in_browser">ब्राउज़र में खोलें</string>
+    <string name="open_button_label">मुद्दा खोलें</string>
+    <string name="issue_submitted">आपका मुद्दा प्रस्तुत किया गया था!</string>
+    <string name="error_unauthorized">अनधिकृत: अमान्य टोकन</string>
+    <string name="error_forbidden">निषिद्ध: अपर्याप्त अनुमतियाँ</string>
+    <string name="error_gone">एपीआई समापन बिंदु हटा दिया गया</string>
+    <string name="error_unprocessable">मुद्दा निर्माण के लिए अमान्य डेटा</string>
 
     <string name="error_reporting">त्रुटि रिपोर्टिंग</string>
     <string name="bug_report">बग रिपोर्ट</string>

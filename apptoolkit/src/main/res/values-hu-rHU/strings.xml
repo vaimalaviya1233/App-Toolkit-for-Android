@@ -136,6 +136,14 @@
     <string name="snack_report_success">A jelentés sikeresen elküldve</string>
     <string name="snack_report_failed">A jelentés elküldése nem sikerült</string>
     <string name="error_invalid_report">A cím és a leírás nem lehet üres</string>
+    <string name="issue_submitted_successfully">A kiadás sikeresen benyújtva</string>
+    <string name="open_issue_in_browser">Nyissa meg a böngészőben</string>
+    <string name="open_button_label">Nyitott kérdés</string>
+    <string name="issue_submitted">A kérdését benyújtották!</string>
+    <string name="error_unauthorized">Jogosulatlan: Érvénytelen token</string>
+    <string name="error_forbidden">Tiltott: Nem elegendő engedély</string>
+    <string name="error_gone">Az API végpontja eltávolítva</string>
+    <string name="error_unprocessable">Érvénytelen adatok a kiadás létrehozásához</string>
 
     <string name="error_reporting">Hibajelentés</string>
     <string name="bug_report">Hibajelentés</string>

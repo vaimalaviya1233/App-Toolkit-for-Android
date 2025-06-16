@@ -136,6 +136,14 @@
     <string name="snack_report_success">Matagumpay na naipadala ang ulat</string>
     <string name="snack_report_failed">Nabigo ang pagpapadala ng ulat</string>
     <string name="error_invalid_report">Hindi maaaring walang laman ang pamagat at paglalarawan</string>
+    <string name="issue_submitted_successfully">Matagumpay na isinumite ang isyu</string>
+    <string name="open_issue_in_browser">Buksan sa browser</string>
+    <string name="open_button_label">Bukas na isyu</string>
+    <string name="issue_submitted">Isinumite ang iyong isyu!</string>
+    <string name="error_unauthorized">Hindi awtorisado: Di -wastong token</string>
+    <string name="error_forbidden">Ipinagbabawal: Hindi sapat na pahintulot</string>
+    <string name="error_gone">Inalis ang endpoint ng API</string>
+    <string name="error_unprocessable">Di -wastong data para sa paglikha ng isyu</string>
 
     <string name="error_reporting">Pag-uulat ng error</string>
     <string name="bug_report">Ulat ng bug</string>

@@ -136,6 +136,14 @@
     <string name="snack_report_success">Informe enviado correctamente</string>
     <string name="snack_report_failed">Error al enviar el informe</string>
     <string name="error_invalid_report">El título y la descripción no pueden estar vacíos</string>
+    <string name="issue_submitted_successfully">Problema enviado con éxito</string>
+    <string name="open_issue_in_browser">Abrir en el navegador</string>
+    <string name="open_button_label">Problema abierto</string>
+    <string name="issue_submitted">¡Su problema fue enviado!</string>
+    <string name="error_unauthorized">Unauthorized: Invalid token</string>
+    <string name="error_forbidden">Prohibido: permisos insuficientes</string>
+    <string name="error_gone">Punto final de la API eliminado</string>
+    <string name="error_unprocessable">Datos no válidos para la creación de problemas</string>
 
     <string name="error_reporting">Informe de errores</string>
     <string name="bug_report">Informe de fallos</string>

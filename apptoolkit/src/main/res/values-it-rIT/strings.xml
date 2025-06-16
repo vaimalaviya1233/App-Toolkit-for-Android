@@ -136,6 +136,14 @@
     <string name="snack_report_success">Segnalazione inviata con successo</string>
     <string name="snack_report_failed">Invio della segnalazione non riuscito</string>
     <string name="error_invalid_report">Titolo e descrizione non possono essere vuoti</string>
+    <string name="issue_submitted_successfully">Emissione presentata con successo</string>
+    <string name="open_issue_in_browser">Aprire nel browser</string>
+    <string name="open_button_label">Problema aperto</string>
+    <string name="issue_submitted">Il tuo problema è stato inviato!</string>
+    <string name="error_unauthorized">Non autorizzato: token non valido</string>
+    <string name="error_forbidden">Proibito: autorizzazioni insufficienti</string>
+    <string name="error_gone">Endpoint API rimosso</string>
+    <string name="error_unprocessable">Dati non validi per la creazione di problemi</string>
 
     <string name="error_reporting">Segnalazione errori</string>
     <string name="bug_report">Segnalazione bug</string>

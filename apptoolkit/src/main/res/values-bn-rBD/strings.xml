@@ -136,6 +136,14 @@
     <string name="snack_report_success">রিপোর্ট সফলভাবে পাঠানো হয়েছে</string>
     <string name="snack_report_failed">রিপোর্ট পাঠাতে ব্যর্থ হয়েছে</string>
     <string name="error_invalid_report">শিরোনাম ও বর্ণনা খালি হতে পারে না</string>
+    <string name="issue_submitted_successfully">ইস্যু সফলভাবে জমা দেওয়া</string>
+    <string name="open_issue_in_browser">ব্রাউজারে খুলুন</string>
+    <string name="open_button_label">খোলা সমস্যা</string>
+    <string name="issue_submitted">আপনার সমস্যা জমা দেওয়া হয়েছিল!</string>
+    <string name="error_unauthorized">অননুমোদিত: অবৈধ টোকেন</string>
+    <string name="error_forbidden">নিষিদ্ধ: অপর্যাপ্ত অনুমতি</string>
+    <string name="error_gone">এপিআই শেষ পয়েন্ট সরানো হয়েছে</string>
+    <string name="error_unprocessable">ইস্যু তৈরির জন্য অবৈধ ডেটা</string>
 
     <string name="error_reporting">ত্রুটি প্রতিবেদন</string>
     <string name="bug_report">বাগ রিপোর্ট</string>
