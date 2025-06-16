@@ -10,6 +10,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.Gi
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appToolkitModule : Module = module {
@@ -25,12 +26,15 @@ val appToolkitModule : Module = module {
             dispatcherProvider = get(),
             httpClient = get(),
             githubTarget = get(),
+            githubToken = get(named("github_token"))
         )
     }
 
     single<GithubTarget> {
         GithubTarget(username = "D4rK7355608", repository = "AppToolkit")
     }
+
+    single(named("github_token")) { BuildConfig.GITHUB_TOKEN }
 
     single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }
 }
