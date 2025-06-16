@@ -17,12 +17,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
-import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -48,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import com.d4rk.android.libs.apptoolkit.R
@@ -64,8 +64,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnack
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -158,14 +158,22 @@ fun IssueReporterScreenContent(
                     ) {
                         Text(text = stringResource(id = R.string.issue_submitted))
                         Row(
+                            modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize)
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = data.issueUrl, modifier = Modifier.weight(1f))
+                            val uriHandler = LocalUriHandler.current
+                            Text(
+                                text = data.issueUrl,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clickable { uriHandler.openUri(data.issueUrl) },
+                                color = MaterialTheme.colorScheme.primary
+                            )
                             SmallHorizontalSpacer()
                             SmallFloatingActionButton(
                                 isVisible = true,
-                                isExtended = false,
+                                isExtended = false, // Keep it compact
                                 icon = Icons.Outlined.ContentCopy,
                                 onClick = {
                                     ClipboardHelper.copyTextToClipboard(
@@ -264,23 +272,18 @@ fun IssueReporterScreenContent(
 
             Card(shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { deviceExpanded = !deviceExpanded }
-                            .padding(SizeConstants.LargeSize),
-                        color = MaterialTheme.colorScheme.surfaceVariant) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = stringResource(id = R.string.device_info),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Icon(
-                                imageVector = if (deviceExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-                                contentDescription = stringResource(id = R.string.cd_expand_device_info)
-                            )
-                        }
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { deviceExpanded = !deviceExpanded }, verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = stringResource(id = R.string.device_info),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            imageVector = if (deviceExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                            contentDescription = stringResource(id = R.string.cd_expand_device_info)
+                        )
                     }
                     AnimatedVisibility(visible = deviceExpanded) {
                         val info = remember { DeviceInfo(context).toString() }
