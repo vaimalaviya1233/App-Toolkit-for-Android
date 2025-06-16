@@ -31,7 +31,7 @@ inline fun <T> MutableStateFlow<UiStateScreen<T>>.updateData(
     }
 }
 
-inline fun <T> MutableStateFlow<UiStateScreen<T>>.copyData(crossinline transform : T.() -> T) { // FIXME: Function "copyData" is never used
+inline fun <T> MutableStateFlow<UiStateScreen<T>>.copyData(crossinline transform : T.() -> T) {
     update { current ->
         val updatedData = current.data?.transform()
         current.copy(data = updatedData)
@@ -96,11 +96,11 @@ fun <T> MutableStateFlow<UiStateScreen<T>>.setLoading() {
     }
 }
 
-fun <T> MutableStateFlow<UiStateScreen<T>>.getData() : T { // FIXME: Function "getData" is never used
+fun <T> MutableStateFlow<UiStateScreen<T>>.getData() : T {
     return value.data ?: throw IllegalStateException("Data is not available or null.")
 }
 
-fun <T> MutableStateFlow<UiStateScreen<T>>.getErrors() : List<UiSnackbar> { // FIXME: Function "getErrors" is never used
+fun <T> MutableStateFlow<UiStateScreen<T>>.getErrors() : List<UiSnackbar> {
     return value.errors
 }
 
