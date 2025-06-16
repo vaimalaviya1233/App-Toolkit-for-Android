@@ -22,7 +22,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -37,11 +36,10 @@ import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
-import com.d4rk.android.libs.apptoolkit.core.ui.components.network.rememberHtmlData
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,16 +49,13 @@ fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
     val view : View = LocalView.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
     val faqList: List<UiHelpQuestion> = rememberFaqList()
-    val htmlData : State<Pair<String? , String?>> = rememberHtmlData(context = context , currentVersionName = config.versionName , packageName = activity.packageName)
-    val changelogHtmlString : String? = htmlData.value.first
-    val eulaHtmlString : String? = htmlData.value.second
 
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
     }
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
-        HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , eulaHtmlString = eulaHtmlString , changelogHtmlString = changelogHtmlString , view = view , config = config)
+        HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , view = view , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(visible = true , expanded = isFabExtended.value , onClick = {
             ReviewHelper.forceLaunchInAppReview(activity = activity)

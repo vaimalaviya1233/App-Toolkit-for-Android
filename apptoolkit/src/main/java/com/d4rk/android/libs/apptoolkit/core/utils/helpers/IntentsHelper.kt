@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
-import com.d4rk.android.libs.apptoolkit.app.about.ui.LicensesActivity
+import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
 import java.net.URLEncoder
 
 /**
@@ -196,12 +196,7 @@ object IntentsHelper {
     ) {
         Intent(context, LicensesActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            putExtra("eula", eulaHtmlString)
-            putExtra("changelog", changelogHtmlString)
-            putExtra("appName", appName)
-            putExtra("appVersion", appVersion)
-            putExtra("appVersionCode", appVersionCode)
-            putExtra("appShortDesc", appShortDescription)
+
         }.let(context::startActivity)
     }
 }

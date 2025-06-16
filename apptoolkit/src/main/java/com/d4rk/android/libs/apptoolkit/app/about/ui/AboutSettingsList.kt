@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
+import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -57,15 +58,7 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
                 SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
                 ExtraTinyVerticalSpacer()
                 SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss)) {
-                    IntentsHelper.openLicensesScreen(
-                        context = context ,
-                        eulaHtmlString = screenState.data?.eulaHtml ,
-                        changelogHtmlString = screenState.data?.changelogHtml ,
-                        appName = context.getString(R.string.app_name) ,
-                        appVersion = configProvider.appVersion ,
-                        appVersionCode = configProvider.appVersionCode ,
-                        appShortDescription = R.string.app_short_description
-                    )
+                    IntentsHelper.openActivity(context = context, activityClass = LicensesActivity::class.java)
                 }
             }
         }
