@@ -120,6 +120,22 @@
 
     <string name="advanced">Avançado</string>
     <string name="summary_preference_settings_advanced">Explore mais configurações avançadas</string>
+    <string name="issue_title_label">Título</string>
+    <string name="issue_description_label">Descrição</string>
+    <string name="issue_section_label">Problema</string>
+    <string name="login_section_label">Login</string>
+    <string name="use_github_account">Enviar usando a conta do GitHub</string>
+    <string name="send_anonymously">Enviar anonimamente</string>
+    <string name="optional_placeholder">(Opcional)</string>
+    <string name="issue_username_label">Nome de usuário</string>
+    <string name="issue_password_label">Senha</string>
+    <string name="issue_email_label">E-mail</string>
+    <string name="issue_send">Enviar</string>
+    <string name="cd_expand_device_info">Expandir ou recolher informações do dispositivo</string>
+    <string name="view_on_github">Redirecionar para o GitHub</string>
+    <string name="snack_report_success">Relatório enviado com sucesso</string>
+    <string name="snack_report_failed">Falha ao enviar relatório</string>
+    <string name="error_invalid_report">O título e a descrição não podem estar vazios</string>
 
     <string name="error_reporting">Relatar erros</string>
     <string name="bug_report">Relatar bug</string>

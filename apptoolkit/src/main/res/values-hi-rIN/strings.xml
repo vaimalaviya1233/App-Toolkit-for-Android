@@ -120,6 +120,22 @@
 
     <string name="advanced">उन्नत</string>
     <string name="summary_preference_settings_advanced">और अधिक उन्नत सेटिंग्स का अन्वेषण करें</string>
+    <string name="issue_title_label">शीर्षक</string>
+    <string name="issue_description_label">विवरण</string>
+    <string name="issue_section_label">समस्या</string>
+    <string name="login_section_label">लॉगिन</string>
+    <string name="use_github_account">GitHub खाता उपयोग करके भेजें</string>
+    <string name="send_anonymously">बेनामी भेजें</string>
+    <string name="optional_placeholder">(वैकल्पिक)</string>
+    <string name="issue_username_label">यूज़रनेम</string>
+    <string name="issue_password_label">पासवर्ड</string>
+    <string name="issue_email_label">ईमेल</string>
+    <string name="issue_send">भेजें</string>
+    <string name="cd_expand_device_info">डिवाइस की जानकारी विस्तारित या संक्षिप्त करें</string>
+    <string name="view_on_github">GitHub पर रीडायरेक्ट करें</string>
+    <string name="snack_report_success">रिपोर्ट सफलतापूर्वक भेजी गई</string>
+    <string name="snack_report_failed">रिपोर्ट भेजने में विफल</string>
+    <string name="error_invalid_report">शीर्षक और विवरण खाली नहीं हो सकते</string>
 
     <string name="error_reporting">त्रुटि रिपोर्टिंग</string>
     <string name="bug_report">बग रिपोर्ट</string>

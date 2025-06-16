@@ -120,6 +120,22 @@
 
     <string name="advanced">Advanced</string>
     <string name="summary_preference_settings_advanced">Galugarin ang mas maraming advanced na setting</string>
+    <string name="issue_title_label">Pamagat</string>
+    <string name="issue_description_label">Paglalarawan</string>
+    <string name="issue_section_label">Isyu</string>
+    <string name="login_section_label">Mag-login</string>
+    <string name="use_github_account">Ipadala gamit ang GitHub account</string>
+    <string name="send_anonymously">Ipadala nang hindi nagpapakilala</string>
+    <string name="optional_placeholder">(Opsyonal)</string>
+    <string name="issue_username_label">Username</string>
+    <string name="issue_password_label">Password</string>
+    <string name="issue_email_label">Email</string>
+    <string name="issue_send">Ipadala</string>
+    <string name="cd_expand_device_info">Palawakin o itago ang impormasyon ng device</string>
+    <string name="view_on_github">I-redirect sa GitHub</string>
+    <string name="snack_report_success">Matagumpay na naipadala ang ulat</string>
+    <string name="snack_report_failed">Nabigo ang pagpapadala ng ulat</string>
+    <string name="error_invalid_report">Hindi maaaring walang laman ang pamagat at paglalarawan</string>
 
     <string name="error_reporting">Pag-uulat ng error</string>
     <string name="bug_report">Ulat ng bug</string>

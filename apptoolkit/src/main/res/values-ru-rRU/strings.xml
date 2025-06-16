@@ -120,6 +120,22 @@
 
     <string name="advanced">Дополнительно</string>
     <string name="summary_preference_settings_advanced">Изучите дополнительные настройки</string>
+    <string name="issue_title_label">Заголовок</string>
+    <string name="issue_description_label">Описание</string>
+    <string name="issue_section_label">Проблема</string>
+    <string name="login_section_label">Войти</string>
+    <string name="use_github_account">Отправить через аккаунт GitHub</string>
+    <string name="send_anonymously">Отправить анонимно</string>
+    <string name="optional_placeholder">(Необязательно)</string>
+    <string name="issue_username_label">Имя пользователя</string>
+    <string name="issue_password_label">Пароль</string>
+    <string name="issue_email_label">Электронная почта</string>
+    <string name="issue_send">Отправить</string>
+    <string name="cd_expand_device_info">Развернуть или свернуть информацию об устройстве</string>
+    <string name="view_on_github">Перейти на GitHub</string>
+    <string name="snack_report_success">Отчет успешно отправлен</string>
+    <string name="snack_report_failed">Не удалось отправить отчет</string>
+    <string name="error_invalid_report">Заголовок и описание не могут быть пустыми</string>
 
     <string name="error_reporting">Отчёт об ошибках</string>
     <string name="bug_report">Отчёт о баге</string>

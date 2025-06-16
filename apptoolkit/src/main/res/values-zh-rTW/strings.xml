@@ -120,6 +120,22 @@
 
     <string name="advanced">進階</string>
     <string name="summary_preference_settings_advanced">探索更多進階設定</string>
+    <string name="issue_title_label">標題</string>
+    <string name="issue_description_label">描述</string>
+    <string name="issue_section_label">問題</string>
+    <string name="login_section_label">登入</string>
+    <string name="use_github_account">使用 GitHub 帳戶傳送</string>
+    <string name="send_anonymously">匿名傳送</string>
+    <string name="optional_placeholder">(可選)</string>
+    <string name="issue_username_label">使用者名稱</string>
+    <string name="issue_password_label">密碼</string>
+    <string name="issue_email_label">電子郵件</string>
+    <string name="issue_send">傳送</string>
+    <string name="cd_expand_device_info">展開或收合裝置資訊</string>
+    <string name="view_on_github">重新導向到 GitHub</string>
+    <string name="snack_report_success">報告已成功送出</string>
+    <string name="snack_report_failed">無法傳送報告</string>
+    <string name="error_invalid_report">標題和描述不能為空</string>
 
     <string name="error_reporting">錯誤回報</string>
     <string name="bug_report">錯誤回報</string>

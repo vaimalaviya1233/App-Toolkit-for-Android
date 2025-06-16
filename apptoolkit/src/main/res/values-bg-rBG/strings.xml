@@ -120,6 +120,22 @@
 
     <string name="advanced">Разширени</string>
     <string name="summary_preference_settings_advanced">Разгледайте повече разширени настройки</string>
+    <string name="issue_title_label">Заглавие</string>
+    <string name="issue_description_label">Описание</string>
+    <string name="issue_section_label">Проблем</string>
+    <string name="login_section_label">Вход</string>
+    <string name="use_github_account">Изпрати чрез GitHub профил</string>
+    <string name="send_anonymously">Изпрати анонимно</string>
+    <string name="optional_placeholder">(По избор)</string>
+    <string name="issue_username_label">Потребителско име</string>
+    <string name="issue_password_label">Парола</string>
+    <string name="issue_email_label">Имейл</string>
+    <string name="issue_send">Изпрати</string>
+    <string name="cd_expand_device_info">Покажи или скрий информацията за устройството</string>
+    <string name="view_on_github">Пренасочи към GitHub</string>
+    <string name="snack_report_success">Докладът е изпратен успешно</string>
+    <string name="snack_report_failed">Неуспешно изпращане на доклада</string>
+    <string name="error_invalid_report">Заглавието и описанието не могат да бъдат празни</string>
 
     <string name="error_reporting">Докладване на грешки</string>
     <string name="bug_report">Доклад за грешка</string>

@@ -120,6 +120,22 @@
 
     <string name="advanced">Haladó</string>
     <string name="summary_preference_settings_advanced">Fedezd fel a további haladó beállításokat</string>
+    <string name="issue_title_label">Cím</string>
+    <string name="issue_description_label">Leírás</string>
+    <string name="issue_section_label">Hiba</string>
+    <string name="login_section_label">Bejelentkezés</string>
+    <string name="use_github_account">Küldés GitHub fiókkal</string>
+    <string name="send_anonymously">Küldés névtelenül</string>
+    <string name="optional_placeholder">(Opcionális)</string>
+    <string name="issue_username_label">Felhasználónév</string>
+    <string name="issue_password_label">Jelszó</string>
+    <string name="issue_email_label">E-mail</string>
+    <string name="issue_send">Küldés</string>
+    <string name="cd_expand_device_info">Eszközinformációk kibontása vagy összecsukása</string>
+    <string name="view_on_github">Átirányítás GitHubra</string>
+    <string name="snack_report_success">A jelentés sikeresen elküldve</string>
+    <string name="snack_report_failed">A jelentés elküldése nem sikerült</string>
+    <string name="error_invalid_report">A cím és a leírás nem lehet üres</string>
 
     <string name="error_reporting">Hibajelentés</string>
     <string name="bug_report">Hibajelentés</string>

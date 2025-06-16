@@ -120,6 +120,22 @@
 
     <string name="advanced">Nâng cao</string>
     <string name="summary_preference_settings_advanced">Khám phá thêm các cài đặt nâng cao</string>
+    <string name="issue_title_label">Tiêu đề</string>
+    <string name="issue_description_label">Mô tả</string>
+    <string name="issue_section_label">Vấn đề</string>
+    <string name="login_section_label">Đăng nhập</string>
+    <string name="use_github_account">Gửi bằng tài khoản GitHub</string>
+    <string name="send_anonymously">Gửi ẩn danh</string>
+    <string name="optional_placeholder">(Tùy chọn)</string>
+    <string name="issue_username_label">Tên người dùng</string>
+    <string name="issue_password_label">Mật khẩu</string>
+    <string name="issue_email_label">Email</string>
+    <string name="issue_send">Gửi</string>
+    <string name="cd_expand_device_info">Mở rộng hoặc thu gọn thông tin thiết bị</string>
+    <string name="view_on_github">Chuyển hướng tới GitHub</string>
+    <string name="snack_report_success">Báo cáo đã được gửi thành công</string>
+    <string name="snack_report_failed">Gửi báo cáo thất bại</string>
+    <string name="error_invalid_report">Tiêu đề và mô tả không được để trống</string>
 
     <string name="error_reporting">Báo cáo lỗi</string>
     <string name="bug_report">Báo cáo lỗi</string>

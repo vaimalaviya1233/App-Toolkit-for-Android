@@ -120,6 +120,22 @@
 
     <string name="advanced">Avancerat</string>
     <string name="summary_preference_settings_advanced">Utforska mer avancerade inställningar</string>
+    <string name="issue_title_label">Titel</string>
+    <string name="issue_description_label">Beskrivning</string>
+    <string name="issue_section_label">Problem</string>
+    <string name="login_section_label">Logga in</string>
+    <string name="use_github_account">Skicka med GitHub-konto</string>
+    <string name="send_anonymously">Skicka anonymt</string>
+    <string name="optional_placeholder">(Valfritt)</string>
+    <string name="issue_username_label">Användarnamn</string>
+    <string name="issue_password_label">Lösenord</string>
+    <string name="issue_email_label">E-post</string>
+    <string name="issue_send">Skicka</string>
+    <string name="cd_expand_device_info">Expandera eller fäll ihop enhetsinformation</string>
+    <string name="view_on_github">Omdirigera till GitHub</string>
+    <string name="snack_report_success">Rapporten skickades</string>
+    <string name="snack_report_failed">Det gick inte att skicka rapporten</string>
+    <string name="error_invalid_report">Titel och beskrivning får inte vara tomma</string>
 
     <string name="error_reporting">Felrapportering</string>
     <string name="bug_report">Felrapport</string>
