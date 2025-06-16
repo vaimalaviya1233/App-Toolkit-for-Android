@@ -20,7 +20,11 @@ class IssueReporterRepository(private val client : HttpClient) {
         val response : HttpResponse = client.post(url) {
             contentType(ContentType.Application.Json)
             token?.let { header("Authorization" , "Bearer $it") }
-            setBody(Json.encodeToString(CreateIssueRequest(title = report.title , body = report.getDescription())))
+            val issueRequest = CreateIssueRequest(
+                title = report.title,
+                body = report.getDescription()
+            )
+            setBody(Json.encodeToString(CreateIssueRequest.serializer(), issueRequest))
         }
         return response.status == HttpStatusCode.Created
     }
