@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter
+package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
@@ -25,13 +25,13 @@ import io.ktor.client.HttpClient
 
 class IssueReporterViewModel(
     private val dispatcherProvider: DispatcherProvider,
-    httpClient: HttpClient
+    httpClient: HttpClient,
+    private val githubTarget: GithubTarget,
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
     initialState = UiStateScreen(data = UiIssueReporterScreen())
 ) {
 
     private val repository = IssueReporterRepository(httpClient)
-    private val target = GithubTarget(username = "D4rK7355608", repository = "AppToolkit")
 
     override fun onEvent(event: IssueReporterEvent) {
         when (event) {
@@ -85,7 +85,7 @@ class IssueReporterViewModel(
                 extraInfo = extraInfo,
                 email = data.email.ifBlank { null }
             )
-            val success = runCatching { repository.sendReport(report, target) }.getOrDefault(false)
+            val success = runCatching { repository.sendReport(report, githubTarget) }.getOrDefault(false)
             if (success) {
                 screenState.showSnackbar<UiIssueReporterScreen>(
                     snackbar = UiSnackbar(

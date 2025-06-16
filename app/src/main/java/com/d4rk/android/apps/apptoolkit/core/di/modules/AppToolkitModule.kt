@@ -6,7 +6,8 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenCon
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.support.domain.usecases.QueryProductDetailsUseCase
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.IssueReporterViewModel
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.model.github.GithubTarget
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -20,7 +21,15 @@ val appToolkitModule : Module = module {
     }
 
     viewModel {
-        IssueReporterViewModel(dispatcherProvider = get() , httpClient = get())
+        IssueReporterViewModel(
+            dispatcherProvider = get(),
+            httpClient = get(),
+            githubTarget = get(),
+        )
+    }
+
+    single<GithubTarget> {
+        GithubTarget(username = "D4rK7355608", repository = "AppToolkit")
     }
 
     single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }

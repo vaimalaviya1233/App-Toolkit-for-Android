@@ -57,7 +57,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".app.issuereporter.IssueReporterActivity"
+            android:name=".app.issuereporter.ui.IssueReporterActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
 
