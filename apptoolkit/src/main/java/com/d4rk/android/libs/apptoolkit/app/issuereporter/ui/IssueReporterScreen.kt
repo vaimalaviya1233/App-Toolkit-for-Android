@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -64,6 +65,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLar
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -145,6 +147,41 @@ fun IssueReporterScreenContent(
     ) {
 
         item {
+            if (!data.issueUrl.isNullOrEmpty()) {
+                val context = LocalContext.current
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.MediumSize),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = stringResource(id = R.string.issue_submitted))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize)
+                        ) {
+                            Text(text = data.issueUrl, modifier = Modifier.weight(1f))
+                            SmallHorizontalSpacer()
+                            SmallFloatingActionButton(
+                                isVisible = true,
+                                isExtended = false,
+                                icon = Icons.Outlined.ContentCopy,
+                                onClick = {
+                                    ClipboardHelper.copyTextToClipboard(
+                                        context = context,
+                                        label = "Issue URL",
+                                        text = data.issueUrl
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        item {
             Text(
                 text = stringResource(id = R.string.issue_section_label),
                 style = MaterialTheme.typography.titleMedium
@@ -205,14 +242,18 @@ fun IssueReporterScreenContent(
                 Column(
                     modifier = Modifier.padding(SizeConstants.MediumSize)
                 ) {
+                    // TODO: implement GitHub authentication
                     RadioOption(
                         selected = !data.anonymous,
                         text = stringResource(id = R.string.use_github_account),
-                        onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(false)) })
+                        onClick = { /* Disabled until auth is implemented */ },
+                        enabled = false
+                    )
                     RadioOption(
                         selected = data.anonymous,
                         text = stringResource(id = R.string.send_anonymously),
-                        onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(true)) })
+                        onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(true)) }
+                    )
                 }
             }
         }
@@ -265,16 +306,21 @@ fun IssueReporterScreenContent(
 }
 
 @Composable
-private fun RadioOption(selected: Boolean, text: String, onClick: () -> Unit) {
+private fun RadioOption(selected: Boolean, text: String, onClick: () -> Unit, enabled: Boolean = true) {
     Row(
-        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
             .fillMaxWidth()
-            .bounceClick()
-            .clip(CircleShape)
-            .clickable(onClick = onClick)
+            .let { base ->
+                if (enabled) {
+                    base.bounceClick().clip(CircleShape).clickable(onClick = onClick)
+                } else base
+            }
     ) {
         RadioButton(
-            selected = selected, onClick = onClick
+            selected = selected,
+            onClick = onClick,
+            enabled = enabled
         )
         SmallHorizontalSpacer()
         Text(text = text, style = MaterialTheme.typography.bodyLarge)
