@@ -1,6 +1,9 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.app.Activity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,49 +14,49 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.clickable
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.material.icons.outlined.ExpandLess
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui.UiIssueReporterScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
-import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
+import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.koinInject
@@ -66,7 +69,6 @@ fun IssueReporterScreen(activity : Activity) {
     val snackbarHostState = remember { SnackbarHostState() }
     val uiStateScreen : UiStateScreen<UiIssueReporterScreen> by viewModel.uiState.collectAsState()
     val target : GithubTarget = koinInject()
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.bug_report) , onBackClicked = { activity.finish() } , snackbarHostState = snackbarHostState , scrollBehavior = scrollBehavior , floatingActionButton = {
@@ -86,7 +88,9 @@ fun IssueReporterScreen(activity : Activity) {
                                                  expanded = true)
         }
     }) { paddingValues : PaddingValues ->
-        IssueReporterScreenContent(paddingValues = paddingValues , viewModel = viewModel , uiStateScreen = uiStateScreen)
+        IssueReporterScreenContent(
+            paddingValues = paddingValues , viewModel = viewModel , uiStateScreen = uiStateScreen
+        )
         DefaultSnackbarHandler(screenState = uiStateScreen , snackbarHostState = snackbarHostState , getDismissEvent = { IssueReporterEvent.DismissSnackbar } , onEvent = { viewModel.onEvent(it) })
     }
 }
@@ -103,11 +107,13 @@ fun IssueReporterScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
-                .padding(horizontal = 16.dp , vertical = 16.dp) ,
-        verticalArrangement = Arrangement.spacedBy(24.dp) ,
+                .padding(horizontal = SizeConstants.LargeSize) ,
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.ExtraLargeSize) ,
     ) {
 
-        Text(text = stringResource(id = R.string.issue_section_label) , style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = stringResource(id = R.string.issue_section_label) , style = MaterialTheme.typography.titleMedium
+        )
 
         Card(
             shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
@@ -115,7 +121,7 @@ fun IssueReporterScreenContent(
             Column(
                 modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp) , verticalArrangement = Arrangement.spacedBy(12.dp)
+                        .padding(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize)
             ) {
                 OutlinedTextField(
                     value = data.title ,
@@ -146,13 +152,15 @@ fun IssueReporterScreenContent(
             }
         }
 
-        Text(text = stringResource(id = R.string.login_section_label) , style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = stringResource(id = R.string.login_section_label) , style = MaterialTheme.typography.titleMedium
+        )
 
         Card(
             shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(16.dp) , verticalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.padding(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize)
             ) {
                 RadioOption(
                     selected = ! data.anonymous , text = stringResource(id = R.string.use_github_account) , onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(false)) })
@@ -166,47 +174,48 @@ fun IssueReporterScreenContent(
 
         Card(shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                androidx.compose.material3.Surface(
-                    modifier = Modifier
+                Surface(modifier = Modifier
                         .fillMaxWidth()
                         .clickable { deviceExpanded = ! deviceExpanded }
-                        .padding(16.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                ) {
+                        .padding(SizeConstants.LargeSize) , color = MaterialTheme.colorScheme.surfaceVariant) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = stringResource(id = R.string.device_info),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.weight(1f)
+                            text = stringResource(id = R.string.device_info) , style = MaterialTheme.typography.titleMedium , modifier = Modifier.weight(1f)
                         )
                         Icon(
-                            imageVector = if (deviceExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-                            contentDescription = null
+                            imageVector = if (deviceExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore , contentDescription = stringResource(id = R.string.cd_expand_device_info)
                         )
                     }
                 }
                 AnimatedVisibility(visible = deviceExpanded) {
                     val info = remember { DeviceInfo(context).toString() }
                     Text(
-                        text = info,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .horizontalScroll(rememberScrollState())
+                        text = info , style = MaterialTheme.typography.bodySmall , modifier = Modifier
+                                .padding(SizeConstants.LargeSize)
+                                .horizontalScroll(rememberScrollState())
                     )
                 }
             }
         }
+
+        ExtraExtraLargeVerticalSpacer()
+        ExtraExtraLargeVerticalSpacer()
 
     }
 }
 
 @Composable
 private fun RadioOption(selected : Boolean , text : String , onClick : () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-        androidx.compose.material3.RadioButton(
+    Row(
+        verticalAlignment = Alignment.CenterVertically , modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = SizeConstants.SmallSize)
+    ) {
+        RadioButton(
             selected = selected , onClick = onClick
         )
-        Text(text = text , style = MaterialTheme.typography.bodyLarge , modifier = Modifier.padding(start = 8.dp))
+        SmallHorizontalSpacer()
+        Text(text = text , style = MaterialTheme.typography.bodyLarge)
     }
 }

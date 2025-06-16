@@ -121,6 +121,24 @@
     <string name="advanced">Advanced</string>
     <string name="summary_preference_settings_advanced">Explore more advanced settings</string>
 
+    <!-- Issue Reporter -->
+    <string name="issue_title_label">Title</string>
+    <string name="issue_description_label">Description</string>
+    <string name="issue_section_label">Issue</string>
+    <string name="login_section_label">Login</string>
+    <string name="use_github_account">Send using GitHub account</string>
+    <string name="send_anonymously">Send anonymously</string>
+    <string name="optional_placeholder">(Optional)</string>
+    <string name="issue_username_label">Username</string>
+    <string name="issue_password_label">Password</string>
+    <string name="issue_email_label">Email</string>
+    <string name="issue_send">Send</string>
+    <string name="cd_expand_device_info">Expand or collapse device information</string>
+    <string name="view_on_github">Redirect to GitHub</string>
+    <string name="snack_report_success">Report sent successfully</string>
+    <string name="snack_report_failed">Failed to send report</string>
+    <string name="error_invalid_report">Title and description cannot be empty</string>
+
     <string name="error_reporting">Error reporting</string>
     <string name="bug_report">Bug report</string>
     <string name="summary_preference_settings_bug_report">Send bug reports and feature requests to the app\'s GitHub repository issues page</string>
@@ -252,20 +270,4 @@
     <string name="non_paid_support">Non-Paid Support</string>
     <string name="web_ad">Web Ad</string>
     <string name="error_failed_to_load_sku_details">Failed to load SKU details</string>
-    <!-- Issue Reporter -->
-    <string name="issue_title_label">Title</string>
-    <string name="issue_description_label">Description</string>
-    <string name="issue_section_label">Issue</string>
-    <string name="login_section_label">Login</string>
-    <string name="use_github_account">Send using GitHub account</string>
-    <string name="send_anonymously">Send anonymously</string>
-    <string name="optional_placeholder">(Optional)</string>
-    <string name="issue_username_label">Username</string>
-    <string name="issue_password_label">Password</string>
-    <string name="issue_email_label">Email</string>
-    <string name="issue_send">Send</string>
-    <string name="view_on_github">Redirect to GitHub</string>
-    <string name="snack_report_success">Report sent successfully</string>
-    <string name="snack_report_failed">Failed to send report</string>
-    <string name="error_invalid_report">Title and description cannot be empty</string>
 </resources>
