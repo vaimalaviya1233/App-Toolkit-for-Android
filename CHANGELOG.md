@@ -1,5 +1,7 @@
 # Version 1.0.3:
 
+- **New**: Added a new issue reporter (might not work as expected)
+- **Minor**: Updated the about libraries to use the new compose module
 - **Minor**: This update includes small under-the-hood improvements to make the app run smoother and prepare for future updates.
 
 # Version 1.0.2:
