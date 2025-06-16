@@ -29,6 +29,7 @@ class IssueReporterViewModel(
     private val dispatcherProvider: DispatcherProvider,
     httpClient: HttpClient,
     private val githubTarget: GithubTarget,
+    private val githubToken: String,
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
     initialState = UiStateScreen(data = UiIssueReporterScreen())
 ) {
@@ -96,7 +97,7 @@ class IssueReporterViewModel(
             )
 
             val result = runCatching {
-                repository.sendReport(report, githubTarget)
+                repository.sendReport(report, githubTarget, githubToken.takeIf { it.isNotBlank() })
             }.onFailure { throwable ->
                 throwable.printStackTrace()
             }.getOrNull()
