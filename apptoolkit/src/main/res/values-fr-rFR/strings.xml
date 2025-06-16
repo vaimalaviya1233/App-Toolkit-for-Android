@@ -138,7 +138,7 @@
     <string name="error_invalid_report">Le titre et la description ne peuvent pas être vides</string>
     <string name="issue_submitted_successfully">Numéro soumis avec succès</string>
     <string name="open_issue_in_browser">Ouvert dans le navigateur</string>
-    <string name="open_button_label">Problème d'ouverture</string>
+    <string name="open_button_label">Problème d\'ouverture</string>
     <string name="issue_submitted">Votre problème a été soumis!</string>
     <string name="error_unauthorized">Non autorisé: jeton non valide</string>
     <string name="error_forbidden">Interdit: autorisation insuffisante</string>
