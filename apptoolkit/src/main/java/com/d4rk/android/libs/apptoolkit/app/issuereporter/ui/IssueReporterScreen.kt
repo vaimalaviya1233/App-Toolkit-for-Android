@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -59,47 +59,33 @@ fun IssueReporterScreen(activity : Activity) {
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
-    LargeTopAppBarWithScaffold(
-        title = stringResource(id = R.string.bug_report) ,
-        onBackClicked = { activity.finish() } ,
-        snackbarHostState = snackbarHostState ,
-        scrollBehavior = scrollBehavior ,
-        floatingActionButton = {
-            val context = LocalContext.current
-            Column(horizontalAlignment = Alignment.End) {
-                SmallFloatingActionButton(
-                    modifier = Modifier.padding(bottom = SizeConstants.MediumSize) ,
-                    isVisible = true ,
-                    isExtended = true ,
-                    icon = Icons.Outlined.Link ,
-                    onClick = {
-                        IntentsHelper.openUrl(
-                            context = context ,
-                            url = "https://github.com/${target.username}/${target.repository}/issues"
-                        )
-                    }
-                )
-                AnimatedExtendedFloatingActionButton(
-                    visible = true ,
-                    onClick = { viewModel.onEvent(IssueReporterEvent.Send(context)) } ,
-                    text = { Text(text = stringResource(id = R.string.issue_send)) } ,
-                    icon = { Icon(imageVector = Icons.Outlined.BugReport , contentDescription = null) } ,
-                    expanded = true
-                )
-            }
+    LargeTopAppBarWithScaffold(title = stringResource(id = R.string.bug_report) , onBackClicked = { activity.finish() } , snackbarHostState = snackbarHostState , scrollBehavior = scrollBehavior , floatingActionButton = {
+        val context = LocalContext.current
+        Column(horizontalAlignment = Alignment.End) {
+            SmallFloatingActionButton(
+                modifier = Modifier.padding(bottom = SizeConstants.MediumSize) , isVisible = true , isExtended = true , icon = Icons.Outlined.Link , onClick = {
+                    IntentsHelper.openUrl(
+                        context = context , url = "https://github.com/${target.username}/${target.repository}/issues"
+                    )
+                })
+            AnimatedExtendedFloatingActionButton(
+                visible = true ,
+                                                 onClick = { viewModel.onEvent(IssueReporterEvent.Send(context)) } ,
+                                                 text = { Text(text = stringResource(id = R.string.issue_send)) } ,
+                                                 icon = { Icon(imageVector = Icons.Outlined.BugReport , contentDescription = null) } ,
+                                                 expanded = true)
         }
-    ) { paddingValues : PaddingValues ->
-        IssueReporterScreenContent(paddingValues = paddingValues , viewModel = viewModel , uiStateScreen = uiStateScreen , target = target)
+    }) { paddingValues : PaddingValues ->
+        IssueReporterScreenContent(paddingValues = paddingValues , viewModel = viewModel , uiStateScreen = uiStateScreen)
         DefaultSnackbarHandler(screenState = uiStateScreen , snackbarHostState = snackbarHostState , getDismissEvent = { IssueReporterEvent.DismissSnackbar } , onEvent = { viewModel.onEvent(it) })
     }
 }
 
 @Composable
 fun IssueReporterScreenContent(
-    paddingValues : PaddingValues , viewModel : IssueReporterViewModel , uiStateScreen : UiStateScreen<UiIssueReporterScreen> , target : GithubTarget
+    paddingValues : PaddingValues , viewModel : IssueReporterViewModel , uiStateScreen : UiStateScreen<UiIssueReporterScreen>
 ) {
     val data = uiStateScreen.data ?: UiIssueReporterScreen()
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     Column(
@@ -114,7 +100,7 @@ fun IssueReporterScreenContent(
         Text(text = stringResource(id = R.string.issue_section_label) , style = MaterialTheme.typography.titleMedium)
 
         Card(
-            tonalElevation = 1.dp , shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
+            shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -128,8 +114,7 @@ fun IssueReporterScreenContent(
                                   leadingIcon = { Icon(Icons.Outlined.Title , contentDescription = null) } ,
                                   modifier = Modifier.fillMaxWidth() ,
                                   singleLine = true ,
-                                  keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
-                )
+                                  keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next))
 
                 OutlinedTextField(
                     value = data.description ,
@@ -137,8 +122,7 @@ fun IssueReporterScreenContent(
                                   label = { Text(stringResource(id = R.string.issue_description_label)) } ,
                                   leadingIcon = { Icon(Icons.Outlined.Info , contentDescription = null) } ,
                                   modifier = Modifier.fillMaxWidth() ,
-                                  minLines = 4
-                )
+                                  minLines = 4)
 
                 OutlinedTextField(
                     value = data.email ,
@@ -148,15 +132,14 @@ fun IssueReporterScreenContent(
                                   leadingIcon = { Icon(Icons.Outlined.Email , contentDescription = null) } ,
                                   modifier = Modifier.fillMaxWidth() ,
                                   singleLine = true ,
-                                  keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
-                )
+                                  keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done))
             }
         }
 
         Text(text = stringResource(id = R.string.login_section_label) , style = MaterialTheme.typography.titleMedium)
 
         Card(
-            tonalElevation = 1.dp , shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
+            shape = MaterialTheme.shapes.medium , modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier.padding(16.dp) , verticalArrangement = Arrangement.spacedBy(12.dp)
