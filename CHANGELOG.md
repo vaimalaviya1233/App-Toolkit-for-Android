@@ -1,4 +1,4 @@
-# Version 1.0.4:
+# Version 1.0.4 (Unreleased):
 
 **Minor**: This update includes small under-the-hood improvements.
 
