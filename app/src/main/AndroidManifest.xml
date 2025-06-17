@@ -100,6 +100,10 @@
             android:value="ca-app-pub-5294151573817700~1979784742" />
 
         <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="true" />
+
+        <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
 
