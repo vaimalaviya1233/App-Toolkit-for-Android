@@ -10,7 +10,7 @@ plugins {
 android {
 
     namespace = "com.d4rk.android.libs.apptoolkit"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 23
@@ -122,7 +122,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "1.0.27"
+            version = "1.0.28"
 
             afterEvaluate {
                 from(components["release"])

@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopListFilters(filters : List<String> , selectedFilter : String , onFilterSelected : (String) -> Unit , label : String = stringResource(id = R.string.sort_by) , modifier : Modifier = Modifier) {
+fun TopListFilters(modifier : Modifier = Modifier, filters : List<String> , selectedFilter : String , onFilterSelected : (String) -> Unit , label : String = stringResource(id = R.string.sort_by)) {
     val listState : LazyListState = rememberLazyListState()
     val scope : CoroutineScope = rememberCoroutineScope()
     Row(modifier = modifier.fillMaxWidth() , verticalAlignment = Alignment.CenterVertically) {

@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
-import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
 import java.net.URLEncoder
 
 /**
@@ -160,43 +159,5 @@ object IntentsHelper {
         context.startActivity(
             Intent.createChooser(emailIntent , context.getString(R.string.send_email_using))
         )
-    }
-
-    /**
-     * Opens a screen displaying open-source licenses, EULA, and changelog information.
-     *
-     * This function uses the `LibsBuilder` library to create and display an activity that provides
-     * details about the application, including its open-source licenses, End-User License Agreement (EULA),
-     * and changelog. It configures the activity's appearance and content using provided parameters.
-     *
-     * The screen includes:
-     *  - A list of open-source licenses used by the application.
-     *  - An optional EULA section, which displays the EULA content provided as an HTML string. If no EULA is provided, a loading message is displayed.
-     *  - An optional changelog section, displaying the changelog content provided as an HTML string. If no changelog is provided, a loading message is displayed.
-     *  - Application name, version, and a short description.
-     *
-     * @param context The context from which the activity is launched.
-     * @param eulaHtmlString An optional HTML string containing the EULA content. If `null`, a loading message is displayed in its place.
-     * @param changelogHtmlString An optional HTML string containing the changelog content. If `null`, a loading message is displayed in its place.
-     * @param appName The string resource ID for the application's name.
-     * @param appVersion The application's version string (e.g., "1.0.0").
-     * @param appVersionCode The integer representing the application's version code (e.g., 1).
-     * @param appShortDescription The string resource ID for a short description of the application.
-     *
-     * @see LibsBuilder for more details about the underlying library.
-     */
-    fun openLicensesScreen(
-        context: Context,
-        eulaHtmlString: String?,
-        changelogHtmlString: String?,
-        appName: String,
-        appVersion: String,
-        appVersionCode: Int,
-        appShortDescription: Int,
-    ) {
-        Intent(context, LicensesActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        }.let(context::startActivity)
     }
 }
