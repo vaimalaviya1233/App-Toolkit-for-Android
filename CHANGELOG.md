@@ -1,3 +1,7 @@
+# Version 1.0.4:
+
+**Minor**: This update includes small under-the-hood improvements.
+
 # Version 1.0.3:
 
 - **New**: Added a new issue reporter (might not work as expected)
