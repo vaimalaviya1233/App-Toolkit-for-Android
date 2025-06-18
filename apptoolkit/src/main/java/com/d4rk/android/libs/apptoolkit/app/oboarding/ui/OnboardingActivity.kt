@@ -33,6 +33,7 @@ class OnboardingActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         checkUserConsent()
+        // Recheck permissions when returning to this activity
     }
 
     private fun checkUserConsent() {
