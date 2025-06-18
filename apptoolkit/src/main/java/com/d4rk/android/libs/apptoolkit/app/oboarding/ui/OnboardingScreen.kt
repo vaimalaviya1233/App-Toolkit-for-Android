@@ -43,6 +43,10 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +56,13 @@ fun OnboardingScreen() {
     val pages: List<OnboardingPage> =
         remember { onboardingProvider.getOnboardingPages(context = context) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val pagerState: PagerState = rememberPagerState { pages.size }
+    val viewModel: OnboardingViewModel = viewModel()
+    val pagerState: PagerState = rememberPagerState(
+        initialPage = viewModel.currentTabIndex,
+    ) { pages.size }
+    LaunchedEffect(pagerState.currentPage) {
+        viewModel.currentTabIndex = pagerState.currentPage
+    }
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val view = LocalView.current
     val onSkipRequested = {
