@@ -1,6 +1,10 @@
-# Version 1.0.4 (Unreleased):
+# Version 1.0.5 (Unreleased):
 
-**Minor**: This update includes small under-the-hood improvements.
+- **Minor**: This update includes small under-the-hood improvements.
+
+# Version 1.0.4:
+
+- **Minor**: This update includes small under-the-hood improvements.
 
 # Version 1.0.3:
 
