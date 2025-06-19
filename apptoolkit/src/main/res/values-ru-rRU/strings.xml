@@ -101,6 +101,8 @@
     <string name="navigation">Навигация</string>
     <string name="startup_page">Стартовая страница</string>
     <string name="summary_preference_settings_startup_page">Выберите экран, который будет отображаться при запуске приложения.</string>
+    <string name="show_labels_on_bottom_bar">Показать этикетки на нижней панели</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Отображение заголовков элементов ниже значков в нижней навигационной панели</string>
 
     <string name="language">Язык</string>
     <string name="summary_preference_settings_language">Измените язык, используемый в приложении</string>

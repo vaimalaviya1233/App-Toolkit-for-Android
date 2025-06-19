@@ -101,6 +101,8 @@
     <string name="navigation">नेविगेशन</string>
     <string name="startup_page">स्टार्टअप पेज</string>
     <string name="summary_preference_settings_startup_page">ऐप शुरू होने पर प्रदर्शित होने वाली स्क्रीन चुनें।</string>
+    <string name="show_labels_on_bottom_bar">नीचे बार पर लेबल दिखाएं</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">नीचे नेविगेशन बार में आइकन के नीचे आइटम शीर्षक प्रदर्शित करें</string>
 
     <string name="language">भाषा</string>
     <string name="summary_preference_settings_language">ऐप में उपयोग की जाने वाली भाषा बदलें</string>

@@ -101,6 +101,8 @@
     <string name="navigation">ナビゲーション</string>
     <string name="startup_page">スタートアップページ</string>
     <string name="summary_preference_settings_startup_page">アプリ起動時に表示される画面を選択する</string>
+    <string name="show_labels_on_bottom_bar">ボトムバーにラベルを表示します</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">下のナビゲーションバーの下にアイテムのタイトルを表示</string>
 
     <string name="language">言語</string>
     <string name="summary_preference_settings_language">アプリ内で使用される言語を変更する</string>

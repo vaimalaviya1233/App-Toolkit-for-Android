@@ -101,6 +101,8 @@
     <string name="navigation">Navigasi</string>
     <string name="startup_page">Halaman awal</string>
     <string name="summary_preference_settings_startup_page">Pilih layar yang akan ditampilkan saat aplikasi dimulai.</string>
+    <string name="show_labels_on_bottom_bar">Tampilkan label di bar bawah</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Tampilkan Judul Item Di Bawah Ikon Di Bilah Navigasi Bawah</string>
 
     <string name="language">Bahasa</string>
     <string name="summary_preference_settings_language">Mengubah bahasa yang digunakan dalam aplikasi</string>

@@ -101,6 +101,8 @@
     <string name="navigation">Gezinti</string>
     <string name="startup_page">Başlangıç sayfası</string>
     <string name="summary_preference_settings_startup_page">Uygulama başlatıldığında görüntülenecek ekranı seçin.</string>
+    <string name="show_labels_on_bottom_bar">Alt çubukta etiketleri gösterin</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Alt gezinme çubuğundaki simgelerin altındaki öğe başlıklarını görüntüleyin</string>
 
     <string name="language">Dil</string>
     <string name="summary_preference_settings_language">Uygulamada kullanılan dili değiştirin</string>
