@@ -30,7 +30,6 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.display.components.dialogs.SelectLanguageAlertDialog
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
-import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPreferenceItemWithDivider
@@ -70,6 +69,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
 
     val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
     val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
+    val showLabelsOnBottomBar : Boolean by dataStore.getShowBottomBarLabels().collectAsState(initial = true)
 
     LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {
@@ -157,11 +157,23 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                             .padding(horizontal = SizeConstants.LargeSize)
                             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
-                    PreferenceItem(title = stringResource(id = R.string.startup_page) , summary = stringResource(id = R.string.summary_preference_settings_startup_page) , onClick = { showStartupDialog = true })
+                    SettingsPreferenceItem(title = stringResource(id = R.string.startup_page) , summary = stringResource(id = R.string.summary_preference_settings_startup_page) , onClick = { showStartupDialog = true })
                     if (showStartupDialog) {
                         provider.StartupPageDialog(onDismiss = {
                             showStartupDialog = false
                         }) { }
+                    }
+
+                    ExtraTinyVerticalSpacer()
+
+                    SwitchPreferenceItem(
+                        title = stringResource(id = R.string.show_labels_on_bottom_bar) ,
+                        summary = stringResource(id = R.string.summary_preference_settings_show_labels_on_bottom_bar) ,
+                        checked = showLabelsOnBottomBar ,
+                    ) { isChecked ->
+                        coroutineScope.launch {
+                            dataStore.saveShowLabelsOnBottomBar(isChecked = isChecked)
+                        }
                     }
                 }
             }

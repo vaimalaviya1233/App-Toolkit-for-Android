@@ -110,6 +110,18 @@ open class CommonDataStore(context : Context) {
         }
     }
 
+    fun getShowBottomBarLabels() : Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_SHOW_BOTTOM_BAR_LABELS)] != false
+        }
+    }
+
+    suspend fun saveShowLabelsOnBottomBar(isChecked: Boolean) {
+        dataStore.edit { preferences: MutablePreferences ->
+            preferences[booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_SHOW_BOTTOM_BAR_LABELS)] = isChecked
+        }
+    }
+
     private val languageKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LANGUAGE)
 
     fun getLanguage() : Flow<String> = dataStore.data.map { preferences : Preferences ->
