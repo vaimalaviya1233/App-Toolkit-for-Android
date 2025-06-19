@@ -28,19 +28,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.d4rk.android.libs.apptoolkit.app.main.utils.interfaces.BottomNavigationItem
+import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun LeftNavigationRail(
     modifier : Modifier = Modifier,
-    bottomItems : List<BottomNavigationItem> = emptyList() ,
+    bottomItems : List<BottomBarItem> = emptyList() ,
     drawerItems : List<NavigationDrawerItem> = emptyList() ,
     currentRoute : String? ,
     isRailExpanded : Boolean = false ,
     paddingValues : PaddingValues ,
-    onBottomItemClick : (BottomNavigationItem) -> Unit = {} ,
+    onBottomItemClick : (BottomBarItem) -> Unit = {} ,
     onDrawerItemClick : (NavigationDrawerItem) -> Unit = {} ,
     content : @Composable () -> Unit ,
 ) {
@@ -50,7 +50,7 @@ fun LeftNavigationRail(
 
     Row(modifier = modifier.padding(top = paddingValues.calculateTopPadding())) {
         NavigationRail(modifier = Modifier.width(railWidth)) {
-            bottomItems.forEach { item : BottomNavigationItem ->
+            bottomItems.forEach { item : BottomBarItem ->
                 val isSelected : Boolean = currentRoute == item.route
 
                 NavigationRailItem(modifier = Modifier.bounceClick() , selected = isSelected , onClick = { onBottomItemClick(item) } , icon = {

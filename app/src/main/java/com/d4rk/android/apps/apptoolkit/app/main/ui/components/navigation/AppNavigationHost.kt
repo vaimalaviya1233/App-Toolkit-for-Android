@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.ui.FavoriteAppsScreen
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
@@ -27,6 +28,9 @@ fun AppNavigationHost(
     ) {
         composable(route = NavigationRoutes.ROUTE_APPS_LIST) {
             AppsListScreen(paddingValues = paddingValues)
+        }
+        composable(route = NavigationRoutes.ROUTE_FAVORITE_APPS) {
+            FavoriteAppsScreen(paddingValues = paddingValues)
         }
     }
 }

@@ -6,6 +6,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -15,7 +16,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 
-class AppsListViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
+class AppsListViewModel(
+    private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase,
+    private val dispatcherProvider : DispatcherProvider,
+    private val dataStore: DataStore
+) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
 
     init {
         onEvent(event = HomeEvent.FetchApps)
@@ -49,5 +54,9 @@ class AppsListViewModel(private val fetchDeveloperAppsUseCase : FetchDeveloperAp
                 }
             }
         }
+    }
+
+    fun toggleFavorite(packageName: String) {
+        launch(context = dispatcherProvider.io) { dataStore.toggleFavoriteApp(packageName) }
     }
 }

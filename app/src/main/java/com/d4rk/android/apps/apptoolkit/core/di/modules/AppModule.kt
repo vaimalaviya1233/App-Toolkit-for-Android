@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListViewModel
+import com.d4rk.android.apps.apptoolkit.app.apps.ui.FavoriteAppsViewModel
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
@@ -36,6 +37,17 @@ val appModule : Module = module {
 
     single { FetchDeveloperAppsUseCase(client = get()) }
     viewModel {
-        AppsListViewModel(fetchDeveloperAppsUseCase = get() , dispatcherProvider = get())
+        AppsListViewModel(
+            fetchDeveloperAppsUseCase = get(),
+            dispatcherProvider = get(),
+            dataStore = get()
+        )
+    }
+    viewModel {
+        FavoriteAppsViewModel(
+            fetchDeveloperAppsUseCase = get(),
+            dataStore = get(),
+            dispatcherProvider = get()
+        )
     }
 }

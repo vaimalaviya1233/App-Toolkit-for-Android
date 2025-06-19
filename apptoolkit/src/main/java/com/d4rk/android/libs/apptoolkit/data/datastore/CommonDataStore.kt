@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import kotlinx.coroutines.flow.Flow
@@ -193,6 +194,22 @@ open class CommonDataStore(context : Context) {
     suspend fun saveAds(isChecked : Boolean) {
         dataStore.edit { preferences : MutablePreferences ->
             preferences[adsKey] = isChecked
+        }
+    }
+
+    // Favorite Apps
+    private val favoriteAppsKey = stringSetPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_FAVORITE_APPS)
+    val favoriteApps: Flow<Set<String>> = dataStore.data.map { prefs: Preferences ->
+        prefs[favoriteAppsKey] ?: emptySet()
+    }
+
+    suspend fun toggleFavoriteApp(packageName: String) {
+        dataStore.edit { prefs: MutablePreferences ->
+            val current = prefs[favoriteAppsKey]?.toMutableSet() ?: mutableSetOf()
+            if (!current.add(packageName)) {
+                current.remove(packageName)
+            }
+            prefs[favoriteAppsKey] = current
         }
     }
 

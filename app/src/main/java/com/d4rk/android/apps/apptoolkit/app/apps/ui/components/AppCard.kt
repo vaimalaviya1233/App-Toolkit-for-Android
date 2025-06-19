@@ -11,7 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +36,12 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
-fun AppCard(appInfo : AppInfo , modifier : Modifier) {
+fun AppCard(
+    appInfo: AppInfo,
+    isFavorite: Boolean,
+    onFavoriteToggle: () -> Unit,
+    modifier: Modifier
+) {
     val context : Context = LocalContext.current
     val view: View = LocalView.current
     Card(modifier = modifier
@@ -65,6 +75,12 @@ fun AppCard(appInfo : AppInfo , modifier : Modifier) {
                         .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.LargeSize + SizeConstants.SmallSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)) , contentScale = ContentScale.Fit
             )
+            IconButton(onClick = onFavoriteToggle) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
+                    contentDescription = null
+                )
+            }
             LargeVerticalSpacer()
             Text(
                 text = appInfo.name , modifier = Modifier
