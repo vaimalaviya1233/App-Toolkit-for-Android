@@ -31,7 +31,12 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 @Composable
-fun AppsList(uiHomeScreen: UiHomeScreen, paddingValues: PaddingValues) {
+fun AppsList(
+    uiHomeScreen: UiHomeScreen,
+    favorites: Set<String>,
+    paddingValues: PaddingValues,
+    onFavoriteToggle: (String) -> Unit
+) {
     val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
     val isTabletOrLandscape: Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
@@ -78,8 +83,11 @@ fun AppsList(uiHomeScreen: UiHomeScreen, paddingValues: PaddingValues) {
                             itemCount = appItemsBuffer.size,
                             modifier = Modifier.fillMaxWidth()
                         ) { index ->
+                            val appInfo = appItemsBuffer[index].appInfo
                             AppCard(
-                                appInfo = appItemsBuffer[index].appInfo,
+                                appInfo = appInfo,
+                                isFavorite = favorites.contains(appInfo.packageName),
+                                onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
                                 modifier = Modifier.animateVisibility(
                                     visible = visibilityStates.getOrElse(index = index) { false },
                                     index = index
@@ -106,8 +114,12 @@ fun AppsList(uiHomeScreen: UiHomeScreen, paddingValues: PaddingValues) {
                 itemCount = appItemsBuffer.size,
                 modifier = Modifier.fillMaxWidth()
             ) { index: Int ->
+                val appInfo = appItemsBuffer[index].appInfo
                 AppCard(
-                    appInfo = appItemsBuffer[index].appInfo, modifier = Modifier.animateVisibility(
+                    appInfo = appInfo,
+                    isFavorite = favorites.contains(appInfo.packageName),
+                    onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
+                    modifier = Modifier.animateVisibility(
                         visible = visibilityStates.getOrElse(index = index) { false }, index = index
                     )
                 )
