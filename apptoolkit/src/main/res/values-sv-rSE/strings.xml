@@ -101,6 +101,8 @@
     <string name="navigation">Navigering</string>
     <string name="startup_page">Startsida</string>
     <string name="summary_preference_settings_startup_page">Välj vilken skärm som ska visas vid appens start.</string>
+    <string name="show_labels_on_bottom_bar">Visa etiketter på bottenstången</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Visa objekttitlar under ikoner i den nedre navigationsfältet</string>
 
     <string name="language">Språk</string>
     <string name="summary_preference_settings_language">Ändra det språk som används i appen</string>

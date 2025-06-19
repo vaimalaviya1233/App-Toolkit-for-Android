@@ -101,6 +101,8 @@
     <string name="navigation">Nabigasyon</string>
     <string name="startup_page">Startup page</string>
     <string name="summary_preference_settings_startup_page">Piliin ang screen na ipapakita kapag nagsimula ang app.</string>
+    <string name="show_labels_on_bottom_bar">Ipakita ang mga label sa ilalim na bar</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Ipakita ang mga pamagat ng item sa ibaba ng mga icon sa ilalim ng nabigasyon bar</string>
 
     <string name="language">Wika</string>
     <string name="summary_preference_settings_language">Binabago ang wikang ginagamit sa app</string>

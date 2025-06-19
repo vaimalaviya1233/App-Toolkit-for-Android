@@ -101,6 +101,8 @@
     <string name="navigation">نیویگیشن</string>
     <string name="startup_page">شروعاتی صفحہ</string>
     <string name="summary_preference_settings_startup_page">ایپ شروع ہونے پر دکھائی جانے والی اسکرین منتخب کریں۔</string>
+    <string name="show_labels_on_bottom_bar">نیچے بار پر لیبل دکھائیں</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">نیچے نیویگیشن بار میں شبیہیں کے نیچے آئٹم کے عنوانات دکھائیں</string>
 
     <string name="language">زبان</string>
     <string name="summary_preference_settings_language">ایپ میں استعمال ہونے والی زبان کو تبدیل کرتا ہے</string>

@@ -101,6 +101,8 @@
     <string name="navigation">التنقل</string>
     <string name="startup_page">صفحة البدء</string>
     <string name="summary_preference_settings_startup_page">اختر الشاشة التي سيتم عرضها عند بدء تشغيل التطبيق.</string>
+    <string name="show_labels_on_bottom_bar">عرض الملصقات على الشريط السفلي</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">عرض عناوين العناصر أدناه الرموز في شريط التنقل السفلي</string>
 
     <string name="language">اللغة</string>
     <string name="summary_preference_settings_language">يغير اللغة المستخدمة في التطبيق</string>

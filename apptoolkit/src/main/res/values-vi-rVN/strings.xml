@@ -101,6 +101,8 @@
     <string name="navigation">Điều hướng</string>
     <string name="startup_page">Trang khởi động</string>
     <string name="summary_preference_settings_startup_page">Chọn màn hình sẽ hiển thị khi ứng dụng khởi động.</string>
+    <string name="show_labels_on_bottom_bar">Hiển thị nhãn trên thanh dưới cùng</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Hiển thị các tiêu đề mục dưới các biểu tượng trong thanh điều hướng dưới cùng</string>
 
     <string name="language">Ngôn ngữ</string>
     <string name="summary_preference_settings_language">Thay đổi ngôn ngữ được sử dụng trong ứng dụng</string>

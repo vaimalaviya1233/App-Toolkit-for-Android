@@ -101,6 +101,8 @@
     <string name="navigation">การนำทาง</string>
     <string name="startup_page">หน้าจอเริ่มต้น</string>
     <string name="summary_preference_settings_startup_page">เลือกหน้าจอที่จะแสดงเมื่อเริ่มต้นแอป</string>
+    <string name="show_labels_on_bottom_bar">แสดงฉลากบนแถบด้านล่าง</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">แสดงชื่อรายการด้านล่างไอคอนในแถบการนำทางด้านล่าง</string>
 
     <string name="language">ภาษา</string>
     <string name="summary_preference_settings_language">เปลี่ยนภาษาที่ใช้ในแอป</string>

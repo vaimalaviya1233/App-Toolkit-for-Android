@@ -101,6 +101,8 @@
     <string name="navigation">নেভিগেশন</string>
     <string name="startup_page">স্টার্টআপ পৃষ্ঠা</string>
     <string name="summary_preference_settings_startup_page">অ্যাপ শুরু হওয়ার সময় প্রদর্শিত স্ক্রিনটি পছন্দ করুন।</string>
+    <string name="show_labels_on_bottom_bar">নীচের বারে লেবেলগুলি দেখান</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">নীচের নেভিগেশন বারে আইকনগুলির নীচে আইটেম শিরোনাম প্রদর্শন করুন</string>
 
     <string name="language">ভাষা</string>
     <string name="summary_preference_settings_language">অ্যাপে ব্যবহৃত ভাষা পরিবর্তন করে</string>

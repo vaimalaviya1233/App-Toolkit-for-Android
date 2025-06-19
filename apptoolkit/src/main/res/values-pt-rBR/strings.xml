@@ -101,6 +101,8 @@
     <string name="navigation">Navegação</string>
     <string name="startup_page">Página inicial</string>
     <string name="summary_preference_settings_startup_page">Escolha a tela que será exibida ao iniciar o aplicativo.</string>
+    <string name="show_labels_on_bottom_bar">Mostrar rótulos na barra inferior</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Exibir títulos dos itens abaixo dos ícones na barra de navegação inferior</string>
 
     <string name="language">Idioma</string>
     <string name="summary_preference_settings_language">Altere o idioma usado no aplicativo</string>

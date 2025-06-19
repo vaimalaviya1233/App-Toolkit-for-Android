@@ -101,6 +101,8 @@
     <string name="navigation">Navigáció</string>
     <string name="startup_page">Indítóoldal</string>
     <string name="summary_preference_settings_startup_page">Válaszd ki a képernyőt, amely megjelenik az alkalmazás indításakor.</string>
+    <string name="show_labels_on_bottom_bar">Mutassa be a címkéket az alsó sávon</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Az elemcímek megjelenítése az ikonok alatt az alsó navigációs sávban</string>
 
     <string name="language">Nyelv</string>
     <string name="summary_preference_settings_language">Módosítja az alkalmazásban használt nyelvet</string>
