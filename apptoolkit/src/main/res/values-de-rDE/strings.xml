@@ -101,6 +101,8 @@
     <string name="navigation">Navigation</string>
     <string name="startup_page">Startseite</string>
     <string name="summary_preference_settings_startup_page">Wählen Sie den Bildschirm, der beim Start der App angezeigt wird.</string>
+    <string name="show_labels_on_bottom_bar">Etiketten an der unteren Bar anzeigen</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Zeigen Sie die Elementtitel unter den Symbole in der unteren Navigationsleiste an</string>
 
     <string name="language">Sprache</string>
     <string name="summary_preference_settings_language">Ändert die Sprache der App</string>

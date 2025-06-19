@@ -101,6 +101,8 @@
     <string name="navigation">Навігація</string>
     <string name="startup_page">Початкова сторінка</string>
     <string name="summary_preference_settings_startup_page">Виберіть екран, який відображатиметься при запуску додатка.</string>
+    <string name="show_labels_on_bottom_bar">Показати етикетки на нижній панелі</string>
+    <string name="summary_preference_settings_show_labels_on_bottom_bar">Дисплея назви елементів нижче Піктограми в нижній панелі навігації</string>
 
     <string name="language">Мова</string>
     <string name="summary_preference_settings_language">Змінити мову додатка</string>
