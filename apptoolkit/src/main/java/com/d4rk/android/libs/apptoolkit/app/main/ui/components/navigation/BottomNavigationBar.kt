@@ -1,32 +1,72 @@
 package com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation
 
-import androidx.compose.foundation.basicMarquee
+import android.view.SoundEffectConstants
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import com.d4rk.android.libs.apptoolkit.app.main.utils.interfaces.BottomNavigationItem
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
-fun BottomNavigationBar(modifier : Modifier = Modifier, items : List<BottomNavigationItem> , currentRoute : String? , onItemSelected : (BottomNavigationItem) -> Unit , showLabels : Boolean = true) {
+fun BottomNavigationBar(
+    navController: NavController,
+    items: List<BottomBarItem>,
+    modifier: Modifier = Modifier,
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "full_banner")),
+    onItemClickSound: (() -> Unit)? = null
+) {
+    val view = LocalView.current
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val context = LocalContext.current
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    val currentRoute = navBackStackEntry?.destination?.route
+    val showLabels: Boolean =
+        dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
+
     Column(modifier = modifier) {
+        AdBanner(modifier = Modifier.fillMaxWidth(), adsConfig = adsConfig)
+
         NavigationBar {
             items.forEach { item ->
-                NavigationBarItem(icon = {
-                    Icon(
-                        imageVector = if (currentRoute == item.route) item.selectedIcon else item.icon , contentDescription = null , modifier = Modifier.bounceClick()
-                    )
-                } , label = {
-                    if (showLabels) {
-                        Text(text = stringResource(id = item.title) , overflow = TextOverflow.Ellipsis , modifier = Modifier.basicMarquee())
+                NavigationBarItem(
+                    icon = {
+                        val icon = if (currentRoute == item.route) item.selectedIcon else item.icon
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            modifier = Modifier.bounceClick()
+                        )
+                    },
+                    alwaysShowLabel = showLabels,
+                    selected = currentRoute == item.route,
+                    onClick = {
+                        onItemClickSound?.invoke()
+                            ?: view.playSoundEffect(SoundEffectConstants.CLICK)
+                        if (currentRoute != item.route) {
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = false
+                                }
+                                launchSingleTop = true
+                            }
+                        }
                     }
-                } , selected = currentRoute == item.route , onClick = { onItemSelected(item) })
+                )
             }
         }
     }
