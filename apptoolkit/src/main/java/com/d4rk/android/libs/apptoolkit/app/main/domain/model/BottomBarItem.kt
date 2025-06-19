@@ -6,5 +6,6 @@ data class BottomBarItem(
     val route: String,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
+    val title: Int,
     val titleResId: Int
 )

@@ -12,4 +12,6 @@ class AppDisplaySettingsProvider(val context : Context) : DisplaySettingsProvide
             context = context , title = context.getString(R.string.dark_theme) , contentKey = SettingsContent.THEME
         )
     }
+
+    override val supportsStartupPage: Boolean = true
 }

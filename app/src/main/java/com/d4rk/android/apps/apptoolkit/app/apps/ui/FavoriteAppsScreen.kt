@@ -21,7 +21,10 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
     ScreenStateHandler(
         screenState = screenState,
         onLoading = { HomeLoadingScreen(paddingValues = paddingValues) },
-        onEmpty = { NoDataScreen(showRetry = true) { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } },
+        onEmpty = { NoDataScreen(showRetry = true, onRetry = {
+            viewModel.onEvent(FavoriteAppsEvent.LoadFavorites)
+        })},
+
         onSuccess = { uiHomeScreen ->
             val favorites by viewModel.dataStore.favoriteApps.collectAsState(initial = emptySet())
             AppsList(
