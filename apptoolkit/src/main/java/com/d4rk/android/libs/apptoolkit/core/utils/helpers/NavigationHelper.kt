@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
