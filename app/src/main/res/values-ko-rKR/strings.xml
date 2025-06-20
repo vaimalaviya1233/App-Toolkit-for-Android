@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">이 앱은 저희 앱툴킷 라이브러리를 사용하여 다양하고 사용자 중심적인 애플리케이션을 구축하는 방법을 보여줍니다. 저희 앱들을 탐색하여 라이브러리의 다양한 기능과 구현 사례를 확인하세요.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">모든 앱</string>
+    <string name="favorite_apps">즐겨 찾기</string>
     <string name="error_failed_to_fetch_our_apps">저희 앱 목록을 가져오는 데 실패했습니다.</string>
 
     <!-- Help screen -->

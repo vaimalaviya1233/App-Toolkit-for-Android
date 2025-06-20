@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">แอปนี้สาธิตวิธีการใช้ไลบรารี AppToolkit ของเราเพื่อสร้างแอปพลิเคชันที่หลากหลายและเน้นผู้ใช้เป็นศูนย์กลาง สำรวจแอปของเราเพื่อดูคุณสมบัติและการนำไลบรารีไปใช้งานในรูปแบบต่างๆ</string>
 
     <!-- Home screen -->
+    <string name="all_apps">แอพทั้งหมด</string>
+    <string name="favorite_apps">รายการโปรด</string>
     <string name="error_failed_to_fetch_our_apps">ไม่สามารถดึงข้อมูลรายการแอปของเราได้</string>
 
     <!-- Help screen -->

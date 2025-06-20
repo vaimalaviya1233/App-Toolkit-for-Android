@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">یہ ایپ ظاہر کرتی ہے کہ ہماری ایپ ٹول کٹ لائبریری کو ورسٹائل اور صارف پر مرکوز ایپلی کیشنز بنانے کے لیے کیسے استعمال کیا جا سکتا ہے۔ لائبریری کی مختلف خصوصیات اور نفاذ کو دیکھنے کے لیے ہماری ایپس کو دریافت کریں۔</string>
 
     <!-- Home screen -->
+    <string name="all_apps">ﺲﭙﯾﺍ ﻡﺎﻤﺗ</string>
+    <string name="favorite_apps">ﮦﺪﯾﺪﻨﺴﭘ</string>
     <string name="error_failed_to_fetch_our_apps">ہماری ایپ فہرستیں حاصل کرنے میں ناکام</string>
 
     <!-- Help screen -->

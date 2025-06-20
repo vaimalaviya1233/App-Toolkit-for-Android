@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">Diese App demonstriert, wie unsere AppToolkit-Bibliothek verwendet werden kann, um vielseitige und benutzerorientierte Anwendungen zu erstellen. Entdecken Sie unsere Apps, um verschiedene Funktionen und Implementierungen der Bibliothek zu sehen.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">Alle Apps</string>
+    <string name="favorite_apps">Favoriten</string>
     <string name="error_failed_to_fetch_our_apps">Fehler beim Abrufen unserer App-Listen</string>
 
     <!-- Help screen -->

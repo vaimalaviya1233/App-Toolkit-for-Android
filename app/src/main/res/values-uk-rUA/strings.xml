@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">Ця програма демонструє, як нашу бібліотеку AppToolkit можна використовувати для створення універсальних та орієнтованих на користувача програм. Ознайомтеся з нашими програмами, щоб побачити різні функції та реалізації бібліотеки.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">Всі програми</string>
+    <string name="favorite_apps">Фаворити</string>
     <string name="error_failed_to_fetch_our_apps">Не вдалося завантажити списки наших програм</string>
 
     <!-- Help screen -->

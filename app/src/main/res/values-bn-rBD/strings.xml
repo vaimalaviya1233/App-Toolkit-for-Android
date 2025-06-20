@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">এই অ্যাপটি দেখায় কীভাবে আমাদের অ্যাপটুলকিট লাইব্রেরি ব্যবহার করে বহুমুখী এবং ব্যবহারকারী-কেন্দ্রিক অ্যাপ্লিকেশন তৈরি করা যায়। লাইব্রেরির বিভিন্ন বৈশিষ্ট্য এবং বাস্তবায়ন দেখতে আমাদের অ্যাপগুলি অন্বেষণ করুন।</string>
 
     <!-- Home screen -->
+    <string name="all_apps">সমস্ত অ্যাপ্লিকেশন</string>
+    <string name="favorite_apps">প্রিয়</string>
     <string name="error_failed_to_fetch_our_apps">আমাদের অ্যাপের তালিকা আনতে ব্যর্থ</string>
 
     <!-- Help screen -->
