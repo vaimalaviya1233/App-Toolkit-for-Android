@@ -26,7 +26,7 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
         })},
 
         onSuccess = { uiHomeScreen ->
-            val favorites by viewModel.dataStore.favoriteApps.collectAsState(initial = emptySet())
+            val favorites by viewModel.favorites.collectAsState()
             AppsList(
                 uiHomeScreen = uiHomeScreen,
                 favorites = favorites,

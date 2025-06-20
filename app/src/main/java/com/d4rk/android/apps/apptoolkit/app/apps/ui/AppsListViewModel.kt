@@ -13,7 +13,9 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class AppsListViewModel(
@@ -21,6 +23,12 @@ class AppsListViewModel(
     private val dispatcherProvider : DispatcherProvider,
     private val dataStore: DataStore
 ) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
+
+    val favorites = dataStore.favoriteApps.stateIn(
+        scope = screenModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = emptySet()
+    )
 
     init {
         onEvent(event = HomeEvent.FetchApps)
