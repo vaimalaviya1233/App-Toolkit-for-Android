@@ -278,6 +278,4 @@
     <string name="non_paid_support">Nem fizetett támogatás</string>
     <string name="web_ad">Webes hirdetés</string>
     <string name="error_failed_to_load_sku_details">Nem sikerült betölteni az SKU részleteit</string>
-    <string name="all_apps">Minden alkalmazás</string>
-    <string name="favorite_apps">Kedvencek</string>
 </resources>

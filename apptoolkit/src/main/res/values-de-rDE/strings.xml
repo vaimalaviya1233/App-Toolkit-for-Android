@@ -278,6 +278,4 @@
     <string name="non_paid_support">Unbezahlte Unterstützung</string>
     <string name="web_ad">Webanzeige</string>
     <string name="error_failed_to_load_sku_details">Fehler beim Laden der SKU-Details</string>
-    <string name="all_apps">Alle Apps</string>
-    <string name="favorite_apps">Favoriten</string>
 </resources>

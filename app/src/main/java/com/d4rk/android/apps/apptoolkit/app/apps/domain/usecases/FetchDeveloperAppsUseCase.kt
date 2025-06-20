@@ -28,7 +28,6 @@ class FetchDeveloperAppsUseCase(private val client: HttpClient) : RepositoryWith
             }).bodyAsText()
             val response : ApiResponse = Json.Default.decodeFromString(jsonString)
             val sortedApps = response.data.apps.sortedBy { it.name.lowercase() }
-            println(message = "sortedApps: $sortedApps")
             sortedApps
         }.onSuccess { foundApps ->
             emit(DataState.Success(data = foundApps))
