@@ -29,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -49,6 +48,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationD
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.NavigationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -122,8 +122,8 @@ fun MainScaffoldTabletContent() {
     val screenState : UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
     val navController : NavHostController = rememberNavController()
-    val navBackStackEntry : NavBackStackEntry? by navController.currentBackStackEntryAsState()
-    val currentRoute : String? = navBackStackEntry?.destination?.route ?: navController.currentDestination?.route
+    val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
+    println("MainScaffoldTabletContent currentRoute -> $currentRoute")
     val bottomItems = listOf(
         BottomBarItem(
             route = NavigationRoutes.ROUTE_APPS_LIST,

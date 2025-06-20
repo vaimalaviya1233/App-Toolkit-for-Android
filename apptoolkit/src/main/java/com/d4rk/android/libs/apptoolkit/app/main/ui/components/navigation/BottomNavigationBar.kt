@@ -17,12 +17,12 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.NavigationHelper
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -35,10 +35,9 @@ fun BottomNavigationBar(
     onItemClickSound: (() -> Unit)? = null
 ) {
     val view = LocalView.current
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val currentRoute : String? = navBackStackEntry?.destination?.route ?: navController.currentDestination?.route
+    val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
     val showLabels: Boolean =
         dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
 
