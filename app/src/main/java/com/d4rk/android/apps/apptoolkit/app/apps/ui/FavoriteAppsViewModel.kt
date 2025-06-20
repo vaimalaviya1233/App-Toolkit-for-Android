@@ -11,8 +11,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 class FavoriteAppsViewModel(
@@ -22,6 +24,12 @@ class FavoriteAppsViewModel(
 ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
+
+    val favorites = dataStore.favoriteApps.stateIn(
+        scope = screenModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = emptySet()
+    )
 
     init {
         onEvent(FavoriteAppsEvent.LoadFavorites)
@@ -35,7 +43,10 @@ class FavoriteAppsViewModel(
 
     private fun loadFavorites() {
         launch(context = dispatcherProvider.io) {
-            combine(fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default), dataStore.favoriteApps) { dataState, favs ->
+            combine(
+                fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
+                favorites
+            ) { dataState, favs ->
                 dataState to favs
             }.collect { (result, favs) ->
                 if (result is DataState.Success) {
