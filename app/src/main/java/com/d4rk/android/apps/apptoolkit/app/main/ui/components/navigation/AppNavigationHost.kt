@@ -29,7 +29,7 @@ fun AppNavigationHost(
 ) {
     val context = LocalContext.current
     val dataStore = CommonDataStore.getInstance(context)
-    val startupRoute by dataStore.getStartupPage().collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
+    val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(
         navController = navController , startDestination = if (startupRoute.isNotBlank()) startupRoute else NavigationRoutes.ROUTE_APPS_LIST
