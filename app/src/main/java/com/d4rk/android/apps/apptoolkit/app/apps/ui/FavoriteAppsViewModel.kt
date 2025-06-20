@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.ui
 
+import androidx.lifecycle.viewModelScope
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.actions.FavoriteAppsAction
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.domain.model.ui.UiHomeScreen
@@ -26,7 +27,7 @@ class FavoriteAppsViewModel(
 ) {
 
     val favorites = dataStore.favoriteApps.stateIn(
-        scope = screenModelScope,
+        scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptySet()
     )

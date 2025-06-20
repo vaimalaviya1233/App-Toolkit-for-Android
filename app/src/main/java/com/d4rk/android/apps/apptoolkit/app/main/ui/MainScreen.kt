@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -80,7 +81,7 @@ fun MainScaffoldContent(drawerState : DrawerState) {
         BottomBarItem(
             route = NavigationRoutes.ROUTE_APPS_LIST,
             icon = Icons.Outlined.Apps,
-            selectedIcon = Icons.Filled.Apps,
+            selectedIcon = Icons.Rounded.Apps,
             title = R.string.all_apps
         ),
         BottomBarItem(
