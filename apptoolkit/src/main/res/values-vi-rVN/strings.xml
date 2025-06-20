@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Cảm ơn bạn đã cá nhân hóa trải nghiệm của mình. Bây giờ bạn đã sẵn sàng khám phá tất cả các tính năng. Chúc bạn vui vẻ!</string>
 
     <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
+    <string name="content_description_more_options">Nhiều lựa chọn hơn</string>
     <string name="go_back">Quay lại</string>
     <string name="toast_review_already_done">Cảm ơn đã đánh giá!</string>
 

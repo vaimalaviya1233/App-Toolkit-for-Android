@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Tack för att du anpassade din upplevelse. Du är nu redo att utforska alla funktioner. Ha så kul!</string>
 
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
+    <string name="content_description_more_options">Fler alternativ</string>
     <string name="go_back">Tillbaka</string>
     <string name="toast_review_already_done">Tack för betyg!</string>
 

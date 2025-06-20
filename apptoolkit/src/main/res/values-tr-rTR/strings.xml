@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Deneyiminizi kişiselleştirdiğiniz için teşekkürler. Artık tüm özellikleri keşfetmeye hazırsınız. Keyfini çıkarın!</string>
 
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
+    <string name="content_description_more_options">Daha Fazla Seçenekler</string>
     <string name="go_back">Geri dön</string>
     <string name="toast_review_already_done">Derecelendirdiğiniz için teşekkürler!</string>
 

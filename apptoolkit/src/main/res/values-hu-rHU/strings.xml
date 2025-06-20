@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Köszönjük, hogy személyre szabta az élményét. Most már készen áll az összes funkció felfedezésére. Jó szórakozást!</string>
 
     <string name="navigation_drawer_open">Navigációs menü megnyitása</string>
+    <string name="content_description_more_options">További lehetőségek</string>
     <string name="go_back">Vissza</string>
     <string name="toast_review_already_done">Köszönöm a besorolást!</string>
 

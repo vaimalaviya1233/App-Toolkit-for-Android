@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">感謝您個人化您的體驗。您現在已準備好探索所有功能。祝您使用愉快！</string>
 
     <string name="navigation_drawer_open">打開導覽抽屜</string>
+    <string name="content_description_more_options">更多选项</string>
     <string name="go_back">返回</string>
     <string name="toast_review_already_done">感謝您的評分！</string>
 

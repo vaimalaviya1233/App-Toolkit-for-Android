@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">エクスペリエンスをパーソナライズしていただきありがとうございます。これで、すべての機能を探索する準備ができました。お楽しみください！</string>
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="content_description_more_options">その他のオプション</string>
     <string name="go_back">戻る</string>
     <string name="toast_review_already_done">評価してくれてありがとう！</string>
 
