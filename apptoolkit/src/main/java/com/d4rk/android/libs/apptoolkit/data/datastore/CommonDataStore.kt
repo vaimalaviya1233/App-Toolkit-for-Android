@@ -59,9 +59,20 @@ open class CommonDataStore(context : Context) {
         preferences[startupKey] != false
     }
 
+    private val startupPageKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP_PAGE)
+    fun getStartupPage() : Flow<String> = dataStore.data.map { preferences ->
+        preferences[startupPageKey] ?: ""
+    }
+
     suspend fun saveStartup(isFirstTime : Boolean) {
         dataStore.edit { preferences : MutablePreferences ->
             preferences[startupKey] = isFirstTime
+        }
+    }
+
+    suspend fun saveStartupPage(route: String) {
+        dataStore.edit { prefs: MutablePreferences ->
+            prefs[startupPageKey] = route
         }
     }
 

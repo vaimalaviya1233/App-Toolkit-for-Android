@@ -278,4 +278,6 @@
     <string name="non_paid_support">Безплатна подкрепа</string>
     <string name="web_ad">Уеб реклама</string>
     <string name="error_failed_to_load_sku_details">Неуспешно зареждане на SKU детайли</string>
+    <string name="all_apps">Всички приложения</string>
+    <string name="favorite_apps">Любими</string>
 </resources>

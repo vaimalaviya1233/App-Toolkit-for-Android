@@ -278,4 +278,6 @@
     <string name="non_paid_support">Hindi Bayad na Suporta</string>
     <string name="web_ad">Web Ad</string>
     <string name="error_failed_to_load_sku_details">Nabigong i-load ang mga detalye ng SKU</string>
+    <string name="all_apps">Lahat ng mga app</string>
+    <string name="favorite_apps">Mga Paborito</string>
 </resources>

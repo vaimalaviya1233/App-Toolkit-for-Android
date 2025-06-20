@@ -278,4 +278,6 @@
     <string name="non_paid_support">Obetalt stöd</string>
     <string name="web_ad">Webbannons</string>
     <string name="error_failed_to_load_sku_details">Det gick inte att läsa in SKU-detaljer</string>
+    <string name="all_apps">Alla appar</string>
+    <string name="favorite_apps">Favoriter</string>
 </resources>
