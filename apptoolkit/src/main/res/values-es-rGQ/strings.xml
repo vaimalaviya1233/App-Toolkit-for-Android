@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
 
     <string name="navigation_drawer_open">Abrir el menú de navegación</string>
+    <string name="content_description_more_options">Más opciones</string>
     <string name="go_back">Volver</string>
     <string name="toast_review_already_done">¡Gracias por la calificación!</string>
 

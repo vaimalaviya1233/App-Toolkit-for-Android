@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Salamat sa pag-personalize ng iyong karanasan. Handa ka na ngayong tuklasin ang lahat ng feature. Magsaya!</string>
 
     <string name="navigation_drawer_open">Buksan ang navigation drawer</string>
+    <string name="content_description_more_options">Higit pang mga pagpipilian</string>
     <string name="go_back">Bumalik</string>
     <string name="toast_review_already_done">Salamat sa rating!</string>
 

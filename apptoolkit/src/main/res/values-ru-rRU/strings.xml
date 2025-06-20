@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Спасибо за персонализацию вашего опыта. Теперь вы готовы исследовать все функции. Наслаждайтесь!</string>
 
     <string name="navigation_drawer_open">Открыть меню навигации</string>
+    <string name="content_description_more_options">Больше вариантов</string>
     <string name="go_back">Назад</string>
     <string name="toast_review_already_done">Спасибо за рейтинг!</string>
 

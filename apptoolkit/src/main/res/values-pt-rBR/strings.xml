@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Obrigado por personalizar sua experiência. Agora você está pronto para explorar todos os recursos. Aproveite!</string>
 
     <string name="navigation_drawer_open">Abrir menu de navegação</string>
+    <string name="content_description_more_options">Mais opções</string>
     <string name="go_back">Voltar</string>
     <string name="toast_review_already_done">Obrigado pela classificação!</string>
 

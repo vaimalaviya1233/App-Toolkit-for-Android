@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati!</string>
 
     <string name="navigation_drawer_open">Buka menu navigasi</string>
+    <string name="content_description_more_options">Lebih banyak opsi</string>
     <string name="go_back">Kembali</string>
     <string name="toast_review_already_done">Terima kasih atas peringkatnya!</string>
 

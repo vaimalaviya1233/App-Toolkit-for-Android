@@ -47,6 +47,7 @@
     <string name="onboarding_final_description">Mulțumim că ți-ai personalizat experiența. Acum ești gata să explorezi toate funcționalitățile. Bucură-te!</string>
 
     <string name="navigation_drawer_open">Deschide meniul de navigare</string>
+    <string name="content_description_more_options">Mai multe opțiuni</string>
     <string name="go_back">Înapoi</string>
     <string name="toast_review_already_done">Mulțumesc pentru evaluare!</string>
 
