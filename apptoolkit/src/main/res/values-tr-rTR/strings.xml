@@ -278,4 +278,6 @@
     <string name="non_paid_support">Ücretsiz destek</string>
     <string name="web_ad">Web Reklamı</string>
     <string name="error_failed_to_load_sku_details">SKU ayrıntıları yüklenemedi</string>
+    <string name="all_apps">Tüm uygulamalar</string>
+    <string name="favorite_apps">Favoriler</string>
 </resources>

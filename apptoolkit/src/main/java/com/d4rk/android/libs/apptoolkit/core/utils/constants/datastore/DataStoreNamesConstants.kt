@@ -34,5 +34,6 @@ open class DataStoreNamesConstants {
         const val DATA_STORE_SESSION_COUNT = "session_count"
         const val DATA_STORE_REVIEW_PROMPTED = "review_prompted"
         const val DATA_STORE_FAVORITE_APPS = "favorite_apps"
+        const val DATA_STORE_STARTUP_PAGE = "startup_page"
     }
 }

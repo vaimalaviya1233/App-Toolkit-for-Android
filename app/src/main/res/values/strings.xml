@@ -11,8 +11,6 @@
 
     <!-- Home screen -->
     <string name="error_failed_to_fetch_our_apps">Failed to fetch our app listings</string>
-    <string name="all_apps">All Apps</string>
-    <string name="favorite_apps">Favorites</string>
 
     <!-- Help screen -->
     <string name="question_1">What is App Toolkit?</string>

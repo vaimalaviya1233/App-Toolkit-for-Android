@@ -81,15 +81,13 @@ fun MainScaffoldContent(drawerState : DrawerState) {
             route = NavigationRoutes.ROUTE_APPS_LIST,
             icon = Icons.Outlined.Apps,
             selectedIcon = Icons.Filled.Apps,
-            titleResId = R.string.all_apps,
             title = R.string.all_apps
         ),
         BottomBarItem(
             route = NavigationRoutes.ROUTE_FAVORITE_APPS,
             icon = Icons.Outlined.Star,
             selectedIcon = Icons.Filled.Star,
-            title = R.string.favorite_apps,
-            titleResId = R.string.favorite_apps
+            title = R.string.favorite_apps
         )
     )
 
@@ -130,14 +128,12 @@ fun MainScaffoldTabletContent() {
             route = NavigationRoutes.ROUTE_APPS_LIST,
             icon = Icons.Outlined.Apps,
             selectedIcon = Icons.Filled.Apps,
-            titleResId = R.string.all_apps,
             title = R.string.all_apps
         ),
         BottomBarItem(
             route = NavigationRoutes.ROUTE_FAVORITE_APPS,
             icon = Icons.Outlined.Star,
             selectedIcon = Icons.Filled.Star,
-            titleResId = R.string.favorite_apps,
             title = R.string.favorite_apps
         )
     )

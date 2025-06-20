@@ -278,4 +278,6 @@
     <string name="non_paid_support">Support non payant</string>
     <string name="web_ad">Publicité Web</string>
     <string name="error_failed_to_load_sku_details">Échec du chargement des détails du SKU</string>
+    <string name="all_apps">Toutes les applications</string>
+    <string name="favorite_apps">Favoris</string>
 </resources>
