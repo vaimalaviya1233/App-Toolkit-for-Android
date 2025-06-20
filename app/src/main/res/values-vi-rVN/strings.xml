@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">Ứng dụng này minh họa cách thư viện AppToolkit của chúng tôi có thể được sử dụng để xây dựng các ứng dụng linh hoạt và tập trung vào người dùng. Khám phá các ứng dụng của chúng tôi để xem các tính năng và cách triển khai khác nhau của thư viện.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">Tất cả các ứng dụng</string>
+    <string name="favorite_apps">Yêu thích</string>
     <string name="error_failed_to_fetch_our_apps">Không thể tìm nạp danh sách ứng dụng của chúng tôi</string>
 
     <!-- Help screen -->
