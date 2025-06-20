@@ -48,6 +48,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="go_back">Go back</string>
+    <string name="content_description_more_options">More options</string>
     <string name="toast_review_already_done">Thanks for rating!</string>
 
     <string name="sort_by">Sort by:</string>
