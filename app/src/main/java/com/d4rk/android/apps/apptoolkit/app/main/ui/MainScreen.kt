@@ -123,7 +123,7 @@ fun MainScaffoldTabletContent() {
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
     val navController : NavHostController = rememberNavController()
     val navBackStackEntry : NavBackStackEntry? by navController.currentBackStackEntryAsState()
-    val currentRoute : String? = navBackStackEntry?.destination?.route
+    val currentRoute : String? = navBackStackEntry?.destination?.route ?: navController.currentDestination?.route
     val bottomItems = listOf(
         BottomBarItem(
             route = NavigationRoutes.ROUTE_APPS_LIST,

@@ -38,7 +38,7 @@ fun BottomNavigationBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute : String? = navBackStackEntry?.destination?.route ?: navController.currentDestination?.route
     val showLabels: Boolean =
         dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
 
@@ -50,6 +50,7 @@ fun BottomNavigationBar(
                 NavigationBarItem(
                     icon = {
                         val icon = if (currentRoute == item.route) item.selectedIcon else item.icon
+                        println("Icon state: $icon, currentRoute: $currentRoute, item.route: ${item.route}")
                         Icon(
                             imageVector = icon,
                             contentDescription = null,
