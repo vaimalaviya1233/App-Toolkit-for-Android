@@ -1,6 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.oboarding.ui
 
-import android.content.Context
+import android.app.Activity
 import android.view.SoundEffectConstants
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -24,12 +24,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.OnboardingBottomNavigation
@@ -43,18 +44,13 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun OnboardingScreen() {
-    val context: Context = LocalContext.current
+fun OnboardingScreen(activity : Activity) {
     val onboardingProvider: OnboardingProvider = koinInject()
     val pages: List<OnboardingPage> =
-        remember { onboardingProvider.getOnboardingPages(context = context) }
+        remember { onboardingProvider.getOnboardingPages(context = activity) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val viewModel: OnboardingViewModel = viewModel()
     val pagerState: PagerState = rememberPagerState(
@@ -63,13 +59,13 @@ fun OnboardingScreen() {
     LaunchedEffect(pagerState.currentPage) {
         viewModel.currentTabIndex = pagerState.currentPage
     }
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = activity)
     val view = LocalView.current
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
         }
-        onboardingProvider.onOnboardingFinished(context = context)
+        onboardingProvider.onOnboardingFinished(context = activity)
     }
 
     Scaffold(topBar = {
@@ -111,7 +107,7 @@ fun OnboardingScreen() {
                     } else {
                         coroutineScope.launch {
                             dataStore.saveStartup(isFirstTime = false)
-                            onboardingProvider.onOnboardingFinished(context)
+                            onboardingProvider.onOnboardingFinished(activity)
                         }
                     }
                 },

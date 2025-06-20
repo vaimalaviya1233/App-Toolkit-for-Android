@@ -27,9 +27,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.Info
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlinx.coroutines.flow.firstOrNull
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
-import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (String) -> Unit) {

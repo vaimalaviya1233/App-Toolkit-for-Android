@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.compose.material.icons.Icons
@@ -66,5 +67,8 @@ class AppOnboardingProvider : OnboardingProvider {
 
     override fun onOnboardingFinished(context: Context) {
         context.startActivity(Intent(context, MainActivity::class.java))
+        if (context is Activity) {
+            context.finish()
+        }
     }
 }

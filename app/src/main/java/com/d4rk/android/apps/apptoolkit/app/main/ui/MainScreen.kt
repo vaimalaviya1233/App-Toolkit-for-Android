@@ -5,11 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,22 +34,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.d4rk.android.apps.apptoolkit.R
-import com.d4rk.android.apps.apptoolkit.app.apps.ui.FavoriteAppsScreen
-import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListScreen
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.AppNavigationHost
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.NavigationDrawer
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.handleNavigationItemClick
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
-import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNavigationRail
-import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.BottomNavigationBar
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.BottomNavigationBar
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNavigationRail
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.NavigationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -86,7 +84,7 @@ fun MainScaffoldContent(drawerState : DrawerState) {
         ),
         BottomBarItem(
             route = NavigationRoutes.ROUTE_FAVORITE_APPS,
-            icon = Icons.Outlined.Star,
+            icon = Icons.Outlined.StarOutline,
             selectedIcon = Icons.Filled.Star,
             title = R.string.favorite_apps
         )
@@ -122,7 +120,11 @@ fun MainScaffoldTabletContent() {
     val screenState : UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
     val navController : NavHostController = rememberNavController()
-    val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
+
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
+
+   // val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
     println("MainScaffoldTabletContent currentRoute -> $currentRoute")
     val bottomItems = listOf(
         BottomBarItem(

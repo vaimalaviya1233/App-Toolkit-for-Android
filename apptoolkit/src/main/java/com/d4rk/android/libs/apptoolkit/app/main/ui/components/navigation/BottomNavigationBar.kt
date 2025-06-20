@@ -17,12 +17,12 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.NavigationHelper
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -37,7 +37,9 @@ fun BottomNavigationBar(
     val view = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
+
     val showLabels: Boolean =
         dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
 
@@ -48,11 +50,9 @@ fun BottomNavigationBar(
             items.forEach { item ->
                 NavigationBarItem(
                     icon = {
-                        val icon = if (currentRoute == item.route) item.selectedIcon else item.icon
-                        println("Icon state: $icon, currentRoute: $currentRoute, item.route: ${item.route}")
                         Icon(
-                            imageVector = icon,
-                            contentDescription = null,
+                            imageVector = if (currentRoute == item.route) item.selectedIcon else item.icon,
+                            contentDescription = stringResource(id = item.title),
                             modifier = Modifier.bounceClick()
                         )
                     },

@@ -24,7 +24,7 @@ class OnboardingActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    OnboardingScreen()
+                    OnboardingScreen(activity = this@OnboardingActivity)
                 }
             }
         }

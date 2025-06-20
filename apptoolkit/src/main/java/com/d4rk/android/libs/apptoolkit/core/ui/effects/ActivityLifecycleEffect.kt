@@ -8,7 +8,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.activity.ComponentActivity
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.findActivity
 
 @Composable
