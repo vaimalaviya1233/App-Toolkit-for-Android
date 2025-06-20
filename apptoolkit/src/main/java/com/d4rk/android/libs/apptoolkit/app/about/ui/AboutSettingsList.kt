@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,11 +38,6 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
     val viewModel : AboutViewModel = koinViewModel()
     val screenState : UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsState()
     val deviceInfo : String = stringResource(id = R.string.device_info)
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.onEvent(event = AboutEvents.LoadHtml(context = context , packageName = configProvider.packageName , versionName = configProvider.appVersion))
-    }
-
     LazyColumn(modifier = Modifier.fillMaxHeight() , contentPadding = paddingValues) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
