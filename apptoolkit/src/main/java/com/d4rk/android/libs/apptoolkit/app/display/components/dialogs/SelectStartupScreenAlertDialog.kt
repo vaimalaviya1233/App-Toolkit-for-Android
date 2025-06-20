@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
@@ -28,6 +27,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.Info
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
@@ -35,8 +36,8 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
     val context = LocalContext.current
     val dataStore = CommonDataStore.getInstance(context)
     val selectedPage = remember { mutableStateOf("") }
-    val entries = stringArrayResource(id = R.array.preference_startup_entries).toList()
-    val values = stringArrayResource(id = R.array.preference_startup_values).toList()
+    val entries: List<String> = koinInject(qualifier = named("startup_entries"))
+    val values: List<String> = koinInject(qualifier = named("startup_values"))
 
     BasicAlertDialog(
         onDismiss = onDismiss,
