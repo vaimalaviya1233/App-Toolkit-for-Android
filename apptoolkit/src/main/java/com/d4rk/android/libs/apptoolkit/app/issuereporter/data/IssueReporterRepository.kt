@@ -38,8 +38,6 @@ class IssueReporterRepository(private val client : HttpClient) {
         }
 
         val responseBody = response.bodyAsText()
-        println("GitHub response: $responseBody")
-
         return if (response.status == HttpStatusCode.Created) {
             val json = Json.parseToJsonElement(responseBody).jsonObject
             val issueUrl = json["html_url"]?.jsonPrimitive?.content ?: ""

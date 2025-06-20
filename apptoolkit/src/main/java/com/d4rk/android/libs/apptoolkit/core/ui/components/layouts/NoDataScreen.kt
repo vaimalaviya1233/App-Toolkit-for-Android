@@ -49,6 +49,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun NoDataScreen(
     text: Int = R.string.try_again,
+    textMessage : Int = R.string.try_again,
     icon: ImageVector = Icons.Default.Info,
     showRetry: Boolean = false,
     onRetry: () -> Unit = {},
@@ -74,7 +75,7 @@ fun NoDataScreen(
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
-                text = stringResource(id = text),
+                text = stringResource(id = textMessage),
                 style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
                 color = MaterialTheme.colorScheme.onBackground
             )

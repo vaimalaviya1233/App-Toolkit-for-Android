@@ -10,16 +10,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListScreen
-import com.d4rk.android.apps.apptoolkit.app.apps.ui.FavoriteAppsScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListScreen
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
