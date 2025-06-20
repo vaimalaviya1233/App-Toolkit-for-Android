@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.d4rk.android.apps.apptoolkit.app.apps.ui.AppsListScreen
@@ -13,6 +16,7 @@ import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoute
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -23,8 +27,12 @@ import kotlinx.coroutines.launch
 fun AppNavigationHost(
     navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues
 ) {
+    val context = LocalContext.current
+    val dataStore = CommonDataStore.getInstance(context)
+    val startupRoute by dataStore.getStartupPage().collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
+
     NavigationHost(
-        navController = navController , startDestination = NavigationRoutes.ROUTE_APPS_LIST
+        navController = navController , startDestination = if (startupRoute.isNotBlank()) startupRoute else NavigationRoutes.ROUTE_APPS_LIST
     ) {
         composable(route = NavigationRoutes.ROUTE_APPS_LIST) {
             AppsListScreen(paddingValues = paddingValues)
