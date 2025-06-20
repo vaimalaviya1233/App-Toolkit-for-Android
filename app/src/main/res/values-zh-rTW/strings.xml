@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">此應用程式展示了如何使用我們的 AppToolkit 程式庫來建構多功能且以使用者為中心的應用程式。探索我們的應用程式，以了解程式庫的不同功能和實作方式。</string>
 
     <!-- Home screen -->
+    <string name="all_apps">所有應用程序</string>
+    <string name="favorite_apps">最愛</string>
     <string name="error_failed_to_fetch_our_apps">無法擷取我們的應用程式清單</string>
 
     <!-- Help screen -->

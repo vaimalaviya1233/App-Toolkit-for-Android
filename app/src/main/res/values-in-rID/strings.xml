@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">Aplikasi ini menunjukkan bagaimana pustaka AppToolkit kami dapat digunakan untuk membangun aplikasi yang serbaguna dan berfokus pada pengguna. Jelajahi aplikasi kami untuk melihat berbagai fitur dan implementasi pustaka.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">Semua aplikasi</string>
+    <string name="favorite_apps">Favorit</string>
     <string name="error_failed_to_fetch_our_apps">Gagal mengambil daftar aplikasi kami</string>
 
     <!-- Help screen -->

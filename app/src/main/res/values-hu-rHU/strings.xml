@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">Ez az alkalmazás bemutatja, hogyan használható AppToolkit könyvtárunk sokoldalú és felhasználó-központú alkalmazások készítésére. Fedezze fel alkalmazásainkat, hogy megtekinthesse a könyvtár különböző funkcióit és implementációit.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">Minden alkalmazás</string>
+    <string name="favorite_apps">Kedvencek</string>
     <string name="error_failed_to_fetch_our_apps">Nem sikerült lekérni alkalmazáslistáinkat</string>
 
     <!-- Help screen -->

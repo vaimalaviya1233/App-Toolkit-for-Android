@@ -10,6 +10,8 @@
     <string name="onboarding_personalization_description">يوضح هذا التطبيق كيف يمكن استخدام مكتبة AppToolkit الخاصة بنا لبناء تطبيقات متعددة الاستخدامات ومركزة على المستخدم. استكشف تطبيقاتنا للاطلاع على الميزات والتطبيقات المختلفة للمكتبة.</string>
 
     <!-- Home screen -->
+    <string name="all_apps">ﺕﺎﻘﻴﺒﻄﺘﻟﺍ ﻊﻴﻤﺟ</string>
+    <string name="favorite_apps">ﺔﻠﻀﻔﻤﻟﺍ</string>
     <string name="error_failed_to_fetch_our_apps">فشل في جلب قوائم تطبيقاتنا</string>
 
     <!-- Help screen -->
