@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Tất cả các ứng dụng</string>
     <string name="favorite_apps">Yêu thích</string>
+    <string name="no_apps_added_to_favorites">Không có ứng dụng nào được thêm vào yêu thích</string>
     <string name="error_failed_to_fetch_our_apps">Không thể tìm nạp danh sách ứng dụng của chúng tôi</string>
 
     <!-- Help screen -->

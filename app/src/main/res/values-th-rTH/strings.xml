@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">แอพทั้งหมด</string>
     <string name="favorite_apps">รายการโปรด</string>
+    <string name="no_apps_added_to_favorites">ไม่มีการเพิ่มแอพในรายการโปรด</string>
     <string name="error_failed_to_fetch_our_apps">ไม่สามารถดึงข้อมูลรายการแอปของเราได้</string>
 
     <!-- Help screen -->

@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">ﺲﭙﯾﺍ ﻡﺎﻤﺗ</string>
     <string name="favorite_apps">ﮦﺪﯾﺪﻨﺴﭘ</string>
+    <string name="no_apps_added_to_favorites">کوئی ایپس شامل نہیں کی گئیں</string>
     <string name="error_failed_to_fetch_our_apps">ہماری ایپ فہرستیں حاصل کرنے میں ناکام</string>
 
     <!-- Help screen -->

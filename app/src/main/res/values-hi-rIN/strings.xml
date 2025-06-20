@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">सभी ऐप्स</string>
     <string name="favorite_apps">पसंदीदा</string>
+    <string name="no_apps_added_to_favorites">पसंदीदा में कोई ऐप नहीं जोड़ा गया</string>
     <string name="error_failed_to_fetch_our_apps">हमारे ऐप लिस्टिंग को लाने में विफल</string>
 
     <!-- Help screen -->

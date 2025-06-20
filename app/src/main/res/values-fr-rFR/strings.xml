@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Toutes les applications</string>
     <string name="favorite_apps">Favoris</string>
+    <string name="no_apps_added_to_favorites">Aucune application ajoutée aux favoris</string>
     <string name="error_failed_to_fetch_our_apps">Échec de la récupération de nos listes d\'applications</string>
 
     <!-- Help screen -->

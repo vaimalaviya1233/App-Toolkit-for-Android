@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Alla appar</string>
     <string name="favorite_apps">Favoriter</string>
+    <string name="no_apps_added_to_favorites">Inga appar läggs till i favoriterna</string>
     <string name="error_failed_to_fetch_our_apps">Kunde inte hämta våra applistningar</string>
 
     <!-- Help screen -->

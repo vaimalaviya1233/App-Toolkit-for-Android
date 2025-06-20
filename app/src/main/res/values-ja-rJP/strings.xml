@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">すべてのアプリ</string>
     <string name="favorite_apps">お気に入り</string>
+    <string name="no_apps_added_to_favorites">お気に入りに追加されるアプリはありません</string>
     <string name="error_failed_to_fetch_our_apps">アプリ一覧の取得に失敗しました</string>
 
     <!-- Help screen -->

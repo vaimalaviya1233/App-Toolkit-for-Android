@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">ﺕﺎﻘﻴﺒﻄﺘﻟﺍ ﻊﻴﻤﺟ</string>
     <string name="favorite_apps">ﺔﻠﻀﻔﻤﻟﺍ</string>
+    <string name="no_apps_added_to_favorites">ﻻ توجد تطبيقات مضافة إلى المفضلة</string>
     <string name="error_failed_to_fetch_our_apps">فشل في جلب قوائم تطبيقاتنا</string>
 
     <!-- Help screen -->

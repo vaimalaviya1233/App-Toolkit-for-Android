@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Tutte le app</string>
     <string name="favorite_apps">Preferiti</string>
+    <string name="no_apps_added_to_favorites">Nessuna app aggiunta ai preferiti</string>
     <string name="error_failed_to_fetch_our_apps">Impossibile recuperare gli elenchi delle nostre app</string>
 
     <!-- Help screen -->
