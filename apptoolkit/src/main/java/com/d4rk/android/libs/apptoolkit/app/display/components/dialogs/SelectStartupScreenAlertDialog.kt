@@ -39,7 +39,7 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
     val selectedPage = remember { mutableStateOf("") }
     val entries: List<String> = koinInject(qualifier = named("startup_entries"))
     val values: List<String> = koinInject(qualifier = named("startup_values"))
-    val startupRoute by dataStore.getStartupPage().collectAsState(initial = values.first())
+    val startupRoute by dataStore.getStartupPage(default = values.first()).collectAsState(initial = values.first())
 
     LaunchedEffect(startupRoute) {
         selectedPage.value = startupRoute

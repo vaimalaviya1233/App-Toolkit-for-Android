@@ -60,8 +60,8 @@ open class CommonDataStore(context : Context) {
     }
 
     private val startupPageKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP_PAGE)
-    fun getStartupPage() : Flow<String> = dataStore.data.map { preferences ->
-        preferences[startupPageKey] ?: ""
+    fun getStartupPage(default: String = "") : Flow<String> = dataStore.data.map { preferences ->
+        preferences[startupPageKey] ?: default
     }
 
     suspend fun saveStartup(isFirstTime : Boolean) {
