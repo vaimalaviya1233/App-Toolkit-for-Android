@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">所有應用程序</string>
     <string name="favorite_apps">最愛</string>
+    <string name="no_apps_added_to_favorites">沒有添加到收藏夾的應用程序</string>
     <string name="error_failed_to_fetch_our_apps">無法擷取我們的應用程式清單</string>
 
     <!-- Help screen -->

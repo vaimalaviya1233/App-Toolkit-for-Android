@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Всички приложения</string>
     <string name="favorite_apps">Любими</string>
+    <string name="no_apps_added_to_favorites">Няма добавени приложения към любимите</string>
     <string name="error_failed_to_fetch_our_apps">Неуспешно зареждане на списъка с нашите приложения</string>
 
     <!-- Help screen -->

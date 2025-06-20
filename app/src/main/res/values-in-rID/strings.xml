@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Semua aplikasi</string>
     <string name="favorite_apps">Favorit</string>
+    <string name="no_apps_added_to_favorites">Tidak ada aplikasi yang ditambahkan ke favorit</string>
     <string name="error_failed_to_fetch_our_apps">Gagal mengambil daftar aplikasi kami</string>
 
     <!-- Help screen -->

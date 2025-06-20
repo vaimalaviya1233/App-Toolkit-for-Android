@@ -12,6 +12,7 @@
     <!-- Home screen -->
     <string name="all_apps">Tüm uygulamalar</string>
     <string name="favorite_apps">Favoriler</string>
+    <string name="no_apps_added_to_favorites">Favorilere eklenen uygulama yok</string>
     <string name="error_failed_to_fetch_our_apps">Uygulama listelerimiz alınamadı</string>
 
     <!-- Help screen -->
