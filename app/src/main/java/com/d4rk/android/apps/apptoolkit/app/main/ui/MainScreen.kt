@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
-import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Apps
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material3.DrawerState
@@ -124,18 +122,16 @@ fun MainScaffoldTabletContent() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
 
-   // val currentRoute : String? = NavigationHelper.currentRoute(navController = navController)
-    println("MainScaffoldTabletContent currentRoute -> $currentRoute")
     val bottomItems = listOf(
         BottomBarItem(
             route = NavigationRoutes.ROUTE_APPS_LIST,
             icon = Icons.Outlined.Apps,
-            selectedIcon = Icons.Filled.Apps,
+            selectedIcon = Icons.Rounded.Apps,
             title = R.string.all_apps
         ),
         BottomBarItem(
             route = NavigationRoutes.ROUTE_FAVORITE_APPS,
-            icon = Icons.Outlined.Star,
+            icon = Icons.Outlined.StarOutline,
             selectedIcon = Icons.Filled.Star,
             title = R.string.favorite_apps
         )

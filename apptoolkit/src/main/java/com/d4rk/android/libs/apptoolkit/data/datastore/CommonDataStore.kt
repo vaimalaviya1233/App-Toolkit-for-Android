@@ -224,18 +224,6 @@ open class CommonDataStore(context : Context) {
         }
     }
 
-    // App Review
-    private val reviewDoneKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_REVIEW_DONE)
-    val reviewDone : Flow<Boolean> = dataStore.data.map { prefs : Preferences ->
-        prefs[reviewDoneKey] == true
-    }
-
-    suspend fun saveReviewDone(isDone : Boolean) {
-        dataStore.edit { preferences : MutablePreferences ->
-            preferences[reviewDoneKey] = isDone
-        }
-    }
-
     // Review Prompt
     private val sessionCountKey = longPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_SESSION_COUNT)
     val sessionCount : Flow<Int> = dataStore.data.map { prefs : Preferences ->

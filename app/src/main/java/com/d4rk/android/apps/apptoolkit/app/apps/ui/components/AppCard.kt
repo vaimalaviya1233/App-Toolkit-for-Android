@@ -3,9 +3,11 @@ package com.d4rk.android.apps.apptoolkit.app.apps.ui.components
 import android.content.Context
 import android.view.SoundEffectConstants
 import android.view.View
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,9 +44,10 @@ fun AppCard(
     onFavoriteToggle: () -> Unit,
     modifier: Modifier
 ) {
-    val context : Context = LocalContext.current
+    val context: Context = LocalContext.current
     val view: View = LocalView.current
-    Card(modifier = modifier
+    Card(
+        modifier = modifier
             .bounceClick()
             .fillMaxSize()
             .aspectRatio(ratio = 1f)
@@ -52,42 +55,64 @@ fun AppCard(
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 if (appInfo.packageName.isNotEmpty()) {
-                    if (AppInfoHelper().isAppInstalled(context = context , packageName = appInfo.packageName)) {
-                        if (! AppInfoHelper().openApp(context = context , packageName = appInfo.packageName)) {
+                    if (AppInfoHelper().isAppInstalled(
+                            context = context,
+                            packageName = appInfo.packageName
+                        )
+                    ) {
+                        if (!AppInfoHelper().openApp(
+                                context = context,
+                                packageName = appInfo.packageName
+                            )
+                        ) {
                             IntentsHelper.openPlayStoreForApp(
-                                context = context ,
+                                context = context,
                                 packageName = appInfo.packageName
                             )
                         }
-                    }
-                    else {
+                    } else {
                         IntentsHelper.openPlayStoreForApp(
-                            context = context ,
+                            context = context,
                             packageName = appInfo.packageName
                         )
                     }
                 }
             }) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            LargeVerticalSpacer()
-            AsyncImage(
-                model = appInfo.iconUrl , contentDescription = appInfo.name , modifier = Modifier
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                AsyncImage(
+                    model = appInfo.iconUrl,
+                    contentDescription = appInfo.name,
+                    modifier = Modifier
                         .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.LargeSize + SizeConstants.SmallSize)
-                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)) , contentScale = ContentScale.Fit
-            )
-            IconButton(onClick = onFavoriteToggle) {
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)),
+                    contentScale = ContentScale.Fit
+                )
+                LargeVerticalSpacer()
+                Text(
+                    text = appInfo.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SizeConstants.LargeSize),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            IconButton(
+                onClick = onFavoriteToggle,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .bounceClick()
+            ) {
                 Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
+                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                     contentDescription = null
                 )
             }
-            LargeVerticalSpacer()
-            Text(
-                text = appInfo.name , modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = SizeConstants.LargeSize) , textAlign = TextAlign.Center , fontWeight = FontWeight.Bold
-            )
-            LargeVerticalSpacer()
         }
     }
 }
