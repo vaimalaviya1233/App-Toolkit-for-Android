@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,7 +28,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.Info
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import kotlinx.coroutines.flow.firstOrNull
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -38,6 +38,11 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
     val selectedPage = remember { mutableStateOf("") }
     val entries: List<String> = koinInject(qualifier = named("startup_entries"))
     val values: List<String> = koinInject(qualifier = named("startup_values"))
+    val startupRoute by dataStore.getStartupPage().collectAsState(initial = values.first())
+
+    LaunchedEffect(startupRoute) {
+        selectedPage.value = startupRoute
+    }
 
     BasicAlertDialog(
         onDismiss = onDismiss,
@@ -48,7 +53,7 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
         icon = Icons.Outlined.Home,
         title = stringResource(id = R.string.startup_page),
         content = {
-            SelectStartupScreenAlertDialogContent(selectedPage, dataStore, entries, values)
+            SelectStartupScreenAlertDialogContent(selectedPage, dataStore, entries, values, startupRoute)
         }
     )
 }
@@ -58,11 +63,9 @@ fun SelectStartupScreenAlertDialogContent(
     selectedPage: MutableState<String>,
     dataStore: CommonDataStore,
     startupEntries: List<String>,
-    startupValues: List<String>
+    startupValues: List<String>,
+    startupRoute: String
 ) {
-    LaunchedEffect(Unit) {
-        selectedPage.value = dataStore.getStartupPage().firstOrNull() ?: startupValues.first()
-    }
 
     Column {
         Text(text = stringResource(id = R.string.dialog_startup_subtitle))
@@ -92,6 +95,8 @@ fun SelectStartupScreenAlertDialogContent(
     }
 
     LaunchedEffect(selectedPage.value) {
-        dataStore.saveStartupPage(selectedPage.value)
+        if (selectedPage.value.isNotBlank() && selectedPage.value != startupRoute) {
+            dataStore.saveStartupPage(selectedPage.value)
+        }
     }
 }
