@@ -18,7 +18,6 @@ fun AppsListScreen(paddingValues : PaddingValues) {
     val viewModel : AppsListViewModel = koinViewModel()
     val screenState : UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
     val favorites by viewModel.favorites.collectAsState()
-    // Content does not trigger in-app review directly; handled in MainActivity
 
     ScreenStateHandler(screenState = screenState , onLoading = {
         HomeLoadingScreen(paddingValues = paddingValues)
