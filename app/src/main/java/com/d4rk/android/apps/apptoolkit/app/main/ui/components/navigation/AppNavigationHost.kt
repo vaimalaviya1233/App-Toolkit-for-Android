@@ -7,28 +7,27 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListScreen
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
+import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 fun AppNavigationHost(
     navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues
 ) {
-    val context = LocalContext.current
-    val dataStore = CommonDataStore.getInstance(context)
+    val dataStore : DataStore = koinInject()
     val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(

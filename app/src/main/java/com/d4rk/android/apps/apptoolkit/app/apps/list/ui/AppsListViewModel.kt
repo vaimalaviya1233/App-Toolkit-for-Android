@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -43,9 +44,11 @@ class AppsListViewModel(
 
     private fun fetchDeveloperApps() {
         launch(context = dispatcherProvider.io) {
-            fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
+            delay(6000)
+            fetchDeveloperAppsUseCase().flowOn(context = dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
                 when (result) {
                     is DataState.Success -> {
+                        delay(6000)
                         val apps = result.data
                         if (apps.isEmpty()) {
                             screenState.update { currentState ->

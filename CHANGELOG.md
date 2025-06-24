@@ -1,4 +1,7 @@
-# Version 1.0.5 (Unreleased):
+# Version 1.0.6:
+
+
+# Version 1.0.5:
 
 - **New**: Added a new screen where users can add their favorite apps.
 - **Minor**: This update includes small under-the-hood improvements.

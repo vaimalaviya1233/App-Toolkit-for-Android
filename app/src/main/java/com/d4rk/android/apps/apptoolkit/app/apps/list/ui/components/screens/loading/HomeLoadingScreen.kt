@@ -1,7 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.screens.loading
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NonLazyGrid
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.WindowItemFit
@@ -25,3 +26,27 @@ fun HomeLoadingScreen(paddingValues : PaddingValues , itemAspectRatio : Float = 
         }
     }
 }
+
+/*
+
+@Composable
+fun HomeLoadingScreen(paddingValues : PaddingValues , itemAspectRatio : Float = 1f) {
+    val context = LocalContext.current
+    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
+    val columnCount : Int = if (isTabletOrLandscape) 4 else 2
+    val placeholderCount : Int = WindowItemFit.count(itemHeight = 180.dp , itemSpacing = SizeConstants.LargeSize , paddingValues = paddingValues)
+    val actualItemCount = if (placeholderCount % 2 == 0) placeholderCount else placeholderCount + 1
+
+    NonLazyGrid(
+        columns = columnCount , itemCount = actualItemCount , modifier = Modifier
+                .fillMaxWidth()
+                .padding(paddingValues)
+                .padding(horizontal = SizeConstants.LargeSize),
+    ) { index ->
+        ShimmerPlaceholderAppCard(
+            aspectRatio = itemAspectRatio
+        )
+    }
+}
+
+*/

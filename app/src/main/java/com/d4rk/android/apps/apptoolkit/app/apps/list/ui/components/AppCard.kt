@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
 import android.content.Context
 import android.view.SoundEffectConstants
 import android.view.View
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -97,7 +98,8 @@ fun AppCard(
                     text = appInfo.name,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = SizeConstants.LargeSize),
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .animateContentSize(),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold
                 )

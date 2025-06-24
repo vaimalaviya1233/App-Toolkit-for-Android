@@ -6,15 +6,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun NonLazyGrid(
-    columns : Int , itemCount : Int , modifier : Modifier = Modifier , content : @Composable (Int) -> Unit
+    columns : Int , itemCount : Int , modifier : Modifier = Modifier, content : @Composable (Int) -> Unit,
 ) {
-    Column(modifier = modifier) {
+    Column(  modifier = modifier) {
         val rows : Int = (itemCount + columns - 1) / columns
 
         (0 until rows).forEach { row ->

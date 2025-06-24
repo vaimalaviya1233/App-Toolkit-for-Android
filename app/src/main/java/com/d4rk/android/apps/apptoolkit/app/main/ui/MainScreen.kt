@@ -1,7 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.app.main.ui
 
 import android.content.Context
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuOpen
@@ -75,16 +75,9 @@ fun MainScaffoldContent(drawerState : DrawerState) {
     val navController : NavHostController = rememberNavController()
     val bottomItems = listOf(
         BottomBarItem(
-            route = NavigationRoutes.ROUTE_APPS_LIST,
-            icon = Icons.Outlined.Apps,
-            selectedIcon = Icons.Rounded.Apps,
-            title = R.string.all_apps
-        ),
-        BottomBarItem(
-            route = NavigationRoutes.ROUTE_FAVORITE_APPS,
-            icon = Icons.Outlined.StarOutline,
-            selectedIcon = Icons.Filled.Star,
-            title = R.string.favorite_apps
+            route = NavigationRoutes.ROUTE_APPS_LIST , icon = Icons.Outlined.Apps , selectedIcon = Icons.Rounded.Apps , title = R.string.all_apps
+        ) , BottomBarItem(
+            route = NavigationRoutes.ROUTE_FAVORITE_APPS , icon = Icons.Outlined.StarOutline , selectedIcon = Icons.Filled.Star , title = R.string.favorite_apps
         )
     )
 
@@ -99,7 +92,7 @@ fun MainScaffoldContent(drawerState : DrawerState) {
     } , snackbarHost = {
         DefaultSnackbarHost(snackbarState = snackBarHostState)
     } , bottomBar = {
-        BottomNavigationBar(navController = navController, items = bottomItems)
+        BottomNavigationBar(navController = navController , items = bottomItems)
     }) { paddingValues ->
         AppNavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = { isFabVisible.value = it } , paddingValues = paddingValues)
     }
@@ -138,27 +131,21 @@ fun MainScaffoldTabletContent() {
     )
 
     Scaffold(
-        modifier = Modifier.fillMaxSize() , topBar = {
+        modifier = Modifier
+                .imePadding()
+                .nestedScroll(connection = scrollBehavior.nestedScrollConnection) , topBar = {
             MainTopAppBar(navigationIcon = if (isRailExpanded) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu , onNavigationIconClick = { coroutineScope.launch { isRailExpanded = ! isRailExpanded } } , scrollBehavior = scrollBehavior)
         }) { paddingValues ->
         LeftNavigationRail(
-            drawerItems = uiState.navigationDrawerItems,
-            bottomItems = bottomItems,
-            currentRoute = currentRoute,
-            isRailExpanded = isRailExpanded,
-            paddingValues = paddingValues,
-            onBottomItemClick = { item -> navController.navigate(item.route) },
-            onDrawerItemClick = { item: NavigationDrawerItem ->
-                handleNavigationItemClick(context = context , item = item)
-            },
+            drawerItems = uiState.navigationDrawerItems ,
+            bottomItems = bottomItems ,
+            currentRoute = currentRoute ,
+            isRailExpanded = isRailExpanded ,
+            paddingValues = paddingValues ,
+            onBottomItemClick = { item : BottomBarItem -> navController.navigate(item.route) } ,
+            onDrawerItemClick = { item : NavigationDrawerItem -> handleNavigationItemClick(context = context , item = item) } ,
             content = {
-                AppNavigationHost(
-                    navController = navController,
-                    snackbarHostState = snackBarHostState,
-                    onFabVisibilityChanged = {},
-                    paddingValues = paddingValues
-                )
-            }
-        )
+                AppNavigationHost(navController = navController , snackbarHostState = snackBarHostState , onFabVisibilityChanged = {} , paddingValues = PaddingValues())
+            })
     }
 }
