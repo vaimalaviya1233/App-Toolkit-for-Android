@@ -1,5 +1,10 @@
 # Version 1.0.6:
 
+- **Minor**: We've made some improvements to how the side navigation menu looks and works.
+- **Minor**: We've updated the temporary screens you see while content is loading, making them look better and adding some subtle animations.
+- **Build**: We've made some technical updates to keep the app running smoothly and up-to-date with the latest technologies.
+- **Minor**: We've tidied up the screen you see when you don't have any favorite items yet by removing an unnecessary button.
+- **Patch**: We've made it easier for the app to gather information if you need to report an issue.
 
 # Version 1.0.5:
 
