@@ -41,26 +41,38 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun LeftNavigationRail(
-    bottomItems : List<BottomBarItem> = emptyList() ,
-    drawerItems : List<NavigationDrawerItem> = emptyList() ,
-    currentRoute : String? ,
-    isRailExpanded : Boolean = false ,
-    paddingValues : PaddingValues ,
-    onBottomItemClick : (BottomBarItem) -> Unit = {} ,
-    onDrawerItemClick : (NavigationDrawerItem) -> Unit = {} ,
-    content : @Composable BoxScope.() -> Unit ,
+    bottomItems: List<BottomBarItem> = emptyList(),
+    drawerItems: List<NavigationDrawerItem> = emptyList(),
+    currentRoute: String?,
+    isRailExpanded: Boolean = false,
+    paddingValues: PaddingValues,
+    onBottomItemClick: (BottomBarItem) -> Unit = {},
+    onDrawerItemClick: (NavigationDrawerItem) -> Unit = {},
+    centerContent: Float = 1f,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    val railWidth : Dp by animateDpAsState(targetValue = if (isRailExpanded) 200.dp else 72.dp , animationSpec = tween(durationMillis = 300))
-    val textEntryAnimation : EnterTransition = fadeIn(animationSpec = tween(durationMillis = 300)) + expandHorizontally() + expandVertically()
-    val textExitAnimation : ExitTransition = fadeOut(animationSpec = tween(durationMillis = 300)) + shrinkHorizontally() + shrinkVertically()
+    val railWidth: Dp by animateDpAsState(
+        targetValue = if (isRailExpanded) 200.dp else 72.dp,
+        animationSpec = tween(durationMillis = 300)
+    )
+    val textEntryAnimation: EnterTransition =
+        fadeIn(animationSpec = tween(durationMillis = 300)) + expandHorizontally() + expandVertically()
+    val textExitAnimation: ExitTransition =
+        fadeOut(animationSpec = tween(durationMillis = 300)) + shrinkHorizontally() + shrinkVertically()
 
-    Row(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
-        NavigationRail(modifier = Modifier
+    Row(
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(paddingValues = paddingValues)
+    ) {
+        NavigationRail(
+            modifier = Modifier
                 .width(width = railWidth)
                 .fillMaxHeight()
-                .verticalScroll(state = rememberScrollState())) {
-            bottomItems.forEach { item : BottomBarItem ->
-                val isSelected : Boolean = currentRoute == item.route
+                .verticalScroll(state = rememberScrollState())
+        ) {
+            bottomItems.forEach { item: BottomBarItem ->
+                val isSelected: Boolean = currentRoute == item.route
                 NavigationRailItem(
                     modifier = Modifier.bounceClick(),
                     selected = isSelected,
@@ -70,25 +82,45 @@ fun LeftNavigationRail(
                         }
                     },
                     icon = {
-                        Icon(imageVector = if (isSelected) item.selectedIcon else item.icon, contentDescription = stringResource(item.title), modifier = Modifier.bounceClick())
+                        Icon(
+                            imageVector = if (isSelected) item.selectedIcon else item.icon,
+                            contentDescription = stringResource(item.title),
+                            modifier = Modifier.bounceClick()
+                        )
                     },
                     label = {
-                        AnimatedVisibility(visible = isRailExpanded, enter = textEntryAnimation, exit = textExitAnimation) {
-                            Text(text = stringResource(id = item.title), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        AnimatedVisibility(
+                            visible = isRailExpanded,
+                            enter = textEntryAnimation,
+                            exit = textExitAnimation
+                        ) {
+                            Text(
+                                text = stringResource(id = item.title),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 )
             }
             Spacer(modifier = Modifier.weight(weight = 1f))
-            drawerItems.forEach { item : NavigationDrawerItem ->
+            drawerItems.forEach { item: NavigationDrawerItem ->
                 NavigationRailItem(
                     selected = false,
                     onClick = { onDrawerItemClick(item) },
                     icon = {
-                        Icon(imageVector = item.selectedIcon, contentDescription = stringResource(id = item.title), modifier = Modifier.bounceClick())
+                        Icon(
+                            imageVector = item.selectedIcon,
+                            contentDescription = stringResource(id = item.title),
+                            modifier = Modifier.bounceClick()
+                        )
                     },
                     label = {
-                        AnimatedVisibility(visible = isRailExpanded, enter = textEntryAnimation, exit = textExitAnimation) {
+                        AnimatedVisibility(
+                            visible = isRailExpanded,
+                            enter = textEntryAnimation,
+                            exit = textExitAnimation
+                        ) {
                             Text(text = stringResource(id = item.title))
                         }
                     }
@@ -96,8 +128,10 @@ fun LeftNavigationRail(
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize().fillMaxWidth(0.6f).padding(paddingValues.calculateBottomPadding()) , contentAlignment = Alignment.Center) {
-            content()
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxWidth(fraction = centerContent)) {
+                content()
+            }
         }
     }
 }

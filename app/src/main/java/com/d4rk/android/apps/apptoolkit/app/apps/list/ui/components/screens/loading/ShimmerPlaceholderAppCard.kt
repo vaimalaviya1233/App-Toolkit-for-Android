@@ -38,9 +38,9 @@ fun ShimmerPlaceholderAppCard(modifier : Modifier = Modifier , aspectRatio : Flo
             LargeVerticalSpacer()
             Box(
                 modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .clip(RoundedCornerShape(SizeConstants.SmallSize))
-                        .height(SizeConstants.LargeSize)
+                        .fillMaxWidth(fraction = 0.7f)
+                        .clip(shape = RoundedCornerShape(SizeConstants.SmallSize))
+                        .height(height = SizeConstants.LargeSize)
                         .shimmerEffect()
             )
             LargeVerticalSpacer()

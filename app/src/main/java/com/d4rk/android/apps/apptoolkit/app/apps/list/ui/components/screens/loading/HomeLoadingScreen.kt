@@ -14,38 +14,31 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.WindowItemFit
 
 @Composable
-fun HomeLoadingScreen(paddingValues : PaddingValues , itemAspectRatio : Float = 1f) {
-    val placeholderCount = WindowItemFit.count(itemHeight = 180.dp , itemSpacing = SizeConstants.LargeSize , paddingValues = paddingValues)
-    val actualItemCount = if (placeholderCount % 2 == 0) placeholderCount else placeholderCount + 1
+fun HomeLoadingScreen(paddingValues: PaddingValues, itemAspectRatio: Float = 1f) {
+
     val context = LocalContext.current
-    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
-    LazyVerticalGrid(columns = GridCells.Fixed(count =  if(isTabletOrLandscape) 4 else 2) , contentPadding = paddingValues , horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize) , modifier = Modifier.padding(horizontal = SizeConstants.LargeSize), userScrollEnabled = false) {
+    val isTabletOrLandscape: Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
+    val numberOfColumns = if (isTabletOrLandscape) 4 else 2
+
+    val fittedRows = WindowItemFit.count(
+        itemHeight = 180.dp,
+        itemSpacing = SizeConstants.LargeSize,
+        paddingValues = paddingValues
+    )
+
+    val totalRowsToDisplay = if (fittedRows == 0) 1 else fittedRows + 1
+    val actualItemCount = totalRowsToDisplay * numberOfColumns
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = if (isTabletOrLandscape) 4 else 2),
+        contentPadding = paddingValues,
+        horizontalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize),
+        verticalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize),
+        modifier = Modifier.padding(horizontal = SizeConstants.LargeSize),
+        userScrollEnabled = false
+    ) {
         items(actualItemCount) {
             ShimmerPlaceholderAppCard(aspectRatio = itemAspectRatio)
         }
     }
 }
-
-/*
-
-@Composable
-fun HomeLoadingScreen(paddingValues : PaddingValues , itemAspectRatio : Float = 1f) {
-    val context = LocalContext.current
-    val isTabletOrLandscape : Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
-    val columnCount : Int = if (isTabletOrLandscape) 4 else 2
-    val placeholderCount : Int = WindowItemFit.count(itemHeight = 180.dp , itemSpacing = SizeConstants.LargeSize , paddingValues = paddingValues)
-    val actualItemCount = if (placeholderCount % 2 == 0) placeholderCount else placeholderCount + 1
-
-    NonLazyGrid(
-        columns = columnCount , itemCount = actualItemCount , modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues)
-                .padding(horizontal = SizeConstants.LargeSize),
-    ) { index ->
-        ShimmerPlaceholderAppCard(
-            aspectRatio = itemAspectRatio
-        )
-    }
-}
-
-*/
