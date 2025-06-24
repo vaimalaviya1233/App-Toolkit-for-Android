@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 
 class DeviceInfo(context: Context) {
@@ -30,18 +29,13 @@ class DeviceInfo(context: Context) {
     private val abis64Bits: Array<String>? = Build.SUPPORTED_64_BIT_ABIS
 
     init {
-        val packageInfo = try {
+        val packageInfo = runCatching {
             context.packageManager.getPackageInfo(context.packageName, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            null
-        }
-        if (packageInfo != null) {
-            versionCode = packageInfo.versionCode
-            versionName = packageInfo.versionName
-        } else {
-            versionCode = -1
-            versionName = null
-        }
+        }.getOrNull()
+
+        @Suppress("DEPRECATION")
+        versionCode = packageInfo?.versionCode ?: -1
+        versionName = packageInfo?.versionName
     }
 
     fun toMarkdown(): String {
