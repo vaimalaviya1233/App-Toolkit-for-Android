@@ -125,6 +125,7 @@ dependencies {
     // About
     api(dependencyNotation = libs.aboutlibraries.compose.m3)
     testImplementation(dependencyNotation = libs.bundles.testing)
+    testImplementation(dependencyNotation = libs.ktor.client.mock)
     androidTestImplementation(dependencyNotation = libs.bundles.androidTesting)
     debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
     api(dependencyNotation = libs.core)
