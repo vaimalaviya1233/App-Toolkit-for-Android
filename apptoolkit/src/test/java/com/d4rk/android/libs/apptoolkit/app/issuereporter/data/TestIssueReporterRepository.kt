@@ -13,9 +13,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
+import org.junit.jupiter.api.Test
 
 class TestIssueReporterRepository {
 
@@ -36,9 +37,9 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
         val result = repository.sendReport(report, target, token = "token123")
 
-        assertIs<IssueReportResult.Success>(result)
-        assertEquals("https://example.com/issue/1", result.url)
-        assertEquals("Bearer token123", capturedRequest?.headers?.get(HttpHeaders.Authorization))
+        assertThat(result).isInstanceOf(IssueReportResult.Success::class)
+        assertThat((result as IssueReportResult.Success).url).isEqualTo("https://example.com/issue/1")
+        assertThat(capturedRequest?.headers?.get(HttpHeaders.Authorization)).isEqualTo("Bearer token123")
         println("\uD83C\uDFC1 [TEST DONE] repository success")
     }
 
@@ -52,9 +53,10 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
         val result = repository.sendReport(report, target)
 
-        assertIs<IssueReportResult.Error>(result)
-        assertEquals(HttpStatusCode.BadRequest, result.status)
-        assertEquals("fail", result.message)
+        assertThat(result).isInstanceOf(IssueReportResult.Error::class)
+        val error = result as IssueReportResult.Error
+        assertThat(error.status).isEqualTo(HttpStatusCode.BadRequest)
+        assertThat(error.message).isEqualTo("fail")
         println("\uD83C\uDFC1 [TEST DONE] repository error")
     }
 }
