@@ -5,7 +5,7 @@ aboutlibraries = "12.2.3"
 core = "4.6.2"
 coil = "3.2.0"
 datastorePreferences = "1.1.7"
-firebaseBom = "33.15.0"
+firebaseBom = "33.16.0"
 composeBom = "2025.06.01"
 graphicsShapes = "1.0.1"
 integrity = "1.4.0"
@@ -30,25 +30,20 @@ multidex = "2.0.1"
 navigationCompose = "2.9.0"
 userMessagingPlatform = "3.2.0"
 workRuntimeKtx = "2.10.2"
-google-services = "4.4.2"
+google-services = "4.4.3"
 google-firebase-crashlytics = "3.0.4"
-junitJupiter = "5.10.1"
-mockk = "1.12.5"
-kotlinxCoroutinesTest = "1.10.2"
-turbine = "1.1.0"
 junit = "4.13.2"
 testRunner = "1.6.2"
 junitVersion = "1.2.1"
 junittest = "3.6.1"
-mannodermaus = "1.9.3.0"
-willow = "0.26.1"
-jupiter = "5.9.3"
-testCorutines = "1.10.1"
-testTurbine = "0.7.0"
-testManifest = "1.7.8"
-junitKtx = "1.2.1"
+mannodermaus = "1.13.1.0"
+willow = "0.28.1"
+mockk = "1.14.4"
+jupiter = "5.13.2"
+testCorutines = "1.10.2"
+testTurbine = "1.2.1"
+testManifestTestJunit4Android = "1.8.3"
 truth = "1.6.0"
-uiTestJunit4Android = "1.7.8"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -108,32 +103,27 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
 
 # Testing
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunner" }
-androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "testRunner" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "junittest" }
 jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
 jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
 mockk-api = { module = "io.mockk:mockk", version.ref = "mockk" }
-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testCorutines" }
+instrumentation-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+instrumentation-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "testManifestTestJunit4Android" }
+willow-assert = { module = "com.willowtreeapps.assertk:assertk", version.ref = "willow" }
 test-turbine = { module = "app.cash.turbine:turbine", version.ref = "testTurbine" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 test-koin = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 test-koin-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 test-koin-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
-instrumentation-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-instrumentation-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "testManifest" }
-willow-assert = { module = "com.willowtreeapps.assertk:assertk", version.ref = "willow" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
-androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitVersion" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "testManifestTestJunit4Android" }
 androidx-truth = { module = "androidx.test.ext:truth", version.ref = "truth" }
 
 [plugins]
@@ -153,6 +143,24 @@ koin = [
     "koin-compose-viewmodel",
     "koin-android"
 ]
+
+androidTesting = [
+    "androidx-espresso-core",
+    "androidx-junit",
+    "androidx-junit-ktx",
+    "androidx-truth",
+    "androidx-test-runner",
+    "mockk-api",
+    "test-kotlin-coroutines",
+    "instrumentation-koin-compose",
+    "test-koin",
+    "willow-assert",
+    "test-turbine",
+    "instrumentation-test-manifest",
+    "androidx-ui-test-junit4-android",
+    "androidx-ui-test-junit4",
+]
+
 testing = [
     "junit",
     "jupiter-api",
@@ -166,22 +174,4 @@ testing = [
     "test-koin",
     "test-koin-junit4",
     "test-koin-junit5"
-]
-
-androidTesting = [
-    "androidx-espresso-core",
-    "androidx-junit",
-    "androidx-junit-ktx",
-    "androidx-truth",
-    "androidx-test-runner",
-    "androidx-test-orchestrator",
-    "mockk-api",
-    "test-kotlin-coroutines",
-    "instrumentation-koin-compose",
-    "test-koin",
-    "willow-assert",
-    "test-turbine",
-    "instrumentation-test-manifest",
-    "androidx-ui-test-junit4-android",
-    "androidx-ui-test-junit4"
 ]
