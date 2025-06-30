@@ -6,6 +6,7 @@ plugins {
     alias(notation = libs.plugins.kotlin.android)
     alias(notation = libs.plugins.compose.compiler)
     alias(notation = libs.plugins.about.libraries)
+    alias(notation = libs.plugins.mannodermaus)
     alias(notation = libs.plugins.googlePlayServices)
     alias(notation = libs.plugins.googleFirebase)
     alias(notation = libs.plugins.kotlin.serialization)
@@ -107,8 +108,16 @@ android {
             excludes.add("META-INF/io.netty.versions.properties")
         }
     }
+
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
     implementation(dependencyNotation = project(path = ":apptoolkit"))
+
+    testImplementation(libs.bundles.testing)
 }
