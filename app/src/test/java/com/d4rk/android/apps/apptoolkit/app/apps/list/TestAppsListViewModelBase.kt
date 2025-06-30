@@ -1,6 +1,8 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list
 
 import app.cash.turbine.test
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
@@ -10,19 +12,14 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import assertk.assertThat
-import assertk.assertions.isEqualTo
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.TestDispatcher
-import io.mockk.coAnswers
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.getData
-import kotlin.test.assertTrue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.TestDispatcher
+import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestAppsListViewModelBase {
@@ -98,7 +95,7 @@ open class TestAppsListViewModelBase {
         println("\uD83C\uDFC1 [TEST END] testEmpty")
     }
 
-    protected suspend fun toggleAndAssert(packageName: String, expected: Boolean, testDispatcher: TestDispatcher) {
+    protected fun toggleAndAssert(packageName: String, expected: Boolean, testDispatcher: TestDispatcher) {
         println("\uD83D\uDE80 [TEST START] toggleAndAssert for $packageName expecting $expected")
         println("Favorites before: ${viewModel.favorites.value}")
         viewModel.toggleFavorite(packageName)
@@ -113,7 +110,6 @@ open class TestAppsListViewModelBase {
             println("\u274C [ASSERTION FAILED] expected $expected but was ${favorites.contains(packageName)}")
         }
         assertThat(favorites.contains(packageName)).isEqualTo(expected)
-        println("Current data: ${viewModel.screenState.value.getData()}")
         println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
     }
 }
