@@ -16,8 +16,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.TestDispatcher
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -31,9 +31,12 @@ open class TestAppsListViewModelBase {
     private lateinit var fetchUseCase: FetchDeveloperAppsUseCase
     private lateinit var dataStore: DataStore
 
-    protected fun setup(fetchFlow: Flow<DataState<List<AppInfo>, RootError>>, initialFavorites: Set<String> = emptySet()) {
-        val extension = MainDispatcherExtension()
-        dispatcherProvider = TestDispatchers(extension.testDispatcher)
+    protected fun setup(
+        fetchFlow: Flow<DataState<List<AppInfo>, RootError>>,
+        initialFavorites: Set<String> = emptySet(),
+        testDispatcher: TestDispatcher
+    ) {
+        dispatcherProvider = TestDispatchers(testDispatcher)
         fetchUseCase = mockk()
         dataStore = mockk(relaxed = true)
         every { dataStore.favoriteApps } returns MutableStateFlow(initialFavorites)
@@ -42,7 +45,10 @@ open class TestAppsListViewModelBase {
         viewModel = AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
     }
 
-    protected fun Flow<UiStateScreen<UiHomeScreen>>.testSuccess(expectedSize: Int) = runTest {
+    protected fun Flow<UiStateScreen<UiHomeScreen>>.testSuccess(
+        expectedSize: Int,
+        testDispatcher: TestDispatcher
+    ) = runTest(testDispatcher) {
         this@testSuccess.test {
             // First emission from init loading might be Loading or IsLoading - the initial state
             val first = awaitItem()
@@ -55,7 +61,7 @@ open class TestAppsListViewModelBase {
         }
     }
 
-    protected fun Flow<UiStateScreen<UiHomeScreen>>.testEmpty() = runTest {
+    protected fun Flow<UiStateScreen<UiHomeScreen>>.testEmpty(testDispatcher: TestDispatcher) = runTest(testDispatcher) {
         this@testEmpty.test {
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
@@ -65,9 +71,11 @@ open class TestAppsListViewModelBase {
         }
     }
 
-    protected fun toggleAndAssert(packageName: String, expected: Boolean) = runTest {
-        viewModel.toggleFavorite(packageName)
-        val favorites = viewModel.favorites.value
-        assertThat(favorites.contains(packageName)).isEqualTo(expected)
-    }
+    protected fun toggleAndAssert(packageName: String, expected: Boolean, testDispatcher: TestDispatcher) =
+        runTest(testDispatcher) {
+            viewModel.toggleFavorite(packageName)
+            testDispatcher.scheduler.advanceUntilIdle()
+            val favorites = viewModel.favorites.value
+            assertThat(favorites.contains(packageName)).isEqualTo(expected)
+        }
 }

@@ -26,8 +26,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow)
-        viewModel.uiState.testSuccess(expectedSize = apps.size)
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testSuccess(expectedSize = apps.size, testDispatcher = dispatcherExtension.testDispatcher)
     }
 
     @Test
@@ -36,8 +36,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(emptyList()))
         }
-        setup(fetchFlow = flow)
-        viewModel.uiState.testEmpty()
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testEmpty(testDispatcher = dispatcherExtension.testDispatcher)
     }
 
     @Test
@@ -47,8 +47,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow)
-        toggleAndAssert(packageName = "pkg", expected = true)
-        toggleAndAssert(packageName = "pkg", expected = false)
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        toggleAndAssert(packageName = "pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
+        toggleAndAssert(packageName = "pkg", expected = false, testDispatcher = dispatcherExtension.testDispatcher)
     }
 }
