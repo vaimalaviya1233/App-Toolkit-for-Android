@@ -20,7 +20,7 @@ class DeviceInfo(context: Context) {
 
     @SuppressLint("NewApi")
     @Suppress("DEPRECATION")
-    private val abis: Array<String> = Build.SUPPORTED_ABIS
+    private val abis: Array<String> = Build.SUPPORTED_ABIS ?: emptyArray()
 
     @SuppressLint("NewApi")
     private val abis32Bits: Array<String>? = Build.SUPPORTED_32_BIT_ABIS

@@ -31,7 +31,10 @@ class IssueReporterViewModel(
     private val githubTarget: GithubTarget,
     private val githubToken: String,
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
-    initialState = UiStateScreen(data = UiIssueReporterScreen())
+    initialState = UiStateScreen(
+        screenState = ScreenState.Success(),
+        data = UiIssueReporterScreen()
+    )
 ) {
 
     private val repository = IssueReporterRepository(httpClient)
@@ -74,7 +77,7 @@ class IssueReporterViewModel(
     private fun sendReport(context: Context) {
         val data = screenState.value.data ?: return
         if (data.title.isBlank() || data.description.isBlank()) {
-            screenState.showSnackbar<UiIssueReporterScreen>(
+            screenState.showSnackbar(
                 snackbar = UiSnackbar(
                     message = UiTextHelper.StringResource(R.string.error_invalid_report),
                     timeStamp = System.currentTimeMillis(),
@@ -107,7 +110,7 @@ class IssueReporterViewModel(
                     screenState.updateData(screenState.value.screenState) { current ->
                         current.copy(issueUrl = result.url)
                     }
-                    screenState.showSnackbar<UiIssueReporterScreen>(
+                    screenState.showSnackbar(
                         snackbar = UiSnackbar(
                             message = UiTextHelper.StringResource(R.string.snack_report_success),
                             isError = false,
@@ -119,7 +122,7 @@ class IssueReporterViewModel(
                 }
 
                 is IssueReportResult.Error -> {
-                    screenState.showSnackbar<UiIssueReporterScreen>(
+                    screenState.showSnackbar(
                         snackbar = UiSnackbar(
                             message = when (result.status) {
                                 HttpStatusCode.Unauthorized -> UiTextHelper.StringResource(R.string.error_unauthorized)
@@ -137,7 +140,7 @@ class IssueReporterViewModel(
                 }
 
                 else -> {
-                    screenState.showSnackbar<UiIssueReporterScreen>(
+                    screenState.showSnackbar(
                         snackbar = UiSnackbar(
                             message = UiTextHelper.StringResource(R.string.snack_report_failed),
                             isError = true,
