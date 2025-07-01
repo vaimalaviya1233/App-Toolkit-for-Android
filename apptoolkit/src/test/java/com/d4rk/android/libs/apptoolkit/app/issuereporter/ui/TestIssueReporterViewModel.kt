@@ -87,23 +87,24 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         every { context.packageName } returns "pkg"
 
         viewModel.uiState.test {
-            // Initial state before sending
-            val initialState = awaitItem()
-            assertThat(initialState.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+            // Consume the initial idle state
+            val idleState = awaitItem()
+            assertThat(idleState.screenState).isInstanceOf(ScreenState.Success::class.java)
 
-            // Trigger the send event
+            // Populate the form and trigger sending
             viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
             viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
             viewModel.onEvent(IssueReporterEvent.UpdateEmail("me@test.com"))
             viewModel.onEvent(IssueReporterEvent.Send(context))
 
+            // Loading state should be emitted next
             val loadingState = awaitItem()
             assertThat(loadingState.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
 
-            // Advance the dispatcher to complete the network call
+            // Advance dispatcher to perform the network call
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-            // Expect the final success state
+            // Final success state
             val successState = awaitItem()
             val snackbar = successState.snackbar!!
 
@@ -111,7 +112,8 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             assertThat(successState.screenState).isInstanceOf(ScreenState.Success::class.java)
             assertThat(successState.data?.issueUrl).isEqualTo("https://ex.com/1")
             assertThat(snackbar.isError).isFalse()
-            assertThat((snackbar.message as UiTextHelper.StringResource).resourceId).isEqualTo(R.string.snack_report_success)
+            assertThat((snackbar.message as UiTextHelper.StringResource).resourceId)
+                .isEqualTo(R.string.snack_report_success)
         }
 
         println("🏁 [TEST DONE] send report success")
