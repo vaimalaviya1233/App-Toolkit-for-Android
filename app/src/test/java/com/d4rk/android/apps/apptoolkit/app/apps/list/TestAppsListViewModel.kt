@@ -2,11 +2,10 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list
 
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import kotlinx.coroutines.flow.flow
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.extension.RegisterExtension
 
 class TestAppsListViewModel : TestAppsListViewModelBase() {

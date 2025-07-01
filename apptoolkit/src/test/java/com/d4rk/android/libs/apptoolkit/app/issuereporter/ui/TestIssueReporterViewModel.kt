@@ -1,24 +1,21 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpStatusCode
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.MainDispatcherExtension
-import io.mockk.every
-import io.mockk.mockk
 
 class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
 
@@ -74,7 +71,7 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
         val pm = mockk<PackageManager>()
         every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
-        val context = mockk<Context>()
+        val context = mockk<Context>(relaxed = true)
         every { context.packageManager } returns pm
         every { context.packageName } returns "pkg"
 
