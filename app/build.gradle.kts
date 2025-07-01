@@ -112,6 +112,7 @@ android {
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
+            it.jvmArgs("-XX:+EnableDynamicAgentLoading")
         }
     }
 }

@@ -39,7 +39,8 @@ jupiter = "5.13.2"
 testCorutines = "1.10.2"
 testTurbine = "1.2.1"
 truth = "1.6.0"
-testManifestTestJunit4Android = "1.8.3" # Added for androidx-ui-test-junit4-android
+testManifestTestJunit4Android = "1.8.3"
+slf4j = "2.0.17"
 
 [libraries]
 # AndroidX & Material
@@ -122,6 +123,7 @@ mockk-api = { module = "io.mockk:mockk", version.ref = "mockk" }
 test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testCorutines" }
 test-turbine = { module = "app.cash.turbine:turbine", version.ref = "testTurbine" }
 androidx-truth = { module = "androidx.test.ext:truth", version.ref = "truth" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 
 # Instrumentation Tests (androidTest folder)
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
@@ -158,6 +160,7 @@ unitTest = [
     "test-koin-junit5",
     "androidx-truth",
     "ktor-client-mock",
+    "slf4j-simple"
 ]
 unitTestRuntime = ["jupiter-engine"]
 
