@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(notation = libs.plugins.android.library)
     alias(notation = libs.plugins.kotlin.android)
+    alias(notation = libs.plugins.mannodermaus)
     alias(notation = libs.plugins.compose.compiler)
     alias(notation = libs.plugins.about.libraries)
     alias(notation = libs.plugins.kotlin.serialization)
@@ -40,6 +41,11 @@ android {
 
     buildFeatures {
         compose = true
+    }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 }
 
@@ -118,6 +124,10 @@ dependencies {
 
     // About
     api(dependencyNotation = libs.aboutlibraries.compose.m3)
+    testImplementation(dependencyNotation = libs.bundles.testing)
+    testImplementation(dependencyNotation = libs.ktor.client.mock)
+    androidTestImplementation(dependencyNotation = libs.bundles.androidTesting)
+    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
     api(dependencyNotation = libs.core)
 }
 
