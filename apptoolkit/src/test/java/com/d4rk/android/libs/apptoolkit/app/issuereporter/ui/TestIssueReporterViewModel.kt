@@ -3,6 +3,8 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PackageInfoFlags
+import android.os.Build
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
@@ -66,11 +68,17 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
     @Test
     fun `send report success`() = runTest(dispatcherExtension.testDispatcher) {
         println("\uD83D\uDE80 [TEST] send report success")
-        val engine = MockEngine { respond("""{\"html_url\":\"https://ex.com/1\"}""", HttpStatusCode.Created) }
+        val engine = MockEngine {
+            respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created)
+        }
         setup(engine, githubToken = "token", testDispatcher = dispatcherExtension.testDispatcher)
         val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
         val pm = mockk<PackageManager>()
-        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            every { pm.getPackageInfo(any<String>(), any<PackageManager.PackageInfoFlags>()) } returns packageInfo
+        } else {
+            every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        }
         val context = mockk<Context>(relaxed = true)
         every { context.packageManager } returns pm
         every { context.packageName } returns "pkg"
@@ -83,7 +91,9 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
-        val snackbar = state.snackbar!!
+        val snackbar = state.snackbar
+        assert(snackbar != null)
+        snackbar!!
         assert(!snackbar.isError)
         assert((snackbar.message as UiTextHelper.StringResource).resourceId == R.string.snack_report_success)
         assert(state.data?.issueUrl == "https://ex.com/1")
