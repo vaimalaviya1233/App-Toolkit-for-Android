@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.apps.list
+package com.d4rk.android.libs.apptoolkit.core
 
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher

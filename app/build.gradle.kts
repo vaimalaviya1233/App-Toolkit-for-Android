@@ -119,8 +119,11 @@ android {
 dependencies {
     implementation(dependencyNotation = project(path = ":apptoolkit"))
 
-    // Test
-    testImplementation(dependencyNotation = libs.bundles.testing)
-    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
-    androidTestImplementation(dependencyNotation = libs.bundles.androidTesting)
+    // Unit Tests
+    testImplementation(libs.bundles.unitTest)
+    testRuntimeOnly(libs.bundles.unitTestRuntime)
+
+    // Instrumentation Tests
+    androidTestImplementation(libs.bundles.instrumentationTest)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

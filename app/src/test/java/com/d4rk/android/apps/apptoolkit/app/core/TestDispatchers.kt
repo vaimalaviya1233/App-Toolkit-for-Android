@@ -1,11 +1,12 @@
-package com.d4rk.android.libs.apptoolkit.app.issuereporter
+package com.d4rk.android.apps.apptoolkit.app.core
 
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 
-class TestDispatchers(val mTestDispatcher: TestDispatcher = StandardTestDispatcher()) : DispatcherProvider {
+class TestDispatchers(val mTestDispatcher: TestDispatcher = StandardTestDispatcher()) :
+    DispatcherProvider {
     override val main: CoroutineDispatcher
         get() = mTestDispatcher
     override val io: CoroutineDispatcher
