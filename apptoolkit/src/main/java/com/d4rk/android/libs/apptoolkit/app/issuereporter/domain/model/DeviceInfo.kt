@@ -7,16 +7,16 @@ import android.os.Build
 class DeviceInfo(context: Context) {
     private val versionCode: Int
     private val versionName: String?
-    private val buildVersion: String = Build.VERSION.INCREMENTAL
-    private val releaseVersion: String = Build.VERSION.RELEASE
+    private val buildVersion: String = Build.VERSION.INCREMENTAL ?: Build.UNKNOWN
+    private val releaseVersion: String = Build.VERSION.RELEASE ?: Build.UNKNOWN
     private val sdkVersion: Int = Build.VERSION.SDK_INT
-    private val buildID: String = Build.DISPLAY
-    private val brand: String = Build.BRAND
-    private val manufacturer: String = Build.MANUFACTURER
-    private val device: String = Build.DEVICE
-    private val model: String = Build.MODEL
-    private val product: String = Build.PRODUCT
-    private val hardware: String = Build.HARDWARE
+    private val buildID: String = Build.DISPLAY ?: Build.UNKNOWN
+    private val brand: String = Build.BRAND ?: Build.UNKNOWN
+    private val manufacturer: String = Build.MANUFACTURER ?: Build.UNKNOWN
+    private val device: String = Build.DEVICE ?: Build.UNKNOWN
+    private val model: String = Build.MODEL ?: Build.UNKNOWN
+    private val product: String = Build.PRODUCT ?: Build.UNKNOWN
+    private val hardware: String = Build.HARDWARE ?: Build.UNKNOWN
 
     @SuppressLint("NewApi")
     @Suppress("DEPRECATION")
