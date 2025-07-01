@@ -87,24 +87,24 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         every { context.packageName } returns "pkg"
 
         viewModel.uiState.test {
-            // Consume the initial idle state
-            val idleState = awaitItem()
-            assertThat(idleState.screenState).isInstanceOf(ScreenState.Success::class.java)
+            // 1. Await and consume the flow's initial state
+            val initialState = awaitItem()
+            assertThat(initialState.screenState).isInstanceOf(ScreenState.Success::class.java)
 
-            // Populate the form and trigger sending
+            // 2. Populate the form and trigger sending
             viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
             viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
             viewModel.onEvent(IssueReporterEvent.UpdateEmail("me@test.com"))
             viewModel.onEvent(IssueReporterEvent.Send(context))
 
-            // Loading state should be emitted next
+            // 3. Loading state should be emitted next
             val loadingState = awaitItem()
             assertThat(loadingState.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
 
-            // Advance dispatcher to perform the network call
+            // 4. Advance dispatcher to perform the network call
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-            // Final success state
+            // 5. Final success state
             val successState = awaitItem()
             val snackbar = successState.snackbar!!
 
