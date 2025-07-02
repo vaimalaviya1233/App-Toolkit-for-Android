@@ -36,14 +36,13 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
 
-        // Act
-        viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
-
         // Assert using the helper from the base class
         viewModel.uiState.testSuccess(
             expectedSize = details.size,
             testDispatcher = dispatcherExtension.testDispatcher,
-        )
+        ) {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
     }
 
     @Test
@@ -59,10 +58,11 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
 
-        // Act
-        viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
-
         // Assert using the helper from the base class
-        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testError(
+            testDispatcher = dispatcherExtension.testDispatcher,
+        ) {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
     }
 }
