@@ -41,18 +41,14 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
 
-        viewModel.uiState.test {
-            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        // Act
+        viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
 
-            val first = awaitItem()
-            assertTrue(first.screenState is ScreenState.IsLoading)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-            val second = awaitItem()
-            assertTrue(second.screenState is ScreenState.Success)
-            assertThat(second.data?.productDetails?.size).isEqualTo(details.size)
-            cancelAndIgnoreRemainingEvents()
-        }
+        // Assert using the helper from the base class
+        viewModel.uiState.testSuccess(
+            expectedSize = details.size,
+            testDispatcher = dispatcherExtension.testDispatcher,
+        )
     }
 
     @Test
@@ -68,18 +64,10 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
 
-        viewModel.uiState.test {
-            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        // Act
+        viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
 
-            val first = awaitItem()
-            assertTrue(first.screenState is ScreenState.IsLoading)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-            val second = awaitItem()
-            assertTrue(second.screenState is ScreenState.Error)
-            val msg = second.errors.first().message as UiTextHelper.StringResource
-            assertThat(msg.resourceId).isEqualTo(R.string.error_failed_to_load_sku_details)
-            cancelAndIgnoreRemainingEvents()
-        }
+        // Assert using the helper from the base class
+        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
     }
 }
