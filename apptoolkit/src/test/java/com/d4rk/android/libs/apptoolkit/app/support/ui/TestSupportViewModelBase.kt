@@ -39,8 +39,13 @@ open class TestSupportViewModelBase {
         viewModel = SupportViewModel(useCase, dispatcherProvider)
     }
 
-    protected suspend fun Flow<UiStateScreen<UiSupportScreen>>.testSuccess(expectedSize: Int, testDispatcher: TestDispatcher) {
+    protected suspend fun Flow<UiStateScreen<UiSupportScreen>>.testSuccess(
+        expectedSize: Int,
+        testDispatcher: TestDispatcher,
+        trigger: () -> Unit = {},
+    ) {
         this@testSuccess.test {
+            trigger()
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
             testDispatcher.scheduler.advanceUntilIdle()
@@ -52,8 +57,12 @@ open class TestSupportViewModelBase {
         }
     }
 
-    protected suspend fun Flow<UiStateScreen<UiSupportScreen>>.testError(testDispatcher: TestDispatcher) {
+    protected suspend fun Flow<UiStateScreen<UiSupportScreen>>.testError(
+        testDispatcher: TestDispatcher,
+        trigger: () -> Unit = {},
+    ) {
         this@testError.test {
+            trigger()
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
             testDispatcher.scheduler.advanceUntilIdle()
