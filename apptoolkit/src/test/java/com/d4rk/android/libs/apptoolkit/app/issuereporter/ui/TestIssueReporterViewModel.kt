@@ -95,6 +95,9 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
             viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
             viewModel.onEvent(IssueReporterEvent.UpdateEmail("me@test.com"))
+
+            // Consume the emitted states for the three update events
+            skipItems(3)
             viewModel.onEvent(IssueReporterEvent.Send(context))
 
             // 3. Loading state should be emitted next
