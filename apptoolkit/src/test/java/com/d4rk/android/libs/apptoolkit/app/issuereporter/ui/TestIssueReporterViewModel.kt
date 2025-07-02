@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.content.Context
+import android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import app.cash.turbine.test // <-- ADDED THIS IMPORT
@@ -79,7 +80,11 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         println("🚀 [TEST] send report success")
         val engine = MockEngine { respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created) }
         setup(engine, githubToken = "token", testDispatcher = dispatcherExtension.testDispatcher)
-        val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply {
+            versionCode = 1;
+            versionName = "1"
+        }
+
         val pm = mockk<PackageManager>()
         every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
         val context = mockk<Context>(relaxed = true)

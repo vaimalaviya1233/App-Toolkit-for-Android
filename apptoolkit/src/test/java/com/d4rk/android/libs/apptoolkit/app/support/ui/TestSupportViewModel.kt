@@ -1,19 +1,14 @@
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import com.android.billingclient.api.ProductDetails
-import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -36,7 +31,7 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             "high" to high
         )
         val flow = flow {
-            emit(DataState.Loading<Map<String, ProductDetails>, Errors>())
+            emit(DataState.Loading())
             emit(DataState.Success<Map<String, ProductDetails>, Errors>(details))
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
@@ -54,7 +49,7 @@ class TestSupportViewModel : TestSupportViewModelBase() {
     @Test
     fun `query product details error`() = runTest(dispatcherExtension.testDispatcher) {
         val flow = flow {
-            emit(DataState.Loading<Map<String, ProductDetails>, Errors>())
+            emit(DataState.Loading())
             emit(
                 DataState.Error<Map<String, ProductDetails>, Errors>(
                     null,
