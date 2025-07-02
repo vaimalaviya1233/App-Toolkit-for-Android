@@ -42,6 +42,7 @@ class TestMainViewModel {
     fun `navigation items loaded on init`() = runTest(dispatcherExtension.testDispatcher) {
         val flow = flow<DataState<Int, Errors>> { }
         setup(flow, dispatcherExtension.testDispatcher)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val items = viewModel.uiState.value.data?.navigationDrawerItems
         assertThat(items?.size).isEqualTo(4)
     }
