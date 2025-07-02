@@ -10,6 +10,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
 import com.d4rk.android.libs.apptoolkit.app.support.domain.usecases.QueryProductDetailsUseCase
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery

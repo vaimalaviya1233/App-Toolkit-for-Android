@@ -1,9 +1,12 @@
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import com.android.billingclient.api.ProductDetails
+import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -19,9 +22,13 @@ class TestSupportViewModel : TestSupportViewModelBase() {
 
     @Test
     fun `query product details success`() = runTest(dispatcherExtension.testDispatcher) {
+        val low = mockk<ProductDetails>()
+        every { low.productId } returns "low"
+        val high = mockk<ProductDetails>()
+        every { high.productId } returns "high"
         val details = mapOf(
-            "low" to ProductDetails.newBuilder().setProductId("low").build(),
-            "high" to ProductDetails.newBuilder().setProductId("high").build()
+            "low" to low,
+            "high" to high
         )
         val flow = flow {
             emit(DataState.Loading<Map<String, ProductDetails>, Errors>())
