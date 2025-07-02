@@ -6,5 +6,6 @@ Welcome to the **AppToolkit** wiki! This section provides extended documentation
 
 - [[Installation]]
 - [[Contributing]]
+- [[Wiki-Guide]]
 
 Use the sidebar to navigate between pages.
