@@ -30,4 +30,20 @@ class TestAboutViewModel {
         val msg = snackbar.message as UiTextHelper.StringResource
         assertThat(msg.resourceId).isEqualTo(R.string.snack_device_info_copied)
     }
+
+    @Test
+    fun `dismiss snackbar resets state`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.snackbar).isNull()
+    }
 }
