@@ -58,6 +58,6 @@ class TestPermissionsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
         val error = state.errors.first().message as UiTextHelper.DynamicString
-        assertThat(error.text).isEqualTo("No settings found")
+        assertThat(error).isEqualTo("No settings found")
     }
 }
