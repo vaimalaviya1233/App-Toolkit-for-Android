@@ -14,7 +14,9 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
 import com.google.common.truth.Truth.assertThat
+import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
+import java.net.SocketTimeoutException
 
 class TestIssueReporterRepository {
 
@@ -56,6 +58,37 @@ class TestIssueReporterRepository {
         assertThat(error.status).isEqualTo(HttpStatusCode.BadRequest)
         assertThat(error.message).isEqualTo("fail")
         println("\uD83C\uDFC1 [TEST DONE] repository error")
+    }
+
+    @Test
+    fun `sendReport without token omits header`() = runTest {
+        var capturedRequest: HttpRequestData? = null
+        val engine = MockEngine { request ->
+            capturedRequest = request
+            respond("""{"html_url":"https://example.com/issue/2"}""", HttpStatusCode.Created)
+        }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        val result = repository.sendReport(report, target, token = null)
+
+        assertThat(result).isInstanceOf(IssueReportResult.Success::class.java)
+        assertThat(capturedRequest?.headers?.get(HttpHeaders.Authorization)).isNull()
+    }
+
+    @Test
+    fun `sendReport network exception`() = runTest {
+        val engine = MockEngine { throw SocketTimeoutException("timeout") }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        assertFailsWith<SocketTimeoutException> {
+            repository.sendReport(report, target)
+        }
     }
 }
 
