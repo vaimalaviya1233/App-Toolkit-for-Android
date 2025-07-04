@@ -126,4 +126,74 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
 
         println("🏁 [TEST DONE] send report success")
     }
+
+    @Test
+    fun `send report unauthorized`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("fail", HttpStatusCode.Unauthorized) }
+        setup(engine, githubToken = "bad", testDispatcher = dispatcherExtension.testDispatcher)
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply {
+            versionCode = 1
+            versionName = "1"
+        }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+        viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+        viewModel.onEvent(IssueReporterEvent.Send(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        val snackbar = state.snackbar!!
+        assertThat(snackbar.isError).isTrue()
+        val msg = snackbar.message as UiTextHelper.StringResource
+        assertThat(msg.resourceId).isEqualTo(R.string.error_unauthorized)
+        assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+    }
+
+    @Test
+    fun `send report forbidden`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("fail", HttpStatusCode.Forbidden) }
+        setup(engine, githubToken = "bad", testDispatcher = dispatcherExtension.testDispatcher)
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply {
+            versionCode = 1
+            versionName = "1"
+        }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+        viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+        viewModel.onEvent(IssueReporterEvent.Send(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        val snackbar = state.snackbar!!
+        assertThat(snackbar.isError).isTrue()
+        val msg = snackbar.message as UiTextHelper.StringResource
+        assertThat(msg.resourceId).isEqualTo(R.string.error_forbidden)
+        assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+    }
+
+    @Test
+    fun `dismiss snackbar clears state`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("", HttpStatusCode.Created) }
+        setup(engine, testDispatcher = dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(IssueReporterEvent.Send(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        viewModel.onEvent(IssueReporterEvent.DismissSnackbar)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
 }
