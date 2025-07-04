@@ -141,17 +141,29 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         every { context.packageManager } returns pm
         every { context.packageName } returns "pkg"
 
-        viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
-        viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
-        viewModel.onEvent(IssueReporterEvent.Send(context))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.uiState.test {
+            // Initial state
+            awaitItem()
 
-        val state = viewModel.uiState.value
-        val snackbar = state.snackbar!!
-        assertThat(snackbar.isError).isTrue()
-        val msg = snackbar.message as UiTextHelper.StringResource
-        assertThat(msg.resourceId).isEqualTo(R.string.error_unauthorized)
-        assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+
+            // Consume emitted states for the update events
+            skipItems(2)
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+
+            val loading = awaitItem()
+            assertThat(loading.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+            val state = awaitItem()
+            val snackbar = state.snackbar!!
+            assertThat(snackbar.isError).isTrue()
+            val msg = snackbar.message as UiTextHelper.StringResource
+            assertThat(msg.resourceId).isEqualTo(R.string.error_unauthorized)
+            assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+        }
     }
 
     @Test
@@ -168,17 +180,29 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         every { context.packageManager } returns pm
         every { context.packageName } returns "pkg"
 
-        viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
-        viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
-        viewModel.onEvent(IssueReporterEvent.Send(context))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.uiState.test {
+            // Initial state
+            awaitItem()
 
-        val state = viewModel.uiState.value
-        val snackbar = state.snackbar!!
-        assertThat(snackbar.isError).isTrue()
-        val msg = snackbar.message as UiTextHelper.StringResource
-        assertThat(msg.resourceId).isEqualTo(R.string.error_forbidden)
-        assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+
+            // Consume emitted states for the update events
+            skipItems(2)
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+
+            val loading = awaitItem()
+            assertThat(loading.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+            val state = awaitItem()
+            val snackbar = state.snackbar!!
+            assertThat(snackbar.isError).isTrue()
+            val msg = snackbar.message as UiTextHelper.StringResource
+            assertThat(msg.resourceId).isEqualTo(R.string.error_forbidden)
+            assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+        }
     }
 
     @Test
