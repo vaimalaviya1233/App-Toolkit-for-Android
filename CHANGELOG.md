@@ -1,3 +1,8 @@
+# AppToolkit v1.0.7
+
+- **Minor**: We've made some improvements for stability and overall usage of the app.
+- **Patch**: This update includes minor bug fixes.
+
 # Version 1.0.6:
 
 - **Minor**: We've made some improvements to how the side navigation menu looks and works.
