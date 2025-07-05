@@ -193,9 +193,10 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         setup(flow = emptyFlow, testDispatcher = dispatcherExtension.testDispatcher)
         coEvery { useCase.invoke(any()) } throws IllegalStateException("bad client")
 
-        assertFailsWith<IllegalStateException> {
-            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
+        viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.screenState is ScreenState.IsLoading)
     }
 }

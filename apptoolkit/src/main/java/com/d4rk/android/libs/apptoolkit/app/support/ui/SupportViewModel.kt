@@ -37,12 +37,13 @@ class SupportViewModel(
 
     private fun queryProductDetails(billingClient : BillingClient) {
         queryJob?.cancel()
+        val flow = queryProductDetailsUseCase(billingClient)
         queryJob = launch(context = dispatcherProvider.io) {
             screenState.updateState(ScreenState.IsLoading())
             // ensure observers see the loading state before work continues
             yield()
 
-            queryProductDetailsUseCase(billingClient)
+            flow
                 .flowOn(dispatcherProvider.default)
                 .collect { result: DataState<Map<String, ProductDetails>, Errors> ->
                     screenState.applyResult(
