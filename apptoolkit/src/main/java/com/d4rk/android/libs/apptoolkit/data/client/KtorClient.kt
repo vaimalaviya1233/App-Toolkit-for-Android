@@ -1,10 +1,15 @@
 package com.d4rk.android.libs.apptoolkit.data.client
 
+import android.util.Log
+import com.d4rk.android.libs.apptoolkit.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.accept
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -22,6 +27,19 @@ class KtorClient {
     private val requestTimeout : Long = 10_000L
 
     /**
+     * Logs a network message when debugging is enabled.
+     */
+    private fun log(message: String, throwable: Throwable? = null) {
+        if (BuildConfig.DEBUG) {
+            if (throwable != null) {
+                Log.d("KtorClient", message, throwable)
+            } else {
+                Log.d("KtorClient", message)
+            }
+        }
+    }
+
+    /**
      * Creates and configures an [HttpClient] for making network requests.
      *
      * This function sets up the client with the following:
@@ -32,8 +50,18 @@ class KtorClient {
      *
      * @return An [HttpClient] instance ready for use.
      */
-    fun createClient() : HttpClient {
+    fun createClient(isDebug: Boolean = false) : HttpClient {
         return HttpClient(engineFactory = Android) {
+            if (isDebug) {
+                install(plugin = Logging) {
+                    logger = object : Logger {
+                        override fun log(message: String) {
+                            log(message)
+                        }
+                    }
+                    level = LogLevel.ALL
+                }
+            }
             install(plugin = ContentNegotiation) {
                 json(json = Json {
                     prettyPrint = true
