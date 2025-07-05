@@ -7,12 +7,13 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.test.R
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkConstructor
 import io.mockk.slot
-import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -138,7 +139,12 @@ class TestIntentsHelper {
 
         val chooser = slot.captured
         assertEquals(Intent.ACTION_CHOOSER, chooser.action)
-        val sendIntent = chooser.getParcelableExtra<Intent>(Intent.EXTRA_INTENT)
+        val sendIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT, Intent::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT)
+        }
         assertEquals(Intent.ACTION_SEND, sendIntent?.action)
         assertEquals("msg", sendIntent?.getStringExtra(Intent.EXTRA_TEXT))
         assertEquals("text/plain", sendIntent?.type)
@@ -157,7 +163,12 @@ class TestIntentsHelper {
 
         val chooser = slot.captured
         assertEquals(Intent.ACTION_CHOOSER, chooser.action)
-        val inner = chooser.getParcelableExtra<Intent>(Intent.EXTRA_INTENT)
+        val inner = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT, Intent::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT)
+        }
         assertEquals(Intent.ACTION_SENDTO, inner?.action)
         assertTrue(inner?.data.toString().startsWith("mailto:"))
     }
