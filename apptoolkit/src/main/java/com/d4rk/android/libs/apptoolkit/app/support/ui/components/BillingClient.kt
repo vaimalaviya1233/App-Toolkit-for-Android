@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.d4rk.android.libs.apptoolkit.app.support.ui.components
 
 import android.content.Context
@@ -15,7 +13,14 @@ import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 @Composable
 fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : BillingClient {
     val billingClient : BillingClient = remember {
-        BillingClient.newBuilder(context).setListener { _ , _ -> }.enablePendingPurchases().build()
+        BillingClient.newBuilder(context)
+            .setListener { _ , _ -> }
+            .enablePendingPurchases(
+                BillingClient.PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build()
+            )
+            .build()
     }
 
     DisposableEffect(billingClient) {
