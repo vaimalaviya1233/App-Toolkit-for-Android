@@ -99,8 +99,6 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
             // initial state
             awaitItem()
-            // first loading
-            awaitItem()
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             // first success
             awaitItem()
@@ -136,7 +134,6 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         viewModel.uiState.test {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
             awaitItem() // initial
-            awaitItem() // first loading
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             assertTrue(awaitItem().screenState is ScreenState.Error)
 
@@ -190,10 +187,9 @@ class TestSupportViewModel : TestSupportViewModelBase() {
 
     @Test
     fun `query product details billing client exception`() = runTest(dispatcherExtension.testDispatcher) {
-        val flow = flow<DataState<Map<String, ProductDetails>, Errors>> {
-            throw IllegalStateException("bad client")
-        }
-        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        val emptyFlow = flow<DataState<Map<String, ProductDetails>, Errors>> { }
+        setup(flow = emptyFlow, testDispatcher = dispatcherExtension.testDispatcher)
+        coEvery { useCase.invoke(any()) } throws IllegalStateException("bad client")
 
         assertFailsWith<IllegalStateException> {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
