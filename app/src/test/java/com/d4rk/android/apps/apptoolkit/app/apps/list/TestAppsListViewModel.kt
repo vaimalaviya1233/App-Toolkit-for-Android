@@ -121,4 +121,31 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
     }
+
+    @Test
+    fun `datastore failure does not update favorites`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher, toggleError = RuntimeException("ds fail"))
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
+    }
+
+    @Test
+    fun `duplicate apps returned are preserved`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(
+            AppInfo("App", "pkg", "url"),
+            AppInfo("App", "pkg", "url")
+        )
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+    }
 }
