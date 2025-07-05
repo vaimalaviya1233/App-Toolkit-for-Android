@@ -5,9 +5,6 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
-import com.d4rk.android.libs.apptoolkit.BuildConfig
-import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
-import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +15,6 @@ import kotlinx.coroutines.supervisorScope
 open class BaseCoreManager : MultiDexApplication() , Application.ActivityLifecycleCallbacks , LifecycleObserver {
 
     companion object {
-        lateinit var ktorClient : HttpClient
-            private set
-
         var isAppLoaded : Boolean = false
             private set
     }
@@ -34,19 +28,11 @@ open class BaseCoreManager : MultiDexApplication() , Application.ActivityLifecyc
     }
 
     private suspend fun initializeApp() = supervisorScope {
-        val ktorClientInitialization : Deferred<Unit> = async { initializeKtorClient() }
-        val appComponentsInitialization : Deferred<Unit> = async { onInitializeApp() }
+        val appComponentsInitialization: Deferred<Unit> = async { onInitializeApp() }
 
-        ktorClientInitialization.await()
         appComponentsInitialization.await()
 
         finalizeInitialization()
-    }
-
-    private fun initializeKtorClient() {
-        runCatching {
-            ktorClient = KtorClient().createClient(enableLogging = BuildConfig.DEBUG)
-        }
     }
 
     protected open suspend fun onInitializeApp() {}
