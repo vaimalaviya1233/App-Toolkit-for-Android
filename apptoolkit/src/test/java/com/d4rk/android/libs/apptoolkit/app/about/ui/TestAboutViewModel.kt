@@ -45,5 +45,38 @@ class TestAboutViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.snackbar).isNull()
+        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
+    }
+
+    @Test
+    fun `snackbar can be shown again after dismissal`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val stateAfterSecondCopy = viewModel.uiState.value
+        assertThat(stateAfterSecondCopy.snackbar).isNotNull()
+        assertThat(stateAfterSecondCopy.data?.showDeviceInfoCopiedSnackbar).isTrue()
+
+        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val finalState = viewModel.uiState.value
+        assertThat(finalState.snackbar).isNull()
+        assertThat(finalState.data?.showDeviceInfoCopiedSnackbar).isFalse()
+
+        // dismissing again should keep snackbar hidden
+        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+        assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isFalse()
     }
 }
