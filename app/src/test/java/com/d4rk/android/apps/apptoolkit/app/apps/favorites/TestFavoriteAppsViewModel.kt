@@ -141,6 +141,9 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(setOf("pkg")) }
         setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
 
+        // allow view model initialization to complete before emitting values
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
         // initial list contains the app
         shared.emit(DataState.Success(listOf(AppInfo("App", "pkg", "url"))))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
