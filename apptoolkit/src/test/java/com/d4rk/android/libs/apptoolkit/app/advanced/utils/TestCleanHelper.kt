@@ -35,4 +35,30 @@ class TestCleanHelper {
         assertFalse(dir3.exists())
         verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
     }
+
+    @Test
+    fun `clearApplicationCache shows error toast when deletion fails`() {
+        val dir1 = createTempDir()
+        val failing = mockk<java.io.File>()
+        every { failing.deleteRecursively() } returns false
+        every { failing.exists() } returns true
+        val dir3 = createTempDir()
+
+        val context = mockk<Context>()
+        every { context.cacheDir } returns dir1
+        every { context.codeCacheDir } returns failing
+        every { context.filesDir } returns dir3
+        every { context.getString(R.string.cache_cleared_error) } returns "error"
+
+        mockkStatic(Toast::class)
+        val toast = mockk<Toast>(relaxed = true)
+        every { Toast.makeText(context, "error", Toast.LENGTH_SHORT) } returns toast
+
+        CleanHelper.clearApplicationCache(context)
+
+        assertFalse(dir1.exists())
+        assertFalse(dir3.exists())
+        verify { failing.deleteRecursively() }
+        verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+    }
 }

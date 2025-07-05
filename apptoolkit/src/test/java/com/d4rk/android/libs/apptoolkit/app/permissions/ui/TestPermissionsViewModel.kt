@@ -13,6 +13,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.andThen
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertFailsWith
@@ -89,5 +90,62 @@ class TestPermissionsViewModel {
         viewModel.screenState.setErrors(emptyList())
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.errors).isEmpty()
+    }
+
+    @Test
+    fun `load permissions valid after error`() = runTest(dispatcherExtension.testDispatcher) {
+        val errorConfig = SettingsConfig(title = "title", categories = emptyList())
+        val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.providePermissionsConfig(any()) } returns errorConfig andThen successConfig
+        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        var state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.categories?.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `load permissions error after success`() = runTest(dispatcherExtension.testDispatcher) {
+        val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
+        val errorConfig = SettingsConfig(title = "title", categories = emptyList())
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.providePermissionsConfig(any()) } returns successConfig andThen errorConfig
+        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        var state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+    }
+
+    @Test
+    fun `load permissions provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.providePermissionsConfig(any()) } returns null as SettingsConfig
+        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        assertFailsWith<NullPointerException> {
+            viewModel.onEvent(PermissionsEvent.Load(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
     }
 }

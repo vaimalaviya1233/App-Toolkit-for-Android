@@ -8,6 +8,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.coEvery
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -113,6 +114,65 @@ class TestSupportViewModel : TestSupportViewModelBase() {
                 assertTrue(state.screenState is ScreenState.Success)
             }
             cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `query product details retry after error`() = runTest(dispatcherExtension.testDispatcher) {
+        val flowError = flow {
+            emit(DataState.Loading())
+            emit(
+                DataState.Error<Map<String, ProductDetails>, Errors>(
+                    null,
+                    Errors.UseCase.FAILED_TO_LOAD_SKU_DETAILS
+                )
+            )
+        }
+        val flowSuccess = flow {
+            emit(DataState.Loading())
+            emit(DataState.Success<Map<String, ProductDetails>, Errors>(emptyMap()))
+        }
+        setup(flow = flowError, testDispatcher = dispatcherExtension.testDispatcher)
+        coEvery { useCase.invoke(any()) } returns flowError andThen flowSuccess
+
+        viewModel.uiState.test {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            awaitItem() // initial
+            awaitItem() // first loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            awaitItem().let { state ->
+                assertTrue(state.screenState is ScreenState.Error)
+            }
+
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            awaitItem().let { state ->
+                assertTrue(state.screenState is ScreenState.IsLoading)
+            }
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            awaitItem().let { state ->
+                assertTrue(state.screenState is ScreenState.Success)
+            }
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `query product details unexpected error code`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading())
+            emit(
+                DataState.Error<Map<String, ProductDetails>, Errors>(
+                    null,
+                    Errors.Network.SERIALIZATION
+                )
+            )
+        }
+        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.uiState.testError(
+            testDispatcher = dispatcherExtension.testDispatcher,
+        ) {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
         }
     }
 }
