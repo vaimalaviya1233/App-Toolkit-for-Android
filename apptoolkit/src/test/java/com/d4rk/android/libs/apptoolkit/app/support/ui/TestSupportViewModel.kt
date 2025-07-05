@@ -193,14 +193,9 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         setup(flow = emptyFlow, testDispatcher = dispatcherExtension.testDispatcher)
         coEvery { useCase.invoke(any()) } throws IllegalStateException("bad client")
 
-        viewModel.uiState.test {
+        assertFailsWith<IllegalStateException> {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
-            awaitItem() // initial
-            dispatcherExtension.testDispatcher.scheduler.runCurrent()
-            assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            assertTrue(awaitItem().screenState is ScreenState.Error)
-            cancelAndIgnoreRemainingEvents()
         }
     }
 }

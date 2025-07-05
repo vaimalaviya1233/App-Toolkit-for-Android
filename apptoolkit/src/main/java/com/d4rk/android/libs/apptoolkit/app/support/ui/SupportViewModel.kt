@@ -11,10 +11,8 @@ import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.applyResult
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
@@ -44,21 +42,16 @@ class SupportViewModel(
             // ensure observers see the loading state before work continues
             yield()
 
-            try {
-                queryProductDetailsUseCase(billingClient)
-                    .flowOn(dispatcherProvider.default)
-                    .collect { result : DataState<Map<String , ProductDetails> , Errors> ->
-                        screenState.applyResult(
-                            result = result,
-                            errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_load_sku_details)
-                        ) { productMap , current ->
-                            current.copy(productDetails = productMap)
-                        }
+            queryProductDetailsUseCase(billingClient)
+                .flowOn(dispatcherProvider.default)
+                .collect { result: DataState<Map<String, ProductDetails>, Errors> ->
+                    screenState.applyResult(
+                        result = result,
+                        errorMessage = UiTextHelper.StringResource(R.string.error_failed_to_load_sku_details)
+                    ) { productMap, current ->
+                        current.copy(productDetails = productMap)
                     }
-            } catch (throwable: Throwable) {
-                screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.StringResource(R.string.error_failed_to_load_sku_details))))
-                screenState.updateState(ScreenState.Error())
-            }
+                }
         }
     }
 }
