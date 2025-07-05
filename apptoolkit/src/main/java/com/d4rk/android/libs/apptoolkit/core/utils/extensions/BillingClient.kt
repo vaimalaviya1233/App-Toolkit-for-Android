@@ -13,9 +13,9 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     productDetailsList
                 } else {
-                    throw Exception("Failed to query: ${billingResult.debugMessage}")
+                    throw Exception("Failed to query product details: ${billingResult.debugMessage} (Response Code: ${billingResult.responseCode})")
                 }
             }
-            continuation.resume(result)
+            continuation.resume(result) // FIXME: Argument type mismatch: actual type is 'Result<QueryProductDetailsResult>', but 'Result<List<ProductDetails>>' was expected.
         }
     }
