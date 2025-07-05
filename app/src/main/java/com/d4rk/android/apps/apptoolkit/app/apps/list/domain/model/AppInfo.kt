@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppInfo(
-    @SerialName("name") val name: String ,
-    @SerialName("packageName") val packageName: String ,
-    @SerialName("iconLogo") val iconUrl: String
+    @SerialName(value = "name") val name: String,
+    @SerialName(value = "packageName") val packageName: String,
+    @SerialName(value = "iconLogo") val iconUrl: String,
 )
