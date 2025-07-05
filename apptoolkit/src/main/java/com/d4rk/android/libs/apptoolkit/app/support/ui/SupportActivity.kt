@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import android.util.Log
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
@@ -32,7 +31,6 @@ class SupportActivity : AppCompatActivity() {
 
     fun initiatePurchase(productId : String , productDetailsMap : Map<String , ProductDetails> , billingClient : BillingClient) {
         if (!billingClient.isReady) {
-            Log.e("SupportActivity" , "BillingClient not ready")
             return
         }
 
@@ -44,10 +42,7 @@ class SupportActivity : AppCompatActivity() {
                 val billingFlowParams : BillingFlowParams = BillingFlowParams.newBuilder()
                     .setProductDetailsParamsList(listOf(productDetailsParams))
                     .build()
-                val result = billingClient.launchBillingFlow(this , billingFlowParams)
-                if (result.responseCode != BillingClient.BillingResponseCode.OK) {
-                    Log.e("SupportActivity" , "Failed to launch billing flow: ${result.debugMessage}")
-                }
+                billingClient.launchBillingFlow(this , billingFlowParams)
             }
         }
     }
