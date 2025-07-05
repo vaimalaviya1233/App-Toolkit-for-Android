@@ -72,10 +72,11 @@ class TestPermissionsViewModel {
         viewModel = PermissionsViewModel(provider, dispatcherProvider)
         val context = mockk<Context>(relaxed = true)
 
-        assertFailsWith<IllegalStateException> {
-            viewModel.onEvent(PermissionsEvent.Load(context))
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
     }
 
     @Test
@@ -139,16 +140,15 @@ class TestPermissionsViewModel {
     fun `load permissions provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
-        every { provider.providePermissionsConfig(any()) } returns mockk<SettingsConfig>(relaxed = true).copy(
-            categories = emptyList()
-        )
+        every { provider.providePermissionsConfig(any()) } returns SettingsConfig(title = "null test", categories = emptyList())
         viewModel = PermissionsViewModel(provider, dispatcherProvider)
         val context = mockk<Context>(relaxed = true)
 
-        assertFailsWith<NullPointerException> {
-            viewModel.onEvent(PermissionsEvent.Load(context))
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
     }
 
     @Test
