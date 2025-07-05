@@ -1,21 +1,20 @@
+package com.d4rk.android.libs.apptoolkit.data.core.ads
+
 import android.app.Activity
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
+import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.OnShowAdCompleteListener
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
-import com.google.android.gms.ads.FullScreenContentCallback
+import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
-import io.mockk.mockkConstructor
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.OnShowAdCompleteListener
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.util.Date
