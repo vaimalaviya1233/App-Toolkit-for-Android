@@ -15,6 +15,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertFailsWith
 
 class TestSupportViewModel : TestSupportViewModelBase() {
 
@@ -164,6 +165,39 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             testDispatcher = dispatcherExtension.testDispatcher,
         ) {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
+    }
+
+    @Test
+    fun `query product details network interruption`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading())
+            emit(
+                DataState.Error<Map<String, ProductDetails>, Errors>(
+                    null,
+                    Errors.Network.NO_INTERNET
+                )
+            )
+        }
+        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.uiState.testError(
+            testDispatcher = dispatcherExtension.testDispatcher,
+        ) {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
+    }
+
+    @Test
+    fun `query product details billing client exception`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<Map<String, ProductDetails>, Errors> {
+            throw IllegalStateException("bad client")
+        }
+        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        assertFailsWith<IllegalStateException> {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         }
     }
 }

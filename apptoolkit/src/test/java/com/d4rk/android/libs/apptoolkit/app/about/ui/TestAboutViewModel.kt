@@ -79,4 +79,21 @@ class TestAboutViewModel {
         assertThat(viewModel.uiState.value.snackbar).isNull()
         assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isFalse()
     }
+
+    @Test
+    fun `repeated copy events show snackbar each time`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val first = viewModel.uiState.value.snackbar!!
+        val firstTimestamp = first.timeStamp
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val second = viewModel.uiState.value.snackbar!!
+
+        assertThat(second.timeStamp).isGreaterThan(firstTimestamp)
+    }
 }
