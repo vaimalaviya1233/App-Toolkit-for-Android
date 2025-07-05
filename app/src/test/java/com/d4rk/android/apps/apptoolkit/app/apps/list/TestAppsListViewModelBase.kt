@@ -103,11 +103,11 @@ open class TestAppsListViewModelBase {
             assertTrue(first.screenState is ScreenState.IsLoading) { "First emission should be IsLoading but was ${first.screenState}" }
             println("advancing dispatcher...")
             testDispatcher.scheduler.advanceUntilIdle()
-
-            val second = awaitItem()
-            println("\u2139\uFE0F [EMISSION 2] $second")
+            expectNoEvents()
+            println("checking state after dispatcher idle...")
+            val current = viewModel.uiState.value
             // Error flow leaves state unchanged, so it should remain loading
-            assertTrue(second.screenState is ScreenState.IsLoading) { "State should remain Loading on error" }
+            assertTrue(current.screenState is ScreenState.IsLoading) { "State should remain Loading on error" }
             cancelAndIgnoreRemainingEvents()
         }
         println("\uD83C\uDFC1 [TEST END] testError")
