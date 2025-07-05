@@ -15,7 +15,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
@@ -44,11 +43,8 @@ class FavoriteAppsViewModel(
     )
 
     init {
-        // collect favorite packages immediately so that subsequent flows
-        // receive the latest favorites even in tests using hot flows
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
             dataStore.favoriteApps
-                .catch { /* ignore errors */ }
                 .onEach {
                     favoritesLoaded.value = true
                     _favorites.value = it
@@ -77,14 +73,14 @@ class FavoriteAppsViewModel(
             start = CoroutineStart.UNDISPATCHED
         ) {
             combine(
-                fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
-                favorites
-            ) { dataState, favs ->
-                dataState to favs
-            }.collect { (result, favs) ->
+                flow = fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
+                flow2 = favorites
+            ) { dataState, favorites ->
+                dataState to favorites
+            }.collect { (result, saved) ->
                 if (!favoritesLoaded.value) return@collect
                 if (result is DataState.Success) {
-                    val apps = result.data.filter { favs.contains(it.packageName) }
+                    val apps = result.data.filter { saved.contains(it.packageName) }
                     if (apps.isEmpty()) {
                         screenState.update { current ->
                             current.copy(screenState = ScreenState.NoData(), data = current.data?.copy(apps = emptyList()))
