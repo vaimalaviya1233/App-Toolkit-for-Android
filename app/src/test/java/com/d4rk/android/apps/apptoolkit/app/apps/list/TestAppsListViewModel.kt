@@ -4,6 +4,10 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -69,5 +73,52 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         toggleAndAssert(packageName = "pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
         toggleAndAssert(packageName = "pkg", expected = false, testDispatcher = dispatcherExtension.testDispatcher)
         println("\uD83C\uDFC1 [TEST DONE] toggle favorite")
+    }
+
+    @Test
+    fun `toggle favorite for package not in list`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        toggleAndAssert(packageName = "missing.pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
+    }
+
+    @Test
+    fun `toggle favorite during fetch`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            delay(100)
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        dispatcherExtension.testDispatcher.scheduler.advanceTimeBy(50)
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
+    }
+
+    @Test
+    fun `error state clears after reload`() = runTest(dispatcherExtension.testDispatcher) {
+        val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
+        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher)
+
+        shared.emit(DataState.Loading())
+        shared.emit(DataState.Error(error = object : Error {}))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
+
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        viewModel.onEvent(HomeEvent.FetchApps)
+        shared.emit(DataState.Loading())
+        shared.emit(DataState.Success(apps))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
+        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
     }
 }
