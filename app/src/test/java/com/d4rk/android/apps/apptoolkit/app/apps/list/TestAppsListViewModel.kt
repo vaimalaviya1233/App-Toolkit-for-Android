@@ -46,6 +46,18 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
     }
 
     @Test
+    fun `fetch apps - error`() = runTest(dispatcherExtension.testDispatcher) {
+        println("\uD83D\uDE80 [TEST] fetch apps - error")
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Error<List<AppInfo>, Error>(error = object : Error {}))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
+        println("\uD83C\uDFC1 [TEST DONE] fetch apps - error")
+    }
+
+    @Test
     fun `toggle favorite`() = runTest(dispatcherExtension.testDispatcher) {
         println("\uD83D\uDE80 [TEST] toggle favorite")
         val apps = listOf(AppInfo("App", "pkg", "url"))

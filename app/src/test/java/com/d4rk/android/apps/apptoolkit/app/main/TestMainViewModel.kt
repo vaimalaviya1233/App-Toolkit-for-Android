@@ -60,4 +60,26 @@ class TestMainViewModel {
         val msg = snackbar!!.message as UiTextHelper.StringResource
         assertThat(msg.resourceId).isEqualTo(R.string.snack_update_failed)
     }
+
+    @Test
+    fun `check update success`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Success<Int, Errors>(0))
+        }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val snackbar = viewModel.uiState.value.snackbar
+        assertThat(snackbar).isNull()
+    }
+
+    @Test
+    fun `load navigation via event`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<DataState<Int, Errors>> { }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.LoadNavigation)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val items = viewModel.uiState.value.data?.navigationDrawerItems
+        assertThat(items?.size).isEqualTo(4)
+    }
 }

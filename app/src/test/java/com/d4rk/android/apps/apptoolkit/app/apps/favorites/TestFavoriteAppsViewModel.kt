@@ -40,6 +40,16 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     }
 
     @Test
+    fun `load favorites - error`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Error<List<AppInfo>, Error>(error = object : Error {}))
+        }
+        setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
+    }
+
+    @Test
     fun `toggle favorite`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
         val flow = flow {
