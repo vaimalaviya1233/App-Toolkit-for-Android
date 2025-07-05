@@ -12,26 +12,33 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.usecases.RepositoryWithoutParam
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.serialization.json.Json
 
 class FetchDeveloperAppsUseCase(private val client: HttpClient) : RepositoryWithoutParam<Flow<DataState<List<AppInfo> , RootError>>> {
 
     override suspend operator fun invoke(): Flow<DataState<List<AppInfo> , RootError>> = flow {
         runCatching {
-            val jsonString = client.get(BuildConfig.DEBUG.let { isDebug ->
+            println("--> Fetching developer apps")
+            val url = BuildConfig.DEBUG.let { isDebug ->
                 val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
                 "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
-            }).bodyAsText()
-            val response : ApiResponse = Json.Default.decodeFromString(jsonString)
-            val sortedApps = response.data.apps.sortedBy { it.name.lowercase() }
+            }
+            println("--> GET $url")
+            val httpResponse: HttpResponse = client.get(url)
+            val apiResponse: ApiResponse = httpResponse.body()
+
+            val sortedApps = apiResponse.data.apps.sortedBy { it.name.lowercase() }
+            println("<-- ${httpResponse.status.value} $url (${apiResponse.data.apps.size} apps)")
             sortedApps
         }.onSuccess { foundApps ->
+            println("--> Success: ${foundApps.size} apps loaded")
             emit(DataState.Success(data = foundApps))
         }.onFailure { error ->
+            println("--> Failure: ${error.message}")
             emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
         }
     }

@@ -1,3 +1,5 @@
+package com.d4rk.android.libs.apptoolkit.core.utils.helpers
+
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -11,13 +13,16 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 
 class TestConsentManagerHelper {
+
     @Test
     fun `updateConsent passes values to firebase`() {
         val analytics = mockk<FirebaseAnalytics>(relaxed = true)
@@ -25,7 +30,7 @@ class TestConsentManagerHelper {
         every { Firebase.analytics } returns analytics
         justRun { analytics.setConsent(any()) }
 
-        com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper.updateConsent(
+        ConsentManagerHelper.updateConsent(
             analyticsGranted = true,
             adStorageGranted = false,
             adUserDataGranted = true,
@@ -42,9 +47,9 @@ class TestConsentManagerHelper {
         }
     }
 
-    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `applyInitialConsent reads datastore and initializes firebase`() = kotlinx.coroutines.test.runTest {
+    fun `applyInitialConsent reads datastore and initializes firebase`() = runTest {
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.analyticsConsent(any()) } returns flowOf(true)
         every { dataStore.adStorageConsent(any()) } returns flowOf(false)
@@ -77,9 +82,9 @@ class TestConsentManagerHelper {
         stopKoin()
     }
 
-    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `updateAnalyticsCollectionFromDatastore sets collection flags`() = kotlinx.coroutines.test.runTest {
+    fun `updateAnalyticsCollectionFromDatastore sets collection flags`() = runTest {
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.usageAndDiagnostics(any()) } returnsMany listOf(flowOf(true), flowOf(false))
 
