@@ -8,7 +8,9 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.PerformInAppUpdateUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +19,6 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import com.google.common.truth.Truth.assertThat
 
 class TestMainViewModel {
 
@@ -101,11 +102,11 @@ class TestMainViewModel {
     @Test
     fun `multiple update attempts error then success`() = runTest(dispatcherExtension.testDispatcher) {
         val errorFlow = flow {
-            emit(DataState.Loading<Int, Errors>())
+            emit(DataState.Loading())
             emit(DataState.Error<Int, Errors>(error = Errors.Network.REQUEST_TIMEOUT))
         }
         val successFlow = flow {
-            emit(DataState.Loading<Int, Errors>())
+            emit(DataState.Loading())
             emit(DataState.Success<Int, Errors>(0))
         }
 

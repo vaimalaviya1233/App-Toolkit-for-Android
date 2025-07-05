@@ -3,12 +3,11 @@ import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import com.google.android.gms.ads.MobileAds
-import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
-import kotlin.test.Test
+import org.junit.Test
 
 class TestAdsCoreManager {
     @Test

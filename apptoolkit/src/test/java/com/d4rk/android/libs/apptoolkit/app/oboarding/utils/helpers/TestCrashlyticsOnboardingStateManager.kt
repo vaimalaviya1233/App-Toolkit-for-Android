@@ -1,6 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers
 
-import kotlin.test.Test
+import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

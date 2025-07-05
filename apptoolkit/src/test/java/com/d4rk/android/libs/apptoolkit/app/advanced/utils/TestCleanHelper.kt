@@ -8,15 +8,16 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.Test
+import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
 
 class TestCleanHelper {
 
     @Test
     fun `clearApplicationCache deletes cache directories`() {
-        val dir1 = createTempDir()
-        val dir2 = createTempDir()
-        val dir3 = createTempDir()
+        val dir1 = createTempDirectory().toFile()
+        val dir2 = createTempDirectory().toFile()
+        val dir3 = createTempDirectory().toFile()
 
         val context = mockk<Context>()
         every { context.cacheDir } returns dir1
@@ -38,11 +39,11 @@ class TestCleanHelper {
 
     @Test
     fun `clearApplicationCache shows error toast when deletion fails`() {
-        val dir1 = createTempDir()
+        val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
         every { failing.deleteRecursively() } returns false
         every { failing.exists() } returns true
-        val dir3 = createTempDir()
+        val dir3 = createTempDirectory().toFile()
 
         val context = mockk<Context>()
         every { context.cacheDir } returns dir1

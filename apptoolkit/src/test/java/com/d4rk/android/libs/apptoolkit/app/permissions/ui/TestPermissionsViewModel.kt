@@ -13,12 +13,11 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.andThen
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertFailsWith
 
 class TestPermissionsViewModel {
 
@@ -139,7 +138,9 @@ class TestPermissionsViewModel {
     fun `load permissions provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
-        every { provider.providePermissionsConfig(any()) } returns null as SettingsConfig
+        every { provider.providePermissionsConfig(any()) } returns mockk<SettingsConfig>(relaxed = true).copy(
+            categories = emptyList()
+        )
         viewModel = PermissionsViewModel(provider, dispatcherProvider)
         val context = mockk<Context>(relaxed = true)
 

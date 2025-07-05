@@ -1,15 +1,18 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list
 
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -86,6 +89,7 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         toggleAndAssert(packageName = "missing.pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `toggle favorite during fetch`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
@@ -102,6 +106,7 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `error state clears after reload`() = runTest(dispatcherExtension.testDispatcher) {
         val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
@@ -122,6 +127,7 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `datastore failure does not update favorites`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))

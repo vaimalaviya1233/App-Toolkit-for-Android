@@ -6,7 +6,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.verify
-import kotlin.test.Test
+import org.junit.Test
 
 class TestConsentManagerHelper {
     @Test

@@ -1,15 +1,19 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.favorites
 
+import app.cash.turbine.test
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -75,12 +79,13 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `favorites change during loading`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
         val flow = flow {
             emit(DataState.Loading<List<AppInfo>, Error>())
-            delay(100)
+            delay(100) // Ensures that the data is not emitted immediately
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
         setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
