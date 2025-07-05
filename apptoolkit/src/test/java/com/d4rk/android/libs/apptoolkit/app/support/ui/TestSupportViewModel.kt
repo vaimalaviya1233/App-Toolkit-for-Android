@@ -104,6 +104,7 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             awaitItem()
 
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            dispatcherExtension.testDispatcher.scheduler.runCurrent()
             // second loading
             assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
@@ -138,6 +139,7 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             assertTrue(awaitItem().screenState is ScreenState.Error)
 
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            dispatcherExtension.testDispatcher.scheduler.runCurrent()
             assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             assertTrue(awaitItem().screenState is ScreenState.Success)
@@ -191,9 +193,14 @@ class TestSupportViewModel : TestSupportViewModelBase() {
         setup(flow = emptyFlow, testDispatcher = dispatcherExtension.testDispatcher)
         coEvery { useCase.invoke(any()) } throws IllegalStateException("bad client")
 
-        assertFailsWith<IllegalStateException> {
+        viewModel.uiState.test {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            awaitItem() // initial
+            dispatcherExtension.testDispatcher.scheduler.runCurrent()
+            assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            assertTrue(awaitItem().screenState is ScreenState.Error)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }
