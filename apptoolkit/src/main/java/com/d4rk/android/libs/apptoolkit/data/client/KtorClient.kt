@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.data.client
 
-import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.engine.android.AndroidEngineConfig
@@ -70,7 +69,7 @@ class KtorClient {
         install(plugin = Logging) {
             logger = object : Logger {
                 override fun log(message: String) {
-                    Log.i("KtorClient", message)
+                    println("KtorClient: $message")
                 }
             }
             level = LogLevel.ALL
