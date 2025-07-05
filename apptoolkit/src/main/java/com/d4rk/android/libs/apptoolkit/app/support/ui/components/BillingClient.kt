@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 
@@ -16,7 +17,7 @@ fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : Bi
         BillingClient.newBuilder(context)
             .setListener { _ , _ -> }
             .enablePendingPurchases(
-                BillingClient.PendingPurchasesParams.newBuilder()
+                PendingPurchasesParams.newBuilder()
                     .enableOneTimeProducts()
                     .build()
             )
