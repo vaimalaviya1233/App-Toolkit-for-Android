@@ -70,4 +70,33 @@ class TestGeneralSettingsViewModel {
         state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
     }
+
+    @Test
+    fun `multiple load calls update key`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        viewModel.onEvent(GeneralSettingsEvent.Load("one"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        var state = viewModel.uiState.value
+        assertThat(state.data?.contentKey).isEqualTo("one")
+
+        viewModel.onEvent(GeneralSettingsEvent.Load("two"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertThat(state.data?.contentKey).isEqualTo("two")
+    }
+
+    @Test
+    fun `errors cleared after successful load`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        viewModel.onEvent(GeneralSettingsEvent.Load(""))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        var state = viewModel.uiState.value
+        assertThat(state.errors).isNotEmpty()
+
+        viewModel.onEvent(GeneralSettingsEvent.Load("valid"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.errors).isEmpty()
+    }
 }
