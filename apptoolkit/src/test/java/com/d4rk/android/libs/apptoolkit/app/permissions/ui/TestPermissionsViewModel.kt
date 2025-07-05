@@ -8,12 +8,14 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -59,5 +61,33 @@ class TestPermissionsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
         val error = state.errors.first().message as UiTextHelper.DynamicString
         assertThat(error.content).isEqualTo("No settings found")
+    }
+
+    @Test
+    fun `load permissions provider throws`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.providePermissionsConfig(any()) } throws IllegalStateException("boom")
+        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        assertFailsWith<IllegalStateException> {
+            viewModel.onEvent(PermissionsEvent.Load(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
+    }
+
+    @Test
+    fun `dismiss errors clears state`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "title", categories = emptyList())
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.errors).isNotEmpty()
+
+        viewModel.screenState.setErrors(emptyList())
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.errors).isEmpty()
     }
 }
