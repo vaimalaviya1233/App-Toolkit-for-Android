@@ -13,14 +13,16 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class FavoriteAppsViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
@@ -61,7 +63,10 @@ class FavoriteAppsViewModel(
     }
 
     private fun loadFavorites() {
-        launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+            start = CoroutineStart.UNDISPATCHED
+        ) {
             combine(
                 fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
                 favorites
@@ -86,7 +91,7 @@ class FavoriteAppsViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        launch(context = dispatcherProvider.io) {
+        viewModelScope.launch(context = dispatcherProvider.io) {
             dataStore.toggleFavoriteApp(packageName)
         }
     }
