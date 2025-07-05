@@ -16,6 +16,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -61,5 +62,33 @@ class TestSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
         val error = state.errors.first().message as UiTextHelper.StringResource
         assertThat(error.resourceId).isEqualTo(R.string.error_no_settings_found)
+    }
+
+    @Test
+    fun `load settings provider throws`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } throws IllegalStateException("boom")
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        assertFailsWith<IllegalStateException> {
+            viewModel.onEvent(SettingsEvent.Load(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
+    }
+
+    @Test
+    fun `load settings provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returns null as SettingsConfig
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        assertFailsWith<NullPointerException> {
+            viewModel.onEvent(SettingsEvent.Load(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
     }
 }
