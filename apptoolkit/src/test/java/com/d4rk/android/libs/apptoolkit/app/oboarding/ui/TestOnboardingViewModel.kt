@@ -40,4 +40,21 @@ class TestOnboardingViewModel {
         viewModel.currentTabIndex = Int.MAX_VALUE
         assertThat(viewModel.currentTabIndex).isEqualTo(Int.MAX_VALUE)
     }
+
+    @Test
+    fun `placeholder for onboarding side effects`() {
+        val viewModel = OnboardingViewModel()
+        // Future analytics or persistence checks would go here
+        assertThat(viewModel.currentTabIndex).isEqualTo(0)
+    }
+
+    @Test
+    fun `repeated open dismiss remains stable`() {
+        val viewModel = OnboardingViewModel()
+        repeat(5) { index ->
+            viewModel.currentTabIndex = index
+            viewModel.currentTabIndex = 0
+        }
+        assertThat(viewModel.currentTabIndex).isEqualTo(0)
+    }
 }

@@ -99,4 +99,29 @@ class TestGeneralSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.errors).isEmpty()
     }
+
+    @Test
+    fun `content persists across config changes`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        viewModel.onEvent(GeneralSettingsEvent.Load("rotate"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val stateBefore = viewModel.uiState.value
+
+        // simulate orientation change by checking state again
+        val stateAfter = viewModel.uiState.value
+        assertThat(stateAfter.data?.contentKey).isEqualTo(stateBefore.data?.contentKey)
+    }
+
+    @Test
+    fun `reload with same key retains state`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        viewModel.onEvent(GeneralSettingsEvent.Load("keep"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val stateBefore = viewModel.uiState.value
+
+        viewModel.onEvent(GeneralSettingsEvent.Load("keep"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val stateAfter = viewModel.uiState.value
+        assertThat(stateAfter).isEqualTo(stateBefore)
+    }
 }

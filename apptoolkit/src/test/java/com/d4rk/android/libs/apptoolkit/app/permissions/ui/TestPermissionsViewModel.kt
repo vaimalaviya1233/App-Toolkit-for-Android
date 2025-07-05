@@ -149,4 +149,40 @@ class TestPermissionsViewModel {
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         }
     }
+
+    @Test
+    fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
+        val first = SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one")))
+        val second = SettingsConfig(title = "second", categories = emptyList())
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.providePermissionsConfig(any()) } returnsMany listOf(first, second)
+        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+    }
+
+    @Test
+    fun `load permissions with malformed data`() = runTest(dispatcherExtension.testDispatcher) {
+        val malformed = SettingsCategory(
+            title = "",
+            preferences = listOf(SettingsPreference(key = null, title = null))
+        )
+        val config = SettingsConfig(title = "bad", categories = listOf(malformed))
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(PermissionsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.categories?.first()?.preferences?.size).isEqualTo(1)
+    }
 }
