@@ -17,6 +17,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestDispatcher
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -45,12 +46,19 @@ open class TestFavoriteAppsViewModelBase {
 
         if (toggleError != null) {
             coEvery { dataStore.toggleFavoriteApp(any()) } throws toggleError
-        } else if (favFlow is MutableStateFlow<Set<String>>) {
+        } else if (favFlow is MutableStateFlow<Set<String>> || favFlow is MutableSharedFlow<Set<String>>) {
             coEvery { dataStore.toggleFavoriteApp(any()) } coAnswers {
                 val pkg = it.invocation.args[0] as String
-                val current = favFlow.value.toMutableSet()
+                val current = when (favFlow) {
+                    is MutableStateFlow -> favFlow.value
+                    is MutableSharedFlow -> favFlow.replayCache.lastOrNull() ?: emptySet()
+                    else -> emptySet()
+                }.toMutableSet()
                 if (!current.add(pkg)) current.remove(pkg)
-                favFlow.value = current
+                when (favFlow) {
+                    is MutableStateFlow -> favFlow.value = current
+                    is MutableSharedFlow -> favFlow.emit(current)
+                }
             }
         } else {
             coEvery { dataStore.toggleFavoriteApp(any()) } returns Unit

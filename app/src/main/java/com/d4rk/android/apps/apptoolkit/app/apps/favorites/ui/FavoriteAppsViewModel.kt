@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class FavoriteAppsViewModel(
@@ -53,7 +55,14 @@ class FavoriteAppsViewModel(
                 }
                 .collect()
         }
-        onEvent(FavoriteAppsEvent.LoadFavorites)
+
+        // ensure favorites are loaded before fetching apps
+        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
+            favoritesLoaded
+                .filter { it }
+                .first()
+            onEvent(FavoriteAppsEvent.LoadFavorites)
+        }
     }
 
     override fun onEvent(event: FavoriteAppsEvent) {
