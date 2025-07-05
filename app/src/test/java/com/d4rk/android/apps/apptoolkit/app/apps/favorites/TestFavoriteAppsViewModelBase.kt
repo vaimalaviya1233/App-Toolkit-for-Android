@@ -78,6 +78,19 @@ open class TestFavoriteAppsViewModelBase {
         }
     }
 
+    protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testError(testDispatcher: TestDispatcher) {
+        this@testError.test {
+            val first = awaitItem()
+            assertTrue(first.screenState is ScreenState.IsLoading)
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            val second = awaitItem()
+            // Error flow doesn't update state, so it should remain loading
+            assertTrue(second.screenState is ScreenState.IsLoading)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
     protected fun toggleAndAssert(packageName: String, expected: Boolean, testDispatcher: TestDispatcher) {
         viewModel.toggleFavorite(packageName)
         testDispatcher.scheduler.advanceUntilIdle()

@@ -5,12 +5,14 @@ import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class TestSupportViewModel : TestSupportViewModelBase() {
 
@@ -63,6 +65,54 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             testDispatcher = dispatcherExtension.testDispatcher,
         ) {
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
+    }
+
+    @Test
+    fun `query product details empty list`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading())
+            emit(DataState.Success<Map<String, ProductDetails>, Errors>(emptyMap()))
+        }
+        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.uiState.testSuccess(
+            expectedSize = 0,
+            testDispatcher = dispatcherExtension.testDispatcher,
+        ) {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+        }
+    }
+
+    @Test
+    fun `query product details retry after success`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading())
+            emit(DataState.Success<Map<String, ProductDetails>, Errors>(emptyMap()))
+        }
+        setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.uiState.test {
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            // initial state
+            awaitItem()
+            // first loading
+            awaitItem()
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            // first success
+            awaitItem()
+
+            viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
+            // second loading
+            awaitItem().let { state ->
+                assertTrue(state.screenState is ScreenState.IsLoading)
+            }
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            // second success
+            awaitItem().let { state ->
+                assertTrue(state.screenState is ScreenState.Success)
+            }
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }
