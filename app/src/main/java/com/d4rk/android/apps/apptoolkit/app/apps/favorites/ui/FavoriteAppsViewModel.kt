@@ -12,11 +12,15 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class FavoriteAppsViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
@@ -26,13 +30,27 @@ class FavoriteAppsViewModel(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
 
-    val favorites = dataStore.favoriteApps.stateIn(
+    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
+    private val favoritesLoaded = MutableStateFlow(false)
+
+    val favorites = _favorites.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptySet()
     )
 
     init {
+        // collect favorite packages immediately so that subsequent flows
+        // receive the latest favorites even in tests using hot flows
+        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
+            dataStore.favoriteApps
+                .catch { /* ignore errors */ }
+                .onEach {
+                    favoritesLoaded.value = true
+                    _favorites.value = it
+                }
+                .collect()
+        }
         onEvent(FavoriteAppsEvent.LoadFavorites)
     }
 
@@ -43,13 +61,14 @@ class FavoriteAppsViewModel(
     }
 
     private fun loadFavorites() {
-        launch(context = dispatcherProvider.io) {
+        launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
             combine(
                 fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
                 favorites
             ) { dataState, favs ->
                 dataState to favs
             }.collect { (result, favs) ->
+                if (!favoritesLoaded.value) return@collect
                 if (result is DataState.Success) {
                     val apps = result.data.filter { favs.contains(it.packageName) }
                     if (apps.isEmpty()) {
