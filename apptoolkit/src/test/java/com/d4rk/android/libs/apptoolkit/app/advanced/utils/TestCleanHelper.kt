@@ -10,6 +10,7 @@ import io.mockk.verify
 import org.junit.Test
 import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
+import kotlin.test.assertFailsWith
 
 class TestCleanHelper {
 
@@ -61,5 +62,15 @@ class TestCleanHelper {
         assertFalse(dir3.exists())
         verify { failing.deleteRecursively() }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+    }
+
+    @Test
+    fun `clearApplicationCache throws when directory inaccessible`() {
+        val context = mockk<Context>()
+        every { context.cacheDir } throws SecurityException("denied")
+
+        assertFailsWith<SecurityException> {
+            CleanHelper.clearApplicationCache(context)
+        }
     }
 }

@@ -58,4 +58,21 @@ class TestClipboardHelper {
             ClipboardHelper.copyTextToClipboard(context, "l", "t")
         }
     }
+
+    @Test
+    fun `copyTextToClipboard skips callback on Android T or newer`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        justRun { manager.setPrimaryClip(any()) }
+
+        var executed = false
+        ClipboardHelper.copyTextToClipboard(context, "l", "t") { executed = true }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            assertFalse(executed)
+        } else {
+            assertTrue(executed)
+        }
+    }
 }

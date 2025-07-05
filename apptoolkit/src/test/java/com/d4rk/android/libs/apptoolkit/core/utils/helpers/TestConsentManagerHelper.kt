@@ -1,12 +1,21 @@
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.FirebasePerformance
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
 
 class TestConsentManagerHelper {
     @Test
@@ -31,5 +40,67 @@ class TestConsentManagerHelper {
                 it[FirebaseAnalytics.ConsentType.AD_PERSONALIZATION] == FirebaseAnalytics.ConsentStatus.DENIED
             })
         }
+    }
+
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @Test
+    fun `applyInitialConsent reads datastore and initializes firebase`() = kotlinx.coroutines.test.runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.analyticsConsent(any()) } returns flowOf(true)
+        every { dataStore.adStorageConsent(any()) } returns flowOf(false)
+        every { dataStore.adUserDataConsent(any()) } returns flowOf(true)
+        every { dataStore.adPersonalizationConsent(any()) } returns flowOf(false)
+        every { dataStore.usageAndDiagnostics(any()) } returns flowOf(true)
+
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns false
+        startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
+
+        val analytics = mockk<FirebaseAnalytics>(relaxed = true)
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+
+        val crashlytics = mockk<FirebaseCrashlytics>(relaxed = true)
+        val performance = mockk<FirebasePerformance>(relaxed = true)
+        mockkStatic(FirebaseCrashlytics::class)
+        mockkStatic(FirebasePerformance::class)
+        every { FirebaseCrashlytics.getInstance() } returns crashlytics
+        every { FirebasePerformance.getInstance() } returns performance
+
+        ConsentManagerHelper.applyInitialConsent(dataStore)
+
+        verify { analytics.setConsent(any()) }
+        verify { analytics.setAnalyticsCollectionEnabled(true) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = true }
+        verify { performance.isPerformanceCollectionEnabled = true }
+
+        stopKoin()
+    }
+
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @Test
+    fun `updateAnalyticsCollectionFromDatastore sets collection flags`() = kotlinx.coroutines.test.runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.usageAndDiagnostics(any()) } returnsMany listOf(flowOf(true), flowOf(false))
+
+        val analytics = mockk<FirebaseAnalytics>(relaxed = true)
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        val crashlytics = mockk<FirebaseCrashlytics>(relaxed = true)
+        val performance = mockk<FirebasePerformance>(relaxed = true)
+        mockkStatic(FirebaseCrashlytics::class)
+        mockkStatic(FirebasePerformance::class)
+        every { FirebaseCrashlytics.getInstance() } returns crashlytics
+        every { FirebasePerformance.getInstance() } returns performance
+
+        ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+        verify { analytics.setAnalyticsCollectionEnabled(true) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = true }
+        verify { performance.isPerformanceCollectionEnabled = true }
+
+        ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+        verify { analytics.setAnalyticsCollectionEnabled(false) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = false }
+        verify { performance.isPerformanceCollectionEnabled = false }
     }
 }
