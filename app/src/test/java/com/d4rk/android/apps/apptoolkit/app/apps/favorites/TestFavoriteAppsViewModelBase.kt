@@ -83,10 +83,10 @@ open class TestFavoriteAppsViewModelBase {
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
             testDispatcher.scheduler.advanceUntilIdle()
-
-            val second = awaitItem()
+            expectNoEvents()
             // Error flow doesn't update state, so it should remain loading
-            assertTrue(second.screenState is ScreenState.IsLoading)
+            val current = viewModel.uiState.value
+            assertTrue(current.screenState is ScreenState.IsLoading)
             cancelAndIgnoreRemainingEvents()
         }
     }
