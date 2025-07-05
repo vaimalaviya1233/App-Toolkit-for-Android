@@ -22,8 +22,8 @@ class QueryProductDetailsUseCase : Repository<BillingClient , Flow<DataState<Map
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
 
         param.queryProductDetails(params).fold(
-            onSuccess = { details ->
-                val resultMap = details.associateBy { pd -> pd.productId }
+            onSuccess = { result ->
+                val resultMap = result.productDetailsList.associateBy { pd -> pd.productId }
                 emit(DataState.Success(data = resultMap))
             },
             onFailure = { error ->
