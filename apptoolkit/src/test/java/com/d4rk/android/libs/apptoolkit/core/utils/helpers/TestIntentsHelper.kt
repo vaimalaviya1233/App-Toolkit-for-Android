@@ -9,6 +9,7 @@ import io.mockk.slot
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
 
 class TestIntentsHelper {
 
@@ -37,5 +38,25 @@ class TestIntentsHelper {
         val intent = intentSlot.captured
         assertEquals(String::class.java.name, intent.component?.className)
         assertTrue(intent.flags and Intent.FLAG_ACTIVITY_NEW_TASK != 0)
+    }
+
+    @Test
+    fun `openUrl propagates exception`() {
+        val context = mockk<Context>()
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.openUrl(context, "https://example.com")
+        }
+    }
+
+    @Test
+    fun `openActivity propagates exception`() {
+        val context = mockk<Context>()
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.openActivity(context, String::class.java)
+        }
     }
 }

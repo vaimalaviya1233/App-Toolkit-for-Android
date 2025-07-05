@@ -13,6 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
 
 class TestClipboardHelper {
     @Test
@@ -33,6 +34,28 @@ class TestClipboardHelper {
             assertTrue(callbackExecuted)
         } else {
             assertFalse(callbackExecuted)
+        }
+    }
+
+    @Test
+    fun `copyTextToClipboard throws when manager missing`() {
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns null
+
+        assertFailsWith<NullPointerException> {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t")
+        }
+    }
+
+    @Test
+    fun `copyTextToClipboard handles manager exception`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        every { manager.setPrimaryClip(any()) } throws RuntimeException("boom")
+
+        assertFailsWith<RuntimeException> {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t")
         }
     }
 }
