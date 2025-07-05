@@ -32,19 +32,30 @@ open class TestFavoriteAppsViewModelBase {
     protected fun setup(
         fetchFlow: Flow<DataState<List<AppInfo>, RootError>>,
         initialFavorites: Set<String> = emptySet(),
-        testDispatcher: TestDispatcher
+        testDispatcher: TestDispatcher,
+        favoritesFlow: Flow<Set<String>>? = null,
+        toggleError: Throwable? = null
     ) {
         dispatcherProvider = TestDispatchers(testDispatcher)
         fetchUseCase = mockk()
         dataStore = mockk(relaxed = true)
-        val favoritesFlow = MutableStateFlow(initialFavorites)
-        every { dataStore.favoriteApps } returns favoritesFlow
-        coEvery { dataStore.toggleFavoriteApp(any()) } coAnswers {
-            val pkg = it.invocation.args[0] as String
-            val current = favoritesFlow.value.toMutableSet()
-            if (!current.add(pkg)) current.remove(pkg)
-            favoritesFlow.value = current
+
+        val favFlow = favoritesFlow ?: MutableStateFlow(initialFavorites)
+        every { dataStore.favoriteApps } returns favFlow
+
+        if (toggleError != null) {
+            coEvery { dataStore.toggleFavoriteApp(any()) } throws toggleError
+        } else if (favFlow is MutableStateFlow<Set<String>>) {
+            coEvery { dataStore.toggleFavoriteApp(any()) } coAnswers {
+                val pkg = it.invocation.args[0] as String
+                val current = favFlow.value.toMutableSet()
+                if (!current.add(pkg)) current.remove(pkg)
+                favFlow.value = current
+            }
+        } else {
+            coEvery { dataStore.toggleFavoriteApp(any()) } returns Unit
         }
+
         coEvery { fetchUseCase.invoke() } returns fetchFlow
 
         viewModel = FavoriteAppsViewModel(fetchUseCase, dataStore, dispatcherProvider)

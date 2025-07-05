@@ -156,4 +156,26 @@ class TestMainViewModel {
         assertThat(firstItems?.size).isEqualTo(4)
         assertThat(secondItems?.size).isEqualTo(4)
     }
+
+    @Test
+    fun `loading update emits nothing else`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Loading<Int, Errors>())
+        }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
+
+    @Test
+    fun `unexpected update result is ignored`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Success<Int, Errors>(5))
+        }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
 }

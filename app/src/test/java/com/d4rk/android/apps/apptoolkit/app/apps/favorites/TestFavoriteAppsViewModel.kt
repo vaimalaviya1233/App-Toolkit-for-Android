@@ -110,4 +110,59 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
     }
+
+    @Test
+    fun `datastore flow error leaves loading state`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val fetchFlow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        val failingFavs = flow<Set<String>> { throw RuntimeException("fail") }
+        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = failingFavs)
+
+        viewModel.uiState.test {
+            val first = awaitItem()
+            assertTrue(first.screenState is ScreenState.IsLoading)
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            expectNoEvents()
+            assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
+        }
+    }
+
+    @Test
+    fun `toggle favorite after removal`() = runTest(dispatcherExtension.testDispatcher) {
+        val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
+        val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(setOf("pkg")) }
+        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
+
+        // initial list contains the app
+        shared.emit(DataState.Success(listOf(AppInfo("App", "pkg", "url"))))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
+
+        // list updates without the app
+        shared.emit(DataState.Success(emptyList()))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
+
+        // toggle favorite on removed app
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
+    }
+
+    @Test
+    fun `duplicate apps kept in favorites list`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(
+            AppInfo("App", "pkg", "url"),
+            AppInfo("App", "pkg", "url")
+        )
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg"), testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+    }
 }
