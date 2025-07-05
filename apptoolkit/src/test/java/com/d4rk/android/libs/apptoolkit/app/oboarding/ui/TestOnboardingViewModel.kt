@@ -18,4 +18,19 @@ class TestOnboardingViewModel {
         viewModel.currentTabIndex = 1
         assertThat(viewModel.currentTabIndex).isEqualTo(1)
     }
+
+    @Test
+    fun `setting negative tab index`() {
+        val viewModel = OnboardingViewModel()
+        viewModel.currentTabIndex = -1
+        assertThat(viewModel.currentTabIndex).isEqualTo(-1)
+    }
+
+    @Test
+    fun `resetting tab index to default`() {
+        val viewModel = OnboardingViewModel()
+        viewModel.currentTabIndex = 2
+        viewModel.currentTabIndex = 0
+        assertThat(viewModel.currentTabIndex).isEqualTo(0)
+    }
 }
