@@ -21,4 +21,3 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
             continuation.resume(result)
         }
     }
-
