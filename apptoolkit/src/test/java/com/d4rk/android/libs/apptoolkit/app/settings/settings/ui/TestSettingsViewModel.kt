@@ -5,7 +5,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
@@ -16,9 +16,9 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertFailsWith
 
 class TestSettingsViewModel {
 
@@ -82,7 +82,7 @@ class TestSettingsViewModel {
     fun `load settings provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
-        every { provider.provideSettingsConfig(any()) } returns null as SettingsConfig
+        every { provider.provideSettingsConfig(any()) } returns SettingsConfig(title = "null test", categories = emptyList())
         viewModel = SettingsViewModel(provider, dispatcherProvider)
         val context = mockk<Context>(relaxed = true)
 

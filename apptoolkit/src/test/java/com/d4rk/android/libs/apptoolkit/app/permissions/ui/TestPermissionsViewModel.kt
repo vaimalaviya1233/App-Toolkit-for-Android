@@ -5,6 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.Permissio
 import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
