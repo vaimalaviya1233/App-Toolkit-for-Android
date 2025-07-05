@@ -47,4 +47,16 @@ class TestPermissionsHelper {
             verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
         }
     }
+
+    @Test
+    fun `hasNotificationPermission handles unexpected value`() {
+        val context = mockk<Context>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mockkStatic(ContextCompat::class)
+            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returns 123
+            assertFalse(PermissionsHelper.hasNotificationPermission(context))
+        } else {
+            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+        }
+    }
 }

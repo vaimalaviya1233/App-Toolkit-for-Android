@@ -19,7 +19,10 @@ open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) :
     override fun onEvent(event : AboutEvents) {
         when (event) {
             is AboutEvents.CopyDeviceInfo -> copyDeviceInfo()
-            is AboutEvents.DismissSnackbar -> screenState.dismissSnackbar()
+            is AboutEvents.DismissSnackbar -> {
+                updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
+                screenState.dismissSnackbar()
+            }
         }
     }
 

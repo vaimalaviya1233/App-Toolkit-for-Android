@@ -33,4 +33,11 @@ class TestOnboardingViewModel {
         viewModel.currentTabIndex = 0
         assertThat(viewModel.currentTabIndex).isEqualTo(0)
     }
+
+    @Test
+    fun `setting extremely large tab index`() {
+        val viewModel = OnboardingViewModel()
+        viewModel.currentTabIndex = Int.MAX_VALUE
+        assertThat(viewModel.currentTabIndex).isEqualTo(Int.MAX_VALUE)
+    }
 }
