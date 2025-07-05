@@ -1,19 +1,20 @@
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
+import app.cash.turbine.test
 import com.android.billingclient.api.ProductDetails
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.coEvery
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import org.junit.jupiter.api.Assertions.assertTrue
 
 class TestSupportViewModel : TestSupportViewModelBase() {
 
@@ -105,14 +106,10 @@ class TestSupportViewModel : TestSupportViewModelBase() {
 
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
             // second loading
-            awaitItem().let { state ->
-                assertTrue(state.screenState is ScreenState.IsLoading)
-            }
+            assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             // second success
-            awaitItem().let { state ->
-                assertTrue(state.screenState is ScreenState.Success)
-            }
+            assertTrue(awaitItem().screenState is ScreenState.Success)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -140,18 +137,12 @@ class TestSupportViewModel : TestSupportViewModelBase() {
             awaitItem() // initial
             awaitItem() // first loading
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            awaitItem().let { state ->
-                assertTrue(state.screenState is ScreenState.Error)
-            }
+            assertTrue(awaitItem().screenState is ScreenState.Error)
 
             viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))
-            awaitItem().let { state ->
-                assertTrue(state.screenState is ScreenState.IsLoading)
-            }
+            assertTrue(awaitItem().screenState is ScreenState.IsLoading)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            awaitItem().let { state ->
-                assertTrue(state.screenState is ScreenState.Success)
-            }
+            assertTrue(awaitItem().screenState is ScreenState.Success)
             cancelAndIgnoreRemainingEvents()
         }
     }
