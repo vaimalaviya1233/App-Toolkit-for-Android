@@ -82,4 +82,78 @@ class TestMainViewModel {
         val items = viewModel.uiState.value.data?.navigationDrawerItems
         assertThat(items?.size).isEqualTo(4)
     }
+
+    @Test
+    fun `dismiss snackbar clears state`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Error<Int, Errors>(error = Errors.UseCase.FAILED_TO_UPDATE_APP))
+        }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        viewModel.screenState.dismissSnackbar()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
+
+    @Test
+    fun `multiple update attempts error then success`() = runTest(dispatcherExtension.testDispatcher) {
+        val errorFlow = flow {
+            emit(DataState.Loading<Int, Errors>())
+            emit(DataState.Error<Int, Errors>(error = Errors.Network.REQUEST_TIMEOUT))
+        }
+        val successFlow = flow {
+            emit(DataState.Loading<Int, Errors>())
+            emit(DataState.Success<Int, Errors>(0))
+        }
+
+        setup(errorFlow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        coEvery { updateUseCase.invoke(Unit) } returns successFlow
+        viewModel.screenState.dismissSnackbar()
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
+
+    @Test
+    fun `handle different update errors`() = runTest(dispatcherExtension.testDispatcher) {
+        val timeoutFlow = flow {
+            emit(DataState.Error<Int, Errors>(error = Errors.Network.REQUEST_TIMEOUT))
+        }
+        setup(timeoutFlow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        viewModel.screenState.dismissSnackbar()
+        val authFlow = flow {
+            emit(DataState.Error<Int, Errors>(error = Errors.Network.NO_INTERNET))
+        }
+        coEvery { updateUseCase.invoke(Unit) } returns authFlow
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+    }
+
+    @Test
+    fun `repeated navigation event does not duplicate items`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<DataState<Int, Errors>> { }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.LoadNavigation)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val firstItems = viewModel.uiState.value.data?.navigationDrawerItems
+
+        viewModel.onEvent(MainEvent.LoadNavigation)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val secondItems = viewModel.uiState.value.data?.navigationDrawerItems
+
+        assertThat(firstItems?.size).isEqualTo(4)
+        assertThat(secondItems?.size).isEqualTo(4)
+    }
 }
