@@ -36,6 +36,8 @@ class SupportViewModel(
     }
 
     private fun queryProductDetails(billingClient : BillingClient) {
+        if (!billingClient.isReady) return
+
         queryJob?.cancel()
         queryJob = launch(context = dispatcherProvider.io) {
             val flow = queryProductDetailsUseCase(billingClient)

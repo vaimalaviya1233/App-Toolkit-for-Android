@@ -191,6 +191,8 @@ class TestSupportViewModel : TestSupportViewModelBase() {
     fun `query product details billing client exception`() = runTest(dispatcherExtension.testDispatcher) {
         val emptyFlow = flow<DataState<Map<String, ProductDetails>, Errors>> { }
         setup(flow = emptyFlow, testDispatcher = dispatcherExtension.testDispatcher)
+        every { billingClient.isReady } returns false
+
         coEvery { useCase.invoke(any()) } throws IllegalStateException("bad client")
 
         viewModel.onEvent(SupportEvent.QueryProductDetails(billingClient))

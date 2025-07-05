@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.domain.model.UiSupportScreen
 import com.d4rk.android.libs.apptoolkit.app.support.domain.usecases.QueryProductDetailsUseCase
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -35,6 +36,7 @@ open class TestSupportViewModelBase {
         dispatcherProvider = TestDispatchers(testDispatcher)
         useCase = mockk()
         billingClient = mockk()
+        every { billingClient.isReady } returns true
         coEvery { useCase.invoke(any()) } returns flow
         viewModel = SupportViewModel(useCase, dispatcherProvider)
     }
