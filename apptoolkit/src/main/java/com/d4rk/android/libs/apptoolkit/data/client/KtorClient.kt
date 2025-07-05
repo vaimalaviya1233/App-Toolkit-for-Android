@@ -1,10 +1,16 @@
 package com.d4rk.android.libs.apptoolkit.data.client
 
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.android.AndroidEngineConfig
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.accept
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -32,14 +38,18 @@ class KtorClient {
      *
      * @return An [HttpClient] instance ready for use.
      */
-    fun createClient() : HttpClient {
+    fun createClient(enableLogging: Boolean = false) : HttpClient {
         return HttpClient(engineFactory = Android) {
+            configureLogging(enableLogging)
+
             install(plugin = ContentNegotiation) {
-                json(json = Json {
+                val jsonConfig = Json {
                     prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
-                })
+                }
+                json(json = jsonConfig)
+                json(json = jsonConfig, contentType = ContentType.Text.Plain)
             }
 
             install(plugin = HttpTimeout) {
@@ -52,6 +62,18 @@ class KtorClient {
                 contentType(type = ContentType.Application.Json)
                 accept(contentType = ContentType.Application.Json)
             }
+        }
+    }
+
+    private fun HttpClientConfig<AndroidEngineConfig>.configureLogging(enableLogging: Boolean) {
+        if (!enableLogging) return
+        install(plugin = Logging) {
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Log.i("KtorClient", message)
+                }
+            }
+            level = LogLevel.ALL
         }
     }
 }
