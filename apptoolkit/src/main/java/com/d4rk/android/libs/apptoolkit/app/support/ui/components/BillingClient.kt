@@ -20,6 +20,7 @@ fun rememberBillingClient(context : Context , viewModel : SupportViewModel) : Bi
                     .enableOneTimeProducts()
                     .build()
             )
+            .enableAutoServiceReconnection()
             .build()
     }
 
