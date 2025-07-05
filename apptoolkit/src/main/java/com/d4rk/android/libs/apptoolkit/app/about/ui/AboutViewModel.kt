@@ -30,9 +30,14 @@ open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) :
         updateUi {
             copy(showDeviceInfoCopiedSnackbar = true)
         }
-        screenState.showSnackbar<UiAboutScreen>(snackbar = UiSnackbar(message = UiTextHelper.StringResource(
-            resourceId = R.string.snack_device_info_copied
-        ) , isError = false , timeStamp = System.currentTimeMillis() , type = ScreenMessageType.SNACKBAR))
+        screenState.showSnackbar<UiAboutScreen>(
+            snackbar = UiSnackbar(
+                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
+                isError = false,
+                timeStamp = System.nanoTime(),
+                type = ScreenMessageType.SNACKBAR
+            )
+        )
     }
 
     private inline fun updateUi(crossinline transform : UiAboutScreen.() -> UiAboutScreen) {
