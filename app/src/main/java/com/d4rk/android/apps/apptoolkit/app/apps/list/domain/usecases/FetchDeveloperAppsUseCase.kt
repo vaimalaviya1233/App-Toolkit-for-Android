@@ -22,23 +22,18 @@ class FetchDeveloperAppsUseCase(private val client: HttpClient) : RepositoryWith
 
     override suspend operator fun invoke(): Flow<DataState<List<AppInfo> , RootError>> = flow {
         runCatching {
-            println("--> Fetching developer apps")
             val url = BuildConfig.DEBUG.let { isDebug ->
                 val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
                 "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
             }
-            println("--> GET $url")
             val httpResponse: HttpResponse = client.get(url)
             val apiResponse: ApiResponse = httpResponse.body()
 
             val sortedApps = apiResponse.data.apps.sortedBy { it.name.lowercase() }
-            println("<-- ${httpResponse.status.value} $url (${apiResponse.data.apps.size} apps)")
             sortedApps
         }.onSuccess { foundApps ->
-            println("--> Success: ${foundApps.size} apps loaded")
             emit(DataState.Success(data = foundApps))
         }.onFailure { error ->
-            println("--> Failure: ${error.message}")
             emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
         }
     }
