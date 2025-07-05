@@ -13,6 +13,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.yield
 
 class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , GeneralSettingsEvent , GeneralSettingsAction>(initialState = UiStateScreen(data = UiGeneralSettingsScreen())) {
 
@@ -25,7 +26,12 @@ class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , Gener
     private fun loadContent(contentKey : String?) {
         launch {
             screenState.setLoading()
+            // ensure a state observation of Loading before processing result
+            yield()
+
             if (! contentKey.isNullOrBlank()) {
+                // clear previous errors on successful load
+                screenState.setErrors(errors = emptyList())
                 screenState.updateData(newState = ScreenState.Success()) { current : UiGeneralSettingsScreen ->
                     current.copy(contentKey = contentKey)
                 }
