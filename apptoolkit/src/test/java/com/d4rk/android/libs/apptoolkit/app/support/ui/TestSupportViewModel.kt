@@ -190,7 +190,7 @@ class TestSupportViewModel : TestSupportViewModelBase() {
 
     @Test
     fun `query product details billing client exception`() = runTest(dispatcherExtension.testDispatcher) {
-        val flow = flow<Map<String, ProductDetails>, Errors> {
+        val flow = flow<DataState<Map<String, ProductDetails>, Errors>> {
             throw IllegalStateException("bad client")
         }
         setup(flow = flow, testDispatcher = dispatcherExtension.testDispatcher)
