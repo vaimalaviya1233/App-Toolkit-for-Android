@@ -13,4 +13,14 @@ class TestCrashlyticsOnboardingStateManager {
         CrashlyticsOnboardingStateManager.dismissDialog()
         assertFalse(CrashlyticsOnboardingStateManager.showCrashlyticsDialog)
     }
+
+    @Test
+    fun `repeated open and dismiss calls`() {
+        CrashlyticsOnboardingStateManager.openDialog()
+        CrashlyticsOnboardingStateManager.openDialog()
+        assertTrue(CrashlyticsOnboardingStateManager.showCrashlyticsDialog)
+        CrashlyticsOnboardingStateManager.dismissDialog()
+        CrashlyticsOnboardingStateManager.dismissDialog()
+        assertFalse(CrashlyticsOnboardingStateManager.showCrashlyticsDialog)
+    }
 }
