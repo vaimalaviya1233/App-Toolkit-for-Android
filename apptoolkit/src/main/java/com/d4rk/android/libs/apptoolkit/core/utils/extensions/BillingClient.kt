@@ -1,7 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.extensions
 
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsResult
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -22,3 +21,4 @@ suspend fun BillingClient.queryProductDetails(params: QueryProductDetailsParams)
             continuation.resume(result)
         }
     }
+
