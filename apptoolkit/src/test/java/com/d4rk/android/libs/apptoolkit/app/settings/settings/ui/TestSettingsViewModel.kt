@@ -149,4 +149,31 @@ class TestSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.title).isEmpty()
     }
+
+    @Test
+    fun `load settings with duplicated categories`() = runTest(dispatcherExtension.testDispatcher) {
+        val category = SettingsCategory(title = "dup")
+        val config = SettingsConfig(title = "t", categories = listOf(category, category))
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.categories?.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `load very large settings config`() = runTest(dispatcherExtension.testDispatcher) {
+        val prefs = List(10) { index -> SettingsPreference(key = "k$index") }
+        val categories = List(50) { index -> SettingsCategory(title = "c$index", preferences = prefs) }
+        val config = SettingsConfig(title = "big", categories = categories)
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.categories?.size).isEqualTo(50)
+    }
 }
