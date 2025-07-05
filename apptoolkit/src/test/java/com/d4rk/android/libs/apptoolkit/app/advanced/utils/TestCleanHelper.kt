@@ -7,8 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
-import java.io.File
-import kotlin.test.Test
+import org.junit.Test
 import kotlin.test.assertFalse
 
 class TestCleanHelper {
