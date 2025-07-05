@@ -91,4 +91,62 @@ class TestSettingsViewModel {
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         }
     }
+
+    @Test
+    fun `sequential loads reflect latest config`() = runTest(dispatcherExtension.testDispatcher) {
+        val context = mockk<Context>(relaxed = true)
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returnsMany listOf(
+            SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one"))),
+            SettingsConfig(title = "second", categories = emptyList())
+        )
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        var state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.title).isEqualTo("first")
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+    }
+
+    @Test
+    fun `state clears errors after subsequent success`() = runTest(dispatcherExtension.testDispatcher) {
+        val context = mockk<Context>(relaxed = true)
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returnsMany listOf(
+            SettingsConfig(title = "bad", categories = emptyList()),
+            SettingsConfig(title = "good", categories = listOf(SettingsCategory(title = "c")))
+        )
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        assertThat(viewModel.uiState.value.errors).isNotEmpty()
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.errors).isEmpty()
+    }
+
+    @Test
+    fun `provider returns partial config`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "", categories = listOf(SettingsCategory()))
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.title).isEmpty()
+    }
 }

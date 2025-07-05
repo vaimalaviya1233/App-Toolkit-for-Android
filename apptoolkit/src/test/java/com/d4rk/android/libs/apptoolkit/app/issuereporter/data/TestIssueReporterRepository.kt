@@ -90,5 +90,49 @@ class TestIssueReporterRepository {
             repository.sendReport(report, target)
         }
     }
+
+    @Test
+    fun `sendReport malformed json`() = runTest {
+        val engine = MockEngine { respond("{", HttpStatusCode.Created) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        assertFailsWith<kotlinx.serialization.SerializationException> {
+            repository.sendReport(report, target)
+        }
+    }
+
+    @Test
+    fun `sendReport unsupported status`() = runTest {
+        val engine = MockEngine { respond("weird", HttpStatusCode.PaymentRequired) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
+        val error = result as IssueReportResult.Error
+        assertThat(error.status).isEqualTo(HttpStatusCode.PaymentRequired)
+        assertThat(error.message).isEqualTo("weird")
+    }
+
+    @Test
+    fun `sendReport includes accept header`() = runTest {
+        var capturedRequest: HttpRequestData? = null
+        val engine = MockEngine { request ->
+            capturedRequest = request
+            respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created)
+        }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        repository.sendReport(report, target)
+        assertThat(capturedRequest?.headers?.get(HttpHeaders.Accept)).isEqualTo("application/vnd.github+json")
+    }
 }
 
