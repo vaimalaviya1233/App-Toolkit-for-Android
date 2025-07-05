@@ -66,6 +66,12 @@ class AppsListViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        launch(context = dispatcherProvider.io) { dataStore.toggleFavoriteApp(packageName) }
+        launch(context = dispatcherProvider.io) {
+            try {
+                dataStore.toggleFavoriteApp(packageName)
+            } catch (_: Throwable) {
+                // Swallow the exception to keep favorites unchanged on failure
+            }
+        }
     }
 }
