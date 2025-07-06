@@ -43,8 +43,10 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpa
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -90,30 +92,30 @@ fun SupportScreenContent(
     val view: View = LocalView.current
     val context: Context = LocalContext.current
     val state = screenState.data ?: SupportScreenUiState()
-    val productDetailsMap = state.products.associateBy { it.productId }
 
     Box(
         modifier = Modifier
             .padding(paddingValues)
             .fillMaxHeight()
     ) {
-        when {
-            screenState.screenState is ScreenState.IsLoading -> {
-                androidx.compose.material3.CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            screenState.screenState is ScreenState.Error && state.error != null -> {
-                Text(
-                    text = state.error,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(all = SizeConstants.LargeSize),
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-            else -> {
-                    LazyColumn {
+        ScreenStateHandler(
+            screenState = screenState,
+            onLoading = { LoadingScreen() },
+            onEmpty = { NoDataScreen() },
+            onError = {
+                state.error?.let {
+                    Text(
+                        text = it,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(all = SizeConstants.LargeSize),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            },
+            onSuccess = { data ->
+                val productDetailsMap = data.products.associateBy { it.productId }
+                LazyColumn {
                         item {
                             Text(
                                 text = stringResource(id = R.string.paid_support),
