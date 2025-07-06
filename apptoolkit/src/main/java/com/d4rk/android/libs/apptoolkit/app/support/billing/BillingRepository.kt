@@ -35,7 +35,12 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
-        .enablePendingPurchases(PendingPurchasesParams.newBuilder().build())
+        .enablePendingPurchases(
+            PendingPurchasesParams
+                .newBuilder()
+                .enableOneTimeProducts()
+                .build()
+        )
         .enableAutoServiceReconnection()
         .build()
 
