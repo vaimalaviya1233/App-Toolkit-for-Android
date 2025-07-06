@@ -73,7 +73,7 @@ fun NoDataScreen(
                 modifier = Modifier
                     .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize)
                     .padding(bottom = SizeConstants.LargeSize),
-                tint = MaterialTheme.colorScheme.primary
+                tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
             )
             Text(
                 text = stringResource(id = textMessage),
