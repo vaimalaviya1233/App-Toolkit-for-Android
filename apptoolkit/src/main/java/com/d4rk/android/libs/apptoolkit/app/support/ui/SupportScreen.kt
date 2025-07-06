@@ -23,10 +23,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -55,7 +55,7 @@ fun SupportComposable(
     adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
 ) {
     val screenState: UiStateScreen<SupportScreenUiState> by viewModel.uiState.collectAsState()
-    val snackbarHostState: SnackbarHostState = rememberSnackbarHostState()
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.support_us),
@@ -261,5 +261,7 @@ fun SupportScreenContent(
                             )
                         }
                     }
+            }
+        }
     }
 }

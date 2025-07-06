@@ -31,8 +31,6 @@ class SupportViewModel(
     )
 ) {
 
-    val purchaseResult = billingRepository.purchaseResult
-
     init {
         launch(dispatcherProvider.io) {
             billingRepository.productDetails.collectLatest { map ->
