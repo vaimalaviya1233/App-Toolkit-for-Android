@@ -16,7 +16,7 @@ import org.koin.dsl.module
 val appToolkitModule : Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
-    single { BillingRepository.getInstance(context = get()) }
+    single(createdAtStart = true) { BillingRepository.getInstance(context = get()) }
     viewModel {
         SupportViewModel(billingRepository = get(), dispatcherProvider = get())
     }

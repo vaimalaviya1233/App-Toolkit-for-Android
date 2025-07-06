@@ -7,6 +7,10 @@ import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
+import org.koin.android.ext.android.inject
 import com.d4rk.android.apps.apptoolkit.core.di.initializeKoin
 import com.d4rk.android.apps.apptoolkit.core.utils.constants.ads.AdsConstants
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
@@ -16,10 +20,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.getKoin
 
-class AppToolkit : BaseCoreManager() {
+class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     private var currentActivity : Activity? = null
 
     private val adsCoreManager : AdsCoreManager by lazy { getKoin().get<AdsCoreManager>() }
+    private val billingRepository: BillingRepository by inject()
 
     override fun onCreate() {
         initializeKoin(context = this)
@@ -39,6 +44,10 @@ class AppToolkit : BaseCoreManager() {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
         currentActivity?.let { adsCoreManager.showAdIfAvailable(it) }
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        billingRepository.processPastPurchases()
     }
 
     override fun onActivityCreated(activity : Activity , savedInstanceState : Bundle?) {}
