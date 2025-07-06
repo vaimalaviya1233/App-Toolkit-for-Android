@@ -54,6 +54,7 @@ fun NoDataScreen(
     showRetry: Boolean = false,
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
+    isError : Boolean = false,
     adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
 ) {
     val view: View = LocalView.current
@@ -77,7 +78,7 @@ fun NoDataScreen(
             Text(
                 text = stringResource(id = textMessage),
                 style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
-                color = MaterialTheme.colorScheme.onBackground
+                color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
             )
             if (showRetry) {
                 LargeVerticalSpacer()
