@@ -7,12 +7,11 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
-import com.android.billingclient.api.ConsumeResult
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
-import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.QueryPurchasesParams
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +22,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.d4rk.android.libs.apptoolkit.app.support.billing.PurchaseResult
 
-class BillingRepository private constructor(private val context: Context) : PurchasesUpdatedListener {
+class BillingRepository private constructor(context: Context) : PurchasesUpdatedListener {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -35,7 +33,11 @@ class BillingRepository private constructor(private val context: Context) : Purc
     private val _purchaseResult = MutableSharedFlow<PurchaseResult>()
     val purchaseResult = _purchaseResult.asSharedFlow()
 
-    private val billingClient: BillingClient
+    private val billingClient: BillingClient = BillingClient.newBuilder(context)
+        .setListener(this)
+        .enablePendingPurchases(PendingPurchasesParams.newBuilder().build())
+        .enableAutoServiceReconnection()
+        .build()
 
     companion object {
         @Volatile
@@ -49,11 +51,6 @@ class BillingRepository private constructor(private val context: Context) : Purc
     }
 
     init {
-        billingClient = BillingClient.newBuilder(context)
-            .setListener(this)
-            .enablePendingPurchases(PendingPurchasesParams.newBuilder().build())
-            .enableAutoServiceReconnection()
-            .build()
 
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {

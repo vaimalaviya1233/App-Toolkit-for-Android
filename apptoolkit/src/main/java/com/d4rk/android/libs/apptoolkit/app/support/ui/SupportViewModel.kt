@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import android.app.Activity
 import com.android.billingclient.api.ProductDetails
+import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.billing.PurchaseResult
 import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
@@ -14,12 +15,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class SupportViewModel(
     private val billingRepository: BillingRepository,
