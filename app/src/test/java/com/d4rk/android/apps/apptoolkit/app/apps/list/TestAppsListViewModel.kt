@@ -173,10 +173,12 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         every { dataStore.favoriteApps } returns MutableStateFlow(emptySet())
         coEvery { fetchUseCase.invoke() } throws RuntimeException("boom")
 
-        assertFailsWith<RuntimeException> {
-            AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
+        val viewModel = AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val finalState = viewModel.uiState.value
+        assertThat(finalState.screenState).isInstanceOf(ScreenState.Error::class.java)
     }
 
     @Test
