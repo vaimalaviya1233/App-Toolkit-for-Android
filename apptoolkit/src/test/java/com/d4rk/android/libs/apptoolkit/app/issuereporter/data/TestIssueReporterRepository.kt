@@ -12,6 +12,7 @@ import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.test.runTest
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.assertFailsWith
@@ -233,6 +234,21 @@ class TestIssueReporterRepository {
         assertThat(result).isInstanceOf(IssueReportResult.Success::class.java)
         val success = result as IssueReportResult.Success
         assertThat(success.url).isEmpty()
+    }
+
+    @Test
+    fun `sendReport runtime error while reading body`() = runTest {
+        val channel = ByteReadChannel("oops")
+        channel.cancel(RuntimeException("mid-call"))
+        val engine = MockEngine { respond(channel, HttpStatusCode.Created) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        assertFailsWith<RuntimeException> {
+            repository.sendReport(report, target)
+        }
     }
 }
 
