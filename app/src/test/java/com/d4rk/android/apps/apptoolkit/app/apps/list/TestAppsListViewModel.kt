@@ -20,6 +20,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -182,5 +184,33 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             expectNoEvents()
             assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
         }
+    }
+
+    @Test
+    fun `fetch apps - large list`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = (1..10_000).map { AppInfo("App$it", "pkg$it", "url$it") }
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        viewModel.uiState.testSuccess(expectedSize = apps.size, testDispatcher = dispatcherExtension.testDispatcher)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `toggle favorite concurrently`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+
+        coroutineScope {
+            repeat(5) { launch { viewModel.toggleFavorite("pkg") } }
+        }
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
     }
 }
