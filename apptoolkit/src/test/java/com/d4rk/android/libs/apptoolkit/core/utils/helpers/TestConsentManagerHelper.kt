@@ -124,7 +124,7 @@ class TestConsentManagerHelper {
         every { provider.isDebugBuild } returns false
         startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
 
-        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
         field.isAccessible = true
         field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
 
@@ -148,7 +148,7 @@ class TestConsentManagerHelper {
         every { provider.isDebugBuild } returns false
         startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
 
-        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
         field.isAccessible = true
         field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
 
@@ -187,7 +187,7 @@ class TestConsentManagerHelper {
         every { provider.isDebugBuild } returns true
         startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
 
-        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
         field.isAccessible = true
         field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
 
