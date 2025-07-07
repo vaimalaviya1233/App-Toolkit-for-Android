@@ -208,4 +208,23 @@ class TestMainViewModel {
         val items = viewModel.uiState.value.data?.navigationDrawerItems
         assertThat(items?.size).isEqualTo(4)
     }
+
+    @Test
+    fun `update flow multiple events`() = runTest(dispatcherExtension.testDispatcher) {
+        val shared = MutableSharedFlow<DataState<Int, Errors>>()
+        setup(shared, dispatcherExtension.testDispatcher)
+
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        shared.emit(DataState.Success(0))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNull()
+
+        shared.emit(DataState.Error<Int, Errors>(error = Errors.UseCase.FAILED_TO_UPDATE_APP))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        shared.emit(DataState.Success(0))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+    }
 }
