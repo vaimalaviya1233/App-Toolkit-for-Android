@@ -100,4 +100,26 @@ class TestClipboardHelper {
             assertTrue(executed)
         }
     }
+
+    @Test
+    fun `copyTextToClipboard propagates exception from callback`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        justRun { manager.setPrimaryClip(any()) }
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            assertFailsWith<RuntimeException> {
+                ClipboardHelper.copyTextToClipboard(context, "l", "t") {
+                    throw RuntimeException("callback failed")
+                }
+            }
+        } else {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t") {
+                throw RuntimeException("callback failed")
+            }
+        }
+
+        verify { manager.setPrimaryClip(any()) }
+    }
 }
