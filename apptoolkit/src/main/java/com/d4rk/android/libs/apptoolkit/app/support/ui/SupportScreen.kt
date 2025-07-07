@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
+import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProductIds
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
@@ -136,7 +137,7 @@ fun SupportScreenContent(
                                     .bounceClick(),
                                 onClick = {
                                     view.playSoundEffect(SoundEffectConstants.CLICK)
-                                    productDetailsMap["low_donation"]?.let { viewModel.onDonateClicked(activity, it) }
+                                    productDetailsMap[DonationProductIds.LOW_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 }
                             ) {
                                 Icon(
@@ -145,7 +146,7 @@ fun SupportScreenContent(
                                     modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                 )
                                 ButtonIconSpacer()
-                                Text(text = productDetailsMap["low_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+                                Text(text = productDetailsMap[DonationProductIds.LOW_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                             }
                         }
                         item {
@@ -155,7 +156,7 @@ fun SupportScreenContent(
                                     .bounceClick(),
                                 onClick = {
                                     view.playSoundEffect(SoundEffectConstants.CLICK)
-                                    productDetailsMap["normal_donation"]?.let { viewModel.onDonateClicked(activity, it) }
+                                    productDetailsMap[DonationProductIds.NORMAL_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 }
                             ) {
                                 Icon(
@@ -164,7 +165,7 @@ fun SupportScreenContent(
                                     modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                 )
                                 ButtonIconSpacer()
-                                Text(text = productDetailsMap["normal_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+                                Text(text = productDetailsMap[DonationProductIds.NORMAL_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                             }
                         }
                     }
@@ -181,7 +182,7 @@ fun SupportScreenContent(
                                     .bounceClick(),
                                 onClick = {
                                     view.playSoundEffect(SoundEffectConstants.CLICK)
-                                    productDetailsMap["high_donation"]?.let { viewModel.onDonateClicked(activity, it) }
+                                    productDetailsMap[DonationProductIds.HIGH_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 }
                             ) {
                                 Icon(
@@ -190,7 +191,7 @@ fun SupportScreenContent(
                                     modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                 )
                                 ButtonIconSpacer()
-                                Text(text = productDetailsMap["high_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+                                Text(text = productDetailsMap[DonationProductIds.HIGH_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                             }
                         }
                         item {
@@ -200,7 +201,7 @@ fun SupportScreenContent(
                                     .bounceClick(),
                                 onClick = {
                                     view.playSoundEffect(SoundEffectConstants.CLICK)
-                                    productDetailsMap["extreme_donation"]?.let { viewModel.onDonateClicked(activity, it) }
+                                    productDetailsMap[DonationProductIds.EXTREME_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 }
                             ) {
                                 Icon(
@@ -209,7 +210,7 @@ fun SupportScreenContent(
                                     modifier = Modifier.size(SizeConstants.ButtonIconSize)
                                 )
                                 ButtonIconSpacer()
-                                Text(text = productDetailsMap["extreme_donation"]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+                                Text(text = productDetailsMap[DonationProductIds.EXTREME_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                             }
                         }
                     }

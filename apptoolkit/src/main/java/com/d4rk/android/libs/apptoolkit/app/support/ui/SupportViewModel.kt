@@ -17,6 +17,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
+import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProductIds
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.flow.collectLatest
 
@@ -89,10 +90,10 @@ class SupportViewModel(
         launch(dispatcherProvider.io) {
             billingRepository.queryProductDetails(
                 listOf(
-                    "low_donation",
-                    "normal_donation",
-                    "high_donation",
-                    "extreme_donation"
+                    DonationProductIds.LOW_DONATION,
+                    DonationProductIds.NORMAL_DONATION,
+                    DonationProductIds.HIGH_DONATION,
+                    DonationProductIds.EXTREME_DONATION
                 )
             )
         }
@@ -103,10 +104,10 @@ class SupportViewModel(
             is SupportEvent.QueryProductDetails -> launch(dispatcherProvider.io) {
                 billingRepository.queryProductDetails(
                     listOf(
-                        "low_donation",
-                        "normal_donation",
-                        "high_donation",
-                        "extreme_donation"
+                        DonationProductIds.LOW_DONATION,
+                        DonationProductIds.NORMAL_DONATION,
+                        DonationProductIds.HIGH_DONATION,
+                        DonationProductIds.EXTREME_DONATION
                     )
                 )
             }
