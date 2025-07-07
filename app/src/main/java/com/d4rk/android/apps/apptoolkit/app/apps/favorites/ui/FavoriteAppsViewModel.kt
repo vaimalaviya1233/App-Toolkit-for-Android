@@ -99,7 +99,11 @@ class FavoriteAppsViewModel(
 
     fun toggleFavorite(packageName: String) {
         viewModelScope.launch(context = dispatcherProvider.io) {
-            dataStore.toggleFavoriteApp(packageName)
+            try {
+                dataStore.toggleFavoriteApp(packageName)
+            } catch (_: Throwable) {
+                // Swallow the exception to keep favorites unchanged on failure
+            }
         }
     }
 }
