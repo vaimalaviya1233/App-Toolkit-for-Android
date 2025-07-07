@@ -39,7 +39,6 @@ private fun getColorScheme(isDarkTheme : Boolean , isAmoledMode : Boolean , isDy
     val baseLightScheme = AppThemeConfig.customLightScheme ?: defaultLightScheme
     val baseDarkScheme = AppThemeConfig.customDarkScheme ?: defaultDarkScheme
 
-
     val dynamicDark : ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) dynamicDarkColorScheme(context) else baseDarkScheme
     val dynamicLight : ColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) dynamicLightColorScheme(context) else baseLightScheme
 

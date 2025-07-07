@@ -28,7 +28,7 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
 
     override fun onCreate() {
         initializeKoin(context = this)
-        super.onCreate()
+        super<BaseCoreManager>.onCreate() // FIXME: Multiple supertypes available. Specify the intended supertype in angle brackets, e.g. 'super<Foo>'.
         registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(observer = this)
     }
@@ -42,7 +42,7 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() {
+    fun onMoveToForeground() { // FIXME: Function "onMoveToForeground" is never used
         currentActivity?.let { adsCoreManager.showAdIfAvailable(it) }
     }
 
