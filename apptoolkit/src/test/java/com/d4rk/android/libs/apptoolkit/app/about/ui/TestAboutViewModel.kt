@@ -96,4 +96,20 @@ class TestAboutViewModel {
 
         assertThat(second.timeStamp).isGreaterThan(firstTimestamp)
     }
+
+    @Test
+    fun `rapid successive copy events keep snackbar visible`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        repeat(5) {
+            viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        }
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.snackbar).isNotNull()
+        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isTrue()
+    }
 }
