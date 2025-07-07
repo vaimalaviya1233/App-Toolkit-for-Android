@@ -124,4 +124,36 @@ class TestGeneralSettingsViewModel {
         val stateAfter = viewModel.uiState.value
         assertThat(stateAfter).isEqualTo(stateBefore)
     }
+
+    @Test
+    fun `load extremely long content key`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        val longKey = "a".repeat(1000)
+        viewModel.onEvent(GeneralSettingsEvent.Load(longKey))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.contentKey).isEqualTo(longKey)
+    }
+
+    @Test
+    fun `load content key with special characters`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        val key = "!@#\$%^&*()_+漢字"
+        viewModel.onEvent(GeneralSettingsEvent.Load(key))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.contentKey).isEqualTo(key)
+    }
+
+    @Test
+    fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = GeneralSettingsViewModel()
+        viewModel.onEvent(GeneralSettingsEvent.Load("first"))
+        viewModel.onEvent(GeneralSettingsEvent.Load("second"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val state = viewModel.uiState.value
+        assertThat(state.data?.contentKey).isEqualTo("second")
+    }
 }
