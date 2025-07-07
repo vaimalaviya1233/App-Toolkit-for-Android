@@ -17,6 +17,8 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertFalse
 import org.junit.Test
+import java.lang.reflect.InvocationTargetException
+import kotlin.test.assertFailsWith
 import java.util.Date
 
 class TestAdsCoreManager {
@@ -289,6 +291,84 @@ class TestAdsCoreManager {
         }
 
         verify(exactly = 2) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `loadAd propagates exceptions from AppOpenAd`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+
+        mockkStatic(AppOpenAd::class)
+        every { AppOpenAd.load(any(), any(), any(), any()) } throws RuntimeException("fail")
+
+        val method = inner.javaClass.getDeclaredMethod("loadAd", Context::class.java)
+        method.isAccessible = true
+
+        assertFailsWith<InvocationTargetException> { method.invoke(inner, context) }
+
+        val loadingField = inner.javaClass.getDeclaredField("isLoadingAd")
+        loadingField.isAccessible = true
+        assert(loadingField.getBoolean(inner))
+    }
+
+    @Test
+    fun `ads disabled by default when debug build`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns true
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        val slot = slot<Boolean>()
+        every { dataStore.ads(capture(slot)) } returns flowOf(false)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        manager.showAdIfAvailable(mockk())
+
+        assert(!slot.captured)
+        verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `ads enabled by default when release build`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns false
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        val slot = slot<Boolean>()
+        every { dataStore.ads(capture(slot)) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        manager.showAdIfAvailable(mockk())
+
+        assert(slot.captured)
+        verify { AppOpenAd.load(any(), any(), any(), any()) }
     }
 
 }
