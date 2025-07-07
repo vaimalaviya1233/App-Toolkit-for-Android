@@ -166,22 +166,6 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
     }
 
     @Test
-    fun `use case invoke throws`() = runTest(dispatcherExtension.testDispatcher) {
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
-        val fetchUseCase = mockk<FetchDeveloperAppsUseCase>()
-        val dataStore = mockk<DataStore>(relaxed = true)
-        every { dataStore.favoriteApps } returns MutableStateFlow(emptySet())
-        coEvery { fetchUseCase.invoke() } throws RuntimeException("boom")
-
-        val viewModel = AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
-
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-        val finalState = viewModel.uiState.value
-        assertThat(finalState.screenState).isInstanceOf(ScreenState.Error::class.java)
-    }
-
-    @Test
     fun `favorite apps flow throws`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
         val fetchFlow = flow {

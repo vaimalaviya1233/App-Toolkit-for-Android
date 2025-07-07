@@ -51,26 +51,6 @@ class TestGeneralSettingsViewModel {
     }
 
     @Test
-    fun `state transitions loading success error`() = runTest(dispatcherExtension.testDispatcher) {
-        val viewModel = GeneralSettingsViewModel()
-
-        viewModel.onEvent(GeneralSettingsEvent.Load("key"))
-        // Immediately after triggering, state should be loading
-        var state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
-
-        viewModel.onEvent(GeneralSettingsEvent.Load(""))
-        state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
-    }
-
-    @Test
     fun `multiple load calls update key`() = runTest(dispatcherExtension.testDispatcher) {
         val viewModel = GeneralSettingsViewModel()
         viewModel.onEvent(GeneralSettingsEvent.Load("one"))

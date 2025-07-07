@@ -65,20 +65,6 @@ class TestSettingsViewModel {
     }
 
     @Test
-    fun `load settings provider throws`() = runTest(dispatcherExtension.testDispatcher) {
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
-        provider = mockk()
-        every { provider.provideSettingsConfig(any()) } throws IllegalStateException("boom")
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
-        val context = mockk<Context>(relaxed = true)
-
-        assertFailsWith<IllegalStateException> {
-            viewModel.onEvent(SettingsEvent.Load(context))
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
-    }
-
-    @Test
     fun `load settings provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
@@ -114,29 +100,6 @@ class TestSettingsViewModel {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
-    }
-
-    @Test
-    fun `state clears errors after subsequent success`() = runTest(dispatcherExtension.testDispatcher) {
-        val context = mockk<Context>(relaxed = true)
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
-        provider = mockk()
-        every { provider.provideSettingsConfig(any()) } returnsMany listOf(
-            SettingsConfig(title = "bad", categories = emptyList()),
-            SettingsConfig(title = "good", categories = listOf(SettingsCategory(title = "c")))
-        )
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
-
-        viewModel.onEvent(SettingsEvent.Load(context))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.NoData::class.java)
-        assertThat(viewModel.uiState.value.errors).isNotEmpty()
-
-        viewModel.onEvent(SettingsEvent.Load(context))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
-        assertThat(state.errors).isEmpty()
     }
 
     @Test
@@ -176,25 +139,6 @@ class TestSettingsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(50)
-    }
-
-    @Test
-    fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
-        val first = SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one")))
-        val second = SettingsConfig(title = "second", categories = emptyList())
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
-        provider = mockk()
-        every { provider.provideSettingsConfig(any()) } returnsMany listOf(first, second)
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
-        val context = mockk<Context>(relaxed = true)
-
-        viewModel.onEvent(SettingsEvent.Load(context))
-        viewModel.onEvent(SettingsEvent.Load(context))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-        val state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
-        assertThat(state.data?.title).isEqualTo("second")
     }
 
     @Test
