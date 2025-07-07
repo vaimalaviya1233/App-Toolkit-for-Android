@@ -455,4 +455,61 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `send report when package manager throws`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created) }
+        setup(engine, githubToken = "tok", testDispatcher = dispatcherExtension.testDispatcher)
+
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } throws PackageManager.NameNotFoundException("missing")
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            skipItems(2)
+
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+
+            awaitItem() // loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            val state = awaitItem()
+            assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+            assertThat(state.data?.issueUrl).isEqualTo("https://ex.com/1")
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `send report with invalid package info`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created) }
+        setup(engine, githubToken = "tok", testDispatcher = dispatcherExtension.testDispatcher)
+
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply { versionCode = -1; versionName = null }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            skipItems(2)
+
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+
+            awaitItem() // loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            val state = awaitItem()
+            assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+            assertThat(state.data?.issueUrl).isEqualTo("https://ex.com/1")
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
