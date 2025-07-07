@@ -28,6 +28,7 @@ class TestClipboardHelper {
         ClipboardHelper.copyTextToClipboard(context, "label", "text") { callbackExecuted = true }
 
         verify { manager.setPrimaryClip(any()) }
+        assertEquals("label", clipSlot.captured.description.label)
         assertEquals("text", clipSlot.captured.getItemAt(0).text)
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
@@ -55,6 +56,30 @@ class TestClipboardHelper {
         every { manager.setPrimaryClip(any()) } throws RuntimeException("boom")
 
         assertFailsWith<RuntimeException> {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t")
+        }
+    }
+
+    @Test
+    fun `copyTextToClipboard propagates IllegalStateException`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        every { manager.setPrimaryClip(any()) } throws IllegalStateException("bad state")
+
+        assertFailsWith<IllegalStateException> {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t")
+        }
+    }
+
+    @Test
+    fun `copyTextToClipboard propagates SecurityException`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        every { manager.setPrimaryClip(any()) } throws SecurityException("no permission")
+
+        assertFailsWith<SecurityException> {
             ClipboardHelper.copyTextToClipboard(context, "l", "t")
         }
     }

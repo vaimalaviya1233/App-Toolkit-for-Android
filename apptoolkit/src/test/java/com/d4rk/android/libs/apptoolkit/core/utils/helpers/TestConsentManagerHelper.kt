@@ -14,8 +14,11 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -107,5 +110,89 @@ class TestConsentManagerHelper {
         verify { analytics.setAnalyticsCollectionEnabled(false) }
         verify { crashlytics.isCrashlyticsCollectionEnabled = false }
         verify { performance.isPerformanceCollectionEnabled = false }
+    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `applyInitialConsent propagates io exception`() = runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.analyticsConsent(any()) } returns flow { throw java.io.IOException("io") }
+        every { dataStore.adStorageConsent(any()) } returns flowOf(true)
+        every { dataStore.adUserDataConsent(any()) } returns flowOf(true)
+        every { dataStore.adPersonalizationConsent(any()) } returns flowOf(true)
+
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns false
+        startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
+
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        field.isAccessible = true
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
+
+        assertFailsWith<java.io.IOException> {
+            ConsentManagerHelper.applyInitialConsent(dataStore)
+        }
+
+        stopKoin()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `applyInitialConsent propagates cancellation exception`() = runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.analyticsConsent(any()) } returns flow { throw kotlinx.coroutines.CancellationException("cancel") }
+        every { dataStore.adStorageConsent(any()) } returns flowOf(true)
+        every { dataStore.adUserDataConsent(any()) } returns flowOf(true)
+        every { dataStore.adPersonalizationConsent(any()) } returns flowOf(true)
+
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns false
+        startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
+
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        field.isAccessible = true
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
+
+        assertFailsWith<kotlinx.coroutines.CancellationException> {
+            ConsentManagerHelper.applyInitialConsent(dataStore)
+        }
+
+        stopKoin()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `updateAnalyticsCollectionFromDatastore propagates firebase failure`() = runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.usageAndDiagnostics(any()) } returns flowOf(true)
+
+        val analytics = mockk<FirebaseAnalytics>(relaxed = true)
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        val crashlytics = mockk<FirebaseCrashlytics>()
+        val performance = mockk<FirebasePerformance>(relaxed = true)
+        mockkStatic(FirebaseCrashlytics::class)
+        mockkStatic(FirebasePerformance::class)
+        every { FirebaseCrashlytics.getInstance() } returns crashlytics
+        every { FirebasePerformance.getInstance() } returns performance
+        every { crashlytics.isCrashlyticsCollectionEnabled = any() } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+        }
+    }
+
+    @Test
+    fun `defaultAnalyticsGranted false when debug build`() {
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns true
+        startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
+
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted$delegate")
+        field.isAccessible = true
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
+
+        assertFalse(ConsentManagerHelper.defaultAnalyticsGranted)
+
+        stopKoin()
     }
 }
