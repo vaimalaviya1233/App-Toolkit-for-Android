@@ -24,6 +24,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.client.HttpClient
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.yield
 
 class IssueReporterViewModel(
     private val dispatcherProvider: DispatcherProvider,
@@ -89,6 +90,7 @@ class IssueReporterViewModel(
         }
         launch(dispatcherProvider.io) {
             screenState.updateState(ScreenState.IsLoading())
+            yield()
             val deviceInfo = DeviceInfo(context)
             val extraInfo = ExtraInfo()
             val report = Report(
