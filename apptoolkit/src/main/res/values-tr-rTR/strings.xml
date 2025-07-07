@@ -279,4 +279,7 @@
     <string name="non_paid_support">Ücretsiz destek</string>
     <string name="web_ad">Web Reklamı</string>
     <string name="error_failed_to_load_sku_details">SKU ayrıntıları yüklenemedi</string>
+    <string name="purchase_pending">Bağışınız Google tarafından işleniyor. Tamamlandığında sizi bilgilendireceğiz. Teşekkür ederim!</string>
+    <string name="purchase_thank_you">Bağışınız için teşekkür ederiz!</string>
+    <string name="purchase_cancelled">Satınalma İptal edildi</string>
 </resources>

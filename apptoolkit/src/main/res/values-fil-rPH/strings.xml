@@ -279,4 +279,7 @@
     <string name="non_paid_support">Hindi Bayad na Suporta</string>
     <string name="web_ad">Web Ad</string>
     <string name="error_failed_to_load_sku_details">Nabigong i-load ang mga detalye ng SKU</string>
+    <string name="purchase_pending">Ang iyong donasyon ay pinoproseso ng Google. Sasabihan ka namin kapag kumpleto na ito. Salamat!</string>
+    <string name="purchase_thank_you">Salamat sa iyong donasyon!</string>
+    <string name="purchase_cancelled">Bumili ng kanselahin</string>
 </resources>
