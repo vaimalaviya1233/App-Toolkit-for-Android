@@ -181,6 +181,43 @@ class TestConsentManagerHelper {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `applyInitialConsent fails when koin not started`() = runTest {
+        stopKoin()
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.analyticsConsent(any()) } returns flowOf(true)
+        every { dataStore.adStorageConsent(any()) } returns flowOf(true)
+        every { dataStore.adUserDataConsent(any()) } returns flowOf(true)
+        every { dataStore.adPersonalizationConsent(any()) } returns flowOf(true)
+
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
+        field.isAccessible = true
+        field.set(ConsentManagerHelper, lazy { !ConsentManagerHelper.configProvider.isDebugBuild })
+
+        assertFailsWith<org.koin.core.error.KoinAppNotStartedException> {
+            ConsentManagerHelper.applyInitialConsent(dataStore)
+        }
+    }
+
+    @Test
+    fun `updateConsent propagates firebase exception`() {
+        val analytics = mockk<FirebaseAnalytics>()
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        every { analytics.setConsent(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            ConsentManagerHelper.updateConsent(
+                analyticsGranted = true,
+                adStorageGranted = true,
+                adUserDataGranted = true,
+                adPersonalizationGranted = true
+            )
+        }
+    }
+
     @Test
     fun `defaultAnalyticsGranted false when debug build`() {
         val provider = mockk<BuildInfoProvider>()
