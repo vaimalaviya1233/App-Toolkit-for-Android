@@ -184,14 +184,16 @@ class TestMainViewModel {
     }
 
     @Test
-    fun `use case throws propagates exception`() = runTest(dispatcherExtension.testDispatcher) {
-        val flow = flow<DataState<Int, Errors>> { }
-        setup(flow, dispatcherExtension.testDispatcher)
-        coEvery { updateUseCase.invoke(Unit) } throws RuntimeException("boom")
-
+    fun `use case throws propagates exception`() {
         assertFailsWith<RuntimeException> {
-            viewModel.onEvent(MainEvent.CheckForUpdates)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            runTest(dispatcherExtension.testDispatcher) {
+                val flow = flow<DataState<Int, Errors>> { }
+                setup(flow, dispatcherExtension.testDispatcher)
+                coEvery { updateUseCase.invoke(Unit) } throws RuntimeException("boom")
+
+                viewModel.onEvent(MainEvent.CheckForUpdates)
+                dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            }
         }
     }
 
