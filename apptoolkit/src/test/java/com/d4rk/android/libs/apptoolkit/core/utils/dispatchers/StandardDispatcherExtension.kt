@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.core
+package com.d4rk.android.libs.apptoolkit.core.utils.dispatchers
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainDispatcherExtension : BeforeEachCallback, AfterEachCallback {
+class StandardDispatcherExtension : BeforeEachCallback, AfterEachCallback {
     val testDispatcher: TestDispatcher = StandardTestDispatcher()
 
     override fun beforeEach(context: ExtensionContext?) {

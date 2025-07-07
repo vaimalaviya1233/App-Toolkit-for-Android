@@ -3,7 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.favorites
 import app.cash.turbine.test
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
-import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -22,7 +22,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = StandardDispatcherExtension()
     }
 
     @Test

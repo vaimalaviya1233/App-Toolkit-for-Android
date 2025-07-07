@@ -61,7 +61,7 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
         .collectAsState(initial = !configProvider.isDebugBuild)
 
 
-    var advancedSettingsExpanded: Boolean by remember { mutableStateOf<Boolean>(value = false) }
+    var advancedSettingsExpanded: Boolean by remember { mutableStateOf(value = false) }
 
     fun updateAllConsents() {
         ConsentManagerHelper.updateConsent(

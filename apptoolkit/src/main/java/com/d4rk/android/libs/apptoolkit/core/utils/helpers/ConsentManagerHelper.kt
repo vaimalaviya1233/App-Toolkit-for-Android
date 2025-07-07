@@ -34,7 +34,7 @@ object ConsentManagerHelper : KoinComponent {
     ) {
         val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
         val consentSettings: MutableMap<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus> =
-            mutableMapOf<FirebaseAnalytics.ConsentType, FirebaseAnalytics.ConsentStatus>()
+            mutableMapOf()
 
         consentSettings[FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE] =
             if (analyticsGranted) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED

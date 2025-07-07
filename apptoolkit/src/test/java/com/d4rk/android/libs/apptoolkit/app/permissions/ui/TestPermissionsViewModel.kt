@@ -6,10 +6,10 @@ import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.Permiss
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
-import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
-import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -18,14 +18,13 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import kotlin.test.assertFailsWith
 
 class TestPermissionsViewModel {
 
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
     private lateinit var dispatcherProvider: TestDispatchers

@@ -28,7 +28,7 @@ import java.util.Locale
 @Composable
 fun DatePickerTextField(date : Date , onDateSelected : (Date) -> Unit) {
     val formatter : SimpleDateFormat = remember { SimpleDateFormat("dd.MM.yyyy" , Locale.getDefault()) }
-    var showDialog : Boolean by remember { mutableStateOf<Boolean>(value = false) }
+    var showDialog : Boolean by remember { mutableStateOf(value = false) }
     val view : View = LocalView.current
     if (showDialog) {
         DatePickerDialog(onDateSelected = { dateString : String ->

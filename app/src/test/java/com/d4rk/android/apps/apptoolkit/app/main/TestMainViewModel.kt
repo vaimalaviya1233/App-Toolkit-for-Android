@@ -1,17 +1,17 @@
 package com.d4rk.android.apps.apptoolkit.app.main
 
-import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
-import com.d4rk.android.apps.apptoolkit.app.core.TestDispatchers
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.PerformInAppUpdateUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -28,7 +28,7 @@ class TestMainViewModel {
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = StandardDispatcherExtension()
     }
 
     private lateinit var dispatcherProvider: TestDispatchers

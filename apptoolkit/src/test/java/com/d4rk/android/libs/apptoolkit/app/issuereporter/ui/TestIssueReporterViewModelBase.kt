@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
-import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

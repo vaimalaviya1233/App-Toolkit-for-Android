@@ -43,8 +43,8 @@ import java.util.concurrent.TimeUnit
 @Composable
 fun FinalOnboardingPageTab() {
 
-    var showKonfettiAnimationForThisInstance : Boolean by remember { mutableStateOf<Boolean>(value = false) }
-    var iconVisible : Boolean by remember { mutableStateOf<Boolean>(value = false) }
+    var showKonfettiAnimationForThisInstance : Boolean by remember { mutableStateOf(value = false) }
+    var iconVisible : Boolean by remember { mutableStateOf(value = false) }
 
     val party = Party(speed = 0f , maxSpeed = 30f , damping = 0.9f , spread = Spread.ROUND , position = Position.Relative(0.5 , 0.3) , emitter = Emitter(duration = 200 , TimeUnit.MILLISECONDS).max(amount = 100))
     val partyRain =
@@ -104,7 +104,7 @@ fun FinalOnboardingPageTab() {
         if (showKonfettiAnimationForThisInstance) {
             KonfettiView(
                 modifier = Modifier.fillMaxSize() ,
-                parties = listOf<Party>(party , partyRain) ,
+                parties = listOf(party , partyRain) ,
             )
         }
     }

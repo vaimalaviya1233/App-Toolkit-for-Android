@@ -31,7 +31,7 @@ fun AppNavigationHost(
     val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(
-        navController = navController , startDestination = if (startupRoute.isNotBlank()) startupRoute else NavigationRoutes.ROUTE_APPS_LIST
+        navController = navController , startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
     ) {
         composable(route = NavigationRoutes.ROUTE_APPS_LIST) {
             AppsListScreen(paddingValues = paddingValues)

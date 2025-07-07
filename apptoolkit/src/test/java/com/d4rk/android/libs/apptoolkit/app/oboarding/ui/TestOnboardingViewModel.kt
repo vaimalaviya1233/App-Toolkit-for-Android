@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.oboarding.ui
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
-import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.OnboardingViewModel
 
 class TestOnboardingViewModel {
 

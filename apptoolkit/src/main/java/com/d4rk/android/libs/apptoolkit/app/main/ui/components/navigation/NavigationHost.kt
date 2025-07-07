@@ -32,8 +32,8 @@ fun NavigationHost(
 
 object NavigationTransitions {
 
-    private val fadeScaleEnterSpec : TweenSpec<Float> = tween<Float>(durationMillis = 200)
-    private val fadeScaleExitSpec : TweenSpec<Float> = tween<Float>(durationMillis = 200)
+    private val fadeScaleEnterSpec : TweenSpec<Float> = tween(durationMillis = 200)
+    private val fadeScaleExitSpec : TweenSpec<Float> = tween(durationMillis = 200)
 
     val DefaultEnter : AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition by lazy {
         {

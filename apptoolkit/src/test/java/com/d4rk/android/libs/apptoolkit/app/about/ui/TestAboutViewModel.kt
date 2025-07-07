@@ -2,20 +2,20 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
-import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
-import com.d4rk.android.libs.apptoolkit.core.TestDispatchers
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import kotlinx.coroutines.test.runTest
 
 class TestAboutViewModel {
 
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
     @Test

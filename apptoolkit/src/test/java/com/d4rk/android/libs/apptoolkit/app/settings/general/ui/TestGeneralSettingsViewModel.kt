@@ -1,11 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.ui
 
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.GeneralSettingsEvent
-import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -16,7 +15,7 @@ class TestGeneralSettingsViewModel {
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
     @Test
@@ -139,7 +138,7 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load content key with special characters`() = runTest(dispatcherExtension.testDispatcher) {
         val viewModel = GeneralSettingsViewModel()
-        val key = "!@#\$%^&*()_+漢字"
+        val key = "!@#$%^&*()_+漢字"
         viewModel.onEvent(GeneralSettingsEvent.Load(key))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = viewModel.uiState.value

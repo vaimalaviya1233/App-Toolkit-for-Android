@@ -1,14 +1,13 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.content.Context
-import android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import app.cash.turbine.test // <-- ADDED THIS IMPORT
+import app.cash.turbine.test
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.MainDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.actions.IssueReporterEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.ktor.client.engine.mock.MockEngine
@@ -25,7 +24,7 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
     companion object {
         @JvmField
         @RegisterExtension
-        val dispatcherExtension = MainDispatcherExtension()
+        val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
     @Test
@@ -81,7 +80,7 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
         val engine = MockEngine { respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created) }
         setup(engine, githubToken = "token", testDispatcher = dispatcherExtension.testDispatcher)
         @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply {
-            versionCode = 1;
+            versionCode = 1
             versionName = "1"
         }
 
