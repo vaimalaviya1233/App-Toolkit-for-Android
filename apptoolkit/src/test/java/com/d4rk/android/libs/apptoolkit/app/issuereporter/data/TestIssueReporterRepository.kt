@@ -190,5 +190,49 @@ class TestIssueReporterRepository {
             repository.sendReport(report, target)
         }
     }
+
+    @Test
+    fun `sendReport unauthorized`() = runTest {
+        val engine = MockEngine { respond("unauth", HttpStatusCode.Unauthorized) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
+        val error = result as IssueReportResult.Error
+        assertThat(error.status).isEqualTo(HttpStatusCode.Unauthorized)
+        assertThat(error.message).isEqualTo("unauth")
+    }
+
+    @Test
+    fun `sendReport forbidden`() = runTest {
+        val engine = MockEngine { respond("stop", HttpStatusCode.Forbidden) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
+        val error = result as IssueReportResult.Error
+        assertThat(error.status).isEqualTo(HttpStatusCode.Forbidden)
+        assertThat(error.message).isEqualTo("stop")
+    }
+
+    @Test
+    fun `sendReport created without url`() = runTest {
+        val engine = MockEngine { respond("{}", HttpStatusCode.Created) }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Success::class.java)
+        val success = result as IssueReportResult.Success
+        assertThat(success.url).isEmpty()
+    }
 }
 
