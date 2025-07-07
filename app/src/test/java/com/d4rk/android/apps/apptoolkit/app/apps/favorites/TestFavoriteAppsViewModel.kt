@@ -4,13 +4,20 @@ import app.cash.turbine.test
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
+import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -192,5 +199,44 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         viewModel.toggleFavorite("pkg")
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
+    }
+
+    @Test
+    fun `toggle favorite fails mid-update`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val fetchFlow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+
+        val favorites = MutableStateFlow<Set<String>>(emptySet())
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val fetchUseCase = mockk<FetchDeveloperAppsUseCase>()
+        val dataStore = mockk<DataStore>(relaxed = true)
+
+        coEvery { fetchUseCase.invoke() } returns fetchFlow
+        every { dataStore.favoriteApps } returns favorites
+
+        var calls = 0
+        coEvery { dataStore.toggleFavoriteApp(any()) } coAnswers {
+            calls++
+            if (calls == 2) throw RuntimeException("fail")
+            val pkg = it.invocation.args[0] as String
+            val current = favorites.value.toMutableSet()
+            if (!current.add(pkg)) current.remove(pkg)
+            favorites.value = current
+        }
+
+        viewModel = FavoriteAppsViewModel(fetchUseCase, dataStore, dispatcherProvider)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
+
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
     }
 }
