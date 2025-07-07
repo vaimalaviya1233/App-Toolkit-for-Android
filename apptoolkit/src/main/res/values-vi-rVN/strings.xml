@@ -279,4 +279,7 @@
     <string name="non_paid_support">Hỗ trợ không trả phí</string>
     <string name="web_ad">Quảng cáo web</string>
     <string name="error_failed_to_load_sku_details">Không thể tải chi tiết SKU</string>
+    <string name="purchase_pending">Sự đóng góp của bạn đang được Google xử lý. Chúng tôi sẽ thông báo cho bạn khi nó hoàn thành. Cảm ơn!</string>
+    <string name="purchase_thank_you">Cảm ơn bạn đã đóng góp của bạn!</string>
+    <string name="purchase_cancelled">Mua hàng bị hủy bỏ</string>
 </resources>

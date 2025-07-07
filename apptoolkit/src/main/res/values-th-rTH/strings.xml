@@ -279,4 +279,7 @@
     <string name="non_paid_support">การสนับสนุนแบบไม่ชำระเงิน</string>
     <string name="web_ad">โฆษณาเว็บ</string>
     <string name="error_failed_to_load_sku_details">ไม่สามารถโหลดรายละเอียด SKU ได้</string>
+    <string name="purchase_pending">การบริจาคของคุณกำลังดำเนินการโดย Google เราจะแจ้งให้คุณทราบเมื่อเสร็จสิ้น ขอบคุณ!</string>
+    <string name="purchase_thank_you">ขอบคุณสำหรับการบริจาค!</string>
+    <string name="purchase_cancelled">การซื้อที่ถูกยกเลิก</string>
 </resources>

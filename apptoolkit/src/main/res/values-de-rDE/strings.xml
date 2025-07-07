@@ -279,4 +279,7 @@
     <string name="non_paid_support">Unbezahlte Unterstützung</string>
     <string name="web_ad">Webanzeige</string>
     <string name="error_failed_to_load_sku_details">Fehler beim Laden der SKU-Details</string>
+    <string name="purchase_pending">Ihre Spende wird von Google verarbeitet. Wir werden Sie benachrichtigen, wenn es abgeschlossen ist. Danke schön!</string>
+    <string name="purchase_thank_you">Vielen Dank für Ihre Spende!</string>
+    <string name="purchase_cancelled">Kauf storniert</string>
 </resources>
