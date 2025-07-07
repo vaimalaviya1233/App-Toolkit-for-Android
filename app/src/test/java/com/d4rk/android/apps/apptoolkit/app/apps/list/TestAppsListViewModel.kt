@@ -3,18 +3,23 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.MainDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.core.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.google.common.truth.Truth.assertThat
+import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertFailsWith
 
 class TestAppsListViewModel : TestAppsListViewModelBase() {
 
@@ -153,5 +158,38 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         }
         setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
         viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+    }
+
+    @Test
+    fun `use case invoke throws`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val fetchUseCase = mockk<FetchDeveloperAppsUseCase>()
+        val dataStore = mockk<DataStore>(relaxed = true)
+        every { dataStore.favoriteApps } returns MutableStateFlow(emptySet())
+        coEvery { fetchUseCase.invoke() } throws RuntimeException("boom")
+
+        assertFailsWith<RuntimeException> {
+            AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
+    }
+
+    @Test
+    fun `favorite apps flow throws`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val fetchFlow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        val failingFavs = flow<Set<String>> { throw RuntimeException("fail") }
+        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = failingFavs)
+
+        viewModel.uiState.test {
+            val first = awaitItem()
+            assertTrue(first.screenState is ScreenState.IsLoading)
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            expectNoEvents()
+            assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
+        }
     }
 }

@@ -173,4 +173,24 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         setup(fetchFlow = flow, initialFavorites = setOf("pkg"), testDispatcher = dispatcherExtension.testDispatcher)
         viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
     }
+
+    @Test
+    fun `toggle favorite throws after load`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(
+            fetchFlow = flow,
+            initialFavorites = emptySet(),
+            testDispatcher = dispatcherExtension.testDispatcher,
+            toggleError = RuntimeException("fail")
+        )
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
+    }
 }
