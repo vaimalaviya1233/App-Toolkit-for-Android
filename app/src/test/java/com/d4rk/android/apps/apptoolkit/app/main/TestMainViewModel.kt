@@ -199,7 +199,7 @@ class TestMainViewModel {
     fun `load navigation replaces invalid config`() = runTest(dispatcherExtension.testDispatcher) {
         val flow = flow<DataState<Int, Errors>> { }
         setup(flow, dispatcherExtension.testDispatcher)
-        viewModel.screenState.updateData(ScreenState.Success()) { copy(navigationDrawerItems = emptyList()) }
+        viewModel.screenState.updateData(ScreenState.Success()) { it.copy(navigationDrawerItems = emptyList()) }
 
         viewModel.onEvent(MainEvent.LoadNavigation)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
