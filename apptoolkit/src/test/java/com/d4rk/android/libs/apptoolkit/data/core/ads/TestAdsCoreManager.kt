@@ -158,4 +158,137 @@ class TestAdsCoreManager {
         verify { AppOpenAd.load(any(), any(), any(), any()) }
     }
 
+    @Test
+    fun `ads disabled skips load and show`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(false)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        val activity = mockk<Activity>()
+        manager.showAdIfAvailable(activity)
+
+        verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `load failure resets loading flag`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+
+        mockkStatic(AppOpenAd::class)
+        val slot = slot<AppOpenAd.AppOpenAdLoadCallback>()
+        every {
+            AppOpenAd.load(any(), any(), any(), capture(slot))
+        } answers {
+            slot.captured.onAdFailedToLoad(mockk())
+        }
+
+        inner.javaClass.getDeclaredMethod("loadAd", Context::class.java).apply {
+            isAccessible = true
+            invoke(inner, context)
+        }
+
+        val loadingField = inner.javaClass.getDeclaredField("isLoadingAd")
+        loadingField.isAccessible = true
+        assertFalse(loadingField.getBoolean(inner))
+    }
+
+    @Test
+    fun `showAdIfAvailable ignores when already showing`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+        val showingField = inner.javaClass.getDeclaredField("isShowingAd")
+        showingField.isAccessible = true
+        showingField.setBoolean(inner, true)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        val method = inner.javaClass.getDeclaredMethod(
+            "showAdIfAvailable",
+            Activity::class.java,
+            OnShowAdCompleteListener::class.java
+        )
+        method.isAccessible = true
+        method.invoke(inner, mockk<Activity>(), mockk<OnShowAdCompleteListener>())
+
+        verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `concurrent load requests chain correctly`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+
+        mockkStatic(AppOpenAd::class)
+        val slot = slot<AppOpenAd.AppOpenAdLoadCallback>()
+        every { AppOpenAd.load(any(), any(), any(), capture(slot)) } answers {}
+
+        inner.javaClass.getDeclaredMethod("loadAd", Context::class.java).apply {
+            isAccessible = true
+            invoke(inner, context)
+        }
+        inner.javaClass.getDeclaredMethod("loadAd", Context::class.java).apply {
+            isAccessible = true
+            invoke(inner, context)
+        }
+
+        verify(exactly = 1) { AppOpenAd.load(any(), any(), any(), any()) }
+
+        slot.captured.onAdLoaded(mockk())
+
+        inner.javaClass.getDeclaredMethod("loadAd", Context::class.java).apply {
+            isAccessible = true
+            invoke(inner, context)
+        }
+
+        verify(exactly = 2) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
 }

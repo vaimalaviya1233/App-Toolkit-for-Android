@@ -10,6 +10,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -19,6 +21,7 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertFailsWith
 
 class TestMainViewModel {
 
@@ -178,5 +181,29 @@ class TestMainViewModel {
         viewModel.onEvent(MainEvent.CheckForUpdates)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNull()
+    }
+
+    @Test
+    fun `use case throws propagates exception`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<DataState<Int, Errors>> { }
+        setup(flow, dispatcherExtension.testDispatcher)
+        coEvery { updateUseCase.invoke(Unit) } throws RuntimeException("boom")
+
+        assertFailsWith<RuntimeException> {
+            viewModel.onEvent(MainEvent.CheckForUpdates)
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
+    }
+
+    @Test
+    fun `load navigation replaces invalid config`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<DataState<Int, Errors>> { }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.screenState.updateData(ScreenState.Success()) { copy(navigationDrawerItems = emptyList()) }
+
+        viewModel.onEvent(MainEvent.LoadNavigation)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val items = viewModel.uiState.value.data?.navigationDrawerItems
+        assertThat(items?.size).isEqualTo(4)
     }
 }
