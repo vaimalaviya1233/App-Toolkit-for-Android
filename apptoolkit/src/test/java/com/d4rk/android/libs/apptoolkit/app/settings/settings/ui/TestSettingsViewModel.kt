@@ -158,4 +158,22 @@ class TestSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.first()?.preferences?.size).isEqualTo(1)
     }
+
+    @Test
+    fun `provider exception leaves state loading`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } throws RuntimeException("boom")
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+
+        assertFailsWith<RuntimeException> {
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        }
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+    }
 }
