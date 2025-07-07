@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class FavoriteAppsViewModel(
@@ -44,12 +44,14 @@ class FavoriteAppsViewModel(
 
     init {
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
-            dataStore.favoriteApps
-                .onEach {
-                    favoritesLoaded.value = true
-                    _favorites.value = it
-                }
-                .collect()
+            runCatching {
+                dataStore.favoriteApps
+                    .onEach {
+                        favoritesLoaded.value = true
+                        _favorites.value = it
+                    }
+                    .collect()
+            }
         }
 
         // ensure favorites are loaded before fetching apps

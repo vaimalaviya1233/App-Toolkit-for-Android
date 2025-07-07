@@ -86,10 +86,11 @@ class TestSettingsViewModel {
         viewModel = SettingsViewModel(provider, dispatcherProvider)
         val context = mockk<Context>(relaxed = true)
 
-        assertFailsWith<NullPointerException> {
-            viewModel.onEvent(SettingsEvent.Load(context))
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        }
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
     }
 
     @Test
