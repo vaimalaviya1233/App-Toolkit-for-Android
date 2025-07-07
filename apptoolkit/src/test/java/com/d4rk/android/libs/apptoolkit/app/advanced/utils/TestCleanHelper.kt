@@ -35,6 +35,7 @@ class TestCleanHelper {
         assertFalse(dir1.exists())
         assertFalse(dir2.exists())
         assertFalse(dir3.exists())
+        verify { context.getString(R.string.cache_cleared_success) }
         verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
     }
 
@@ -61,6 +62,7 @@ class TestCleanHelper {
         assertFalse(dir1.exists())
         assertFalse(dir3.exists())
         verify { failing.deleteRecursively() }
+        verify { context.getString(R.string.cache_cleared_error) }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
     }
 
@@ -70,6 +72,46 @@ class TestCleanHelper {
         every { context.cacheDir } throws SecurityException("denied")
 
         assertFailsWith<SecurityException> {
+            CleanHelper.clearApplicationCache(context)
+        }
+    }
+
+    @Test
+    fun `clearApplicationCache handles missing directories`() {
+        val dir1 = createTempDirectory().toFile().also { it.deleteRecursively() }
+        val dir2 = createTempDirectory().toFile().also { it.deleteRecursively() }
+        val dir3 = createTempDirectory().toFile().also { it.deleteRecursively() }
+
+        val context = mockk<Context>()
+        every { context.cacheDir } returns dir1
+        every { context.codeCacheDir } returns dir2
+        every { context.filesDir } returns dir3
+        every { context.getString(R.string.cache_cleared_success) } returns "success"
+
+        mockkStatic(Toast::class)
+        val toast = mockk<Toast>(relaxed = true)
+        every { Toast.makeText(context, "success", Toast.LENGTH_SHORT) } returns toast
+
+        CleanHelper.clearApplicationCache(context)
+
+        verify { context.getString(R.string.cache_cleared_success) }
+        verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
+    }
+
+    @Test
+    fun `clearApplicationCache propagates io exception`() {
+        val dir1 = createTempDirectory().toFile()
+        val failing = mockk<java.io.File>()
+        every { failing.deleteRecursively() } throws java.io.IOException("io")
+        every { failing.exists() } returns true
+        val dir3 = createTempDirectory().toFile()
+
+        val context = mockk<Context>()
+        every { context.cacheDir } returns dir1
+        every { context.codeCacheDir } returns failing
+        every { context.filesDir } returns dir3
+
+        assertFailsWith<java.io.IOException> {
             CleanHelper.clearApplicationCache(context)
         }
     }

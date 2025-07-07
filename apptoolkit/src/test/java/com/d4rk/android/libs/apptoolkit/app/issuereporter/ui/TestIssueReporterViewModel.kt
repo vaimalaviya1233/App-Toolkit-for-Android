@@ -399,4 +399,61 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `toggle anonymous back to true`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("", HttpStatusCode.Created) }
+        setup(engine, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.onEvent(IssueReporterEvent.SetAnonymous(false))
+        viewModel.onEvent(IssueReporterEvent.SetAnonymous(true))
+
+        assertThat(viewModel.uiState.value.data?.anonymous).isTrue()
+    }
+
+    @Test
+    fun `update email field variations`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("", HttpStatusCode.Created) }
+        setup(engine, testDispatcher = dispatcherExtension.testDispatcher)
+
+        viewModel.onEvent(IssueReporterEvent.UpdateEmail(""))
+        assertThat(viewModel.uiState.value.data?.email).isEmpty()
+
+        viewModel.onEvent(IssueReporterEvent.UpdateEmail("me@test.com"))
+        assertThat(viewModel.uiState.value.data?.email).isEqualTo("me@test.com")
+
+        viewModel.onEvent(IssueReporterEvent.UpdateEmail("invalid"))
+        assertThat(viewModel.uiState.value.data?.email).isEqualTo("invalid")
+    }
+
+    @Test
+    fun `send report while another in flight`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine {
+            kotlinx.coroutines.delay(100)
+            respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created)
+        }
+        setup(engine, githubToken = "tok", testDispatcher = dispatcherExtension.testDispatcher)
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            skipItems(2)
+
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+
+            awaitItem() // loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            val final = awaitItem()
+            assertThat(final.screenState).isInstanceOf(ScreenState.Success::class.java)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
