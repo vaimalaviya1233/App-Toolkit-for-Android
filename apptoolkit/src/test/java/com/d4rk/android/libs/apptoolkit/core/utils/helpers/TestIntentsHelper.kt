@@ -172,4 +172,88 @@ class TestIntentsHelper {
         assertEquals(Intent.ACTION_SENDTO, inner?.action)
         assertTrue(inner?.data.toString().startsWith("mailto:"))
     }
+
+    @Test
+    fun `openAppNotificationSettings propagates exception`() {
+        val context = mockk<Context>()
+        every { context.packageName } returns "pkg"
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.openAppNotificationSettings(context)
+        }
+    }
+
+    @Test
+    fun `openPlayStoreForApp propagates exception`() {
+        val context = mockk<Context>()
+        val pm = mockk<PackageManager>()
+        every { context.packageManager } returns pm
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().resolveActivity(pm) } returns mockk()
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.openPlayStoreForApp(context, "com.test")
+        }
+    }
+
+    @Test
+    fun `shareApp propagates exception`() {
+        val context = mockk<Context>()
+        val res = mockk<Resources>()
+        every { context.resources } returns res
+        every { res.getText(R.string.send_email_using) } returns "send"
+        every { context.getString(R.string.summary_share_message, any()) } returns "msg"
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.shareApp(context, R.string.summary_share_message)
+        }
+    }
+
+    @Test
+    fun `sendEmailToDeveloper propagates exception`() {
+        val context = mockk<Context>()
+        every { context.getString(R.string.feedback_for, "App") } returns "subject"
+        every { context.getString(R.string.dear_developer) } returns "body"
+        every { context.getString(R.string.send_email_using) } returns "send"
+        every { context.startActivity(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            IntentsHelper.sendEmailToDeveloper(context, R.string.app_name)
+        }
+    }
+
+    @Test
+    fun `openPlayStoreForApp with empty package name`() {
+        val context = mockk<Context>()
+        val pm = mockk<PackageManager>()
+        every { context.packageManager } returns pm
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().resolveActivity(pm) } returns mockk()
+
+        IntentsHelper.openPlayStoreForApp(context, "")
+
+        val intent = slot.captured
+        assertEquals(Intent.ACTION_VIEW, intent.action)
+        assertEquals(AppLinks.MARKET_APP_PAGE, intent.data.toString())
+    }
+
+    @Test
+    fun `openPlayStoreForApp null package throws`() {
+        val context = mockk<Context>()
+        val method = IntentsHelper::class.java.getDeclaredMethod(
+            "openPlayStoreForApp",
+            Context::class.java,
+            String::class.java
+        )
+
+        assertFailsWith<NullPointerException> {
+            method.invoke(IntentsHelper, context, null)
+        }
+    }
 }

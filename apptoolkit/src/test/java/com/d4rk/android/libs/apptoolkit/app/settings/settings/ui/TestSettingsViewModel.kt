@@ -177,4 +177,41 @@ class TestSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(50)
     }
+
+    @Test
+    fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
+        val first = SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one")))
+        val second = SettingsConfig(title = "second", categories = emptyList())
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returnsMany listOf(first, second)
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        assertThat(state.data?.title).isEqualTo("second")
+    }
+
+    @Test
+    fun `load settings with malformed preference`() = runTest(dispatcherExtension.testDispatcher) {
+        val malformed = SettingsCategory(
+            title = "bad",
+            preferences = listOf(SettingsPreference(key = null, title = null))
+        )
+        val config = SettingsConfig(title = "bad", categories = listOf(malformed))
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(state.data?.categories?.first()?.preferences?.size).isEqualTo(1)
+    }
 }
