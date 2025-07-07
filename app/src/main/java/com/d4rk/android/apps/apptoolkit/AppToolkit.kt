@@ -4,13 +4,9 @@ package com.d4rk.android.apps.apptoolkit
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
-import org.koin.android.ext.android.inject
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.d4rk.android.apps.apptoolkit.core.di.initializeKoin
 import com.d4rk.android.apps.apptoolkit.core.utils.constants.ads.AdsConstants
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
@@ -24,12 +20,10 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     private var currentActivity : Activity? = null
 
     private val adsCoreManager : AdsCoreManager by lazy { getKoin().get<AdsCoreManager>() }
-    private val billingRepository: BillingRepository by inject()
 
     override fun onCreate() {
         initializeKoin(context = this)
-        super<BaseCoreManager>.onCreate() // FIXME: Multiple supertypes available. Specify the intended supertype in angle brackets, e.g. 'super<Foo>'.
-        registerActivityLifecycleCallbacks(this)
+        super<BaseCoreManager>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(observer = this)
     }
 
@@ -41,8 +35,7 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
         adsCoreManager.initializeAds(AdsConstants.APP_OPEN_UNIT_ID)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() { // FIXME: Function "onMoveToForeground" is never used
+    override fun onStart(owner: LifecycleOwner) {
         currentActivity?.let { adsCoreManager.showAdIfAvailable(it) }
     }
 

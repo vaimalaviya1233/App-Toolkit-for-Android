@@ -5,14 +5,18 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
+import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import org.koin.android.ext.android.inject
 
-open class BaseCoreManager : MultiDexApplication() , Application.ActivityLifecycleCallbacks , LifecycleObserver {
+open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
+
+    protected val billingRepository: BillingRepository by inject()
 
     companion object {
         var isAppLoaded : Boolean = false
