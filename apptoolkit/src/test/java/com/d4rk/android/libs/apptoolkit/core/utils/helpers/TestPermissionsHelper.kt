@@ -99,4 +99,21 @@ class TestPermissionsHelper {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
     }
+
+    @Test
+    fun `hasNotificationPermission reflects runtime revocation`() {
+        val context = mockk<Context>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mockkStatic(ContextCompat::class)
+            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returnsMany listOf(
+                PackageManager.PERMISSION_GRANTED,
+                PackageManager.PERMISSION_DENIED
+            )
+            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+            assertFalse(PermissionsHelper.hasNotificationPermission(context))
+        } else {
+            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+        }
+    }
 }
