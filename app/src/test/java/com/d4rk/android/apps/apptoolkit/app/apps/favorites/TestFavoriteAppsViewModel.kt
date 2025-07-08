@@ -193,4 +193,65 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
     }
+
+    @Test
+    fun `favorites persist when datastore flow fails mid stream`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val fetchFlow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        val failingFavs = flow {
+            emit(setOf("pkg"))
+            throw RuntimeException("fail")
+        }
+
+        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = failingFavs)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value).containsExactly("pkg")
+
+        viewModel.toggleFavorite("pkg")
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.favorites.value).containsExactly("pkg")
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `multiple toggles during fetch`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val flow = flow {
+            emit(DataState.Loading<List<AppInfo>, Error>())
+            delay(100)
+            emit(DataState.Success<List<AppInfo>, Error>(apps))
+        }
+        setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceTimeBy(50)
+        repeat(3) { viewModel.toggleFavorite("pkg") }
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `favorites update races with fetch response`() = runTest(dispatcherExtension.testDispatcher) {
+        val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
+        val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(setOf("pkg")) }
+
+        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        launch { shared.emit(DataState.Loading()) }
+        launch { shared.emit(DataState.Success(listOf(AppInfo("App", "pkg", "url")))) }
+        launch { favorites.emit(emptySet()) }
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.favorites.value).isEmpty()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
+    }
 }
