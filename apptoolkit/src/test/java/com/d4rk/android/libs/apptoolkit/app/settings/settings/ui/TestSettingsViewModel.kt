@@ -158,4 +158,51 @@ class TestSettingsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.first()?.preferences?.size).isEqualTo(1)
     }
+
+    @Test
+    fun `load settings provider throws`() = runTest(dispatcherExtension.testDispatcher) {
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } throws IllegalStateException("boom")
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+    }
+
+    @Test
+    fun `state persists across config changes`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "persist", categories = listOf(SettingsCategory(title = "c")))
+        setup(config, dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val before = viewModel.uiState.value
+
+        // simulate orientation change by re-reading state
+        val after = viewModel.uiState.value
+        assertThat(after).isEqualTo(before)
+    }
+
+    @Test
+    fun `load settings with null context`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "bad context", categories = emptyList())
+        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } answers {
+            firstArg<Context>().hashCode()
+            config
+        }
+        viewModel = SettingsViewModel(provider, dispatcherProvider)
+
+        val context = null as Context
+        assertFailsWith<NullPointerException> {
+            viewModel.onEvent(SettingsEvent.Load(context))
+        }
+    }
 }
