@@ -6,54 +6,40 @@ import org.junit.jupiter.api.Test
 class TestOnboardingViewModel {
 
     @Test
-    fun `default tab index is zero`() {
+    fun `current tab index mutates as expected`() {
         val viewModel = OnboardingViewModel()
-        assertThat(viewModel.currentTabIndex).isEqualTo(0)
-    }
 
-    @Test
-    fun `tab index can be changed`() {
-        val viewModel = OnboardingViewModel()
+        // Default value
+        assertThat(viewModel.currentTabIndex).isEqualTo(0)
+
+        // Changing the index updates the state
         viewModel.currentTabIndex = 1
         assertThat(viewModel.currentTabIndex).isEqualTo(1)
-    }
 
-    @Test
-    fun `setting negative tab index`() {
-        val viewModel = OnboardingViewModel()
+        // Negative values are also accepted
         viewModel.currentTabIndex = -1
         assertThat(viewModel.currentTabIndex).isEqualTo(-1)
-    }
 
-    @Test
-    fun `resetting tab index to default`() {
-        val viewModel = OnboardingViewModel()
-        viewModel.currentTabIndex = 2
+        // Extremely large values do not break the model
+        viewModel.currentTabIndex = Int.MAX_VALUE
+        assertThat(viewModel.currentTabIndex).isEqualTo(Int.MAX_VALUE)
+
+        // Reset back to default
         viewModel.currentTabIndex = 0
         assertThat(viewModel.currentTabIndex).isEqualTo(0)
     }
 
     @Test
-    fun `setting extremely large tab index`() {
+    fun `repeated index changes remain stable`() {
         val viewModel = OnboardingViewModel()
-        viewModel.currentTabIndex = Int.MAX_VALUE
-        assertThat(viewModel.currentTabIndex).isEqualTo(Int.MAX_VALUE)
-    }
 
-    @Test
-    fun `placeholder for onboarding side effects`() {
-        val viewModel = OnboardingViewModel()
-        // Future analytics or persistence checks would go here
-        assertThat(viewModel.currentTabIndex).isEqualTo(0)
-    }
-
-    @Test
-    fun `repeated open dismiss remains stable`() {
-        val viewModel = OnboardingViewModel()
         repeat(5) { index ->
             viewModel.currentTabIndex = index
-            viewModel.currentTabIndex = 0
         }
+
+        assertThat(viewModel.currentTabIndex).isEqualTo(4)
+
+        viewModel.currentTabIndex = 0
         assertThat(viewModel.currentTabIndex).isEqualTo(0)
     }
 }
