@@ -371,4 +371,166 @@ class TestAdsCoreManager {
         verify { AppOpenAd.load(any(), any(), any(), any()) }
     }
 
+    @Test
+    fun `failure to show triggers reload`() {
+        val context = mockk<Context>(relaxed = true)
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val ad = mockk<AppOpenAd>(relaxed = true)
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+        val adField = inner.javaClass.getDeclaredField("appOpenAd")
+        adField.isAccessible = true
+        adField.set(inner, ad)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        val slot = slot<FullScreenContentCallback>()
+        every { ad.fullScreenContentCallback = capture(slot) } returns Unit
+
+        val method = inner.javaClass.getDeclaredMethod(
+            "showAdIfAvailable",
+            Activity::class.java,
+            OnShowAdCompleteListener::class.java
+        )
+        method.isAccessible = true
+        method.invoke(inner, mockk<Activity>(), object : OnShowAdCompleteListener {
+            override fun onShowAdComplete() {}
+        })
+
+        slot.captured.onAdFailedToShowFullScreenContent(mockk())
+
+        val showField = inner.javaClass.getDeclaredField("isShowingAd")
+        showField.isAccessible = true
+        assertFalse(showField.getBoolean(inner))
+        verify { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `old ads are not shown`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val ad = mockk<AppOpenAd>(relaxed = true)
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+        val adField = inner.javaClass.getDeclaredField("appOpenAd")
+        adField.isAccessible = true
+        adField.set(inner, ad)
+        val timeField = inner.javaClass.getDeclaredField("loadTime")
+        timeField.isAccessible = true
+        timeField.setLong(inner, Date().time - 3600000 * 5)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+
+        var completed = false
+        val method = inner.javaClass.getDeclaredMethod(
+            "showAdIfAvailable",
+            Activity::class.java,
+            OnShowAdCompleteListener::class.java
+        )
+        method.isAccessible = true
+        val listener = object : OnShowAdCompleteListener { override fun onShowAdComplete() { completed = true } }
+        method.invoke(inner, mockk<Activity>(), listener)
+
+        val showField = inner.javaClass.getDeclaredField("isShowingAd")
+        showField.isAccessible = true
+        assertFalse(showField.getBoolean(inner))
+        assert(completed)
+        verify { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
+    @Test
+    fun `initializeAds propagates MobileAds failure`() {
+        val context = mockk<Context>()
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+
+        mockkStatic(MobileAds::class)
+        every { MobileAds.initialize(context) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> { manager.initializeAds("unit") }
+
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        assert(mgrField.get(manager) == null)
+    }
+
+    @Test
+    fun `show continues when datastore disables ads while showing`() {
+        val context = mockk<Context>(relaxed = true)
+        val provider = mockk<BuildInfoProvider>()
+        val manager = AdsCoreManager(context, provider)
+        manager.initializeAds("unit")
+
+        var enabled = true
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } answers { flowOf(enabled) }
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
+        val ad = mockk<AppOpenAd>(relaxed = true)
+        val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
+        mgrField.isAccessible = true
+        val inner = mgrField.get(manager)!!
+        val adField = inner.javaClass.getDeclaredField("appOpenAd")
+        adField.isAccessible = true
+        adField.set(inner, ad)
+        val timeField = inner.javaClass.getDeclaredField("loadTime")
+        timeField.isAccessible = true
+        timeField.setLong(inner, Date().time)
+
+        mockkStatic(AppOpenAd::class)
+        justRun { AppOpenAd.load(any(), any(), any(), any()) }
+        justRun { ad.show(any()) }
+
+        val callback = slot<FullScreenContentCallback>()
+        every { ad.fullScreenContentCallback = capture(callback) } returns Unit
+
+        val method = inner.javaClass.getDeclaredMethod(
+            "showAdIfAvailable",
+            Activity::class.java,
+            OnShowAdCompleteListener::class.java
+        )
+        method.isAccessible = true
+        method.invoke(inner, mockk<Activity>(), object : OnShowAdCompleteListener {
+            override fun onShowAdComplete() {}
+        })
+
+        verify { ad.show(any()) }
+
+        enabled = false
+
+        callback.captured.onAdDismissedFullScreenContent()
+
+        verify { AppOpenAd.load(any(), any(), any(), any()) }
+
+        clearMocks(ad)
+        method.invoke(inner, mockk<Activity>(), mockk())
+
+        verify(exactly = 0) { ad.show(any()) }
+        verify(exactly = 1) { AppOpenAd.load(any(), any(), any(), any()) }
+    }
+
 }
