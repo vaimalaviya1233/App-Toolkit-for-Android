@@ -198,6 +198,51 @@ class TestMainViewModel {
     }
 
     @Test
+    fun `flow throwing propagates exception`() {
+        assertFailsWith<RuntimeException> {
+            runTest(dispatcherExtension.testDispatcher) {
+                val flow = flow<DataState<Int, Errors>> {
+                    throw RuntimeException("kaboom")
+                }
+                setup(flow, dispatcherExtension.testDispatcher)
+
+                viewModel.onEvent(MainEvent.CheckForUpdates)
+                dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            }
+        }
+    }
+
+    @Test
+    fun `navigation items persist after rotation`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow<DataState<Int, Errors>> { }
+        setup(flow, dispatcherExtension.testDispatcher)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val firstItems = viewModel.uiState.value.data?.navigationDrawerItems
+        assertThat(firstItems?.size).isEqualTo(4)
+
+        // simulate rotation by recreating the ViewModel
+        setup(flow, dispatcherExtension.testDispatcher)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val secondItems = viewModel.uiState.value.data?.navigationDrawerItems
+        assertThat(secondItems?.size).isEqualTo(4)
+    }
+
+    @Test
+    fun `concurrent CheckForUpdates events`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Error<Int, Errors>(error = Errors.UseCase.FAILED_TO_UPDATE_APP))
+        }
+        setup(flow, dispatcherExtension.testDispatcher)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        viewModel.onEvent(MainEvent.CheckForUpdates)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val snackbar = viewModel.uiState.value.snackbar
+        assertThat(snackbar).isNotNull()
+        val msg = snackbar!!.message as UiTextHelper.StringResource
+        assertThat(msg.resourceId).isEqualTo(R.string.snack_update_failed)
+    }
+
+    @Test
     fun `load navigation replaces invalid config`() = runTest(dispatcherExtension.testDispatcher) {
         val flow = flow<DataState<Int, Errors>> { }
         setup(flow, dispatcherExtension.testDispatcher)
