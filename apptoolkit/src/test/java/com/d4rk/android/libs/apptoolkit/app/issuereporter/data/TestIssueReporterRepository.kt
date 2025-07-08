@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.data
 
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueReportResult
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.CreateIssueRequest
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import io.ktor.client.HttpClient
@@ -12,6 +13,8 @@ import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
+import io.mockk.every
+import io.mockk.mockkStatic
 import kotlinx.coroutines.test.runTest
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.assertFailsWith
@@ -233,6 +236,34 @@ class TestIssueReporterRepository {
         assertThat(result).isInstanceOf(IssueReportResult.Success::class.java)
         val success = result as IssueReportResult.Success
         assertThat(success.url).isEmpty()
+    }
+
+    @Test
+    fun `sendReport serialization failure`() = runTest {
+        mockkStatic(Json::class)
+        every { Json.encodeToString(CreateIssueRequest.serializer(), any()) } throws kotlinx.serialization.SerializationException("boom")
+        val engine = MockEngine { error("should not be called") }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user", "repo")
+
+        assertFailsWith<kotlinx.serialization.SerializationException> {
+            repository.sendReport(report, target)
+        }
+    }
+
+    @Test
+    fun `sendReport invalid url`() = runTest {
+        val engine = MockEngine { error("should not hit network") }
+        val client = HttpClient(engine) { install(ContentNegotiation) { json() } }
+        val repository = IssueReporterRepository(client)
+        val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo(android.app.Application()), ExtraInfo(), null)
+        val target = GithubTarget("user name", "re po")
+
+        assertFailsWith<IllegalArgumentException> {
+            repository.sendReport(report, target)
+        }
     }
 }
 
