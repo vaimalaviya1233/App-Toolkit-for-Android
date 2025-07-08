@@ -181,6 +181,83 @@ class TestConsentManagerHelper {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `applyInitialConsent when debug build uses datastore values`() = runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.analyticsConsent(any()) } returns flowOf(false)
+        every { dataStore.adStorageConsent(any()) } returns flowOf(false)
+        every { dataStore.adUserDataConsent(any()) } returns flowOf(false)
+        every { dataStore.adPersonalizationConsent(any()) } returns flowOf(false)
+        every { dataStore.usageAndDiagnostics(any()) } returns flowOf(false)
+
+        val provider = mockk<BuildInfoProvider>()
+        every { provider.isDebugBuild } returns true
+        startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
+
+        val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
+        field.isAccessible = true
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
+
+        val analytics = mockk<FirebaseAnalytics>(relaxed = true)
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        val crashlytics = mockk<FirebaseCrashlytics>(relaxed = true)
+        val performance = mockk<FirebasePerformance>(relaxed = true)
+        mockkStatic(FirebaseCrashlytics::class)
+        mockkStatic(FirebasePerformance::class)
+        every { FirebaseCrashlytics.getInstance() } returns crashlytics
+        every { FirebasePerformance.getInstance() } returns performance
+
+        ConsentManagerHelper.applyInitialConsent(dataStore)
+
+        verify { analytics.setConsent(any()) }
+        verify { analytics.setAnalyticsCollectionEnabled(false) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = false }
+        verify { performance.isPerformanceCollectionEnabled = false }
+
+        stopKoin()
+    }
+
+    @Test
+    fun `updateConsent propagates firebase exception`() {
+        val analytics = mockk<FirebaseAnalytics>()
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        every { analytics.setConsent(any()) } throws RuntimeException("fail")
+
+        assertFailsWith<RuntimeException> {
+            ConsentManagerHelper.updateConsent(true, true, true, true)
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `updateAnalyticsCollectionFromDatastore toggles false to true`() = runTest {
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.usageAndDiagnostics(any()) } returnsMany listOf(flowOf(false), flowOf(true))
+
+        val analytics = mockk<FirebaseAnalytics>(relaxed = true)
+        mockkObject(Firebase)
+        every { Firebase.analytics } returns analytics
+        val crashlytics = mockk<FirebaseCrashlytics>(relaxed = true)
+        val performance = mockk<FirebasePerformance>(relaxed = true)
+        mockkStatic(FirebaseCrashlytics::class)
+        mockkStatic(FirebasePerformance::class)
+        every { FirebaseCrashlytics.getInstance() } returns crashlytics
+        every { FirebasePerformance.getInstance() } returns performance
+
+        ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+        verify { analytics.setAnalyticsCollectionEnabled(false) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = false }
+        verify { performance.isPerformanceCollectionEnabled = false }
+
+        ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+        verify { analytics.setAnalyticsCollectionEnabled(true) }
+        verify { crashlytics.isCrashlyticsCollectionEnabled = true }
+        verify { performance.isPerformanceCollectionEnabled = true }
+    }
+
     @Test
     fun `defaultAnalyticsGranted false when debug build`() {
         val provider = mockk<BuildInfoProvider>()
