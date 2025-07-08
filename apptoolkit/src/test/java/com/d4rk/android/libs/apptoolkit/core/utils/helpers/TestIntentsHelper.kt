@@ -13,6 +13,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkConstructor
+import io.mockk.mockkStatic
 import io.mockk.slot
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -255,5 +256,84 @@ class TestIntentsHelper {
         assertFailsWith<NullPointerException> {
             method.invoke(IntentsHelper, context, null)
         }
+    }
+
+    @Test
+    fun `openUrl handles malformed url`() {
+        val context = mockk<Context>()
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        IntentsHelper.openUrl(context, "htp::://bad url")
+
+        val intent = slot.captured
+        assertEquals(Intent.ACTION_VIEW, intent.action)
+        assertEquals("htp::://bad url", intent.data.toString())
+    }
+
+    @Test
+    fun `openPlayStoreForApp handles unusual package name`() {
+        val context = mockk<Context>()
+        val pm = mockk<PackageManager>()
+        every { context.packageManager } returns pm
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().resolveActivity(pm) } returns mockk()
+
+        val pkg = "com.example.app-1_2"
+        IntentsHelper.openPlayStoreForApp(context, pkg)
+
+        val intent = slot.captured
+        assertEquals("${AppLinks.MARKET_APP_PAGE}$pkg", intent.data.toString())
+    }
+
+    @Test
+    fun `shareApp uses provided chooser title`() {
+        val context = mockk<Context>()
+        val res = mockk<Resources>()
+        every { context.resources } returns res
+        every { res.getText(R.string.send_email_using) } returns "Share via \u2728"
+        every { context.getString(R.string.summary_share_message, any()) } returns "msg"
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        IntentsHelper.shareApp(context, R.string.summary_share_message)
+
+        val chooser = slot.captured
+        assertEquals("Share via \u2728", chooser.getCharSequenceExtra(Intent.EXTRA_TITLE))
+    }
+
+    @Test
+    fun `sendEmailToDeveloper uses provided chooser title`() {
+        val context = mockk<Context>()
+        every { context.getString(R.string.feedback_for, "App") } returns "subject"
+        every { context.getString(R.string.dear_developer) } returns "body"
+        every { context.getString(R.string.send_email_using) } returns "Email via \uD83D\uDE80"
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        IntentsHelper.sendEmailToDeveloper(context, R.string.app_name)
+
+        val chooser = slot.captured
+        assertEquals("Email via \uD83D\uDE80", chooser.getCharSequenceExtra(Intent.EXTRA_TITLE))
+    }
+
+    @Test
+    fun `openAppNotificationSettings uses legacy intent pre O`() {
+        val context = mockk<Context>()
+        every { context.packageName } returns "pkg"
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        mockkStatic(Build.VERSION::class)
+        every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.N
+
+        IntentsHelper.openAppNotificationSettings(context)
+
+        val intent = slot.captured
+        assertEquals("android.settings.APPLICATION_DETAILS_SETTINGS", intent.action)
+        assertEquals(Uri.fromParts("package", "pkg", null), intent.data)
     }
 }
