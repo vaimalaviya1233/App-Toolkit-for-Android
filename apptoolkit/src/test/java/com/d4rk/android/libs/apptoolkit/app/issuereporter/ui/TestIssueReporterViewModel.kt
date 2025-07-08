@@ -12,7 +12,9 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.HttpHeaders
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -510,6 +512,116 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
             assertThat(state.data?.issueUrl).isEqualTo("https://ex.com/1")
             cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `send report with only description`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("", HttpStatusCode.Created) }
+        setup(engine, testDispatcher = dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            val state = awaitItem()
+            val snackbar = state.snackbar!!
+            assertThat(snackbar.isError).isTrue()
+            val msg = snackbar.message as UiTextHelper.StringResource
+            assertThat(msg.resourceId).isEqualTo(R.string.error_invalid_report)
+            assertThat(state.screenState).isNotInstanceOf(ScreenState.IsLoading::class.java)
+        }
+    }
+
+    @Test
+    fun `send report with only title`() = runTest(dispatcherExtension.testDispatcher) {
+        val engine = MockEngine { respond("", HttpStatusCode.Created) }
+        setup(engine, testDispatcher = dispatcherExtension.testDispatcher)
+        val context = mockk<Context>(relaxed = true)
+
+        viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            val state = awaitItem()
+            val snackbar = state.snackbar!!
+            assertThat(snackbar.isError).isTrue()
+            val msg = snackbar.message as UiTextHelper.StringResource
+            assertThat(msg.resourceId).isEqualTo(R.string.error_invalid_report)
+            assertThat(state.screenState).isNotInstanceOf(ScreenState.IsLoading::class.java)
+        }
+    }
+
+    @Test
+    fun `form can be reset after success`() = runTest(dispatcherExtension.testDispatcher) {
+        var captured: HttpRequestData? = null
+        val engine = MockEngine { request ->
+            captured = request
+            respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created)
+        }
+        setup(engine, githubToken = "tok", testDispatcher = dispatcherExtension.testDispatcher)
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            skipItems(2)
+
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+            awaitItem() // loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            awaitItem()
+
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle(""))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription(""))
+            viewModel.onEvent(IssueReporterEvent.UpdateEmail(""))
+
+            val final = awaitItem()
+            assertThat(final.data?.title).isEmpty()
+            assertThat(final.data?.description).isEmpty()
+            assertThat(final.data?.email).isEmpty()
+        }
+    }
+
+    @Test
+    fun `github token captured at init`() = runTest(dispatcherExtension.testDispatcher) {
+        var captured: HttpRequestData? = null
+        var token = "bad"
+        val engine = MockEngine { request ->
+            captured = request
+            respond("""{"html_url":"https://ex.com/1"}""", HttpStatusCode.Created)
+        }
+        setup(engine, githubToken = token, testDispatcher = dispatcherExtension.testDispatcher)
+        token = "good" // change after initialization
+        @Suppress("DEPRECATION") val packageInfo = PackageInfo().apply { versionCode = 1; versionName = "1" }
+        val pm = mockk<PackageManager>()
+        every { pm.getPackageInfo(any<String>(), any<Int>()) } returns packageInfo
+        val context = mockk<Context>(relaxed = true)
+        every { context.packageManager } returns pm
+        every { context.packageName } returns "pkg"
+
+        viewModel.uiState.test {
+            awaitItem()
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            skipItems(2)
+
+            viewModel.onEvent(IssueReporterEvent.Send(context))
+            awaitItem() // loading
+            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            awaitItem()
+            assertThat(captured?.headers?.get(HttpHeaders.Authorization)).isEqualTo("Bearer bad")
         }
     }
 }
