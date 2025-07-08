@@ -34,7 +34,8 @@ open class TestAppsListViewModelBase {
         initialFavorites: Set<String> = emptySet(),
         testDispatcher: TestDispatcher,
         favoritesFlow: Flow<Set<String>>? = null,
-        toggleError: Throwable? = null
+        toggleError: Throwable? = null,
+        fetchThrows: Throwable? = null
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         dispatcherProvider = TestDispatchers(testDispatcher)
@@ -58,7 +59,11 @@ open class TestAppsListViewModelBase {
         } else {
             coEvery { dataStore.toggleFavoriteApp(any()) } returns Unit
         }
-        coEvery { fetchUseCase.invoke() } returns fetchFlow
+        if (fetchThrows != null) {
+            coEvery { fetchUseCase.invoke() } throws fetchThrows
+        } else {
+            coEvery { fetchUseCase.invoke() } returns fetchFlow
+        }
 
         viewModel = AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
         println("\u2705 [SETUP] ViewModel initialized")
