@@ -2,6 +2,8 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
@@ -111,5 +113,38 @@ class TestAboutViewModel {
         val state = viewModel.uiState.value
         assertThat(state.snackbar).isNotNull()
         assertThat(state.data?.showDeviceInfoCopiedSnackbar).isTrue()
+    }
+
+    @Test
+    fun `changing screen data resets copy state`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isTrue()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        viewModel.screenState.updateData(viewModel.uiState.value.screenState) { UiAboutScreen() }
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(state.snackbar).isNotNull()
+    }
+
+    @Test
+    fun `new viewmodel has default state`() = runTest(dispatcherExtension.testDispatcher) {
+        val dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
+        val viewModel = AboutViewModel(dispatcherProvider)
+
+        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
+
+        val recreated = AboutViewModel(dispatcherProvider)
+        val state = recreated.uiState.value
+        assertThat(state.snackbar).isNull()
+        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
     }
 }
