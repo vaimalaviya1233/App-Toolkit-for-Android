@@ -122,4 +122,79 @@ class TestClipboardHelper {
 
         verify { manager.setPrimaryClip(any()) }
     }
+
+    @Test
+    fun `copyTextToClipboard handles empty label and text`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        val clipSlot = slot<ClipData>()
+        justRun { manager.setPrimaryClip(capture(clipSlot)) }
+
+        ClipboardHelper.copyTextToClipboard(context, "", "")
+
+        verify { manager.setPrimaryClip(any()) }
+        assertEquals("", clipSlot.captured.description.label)
+        assertEquals("", clipSlot.captured.getItemAt(0).text)
+    }
+
+    @Test
+    fun `copyTextToClipboard handles long label and text`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        val clipSlot = slot<ClipData>()
+        justRun { manager.setPrimaryClip(capture(clipSlot)) }
+
+        val longLabel = "a".repeat(10000)
+        val longText = "b".repeat(10000)
+        ClipboardHelper.copyTextToClipboard(context, longLabel, longText)
+
+        verify { manager.setPrimaryClip(any()) }
+        assertEquals(longLabel, clipSlot.captured.description.label)
+        assertEquals(longText, clipSlot.captured.getItemAt(0).text)
+    }
+
+    private fun setSdkInt(tempValue: Int, block: () -> Unit) {
+        val field = Build.VERSION::class.java.getDeclaredField("SDK_INT")
+        field.isAccessible = true
+        val modifiersField = java.lang.reflect.Field::class.java.getDeclaredField("modifiers")
+        modifiersField.isAccessible = true
+        val originalModifiers = field.modifiers
+        modifiersField.setInt(field, field.modifiers and java.lang.reflect.Modifier.FINAL.inv())
+        val originalValue = field.getInt(null)
+        field.setInt(null, tempValue)
+        try {
+            block()
+        } finally {
+            field.setInt(null, originalValue)
+            modifiersField.setInt(field, originalModifiers)
+        }
+    }
+
+    @Test
+    fun `copyTextToClipboard skips callback exactly on API 33`() {
+        val manager = mockk<ClipboardManager>()
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns manager
+        justRun { manager.setPrimaryClip(any()) }
+
+        var executed = false
+        setSdkInt(Build.VERSION_CODES.TIRAMISU) {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t") { executed = true }
+        }
+
+        assertFalse(executed)
+    }
+
+    @Test
+    fun `copyTextToClipboard throws when clipboard service type unexpected`() {
+        val context = mockk<Context>()
+        every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns "not a manager"
+
+        assertFailsWith<ClassCastException> {
+            ClipboardHelper.copyTextToClipboard(context, "l", "t")
+        }
+    }
 }
+
