@@ -37,6 +37,7 @@ open class TestFavoriteAppsViewModelBase {
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null
     ) {
+        println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         dispatcherProvider = TestDispatchers(testDispatcher)
         fetchUseCase = mockk()
         dataStore = mockk(relaxed = true)
@@ -67,53 +68,82 @@ open class TestFavoriteAppsViewModelBase {
         coEvery { fetchUseCase.invoke() } returns fetchFlow
 
         viewModel = FavoriteAppsViewModel(fetchUseCase, dataStore, dispatcherProvider)
+        println("\u2705 [SETUP] ViewModel initialized")
     }
 
     protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testSuccess(
         expectedSize: Int,
         testDispatcher: TestDispatcher
     ) {
+        println("\uD83D\uDE80 [TEST START] testSuccess expecting $expectedSize items")
         this@testSuccess.test {
             val first = awaitItem()
+            println("\u23F3 [EMISSION 1] $first")
             assertTrue(first.screenState is ScreenState.IsLoading)
+            println("advancing dispatcher...")
             testDispatcher.scheduler.advanceUntilIdle()
 
             val second = awaitItem()
+            println("\u2705 [EMISSION] $second")
             assertTrue(second.screenState is ScreenState.Success)
             assertThat(second.data?.apps?.size).isEqualTo(expectedSize)
+            println("\uD83D\uDC4D [ASSERTION PASSED] Success with ${second.data?.apps?.size} items")
             cancelAndIgnoreRemainingEvents()
         }
+        println("\uD83C\uDFC1 [TEST END] testSuccess")
     }
 
     protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testEmpty(testDispatcher: TestDispatcher) {
+        println("\uD83D\uDE80 [TEST START] testEmpty")
         this@testEmpty.test {
             val first = awaitItem()
+            println("\u23F3 [EMISSION 1] $first")
             assertTrue(first.screenState is ScreenState.IsLoading)
+            println("advancing dispatcher...")
             testDispatcher.scheduler.advanceUntilIdle()
 
             val second = awaitItem()
+            println("\u2139\uFE0F [EMISSION 2] $second")
             assertTrue(second.screenState is ScreenState.NoData)
+            println("\uD83D\uDC4D [ASSERTION PASSED] NoData state observed")
             cancelAndIgnoreRemainingEvents()
         }
+        println("\uD83C\uDFC1 [TEST END] testEmpty")
     }
 
     protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testError(testDispatcher: TestDispatcher) {
+        println("\uD83D\uDE80 [TEST START] testError")
         this@testError.test {
             val first = awaitItem()
+            println("\u23F3 [EMISSION 1] $first")
             assertTrue(first.screenState is ScreenState.IsLoading)
+            println("advancing dispatcher...")
             testDispatcher.scheduler.advanceUntilIdle()
             expectNoEvents()
+            println("checking state after dispatcher idle...")
             // Error flow doesn't update state, so it should remain loading
             val current = viewModel.uiState.value
             assertTrue(current.screenState is ScreenState.IsLoading)
             cancelAndIgnoreRemainingEvents()
         }
+        println("\uD83C\uDFC1 [TEST END] testError")
     }
 
     protected fun toggleAndAssert(packageName: String, expected: Boolean, testDispatcher: TestDispatcher) {
+        println("\uD83D\uDE80 [TEST START] toggleAndAssert for $packageName expecting $expected")
+        println("Favorites before: ${viewModel.favorites.value}")
         viewModel.toggleFavorite(packageName)
+        println("\uD83D\uDD04 [ACTION] toggled $packageName")
+        println("advancing dispatcher...")
         testDispatcher.scheduler.advanceUntilIdle()
         val favorites = viewModel.favorites.value
+        println("Favorites after: $favorites")
+        if (favorites.contains(packageName) == expected) {
+            println("\uD83D\uDC4D [ASSERTION PASSED] favorite state matches $expected")
+        } else {
+            println("\u274C [ASSERTION FAILED] expected $expected but was ${favorites.contains(packageName)}")
+        }
         assertThat(favorites.contains(packageName)).isEqualTo(expected)
+        println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
     }
 }
