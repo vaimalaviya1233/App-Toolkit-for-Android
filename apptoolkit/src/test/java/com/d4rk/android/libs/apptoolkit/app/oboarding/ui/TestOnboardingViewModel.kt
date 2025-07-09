@@ -7,6 +7,7 @@ class TestOnboardingViewModel {
 
     @Test
     fun `current tab index mutates as expected`() {
+        println("🚀 [TEST] current tab index mutates as expected")
         val viewModel = OnboardingViewModel()
 
         // Default value
@@ -27,10 +28,12 @@ class TestOnboardingViewModel {
         // Reset back to default
         viewModel.currentTabIndex = 0
         assertThat(viewModel.currentTabIndex).isEqualTo(0)
+        println("🏁 [TEST DONE] current tab index mutates as expected")
     }
 
     @Test
     fun `repeated index changes remain stable`() {
+        println("🚀 [TEST] repeated index changes remain stable")
         val viewModel = OnboardingViewModel()
 
         repeat(5) { index ->
@@ -41,5 +44,6 @@ class TestOnboardingViewModel {
 
         viewModel.currentTabIndex = 0
         assertThat(viewModel.currentTabIndex).isEqualTo(0)
+        println("🏁 [TEST DONE] repeated index changes remain stable")
     }
 }

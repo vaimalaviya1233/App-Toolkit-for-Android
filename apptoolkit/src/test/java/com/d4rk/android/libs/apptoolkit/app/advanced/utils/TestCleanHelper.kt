@@ -16,6 +16,7 @@ class TestCleanHelper {
 
     @Test
     fun `clearApplicationCache deletes cache directories`() {
+        println("🚀 [TEST] clearApplicationCache deletes cache directories")
         val dir1 = createTempDirectory().toFile()
         val dir2 = createTempDirectory().toFile()
         val dir3 = createTempDirectory().toFile()
@@ -37,10 +38,12 @@ class TestCleanHelper {
         assertFalse(dir3.exists())
         verify { context.getString(R.string.cache_cleared_success) }
         verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
+        println("🏁 [TEST DONE] clearApplicationCache deletes cache directories")
     }
 
     @Test
     fun `clearApplicationCache shows error toast when deletion fails`() {
+        println("🚀 [TEST] clearApplicationCache shows error toast when deletion fails")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
         every { failing.deleteRecursively() } returns false
@@ -64,20 +67,24 @@ class TestCleanHelper {
         verify { failing.deleteRecursively() }
         verify { context.getString(R.string.cache_cleared_error) }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+        println("🏁 [TEST DONE] clearApplicationCache shows error toast when deletion fails")
     }
 
     @Test
     fun `clearApplicationCache throws when directory inaccessible`() {
+        println("🚀 [TEST] clearApplicationCache throws when directory inaccessible")
         val context = mockk<Context>()
         every { context.cacheDir } throws SecurityException("denied")
 
         assertFailsWith<SecurityException> {
             CleanHelper.clearApplicationCache(context)
         }
+        println("🏁 [TEST DONE] clearApplicationCache throws when directory inaccessible")
     }
 
     @Test
     fun `clearApplicationCache handles missing directories`() {
+        println("🚀 [TEST] clearApplicationCache handles missing directories")
         val dir1 = createTempDirectory().toFile().also { it.deleteRecursively() }
         val dir2 = createTempDirectory().toFile().also { it.deleteRecursively() }
         val dir3 = createTempDirectory().toFile().also { it.deleteRecursively() }
@@ -96,10 +103,12 @@ class TestCleanHelper {
 
         verify { context.getString(R.string.cache_cleared_success) }
         verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
+        println("🏁 [TEST DONE] clearApplicationCache handles missing directories")
     }
 
     @Test
     fun `clearApplicationCache propagates io exception`() {
+        println("🚀 [TEST] clearApplicationCache propagates io exception")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
         every { failing.deleteRecursively() } throws java.io.IOException("io")
@@ -114,10 +123,12 @@ class TestCleanHelper {
         assertFailsWith<java.io.IOException> {
             CleanHelper.clearApplicationCache(context)
         }
+        println("🏁 [TEST DONE] clearApplicationCache propagates io exception")
     }
 
     @Test
     fun `clearApplicationCache propagates toast exception`() {
+        println("🚀 [TEST] clearApplicationCache propagates toast exception")
         val dir1 = createTempDirectory().toFile()
         val dir2 = createTempDirectory().toFile()
         val dir3 = createTempDirectory().toFile()
@@ -134,10 +145,12 @@ class TestCleanHelper {
         assertFailsWith<RuntimeException> {
             CleanHelper.clearApplicationCache(context)
         }
+        println("🏁 [TEST DONE] clearApplicationCache propagates toast exception")
     }
 
     @Test
     fun `clearApplicationCache handles partial deletion`() {
+        println("🚀 [TEST] clearApplicationCache handles partial deletion")
         val dir1 = createTempDirectory().toFile()
         val failing2 = mockk<java.io.File>()
         every { failing2.deleteRecursively() } returns false
@@ -163,5 +176,6 @@ class TestCleanHelper {
         verify { failing3.deleteRecursively() }
         verify { context.getString(R.string.cache_cleared_error) }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+        println("🏁 [TEST DONE] clearApplicationCache handles partial deletion")
     }
 }
