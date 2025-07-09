@@ -52,13 +52,12 @@ open class TestFavoriteAppsViewModelBase {
                 val pkg = it.invocation.args[0] as String
                 val current = when (favFlow) {
                     is MutableStateFlow -> favFlow.value
-                    is MutableSharedFlow -> favFlow.replayCache.lastOrNull() ?: emptySet()
-                    else -> emptySet()
+                    else -> favFlow.replayCache.lastOrNull() ?: emptySet()
                 }.toMutableSet()
                 if (!current.add(pkg)) current.remove(pkg)
                 when (favFlow) {
                     is MutableStateFlow -> favFlow.value = current
-                    is MutableSharedFlow -> favFlow.emit(current)
+                    else -> favFlow.emit(current)
                 }
             }
         } else {

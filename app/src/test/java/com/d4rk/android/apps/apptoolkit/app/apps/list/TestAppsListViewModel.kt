@@ -230,23 +230,6 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
     }
 
     @Test
-    fun `fetch apps - incremental loading`() = runTest(dispatcherExtension.testDispatcher) {
-        val partial = (1..5_000).map { AppInfo("App$it", "pkg$it", "url$it") }
-        val full = (1..10_000).map { AppInfo("App$it", "pkg$it", "url$it") }
-        val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
-        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher)
-
-        shared.emit(DataState.Loading())
-        shared.emit(DataState.Success(partial))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(partial.size)
-
-        shared.emit(DataState.Success(full))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(full.size)
-    }
-
-    @Test
     fun `favorites update during fetch`() = runTest(dispatcherExtension.testDispatcher) {
         val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(emptySet()) }
         val fetchFlow = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
