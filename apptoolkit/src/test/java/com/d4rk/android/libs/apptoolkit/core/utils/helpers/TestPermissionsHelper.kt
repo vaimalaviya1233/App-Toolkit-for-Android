@@ -22,6 +22,7 @@ class TestPermissionsHelper {
 
     @Test
     fun `hasNotificationPermission parses permission state`() {
+        println("🚀 [TEST] hasNotificationPermission parses permission state")
         val context = mockk<Context>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ContextCompat::class)
@@ -32,10 +33,12 @@ class TestPermissionsHelper {
         } else {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
+        println("🏁 [TEST DONE] hasNotificationPermission parses permission state")
     }
 
     @Test
     fun `requestNotificationPermission delegates to ActivityCompat when needed`() {
+        println("🚀 [TEST] requestNotificationPermission delegates to ActivityCompat when needed")
         val activity = mockk<Activity>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ActivityCompat::class)
@@ -47,10 +50,12 @@ class TestPermissionsHelper {
             PermissionsHelper.requestNotificationPermission(activity)
             verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
         }
+        println("🏁 [TEST DONE] requestNotificationPermission delegates to ActivityCompat when needed")
     }
 
     @Test
     fun `hasNotificationPermission handles unexpected value`() {
+        println("🚀 [TEST] hasNotificationPermission handles unexpected value")
         val context = mockk<Context>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ContextCompat::class)
@@ -59,10 +64,12 @@ class TestPermissionsHelper {
         } else {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
+        println("🏁 [TEST DONE] hasNotificationPermission handles unexpected value")
     }
 
     @Test
     fun `hasNotificationPermission propagates exception`() {
+        println("🚀 [TEST] hasNotificationPermission propagates exception")
         val context = mockk<Context>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ContextCompat::class)
@@ -71,10 +78,12 @@ class TestPermissionsHelper {
         } else {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
+        println("🏁 [TEST DONE] hasNotificationPermission propagates exception")
     }
 
     @Test
     fun `requestNotificationPermission propagates exception`() {
+        println("🚀 [TEST] requestNotificationPermission propagates exception")
         val activity = mockk<Activity>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ActivityCompat::class)
@@ -85,10 +94,12 @@ class TestPermissionsHelper {
             PermissionsHelper.requestNotificationPermission(activity)
             verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
         }
+        println("🏁 [TEST DONE] requestNotificationPermission propagates exception")
     }
 
     @Test
     fun `hasNotificationPermission handles other unknown values`() {
+        println("🚀 [TEST] hasNotificationPermission handles other unknown values")
         val context = mockk<Context>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ContextCompat::class)
@@ -98,10 +109,12 @@ class TestPermissionsHelper {
         } else {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
+        println("🏁 [TEST DONE] hasNotificationPermission handles other unknown values")
     }
 
     @Test
     fun `hasNotificationPermission reflects runtime revocation`() {
+        println("🚀 [TEST] hasNotificationPermission reflects runtime revocation")
         val context = mockk<Context>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mockkStatic(ContextCompat::class)
@@ -115,5 +128,6 @@ class TestPermissionsHelper {
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
         }
+        println("🏁 [TEST DONE] hasNotificationPermission reflects runtime revocation")
     }
 }

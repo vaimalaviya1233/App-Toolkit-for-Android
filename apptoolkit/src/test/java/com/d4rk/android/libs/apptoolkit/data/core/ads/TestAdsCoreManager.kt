@@ -24,6 +24,7 @@ import java.util.Date
 class TestAdsCoreManager {
     @Test
     fun `initializeAds triggers MobileAds`() {
+        println("🚀 [TEST] initializeAds triggers MobileAds")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -33,20 +34,24 @@ class TestAdsCoreManager {
 
         manager.initializeAds("id")
         verify { MobileAds.initialize(context) }
+        println("🏁 [TEST DONE] initializeAds triggers MobileAds")
     }
 
     @Test
     fun `showAdIfAvailable before init does nothing`() {
+        println("🚀 [TEST] showAdIfAvailable before init does nothing")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         val activity = mockk<Activity>()
 
         manager.showAdIfAvailable(activity)
+        println("🏁 [TEST DONE] showAdIfAvailable before init does nothing")
     }
 
     @Test
     fun `loadAd does not load when already loading or available`() {
+        println("🚀 [TEST] loadAd does not load when already loading or available")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -80,10 +85,12 @@ class TestAdsCoreManager {
             invoke(inner, context)
         }
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] loadAd does not load when already loading or available")
     }
 
     @Test
     fun `showAdIfAvailable loads when no ad`() {
+        println("🚀 [TEST] showAdIfAvailable loads when no ad")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -113,10 +120,12 @@ class TestAdsCoreManager {
 
         assert(completed)
         verify { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] showAdIfAvailable loads when no ad")
     }
 
     @Test
     fun `callback dismiss reloads ad`() {
+        println("🚀 [TEST] callback dismiss reloads ad")
         val context = mockk<Context>(relaxed = true)
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -158,10 +167,12 @@ class TestAdsCoreManager {
         showField.isAccessible = true
         assertFalse(showField.getBoolean(inner3))
         verify { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] callback dismiss reloads ad")
     }
 
     @Test
     fun `ads disabled skips load and show`() {
+        println("🚀 [TEST] ads disabled skips load and show")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -180,10 +191,12 @@ class TestAdsCoreManager {
         manager.showAdIfAvailable(activity)
 
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] ads disabled skips load and show")
     }
 
     @Test
     fun `load failure resets loading flag`() {
+        println("🚀 [TEST] load failure resets loading flag")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -215,10 +228,12 @@ class TestAdsCoreManager {
         val loadingField = inner.javaClass.getDeclaredField("isLoadingAd")
         loadingField.isAccessible = true
         assertFalse(loadingField.getBoolean(inner))
+        println("🏁 [TEST DONE] load failure resets loading flag")
     }
 
     @Test
     fun `showAdIfAvailable ignores when already showing`() {
+        println("🚀 [TEST] showAdIfAvailable ignores when already showing")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -249,10 +264,12 @@ class TestAdsCoreManager {
         method.invoke(inner, mockk<Activity>(), mockk<OnShowAdCompleteListener>())
 
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] showAdIfAvailable ignores when already showing")
     }
 
     @Test
     fun `concurrent load requests chain correctly`() {
+        println("🚀 [TEST] concurrent load requests chain correctly")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -291,10 +308,12 @@ class TestAdsCoreManager {
         }
 
         verify(exactly = 2) { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] concurrent load requests chain correctly")
     }
 
     @Test
     fun `loadAd propagates exceptions from AppOpenAd`() {
+        println("🚀 [TEST] loadAd propagates exceptions from AppOpenAd")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
@@ -321,10 +340,12 @@ class TestAdsCoreManager {
         val loadingField = inner.javaClass.getDeclaredField("isLoadingAd")
         loadingField.isAccessible = true
         assert(loadingField.getBoolean(inner))
+        println("🏁 [TEST DONE] loadAd propagates exceptions from AppOpenAd")
     }
 
     @Test
     fun `ads disabled by default when debug build`() {
+        println("🚀 [TEST] ads disabled by default when debug build")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns true
@@ -345,10 +366,12 @@ class TestAdsCoreManager {
 
         assert(!slot.captured)
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] ads disabled by default when debug build")
     }
 
     @Test
     fun `ads enabled by default when release build`() {
+        println("🚀 [TEST] ads enabled by default when release build")
         val context = mockk<Context>()
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns false
@@ -369,6 +392,7 @@ class TestAdsCoreManager {
 
         assert(slot.captured)
         verify { AppOpenAd.load(any(), any(), any(), any()) }
+        println("🏁 [TEST DONE] ads enabled by default when release build")
     }
 
 }

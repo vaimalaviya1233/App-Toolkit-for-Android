@@ -28,6 +28,7 @@ class TestConsentManagerHelper {
 
     @Test
     fun `updateConsent passes values to firebase`() {
+        println("🚀 [TEST] updateConsent passes values to firebase")
         val analytics = mockk<FirebaseAnalytics>(relaxed = true)
         mockkObject(Firebase)
         every { Firebase.analytics } returns analytics
@@ -48,11 +49,13 @@ class TestConsentManagerHelper {
                 it[FirebaseAnalytics.ConsentType.AD_PERSONALIZATION] == FirebaseAnalytics.ConsentStatus.DENIED
             })
         }
+        println("🏁 [TEST DONE] updateConsent passes values to firebase")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `applyInitialConsent reads datastore and initializes firebase`() = runTest {
+        println("🚀 [TEST] applyInitialConsent reads datastore and initializes firebase")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.analyticsConsent(any()) } returns flowOf(true)
         every { dataStore.adStorageConsent(any()) } returns flowOf(false)
@@ -83,11 +86,13 @@ class TestConsentManagerHelper {
         verify { performance.isPerformanceCollectionEnabled = true }
 
         stopKoin()
+        println("🏁 [TEST DONE] applyInitialConsent reads datastore and initializes firebase")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `updateAnalyticsCollectionFromDatastore sets collection flags`() = runTest {
+        println("🚀 [TEST] updateAnalyticsCollectionFromDatastore sets collection flags")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.usageAndDiagnostics(any()) } returnsMany listOf(flowOf(true), flowOf(false))
 
@@ -110,10 +115,12 @@ class TestConsentManagerHelper {
         verify { analytics.setAnalyticsCollectionEnabled(false) }
         verify { crashlytics.isCrashlyticsCollectionEnabled = false }
         verify { performance.isPerformanceCollectionEnabled = false }
+        println("🏁 [TEST DONE] updateAnalyticsCollectionFromDatastore sets collection flags")
     }
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `applyInitialConsent propagates io exception`() = runTest {
+        println("🚀 [TEST] applyInitialConsent propagates io exception")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.analyticsConsent(any()) } returns flow { throw java.io.IOException("io") }
         every { dataStore.adStorageConsent(any()) } returns flowOf(true)
@@ -133,11 +140,13 @@ class TestConsentManagerHelper {
         }
 
         stopKoin()
+        println("🏁 [TEST DONE] applyInitialConsent propagates io exception")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `applyInitialConsent propagates cancellation exception`() = runTest {
+        println("🚀 [TEST] applyInitialConsent propagates cancellation exception")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.analyticsConsent(any()) } returns flow { throw kotlinx.coroutines.CancellationException("cancel") }
         every { dataStore.adStorageConsent(any()) } returns flowOf(true)
@@ -157,11 +166,13 @@ class TestConsentManagerHelper {
         }
 
         stopKoin()
+        println("🏁 [TEST DONE] applyInitialConsent propagates cancellation exception")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `updateAnalyticsCollectionFromDatastore propagates firebase failure`() = runTest {
+        println("🚀 [TEST] updateAnalyticsCollectionFromDatastore propagates firebase failure")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.usageAndDiagnostics(any()) } returns flowOf(true)
 
@@ -179,11 +190,13 @@ class TestConsentManagerHelper {
         assertFailsWith<RuntimeException> {
             ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
         }
+        println("🏁 [TEST DONE] updateAnalyticsCollectionFromDatastore propagates firebase failure")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `applyInitialConsent when debug build uses datastore values`() = runTest {
+        println("🚀 [TEST] applyInitialConsent when debug build uses datastore values")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.analyticsConsent(any()) } returns flowOf(false)
         every { dataStore.adStorageConsent(any()) } returns flowOf(false)
@@ -217,10 +230,12 @@ class TestConsentManagerHelper {
         verify { performance.isPerformanceCollectionEnabled = false }
 
         stopKoin()
+        println("🏁 [TEST DONE] applyInitialConsent when debug build uses datastore values")
     }
 
     @Test
     fun `updateConsent propagates firebase exception`() {
+        println("🚀 [TEST] updateConsent propagates firebase exception")
         val analytics = mockk<FirebaseAnalytics>()
         mockkObject(Firebase)
         every { Firebase.analytics } returns analytics
@@ -229,11 +244,13 @@ class TestConsentManagerHelper {
         assertFailsWith<RuntimeException> {
             ConsentManagerHelper.updateConsent(true, true, true, true)
         }
+        println("🏁 [TEST DONE] updateConsent propagates firebase exception")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `updateAnalyticsCollectionFromDatastore toggles false to true`() = runTest {
+        println("🚀 [TEST] updateAnalyticsCollectionFromDatastore toggles false to true")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.usageAndDiagnostics(any()) } returnsMany listOf(flowOf(false), flowOf(true))
 
@@ -256,10 +273,12 @@ class TestConsentManagerHelper {
         verify { analytics.setAnalyticsCollectionEnabled(true) }
         verify { crashlytics.isCrashlyticsCollectionEnabled = true }
         verify { performance.isPerformanceCollectionEnabled = true }
+        println("🏁 [TEST DONE] updateAnalyticsCollectionFromDatastore toggles false to true")
     }
 
     @Test
     fun `defaultAnalyticsGranted false when debug build`() {
+        println("🚀 [TEST] defaultAnalyticsGranted false when debug build")
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns true
         startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
@@ -271,5 +290,6 @@ class TestConsentManagerHelper {
         assertFalse(ConsentManagerHelper.defaultAnalyticsGranted)
 
         stopKoin()
+        println("🏁 [TEST DONE] defaultAnalyticsGranted false when debug build")
     }
 }

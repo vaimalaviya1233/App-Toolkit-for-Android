@@ -40,6 +40,7 @@ class TestPermissionsViewModel {
 
     @Test
     fun `load permissions success`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions success")
         val config = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
         setup(config, dispatcherExtension.testDispatcher)
         val context = mockk<Context>(relaxed = true)
@@ -48,10 +49,12 @@ class TestPermissionsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(1)
+        println("🏁 [TEST DONE] load permissions success")
     }
 
     @Test
     fun `load permissions empty`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions empty")
         val config = SettingsConfig(title = "title", categories = emptyList())
         setup(config, dispatcherExtension.testDispatcher)
         val context = mockk<Context>(relaxed = true)
@@ -61,10 +64,12 @@ class TestPermissionsViewModel {
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
         val error = state.errors.first().message as UiTextHelper.DynamicString
         assertThat(error.content).isEqualTo("No settings found")
+        println("🏁 [TEST DONE] load permissions empty")
     }
 
     @Test
     fun `load permissions provider throws`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions provider throws")
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } throws IllegalStateException("boom")
@@ -76,10 +81,12 @@ class TestPermissionsViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+        println("🏁 [TEST DONE] load permissions provider throws")
     }
 
     @Test
     fun `dismiss errors clears state`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] dismiss errors clears state")
         val config = SettingsConfig(title = "title", categories = emptyList())
         setup(config, dispatcherExtension.testDispatcher)
         val context = mockk<Context>(relaxed = true)
@@ -90,10 +97,12 @@ class TestPermissionsViewModel {
         viewModel.screenState.setErrors(emptyList())
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.errors).isEmpty()
+        println("🏁 [TEST DONE] dismiss errors clears state")
     }
 
     @Test
     fun `load permissions valid after error`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions valid after error")
         val errorConfig = SettingsConfig(title = "title", categories = emptyList())
         val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
@@ -112,10 +121,12 @@ class TestPermissionsViewModel {
         state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(1)
+        println("🏁 [TEST DONE] load permissions valid after error")
     }
 
     @Test
     fun `load permissions error after success`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions error after success")
         val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
         val errorConfig = SettingsConfig(title = "title", categories = emptyList())
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
@@ -133,10 +144,12 @@ class TestPermissionsViewModel {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        println("🏁 [TEST DONE] load permissions error after success")
     }
 
     @Test
     fun `load permissions provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions provider returns null")
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returns SettingsConfig(title = "null test", categories = emptyList())
@@ -148,10 +161,12 @@ class TestPermissionsViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        println("🏁 [TEST DONE] load permissions provider returns null")
     }
 
     @Test
     fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] concurrent load events yield latest state")
         val first = SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one")))
         val second = SettingsConfig(title = "second", categories = emptyList())
         dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
@@ -166,10 +181,12 @@ class TestPermissionsViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        println("🏁 [TEST DONE] concurrent load events yield latest state")
     }
 
     @Test
     fun `load permissions with malformed data`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions with malformed data")
         val malformed = SettingsCategory(
             title = "",
             preferences = listOf(SettingsPreference(key = null, title = null))
@@ -184,10 +201,12 @@ class TestPermissionsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.first()?.preferences?.size).isEqualTo(1)
+        println("🏁 [TEST DONE] load permissions with malformed data")
     }
 
     @Test
     fun `load permissions with duplicated categories`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load permissions with duplicated categories")
         val category = SettingsCategory(title = "dup")
         val config = SettingsConfig(title = "t", categories = listOf(category, category))
         setup(config, dispatcherExtension.testDispatcher)
@@ -199,10 +218,12 @@ class TestPermissionsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(2)
+        println("🏁 [TEST DONE] load permissions with duplicated categories")
     }
 
     @Test
     fun `load very large permissions config`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] load very large permissions config")
         val prefs = List(10) { index -> SettingsPreference(key = "k$index") }
         val categories = List(50) { index -> SettingsCategory(title = "c$index", preferences = prefs) }
         val config = SettingsConfig(title = "big", categories = categories)
@@ -215,5 +236,6 @@ class TestPermissionsViewModel {
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
         assertThat(state.data?.categories?.size).isEqualTo(50)
+        println("🏁 [TEST DONE] load very large permissions config")
     }
 }
