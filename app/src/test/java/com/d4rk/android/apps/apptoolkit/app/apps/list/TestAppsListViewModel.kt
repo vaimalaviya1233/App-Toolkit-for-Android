@@ -213,4 +213,54 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
     }
+
+    @Test
+    fun `fetch apps - use case throws`() {
+        assertFailsWith<RuntimeException> {
+            runTest(dispatcherExtension.testDispatcher) {
+                val flow = flow<DataState<List<AppInfo>, Error>> { }
+                setup(
+                    fetchFlow = flow,
+                    testDispatcher = dispatcherExtension.testDispatcher,
+                    fetchThrows = RuntimeException("boom")
+                )
+                dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            }
+        }
+    }
+
+    @Test
+    fun `fetch apps - incremental loading`() = runTest(dispatcherExtension.testDispatcher) {
+        val partial = (1..5_000).map { AppInfo("App$it", "pkg$it", "url$it") }
+        val full = (1..10_000).map { AppInfo("App$it", "pkg$it", "url$it") }
+        val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
+        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher)
+
+        shared.emit(DataState.Loading())
+        shared.emit(DataState.Success(partial))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(partial.size)
+
+        shared.emit(DataState.Success(full))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(full.size)
+    }
+
+    @Test
+    fun `favorites update during fetch`() = runTest(dispatcherExtension.testDispatcher) {
+        val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(emptySet()) }
+        val fetchFlow = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
+        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
+
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        val apps = listOf(AppInfo("App", "pkg", "url"))
+        fetchFlow.emit(DataState.Loading())
+        favorites.emit(setOf("pkg"))
+        fetchFlow.emit(DataState.Success(apps))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
+        assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
+    }
 }
