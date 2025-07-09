@@ -115,4 +115,53 @@ class TestCleanHelper {
             CleanHelper.clearApplicationCache(context)
         }
     }
+
+    @Test
+    fun `clearApplicationCache propagates toast exception`() {
+        val dir1 = createTempDirectory().toFile()
+        val dir2 = createTempDirectory().toFile()
+        val dir3 = createTempDirectory().toFile()
+
+        val context = mockk<Context>()
+        every { context.cacheDir } returns dir1
+        every { context.codeCacheDir } returns dir2
+        every { context.filesDir } returns dir3
+        every { context.getString(R.string.cache_cleared_success) } returns "success"
+
+        mockkStatic(Toast::class)
+        every { Toast.makeText(context, "success", Toast.LENGTH_SHORT) } throws RuntimeException("toast")
+
+        assertFailsWith<RuntimeException> {
+            CleanHelper.clearApplicationCache(context)
+        }
+    }
+
+    @Test
+    fun `clearApplicationCache handles partial deletion`() {
+        val dir1 = createTempDirectory().toFile()
+        val failing2 = mockk<java.io.File>()
+        every { failing2.deleteRecursively() } returns false
+        every { failing2.exists() } returns true
+        val failing3 = mockk<java.io.File>()
+        every { failing3.deleteRecursively() } returns false
+        every { failing3.exists() } returns true
+
+        val context = mockk<Context>()
+        every { context.cacheDir } returns dir1
+        every { context.codeCacheDir } returns failing2
+        every { context.filesDir } returns failing3
+        every { context.getString(R.string.cache_cleared_error) } returns "error"
+
+        mockkStatic(Toast::class)
+        val toast = mockk<Toast>(relaxed = true)
+        every { Toast.makeText(context, "error", Toast.LENGTH_SHORT) } returns toast
+
+        CleanHelper.clearApplicationCache(context)
+
+        assertFalse(dir1.exists())
+        verify { failing2.deleteRecursively() }
+        verify { failing3.deleteRecursively() }
+        verify { context.getString(R.string.cache_cleared_error) }
+        verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+    }
 }
