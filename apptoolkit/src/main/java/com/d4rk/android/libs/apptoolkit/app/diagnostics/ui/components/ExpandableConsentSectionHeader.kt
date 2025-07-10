@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material3.Icon
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,7 +25,9 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun ExpandableConsentSectionHeader(
-    title: String, expanded: Boolean, onToggle: () -> Unit
+    title: String,
+    expanded: Boolean,
+    onToggle: () -> Unit
 ) {
     val view: View = LocalView.current
     Row(
@@ -50,14 +51,12 @@ fun ExpandableConsentSectionHeader(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
-        IconButton(onClick = onToggle) {
-            Icon(
-                imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = if (expanded) stringResource(id = R.string.icon_desc_expand_less) else stringResource(
-                    id = R.string.icon_desc_expand_more
-                ),
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
+        IconButton(
+            onClick = onToggle,
+            icon = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+            iconContentDescription = if (expanded) stringResource(id = R.string.icon_desc_expand_less) else stringResource(
+                id = R.string.icon_desc_expand_more
+            ),
+        )
     }
 }
