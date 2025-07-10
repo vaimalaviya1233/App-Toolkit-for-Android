@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material3.Icon
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
@@ -28,9 +27,11 @@ fun DefaultSnackbarHost(snackbarState : SnackbarHostState , modifier : Modifier 
                 containerColor = if (isError) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.inverseSurface ,
                 contentColor = if (isError) MaterialTheme.colorScheme.error else SnackbarDefaults.contentColor ,
                 action = {
-                    IconButton(onClick = { snackbarData.dismiss() }) {
-                        Icon(imageVector = Icons.Outlined.Close , contentDescription = "Close Snackbar" , tint = if (isError) MaterialTheme.colorScheme.error else SnackbarDefaults.contentColor)
-                    }
+                    IconButton(
+                        onClick = { snackbarData.dismiss() },
+                        icon = Icons.Outlined.Close,
+                        iconContentDescription = "Close Snackbar"
+                    )
                 }) {
                 Text(text = visuals.message)
             }

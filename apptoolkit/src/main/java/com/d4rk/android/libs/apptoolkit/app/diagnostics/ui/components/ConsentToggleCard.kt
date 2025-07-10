@@ -84,7 +84,6 @@ fun ConsentToggleCard(
                 CustomSwitch(
                     checked = switchState,
                     onCheckedChange = onCheckedChange,
-                    modifier = Modifier,
                 )
             }
         }

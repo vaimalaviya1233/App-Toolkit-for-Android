@@ -52,7 +52,6 @@ fun OnboardingBottomNavigation(
                     Box(contentAlignment = Alignment.CenterStart) {
                         OutlinedIconButtonWithText(
                             onClick = onBackClicked,
-                            modifier = Modifier,
                             icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             iconContentDescription = stringResource(id = R.string.back_button_content_description),
                             label = stringResource(id = R.string.back_button_text)

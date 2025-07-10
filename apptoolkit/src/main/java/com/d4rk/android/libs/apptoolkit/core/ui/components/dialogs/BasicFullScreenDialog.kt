@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,9 +36,11 @@ fun BasicFullScreenDialog(title : String , onDismiss : () -> Unit , onConfirm : 
         Scaffold(
             modifier = Modifier.fillMaxSize() , topBar = {
                 CenterAlignedTopAppBar(navigationIcon = {
-                    IconButton(onClick = onDismiss) {
-                        Icon(imageVector = Icons.Filled.Close , contentDescription = null)
-                    }
+                    IconButton(
+                        onClick = onDismiss,
+                        icon = Icons.Filled.Close,
+                        iconContentDescription = null
+                    )
                 } , title = { Text(text = title) } , actions = {
                     TextButton(modifier = Modifier.bounceClick() , onClick = {
                         view.playSoundEffect(SoundEffectConstants.CLICK)
