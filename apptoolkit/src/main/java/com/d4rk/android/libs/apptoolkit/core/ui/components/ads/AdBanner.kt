@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -28,10 +27,6 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
 
     if (showAds) {
         val adView = remember { AdView(context) }
-        val adWidth = LocalConfiguration.current.screenWidthDp
-        val adSize = remember(adWidth) {
-            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth)
-        }
 
         DisposableEffect(Unit) {
             onDispose { adView.destroy() }
@@ -40,10 +35,10 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
         AndroidView(
             modifier = modifier
                 .fillMaxWidth()
-                .height(adSize.height.dp),
+                .height(adsConfig.adSize.height.dp),
             factory = {
                 adView.apply {
-                    setAdSize(adSize)
+                    setAdSize(adsConfig.adSize)
                     adUnitId = adsConfig.bannerAdUnitId
                 }
             },
