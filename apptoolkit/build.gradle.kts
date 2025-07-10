@@ -141,7 +141,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "1.0.36"
+            version = "1.0.37"
 
             afterEvaluate {
                 from(components["release"])
