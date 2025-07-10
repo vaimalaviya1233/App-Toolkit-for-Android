@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
-import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedIconButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.VersionInfoAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
@@ -39,7 +39,7 @@ fun HelpScreenMenuActions(
 ) {
     var showMenu : Boolean by remember { mutableStateOf(value = false) }
 
-    AnimatedButtonDirection(
+    AnimatedIconButtonDirection(
         fromRight = true , contentDescription = null , icon = Icons.Default.MoreVert , onClick = { showMenu = true })
 
     DropdownMenu(expanded = showMenu , onDismissRequest = {

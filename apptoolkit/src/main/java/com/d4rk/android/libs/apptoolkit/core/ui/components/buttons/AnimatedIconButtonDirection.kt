@@ -43,7 +43,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
  *      modifier = Modifier.padding(16.dp),
  *      visible = is */
 @Composable
-fun AnimatedButtonDirection(
+fun AnimatedIconButtonDirection(
     modifier : Modifier = Modifier , visible : Boolean = true , icon : ImageVector , contentDescription : String? , onClick : () -> Unit , durationMillis : Int = 500 , autoAnimate : Boolean = true , fromRight : Boolean = false
 ) {
     val animatedVisibility : MutableState<Boolean> = rememberSaveable { mutableStateOf(value = false) }

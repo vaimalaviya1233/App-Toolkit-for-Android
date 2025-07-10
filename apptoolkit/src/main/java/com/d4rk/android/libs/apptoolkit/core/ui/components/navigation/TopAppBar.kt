@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedIconButtonDirection
 
 /**
  * A composable function that creates a screen layout with a large top app bar and a scaffold.
@@ -60,7 +60,7 @@ fun LargeTopAppBarWithScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) ,
         topBar = {
             LargeTopAppBar(title = { Text(modifier = Modifier.animateContentSize() , text = title) } , navigationIcon = {
-                AnimatedButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
+                AnimatedIconButtonDirection(icon = Icons.AutoMirrored.Filled.ArrowBack , contentDescription = stringResource(id = com.d4rk.android.libs.apptoolkit.R.string.go_back) , onClick = { onBackClicked() })
             } , actions = actions , scrollBehavior = scrollBehavior)
         } ,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) } ,

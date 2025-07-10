@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportActivity
-import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedButtonDirection
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedIconButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
@@ -33,7 +33,7 @@ fun MainTopAppBar(navigationIcon : ImageVector , onNavigationIconClick : () -> U
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.app_name)) },
         navigationIcon = {
-            AnimatedButtonDirection(
+            AnimatedIconButtonDirection(
                 icon = navigationIcon,
                 contentDescription = stringResource(id = R.string.go_back),
                 onClick = { onNavigationIconClick() },
@@ -42,7 +42,7 @@ fun MainTopAppBar(navigationIcon : ImageVector , onNavigationIconClick : () -> U
         actions = {
             var expandedMenu by remember { mutableStateOf(value = false) }
 
-            AnimatedButtonDirection(
+            AnimatedIconButtonDirection(
                 fromRight = true,
                 icon = Icons.Outlined.MoreVert,
                 contentDescription = stringResource(id = R.string.content_description_more_options),
