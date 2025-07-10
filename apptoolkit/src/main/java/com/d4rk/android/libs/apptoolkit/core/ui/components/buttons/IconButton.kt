@@ -7,6 +7,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -93,6 +95,69 @@ fun TonalIconButtonWithText(
     val view: View = LocalView.current
 
     FilledTonalButton(onClick = {
+        view.playSoundEffect(SoundEffectConstants.CLICK)
+        onClick()
+    }, enabled = enabled, modifier = modifier.bounceClick()) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                imageVector = it,
+                contentDescription = iconContentDescription
+            )
+        } ?: painter?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                painter = it,
+                contentDescription = iconContentDescription)
+        }
+        ButtonIconSpacer()
+        Text(text = label)
+    }
+}
+
+@Composable
+fun OutlinedIconButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    iconContentDescription: String? = null,
+    icon: ImageVector? = null,
+    painter: Painter? = null
+) {
+    val view: View = LocalView.current
+
+    OutlinedIconButton(onClick = {
+        view.playSoundEffect(SoundEffectConstants.CLICK)
+        onClick()
+    }, enabled = enabled, modifier = modifier.bounceClick()) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                imageVector = it,
+                contentDescription = iconContentDescription
+            )
+        } ?: painter?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                painter = it,
+                contentDescription = iconContentDescription)
+        }
+    }
+}
+
+@Composable
+fun OutlinedIconButtonWithText(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    iconContentDescription: String? = null,
+    label: String,
+    icon: ImageVector? = null,
+    painter: Painter? = null
+) {
+    val view: View = LocalView.current
+
+    OutlinedButton(onClick = {
         view.playSoundEffect(SoundEffectConstants.CLICK)
         onClick()
     }, enabled = enabled, modifier = modifier.bounceClick()) {
