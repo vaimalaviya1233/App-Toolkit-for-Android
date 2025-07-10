@@ -23,7 +23,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +54,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
@@ -138,14 +137,14 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
                     SmallVerticalSpacer()
                     Text(text = stringResource(id = R.string.settings_placeholder_description) , style = MaterialTheme.typography.bodyMedium , textAlign = TextAlign.Center)
                 }
-                OutlinedButton(modifier = Modifier
+                OutlinedIconButtonWithText(
+                    modifier = Modifier
                         .padding(all = SizeConstants.MediumSize * 2)
-                        .align(alignment = Alignment.Start)
-                        .bounceClick() , onClick = { IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java) }) {
-                    Icon(imageVector = Icons.AutoMirrored.Outlined.ContactSupport , contentDescription = null)
-                    ExtraTinyVerticalSpacer()
-                    Text(text = stringResource(id = R.string.get_help))
-                }
+                        .align(alignment = Alignment.Start),
+                    onClick = { IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java) },
+                    icon = Icons.AutoMirrored.Outlined.ContactSupport,
+                    label = stringResource(id = R.string.get_help)
+                )
             }
         }
     }

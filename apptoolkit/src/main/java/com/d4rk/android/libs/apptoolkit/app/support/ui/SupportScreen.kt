@@ -2,8 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import android.app.Activity
 import android.content.Context
-import android.view.SoundEffectConstants
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoneyOff
 import androidx.compose.material.icons.outlined.Paid
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -28,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
@@ -40,7 +36,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.TonalIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
@@ -99,7 +95,6 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
     adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
 ) {
-    val view: View = LocalView.current
     val context: Context = LocalContext.current
 
     val productDetailsMap = data.products.associateBy { it.productId }
@@ -131,42 +126,24 @@ fun SupportScreenContent(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         item {
-                            FilledTonalButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .bounceClick(),
+                            TonalIconButtonWithText(
+                                modifier = Modifier.fillMaxWidth(),
                                 onClick = {
-                                    view.playSoundEffect(SoundEffectConstants.CLICK)
                                     productDetailsMap[DonationProductIds.LOW_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Paid,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                                )
-                                ButtonIconSpacer()
-                                Text(text = productDetailsMap[DonationProductIds.LOW_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
-                            }
+                                },
+                                icon = Icons.Outlined.Paid,
+                                label = productDetailsMap[DonationProductIds.LOW_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                            )
                         }
                         item {
-                            FilledTonalButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .bounceClick(),
+                            TonalIconButtonWithText(
+                                modifier = Modifier.fillMaxWidth(),
                                 onClick = {
-                                    view.playSoundEffect(SoundEffectConstants.CLICK)
                                     productDetailsMap[DonationProductIds.NORMAL_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
-                                }
-                            ) {
-                                Icon(
-                                    Icons.Outlined.Paid,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                                )
-                                ButtonIconSpacer()
-                                Text(text = productDetailsMap[DonationProductIds.NORMAL_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
-                            }
+                                },
+                                icon = Icons.Outlined.Paid,
+                                label = productDetailsMap[DonationProductIds.NORMAL_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                            )
                         }
                     }
                     LazyRow(
@@ -176,42 +153,24 @@ fun SupportScreenContent(
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         item {
-                            FilledTonalButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .bounceClick(),
+                            TonalIconButtonWithText(
+                                modifier = Modifier.fillMaxWidth(),
                                 onClick = {
-                                    view.playSoundEffect(SoundEffectConstants.CLICK)
                                     productDetailsMap[DonationProductIds.HIGH_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
-                                }
-                            ) {
-                                Icon(
-                                    Icons.Outlined.Paid,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                                )
-                                ButtonIconSpacer()
-                                Text(text = productDetailsMap[DonationProductIds.HIGH_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
-                            }
+                                },
+                                icon = Icons.Outlined.Paid,
+                                label = productDetailsMap[DonationProductIds.HIGH_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                            )
                         }
                         item {
-                            FilledTonalButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .bounceClick(),
+                            TonalIconButtonWithText(
+                                modifier = Modifier.fillMaxWidth(),
                                 onClick = {
-                                    view.playSoundEffect(SoundEffectConstants.CLICK)
                                     productDetailsMap[DonationProductIds.EXTREME_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
-                                }
-                            ) {
-                                Icon(
-                                    Icons.Outlined.Paid,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                                )
-                                ButtonIconSpacer()
-                                Text(text = productDetailsMap[DonationProductIds.EXTREME_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
-                            }
+                                },
+                                icon = Icons.Outlined.Paid,
+                                label = productDetailsMap[DonationProductIds.EXTREME_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                            )
                         }
                     }
                 }
@@ -225,27 +184,19 @@ fun SupportScreenContent(
             )
         }
         item {
-            FilledTonalButton(
+            TonalIconButtonWithText(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = SizeConstants.LargeSize),
                 onClick = {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
                     IntentsHelper.openUrl(
                         context = context,
                         url = "https://direct-link.net/548212/agOqI7123501341"
                     )
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .bounceClick()
-                    .padding(all = SizeConstants.LargeSize)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Paid,
-                    contentDescription = null,
-                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                )
-                ButtonIconSpacer()
-                Text(text = stringResource(id = R.string.web_ad))
-            }
+                icon = Icons.Outlined.Paid,
+                label = stringResource(id = R.string.web_ad)
+            )
         }
         item {
             AdBanner(
