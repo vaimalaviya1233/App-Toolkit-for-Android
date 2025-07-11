@@ -106,14 +106,10 @@ fun AppCard(
             }
             IconButton(
                 onClick = onFavoriteToggle,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                    contentDescription = null
-                )
-            }
+                modifier = Modifier.align(Alignment.TopEnd),
+                icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                iconContentDescription = null
+            )
         }
     }
 }
