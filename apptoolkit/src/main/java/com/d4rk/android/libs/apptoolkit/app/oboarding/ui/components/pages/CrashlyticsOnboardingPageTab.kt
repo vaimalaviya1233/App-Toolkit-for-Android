@@ -34,7 +34,6 @@ import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -43,7 +42,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -57,7 +55,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.net.toUri
@@ -259,26 +256,16 @@ fun LearnMoreSection(context: Context) {
         )
 
         MediumVerticalSpacer()
-        TextButton(
+        OutlinedIconButtonWithText(
             onClick = {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
                 context.startActivity(intent)
             },
-            modifier = Modifier.bounceClick(),
-            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.Launch,
-                contentDescription = null,
-                modifier = Modifier.size(SizeConstants.ButtonIconSize)
-            )
-            ButtonIconSpacer()
-            Text(
-                text = stringResource(id = R.string.learn_more_privacy_policy),
-                textDecoration = TextDecoration.Underline
-            )
-        }
+            icon = Icons.AutoMirrored.Filled.Launch,
+            iconContentDescription = null,
+            label = stringResource(id = R.string.learn_more_privacy_policy)
+        )
     }
 }
 
