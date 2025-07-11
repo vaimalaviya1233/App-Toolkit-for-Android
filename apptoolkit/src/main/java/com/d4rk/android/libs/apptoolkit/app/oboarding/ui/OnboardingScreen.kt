@@ -21,7 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +36,6 @@ import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.Onboa
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.OnboardingBottomNavigation
 import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.OnboardingDefaultPageLayout
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -76,21 +75,15 @@ fun OnboardingScreen(activity : Activity) {
                     enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(),
                     exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
                 ) {
-                    TextButton(
+                    OutlinedIconButtonWithText(
                         onClick = {
                             view.playSoundEffect(SoundEffectConstants.CLICK)
                             onSkipRequested()
                         },
-                        modifier = Modifier.bounceClick()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.SkipNext,
-                            contentDescription = stringResource(id = R.string.skip_button_content_description),
-                            modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                        )
-                        ButtonIconSpacer()
-                        Text(text = stringResource(id = R.string.skip_button_text))
-                    }
+                        icon = Icons.Filled.SkipNext,
+                        iconContentDescription = stringResource(id = R.string.skip_button_content_description),
+                        label = stringResource(id = R.string.skip_button_text)
+                    )
                 }
             })
         }

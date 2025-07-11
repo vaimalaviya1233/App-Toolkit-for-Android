@@ -35,7 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -188,19 +188,12 @@ fun IssueReporterScreenContent(
                         ) {
                             val uriHandler = LocalUriHandler.current
 
-                            TextButton(
+                            OutlinedIconButtonWithText(
                                 onClick = { uriHandler.openUri(data.issueUrl) },
-
-                                modifier = Modifier.bounceClick()
-                            ) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
-                                    contentDescription = stringResource(R.string.open_issue_in_browser),
-                                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                                )
-                                ButtonIconSpacer()
-                                Text(stringResource(R.string.open_button_label))
-                            }
+                                icon = Icons.AutoMirrored.Outlined.OpenInNew,
+                                iconContentDescription = stringResource(R.string.open_issue_in_browser),
+                                label = stringResource(R.string.open_button_label)
+                            )
                         }
                     }
                 }
