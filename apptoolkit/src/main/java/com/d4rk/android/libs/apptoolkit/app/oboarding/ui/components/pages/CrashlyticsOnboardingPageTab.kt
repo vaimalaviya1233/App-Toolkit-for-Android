@@ -404,8 +404,8 @@ fun CrashlyticsConsentDialog(
             }
         },
         confirmButton = {
-            TextButton(
-                modifier = Modifier.bounceClick(), onClick = {
+            OutlinedIconButtonWithText(
+                onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
                     coroutineScope.launch {
                         val overallConsent: Boolean =
@@ -420,9 +420,9 @@ fun CrashlyticsConsentDialog(
                         )
                     }
                     onAcknowledge()
-                }) {
-                Text(text = stringResource(id = R.string.button_acknowledge_consents))
-            }
+                },
+                label = stringResource(id = R.string.button_acknowledge_consents)
+            )
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )
