@@ -40,7 +40,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -66,6 +65,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers.CrashlyticsOnboardingStateManager
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeIncreasedVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
@@ -143,21 +143,13 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
 
             LargeVerticalSpacer()
 
-            OutlinedButton(onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
-                CrashlyticsOnboardingStateManager.openDialog()
-                                     },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .bounceClick()) {
-                Icon(
-                    Icons.Outlined.PrivacyTip,
-                    contentDescription = stringResource(id = R.string.onboarding_crashlytics_show_details_button_cd),
-                    modifier = Modifier.size(SizeConstants.ButtonIconSize)
-                )
-                ButtonIconSpacer()
-                Text(text = stringResource(id = R.string.onboarding_crashlytics_show_details_button))
-            }
+            OutlinedIconButtonWithText(
+                onClick = { CrashlyticsOnboardingStateManager.openDialog() },
+                modifier = Modifier.fillMaxWidth(),
+                icon = Icons.Outlined.PrivacyTip,
+                iconContentDescription = stringResource(id = R.string.onboarding_crashlytics_show_details_button_cd),
+                label = stringResource(id = R.string.onboarding_crashlytics_show_details_button)
+            )
 
             LargeVerticalSpacer()
 
