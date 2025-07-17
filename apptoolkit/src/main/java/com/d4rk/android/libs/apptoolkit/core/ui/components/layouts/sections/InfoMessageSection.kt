@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
@@ -12,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreActionText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
 
@@ -27,6 +29,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
  * @param modifier The modifier to be applied to the container (Column).
  * @param learnMoreText The text to be displayed for the "Learn More" link. If null or empty, the link will not be shown.
  * @param learnMoreUrl The URL to be opened when the "Learn More" link is clicked. If null or empty, the link will not be shown.
+ * @param newLine When false the learn more text is displayed inline with the message. Defaults to true which places it on a new line.
  *
  * Example Usage:
  * ```
@@ -34,39 +37,63 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
  *     message = "This is an important information message.",
  *     modifier = Modifier.padding(16.dp),
  *     learnMoreText = "Learn More",
- *     learnMoreUrl = "https://www.example.com"
+ *     learnMoreUrl = "https://www.example.com",
+ *     newLine = false
  * )
  *
  * InfoMessageSection(
  *     message = "Another message without a learn more link",
- */
+ * )
+ * ```
 @Composable
 fun InfoMessageSection(
     message : String ,
     modifier : Modifier = Modifier ,
     learnMoreText : String? = null ,
     learnMoreUrl : String? = null ,
-    learnMoreAction : (() -> Unit)? = null
+    learnMoreAction : (() -> Unit)? = null ,
+    newLine : Boolean = true
 ) {
     Column(modifier = modifier) {
         Icon(imageVector = Icons.Outlined.Info , contentDescription = stringResource(id = R.string.about))
         MediumVerticalSpacer()
-        Text(text = message , style = MaterialTheme.typography.bodyMedium)
+        if (!learnMoreText.isNullOrEmpty() && !newLine) {
+            Row {
+                Text(text = message , style = MaterialTheme.typography.bodyMedium)
+                SmallHorizontalSpacer()
+                when {
+                    learnMoreAction != null ->
+                        LearnMoreActionText(
+                            text = learnMoreText ,
+                            onClick = learnMoreAction ,
+                            modifier = Modifier.clip(MaterialTheme.shapes.small)
+                        )
+                    !learnMoreUrl.isNullOrEmpty() ->
+                        LearnMoreText(
+                            text = learnMoreText ,
+                            url = learnMoreUrl ,
+                            modifier = Modifier.clip(MaterialTheme.shapes.small)
+                        )
+                }
+            }
+        } else {
+            Text(text = message , style = MaterialTheme.typography.bodyMedium)
 
-        if (! learnMoreText.isNullOrEmpty()) {
-            when {
-                learnMoreAction != null ->
-                    LearnMoreActionText(
-                        text = learnMoreText ,
-                        onClick = learnMoreAction ,
-                        modifier = Modifier.clip(MaterialTheme.shapes.small)
-                    )
-                ! learnMoreUrl.isNullOrEmpty() ->
-                    LearnMoreText(
-                        text = learnMoreText ,
-                        url = learnMoreUrl ,
-                        modifier = Modifier.clip(MaterialTheme.shapes.small)
-                    )
+            if (! learnMoreText.isNullOrEmpty()) {
+                when {
+                    learnMoreAction != null ->
+                        LearnMoreActionText(
+                            text = learnMoreText ,
+                            onClick = learnMoreAction ,
+                            modifier = Modifier.clip(MaterialTheme.shapes.small)
+                        )
+                    ! learnMoreUrl.isNullOrEmpty() ->
+                        LearnMoreText(
+                            text = learnMoreText ,
+                            url = learnMoreUrl ,
+                            modifier = Modifier.clip(MaterialTheme.shapes.small)
+                        )
+                }
             }
         }
     }
