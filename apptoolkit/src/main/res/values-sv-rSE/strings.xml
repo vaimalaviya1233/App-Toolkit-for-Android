@@ -90,7 +90,8 @@
     <string name="follow_system">Följ systeminställningar</string>
     <string name="light_mode">Ljust läge</string>
     <string name="dark_mode">Mörkt läge</string>
-    <string name="summary_dark_theme">Mörkt tema använder en djup bakgrund för att hjälpa till att spara batteritid</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android's system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">Dynamiska färger</string>
     <string name="summary_preference_settings_dynamic_colors">Applicera färger från tapeten till appens tema</string>

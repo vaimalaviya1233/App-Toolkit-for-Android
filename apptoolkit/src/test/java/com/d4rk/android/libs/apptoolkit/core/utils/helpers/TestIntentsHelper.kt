@@ -376,4 +376,42 @@ class TestIntentsHelper {
         assertEquals(Uri.fromParts("package", "pkg", null), intent.data)
         println("🏁 [TEST DONE] openAppNotificationSettings uses legacy intent pre O")
     }
+
+    @Test
+    fun `openDisplaySettings uses display intent when resolvable`() {
+        println("🚀 [TEST] openDisplaySettings uses display intent when resolvable")
+        val context = mockk<Context>()
+        val pm = mockk<PackageManager>()
+        every { context.packageManager } returns pm
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().resolveActivity(pm) } returns mockk()
+
+        IntentsHelper.openDisplaySettings(context)
+
+        val intent = slot.captured
+        assertEquals(Settings.ACTION_DISPLAY_SETTINGS, intent.action)
+        println("🏁 [TEST DONE] openDisplaySettings uses display intent when resolvable")
+    }
+
+    @Test
+    fun `openDisplaySettings falls back to general settings`() {
+        println("🚀 [TEST] openDisplaySettings falls back to general settings")
+        val context = mockk<Context>()
+        val pm = mockk<PackageManager>()
+        every { context.packageManager } returns pm
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().resolveActivity(pm) } returnsMany listOf(null, mockk())
+
+        IntentsHelper.openDisplaySettings(context)
+
+        val intent = slot.captured
+        assertEquals(Settings.ACTION_SETTINGS, intent.action)
+        println("🏁 [TEST DONE] openDisplaySettings falls back to general settings")
+    }
 }
