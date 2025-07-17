@@ -99,6 +99,7 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                             .fillMaxWidth()
                             .padding(all = SizeConstants.MediumSize * 2),
                     message = stringResource(id = R.string.summary_dark_theme),
+                    newLine = false,
                     learnMoreText = stringResource(id = R.string.screen_and_display_settings),
                     learnMoreAction = { IntentsHelper.openDisplaySettings(context) }
                 )

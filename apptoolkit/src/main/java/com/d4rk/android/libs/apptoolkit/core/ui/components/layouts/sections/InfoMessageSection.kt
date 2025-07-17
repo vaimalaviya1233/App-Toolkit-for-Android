@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -8,12 +9,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.LinkInteractionListener
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreActionText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 /**
  * Displays an information message section with an optional "Learn More" link.
@@ -42,31 +49,85 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
  */
 @Composable
 fun InfoMessageSection(
-    message : String ,
-    modifier : Modifier = Modifier ,
-    learnMoreText : String? = null ,
-    learnMoreUrl : String? = null ,
-    learnMoreAction : (() -> Unit)? = null
+    message: String,
+    modifier: Modifier = Modifier,
+    learnMoreText: String? = null,
+    learnMoreUrl: String? = null,
+    learnMoreAction: (() -> Unit)? = null,
+    newLine: Boolean = true
 ) {
-    Column(modifier = modifier) {
-        Icon(imageVector = Icons.Outlined.Info , contentDescription = stringResource(id = R.string.about))
-        MediumVerticalSpacer()
-        Text(text = message , style = MaterialTheme.typography.bodyMedium)
+    val context: Context = LocalContext.current
+    val hasLearnMore =
+        !learnMoreText.isNullOrEmpty() && (learnMoreAction != null || !learnMoreUrl.isNullOrEmpty())
 
-        if (! learnMoreText.isNullOrEmpty()) {
-            when {
-                learnMoreAction != null ->
-                    LearnMoreActionText(
-                        text = learnMoreText ,
-                        onClick = learnMoreAction ,
-                        modifier = Modifier.clip(MaterialTheme.shapes.small)
-                    )
-                ! learnMoreUrl.isNullOrEmpty() ->
+    Column(modifier = modifier) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = stringResource(id = R.string.about)
+        )
+
+        MediumVerticalSpacer()
+
+        when {
+            newLine || !hasLearnMore -> {
+                Text(text = message, style = MaterialTheme.typography.bodyMedium)
+                if (hasLearnMore) {
                     LearnMoreText(
-                        text = learnMoreText ,
-                        url = learnMoreUrl ,
-                        modifier = Modifier.clip(MaterialTheme.shapes.small)
+                        text = learnMoreText,
+                        onClick = {
+                            when {
+                                learnMoreAction != null -> learnMoreAction()
+                                !learnMoreUrl.isNullOrEmpty() -> IntentsHelper.openUrl(
+                                    context,
+                                    learnMoreUrl
+                                )
+                            }
+                        }
                     )
+                }
+            }
+
+            else -> {
+                val annotatedString = buildAnnotatedString {
+                    append("$message ")
+
+                    val linkInteraction = object : LinkInteractionListener {
+                        override fun onClick(link: LinkAnnotation) {
+                            when {
+                                learnMoreAction != null -> learnMoreAction()
+                                !learnMoreUrl.isNullOrEmpty() -> IntentsHelper.openUrl(
+                                    context,
+                                    learnMoreUrl
+                                )
+                            }
+                        }
+                    }
+
+                    pushLink(
+                        link = LinkAnnotation.Clickable(
+                            tag = "learn_more",
+                            linkInteractionListener = linkInteraction
+                        )
+                    )
+
+                    withStyle(
+                        style = SpanStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            textDecoration = TextDecoration.Underline
+                        )
+                    ) {
+                        append(learnMoreText)
+                    }
+
+                    pop()
+                }
+
+                Text(
+                    text = annotatedString,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                )
             }
         }
     }
