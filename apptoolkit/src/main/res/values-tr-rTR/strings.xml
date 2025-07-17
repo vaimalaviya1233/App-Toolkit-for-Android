@@ -90,7 +90,8 @@
     <string name="follow_system">Sistem modunu takip et</string>
     <string name="light_mode">Aydınlık Mod</string>
     <string name="dark_mode">Koyu Mod</string>
-    <string name="summary_dark_theme">Koyu tema, pil ömrünüzü uzatmaya yardımcı olmak için derin bir arka plan kullanır</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">Dinamik renkler</string>
     <string name="summary_preference_settings_dynamic_colors">Uygulama temasına duvar kağıtlarından renkler uygula</string>

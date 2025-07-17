@@ -28,6 +28,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -96,7 +97,10 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
                 InfoMessageSection(
                     modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = SizeConstants.MediumSize * 2) , message = stringResource(id = R.string.summary_dark_theme)
+                            .padding(all = SizeConstants.MediumSize * 2),
+                    message = stringResource(id = R.string.summary_dark_theme),
+                    learnMoreText = stringResource(id = R.string.screen_and_display_settings),
+                    learnMoreAction = { IntentsHelper.openDisplaySettings(context) }
                 )
             }
         }

@@ -75,6 +75,33 @@ object IntentsHelper {
     }
 
     /**
+     * Opens the system display settings screen.
+     *
+     * Attempts to launch the system's display settings page. If the intent
+     * cannot be resolved, it falls back to the general settings screen.
+     *
+     * @param context The Android context used to start the activity.
+     */
+    fun openDisplaySettings(context : Context) {
+        val packageManager = context.packageManager
+
+        val displayIntent = Intent(Settings.ACTION_DISPLAY_SETTINGS).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        val settingsIntent = Intent(Settings.ACTION_SETTINGS).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        when {
+            displayIntent.resolveActivity(packageManager) != null ->
+                context.startActivity(displayIntent)
+            settingsIntent.resolveActivity(packageManager) != null ->
+                context.startActivity(settingsIntent)
+        }
+    }
+
+    /**
      * Opens the specified application's Play Store page. If the Play Store
      * application is not available, it falls back to opening the web version
      * of the Play Store.

@@ -90,7 +90,8 @@
     <string name="follow_system">سسٹم موڈ فالو کریں</string>
     <string name="light_mode">لائٹ موڈ</string>
     <string name="dark_mode">ڈارک موڈ</string>
-    <string name="summary_dark_theme">ڈارک تھیم گہری پس منظر استعمال کرتا ہے تاکہ آپ کی بیٹری زیادہ دیر تک چل سکے۔</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">متحرک رنگ</string>
     <string name="summary_preference_settings_dynamic_colors">وال پیپرز سے رنگ ایپ تھیم پر لاگو کریں</string>

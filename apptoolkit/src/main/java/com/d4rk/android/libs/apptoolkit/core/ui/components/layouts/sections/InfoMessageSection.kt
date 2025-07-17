@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreActionText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
 
 /**
@@ -40,14 +41,33 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.text.LearnMoreText
  *     message = "Another message without a learn more link",
  */
 @Composable
-fun InfoMessageSection(message : String , modifier : Modifier = Modifier , learnMoreText : String? = null , learnMoreUrl : String? = null) {
+fun InfoMessageSection(
+    message : String ,
+    modifier : Modifier = Modifier ,
+    learnMoreText : String? = null ,
+    learnMoreUrl : String? = null ,
+    learnMoreAction : (() -> Unit)? = null
+) {
     Column(modifier = modifier) {
         Icon(imageVector = Icons.Outlined.Info , contentDescription = stringResource(id = R.string.about))
         MediumVerticalSpacer()
         Text(text = message , style = MaterialTheme.typography.bodyMedium)
 
-        if (! learnMoreText.isNullOrEmpty() && ! learnMoreUrl.isNullOrEmpty()) {
-            LearnMoreText(text = learnMoreText , url = learnMoreUrl , modifier = Modifier.clip(MaterialTheme.shapes.small))
+        if (! learnMoreText.isNullOrEmpty()) {
+            when {
+                learnMoreAction != null ->
+                    LearnMoreActionText(
+                        text = learnMoreText ,
+                        onClick = learnMoreAction ,
+                        modifier = Modifier.clip(MaterialTheme.shapes.small)
+                    )
+                ! learnMoreUrl.isNullOrEmpty() ->
+                    LearnMoreText(
+                        text = learnMoreText ,
+                        url = learnMoreUrl ,
+                        modifier = Modifier.clip(MaterialTheme.shapes.small)
+                    )
+            }
         }
     }
 }

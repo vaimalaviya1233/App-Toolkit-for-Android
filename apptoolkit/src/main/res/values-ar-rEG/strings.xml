@@ -90,7 +90,8 @@
     <string name="follow_system">اتباع وضع النظام</string>
     <string name="light_mode">الوضع الفاتح</string>
     <string name="dark_mode">الوضع الداكن</string>
-    <string name="summary_dark_theme">يستخدم المظهر الداكن خلفية داكنة للمساعدة في الحفاظ على عمر البطارية لفترة أطول</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">الألوان الديناميكية</string>
     <string name="summary_preference_settings_dynamic_colors">تطبيق الألوان من الخلفيات على سمة التطبيق</string>

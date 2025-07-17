@@ -90,7 +90,8 @@
     <string name="follow_system">시스템 모드 따르기</string>
     <string name="light_mode">라이트 모드</string>
     <string name="dark_mode">다크 모드</string>
-    <string name="summary_dark_theme">어두운 테마는 어두운 배경을 사용하여 배터리 수명을 더 오래 유지하는 데 도움을 줍니다.</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">동적 색상</string>
     <string name="summary_preference_settings_dynamic_colors">배경화면의 색상을 앱 테마에 적용</string>

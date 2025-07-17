@@ -90,7 +90,8 @@
     <string name="follow_system">Segui modalità sistema</string>
     <string name="light_mode">Modalità chiara</string>
     <string name="dark_mode">Modalità scura</string>
-    <string name="summary_dark_theme">Il tema scuro utilizza uno sfondo profondo per aiutare a prolungare la durata della batteria</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">Colori dinamici</string>
     <string name="summary_preference_settings_dynamic_colors">Applica i colori dai wallpaper al tema dell\'app</string>

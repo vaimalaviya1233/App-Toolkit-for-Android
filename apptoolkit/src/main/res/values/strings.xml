@@ -91,7 +91,8 @@
     <string name="follow_system">Follow System Mode</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="summary_dark_theme">Dark theme uses a deep background to help keep your battery alive longer</string>
+    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
+    <string name="screen_and_display_settings">screen and display settings.</string>
 
     <string name="dynamic_colors">Dynamic colors</string>
     <string name="summary_preference_settings_dynamic_colors">Apply colors from wallpapers to the app theme</string>
