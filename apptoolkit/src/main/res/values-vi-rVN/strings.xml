@@ -90,8 +90,8 @@
     <string name="follow_system">Theo chế độ hệ thống</string>
     <string name="light_mode">Chế độ sáng</string>
     <string name="dark_mode">Chế độ tối</string>
-    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
-    <string name="screen_and_display_settings">screen and display settings.</string>
+    <string name="summary_dark_theme">Chủ đề tối tận dụng một nền sâu để mở rộng đáng kể thời lượng pin của bạn. Để kích hoạt nó, chỉ cần điều hướng đến Trình quản lý hệ thống Android của bạn và chọn chủ đề ưa thích của bạn trong</string>
+    <string name="screen_and_display_settings">màn hình và cài đặt hiển thị.</string>
 
     <string name="dynamic_colors">Màu sắc động</string>
     <string name="summary_preference_settings_dynamic_colors">Áp dụng màu từ hình nền vào chủ đề ứng dụng</string>

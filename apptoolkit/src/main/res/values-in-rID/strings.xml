@@ -90,8 +90,8 @@
     <string name="follow_system">Ikuti mode sistem</string>
     <string name="light_mode">Mode terang</string>
     <string name="dark_mode">Mode gelap</string>
-    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
-    <string name="screen_and_display_settings">screen and display settings.</string>
+    <string name="summary_dark_theme">Tema gelap memanfaatkan latar belakang yang dalam untuk secara signifikan memperpanjang masa pakai baterai Anda. Untuk mengaktifkannya, cukup arahkan ke manajer sistem Android Anda dan pilih tema pilihan Anda</string>
+    <string name="screen_and_display_settings">Layar dan Tampilan Pengaturan.</string>
 
     <string name="dynamic_colors">Warna dinamis</string>
     <string name="summary_preference_settings_dynamic_colors">Terapkan warna dari wallpaper ke tema aplikasi</string>
