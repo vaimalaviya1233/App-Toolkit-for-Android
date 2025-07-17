@@ -130,17 +130,27 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(products)
             .build()
-        billingClient.queryProductDetailsAsync(params) { billingResult, result ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                val map = result.productDetailsList.associateBy { it.productId }
-                scope.launch { _productDetails.emit(map) }
+
+        scope.launch {
+            val result = billingClient.queryProductDetails(params)
+            if (result.isSuccess) {
+                val details = result.getOrNull()
+                val map = details?.productDetailsList?.associateBy { it.productId } ?: emptyMap()
+                _productDetails.emit(map)
             } else {
-                scope.launch { _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage)) }
+                _purchaseResult.emit(
+                    PurchaseResult.Failed(result.exceptionOrNull()?.message ?: "Unknown error")
+                )
             }
         }
     }
 
     fun launchPurchaseFlow(activity: Activity, details: ProductDetails) {
+        if (!billingClient.isReady) {
+            scope.launch { _purchaseResult.emit(PurchaseResult.Failed("Billing client is not ready")) }
+            return
+        }
+
         val params = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(
                 listOf(
@@ -149,7 +159,11 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
                         .build()
                 )
             ).build()
-        billingClient.launchBillingFlow(activity, params)
+
+        val billingResult = billingClient.launchBillingFlow(activity, params)
+        if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            scope.launch { _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage)) }
+        }
     }
 }
 
