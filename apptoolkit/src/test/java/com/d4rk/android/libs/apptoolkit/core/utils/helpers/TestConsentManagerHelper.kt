@@ -242,7 +242,7 @@ class TestConsentManagerHelper {
         every { analytics.setConsent(any()) } throws RuntimeException("fail")
 
         assertFailsWith<RuntimeException> {
-            ConsentManagerHelper.updateConsent(true, true, true, true)
+            ConsentManagerHelper.updateConsent(analyticsGranted = true , adStorageGranted = true , adUserDataGranted = true , adPersonalizationGranted = true)
         }
         println("🏁 [TEST DONE] updateConsent propagates firebase exception")
     }

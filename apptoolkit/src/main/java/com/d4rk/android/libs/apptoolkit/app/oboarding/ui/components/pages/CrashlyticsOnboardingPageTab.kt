@@ -63,7 +63,6 @@ import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers.CrashlyticsO
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeIncreasedVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -90,7 +89,6 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
         dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
             .collectAsState(initial = !configProvider.isDebugBuild)
     val showCrashlyticsDialog = CrashlyticsOnboardingStateManager.showCrashlyticsDialog
-    val view : View = LocalView.current
 
     Column(
         modifier = Modifier
