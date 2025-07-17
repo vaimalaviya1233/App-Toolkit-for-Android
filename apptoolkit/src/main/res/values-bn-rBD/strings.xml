@@ -90,8 +90,8 @@
     <string name="follow_system">সিস্টেম মোড অনুসরণ করুন</string>
     <string name="light_mode">লাইট মোড</string>
     <string name="dark_mode">ডার্ক মোড</string>
-    <string name="summary_dark_theme">Dark theme leverages a deep background to significantly extend your battery life. To activate it, simply navigate to your Android\'s system manager and select your preferred theme in</string>
-    <string name="screen_and_display_settings">screen and display settings.</string>
+    <string name="summary_dark_theme">গা dark ় থিম আপনার ব্যাটারির জীবনকে উল্লেখযোগ্যভাবে প্রসারিত করতে একটি গভীর পটভূমি উপার্জন করে। এটি সক্রিয় করতে, কেবল আপনার অ্যান্ড্রয়েডের সিস্টেম ম্যানেজারে নেভিগেট করুন এবং আপনার পছন্দসই থিমটি নির্বাচন করুন</string>
+    <string name="screen_and_display_settings">স্ক্রিন এবং প্রদর্শন সেটিংস।</string>
 
     <string name="dynamic_colors">ডাইনামিক রঙ</string>
     <string name="summary_preference_settings_dynamic_colors">ওয়ালপেপার থেকে রঙ অ্যাপ থিমে প্রয়োগ করুন</string>
