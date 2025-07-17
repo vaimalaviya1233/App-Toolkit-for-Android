@@ -4,6 +4,7 @@ import android.view.SoundEffectConstants
 import android.view.View
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -11,6 +12,7 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import java.text.SimpleDateFormat
@@ -23,7 +25,7 @@ fun DatePickerDialog(onDateSelected : (String) -> Unit , onDismiss : () -> Unit)
     val selectedDatePickerState : DatePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
     val view : View = LocalView.current
 
-    androidx.compose.material3.DatePickerDialog(onDismissRequest = {
+    DatePickerDialog(onDismissRequest = {
         onDismiss()
     } , confirmButton = {
         Button(modifier = Modifier.bounceClick(), onClick = {
@@ -36,7 +38,7 @@ fun DatePickerDialog(onDateSelected : (String) -> Unit , onDismiss : () -> Unit)
             Text(text = stringResource(id = android.R.string.ok))
         }
     } , dismissButton = {
-        Button(modifier = Modifier.bounceClick(), onClick = {
+        OutlinedButton(modifier = Modifier.bounceClick(), onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
             onDismiss()
         }) {

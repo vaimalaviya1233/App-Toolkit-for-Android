@@ -4,10 +4,10 @@ import android.view.SoundEffectConstants
 import android.view.View
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +51,7 @@ fun BasicAlertDialog(
             Text(text = confirmButtonText ?: stringResource(id = android.R.string.ok))
         }
     } , dismissButton = {
-        TextButton(modifier = Modifier.bounceClick(), onClick = {
+        OutlinedButton(modifier = Modifier.bounceClick(), onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
             onCancel()
         } , enabled = dismissEnabled) {
