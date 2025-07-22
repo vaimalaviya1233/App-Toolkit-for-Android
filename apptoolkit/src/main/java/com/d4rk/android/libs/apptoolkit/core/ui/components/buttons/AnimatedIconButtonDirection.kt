@@ -17,6 +17,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
@@ -48,6 +51,7 @@ fun AnimatedIconButtonDirection(
 ) {
     val animatedVisibility : MutableState<Boolean> = rememberSaveable { mutableStateOf(value = false) }
 
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     LaunchedEffect(visible) {
@@ -65,6 +69,7 @@ fun AnimatedIconButtonDirection(
                        exit = fadeOut(animationSpec = tween(durationMillis = durationMillis)) + slideOutHorizontally(targetOffsetX = { if (fromRight) it else - it } , animationSpec = tween(durationMillis = durationMillis))) {
         IconButton(modifier = modifier.bounceClick() , onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onClick()
         }) {
             Icon(imageVector = icon , contentDescription = contentDescription)

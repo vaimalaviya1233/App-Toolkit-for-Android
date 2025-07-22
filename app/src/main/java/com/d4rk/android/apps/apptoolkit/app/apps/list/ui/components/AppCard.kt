@@ -23,8 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,7 +48,8 @@ fun AppCard(
     modifier: Modifier
 ) {
     val context: Context = LocalContext.current
-    val view: View = LocalView.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
+    val view : View = LocalView.current
     Card(
         modifier = modifier
             .bounceClick()
@@ -54,6 +58,7 @@ fun AppCard(
             .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 if (appInfo.packageName.isNotEmpty()) {
                     if (AppInfoHelper().isAppInstalled(
                             context = context,

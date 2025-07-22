@@ -20,6 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
@@ -30,6 +33,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BasicFullScreenDialog(title : String , onDismiss : () -> Unit , onConfirm : () -> Unit , confirmEnabled : Boolean = true , confirmButtonText : String = stringResource(id = android.R.string.ok) , content : @Composable ColumnScope.() -> Unit) {
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Dialog(onDismissRequest = onDismiss , properties = DialogProperties(dismissOnBackPress = true , dismissOnClickOutside = true , usePlatformDefaultWidth = false , decorFitsSystemWindows = true)) {
@@ -44,6 +48,7 @@ fun BasicFullScreenDialog(title : String , onDismiss : () -> Unit , onConfirm : 
                 } , title = { Text(text = title) } , actions = {
                     TextButton(modifier = Modifier.bounceClick() , onClick = {
                         view.playSoundEffect(SoundEffectConstants.CLICK)
+                        hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                         onConfirm()
                     } , enabled = confirmEnabled) {
                         Text(confirmButtonText)

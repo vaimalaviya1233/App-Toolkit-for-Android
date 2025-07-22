@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation
 
 import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,9 +36,9 @@ fun BottomNavigationBar(
     items: List<BottomBarItem>,
     modifier: Modifier = Modifier,
     adsConfig: AdsConfig = koinInject(qualifier = named(name = "full_banner")),
-    onItemClickSound: (() -> Unit)? = null
 ) {
-    val view = LocalView.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
+    val view : View = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -64,8 +68,9 @@ fun BottomNavigationBar(
                     alwaysShowLabel = showLabels,
                     selected = currentRoute == item.route,
                     onClick = {
-                        onItemClickSound?.invoke()
-                            ?: view.playSoundEffect(SoundEffectConstants.CLICK)
+                        view.playSoundEffect(SoundEffectConstants.CLICK)
+                        hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+
                         if (currentRoute != item.route) {
                             navController.navigate(item.route) {
                                 popUpTo(navController.graph.startDestinationId) {

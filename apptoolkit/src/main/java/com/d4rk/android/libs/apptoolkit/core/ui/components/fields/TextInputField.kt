@@ -18,12 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun DropdownMenuBox(selectedText : String , options : List<String> , onOptionSelected : (String) -> Unit) {
     var expanded : Boolean by remember { mutableStateOf(value = false) }
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
     Box(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(value = selectedText , onValueChange = {} , modifier = Modifier
@@ -31,6 +35,7 @@ fun DropdownMenuBox(selectedText : String , options : List<String> , onOptionSel
                 .bounceClick()
                 .clickable {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
+                    hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.VirtualKey)
                     expanded = true
                 } , readOnly = true , trailingIcon = { Icon(imageVector = Icons.Default.ArrowDropDown , contentDescription = null) })
         DropdownMenu(expanded = expanded , onDismissRequest = { expanded = false }) {

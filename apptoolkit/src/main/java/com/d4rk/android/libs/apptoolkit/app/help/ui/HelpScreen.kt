@@ -2,8 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui
 
 import android.app.Activity
 import android.content.Context
-import android.view.SoundEffectConstants
-import android.view.View
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +24,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
@@ -46,7 +43,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
     val context : Context = LocalContext.current
-    val view : View = LocalView.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
     val faqList: List<UiHelpQuestion> = rememberFaqList()
 
@@ -55,18 +51,18 @@ fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
     }
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
-        HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , view = view , config = config)
+        HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(visible = true , expanded = isFabExtended.value , onClick = {
             ReviewHelper.forceLaunchInAppReview(activity = activity)
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
     }) { paddingValues ->
-        HelpScreenContent(questions = faqList , paddingValues = paddingValues , activity = activity , view = view)
+        HelpScreenContent(questions = faqList , paddingValues = paddingValues , activity = activity)
     }
 }
 
 @Composable
-fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : Activity , view : View) {
+fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : Activity) {
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
@@ -80,7 +76,6 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
             }
             MediumVerticalSpacer()
             ContactUsCard(onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
                 IntentsHelper.sendEmailToDeveloper(context = activity , applicationNameRes = R.string.app_name)
             })
             Spacer(modifier = Modifier.height(height = SizeConstants.ExtraExtraLargeSize * 2))

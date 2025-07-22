@@ -17,6 +17,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.DatePickerDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
@@ -29,6 +32,7 @@ import java.util.Locale
 fun DatePickerTextField(date : Date , onDateSelected : (Date) -> Unit) {
     val formatter : SimpleDateFormat = remember { SimpleDateFormat("dd.MM.yyyy" , Locale.getDefault()) }
     var showDialog : Boolean by remember { mutableStateOf(value = false) }
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
     if (showDialog) {
         DatePickerDialog(onDateSelected = { dateString : String ->
@@ -42,6 +46,7 @@ fun DatePickerTextField(date : Date , onDateSelected : (Date) -> Unit) {
             .bounceClick()
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 showDialog = true
             } , trailingIcon = {
         Icon(imageVector = Icons.Default.CalendarToday , contentDescription = null)

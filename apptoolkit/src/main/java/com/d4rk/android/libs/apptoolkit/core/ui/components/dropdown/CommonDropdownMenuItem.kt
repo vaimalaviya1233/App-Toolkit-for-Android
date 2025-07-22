@@ -1,14 +1,10 @@
-package com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab
+package com.d4rk.android.libs.apptoolkit.core.ui.components.dropdown
 
 import android.view.SoundEffectConstants
 import android.view.View
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,20 +12,26 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
-fun AnimatedFloatingActionButton(modifier : Modifier = Modifier , isVisible : Boolean , icon : ImageVector , contentDescription : String? = null , onClick : () -> Unit) {
+fun CommonDropdownMenuItem(
+    textResId: Int,
+    icon: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
-
-    AnimatedVisibility(visible = isVisible , enter = scaleIn() + fadeIn() , exit = scaleOut() + fadeOut()) {
-        FloatingActionButton(onClick = {
+    DropdownMenuItem(
+        text = { Text(text = stringResource(id = textResId)) },
+        leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
+        onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
             hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onClick()
-        } , modifier = modifier.bounceClick()) {
-            Icon(imageVector = icon , contentDescription = contentDescription)
-        }
-    }
+        },
+        modifier = modifier.bounceClick()
+    )
 }

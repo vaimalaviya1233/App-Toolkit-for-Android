@@ -18,6 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,6 +40,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  */
 @Composable
 fun PreferenceItem(icon : ImageVector? = null , title : String? = null , summary : String? = null , enabled : Boolean = true , rippleEffectDp : Dp = SizeConstants.LargeSize , onClick : () -> Unit = {}) {
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
     Row(
         modifier = Modifier
@@ -44,6 +48,7 @@ fun PreferenceItem(icon : ImageVector? = null , title : String? = null , summary
                 .clip(shape = RoundedCornerShape(size = rippleEffectDp))
                 .clickable(enabled = enabled , onClick = {
                     view.playSoundEffect(SoundEffectConstants.CLICK)
+                    hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                     onClick()
                 }) , verticalAlignment = Alignment.CenterVertically
     ) {

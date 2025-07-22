@@ -20,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +40,8 @@ fun ConsentToggleCard(
     icon: ImageVector,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val view: View = LocalView.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
+    val view : View = LocalView.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,6 +49,7 @@ fun ConsentToggleCard(
             .clip(shape = RoundedCornerShape(SizeConstants.LargeSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 onCheckedChange(!switchState)
             },
         shape = MaterialTheme.shapes.large, colors = CardDefaults.cardColors(

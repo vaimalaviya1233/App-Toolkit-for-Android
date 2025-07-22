@@ -4,15 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.SoundEffectConstants
 import android.view.View
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.Campaign
@@ -39,8 +34,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -50,7 +43,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,8 +57,8 @@ import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.helpers.CrashlyticsOnboardingStateManager
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeIncreasedVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -70,6 +66,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVertical
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.switches.CustomSwitch
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -164,6 +161,7 @@ fun UsageAndDiagnosticsToggleCard(
     switchState: Boolean, onCheckedChange: (Boolean) -> Unit
 ) {
 
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Card(
@@ -173,6 +171,7 @@ fun UsageAndDiagnosticsToggleCard(
             .clip(RoundedCornerShape(SizeConstants.LargeSize))
             .clickable(onClick = {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 onCheckedChange(!switchState)
             }),
         shape = RoundedCornerShape(SizeConstants.LargeSize),
@@ -205,41 +204,21 @@ fun UsageAndDiagnosticsToggleCard(
                 )
             }
             LargeHorizontalSpacer()
-            Switch(
+
+            CustomSwitch(
                 checked = switchState,
-                onCheckedChange = {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(it)
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
                 },
-                thumbContent = {
-                AnimatedContent(targetState = switchState, transitionSpec = {
-                    if (targetState) {
-                        slideInVertically { height: Int -> height } + fadeIn() togetherWith slideOutVertically { height: Int -> -height } + fadeOut()
-                    } else {
-                        slideInVertically { height: Int -> -height } + fadeIn() togetherWith slideOutVertically { height: Int -> height } + fadeOut()
-                    } using SizeTransform(clip = false)
-                }, label = "SwitchIconAnimation") { targetChecked: Boolean ->
-                    Icon(
-                        imageVector = if (targetChecked) Icons.Filled.Analytics else Icons.Filled.Policy,
-                        contentDescription = null,
-                        modifier = Modifier.size(size = SizeConstants.SwitchIconSize),
-                        tint = if (targetChecked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }, colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
-            ))
+                checkIcon = Icons.Filled.Analytics,
+                uncheckIcon = Icons.Filled.Policy
+            )
         }
     }
 }
 
 @Composable
 fun LearnMoreSection(context: Context) {
-    val view : View = LocalView.current
-
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         HorizontalDivider(
             modifier = Modifier.padding(vertical = SizeConstants.LargeSize), thickness = SizeConstants.ExtraTinySize / 4
@@ -256,7 +235,6 @@ fun LearnMoreSection(context: Context) {
         MediumVerticalSpacer()
         OutlinedIconButtonWithText(
             onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
                 val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
                 context.startActivity(intent)
             },
@@ -313,8 +291,6 @@ fun CrashlyticsConsentDialog(
             }
         }
     }
-
-    val view : View = LocalView.current
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
@@ -404,7 +380,6 @@ fun CrashlyticsConsentDialog(
         confirmButton = {
             OutlinedIconButtonWithText(
                 onClick = {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
                     coroutineScope.launch {
                         val overallConsent: Boolean =
                             analyticsState.value && adStorageState.value && adUserDataState.value && adPersonalizationState.value
@@ -436,6 +411,7 @@ fun ConsentToggleItem(
     modifier: Modifier = Modifier
 ) {
 
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Card(
@@ -445,6 +421,7 @@ fun ConsentToggleItem(
             .clip(RoundedCornerShape(SizeConstants.MediumSize))
             .clickable(onClick = {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 onCheckedChange(!switchState)
             }),
         shape = RoundedCornerShape(SizeConstants.MediumSize),
@@ -481,18 +458,14 @@ fun ConsentToggleItem(
                 )
             }
             MediumHorizontalSpacer()
-            Switch(
+
+            CustomSwitch(
                 checked = switchState,
-                onCheckedChange = {
-                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    onCheckedChange(it)
+                onCheckedChange = { isChecked ->
+                    onCheckedChange(isChecked)
                 },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.primary,
-                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
-                )
+                checkIcon = Icons.Filled.Done,
+                uncheckIcon = Icons.Filled.Block
             )
         }
     }

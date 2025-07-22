@@ -10,6 +10,9 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
@@ -28,6 +31,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
  */
 @Composable
 fun SmallFloatingActionButton(modifier : Modifier = Modifier , isVisible : Boolean , isExtended : Boolean , icon : ImageVector , contentDescription : String? = null , onClick : () -> Unit) {
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     AnimatedVisibility(
@@ -37,6 +41,7 @@ fun SmallFloatingActionButton(modifier : Modifier = Modifier , isVisible : Boole
     ) {
         SmallFloatingActionButton(onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onClick()
         } , modifier = modifier.bounceClick()) {
             Icon(imageVector = icon , contentDescription = contentDescription)

@@ -1,6 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections
 
 import android.content.Context
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -9,7 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.LinkInteractionListener
@@ -57,6 +63,8 @@ fun InfoMessageSection(
     newLine: Boolean = true
 ) {
     val context: Context = LocalContext.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
+    val view : View = LocalView.current
     val hasLearnMore =
         !learnMoreText.isNullOrEmpty() && (learnMoreAction != null || !learnMoreUrl.isNullOrEmpty())
 
@@ -75,6 +83,8 @@ fun InfoMessageSection(
                     LearnMoreText(
                         text = learnMoreText,
                         onClick = {
+                            view.playSoundEffect(SoundEffectConstants.CLICK)
+                            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                             when {
                                 learnMoreAction != null -> learnMoreAction()
                                 !learnMoreUrl.isNullOrEmpty() -> IntentsHelper.openUrl(
@@ -93,6 +103,8 @@ fun InfoMessageSection(
 
                     val linkInteraction = object : LinkInteractionListener {
                         override fun onClick(link: LinkAnnotation) {
+                            view.playSoundEffect(SoundEffectConstants.CLICK)
+                            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                             when {
                                 learnMoreAction != null -> learnMoreAction()
                                 !learnMoreUrl.isNullOrEmpty() -> IntentsHelper.openUrl(

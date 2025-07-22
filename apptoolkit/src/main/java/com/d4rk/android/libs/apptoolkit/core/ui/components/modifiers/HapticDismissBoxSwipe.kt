@@ -32,12 +32,12 @@ import androidx.compose.ui.platform.LocalHapticFeedback
  *        .hapticSwipeToDismissBox(swipeToDismissBoxState = swipeState)
  */
 fun Modifier.hapticSwipeToDismissBox(swipeToDismissBoxState : SwipeToDismissBoxState) : Modifier = composed {
-    val haptic : HapticFeedback = LocalHapticFeedback.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     var hasVibrated : Boolean by remember { mutableStateOf(value = false) }
 
     LaunchedEffect(swipeToDismissBoxState.currentValue) {
         if (swipeToDismissBoxState.currentValue != SwipeToDismissBoxValue.Settled && ! hasVibrated) {
-            haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.GestureThresholdActivate)
             hasVibrated = true
         }
         else if (swipeToDismissBoxState.currentValue == SwipeToDismissBoxValue.Settled) {

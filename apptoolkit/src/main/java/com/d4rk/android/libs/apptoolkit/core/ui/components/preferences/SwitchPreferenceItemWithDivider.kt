@@ -22,6 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +50,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
  */
 @Composable
 fun SwitchPreferenceItemWithDivider(icon : ImageVector? = null , title : String , summary : String , checked : Boolean , onCheckedChange : (Boolean) -> Unit , onClick : () -> Unit , onSwitchClick : (Boolean) -> Unit) {
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Card(
@@ -60,6 +64,7 @@ fun SwitchPreferenceItemWithDivider(icon : ImageVector? = null , title : String 
                     .fillMaxWidth()
                     .clickable(onClick = {
                         view.playSoundEffect(SoundEffectConstants.CLICK)
+                        hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                         onClick()
                     }) , verticalAlignment = Alignment.CenterVertically
         ) {

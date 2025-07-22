@@ -19,11 +19,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 
 @Composable
 fun CommonFilterChip(selected : Boolean , onClick : () -> Unit , label : String , modifier : Modifier = Modifier , leadingIcon : (@Composable (() -> Unit))? = null) {
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
     val interactionSource : MutableInteractionSource = remember { MutableInteractionSource() }
 
@@ -31,6 +35,7 @@ fun CommonFilterChip(selected : Boolean , onClick : () -> Unit , label : String 
         selected = selected ,
         onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onClick()
         } ,
         label = { Text(text = label) } ,

@@ -79,8 +79,8 @@ dependencies {
 
     // Firebase
     api(dependencyNotation = platform(libs.firebase.bom))
-    api(dependencyNotation = libs.firebase.analytics.ktx)
-    api(dependencyNotation = libs.firebase.crashlytics.ktx)
+    api(dependencyNotation = libs.firebase.analytics)
+    api(dependencyNotation = libs.firebase.crashlytics)
     api(dependencyNotation = libs.firebase.perf)
 
     // Google
@@ -115,6 +115,9 @@ dependencies {
     // Konfetti
     api(dependencyNotation = libs.konfetti.compose)
 
+    // Lottie
+    api(dependencyNotation = libs.lottie.compose)
+
     // Lifecycle
     api(dependencyNotation = libs.androidx.lifecycle.runtime.ktx)
     api(dependencyNotation = libs.androidx.lifecycle.livedata.ktx)
@@ -141,7 +144,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.D4rK7355608"
             artifactId = "AppToolkit"
-            version = "1.0.38"
+            version = "1.0.39"
 
             afterEvaluate {
                 from(components["release"])

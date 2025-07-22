@@ -31,6 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -62,6 +65,7 @@ fun ThemeChoiceCard(
         BorderStroke(SizeConstants.ExtraTinySize / 2 , MaterialTheme.colorScheme.outlineVariant)
     }
 
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Card(
@@ -71,6 +75,7 @@ fun ThemeChoiceCard(
             .clip(RoundedCornerShape(SizeConstants.LargeSize))
             .clickable(onClick = {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 onClick() }) , shape = RoundedCornerShape(SizeConstants.LargeSize) , colors = cardColors , elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) SizeConstants.ExtraSmallSize else SizeConstants.ExtraTinySize / 2) , border = border
     ) {
         Row(

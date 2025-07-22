@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import java.text.SimpleDateFormat
@@ -23,6 +26,7 @@ import java.util.Locale
 @Composable
 fun DatePickerDialog(onDateSelected : (String) -> Unit , onDismiss : () -> Unit) {
     val selectedDatePickerState : DatePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     DatePickerDialog(onDismissRequest = {
@@ -30,6 +34,7 @@ fun DatePickerDialog(onDateSelected : (String) -> Unit , onDismiss : () -> Unit)
     } , confirmButton = {
         Button(modifier = Modifier.bounceClick(), onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onDismiss()
             selectedDatePickerState.selectedDateMillis?.let {
                 onDateSelected(SimpleDateFormat("yyyy-MM-dd" , Locale.getDefault()).format(Date(it)))
@@ -40,6 +45,7 @@ fun DatePickerDialog(onDateSelected : (String) -> Unit , onDismiss : () -> Unit)
     } , dismissButton = {
         OutlinedButton(modifier = Modifier.bounceClick(), onClick = {
             view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onDismiss()
         }) {
             Text(text = stringResource(id = android.R.string.cancel))

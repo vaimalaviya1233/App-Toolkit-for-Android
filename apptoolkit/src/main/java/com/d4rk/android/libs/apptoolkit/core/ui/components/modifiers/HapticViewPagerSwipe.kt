@@ -13,12 +13,12 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 
 fun Modifier.hapticPagerSwipe(pagerState : PagerState) : Modifier = composed {
-    val haptic : HapticFeedback = LocalHapticFeedback.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     var hasVibrated : Boolean by remember { mutableStateOf(value = false) }
 
     LaunchedEffect(key1 = pagerState.isScrollInProgress) {
         if (pagerState.isScrollInProgress && ! hasVibrated) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.SegmentTick)
             hasVibrated = true
         }
         else if (! pagerState.isScrollInProgress) {

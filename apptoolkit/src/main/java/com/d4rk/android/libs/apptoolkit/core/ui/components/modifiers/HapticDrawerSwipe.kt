@@ -34,12 +34,12 @@ import androidx.compose.ui.platform.LocalHapticFeedback
  * ```
  */
 fun Modifier.hapticDrawerSwipe(state : DrawerState) : Modifier = composed {
-    val feedback : HapticFeedback = LocalHapticFeedback.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     var hasFeedbackTriggered : Boolean by remember { mutableStateOf(value = false) }
 
     LaunchedEffect(key1 = state.currentValue , key2 = state.targetValue) {
         if (state.isAnimationRunning && ! hasFeedbackTriggered) {
-            feedback.performHapticFeedback(HapticFeedbackType.LongPress)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.GestureThresholdActivate)
             hasFeedbackTriggered = true
         }
 

@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.oboarding.ui
 
 import android.app.Activity
 import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -25,6 +26,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -54,7 +58,8 @@ fun OnboardingScreen(activity : Activity) {
         viewModel.currentTabIndex = pagerState.currentPage
     }
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = activity)
-    val view = LocalView.current
+    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
+    val view : View = LocalView.current
     val onSkipRequested = {
         coroutineScope.launch {
             dataStore.saveStartup(isFirstTime = false)
@@ -73,6 +78,7 @@ fun OnboardingScreen(activity : Activity) {
                     OutlinedIconButtonWithText(
                         onClick = {
                             view.playSoundEffect(SoundEffectConstants.CLICK)
+                            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                             onSkipRequested()
                         },
                         icon = Icons.Filled.SkipNext,

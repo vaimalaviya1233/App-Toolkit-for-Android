@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
@@ -32,10 +31,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -49,7 +46,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -62,14 +58,14 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInf
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.ui.UiIssueReporterScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloatingActionButton
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
+import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.RadioButtonPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -263,17 +259,18 @@ fun IssueReporterScreenContent(
                 Column(
                     modifier = Modifier.padding(SizeConstants.LargeSize)
                 ) {
-
-                    RadioOption(
-                        selected = !data.anonymous,
+                    RadioButtonPreferenceItem(
                         text = stringResource(id = R.string.use_github_account),
-                        onClick = { },
+                        isChecked = !data.anonymous,
+                        onCheckedChange = { },
                         enabled = false
                     )
-                    RadioOption(
-                        selected = data.anonymous,
+                    RadioButtonPreferenceItem(
                         text = stringResource(id = R.string.send_anonymously),
-                        onClick = { viewModel.onEvent(IssueReporterEvent.SetAnonymous(true)) }
+                        isChecked = data.anonymous,
+                        onCheckedChange = {
+                            viewModel.onEvent(event = IssueReporterEvent.SetAnonymous(anonymous = true))
+                        }
                     )
                 }
             }
@@ -317,43 +314,9 @@ fun IssueReporterScreenContent(
                     }
                 }
             }
-        }
 
-        item {
+            ExtraExtraLargeVerticalSpacer()
             ExtraExtraLargeVerticalSpacer()
         }
-        item {
-            ExtraExtraLargeVerticalSpacer()
-        }
-    }
-}
-
-@Composable
-private fun RadioOption(
-    selected: Boolean,
-    text: String,
-    onClick: () -> Unit,
-    enabled: Boolean = true
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .let { base ->
-                if (enabled) {
-                    base
-                        .bounceClick()
-                        .clip(CircleShape)
-                        .clickable(onClick = onClick)
-                } else base
-            }
-    ) {
-        RadioButton(
-            selected = selected,
-            onClick = onClick,
-            enabled = enabled
-        )
-        SmallHorizontalSpacer()
-        Text(text = text, style = MaterialTheme.typography.bodyLarge)
     }
 }

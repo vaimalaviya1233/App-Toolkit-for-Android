@@ -30,7 +30,6 @@ fun DefaultSnackbarHost(snackbarState : SnackbarHostState , modifier : Modifier 
                     IconButton(
                         onClick = { snackbarData.dismiss() },
                         icon = Icons.Outlined.Close,
-                        iconContentDescription = "Close Snackbar"
                     )
                 }) {
                 Text(text = visuals.message)
