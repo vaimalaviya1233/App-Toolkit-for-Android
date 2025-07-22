@@ -23,5 +23,5 @@ object AppLinks {
     const val GITHUB_BASE : String = "https://github.com/$GITHUB_USER/"
     const val GITHUB_ISSUES_SUFFIX : String = "/issues/new"
     const val GITHUB_RAW : String = "https://raw.githubusercontent.com/$GITHUB_USER"
-    fun githubChangelog(packageName : String) : String = "$GITHUB_BASE$packageName/blob/master/CHANGELOG.md"
+    fun githubChangelog(repository: String) : String = "$GITHUB_BASE$repository/blob/master/CHANGELOG.md"
 }
