@@ -31,12 +31,17 @@ val appToolkitModule : Module = module {
         )
     }
 
+    single(named("github_repository")) { "AppToolkit" }
+
     single<GithubTarget> {
-        GithubTarget(username = "D4rK7355608", repository = "AppToolkit")
+        GithubTarget(
+            username = "D4rK7355608",
+            repository = get(named("github_repository")),
+        )
     }
 
     single(named("github_changelog")) {
-        AppLinks.githubChangelog(get<GithubTarget>().repository)
+        AppLinks.githubChangelog(get<String>(named("github_repository")))
     }
 
     single(named("github_token")) { BuildConfig.GITHUB_TOKEN }

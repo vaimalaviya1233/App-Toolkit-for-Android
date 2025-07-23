@@ -18,12 +18,15 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticDrawerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
 fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
     val drawerState : DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
     val context : Context = LocalContext.current
+    val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
 
     ModalNavigationDrawer(
@@ -32,7 +35,13 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
                 LargeVerticalSpacer()
                 uiState.navigationDrawerItems.forEach { item : NavigationDrawerItem ->
                     NavigationDrawerItemContent(item = item , handleNavigationItemClick = {
-                        handleNavigationItemClick(context = context , item = item , drawerState = drawerState , coroutineScope = coroutineScope)
+                        handleNavigationItemClick(
+                            context = context,
+                            item = item,
+                            drawerState = drawerState,
+                            coroutineScope = coroutineScope,
+                            changelogUrl = changelogUrl,
+                        )
                     })
                 }
             }

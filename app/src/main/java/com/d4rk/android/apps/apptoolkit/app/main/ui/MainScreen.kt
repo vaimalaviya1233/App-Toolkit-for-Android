@@ -48,6 +48,8 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
 fun MainScreen() {
@@ -119,6 +121,7 @@ fun MainScaffoldTabletContent() {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val context: Context = LocalContext.current
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
 
     val viewModel: MainViewModel = koinViewModel()
     val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
@@ -165,7 +168,8 @@ fun MainScaffoldTabletContent() {
             onDrawerItemClick = { item: NavigationDrawerItem ->
                 handleNavigationItemClick(
                     context = context,
-                    item = item
+                    item = item,
+                    changelogUrl = changelogUrl,
                 )
             },
             content = {
