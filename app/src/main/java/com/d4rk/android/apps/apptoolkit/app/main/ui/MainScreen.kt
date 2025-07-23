@@ -26,8 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -149,6 +152,8 @@ fun MainScaffoldTabletContent() {
         )
     )
 
+    val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+
     Scaffold(
         modifier = Modifier
             .imePadding()
@@ -156,6 +161,7 @@ fun MainScaffoldTabletContent() {
             MainTopAppBar(
                 navigationIcon = if (isRailExpanded) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu,
                 onNavigationIconClick = {
+                    hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                     coroutineScope.launch {
                         isRailExpanded = !isRailExpanded
                     }
@@ -173,7 +179,6 @@ fun MainScaffoldTabletContent() {
                 handleNavigationItemClick(
                     context = context,
                     item = item,
-                    changelogUrl = changelogUrl,
                     onChangelogRequested = { showChangelog = true },
                 )
             },

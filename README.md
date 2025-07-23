@@ -40,4 +40,4 @@ This project is licensed under the GNU General Public License v3.0. See the [LIC
 
 ## Contact
 
-For any questions or suggestions, feel free to reach out to me at [d4rk7355608@gmail.com](mailto:d4rk7355608@gmail.com).
+For any questions or suggestions, feel free to reach out to me at [contact.mihaicristiancondrea@gmail.com](mailto:contact.mihaicristiancondrea@gmail.com).

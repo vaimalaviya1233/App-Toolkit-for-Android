@@ -38,6 +38,7 @@ fun MainTopAppBar(
                 icon = navigationIcon,
                 contentDescription = stringResource(id = R.string.go_back),
                 onClick = { onNavigationIconClick() },
+                vibrate = false
             )
         },
         actions = {

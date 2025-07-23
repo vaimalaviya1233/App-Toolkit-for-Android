@@ -46,7 +46,6 @@ fun handleNavigationItemClick(
     item: NavigationDrawerItem,
     drawerState: DrawerState? = null,
     coroutineScope: CoroutineScope? = null,
-    changelogUrl: String,
     onChangelogRequested: () -> Unit = {},
 ) {
     when (item.title) {

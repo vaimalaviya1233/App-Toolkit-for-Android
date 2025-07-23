@@ -48,7 +48,6 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
                             item = item,
                             drawerState = drawerState,
                             coroutineScope = coroutineScope,
-                            changelogUrl = changelogUrl,
                             onChangelogRequested = { showChangelog = true }
                         )
                     })

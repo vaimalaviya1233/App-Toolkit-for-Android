@@ -148,30 +148,8 @@ object IntentsHelper {
         )
     }
 
-    /**
-     * Sends an email to the developer with pre-filled subject and body.
-     *
-     * This function constructs an email intent with the specified application name in the subject
-     * and a default greeting in the body. It then prompts the user to choose an email client to
-     * send the email.
-     *
-     * @param context The application context.
-     * @param applicationNameRes The string resource ID of the application's name. This name will be
-     *                           included in the email subject. For example R.string.app_name
-     *
-     * @throws android.content.ActivityNotFoundException if no email client is found on the device.
-     *
-     * Example Usage:
-     * ```kotlin
-     *  sendEmailToDeveloper(this, R.string.app_name)
-     * ```
-     *
-     * The subject of the email will be "Feedback for [application name]"
-     * The Body of the email will be "Dear developer \n\n"
-     * The receiver of the email is "d4rk7355608@gmail.com"
-     */
     fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
-        val developerEmail = "d4rk7355608@gmail.com"
+        val developerEmail = AppLinks.CONTACT_EMAIL
 
         val appName : String = context.getString(applicationNameRes)
         val subject : String = context.getString(R.string.feedback_for , appName)
