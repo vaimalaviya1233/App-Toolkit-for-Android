@@ -2,6 +2,7 @@
 agp = "8.11.1"
 appcompat = "1.7.1"
 aboutlibraries = "12.2.4"
+composeMarkdown = "0.5.7"
 core = "4.6.2"
 coil = "3.3.0"
 lottie = "6.6.7"
@@ -50,6 +51,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePreferences" }
 androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastorePreferences" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
 datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastorePreferences" }
 androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version.ref = "graphicsShapes" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

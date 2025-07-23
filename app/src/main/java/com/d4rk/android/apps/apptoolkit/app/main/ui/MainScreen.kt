@@ -38,20 +38,19 @@ import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.Naviga
 import com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation.handleNavigationItemClick
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.dialogs.ChangelogDialog
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.BottomNavigationBar
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.LeftNavigationRail
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.MainTopAppBar
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
-import com.d4rk.android.libs.apptoolkit.app.main.ui.components.dialogs.ChangelogDialog
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.qualifier.named
 
 @Composable
@@ -126,9 +125,6 @@ fun MainScaffoldTabletContent() {
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
     val buildInfoProvider: BuildInfoProvider = koinInject()
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
-    val lastSeenVersion by dataStore.getLastSeenVersion().collectAsState(initial = "")
-    val cachedChangelog by dataStore.getCachedChangelog().collectAsState(initial = "")
     var showChangelog by remember { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
@@ -194,9 +190,6 @@ fun MainScaffoldTabletContent() {
         ChangelogDialog(
             changelogUrl = changelogUrl,
             buildInfoProvider = buildInfoProvider,
-            dataStore = dataStore,
-            lastSeenVersion = lastSeenVersion,
-            cachedChangelog = cachedChangelog,
             onDismiss = { showChangelog = false }
         )
     }
