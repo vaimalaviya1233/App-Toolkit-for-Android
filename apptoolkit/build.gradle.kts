@@ -133,12 +133,12 @@ dependencies {
     api(dependencyNotation = libs.compose.markdown)
 
     // Unit Tests
-    testImplementation(libs.bundles.unitTest)
-    testRuntimeOnly(libs.bundles.unitTestRuntime)
+    testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
 
     // Instrumentation Tests
-    androidTestImplementation(libs.bundles.instrumentationTest)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
+    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
 }
 
 publishing {
