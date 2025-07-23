@@ -180,12 +180,12 @@ class TestClipboardHelper {
         modifiersField.isAccessible = true
         val originalModifiers = field.modifiers
         modifiersField.setInt(field, field.modifiers and java.lang.reflect.Modifier.FINAL.inv())
-        val originalValue = field.getInt(null)
-        field.setInt(null, tempValue)
-        try {
+        val originalValue = field.get(null)
+        field.set(null, tempValue)
+        runCatching {
             block()
-        } finally {
-            field.setInt(null, originalValue)
+        }.also {
+            field.set(null, originalValue)
             modifiersField.setInt(field, originalModifiers)
         }
     }

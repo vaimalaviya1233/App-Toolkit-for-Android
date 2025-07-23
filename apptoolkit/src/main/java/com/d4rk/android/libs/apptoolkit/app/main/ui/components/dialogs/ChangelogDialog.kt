@@ -43,40 +43,29 @@ fun ChangelogDialog(
 ) {
     val context = LocalContext.current
     val changelogText: MutableState<String?> = remember {
-        mutableStateOf(
-            if (lastSeenVersion == buildInfoProvider.appVersion) cachedChangelog else null
-        )
+        mutableStateOf(if (lastSeenVersion == buildInfoProvider.appVersion) cachedChangelog else null)
     }
     val isError = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     suspend fun loadChangelog() {
-        val client = HttpClient(Android)
-        try {
-            val content: String = client.get(changelogUrl).body()
-            val section = extractChangesForVersion(content, buildInfoProvider.appVersion)
-            changelogText.value = section.ifBlank { context.getString(R.string.no_new_updates_message) }
-            withContext(Dispatchers.IO) {
-                dataStore.saveLastSeenVersion(buildInfoProvider.appVersion)
-                dataStore.saveCachedChangelog(changelogText.value!!)
+        HttpClient(Android).use { client ->
+            runCatching {
+                val content: String = client.get(changelogUrl).body()
+                val section = extractChangesForVersion(content, buildInfoProvider.appVersion)
+                changelogText.value = section.ifBlank { context.getString(R.string.no_new_updates_message) }
+                withContext(Dispatchers.IO) {
+                    dataStore.saveLastSeenVersion(buildInfoProvider.appVersion)
+                    dataStore.saveCachedChangelog(changelogText.value!!)
+                }
+            }.onFailure {
+                isError.value = true
             }
-        } catch (_: Exception) {
-            isError.value = true
-        } finally {
-            client.close()
         }
     }
 
     LaunchedEffect(Unit) {
-        if (lastSeenVersion != buildInfoProvider.appVersion) {
-            loadChangelog()
-        } else {
-            changelogText.value = if (cachedChangelog.isNotBlank()) {
-                cachedChangelog
-            } else {
-                context.getString(R.string.no_new_updates_message)
-            }
-        }
+        loadChangelog()
     }
 
     BasicAlertDialog(
@@ -91,7 +80,8 @@ fun ChangelogDialog(
             }
         },
         onCancel = onDismiss,
-        confirmButtonText = if (isError.value) stringResource(id = R.string.try_again) else null,
+        showDismissButton = false,
+        confirmButtonText = if (isError.value) stringResource(id = R.string.try_again) else stringResource(id = R.string.done_button_content_description),
         title = stringResource(id = R.string.changelog_title),
         content = {
             when {
@@ -103,10 +93,12 @@ fun ChangelogDialog(
                 isError.value -> Column(verticalArrangement = Arrangement.Center) {
                     Text(text = stringResource(id = R.string.error_loading_changelog_message))
                 }
-                else -> MarkdownText(
-                    modifier = Modifier.fillMaxWidth(),
-                    markdown = changelogText.value!!
-                )
+                else -> changelogText.value?.let { markdownContent ->
+                    MarkdownText(
+                        modifier = Modifier.fillMaxWidth(),
+                        markdown = markdownContent
+                    )
+                }
             }
         }
     )
@@ -116,12 +108,12 @@ private fun extractChangesForVersion(markdown: String, version: String): String 
     val lines = markdown.lines()
     val startIndex = lines.indexOfFirst { line -> line.contains(version) }
     if (startIndex == -1) return ""
-    val sb = StringBuilder()
-    sb.appendLine(lines[startIndex])
+    val versionSection = StringBuilder()
+    versionSection.appendLine(lines[startIndex])
     for (i in startIndex + 1 until lines.size) {
         val line = lines[i]
         if (line.startsWith("#")) break
-        sb.appendLine(line)
+        versionSection.appendLine(line)
     }
-    return sb.toString().trim()
+    return versionSection.toString().trim()
 }
