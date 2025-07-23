@@ -5,7 +5,7 @@ Follow these steps to include **AppToolkit** in your Android project.
 ## Kotlin DSL
 ```kotlin
 dependencies {
-    api("com.github.D4rK7355608:AppToolkit:+") {
+    api("com.github.MihaiCristianCondrea:AppToolkit:+") {
         isTransitive = true
     }
 }
@@ -14,7 +14,7 @@ dependencies {
 ## Groovy DSL
 ```groovy
 dependencies {
-    api('com.github.D4rK7355608:AppToolkit:+') {
+    api('com.github.MihaiCristianCondrea:AppToolkit:+') {
         transitive = true
     }
 }

@@ -12,7 +12,7 @@ To integrate AppToolkit into your project, add the following dependency to your 
 
 ```kotlin
 dependencies {
-    api("com.github.D4rK7355608:AppToolkit:+") {
+    api("com.github.MihaiCristianCondrea:AppToolkit:+") {
         isTransitive = true
     }
 }
@@ -22,7 +22,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    api('com.github.D4rK7355608:AppToolkit:+') {
+    api('com.github.MihaiCristianCondrea:AppToolkit:+') {
         transitive = true
     }
 }

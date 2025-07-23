@@ -144,8 +144,8 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.github.D4rK7355608"
-            artifactId = "AppToolkit"
+            groupId = "com.github.MihaiCristianCondrea"
+            artifactId = "App-Toolkit-for-Android"
             version = "1.0.40"
 
             afterEvaluate {
