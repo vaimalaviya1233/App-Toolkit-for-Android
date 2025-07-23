@@ -7,7 +7,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
+import com.google.firebase.initialize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
