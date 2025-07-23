@@ -1,6 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
 import android.app.Activity
+import android.view.SoundEffectConstants
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -46,8 +48,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -61,6 +67,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.RadioButtonPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
@@ -278,6 +285,8 @@ fun IssueReporterScreenContent(
 
         item {
             val context = LocalContext.current
+            val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+            val view: View = LocalView.current
             var deviceExpanded by rememberSaveable { mutableStateOf(false) }
 
             Card(shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
@@ -285,7 +294,12 @@ fun IssueReporterScreenContent(
                     LargeHorizontalSpacer()
                     Row(
                         modifier = Modifier
-                            .clickable { deviceExpanded = !deviceExpanded }
+                            .bounceClick()
+                            .clickable {
+                                view.playSoundEffect(SoundEffectConstants.CLICK)
+                                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+                                deviceExpanded = !deviceExpanded
+                            }
                             .fillMaxWidth()
                             .padding(vertical = SizeConstants.LargeSize),
                         verticalAlignment = Alignment.CenterVertically) {
