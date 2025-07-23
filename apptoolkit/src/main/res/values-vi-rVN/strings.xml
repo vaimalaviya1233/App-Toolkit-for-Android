@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Đang tìm nạp nhật ký thay đổi ứng dụng…</string>
     <string name="error_loading_eula_message">Không thể tải Thỏa thuận cấp phép người dùng cuối. Vui lòng thử lại.</string>
     <string name="error_loading_changelog_message">Không thể tải nhật ký thay đổi ứng dụng. Vui lòng thử lại.</string>
+    <string name="no_new_updates_message">Không có bản cập nhật mới.</string>
 
     <string name="device_info">Thông tin thiết bị</string>
     <string name="app_build">Bản dựng ứng dụng: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

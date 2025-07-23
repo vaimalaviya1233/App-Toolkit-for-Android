@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Зареждане на дневника на промените…</string>
     <string name="error_loading_eula_message">Неуспешно зареждане на лицензионното споразумение. Опитайте отново.</string>
     <string name="error_loading_changelog_message">Неуспешно зареждане на дневника на промените. Опитайте отново.</string>
+    <string name="no_new_updates_message">Няма налични нови актуализации.</string>
 
     <string name="device_info">Информация за устройството</string>
     <string name="app_build">Компилация на приложението: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

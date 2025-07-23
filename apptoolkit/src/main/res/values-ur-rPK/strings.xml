@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">ایپلیکیشن چینج لاگ حاصل کیا جا رہا ہے…</string>
     <string name="error_loading_eula_message">اینڈ یوزر لائسنس ایگریمنٹ لوڈ کرنے سے قاصر۔ براہ کرم دوبارہ کوشش کریں۔</string>
     <string name="error_loading_changelog_message">ایپلیکیشن چینج لاگ لوڈ کرنے سے قاصر۔ براہ کرم دوبارہ کوشش کریں۔</string>
+    <string name="no_new_updates_message">کوئی نئی اپ ڈیٹس دستیاب نہیں ہیں۔</string>
 
     <string name="device_info">ڈیوائس کی معلومات</string>
     <string name="app_build">ایپ بلڈ: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

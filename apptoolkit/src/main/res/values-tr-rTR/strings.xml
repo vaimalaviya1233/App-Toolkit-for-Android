@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Değişiklik günlüğü alınıyor…</string>
     <string name="error_loading_eula_message">Son Kullanıcı Lisans Sözleşmesi yüklenemedi. Lütfen tekrar deneyin.</string>
     <string name="error_loading_changelog_message">Değişiklik günlüğü yüklenemedi. Lütfen tekrar deneyin.</string>
+    <string name="no_new_updates_message">Yeni güncelleme yok.</string>
 
     <string name="device_info">Cihaz Bilgileri</string>
     <string name="app_build">Uygulama Yapısı: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

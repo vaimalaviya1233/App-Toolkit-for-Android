@@ -26,6 +26,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "App Toolkit"
+rootProject.name = "App Toolkit for Android"
 include(":app")
 include(":apptoolkit")

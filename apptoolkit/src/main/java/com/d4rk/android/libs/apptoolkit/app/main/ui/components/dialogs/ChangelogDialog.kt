@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.main.ui.components.dialogs
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import dev.jeziellago.compose.markdowntext.MarkdownText
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
@@ -42,7 +42,7 @@ fun ChangelogDialog(
             try {
                 val content: String = client.get(changelogUrl).body()
                 val section = extractChangesForVersion(content, buildInfoProvider.appVersion)
-                changelogText.value = if (section.isNotBlank()) section else context.getString(R.string.no_new_updates_message)
+                changelogText.value = section.ifBlank { context.getString(R.string.no_new_updates_message) }
                 withContext(Dispatchers.IO) {
                     dataStore.saveLastSeenVersion(buildInfoProvider.appVersion)
                 }
@@ -64,11 +64,10 @@ fun ChangelogDialog(
             when {
                 changelogText.value == null && !isError.value -> Text(text = stringResource(id = R.string.loading_changelog_message))
                 isError.value -> Text(text = stringResource(id = R.string.error_loading_changelog_message))
-                else -> Column(modifier = Modifier.fillMaxWidth()) {
-                    changelogText.value!!.lines().forEach { line ->
-                        Text(text = line.trimStart('-',' '))
-                    }
-                }
+                else -> MarkdownText(
+                    modifier = Modifier.fillMaxWidth(),
+                    markdown = changelogText.value!!
+                )
             }
         }
     )
@@ -79,10 +78,11 @@ private fun extractChangesForVersion(markdown: String, version: String): String 
     val startIndex = lines.indexOfFirst { line -> line.contains(version) }
     if (startIndex == -1) return ""
     val sb = StringBuilder()
+    sb.appendLine(lines[startIndex])
     for (i in startIndex + 1 until lines.size) {
         val line = lines[i]
         if (line.startsWith("#")) break
-        if (line.isNotBlank()) sb.appendLine(line.trim())
+        sb.appendLine(line)
     }
     return sb.toString().trim()
 }
