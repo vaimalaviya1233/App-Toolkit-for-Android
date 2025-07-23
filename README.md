@@ -72,4 +72,4 @@ for you!
 __Privacy Policy__ [here](https://mihaicristiancondrea.github.io/profile/#privacy-policy-apps).
 __Terms of Service__ [here](https://mihaicristiancondrea.github.io/profile/#terms-of-service-apps).
 
-![license](https://imgur.com/QQlcEVT.png)]()
+![license](https://imgur.com/QQlcEVT.png)
