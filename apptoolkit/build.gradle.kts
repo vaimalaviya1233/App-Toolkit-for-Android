@@ -82,6 +82,7 @@ dependencies {
     api(dependencyNotation = libs.firebase.analytics)
     api(dependencyNotation = libs.firebase.crashlytics)
     api(dependencyNotation = libs.firebase.perf)
+    api(dependencyNotation = libs.firebase.appcheck.playintegrity)
 
     // Google
     api(dependencyNotation = libs.play.services.ads)

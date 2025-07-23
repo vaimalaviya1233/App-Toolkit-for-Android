@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
+import com.google.firebase.Firebase
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,10 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
 
     override fun onCreate() {
         super.onCreate()
+        Firebase.initialize(context = this)
+        Firebase.appCheck.installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance(),
+        )
         registerActivityLifecycleCallbacks(this)
         CoroutineScope(Dispatchers.IO).launch {
             initializeApp()

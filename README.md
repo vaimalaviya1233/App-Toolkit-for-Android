@@ -2,6 +2,8 @@
 
 AppToolkit is a versatile Android library designed to streamline development by providing pre-built components and utilities that adhere to modern design principles.
 
+The library initializes Firebase App Check with Play Integrity by default to help protect your Firebase resources from unauthorized access.
+
 ## Installation
 
 To integrate AppToolkit into your project, add the following dependency to your `build.gradle` file:
