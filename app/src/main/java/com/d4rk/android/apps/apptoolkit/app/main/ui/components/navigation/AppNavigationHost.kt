@@ -18,11 +18,11 @@ import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.Naviga
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import org.koin.core.context.GlobalContext
-import org.koin.core.qualifier.named
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import org.koin.core.context.GlobalContext
+import org.koin.core.qualifier.named
 
 @Composable
 fun AppNavigationHost(
@@ -48,8 +48,8 @@ fun handleNavigationItemClick(context : Context , item : NavigationDrawerItem , 
         com.d4rk.android.libs.apptoolkit.R.string.settings -> IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.updates -> {
-            val koin = GlobalContext.get().koin
-            val changelogUrl: String = koin.get(qualifier = named("github_changelog"))
+            val koin = GlobalContext.get()
+            val changelogUrl: String = koin.get<String>(qualifier = named("github_changelog"))
             IntentsHelper.openUrl(context = context , url = changelogUrl)
         }
         com.d4rk.android.libs.apptoolkit.R.string.share -> IntentsHelper.shareApp(context = context , shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
