@@ -1,8 +1,8 @@
-# AppToolkit v1.0.8
+# AppToolkit v1.0.8:
 
 - **Minor**: We've made some improvements for stability and overall usage of the app.
 
-# AppToolkit v1.0.7
+# AppToolkit v1.0.7:
 
 - **Minor**: We've made some improvements for stability and overall usage of the app.
 - **Patch**: This update includes minor bug fixes.
