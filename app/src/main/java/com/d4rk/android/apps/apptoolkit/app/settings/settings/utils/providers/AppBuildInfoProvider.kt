@@ -6,7 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 
 class AppBuildInfoProvider(val context : Context) : BuildInfoProvider {
 
-    override val packageName : String get() = "AppToolkit"
+    override val packageName : String get() = "App-Toolkit-for-Android"
 
     override val appVersion : String get() = BuildConfig.VERSION_NAME
 

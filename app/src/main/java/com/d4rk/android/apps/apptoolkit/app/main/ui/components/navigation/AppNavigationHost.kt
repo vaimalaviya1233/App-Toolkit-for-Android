@@ -51,10 +51,7 @@ fun handleNavigationItemClick(
     when (item.title) {
         com.d4rk.android.libs.apptoolkit.R.string.settings -> IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
         com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
-        com.d4rk.android.libs.apptoolkit.R.string.updates -> IntentsHelper.openUrl(
-            context = context,
-            url = changelogUrl,
-        )
+        com.d4rk.android.libs.apptoolkit.R.string.updates -> IntentsHelper.openUrl(context = context, url = changelogUrl,)
         com.d4rk.android.libs.apptoolkit.R.string.share -> IntentsHelper.shareApp(context = context , shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
     }
     if (drawerState != null && coroutineScope != null) {

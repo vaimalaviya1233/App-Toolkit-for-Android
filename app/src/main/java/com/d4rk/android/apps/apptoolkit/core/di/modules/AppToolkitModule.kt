@@ -31,8 +31,7 @@ val appToolkitModule : Module = module {
         )
     }
 
-    single(qualifier = named(name = "github_repository")) { "AppToolkit" }
-
+    single(qualifier = named(name = "github_repository")) { "App-Toolkit-for-Android" }
     single<GithubTarget> {
         GithubTarget(
             username = GithubConstants.GITHUB_USER,
