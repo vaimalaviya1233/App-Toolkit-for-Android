@@ -247,6 +247,18 @@ open class CommonDataStore(context : Context) {
         }
     }
 
+    // Cached changelog for last seen version
+    private val cachedChangelogKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_CACHED_CHANGELOG)
+    fun getCachedChangelog(default: String = "") : Flow<String> = dataStore.data.map { prefs: Preferences ->
+        prefs[cachedChangelogKey] ?: default
+    }
+
+    suspend fun saveCachedChangelog(changelog: String) {
+        dataStore.edit { prefs: MutablePreferences ->
+            prefs[cachedChangelogKey] = changelog
+        }
+    }
+
     suspend fun incrementSessionCount() {
         dataStore.edit { prefs : MutablePreferences ->
             val current : Long = prefs[sessionCountKey] ?: 0L

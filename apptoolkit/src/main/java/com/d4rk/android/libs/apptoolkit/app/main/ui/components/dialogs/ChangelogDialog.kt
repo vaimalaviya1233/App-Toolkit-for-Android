@@ -28,11 +28,14 @@ fun ChangelogDialog(
     buildInfoProvider: BuildInfoProvider,
     dataStore: CommonDataStore,
     lastSeenVersion: String,
+    cachedChangelog: String,
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
     val changelogText: MutableState<String?> = remember {
-        mutableStateOf(if (lastSeenVersion == buildInfoProvider.appVersion) "" else null)
+        mutableStateOf(
+            if (lastSeenVersion == buildInfoProvider.appVersion) cachedChangelog else null
+        )
     }
     val isError = remember { mutableStateOf(false) }
 
@@ -45,6 +48,7 @@ fun ChangelogDialog(
                 changelogText.value = section.ifBlank { context.getString(R.string.no_new_updates_message) }
                 withContext(Dispatchers.IO) {
                     dataStore.saveLastSeenVersion(buildInfoProvider.appVersion)
+                    dataStore.saveCachedChangelog(changelogText.value!!)
                 }
             } catch (_: Exception) {
                 isError.value = true
@@ -52,7 +56,11 @@ fun ChangelogDialog(
                 client.close()
             }
         } else {
-            changelogText.value = context.getString(R.string.no_new_updates_message)
+            changelogText.value = if (cachedChangelog.isNotBlank()) {
+                cachedChangelog
+            } else {
+                context.getString(R.string.no_new_updates_message)
+            }
         }
     }
 

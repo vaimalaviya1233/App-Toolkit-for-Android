@@ -36,5 +36,6 @@ open class DataStoreNamesConstants {
         const val DATA_STORE_FAVORITE_APPS = "favorite_apps"
         const val DATA_STORE_STARTUP_PAGE = "startup_page"
         const val DATA_STORE_LAST_SEEN_VERSION = "last_seen_version"
+        const val DATA_STORE_CACHED_CHANGELOG = "cached_changelog"
     }
 }

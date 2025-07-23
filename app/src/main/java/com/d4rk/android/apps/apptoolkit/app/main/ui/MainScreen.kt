@@ -128,6 +128,7 @@ fun MainScaffoldTabletContent() {
     val buildInfoProvider: BuildInfoProvider = koinInject()
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
     val lastSeenVersion by dataStore.getLastSeenVersion().collectAsState(initial = "")
+    val cachedChangelog by dataStore.getCachedChangelog().collectAsState(initial = "")
     var showChangelog by remember { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
@@ -195,6 +196,7 @@ fun MainScaffoldTabletContent() {
             buildInfoProvider = buildInfoProvider,
             dataStore = dataStore,
             lastSeenVersion = lastSeenVersion,
+            cachedChangelog = cachedChangelog,
             onDismiss = { showChangelog = false }
         )
     }

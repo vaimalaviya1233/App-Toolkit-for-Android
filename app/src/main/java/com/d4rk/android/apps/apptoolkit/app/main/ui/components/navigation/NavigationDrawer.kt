@@ -38,6 +38,7 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
     val buildInfoProvider: BuildInfoProvider = koinInject()
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
     val lastSeenVersion by dataStore.getLastSeenVersion().collectAsState(initial = "")
+    val cachedChangelog by dataStore.getCachedChangelog().collectAsState(initial = "")
     var showChangelog by remember { mutableStateOf(false) }
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
 
@@ -68,6 +69,7 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
             buildInfoProvider = buildInfoProvider,
             dataStore = dataStore,
             lastSeenVersion = lastSeenVersion,
+            cachedChangelog = cachedChangelog,
             onDismiss = { showChangelog = false }
         )
     }
