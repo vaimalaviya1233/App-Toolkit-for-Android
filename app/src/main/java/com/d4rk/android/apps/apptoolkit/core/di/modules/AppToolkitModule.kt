@@ -31,12 +31,12 @@ val appToolkitModule : Module = module {
         )
     }
 
-    single(named("github_repository")) { "AppToolkit" }
+    single(qualifier = named(name = "github_repository")) { "AppToolkit" }
 
     single<GithubTarget> {
         GithubTarget(
             username = GithubConstants.GITHUB_USER,
-            repository = get(qualifier = named(name = "AppToolkit")),
+            repository = get(qualifier = named("github_repository")),
         )
     }
 
