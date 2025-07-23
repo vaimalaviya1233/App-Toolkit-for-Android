@@ -129,7 +129,7 @@ dependencies {
     // About
     api(dependencyNotation = libs.aboutlibraries.compose.m3)
     api(dependencyNotation = libs.core)
-    api(libs.compose.markdown)
+    api(dependencyNotation = libs.compose.markdown)
 
     // Unit Tests
     testImplementation(libs.bundles.unitTest)
