@@ -235,6 +235,18 @@ open class CommonDataStore(context : Context) {
         prefs[reviewPromptedKey] == true
     }
 
+    // Last seen changelog version
+    private val lastSeenVersionKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_LAST_SEEN_VERSION)
+    fun getLastSeenVersion(default: String = "") : Flow<String> = dataStore.data.map { prefs: Preferences ->
+        prefs[lastSeenVersionKey] ?: default
+    }
+
+    suspend fun saveLastSeenVersion(version: String) {
+        dataStore.edit { prefs: MutablePreferences ->
+            prefs[lastSeenVersionKey] = version
+        }
+    }
+
     suspend fun incrementSessionCount() {
         dataStore.edit { prefs : MutablePreferences ->
             val current : Long = prefs[sessionCountKey] ?: 0L

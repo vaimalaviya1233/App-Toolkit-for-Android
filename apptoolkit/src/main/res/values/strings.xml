@@ -249,6 +249,7 @@
     <string name="loading_changelog_message">Fetching application changelog…</string>
     <string name="error_loading_eula_message">Unable to load the End User License Agreement. Please try again.</string>
     <string name="error_loading_changelog_message">Unable to load the application changelog. Please try again.</string>
+    <string name="no_new_updates_message">No new updates available.</string>
 
     <string name="device_info">Device Info</string>
     <string name="app_build">App Build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
