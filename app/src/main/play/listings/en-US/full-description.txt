@@ -1,6 +1,6 @@
-AppToolkit
+App Toolkit
 
-AppToolkit is a clean and lightweight demo app that showcases the reusable screens, components, and architecture powering my Android projects.
+App Toolkit is a clean and lightweight demo app that showcases the reusable screens, components, and architecture powering my Android projects.
 
 It includes a live preview of all the shared UI elements I’ve built for my apps — such as Settings, Help, Support, and more — as well as a dynamic list of my published apps from Google Play.
 
@@ -23,10 +23,10 @@ Benefits
 • Explore real, modular app structure
 
 How it works
-AppToolkit uses a modular architecture with a shared core that powers every screen. The home screen dynamically fetches all apps I’ve published on Google Play and allows you to open or install them with one tap. Every screen is live and functional — just like it appears in real apps.
+App Toolkit uses a modular architecture with a shared core that powers every screen. The home screen dynamically fetches all apps I’ve published on Google Play and allows you to open or install them with one tap. Every screen is live and functional — just like it appears in real apps.
 
 Get started today
-Download AppToolkit from the Google Play Store and explore the internal structure of real Android apps. It's free, easy to navigate, and the perfect way to discover how reusable design can elevate any project.
+Download App Toolkit from the Google Play Store and explore the internal structure of real Android apps. It's free, easy to navigate, and the perfect way to discover how reusable design can elevate any project.
 
 Feedback
 We are constantly updating and improving AppToolkit to give you the best possible experience. If you have any suggested features or improvements, please leave a review. In case something is not working correctly please let me know. When posting a low rating please describe what is wrong to give the possibility to fix that issue.

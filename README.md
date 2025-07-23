@@ -1,43 +1,75 @@
-# AppToolkit
+[![App Toolkit for Android](/app/src/main/play/listings/en-US/graphics/feature-graphic/play_store_feature_graphic.png "App Toolkit for Android")
 
-AppToolkit is a versatile Android library designed to streamline development by providing pre-built components and utilities that adhere to modern design principles.
+<a href="https://play.google.com/store/apps/details?id=com.d4rk.android.apps.apptoolkit"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>
 
-The library initializes Firebase App Check with Play Integrity by default to help protect your Firebase resources from unauthorized access.
+App Toolkit for Android
+==================
 
-## Installation
+**Explore smart components that powers all of our Android apps.**
 
-To integrate AppToolkit into your project, add the following dependency to your `build.gradle` file:
+App Toolkit is a clean and lightweight demo app that showcases the reusable screens, components, and
+architecture powering my Android projects.
 
-### **Kotlin DSL**:
+It includes a live preview of all the shared UI elements I’ve built for my apps — such as Settings,
+Help, Support, and more — as well as a dynamic list of my published apps from Google Play.
 
-```kotlin
-dependencies {
-    api("com.github.MihaiCristianCondrea:AppToolkit:+") {
-        isTransitive = true
-    }
-}
-```
+Whether you’re a developer, designer, or just curious about how modern Android apps are structured,
+AppToolkit gives you a hands-on look at the foundational UI blocks behind my work.
 
-### **Groovy DSL**:
+Our app is designed to be simple and easy to use, while also being fast and lightweight. Plus, it's
+free and open-source software!
 
-```groovy
-dependencies {
-    api('com.github.MihaiCristianCondrea:AppToolkit:+') {
-        transitive = true
-    }
-}
-```
+# Features
 
-**Note**: Enabling transitive dependencies ensures that all necessary dependencies included in AppToolkit are available in your project, simplifying setup and reducing potential conflicts.
+- Preview reusable screens
+- Built with Jetpack Compose
+- Lists all my published apps
+- Launch apps or open Play Store
+- Dynamic content
+- Supports Material You theming
 
-## Contributing
+# Benefits
 
-Contributions are welcome! Please fork the repository and submit a pull request. For major changes, open an issue first to discuss your ideas.
+- See how shared components work
+- Build your own UI toolkit faster
+- Discover my other apps
+- Explore real, modular app structure
 
-## License
+# Screenshots
 
-This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE.md) file for details.
+<table>
+  <tr>
+    <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/1-screenshot_welcome.png" width="300"></td>
+    <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/2-screenshot_apps.png" width="300"></td>
+    <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/3-screenshot_oboarding_theme.png" width="300"></td>
+  </tr>
+</table>
 
-## Contact
+# How it works
 
-For any questions or suggestions, feel free to reach out to me at [contact.mihaicristiancondrea@gmail.com](mailto:contact.mihaicristiancondrea@gmail.com).
+App Toolkit uses a modular architecture with a shared core that powers every screen. The home screen
+dynamically fetches all apps I’ve published on Google Play and allows you to open or install them
+with one tap. Every screen is live and functional — just like it appears in real apps.
+
+# Get started today
+
+Download App Toolkit from the Google Play Store and explore the internal structure of real Android
+apps. It's free, easy to navigate, and the perfect way to discover how reusable design can elevate
+any project.
+
+# Feedback
+
+We are constantly updating and improving AppToolkit to give you the best possible experience. If you
+have any suggested features or improvements, please leave a review. In case something is not working
+correctly please let me know. When posting a low rating please describe what is wrong to give the
+possibility to fix that issue.
+
+Thank you for choosing App Toolkit! We hope you enjoy using our app as much as we enjoyed creating it
+for you!
+
+# License
+
+__Privacy Policy__ [here](https://mihaicristiancondrea.github.io/profile/#privacy-policy-apps).
+__Terms of Service__ [here](https://mihaicristiancondrea.github.io/profile/#terms-of-service-apps).
+
+![license](https://imgur.com/QQlcEVT.png)]()
