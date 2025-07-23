@@ -8,7 +8,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewMo
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -35,16 +35,16 @@ val appToolkitModule : Module = module {
 
     single<GithubTarget> {
         GithubTarget(
-            username = "D4rK7355608",
-            repository = get(named("github_repository")),
+            username = GithubConstants.GITHUB_USER,
+            repository = get(qualifier = named(name = "AppToolkit")),
         )
     }
 
-    single(named("github_changelog")) {
-        AppLinks.githubChangelog(get<String>(named("github_repository")))
+    single(qualifier = named("github_changelog")) {
+        GithubConstants.githubChangelog(get<String>(named("github_repository")))
     }
 
-    single(named("github_token")) { BuildConfig.GITHUB_TOKEN }
+    single(qualifier = named("github_token")) { BuildConfig.GITHUB_TOKEN }
 
     single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }
 }

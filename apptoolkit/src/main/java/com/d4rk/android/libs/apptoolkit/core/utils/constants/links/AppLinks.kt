@@ -17,11 +17,4 @@ object AppLinks {
     const val CODE_OF_CONDUCT : String = "${GOOGLE_SITES_BASE}#code-of-conduct-website"
     const val LEGAL_NOTICES : String = "${GOOGLE_SITES_BASE}#legal-notices"
     const val GPL_V3 : String = "https://www.gnu.org/licenses/gpl-3.0"
-
-    // GitHub
-    private const val GITHUB_USER : String = "D4rK7355608"
-    const val GITHUB_BASE : String = "https://github.com/$GITHUB_USER/"
-    const val GITHUB_ISSUES_SUFFIX : String = "/issues/new"
-    const val GITHUB_RAW : String = "https://raw.githubusercontent.com/$GITHUB_USER"
-    fun githubChangelog(repository: String) : String = "$GITHUB_BASE$repository/blob/master/CHANGELOG.md"
 }
