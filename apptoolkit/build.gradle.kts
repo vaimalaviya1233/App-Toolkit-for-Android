@@ -129,6 +129,7 @@ dependencies {
     // About
     api(dependencyNotation = libs.aboutlibraries.compose.m3)
     api(dependencyNotation = libs.core)
+    api("com.github.jeziellago:compose-markdown:0.5.7")
 
     // Unit Tests
     testImplementation(libs.bundles.unitTest)

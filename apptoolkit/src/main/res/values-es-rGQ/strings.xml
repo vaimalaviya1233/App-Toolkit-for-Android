@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Recuperando el registro de cambios…</string>
     <string name="error_loading_eula_message">No se pudo cargar el acuerdo de licencia. Inténtalo de nuevo.</string>
     <string name="error_loading_changelog_message">No se pudo cargar el registro de cambios. Inténtalo de nuevo.</string>
+    <string name="no_new_updates_message">No hay nuevas actualizaciones disponibles.</string>
 
     <string name="device_info">Información del dispositivo</string>
     <string name="app_build">Compilación de la aplicación: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

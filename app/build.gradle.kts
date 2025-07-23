@@ -20,8 +20,8 @@ android {
         applicationId = "com.d4rk.android.apps.apptoolkit"
         minSdk = 23
         targetSdk = 36
-        versionCode = 43
-        versionName = "1.0.9"
+        versionCode = 44
+        versionName = "1.0.8"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters += listOf(

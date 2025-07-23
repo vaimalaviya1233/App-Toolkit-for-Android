@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Récupération du journal des modifications…</string>
     <string name="error_loading_eula_message">Impossible de charger l\'accord de licence. Veuillez réessayer.</string>
     <string name="error_loading_changelog_message">Impossible de charger le journal des modifications. Veuillez réessayer.</string>
+    <string name="no_new_updates_message">Aucune nouvelle mise à jour disponible.</string>
 
     <string name="device_info">Informations sur l\'appareil</string>
     <string name="app_build">Compilation de l\'application: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

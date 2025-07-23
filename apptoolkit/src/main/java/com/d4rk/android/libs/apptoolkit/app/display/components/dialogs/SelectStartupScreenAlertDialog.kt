@@ -46,6 +46,8 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
             onDismiss()
         },
         icon = Icons.Outlined.Home,
+        showDismissButton = false,
+        confirmButtonText = stringResource(id = R.string.done_button_content_description),
         title = stringResource(id = R.string.startup_page),
         content = {
             SelectStartupScreenAlertDialogContent(selectedPage, dataStore, entries, values, startupRoute)

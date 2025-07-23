@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Se preia jurnalul de modificări al aplicației…</string>
     <string name="error_loading_eula_message">Nu s-a putut încărca Acordul de Licență pentru Utilizatorul Final. Încearcă din nou.</string>
     <string name="error_loading_changelog_message">Nu s-a putut încărca jurnalul de modificări al aplicației. Încearcă din nou.</string>
+    <string name="no_new_updates_message">Nu există actualizări noi disponibile.</string>
 
     <string name="device_info">Informații despre dispozitiv</string>
     <string name="app_build">Compilare aplicație: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

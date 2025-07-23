@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Mengambil catatan perubahan aplikasi…</string>
     <string name="error_loading_eula_message">Tidak dapat memuat Perjanjian Lisensi Pengguna Akhir. Silakan coba lagi.</string>
     <string name="error_loading_changelog_message">Tidak dapat memuat catatan perubahan aplikasi. Silakan coba lagi.</string>
+    <string name="no_new_updates_message">Tidak ada pembaruan baru yang tersedia.</string>
 
     <string name="device_info">Informasi Perangkat</string>
     <string name="app_build">Build Aplikasi: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

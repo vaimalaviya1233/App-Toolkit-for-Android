@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Obteniendo registro de cambios de la aplicación…</string>
     <string name="error_loading_eula_message">No se pudo cargar el Acuerdo de Licencia de Usuario Final. Por favor, inténtalo de nuevo.</string>
     <string name="error_loading_changelog_message">No se pudo cargar el registro de cambios de la aplicación. Por favor, inténtalo de nuevo.</string>
+    <string name="no_new_updates_message">No hay nuevas actualizaciones disponibles.</string>
 
     <string name="device_info">Información del dispositivo</string>
     <string name="app_build">Compilación de la App: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

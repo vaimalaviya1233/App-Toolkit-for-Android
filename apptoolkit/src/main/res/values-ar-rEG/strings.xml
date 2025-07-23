@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">جارٍ جلب سجل تغييرات التطبيق…</string>
     <string name="error_loading_eula_message">تعذر تحميل اتفاقية ترخيص المستخدم النهائي. يرجى المحاولة مرة أخرى.</string>
     <string name="error_loading_changelog_message">تعذر تحميل سجل تغييرات التطبيق. يرجى المحاولة مرة أخرى.</string>
+    <string name="no_new_updates_message">لا توجد تحديثات جديدة متاحة.</string>
 
     <string name="device_info">معلومات الجهاز</string>
     <string name="app_build">إصدار التطبيق: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

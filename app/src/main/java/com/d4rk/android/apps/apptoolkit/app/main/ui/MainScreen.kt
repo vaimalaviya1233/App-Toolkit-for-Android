@@ -45,6 +45,9 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationD
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import com.d4rk.android.libs.apptoolkit.app.main.ui.components.dialogs.ChangelogDialog
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -122,6 +125,11 @@ fun MainScaffoldTabletContent() {
     val context: Context = LocalContext.current
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
+    val buildInfoProvider: BuildInfoProvider = koinInject()
+    val dataStore: CommonDataStore = CommonDataStore.getInstance(context)
+    val lastSeenVersion by dataStore.getLastSeenVersion().collectAsState(initial = "")
+    val cachedChangelog by dataStore.getCachedChangelog().collectAsState(initial = "")
+    var showChangelog by remember { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
     val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
@@ -170,6 +178,7 @@ fun MainScaffoldTabletContent() {
                     context = context,
                     item = item,
                     changelogUrl = changelogUrl,
+                    onChangelogRequested = { showChangelog = true },
                 )
             },
             content = {
@@ -179,5 +188,16 @@ fun MainScaffoldTabletContent() {
                     onFabVisibilityChanged = {},
                     paddingValues = PaddingValues())
             })
+    }
+
+    if (showChangelog) {
+        ChangelogDialog(
+            changelogUrl = changelogUrl,
+            buildInfoProvider = buildInfoProvider,
+            dataStore = dataStore,
+            lastSeenVersion = lastSeenVersion,
+            cachedChangelog = cachedChangelog,
+            onDismiss = { showChangelog = false }
+        )
     }
 }

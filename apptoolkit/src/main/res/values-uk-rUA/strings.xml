@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Отримання журналу змін…</string>
     <string name="error_loading_eula_message">Не вдалося завантажити ліцензійну угоду. Будь ласка, спробуйте знову.</string>
     <string name="error_loading_changelog_message">Не вдалося завантажити журнал змін. Будь ласка, спробуйте знову.</string>
+    <string name="no_new_updates_message">Немає нових оновлень.</string>
 
     <string name="device_info">Інформація про пристрій</string>
     <string name="app_build">Збірка додатка: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

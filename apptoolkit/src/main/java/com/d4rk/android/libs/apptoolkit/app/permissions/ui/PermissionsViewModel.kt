@@ -14,7 +14,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.flowOf
 
 
 class PermissionsViewModel(private val settingsProvider : PermissionsProvider , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<SettingsConfig , PermissionsEvent , PermissionsAction>(initialState = UiStateScreen(data = SettingsConfig(title = "" , categories = emptyList()))) {
@@ -27,20 +26,17 @@ class PermissionsViewModel(private val settingsProvider : PermissionsProvider , 
 
     private fun loadPermissions(context : Context) {
         launch(context = dispatcherProvider.io) {
-            try {
-                flowOf(value = settingsProvider.providePermissionsConfig(context = context)).collect { result : SettingsConfig ->
-                    if (result.categories.isNotEmpty()) {
-                        screenState.successData {
-                            copy(title = result.title , categories = result.categories)
-                        }
+            runCatching {
+                settingsProvider.providePermissionsConfig(context = context)
+            }.onSuccess { result : SettingsConfig ->
+                if (result.categories.isNotEmpty()) {
+                    screenState.successData {
+                        copy(title = result.title , categories = result.categories)
                     }
-                    else {
-                        screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
-                        screenState.updateState(ScreenState.NoData())
-                    }
+                } else {
+                    screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
+                    screenState.updateState(ScreenState.NoData())
                 }
-            } catch (_ : Exception) {
-                // Keep current loading state when provider fails
             }
         }
     }

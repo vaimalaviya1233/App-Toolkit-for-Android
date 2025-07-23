@@ -246,6 +246,7 @@
     <string name="loading_changelog_message">Загрузка журнала изменений приложения…</string>
     <string name="error_loading_eula_message">Не удалось загрузить лицензионное соглашение. Попробуйте снова.</string>
     <string name="error_loading_changelog_message">Не удалось загрузить журнал изменений приложения. Попробуйте снова.</string>
+    <string name="no_new_updates_message">Нет новых обновлений.</string>
 
     <string name="device_info">Информация об устройстве</string>
     <string name="app_build">Сборка приложения: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>

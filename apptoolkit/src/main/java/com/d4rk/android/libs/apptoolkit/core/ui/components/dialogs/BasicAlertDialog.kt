@@ -31,7 +31,8 @@ fun BasicAlertDialog(
     confirmButtonText : String? = null ,
     dismissButtonText : String? = null ,
     confirmEnabled : Boolean = true ,
-    dismissEnabled : Boolean = true
+    dismissEnabled : Boolean = true,
+    showDismissButton : Boolean = true
 ) {
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
@@ -56,12 +57,14 @@ fun BasicAlertDialog(
             Text(text = confirmButtonText ?: stringResource(id = android.R.string.ok))
         }
     } , dismissButton = {
-        OutlinedButton(modifier = Modifier.bounceClick(), onClick = {
-            view.playSoundEffect(SoundEffectConstants.CLICK)
-            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
-            onCancel()
-        } , enabled = dismissEnabled) {
-            Text(text = dismissButtonText ?: stringResource(id = android.R.string.cancel))
+        if(showDismissButton) {
+            OutlinedButton(modifier = Modifier.bounceClick(), onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+                onCancel()
+            } , enabled = dismissEnabled) {
+                Text(text = dismissButtonText ?: stringResource(id = android.R.string.cancel))
+            }
         }
     })
 }
