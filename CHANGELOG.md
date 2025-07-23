@@ -1,8 +1,15 @@
-# AppToolkit v1.0.8:
+# Version v1.0.9:
+
+- **New**: New animated startup screen for a modern first impression.
+- **New**: View the latest updates any time with our new in-app changelog dialog.
+- **Minor**: Navigation menu feels smoother (no more buzz on tap).
+- **Patch**: App now loads more reliably, with fixes for minor bugs and translation issues.
+
+# Version v1.0.8:
 
 - **Minor**: We've made some improvements for stability and overall usage of the app.
 
-# AppToolkit v1.0.7:
+# Version v1.0.7:
 
 - **Minor**: We've made some improvements for stability and overall usage of the app.
 - **Patch**: This update includes minor bug fixes.
