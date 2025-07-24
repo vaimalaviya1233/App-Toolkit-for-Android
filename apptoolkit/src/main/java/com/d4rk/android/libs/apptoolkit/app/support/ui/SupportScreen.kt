@@ -28,6 +28,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProductIds
+import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.ShortenLinkConstants
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
@@ -188,7 +189,7 @@ fun SupportScreenContent(
                 onClick = {
                     IntentsHelper.openUrl(
                         context = context,
-                        url = "https://direct-link.net/548212/agOqI7123501341"
+                        url = ShortenLinkConstants.LINKVERTISE_APP_DIRECT_LINK
                     )
                 },
                 icon = Icons.Outlined.Paid,
