@@ -1,16 +1,13 @@
-App Toolkit
-
 App Toolkit is a clean and lightweight demo app that showcases the reusable screens, components, and architecture powering my Android projects.
 
 It includes a live preview of all the shared UI elements I’ve built for my apps — such as Settings, Help, Support, and more — as well as a dynamic list of my published apps from Google Play.
 
-Whether you’re a developer, designer, or just curious about how modern Android apps are structured, AppToolkit gives you a hands-on look at the foundational UI blocks behind my work.
+Whether you’re a developer, designer, or just curious about how modern Android apps are structured, App Toolkit gives you a hands-on look at the foundational UI blocks behind my work.
 
 Our app is designed to be simple and easy to use, while also being fast and lightweight. Plus, it's free and open-source software!
 
 Features
 • Preview reusable screens
-• Built with Jetpack Compose
 • Lists all my published apps
 • Launch apps or open Play Store
 • Dynamic content
@@ -29,6 +26,6 @@ Get started today
 Download App Toolkit from the Google Play Store and explore the internal structure of real Android apps. It's free, easy to navigate, and the perfect way to discover how reusable design can elevate any project.
 
 Feedback
-We are constantly updating and improving AppToolkit to give you the best possible experience. If you have any suggested features or improvements, please leave a review. In case something is not working correctly please let me know. When posting a low rating please describe what is wrong to give the possibility to fix that issue.
+We are constantly updating and improving App Toolkit to give you the best possible experience. If you have any suggested features or improvements, please leave a review. In case something is not working correctly please let me know. When posting a low rating please describe what is wrong to give the possibility to fix that issue.
 
-Thank you for choosing AppToolkit! We hope you enjoy using our app as much as we enjoyed creating it for you!
+Thank you for choosing App Toolkit! We hope you enjoy using our app as much as we enjoyed creating it for you!

@@ -14,7 +14,7 @@ It includes a live preview of all the shared UI elements I’ve built for my app
 Help, Support, and more — as well as a dynamic list of my published apps from Google Play.
 
 Whether you’re a developer, designer, or just curious about how modern Android apps are structured,
-AppToolkit gives you a hands-on look at the foundational UI blocks behind my work.
+App Toolkit gives you a hands-on look at the foundational UI blocks behind my work.
 
 Our app is designed to be simple and easy to use, while also being fast and lightweight. Plus, it's
 free and open-source software!
@@ -22,7 +22,6 @@ free and open-source software!
 # Features
 
 - Preview reusable screens
-- Built with Jetpack Compose
 - Lists all my published apps
 - Launch apps or open Play Store
 - Dynamic content
@@ -60,7 +59,7 @@ any project.
 
 # Feedback
 
-We are constantly updating and improving AppToolkit to give you the best possible experience. If you
+We are constantly updating and improving App Toolkit to give you the best possible experience. If you
 have any suggested features or improvements, please leave a review. In case something is not working
 correctly please let me know. When posting a low rating please describe what is wrong to give the
 possibility to fix that issue.
