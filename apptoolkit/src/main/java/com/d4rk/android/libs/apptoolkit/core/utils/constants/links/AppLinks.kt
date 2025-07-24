@@ -12,9 +12,9 @@ object AppLinks {
     // Legal & Policy
     private const val GOOGLE_SITES_BASE : String = "https://mihaicristiancondrea.github.io/profile/"
     const val ADS_HELP_CENTER : String = "${GOOGLE_SITES_BASE}#ads-help-center"
-    const val PRIVACY_POLICY : String = "${GOOGLE_SITES_BASE}#privacy-policy-apps"
-    const val TERMS_OF_SERVICE : String = "${GOOGLE_SITES_BASE}#terms-of-service-apps"
-    const val CODE_OF_CONDUCT : String = "${GOOGLE_SITES_BASE}#code-of-conduct-website"
+    const val PRIVACY_POLICY : String = "${GOOGLE_SITES_BASE}#privacy-policy-end-user-software"
+    const val TERMS_OF_SERVICE : String = "${GOOGLE_SITES_BASE}#terms-of-service-end-user-software"
+    const val CODE_OF_CONDUCT : String = "${GOOGLE_SITES_BASE}#code-of-conduct"
     const val LEGAL_NOTICES : String = "${GOOGLE_SITES_BASE}#legal-notices"
     const val GPL_V3 : String = "https://www.gnu.org/licenses/gpl-3.0"
 
