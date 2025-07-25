@@ -23,6 +23,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.google.android.gms.ads.MobileAds
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +35,6 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     private val dataStore: DataStore by inject()
-    private val appUpdateManager: AppUpdateManager by inject()
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private var keepSplashVisible: Boolean = true
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkForUpdates() {
         lifecycleScope.launch {
             InAppUpdateHelper.performUpdate(
-                appUpdateManager = appUpdateManager,
+                appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity),
                 updateResultLauncher = updateResultLauncher,
             )
         }
