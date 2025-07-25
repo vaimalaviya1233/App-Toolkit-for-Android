@@ -12,8 +12,6 @@ import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -34,7 +32,6 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    single<AppUpdateManager> { AppUpdateManagerFactory.create(get()) }
     viewModel { MainViewModel(dispatcherProvider = get()) }
 
     single { FetchDeveloperAppsUseCase(client = get()) }
