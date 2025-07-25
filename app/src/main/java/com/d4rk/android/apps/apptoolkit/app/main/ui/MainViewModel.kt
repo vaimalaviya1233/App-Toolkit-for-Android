@@ -9,21 +9,14 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.PerformInAppUpdateUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.flowOn
 
-class MainViewModel(private val performInAppUpdateUseCase : PerformInAppUpdateUseCase , private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
+
+class MainViewModel(private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
 
     init {
         onEvent(event = MainEvent.LoadNavigation)
@@ -32,17 +25,6 @@ class MainViewModel(private val performInAppUpdateUseCase : PerformInAppUpdateUs
     override fun onEvent(event : MainEvent) {
         when (event) {
             is MainEvent.LoadNavigation -> loadNavigationItems()
-            is MainEvent.CheckForUpdates -> checkAppUpdate()
-        }
-    }
-
-    private fun checkAppUpdate() {
-        launch(context = dispatcherProvider.io) {
-            performInAppUpdateUseCase(Unit).flowOn(dispatcherProvider.default).collect { result : DataState<Int , Errors> ->
-                if (result is DataState.Error) {
-                    screenState.showSnackbar(snackbar = UiSnackbar(message = UiTextHelper.StringResource(R.string.snack_update_failed) , isError = true , timeStamp = System.currentTimeMillis() , type = ScreenMessageType.SNACKBAR))
-                }
-            }
         }
     }
 
