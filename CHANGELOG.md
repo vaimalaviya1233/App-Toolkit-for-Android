@@ -1,4 +1,4 @@
-# Version 1.0.9:
+# Version 1.1.0:
 
 - **New**: New animated startup screen for a modern first impression.
 - **New**: View the latest updates any time with our new in-app changelog dialog.
