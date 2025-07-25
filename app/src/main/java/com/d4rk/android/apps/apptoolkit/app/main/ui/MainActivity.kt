@@ -22,6 +22,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import com.google.android.gms.ads.MobileAds
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.CoroutineScope
@@ -29,8 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.getViewModel
-import com.google.android.play.core.appupdate.AppUpdateManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private val appUpdateManager: AppUpdateManager by inject()
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
-    private lateinit var viewModel: MainViewModel
     private var keepSplashVisible: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,12 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch {
-            InAppUpdateHelper.performUpdate(
-                appUpdateManager = appUpdateManager,
-                updateResultLauncher = updateResultLauncher,
-            )
-        }
+        checkForUpdates()
         checkUserConsent()
     }
 
@@ -67,8 +60,6 @@ class MainActivity : AppCompatActivity() {
             MobileAds.initialize(this@MainActivity) {}
             ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
         }
-
-        viewModel = getViewModel()
     }
 
     private fun handleStartup() {
@@ -118,6 +109,15 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch { dataStore.setHasPromptedReview(value = true) }
             }
             dataStore.incrementSessionCount()
+        }
+    }
+
+    private fun checkForUpdates() {
+        lifecycleScope.launch {
+            InAppUpdateHelper.performUpdate(
+                appUpdateManager = appUpdateManager,
+                updateResultLauncher = updateResultLauncher,
+            )
         }
     }
 }
