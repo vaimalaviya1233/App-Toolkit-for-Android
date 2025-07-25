@@ -13,8 +13,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.libs.apptoolkit.app.main.utils.InAppUpdateHelper
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
@@ -30,11 +30,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.core.parameter.parametersOf
+import com.google.android.play.core.appupdate.AppUpdateManager
 
 class MainActivity : AppCompatActivity() {
 
     private val dataStore: DataStore by inject()
+    private val appUpdateManager: AppUpdateManager by inject()
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private lateinit var viewModel: MainViewModel
@@ -52,7 +53,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.onEvent(event = MainEvent.CheckForUpdates)
+        lifecycleScope.launch {
+            InAppUpdateHelper.performUpdate(
+                appUpdateManager = appUpdateManager,
+                updateResultLauncher = updateResultLauncher,
+            )
+        }
         checkUserConsent()
     }
 
@@ -62,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
         }
 
-        viewModel = getViewModel { parametersOf(updateResultLauncher) }
+        viewModel = getViewModel()
     }
 
     private fun handleStartup() {
