@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.apps.apptoolkit.core.di.initializeKoin
 import com.d4rk.android.apps.apptoolkit.core.utils.constants.ads.AdsConstants
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
@@ -36,7 +37,7 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     }
 
     override fun onStart(owner: LifecycleOwner) {
-        currentActivity?.let { adsCoreManager.showAdIfAvailable(it) }
+        currentActivity?.let { adsCoreManager.showAdIfAvailable(it, owner.lifecycleScope) }
     }
 
     override fun onResume(owner: LifecycleOwner) {

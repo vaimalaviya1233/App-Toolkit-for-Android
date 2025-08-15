@@ -14,7 +14,11 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.EmptyCoroutineContext
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.lang.reflect.InvocationTargetException
@@ -22,6 +26,12 @@ import kotlin.test.assertFailsWith
 import java.util.Date
 
 class TestAdsCoreManager {
+    private val testScope = CoroutineScope(Dispatchers.Unconfined)
+    private val noopContinuation = object : Continuation<Unit> {
+        override val context = EmptyCoroutineContext
+        override fun resumeWith(result: Result<Unit>) {}
+    }
+
     @Test
     fun `initializeAds triggers MobileAds`() {
         println("🚀 [TEST] initializeAds triggers MobileAds")
@@ -45,7 +55,7 @@ class TestAdsCoreManager {
         val manager = AdsCoreManager(context, provider)
         val activity = mockk<Activity>()
 
-        manager.showAdIfAvailable(activity)
+        manager.showAdIfAvailable(activity, testScope)
         println("🏁 [TEST DONE] showAdIfAvailable before init does nothing")
     }
 
@@ -112,11 +122,12 @@ class TestAdsCoreManager {
         val method = inner2.javaClass.getDeclaredMethod(
             "showAdIfAvailable",
             Activity::class.java,
-            OnShowAdCompleteListener::class.java
+            OnShowAdCompleteListener::class.java,
+            Continuation::class.java
         )
         method.isAccessible = true
         val listener = object : OnShowAdCompleteListener { override fun onShowAdComplete() { completed = true } }
-        method.invoke(inner2, mockk<Activity>(), listener)
+        method.invoke(inner2, mockk<Activity>(), listener, noopContinuation)
 
         assert(completed)
         verify { AppOpenAd.load(any(), any(), any(), any()) }
@@ -154,12 +165,13 @@ class TestAdsCoreManager {
         val method2 = inner3.javaClass.getDeclaredMethod(
             "showAdIfAvailable",
             Activity::class.java,
-            OnShowAdCompleteListener::class.java
+            OnShowAdCompleteListener::class.java,
+            Continuation::class.java
         )
         method2.isAccessible = true
         method2.invoke(inner3, mockk<Activity>(), object : OnShowAdCompleteListener {
             override fun onShowAdComplete() {}
-        })
+        }, noopContinuation)
 
         slot.captured.onAdDismissedFullScreenContent()
 
@@ -188,7 +200,7 @@ class TestAdsCoreManager {
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
 
         val activity = mockk<Activity>()
-        manager.showAdIfAvailable(activity)
+        manager.showAdIfAvailable(activity, testScope)
 
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
         println("🏁 [TEST DONE] ads disabled skips load and show")
@@ -258,10 +270,11 @@ class TestAdsCoreManager {
         val method = inner.javaClass.getDeclaredMethod(
             "showAdIfAvailable",
             Activity::class.java,
-            OnShowAdCompleteListener::class.java
+            OnShowAdCompleteListener::class.java,
+            Continuation::class.java
         )
         method.isAccessible = true
-        method.invoke(inner, mockk<Activity>(), mockk<OnShowAdCompleteListener>())
+        method.invoke(inner, mockk<Activity>(), mockk<OnShowAdCompleteListener>(), noopContinuation)
 
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
         println("🏁 [TEST DONE] showAdIfAvailable ignores when already showing")
@@ -362,7 +375,7 @@ class TestAdsCoreManager {
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
 
-        manager.showAdIfAvailable(mockk())
+        manager.showAdIfAvailable(mockk(), testScope)
 
         assert(!slot.captured)
         verify(exactly = 0) { AppOpenAd.load(any(), any(), any(), any()) }
@@ -388,7 +401,7 @@ class TestAdsCoreManager {
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
 
-        manager.showAdIfAvailable(mockk())
+        manager.showAdIfAvailable(mockk(), testScope)
 
         assert(slot.captured)
         verify { AppOpenAd.load(any(), any(), any(), any()) }
