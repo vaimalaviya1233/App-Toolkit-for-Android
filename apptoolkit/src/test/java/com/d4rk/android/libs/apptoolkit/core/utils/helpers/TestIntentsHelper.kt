@@ -145,9 +145,15 @@ class TestIntentsHelper {
         println("🚀 [TEST] shareApp builds chooser intent")
         val context = mockk<Context>()
         val res = mockk<Resources>()
+        every { context.packageName } returns "pkg"
         every { context.resources } returns res
         every { res.getText(R.string.send_email_using) } returns "send"
-        every { context.getString(R.string.summary_share_message, any()) } returns "msg"
+        every {
+            context.getString(
+                R.string.summary_share_message,
+                "${AppLinks.PLAY_STORE_APP}pkg"
+            )
+        } returns "msg"
         val slot = slot<Intent>()
         justRun { context.startActivity(capture(slot)) }
 
@@ -226,9 +232,15 @@ class TestIntentsHelper {
         println("🚀 [TEST] shareApp propagates exception")
         val context = mockk<Context>()
         val res = mockk<Resources>()
+        every { context.packageName } returns "pkg"
         every { context.resources } returns res
         every { res.getText(R.string.send_email_using) } returns "send"
-        every { context.getString(R.string.summary_share_message, any()) } returns "msg"
+        every {
+            context.getString(
+                R.string.summary_share_message,
+                "${AppLinks.PLAY_STORE_APP}pkg"
+            )
+        } returns "msg"
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
         assertFailsWith<RuntimeException> {
@@ -328,9 +340,15 @@ class TestIntentsHelper {
         println("🚀 [TEST] shareApp uses provided chooser title")
         val context = mockk<Context>()
         val res = mockk<Resources>()
+        every { context.packageName } returns "pkg"
         every { context.resources } returns res
         every { res.getText(R.string.send_email_using) } returns "Share via \u2728"
-        every { context.getString(R.string.summary_share_message, any()) } returns "msg"
+        every {
+            context.getString(
+                R.string.summary_share_message,
+                "${AppLinks.PLAY_STORE_APP}pkg"
+            )
+        } returns "msg"
         val slot = slot<Intent>()
         justRun { context.startActivity(capture(slot)) }
 

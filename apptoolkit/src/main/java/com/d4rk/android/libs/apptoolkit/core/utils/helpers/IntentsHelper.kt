@@ -27,11 +27,18 @@ object IntentsHelper {
      *
      * @param context The Android context in which the URL should be opened.
      * @param url The URL to open.
+     * @return `true` if the URL could be handled, `false` otherwise.
      */
-    fun openUrl(context : Context , url : String) {
-        Intent(Intent.ACTION_VIEW , url.toUri()).let { intent ->
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun openUrl(context : Context , url : String) : Boolean {
+        val intent = Intent(Intent.ACTION_VIEW , url.toUri()).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
+            true
+        }
+        else {
+            false
         }
     }
 
@@ -42,11 +49,18 @@ object IntentsHelper {
      *
      * @param context The Android context in which the activity should be opened.
      * @param activityClass The class of the activity to open.
+     * @return `true` if the activity could be launched, `false` otherwise.
      */
-    fun openActivity(context : Context , activityClass : Class<*>) {
-        Intent(context , activityClass).let { intent ->
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun openActivity(context : Context , activityClass : Class<*>) : Boolean {
+        val intent = Intent(context , activityClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
+            true
+        }
+        else {
+            false
         }
     }
 
@@ -57,8 +71,9 @@ object IntentsHelper {
      * The activity runs in a new task.
      *
      * @param context The Android context in which the app's notification settings should be opened.
+     * @return `true` if the settings screen was opened, `false` otherwise.
      */
-    fun openAppNotificationSettings(context : Context) {
+    fun openAppNotificationSettings(context : Context) : Boolean {
         val intent : Intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                 putExtra(Settings.EXTRA_APP_PACKAGE , context.packageName)
@@ -71,7 +86,13 @@ object IntentsHelper {
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        return if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+            true
+        }
+        else {
+            false
+        }
     }
 
     /**
@@ -81,8 +102,9 @@ object IntentsHelper {
      * cannot be resolved, it falls back to the general settings screen.
      *
      * @param context The Android context used to start the activity.
+     * @return `true` if a settings screen could be opened, `false` otherwise.
      */
-    fun openDisplaySettings(context : Context) {
+    fun openDisplaySettings(context : Context) : Boolean {
         val packageManager = context.packageManager
 
         val displayIntent = Intent(Settings.ACTION_DISPLAY_SETTINGS).apply {
@@ -93,11 +115,16 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        when {
-            displayIntent.resolveActivity(packageManager) != null ->
+        return when {
+            displayIntent.resolveActivity(packageManager) != null -> {
                 context.startActivity(displayIntent)
-            settingsIntent.resolveActivity(packageManager) != null ->
+                true
+            }
+            settingsIntent.resolveActivity(packageManager) != null -> {
                 context.startActivity(settingsIntent)
+                true
+            }
+            else -> false
         }
     }
 
@@ -108,15 +135,17 @@ object IntentsHelper {
      *
      * @param context The context used to start the intent.
      * @param packageName The package name of the application to display.
+     * @return `true` if a suitable handler was found, `false` otherwise.
      */
-    fun openPlayStoreForApp(context : Context , packageName : String) {
+    fun openPlayStoreForApp(context : Context , packageName : String) : Boolean {
         val marketIntent = Intent(
             Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}$packageName".toUri()
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        if (marketIntent.resolveActivity(context.packageManager) != null) {
+        return if (marketIntent.resolveActivity(context.packageManager) != null) {
             context.startActivity(marketIntent)
+            true
         }
         else {
             openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
@@ -128,6 +157,7 @@ object IntentsHelper {
      *
      * This function constructs a share message using a provided string resource and the app's Play Store link.
      * It then creates an ACTION_SEND intent with this message and uses a chooser intent to present the user with options for sharing the message (e.g., email, messaging apps).
+     * If the chooser intent is launched without [Intent.FLAG_ACTIVITY_NEW_TASK], the provided context must be an [android.app.Activity].
      *
      * @param context The Android context in which the share sheet should be opened.
      * @param shareMessageFormat The resource ID of the string to be used as the base for the share message. This string should include a placeholder, where the app's playstore link will be injected.
@@ -135,19 +165,26 @@ object IntentsHelper {
      *                           The %s will be replaced by the app's Play Store URL.
      */
     fun shareApp(context : Context , shareMessageFormat : Int) {
-        val messageToShare : String = context.getString(shareMessageFormat , "${AppLinks.PLAY_STORE_APP}=${context.packageName}")
+        val messageToShare : String = context.getString(shareMessageFormat , "${AppLinks.PLAY_STORE_APP}${context.packageName}")
         val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT , messageToShare)
             type = "text/plain"
         }
-        context.startActivity(
-            Intent.createChooser(
-                sendIntent , context.resources.getText(R.string.send_email_using)
-            )
+        val chooser = Intent.createChooser(
+            sendIntent , context.resources.getText(R.string.send_email_using)
         )
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(chooser)
     }
 
+    /**
+     * Sends an email to the developer's contact address.
+     *
+     * A chooser intent is used to let the user select their preferred email client. The chooser is launched with
+     * [Intent.FLAG_ACTIVITY_NEW_TASK] to allow starting from a non-activity context. If this flag is removed, an
+     * [android.app.Activity] context must be supplied.
+     */
     fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
         val developerEmail = AppLinks.CONTACT_EMAIL
 
@@ -161,8 +198,10 @@ object IntentsHelper {
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
         val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
-        context.startActivity(
-            Intent.createChooser(emailIntent , context.getString(R.string.send_email_using))
+        val chooser = Intent.createChooser(
+            emailIntent , context.getString(R.string.send_email_using)
         )
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(chooser)
     }
 }
