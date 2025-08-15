@@ -47,7 +47,8 @@ fun ChangelogDialog(
             runCatching {
                 val content: String = client.get(changelogUrl).body()
                 val section = extractChangesForVersion(content, buildInfoProvider.appVersion)
-                changelogText.value = section.ifBlank { context.getString(R.string.no_new_updates_message) }
+                changelogText.value =
+                    section.ifBlank { context.getString(R.string.no_new_updates_message) }
             }.onFailure {
                 isError.value = true
             }
@@ -72,27 +73,32 @@ fun ChangelogDialog(
         icon = Icons.Outlined.NewReleases,
         onCancel = onDismiss,
         showDismissButton = false,
-        confirmButtonText = if (isError.value) stringResource(id = R.string.try_again) else stringResource(id = R.string.done_button_content_description),
+        confirmButtonText = if (isError.value) stringResource(id = R.string.try_again) else stringResource(
+            id = R.string.done_button_content_description
+        ),
         title = stringResource(id = R.string.changelog_title),
         content = {
+            val currentChangelogText = changelogText.value
+            val currentIsError = isError.value
+
             when {
-                changelogText.value == null && !isError.value -> Row(verticalAlignment = Alignment.CenterVertically) {
+                currentChangelogText == null && !currentIsError -> Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator()
                     LargeHorizontalSpacer()
                     Text(text = stringResource(id = R.string.loading_changelog_message))
                 }
-                isError.value -> Column(verticalArrangement = Arrangement.Center) {
+
+                currentIsError -> Column(verticalArrangement = Arrangement.Center) {
                     Text(text = stringResource(id = R.string.error_loading_changelog_message))
                 }
-                else -> changelogText.value?.let { markdownContent ->
+
+                else -> currentChangelogText?.let { markdownContent ->
                     MarkdownText(
-                        modifier = Modifier.fillMaxWidth(),
-                        markdown = markdownContent
+                        modifier = Modifier.fillMaxWidth(), markdown = markdownContent
                     )
                 }
             }
-        }
-    )
+        })
 }
 
 private fun extractChangesForVersion(markdown: String, version: String): String {

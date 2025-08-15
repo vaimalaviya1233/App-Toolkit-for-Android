@@ -25,7 +25,32 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters += listOf(
-            "ar-rEG" , "bg-rBG" , "bn-rBD" , "de-rDE" , "en" , "es-rGQ" , "es-rMX" , "fil-rPH" , "fr-rFR" , "hi-rIN" , "hu-rHU" , "in-rID" , "it-rIT" , "ja-rJP" , "ko-rKR" , "pl-rPL" , "pt-rBR" , "ro-rRO" , "ru-rRU" , "sv-rSE" , "th-rTH" , "tr-rTR" , "uk-rUA" , "ur-rPK" , "vi-rVN" , "zh-rTW"
+            "ar-rEG",
+            "bg-rBG",
+            "bn-rBD",
+            "de-rDE",
+            "en",
+            "es-rGQ",
+            "es-rMX",
+            "fil-rPH",
+            "fr-rFR",
+            "hi-rIN",
+            "hu-rHU",
+            "in-rID",
+            "it-rIT",
+            "ja-rJP",
+            "ko-rKR",
+            "pl-rPL",
+            "pt-rBR",
+            "ro-rRO",
+            "ru-rRU",
+            "sv-rSE",
+            "th-rTH",
+            "tr-rTR",
+            "uk-rUA",
+            "ur-rPK",
+            "vi-rVN",
+            "zh-rTW"
         )
         vectorDrawables {
             useSupportLibrary = true
@@ -57,8 +82,7 @@ android {
                 keyAlias = signingProps["KEY_ALIAS"].toString()
                 keyPassword = signingProps["KEY_PASSWORD"].toString()
             }
-        }
-        else {
+        } else {
             android.buildTypes.getByName("release").signingConfig = null
         }
     }
@@ -83,7 +107,10 @@ android {
             multiDexEnabled = true
             isMinifyEnabled = false
             isShrinkResources = false
-            proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt") , "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 

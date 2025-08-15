@@ -1,3 +1,10 @@
+# Version 1.1.1:
+
+- **Patch**: Corrected the close button colors in snackbars for better visibility.
+- **Patch**: Resolved User Messaging Platform (UMP) crashes that occurred on certain devices and in specific scenarios.
+- **Minor**: Implemented several small quality of life improvements.
+- **Patch**: Addressed various minor bugs to enhance overall stability.
+
 # Version 1.1.0:
 
 - **New**: New animated startup screen for a modern first impression.
