@@ -36,6 +36,7 @@ class TestAdsCoreManager {
     fun `initializeAds triggers MobileAds`() {
         println("🚀 [TEST] initializeAds triggers MobileAds")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
 
@@ -51,6 +52,7 @@ class TestAdsCoreManager {
     fun `showAdIfAvailable before init does nothing`() {
         println("🚀 [TEST] showAdIfAvailable before init does nothing")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         val activity = mockk<Activity>()
@@ -63,6 +65,7 @@ class TestAdsCoreManager {
     fun `loadAd does not load when already loading or available`() {
         println("🚀 [TEST] loadAd does not load when already loading or available")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -102,6 +105,7 @@ class TestAdsCoreManager {
     fun `showAdIfAvailable loads when no ad`() {
         println("🚀 [TEST] showAdIfAvailable loads when no ad")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -138,6 +142,7 @@ class TestAdsCoreManager {
     fun `callback dismiss reloads ad`() {
         println("🚀 [TEST] callback dismiss reloads ad")
         val context = mockk<Context>(relaxed = true)
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -186,6 +191,7 @@ class TestAdsCoreManager {
     fun `ads disabled skips load and show`() {
         println("🚀 [TEST] ads disabled skips load and show")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -210,6 +216,7 @@ class TestAdsCoreManager {
     fun `load failure resets loading flag`() {
         println("🚀 [TEST] load failure resets loading flag")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -247,6 +254,7 @@ class TestAdsCoreManager {
     fun `showAdIfAvailable ignores when already showing`() {
         println("🚀 [TEST] showAdIfAvailable ignores when already showing")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -284,6 +292,7 @@ class TestAdsCoreManager {
     fun `concurrent load requests chain correctly`() {
         println("🚀 [TEST] concurrent load requests chain correctly")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -328,6 +337,7 @@ class TestAdsCoreManager {
     fun `loadAd propagates exceptions from AppOpenAd`() {
         println("🚀 [TEST] loadAd propagates exceptions from AppOpenAd")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
         manager.initializeAds("unit")
@@ -360,6 +370,7 @@ class TestAdsCoreManager {
     fun `ads disabled by default when debug build`() {
         println("🚀 [TEST] ads disabled by default when debug build")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns true
         val manager = AdsCoreManager(context, provider)
@@ -386,6 +397,7 @@ class TestAdsCoreManager {
     fun `ads enabled by default when release build`() {
         println("🚀 [TEST] ads enabled by default when release build")
         val context = mockk<Context>()
+        every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns false
         val manager = AdsCoreManager(context, provider)

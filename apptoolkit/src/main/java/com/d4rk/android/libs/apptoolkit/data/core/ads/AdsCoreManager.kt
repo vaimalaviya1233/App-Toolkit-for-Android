@@ -43,8 +43,9 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
             }
             isLoadingAd = true
             val request = AdRequest.Builder().build()
+            val appContext = context.applicationContext ?: context
             AppOpenAd.load(
-                context , appOpenUnitId , request , object : AppOpenAd.AppOpenAdLoadCallback() {
+                appContext , appOpenUnitId , request , object : AppOpenAd.AppOpenAdLoadCallback() {
                     override fun onAdLoaded(ad : AppOpenAd) {
                         appOpenAd = ad
                         isLoadingAd = false
@@ -84,7 +85,7 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
             }
             if (! isAdAvailable()) {
                 onShowAdCompleteListener.onShowAdComplete()
-                loadAd(context = activity)
+                loadAd(context = this@AdsCoreManager.context)
                 return
             }
 
@@ -93,14 +94,14 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
                     appOpenAd = null
                     isShowingAd = false
                     onShowAdCompleteListener.onShowAdComplete()
-                    loadAd(context = activity)
+                    loadAd(context = this@AdsCoreManager.context)
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError : AdError) {
                     appOpenAd = null
                     isShowingAd = false
                     onShowAdCompleteListener.onShowAdComplete()
-                    loadAd(context = activity)
+                    loadAd(context = this@AdsCoreManager.context)
                 }
 
                 override fun onAdShowedFullScreenContent() {
