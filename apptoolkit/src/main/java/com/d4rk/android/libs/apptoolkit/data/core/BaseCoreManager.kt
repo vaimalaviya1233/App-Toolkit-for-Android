@@ -60,4 +60,9 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     override fun onActivityStopped(activity : Activity) {}
     override fun onActivitySaveInstanceState(activity : Activity , outState : Bundle) {}
     override fun onActivityDestroyed(activity : Activity) {}
+
+    override fun onTerminate() {
+        super.onTerminate()
+        billingRepository.close()
+    }
 }
