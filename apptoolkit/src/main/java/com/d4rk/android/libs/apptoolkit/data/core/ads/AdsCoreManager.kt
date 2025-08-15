@@ -12,7 +12,8 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.util.Date
 
 open class AdsCoreManager(protected val context : Context , val buildInfoProvider : BuildInfoProvider) {
@@ -24,8 +25,10 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
         appOpenAdManager = AppOpenAdManager(appOpenUnitId)
     }
 
-    fun showAdIfAvailable(activity : Activity) {
-        appOpenAdManager?.showAdIfAvailable(activity = activity)
+    fun showAdIfAvailable(activity : Activity , scope : CoroutineScope) {
+        scope.launch {
+            appOpenAdManager?.showAdIfAvailable(activity = activity)
+        }
     }
 
     private inner class AppOpenAdManager(private val appOpenUnitId : String) {
@@ -64,18 +67,17 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo()
         }
 
-        fun showAdIfAvailable(activity : Activity) {
+        suspend fun showAdIfAvailable(activity : Activity) {
             showAdIfAvailable(activity = activity , onShowAdCompleteListener = object : OnShowAdCompleteListener {
                 override fun onShowAdComplete() {}
             })
         }
 
-        fun showAdIfAvailable(
+        suspend fun showAdIfAvailable(
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
-            val isAdsChecked : Boolean = runBlocking {
+            val isAdsChecked : Boolean =
                 dataStore.ads(default = ! buildInfoProvider.isDebugBuild).first()
-            }
 
             if (isShowingAd || ! isAdsChecked) {
                 return
