@@ -28,7 +28,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
     val context: Context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean? by dataStore.ads(default = !buildInfoProvider.isDebugBuild)
-        .map<Boolean?> { it }
+        .map { it as Boolean? }
         .collectAsStateWithLifecycle(initialValue = null)
 
     if (showAds == true) {
