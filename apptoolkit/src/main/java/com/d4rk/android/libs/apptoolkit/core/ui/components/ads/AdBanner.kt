@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,8 +22,8 @@ import org.koin.compose.koinInject
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoProvider : BuildInfoProvider = koinInject()) {
     val context: Context = LocalContext.current
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val showAds : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsState(initial = true)
+    val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
+    val showAds : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsStateWithLifecycle(initialValue = true)
 
     if (showAds) {
         val adView = remember { AdView(context) }
