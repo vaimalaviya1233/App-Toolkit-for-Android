@@ -149,7 +149,15 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
                         .build()
                 )
             ).build()
-        billingClient.launchBillingFlow(activity, params)
+        val billingResult = billingClient.launchBillingFlow(activity, params)
+        if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            val result = if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+                PurchaseResult.UserCancelled
+            } else {
+                PurchaseResult.Failed(billingResult.debugMessage)
+            }
+            scope.launch { _purchaseResult.emit(result) }
+        }
     }
 }
 
