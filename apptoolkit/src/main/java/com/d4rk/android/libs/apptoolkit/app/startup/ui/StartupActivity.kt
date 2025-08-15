@@ -57,8 +57,10 @@ class StartupActivity : AppCompatActivity() {
     }
 
     private fun checkUserConsent() {
-        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        ConsentFormHelper.showConsentFormIfRequired(activity = this , consentInfo = consentInfo)
-        consentFormLoaded = true
+        lifecycleScope.launch {
+            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this@StartupActivity)
+            ConsentFormHelper.showConsentFormIfRequired(activity = this@StartupActivity , consentInfo = consentInfo)
+            consentFormLoaded = true
+        }
     }
 }

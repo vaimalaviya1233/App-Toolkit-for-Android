@@ -25,10 +25,10 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -55,9 +55,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeDependencies() {
-        CoroutineScope(context = Dispatchers.IO).launch {
+        lifecycleScope.launch {
             MobileAds.initialize(this@MainActivity) {}
-            ConsentManagerHelper.applyInitialConsent(dataStore = dataStore)
+            withContext(Dispatchers.IO) {
+                ConsentManagerHelper.applyInitialConsent(dataStore)
+            }
         }
     }
 
@@ -92,8 +94,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkUserConsent() {
-        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        ConsentFormHelper.showConsentFormIfRequired(activity = this, consentInfo = consentInfo)
+        lifecycleScope.launch {
+            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this@MainActivity)
+            ConsentFormHelper.showConsentFormIfRequired(activity = this@MainActivity, consentInfo = consentInfo)
+        }
     }
 
     private fun checkInAppReview() {
