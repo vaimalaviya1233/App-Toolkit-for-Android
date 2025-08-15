@@ -27,11 +27,18 @@ object IntentsHelper {
      *
      * @param context The Android context in which the URL should be opened.
      * @param url The URL to open.
+     * @return `true` if the URL could be handled, `false` otherwise.
      */
-    fun openUrl(context : Context , url : String) {
-        Intent(Intent.ACTION_VIEW , url.toUri()).let { intent ->
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun openUrl(context : Context , url : String) : Boolean {
+        val intent = Intent(Intent.ACTION_VIEW , url.toUri()).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
+            true
+        }
+        else {
+            false
         }
     }
 
@@ -42,11 +49,18 @@ object IntentsHelper {
      *
      * @param context The Android context in which the activity should be opened.
      * @param activityClass The class of the activity to open.
+     * @return `true` if the activity could be launched, `false` otherwise.
      */
-    fun openActivity(context : Context , activityClass : Class<*>) {
-        Intent(context , activityClass).let { intent ->
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun openActivity(context : Context , activityClass : Class<*>) : Boolean {
+        val intent = Intent(context , activityClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (intent.resolveActivity(context.packageManager) != null) {
             context.startActivity(intent)
+            true
+        }
+        else {
+            false
         }
     }
 
@@ -57,8 +71,9 @@ object IntentsHelper {
      * The activity runs in a new task.
      *
      * @param context The Android context in which the app's notification settings should be opened.
+     * @return `true` if the settings screen was opened, `false` otherwise.
      */
-    fun openAppNotificationSettings(context : Context) {
+    fun openAppNotificationSettings(context : Context) : Boolean {
         val intent : Intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                 putExtra(Settings.EXTRA_APP_PACKAGE , context.packageName)
@@ -71,7 +86,13 @@ object IntentsHelper {
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        return if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+            true
+        }
+        else {
+            false
+        }
     }
 
     /**
@@ -81,8 +102,9 @@ object IntentsHelper {
      * cannot be resolved, it falls back to the general settings screen.
      *
      * @param context The Android context used to start the activity.
+     * @return `true` if a settings screen could be opened, `false` otherwise.
      */
-    fun openDisplaySettings(context : Context) {
+    fun openDisplaySettings(context : Context) : Boolean {
         val packageManager = context.packageManager
 
         val displayIntent = Intent(Settings.ACTION_DISPLAY_SETTINGS).apply {
@@ -93,11 +115,16 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        when {
-            displayIntent.resolveActivity(packageManager) != null ->
+        return when {
+            displayIntent.resolveActivity(packageManager) != null -> {
                 context.startActivity(displayIntent)
-            settingsIntent.resolveActivity(packageManager) != null ->
+                true
+            }
+            settingsIntent.resolveActivity(packageManager) != null -> {
                 context.startActivity(settingsIntent)
+                true
+            }
+            else -> false
         }
     }
 
@@ -108,15 +135,17 @@ object IntentsHelper {
      *
      * @param context The context used to start the intent.
      * @param packageName The package name of the application to display.
+     * @return `true` if a suitable handler was found, `false` otherwise.
      */
-    fun openPlayStoreForApp(context : Context , packageName : String) {
+    fun openPlayStoreForApp(context : Context , packageName : String) : Boolean {
         val marketIntent = Intent(
             Intent.ACTION_VIEW , "${AppLinks.MARKET_APP_PAGE}$packageName".toUri()
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        if (marketIntent.resolveActivity(context.packageManager) != null) {
+        return if (marketIntent.resolveActivity(context.packageManager) != null) {
             context.startActivity(marketIntent)
+            true
         }
         else {
             openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
