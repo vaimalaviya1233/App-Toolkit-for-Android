@@ -29,7 +29,7 @@ object ConsentFormHelper {
                         }
                     }
                 } , { t ->
-                    Log.e("ConsentFormHelper", "Failed to load consent form", t)
+                    Log.e("ConsentFormHelper", "Failed to load consent form: ${t.message}")
                     onFormShown()
                 })
             }.onFailure {
@@ -57,7 +57,7 @@ object ConsentFormHelper {
                         onFormShown()
                     }
                 } , { t ->
-                    Log.e("ConsentFormHelper", "Failed to load consent form", t)
+                    Log.e("ConsentFormHelper", "Failed to load consent form: ${t.message}")
                     onFormShown()
                 })
             }.onFailure {
