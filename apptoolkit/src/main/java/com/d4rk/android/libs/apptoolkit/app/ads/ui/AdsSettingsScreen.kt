@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -37,8 +38,9 @@ import kotlinx.coroutines.launch
 fun AdsSettingsScreen(activity : Activity , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val adsEnabled : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsState(initial = ! buildInfoProvider.isDebugBuild)
+    val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
+    val adsEnabled : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild)
+        .collectAsStateWithLifecycle(initialValue = ! buildInfoProvider.isDebugBuild)
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.ads) , onBackClicked = { (context as? Activity)?.finish() }) { paddingValues : PaddingValues ->

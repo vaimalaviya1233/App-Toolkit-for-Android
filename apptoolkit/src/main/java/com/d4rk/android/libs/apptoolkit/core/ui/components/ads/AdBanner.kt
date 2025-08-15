@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.map
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -24,17 +27,31 @@ import org.koin.compose.koinInject
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoProvider : BuildInfoProvider = koinInject()) {
     val context: Context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
-    val showAds : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild).collectAsStateWithLifecycle(initialValue = true)
+    val showAds: Boolean? by dataStore.ads(default = !buildInfoProvider.isDebugBuild)
+        .map<Boolean?> { it }
+        .collectAsStateWithLifecycle(initialValue = null)
 
-    if (showAds) {
+    if (showAds == true) {
         val adView = remember { AdView(context) }
+        val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         LaunchedEffect(adView) {
             adView.loadAd(AdRequest.Builder().build())
         }
 
-        DisposableEffect(Unit) {
-            onDispose { adView.destroy() }
+        DisposableEffect(lifecycle, adView) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> adView.pause()
+                    androidx.lifecycle.Lifecycle.Event.ON_RESUME -> adView.resume()
+                    else -> Unit
+                }
+            }
+            lifecycle.addObserver(observer)
+            onDispose {
+                lifecycle.removeObserver(observer)
+                adView.destroy()
+            }
         }
 
         AndroidView(
