@@ -15,7 +15,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".app.oboarding.ui.OnboardingActivity"
+            android:name=".app.onboarding.ui.OnboardingActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

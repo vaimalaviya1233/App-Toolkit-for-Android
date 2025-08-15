@@ -10,11 +10,11 @@ import androidx.compose.material.icons.outlined.Star
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainActivity
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.constants.OnboardingKeys
-import com.d4rk.android.libs.apptoolkit.app.oboarding.domain.data.model.ui.OnboardingPage
-import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.CrashlyticsOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.FinalOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.oboarding.ui.components.pages.ThemeOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
+import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.data.model.ui.OnboardingPage
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.CrashlyticsOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.FinalOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.ThemeOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 
 class AppOnboardingProvider : OnboardingProvider {
 

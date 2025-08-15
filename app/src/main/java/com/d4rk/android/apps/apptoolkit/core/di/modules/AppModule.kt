@@ -9,7 +9,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
-import com.d4rk.android.libs.apptoolkit.app.oboarding.utils.interfaces.providers.OnboardingProvider
+import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import org.koin.core.module.Module
