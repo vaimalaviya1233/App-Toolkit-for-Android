@@ -141,6 +141,23 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
     }
 
     fun launchPurchaseFlow(activity: Activity, details: ProductDetails) {
+        if (!billingClient.isReady) {
+            billingClient.startConnection(object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        launchPurchaseFlow(activity, details)
+                    } else {
+                        scope.launch { _purchaseResult.emit(PurchaseResult.Failed("Billing is unavailable")) }
+                    }
+                }
+
+                override fun onBillingServiceDisconnected() {
+                    // handled by auto reconnection
+                }
+            })
+            return
+        }
+
         val params = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(
                 listOf(
