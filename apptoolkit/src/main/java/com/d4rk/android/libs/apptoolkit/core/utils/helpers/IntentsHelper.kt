@@ -128,6 +128,7 @@ object IntentsHelper {
      *
      * This function constructs a share message using a provided string resource and the app's Play Store link.
      * It then creates an ACTION_SEND intent with this message and uses a chooser intent to present the user with options for sharing the message (e.g., email, messaging apps).
+     * If the chooser intent is launched without [Intent.FLAG_ACTIVITY_NEW_TASK], the provided context must be an [android.app.Activity].
      *
      * @param context The Android context in which the share sheet should be opened.
      * @param shareMessageFormat The resource ID of the string to be used as the base for the share message. This string should include a placeholder, where the app's playstore link will be injected.
@@ -141,13 +142,20 @@ object IntentsHelper {
             putExtra(Intent.EXTRA_TEXT , messageToShare)
             type = "text/plain"
         }
-        context.startActivity(
-            Intent.createChooser(
-                sendIntent , context.resources.getText(R.string.send_email_using)
-            )
+        val chooser = Intent.createChooser(
+            sendIntent , context.resources.getText(R.string.send_email_using)
         )
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(chooser)
     }
 
+    /**
+     * Sends an email to the developer's contact address.
+     *
+     * A chooser intent is used to let the user select their preferred email client. The chooser is launched with
+     * [Intent.FLAG_ACTIVITY_NEW_TASK] to allow starting from a non-activity context. If this flag is removed, an
+     * [android.app.Activity] context must be supplied.
+     */
     fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
         val developerEmail = AppLinks.CONTACT_EMAIL
 
@@ -161,8 +169,10 @@ object IntentsHelper {
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
         val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
-        context.startActivity(
-            Intent.createChooser(emailIntent , context.getString(R.string.send_email_using))
+        val chooser = Intent.createChooser(
+            emailIntent , context.getString(R.string.send_email_using)
         )
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(chooser)
     }
 }
