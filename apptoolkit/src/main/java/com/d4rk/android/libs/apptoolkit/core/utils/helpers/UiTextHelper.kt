@@ -58,10 +58,10 @@ sealed class UiTextHelper {
      *
      * @see DynamicString
      * @see StringResource
-     */
+    */
     @Composable
     fun asString() : String {
-        val context : Context = LocalContext.current.applicationContext
+        val context : Context = LocalContext.current
         return when (this) {
             is DynamicString -> content
             is StringResource -> context.getString(resourceId , *arguments.toTypedArray())
