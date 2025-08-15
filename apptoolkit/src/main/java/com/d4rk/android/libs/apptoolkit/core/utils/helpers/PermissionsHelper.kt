@@ -37,9 +37,12 @@ object PermissionsHelper {
      * @param activity The Activity instance required to request the permission.
      */
     fun requestNotificationPermission(activity : Activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !hasNotificationPermission(activity)) {
             ActivityCompat.requestPermissions(
-                activity , arrayOf(Manifest.permission.POST_NOTIFICATIONS) , PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION
+                activity,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION
             )
         }
     }
