@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedback
@@ -75,8 +76,8 @@ fun MainScreen() {
 fun MainScaffoldContent(drawerState: DrawerState) {
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
-    val isFabExtended: MutableState<Boolean> = remember { mutableStateOf(value = true) }
-    val isFabVisible: MutableState<Boolean> = remember { mutableStateOf(value = false) }
+    val isFabExtended: MutableState<Boolean> = rememberSaveable { mutableStateOf(value = true) }
+    val isFabVisible: MutableState<Boolean> = rememberSaveable { mutableStateOf(value = false) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val navController: NavHostController = rememberNavController()
     val bottomItems = listOf(
@@ -122,13 +123,13 @@ fun MainScaffoldContent(drawerState: DrawerState) {
 @Composable
 fun MainScaffoldTabletContent() {
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    var isRailExpanded by remember { mutableStateOf(value = false) }
+    var isRailExpanded by rememberSaveable { mutableStateOf(value = false) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val context: Context = LocalContext.current
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
     val buildInfoProvider: BuildInfoProvider = koinInject()
-    var showChangelog by remember { mutableStateOf(false) }
+    var showChangelog by rememberSaveable { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
     val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
