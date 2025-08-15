@@ -164,7 +164,7 @@ object IntentsHelper {
      *                           Example : "Check out this awesome app! Download it here: %s"
      *                           The %s will be replaced by the app's Play Store URL.
      */
-    fun shareApp(context : Context , shareMessageFormat : Int) {
+    fun shareApp(context : Context , @StringRes shareMessageFormat : Int) : Boolean {
         val messageToShare : String = context.getString(shareMessageFormat , "${AppLinks.PLAY_STORE_APP}${context.packageName}")
         val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -173,9 +173,16 @@ object IntentsHelper {
         }
         val chooser = Intent.createChooser(
             sendIntent , context.resources.getText(R.string.send_email_using)
-        )
-        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(chooser)
+        ).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        return if (chooser.resolveActivity(context.packageManager) != null) {
+            context.startActivity(chooser)
+            true
+        }
+        else {
+            false
+        }
     }
 
     /**
@@ -185,7 +192,7 @@ object IntentsHelper {
      * [Intent.FLAG_ACTIVITY_NEW_TASK] to allow starting from a non-activity context. If this flag is removed, an
      * [android.app.Activity] context must be supplied.
      */
-    fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) {
+    fun sendEmailToDeveloper(context : Context , @StringRes applicationNameRes : Int) : Boolean {
         val developerEmail = AppLinks.CONTACT_EMAIL
 
         val appName : String = context.getString(applicationNameRes)
@@ -198,10 +205,17 @@ object IntentsHelper {
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
         val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
-        val chooser = Intent.createChooser(
-            emailIntent , context.getString(R.string.send_email_using)
-        )
-        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(chooser)
+        return if (emailIntent.resolveActivity(context.packageManager) != null) {
+            val chooser = Intent.createChooser(
+                emailIntent , context.getString(R.string.send_email_using)
+            ).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(chooser)
+            true
+        }
+        else {
+            false
+        }
     }
 }
