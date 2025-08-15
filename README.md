@@ -41,7 +41,7 @@ free and open-source software!
   <tr>
     <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/1-screenshot_welcome.png" width="300" alt="Screenshot Welcome"></td>
     <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/2-screenshot_apps.png" width="300" alt="Screenshot Apps"></td>
-    <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/3-screenshot_oboarding_theme.png" width="300" alt="Screenshot Onboarding Theme"></td>
+    <td><img src="/app/src/main/play/listings/en-US/graphics/phone-screenshots/3-screenshot_onboarding_theme.png" width="300" alt="Screenshot Onboarding Theme"></td>
   </tr>
 </table>
 
