@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -28,6 +29,10 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
     if (showAds) {
         val adView = remember { AdView(context) }
 
+        LaunchedEffect(adView) {
+            adView.loadAd(AdRequest.Builder().build())
+        }
+
         DisposableEffect(Unit) {
             onDispose { adView.destroy() }
         }
@@ -41,9 +46,6 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
                     setAdSize(adsConfig.adSize)
                     adUnitId = adsConfig.bannerAdUnitId
                 }
-            },
-            update = {
-                it.loadAd(AdRequest.Builder().build())
             }
         )
     }
