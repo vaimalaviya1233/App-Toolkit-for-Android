@@ -65,6 +65,7 @@ android {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
+        buildConfigField("Boolean", "DEFER_APP_OPEN", "true")
     }
 
     signingConfigs {
