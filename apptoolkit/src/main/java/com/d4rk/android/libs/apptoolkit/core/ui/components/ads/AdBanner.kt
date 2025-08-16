@@ -20,8 +20,8 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import org.koin.compose.koinInject
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdViewPool
 
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoProvider : BuildInfoProvider = koinInject()) {
@@ -32,11 +32,15 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
         .collectAsStateWithLifecycle(initialValue = null)
 
     if (showAds == true) {
-        val adView = remember { AdView(context) }
+        val adView = remember(adsConfig.bannerAdUnitId) {
+            AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
+        }
         val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         LaunchedEffect(adView) {
-            adView.loadAd(AdRequest.Builder().build())
+            if (adView.responseInfo == null) {
+                adView.loadAd(AdRequest.Builder().build())
+            }
         }
 
         DisposableEffect(lifecycle, adView) {
@@ -50,7 +54,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig , buildInfoP
             lifecycle.addObserver(observer)
             onDispose {
                 lifecycle.removeObserver(observer)
-                adView.destroy()
+                AdViewPool.release(adsConfig.bannerAdUnitId, adView)
             }
         }
 
