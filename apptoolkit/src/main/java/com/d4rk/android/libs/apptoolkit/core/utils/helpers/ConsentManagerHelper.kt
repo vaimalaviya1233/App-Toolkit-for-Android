@@ -7,6 +7,9 @@ import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.Firebase
 import com.google.firebase.perf.FirebasePerformance
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -59,14 +62,32 @@ object ConsentManagerHelper : KoinComponent {
      * @param dataStore Your instance of CommonDataStore.
      */
     suspend fun applyInitialConsent(dataStore: CommonDataStore) {
-        val analyticsGranted: Boolean =
-            dataStore.analyticsConsent(default = defaultAnalyticsGranted).first()
-        val adStorageGranted: Boolean =
-            dataStore.adStorageConsent(default = defaultAnalyticsGranted).first()
-        val adUserDataGranted: Boolean =
-            dataStore.adUserDataConsent(default = defaultAnalyticsGranted).first()
-        val adPersonalizationGranted: Boolean =
-            dataStore.adPersonalizationConsent(default = defaultAnalyticsGranted).first()
+        val (
+            analyticsGranted,
+            adStorageGranted,
+            adUserDataGranted,
+            adPersonalizationGranted
+        ) = coroutineScope {
+            val analyticsDeferred = async {
+                dataStore.analyticsConsent(default = defaultAnalyticsGranted).first()
+            }
+            val adStorageDeferred = async {
+                dataStore.adStorageConsent(default = defaultAnalyticsGranted).first()
+            }
+            val adUserDataDeferred = async {
+                dataStore.adUserDataConsent(default = defaultAnalyticsGranted).first()
+            }
+            val adPersonalizationDeferred = async {
+                dataStore.adPersonalizationConsent(default = defaultAnalyticsGranted).first()
+            }
+
+            awaitAll(
+                analyticsDeferred,
+                adStorageDeferred,
+                adUserDataDeferred,
+                adPersonalizationDeferred
+            )
+        }
 
         updateConsent(
             analyticsGranted = analyticsGranted,
