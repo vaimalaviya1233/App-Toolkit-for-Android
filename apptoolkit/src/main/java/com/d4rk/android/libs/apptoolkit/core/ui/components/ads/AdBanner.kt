@@ -30,11 +30,12 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
         val adView = remember(adsConfig.bannerAdUnitId) {
             AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
         }
+        val adRequest = remember { AdRequest.Builder().build() }
         val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         LaunchedEffect(adView) {
             if (adView.responseInfo == null) {
-                adView.loadAd(AdRequest.Builder().build())
+                adView.loadAd(adRequest)
             }
         }
 
