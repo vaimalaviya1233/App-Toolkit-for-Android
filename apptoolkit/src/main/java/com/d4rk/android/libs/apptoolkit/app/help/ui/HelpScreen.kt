@@ -37,6 +37,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVertica
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
+import androidx.lifecycle.lifecycleScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +55,7 @@ fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
         HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , config = config)
     } , scrollBehavior = scrollBehavior , floatingActionButton = {
         AnimatedExtendedFloatingActionButton(visible = true , expanded = isFabExtended.value , onClick = {
-            ReviewHelper.forceLaunchInAppReview(activity = activity)
+            ReviewHelper.forceLaunchInAppReview(activity = activity, scope = activity.lifecycleScope)
         } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
     }) { paddingValues ->
         HelpScreenContent(questions = faqList , paddingValues = paddingValues , activity = activity)

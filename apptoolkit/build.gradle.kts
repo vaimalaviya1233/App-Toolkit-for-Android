@@ -103,6 +103,7 @@ dependencies {
 
     // Kotlin
     api(dependencyNotation = libs.kotlinx.coroutines.android)
+    api(dependencyNotation = libs.kotlinx.coroutines.play.services)
     api(dependencyNotation = libs.kotlinx.serialization.json)
 
     // Ktor
