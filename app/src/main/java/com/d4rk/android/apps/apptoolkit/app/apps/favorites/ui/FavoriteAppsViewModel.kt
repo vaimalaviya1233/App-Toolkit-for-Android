@@ -13,14 +13,9 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -33,10 +28,7 @@ class FavoriteAppsViewModel(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
 
-    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
-    private val favoritesLoaded = MutableStateFlow(false)
-
-    val favorites = _favorites.stateIn(
+    val favorites = dataStore.favoriteApps.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptySet()
@@ -44,21 +36,6 @@ class FavoriteAppsViewModel(
 
     init {
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
-            runCatching {
-                dataStore.favoriteApps
-                    .onEach {
-                        favoritesLoaded.value = true
-                        _favorites.value = it
-                    }
-                    .collect()
-            }
-        }
-
-        // ensure favorites are loaded before fetching apps
-        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
-            favoritesLoaded
-                .filter { it }
-                .first()
             onEvent(FavoriteAppsEvent.LoadFavorites)
         }
     }
@@ -75,17 +52,19 @@ class FavoriteAppsViewModel(
             start = CoroutineStart.UNDISPATCHED
         ) {
             combine(
-                flow = fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
-                flow2 = favorites
-            ) { dataState, favorites ->
-                dataState to favorites
+                fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
+                favorites
+            ) { dataState, saved ->
+                dataState to saved
             }.collect { (result, saved) ->
-                if (!favoritesLoaded.value) return@collect
                 if (result is DataState.Success) {
                     val apps = result.data.filter { saved.contains(it.packageName) }
                     if (apps.isEmpty()) {
                         screenState.update { current ->
-                            current.copy(screenState = ScreenState.NoData(), data = current.data?.copy(apps = emptyList()))
+                            current.copy(
+                                screenState = ScreenState.NoData(),
+                                data = current.data?.copy(apps = emptyList())
+                            )
                         }
                     } else {
                         screenState.updateData(ScreenState.Success()) { current ->

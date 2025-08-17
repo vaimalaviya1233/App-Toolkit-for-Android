@@ -15,27 +15,22 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AppsListViewModel(
-    private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase,
-    private val dispatcherProvider : DispatcherProvider,
+    private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
+    private val dispatcherProvider: DispatcherProvider,
     private val dataStore: DataStore
-) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
+) : ScreenViewModel<UiHomeScreen, HomeEvent, HomeAction>(
+    initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
+) {
 
-    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
-    private val favoritesLoaded = MutableStateFlow(false)
-
-    val favorites = _favorites.stateIn(
+    val favorites = dataStore.favoriteApps.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptySet()
@@ -43,23 +38,11 @@ class AppsListViewModel(
 
     init {
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
-            runCatching {
-                dataStore.favoriteApps
-                    .onEach {
-                        favoritesLoaded.value = true
-                        _favorites.value = it
-                    }
-                    .collect()
-            }
-        }
-
-        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
-            favoritesLoaded.filter { it }.first()
             onEvent(HomeEvent.FetchApps)
         }
     }
 
-    override fun onEvent(event : HomeEvent) {
+    override fun onEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.FetchApps -> fetchDeveloperApps()
         }
@@ -67,16 +50,23 @@ class AppsListViewModel(
 
     private fun fetchDeveloperApps() {
         launch(context = dispatcherProvider.io) {
-            fetchDeveloperAppsUseCase().flowOn(context = dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
+            combine(
+                fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
+                favorites
+            ) { result: DataState<List<AppInfo>, RootError>, _ ->
+                result
+            }.collect { result ->
                 when (result) {
                     is DataState.Success -> {
                         val apps = result.data
                         if (apps.isEmpty()) {
                             screenState.update { currentState ->
-                                currentState.copy(screenState = ScreenState.NoData() , data = currentState.data?.copy(apps = emptyList()))
+                                currentState.copy(
+                                    screenState = ScreenState.NoData(),
+                                    data = currentState.data?.copy(apps = emptyList())
+                                )
                             }
-                        }
-                        else {
+                        } else {
                             screenState.updateData(newState = ScreenState.Success()) { currentData ->
                                 currentData.copy(apps = apps)
                             }
@@ -97,3 +87,4 @@ class AppsListViewModel(
         }
     }
 }
+
