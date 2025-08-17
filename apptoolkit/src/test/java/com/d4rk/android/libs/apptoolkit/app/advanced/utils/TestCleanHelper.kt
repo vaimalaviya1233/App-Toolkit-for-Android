@@ -11,11 +11,12 @@ import org.junit.Test
 import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
 import kotlin.test.assertFailsWith
+import kotlinx.coroutines.test.runTest
 
 class TestCleanHelper {
 
     @Test
-    fun `clearApplicationCache deletes cache directories`() {
+    fun `clearApplicationCache deletes cache directories`() = runTest {
         println("🚀 [TEST] clearApplicationCache deletes cache directories")
         val dir1 = createTempDirectory().toFile()
         val dir2 = createTempDirectory().toFile()
@@ -42,7 +43,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache shows error toast when deletion fails`() {
+    fun `clearApplicationCache shows error toast when deletion fails`() = runTest {
         println("🚀 [TEST] clearApplicationCache shows error toast when deletion fails")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
@@ -71,7 +72,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache throws when directory inaccessible`() {
+    fun `clearApplicationCache throws when directory inaccessible`() = runTest {
         println("🚀 [TEST] clearApplicationCache throws when directory inaccessible")
         val context = mockk<Context>()
         every { context.cacheDir } throws SecurityException("denied")
@@ -83,7 +84,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache handles missing directories`() {
+    fun `clearApplicationCache handles missing directories`() = runTest {
         println("🚀 [TEST] clearApplicationCache handles missing directories")
         val dir1 = createTempDirectory().toFile().also { it.deleteRecursively() }
         val dir2 = createTempDirectory().toFile().also { it.deleteRecursively() }
@@ -107,7 +108,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache propagates io exception`() {
+    fun `clearApplicationCache propagates io exception`() = runTest {
         println("🚀 [TEST] clearApplicationCache propagates io exception")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
@@ -127,7 +128,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache propagates toast exception`() {
+    fun `clearApplicationCache propagates toast exception`() = runTest {
         println("🚀 [TEST] clearApplicationCache propagates toast exception")
         val dir1 = createTempDirectory().toFile()
         val dir2 = createTempDirectory().toFile()
@@ -149,7 +150,7 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache handles partial deletion`() {
+    fun `clearApplicationCache handles partial deletion`() = runTest {
         println("🚀 [TEST] clearApplicationCache handles partial deletion")
         val dir1 = createTempDirectory().toFile()
         val failing2 = mockk<java.io.File>()

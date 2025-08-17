@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -21,10 +22,12 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsP
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import kotlinx.coroutines.launch
 
 @Composable
 fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provider : AdvancedSettingsProvider) {
     val context : Context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {
@@ -46,7 +49,7 @@ fun AdvancedSettingsList(paddingValues : PaddingValues = PaddingValues() , provi
                         .padding(horizontal = SizeConstants.LargeSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
-                SettingsPreferenceItem(title = stringResource(id = R.string.clear_cache) , summary = stringResource(id = R.string.summary_preference_settings_clear_cache) , onClick = { CleanHelper.clearApplicationCache(context = context) })
+                SettingsPreferenceItem(title = stringResource(id = R.string.clear_cache) , summary = stringResource(id = R.string.summary_preference_settings_clear_cache) , onClick = { coroutineScope.launch { CleanHelper.clearApplicationCache(context = context) } })
             }
         }
     }
