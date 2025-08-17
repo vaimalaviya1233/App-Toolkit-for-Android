@@ -38,7 +38,7 @@ class IssueReporterViewModel(
     )
 ) {
 
-    private val repository = IssueReporterRepository(httpClient)
+    private val repository = IssueReporterRepository(httpClient, dispatcherProvider)
 
     override fun onEvent(event: IssueReporterEvent) {
         when (event) {
