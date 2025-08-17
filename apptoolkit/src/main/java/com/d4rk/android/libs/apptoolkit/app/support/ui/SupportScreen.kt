@@ -93,7 +93,9 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
 ) {
     val context: Context = LocalContext.current
-    val adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    val adsConfig: AdsConfig = remember {
+        koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    }
 
     val productDetailsMap = data.products.associateBy { it.productId }
     LazyColumn(
