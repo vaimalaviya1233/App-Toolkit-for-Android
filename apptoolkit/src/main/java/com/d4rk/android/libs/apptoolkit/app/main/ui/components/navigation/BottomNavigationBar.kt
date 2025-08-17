@@ -36,14 +36,14 @@ fun BottomNavigationBar(
     navController: NavController,
     items: List<BottomBarItem>,
     modifier: Modifier = Modifier,
-    adsConfig: AdsConfig = koinInject(qualifier = named(name = "full_banner")),
 ) {
-    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
-    val view : View = LocalView.current
+    val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+    val view: View = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
+    val adsConfig: AdsConfig = koinInject(qualifier = named("full_banner"))
 
     val showLabels: Boolean =
         dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
