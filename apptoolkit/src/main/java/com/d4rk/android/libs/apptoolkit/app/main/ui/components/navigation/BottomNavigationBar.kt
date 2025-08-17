@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -44,7 +43,7 @@ fun BottomNavigationBar(
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
-    val adsConfig: AdsConfig = remember { koinInject(named("full_banner")) }
+    val adsConfig: AdsConfig = koinInject(qualifier = named("full_banner"))
 
     val showLabels: Boolean =
         dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
