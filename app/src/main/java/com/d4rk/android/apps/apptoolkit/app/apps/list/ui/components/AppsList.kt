@@ -27,7 +27,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NonLazyGrid
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
-import org.koin.compose.koinInject
+import org.koin.compose.getKoin
 import org.koin.core.qualifier.named
 
 @Composable
@@ -43,10 +43,11 @@ fun AppsList(
     val columnCount: Int = if (isTabletOrLandscape) 4 else 2
 
     val bannerType: String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
-    val adsConfig: AdsConfig = koinInject(qualifier = named(bannerType))
+    val koin = getKoin()
+    val adsConfig: AdsConfig = remember { koin.get(qualifier = named(bannerType)) }
     val listState: LazyGridState = rememberLazyGridState()
     val adFrequency = 4
-    val dataStore: DataStore = koinInject()
+    val dataStore: DataStore = remember { koin.get() }
     val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
     val items: List<AppListItem> = remember(key1 = apps, key2 = adsEnabled) {
         buildList {
