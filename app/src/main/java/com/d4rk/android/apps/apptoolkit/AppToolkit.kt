@@ -32,7 +32,7 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
         listOf(async { initializeAds() }).awaitAll()
     }
 
-    private fun initializeAds() {
+    private suspend fun initializeAds() {
         adsCoreManager.initializeAds(AdsConstants.APP_OPEN_UNIT_ID)
     }
 

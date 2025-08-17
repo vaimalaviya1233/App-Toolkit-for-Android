@@ -22,9 +22,14 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
-    fun initializeAds(appOpenUnitId : String) {
-        MobileAds.initialize(context)
-        appOpenAdManager = AppOpenAdManager(appOpenUnitId)
+    suspend fun initializeAds(appOpenUnitId : String) {
+        val isAdsChecked : Boolean = withContext(Dispatchers.IO) {
+            dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
+        }
+        if (isAdsChecked) {
+            MobileAds.initialize(context)
+            appOpenAdManager = AppOpenAdManager(appOpenUnitId)
+        }
     }
 
     fun showAdIfAvailable(activity : Activity , scope : CoroutineScope) {

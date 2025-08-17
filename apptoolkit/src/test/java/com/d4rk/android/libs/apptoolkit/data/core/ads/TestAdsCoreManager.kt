@@ -17,6 +17,7 @@ import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.EmptyCoroutineContext
 import org.junit.Assert.assertFalse
@@ -40,10 +41,16 @@ class TestAdsCoreManager {
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
 
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+
         mockkStatic(MobileAds::class)
         justRun { MobileAds.initialize(context) }
 
-        manager.initializeAds("id")
+        runBlocking { manager.initializeAds("id") }
         verify { MobileAds.initialize(context) }
         println("🏁 [TEST DONE] initializeAds triggers MobileAds")
     }
@@ -68,7 +75,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(any()) } returns flowOf(true)
+        val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
+        storeField.isAccessible = true
+        storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
         mgrField.isAccessible = true
@@ -108,13 +120,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
@@ -145,13 +156,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val ad = mockk<AppOpenAd>(relaxed = true)
         val mgrField3 = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
@@ -194,13 +204,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(false)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
@@ -219,13 +228,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
         mgrField.isAccessible = true
@@ -257,13 +265,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
         mgrField.isAccessible = true
@@ -295,13 +302,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
         mgrField.isAccessible = true
@@ -340,13 +346,12 @@ class TestAdsCoreManager {
         every { context.applicationContext } returns context
         val provider = mockk<BuildInfoProvider>()
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(any()) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         val mgrField = AdsCoreManager::class.java.getDeclaredField("appOpenAdManager")
         mgrField.isAccessible = true
@@ -374,14 +379,13 @@ class TestAdsCoreManager {
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns true
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         val slot = slot<Boolean>()
         every { dataStore.ads(capture(slot)) } returns flowOf(false)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
@@ -401,14 +405,13 @@ class TestAdsCoreManager {
         val provider = mockk<BuildInfoProvider>()
         every { provider.isDebugBuild } returns false
         val manager = AdsCoreManager(context, provider)
-        manager.initializeAds("unit")
-
         val dataStore = mockk<CommonDataStore>()
         val slot = slot<Boolean>()
         every { dataStore.ads(capture(slot)) } returns flowOf(true)
         val storeField = AdsCoreManager::class.java.getDeclaredField("dataStore")
         storeField.isAccessible = true
         storeField.set(manager, dataStore)
+        runBlocking { manager.initializeAds("unit") }
 
         mockkStatic(AppOpenAd::class)
         justRun { AppOpenAd.load(any(), any(), any(), any()) }
