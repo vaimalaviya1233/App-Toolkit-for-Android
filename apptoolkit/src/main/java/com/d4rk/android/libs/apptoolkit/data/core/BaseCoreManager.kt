@@ -13,7 +13,9 @@ import com.google.firebase.initialize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.inject
@@ -21,6 +23,7 @@ import org.koin.android.ext.android.inject
 open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
 
     protected val billingRepository: BillingRepository by inject()
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     companion object {
         var isAppLoaded : Boolean = false
@@ -34,7 +37,7 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
             PlayIntegrityAppCheckProviderFactory.getInstance(),
         )
         registerActivityLifecycleCallbacks(this)
-        CoroutineScope(Dispatchers.IO).launch {
+        applicationScope.launch {
             initializeApp()
         }
     }
@@ -64,5 +67,6 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     override fun onTerminate() {
         super.onTerminate()
         billingRepository.close()
+        applicationScope.cancel()
     }
 }
