@@ -67,7 +67,7 @@ class AppsListViewModel(
 
     private fun fetchDeveloperApps() {
         launch(context = dispatcherProvider.io) {
-            fetchDeveloperAppsUseCase().flowOn(context = dispatcherProvider.default).collect { result : DataState<List<AppInfo> , RootError> ->
+            fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.io).collect { result : DataState<List<AppInfo> , RootError> ->
                 when (result) {
                     is DataState.Success -> {
                         val apps = result.data

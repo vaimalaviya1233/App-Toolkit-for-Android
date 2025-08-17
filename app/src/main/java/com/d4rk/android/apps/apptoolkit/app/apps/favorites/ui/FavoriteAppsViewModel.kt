@@ -75,7 +75,7 @@ class FavoriteAppsViewModel(
             start = CoroutineStart.UNDISPATCHED
         ) {
             combine(
-                flow = fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.default),
+                flow = fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.io),
                 flow2 = favorites
             ) { dataState, favorites ->
                 dataState to favorites
