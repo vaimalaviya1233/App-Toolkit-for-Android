@@ -27,11 +27,11 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle()
 
     if (showAds) {
+        val adRequest = remember { AdRequest.Builder().build() }
         val adView = remember(adsConfig.bannerAdUnitId) {
-            AdViewPool.preload(context, adsConfig.bannerAdUnitId)
+            AdViewPool.preload(context, adsConfig.bannerAdUnitId, adRequest)
             AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
         }
-        val adRequest = remember { AdRequest.Builder().build() }
         val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         LaunchedEffect(adView) {
