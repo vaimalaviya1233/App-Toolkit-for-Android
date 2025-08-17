@@ -3,10 +3,14 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DeviceInfo(context: Context) {
-    private val versionCode: Int
-    private val versionName: String?
+    private var versionCode: Int = -1
+    private var versionName: String? = null
     private val buildVersion: String = Build.VERSION.INCREMENTAL ?: Build.UNKNOWN
     private val releaseVersion: String = Build.VERSION.RELEASE ?: Build.UNKNOWN
     private val sdkVersion: Int = Build.VERSION.SDK_INT
@@ -29,13 +33,19 @@ class DeviceInfo(context: Context) {
     private val abis64Bits: Array<String>? = Build.SUPPORTED_64_BIT_ABIS
 
     init {
-        val packageInfo = runCatching {
+        CoroutineScope(Dispatchers.Default).launch {
+            val packageInfo = getPackageInfo(context)
+
+            @Suppress("DEPRECATION")
+            versionCode = packageInfo?.versionCode ?: -1
+            versionName = packageInfo?.versionName
+        }
+    }
+
+    private suspend fun getPackageInfo(context: Context) = withContext(Dispatchers.IO) {
+        runCatching {
             context.packageManager.getPackageInfo(context.packageName, 0)
         }.getOrNull()
-
-        @Suppress("DEPRECATION")
-        versionCode = packageInfo?.versionCode ?: -1
-        versionName = packageInfo?.versionName
     }
 
     fun toMarkdown(): String {
