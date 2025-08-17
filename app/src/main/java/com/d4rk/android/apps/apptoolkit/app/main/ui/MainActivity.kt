@@ -26,9 +26,11 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +58,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeDependencies() {
         lifecycleScope.launch {
-            MobileAds.initialize(this@MainActivity) {}
-            withContext(Dispatchers.IO) {
-                ConsentManagerHelper.applyInitialConsent(dataStore)
+            coroutineScope {
+                val adsInitialization = async { MobileAds.initialize(this@MainActivity) {} }
+                val consentInitialization = async(Dispatchers.IO) {
+                    ConsentManagerHelper.applyInitialConsent(dataStore)
+                }
+                awaitAll(adsInitialization, consentInitialization)
             }
         }
     }
