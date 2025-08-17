@@ -112,9 +112,10 @@ class MainActivity : AppCompatActivity() {
             ReviewHelper.launchInAppReviewIfEligible(
                 activity = this@MainActivity,
                 sessionCount = sessionCount,
-                hasPromptedBefore = hasPrompted
+                hasPromptedBefore = hasPrompted,
+                scope = this
             ) {
-                lifecycleScope.launch { dataStore.setHasPromptedReview(value = true) }
+                launch { dataStore.setHasPromptedReview(value = true) }
             }
             dataStore.incrementSessionCount()
         }

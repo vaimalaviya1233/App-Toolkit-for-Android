@@ -1,6 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.help.ui
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -37,10 +37,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVertica
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
+fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: CoroutineScope) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
     val context : Context = LocalContext.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
@@ -50,19 +51,36 @@ fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
     }
 
-    LargeTopAppBarWithScaffold(title = stringResource(id = R.string.help) , onBackClicked = { activity.finish() } , actions = {
-        HelpScreenMenuActions(context = context , activity = activity , showDialog = remember { mutableStateOf(value = false) } , config = config)
-    } , scrollBehavior = scrollBehavior , floatingActionButton = {
-        AnimatedExtendedFloatingActionButton(visible = true , expanded = isFabExtended.value , onClick = {
-            ReviewHelper.forceLaunchInAppReview(activity = activity)
-        } , text = { Text(text = stringResource(id = R.string.feedback)) } , icon = { Icon(Icons.Outlined.RateReview , contentDescription = null) })
-    }) { paddingValues ->
-        HelpScreenContent(questions = faqList , paddingValues = paddingValues , activity = activity)
+    LargeTopAppBarWithScaffold(
+        title = stringResource(id = R.string.help),
+        onBackClicked = { activity.finish() },
+        actions = {
+            HelpScreenMenuActions(
+                context = context,
+                activity = activity,
+                showDialog = remember { mutableStateOf(value = false) },
+                config = config
+            )
+        },
+        scrollBehavior = scrollBehavior,
+        floatingActionButton = {
+            AnimatedExtendedFloatingActionButton(
+                visible = true,
+                expanded = isFabExtended.value,
+                onClick = {
+                    ReviewHelper.forceLaunchInAppReview(activity = activity, scope = scope)
+                },
+                text = { Text(text = stringResource(id = R.string.feedback)) },
+                icon = { Icon(Icons.Outlined.RateReview, contentDescription = null) }
+            )
+        }
+    ) { paddingValues ->
+        HelpScreenContent(questions = faqList, paddingValues = paddingValues, activity = activity)
     }
 }
 
 @Composable
-fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : Activity) {
+fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
