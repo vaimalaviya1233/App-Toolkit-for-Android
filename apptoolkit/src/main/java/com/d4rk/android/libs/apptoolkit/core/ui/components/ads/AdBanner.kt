@@ -62,7 +62,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
             factory = {
                 adView.apply {
                     setAdSize(adsConfig.adSize)
-                    adUnitId = adsConfig.bannerAdUnitId
+                  //  adUnitId = adsConfig.bannerAdUnitId
                 }
             }
         )

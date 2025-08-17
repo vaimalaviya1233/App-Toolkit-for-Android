@@ -9,7 +9,6 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import dev.jeziellago.compose.markdowntext.MarkdownText
@@ -31,13 +29,13 @@ import io.ktor.client.request.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 
 @Composable
 fun ChangelogDialog(
     changelogUrl: String,
     buildInfoProvider: BuildInfoProvider,
     onDismiss: () -> Unit,
-    client: HttpClient? = null,
 ) {
     val context = LocalContext.current
     val changelogText: MutableState<String?> = remember {
@@ -45,15 +43,12 @@ fun ChangelogDialog(
     }
     val isError = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val httpClientState = remember { mutableStateOf(client ?: KtorClient().createClient()) }
-    DisposableEffect(Unit) {
-        onDispose { httpClientState.value.close() }
-    }
+    val httpClient: HttpClient = koinInject()
 
     suspend fun loadChangelog() {
         withContext(Dispatchers.IO) {
             runCatching {
-                val content: String = httpClientState.value.get(changelogUrl).body()
+                val content: String = httpClient.get(changelogUrl).body()
                 val section = extractChangesForVersion(content, buildInfoProvider.appVersion)
                 changelogText.value =
                     section.ifBlank { context.getString(R.string.no_new_updates_message) }

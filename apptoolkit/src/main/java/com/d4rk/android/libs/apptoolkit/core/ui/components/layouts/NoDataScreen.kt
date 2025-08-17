@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -49,10 +50,10 @@ fun NoDataScreen(
     showRetry: Boolean = false,
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
-    isError : Boolean = false,
-    adsConfig: AdsConfig? = null,
+    isError: Boolean = false,
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle")),
 ) {
-    val adsConfigRemember: AdsConfig = adsConfig ?: koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    val bannerConfig: AdsConfig = remember { adsConfig }
 
     Box(
         modifier = Modifier
@@ -92,7 +93,7 @@ fun NoDataScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = SizeConstants.MediumSize),
-                    adsConfig = adsConfigRemember
+                    adsConfig = bannerConfig
                 )
             }
         }

@@ -36,4 +36,3 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
         }
     )
 }
-

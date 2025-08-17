@@ -54,7 +54,6 @@ class FavoriteAppsViewModel(
             }
         }
 
-        // ensure favorites are loaded before fetching apps
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
             favoritesLoaded
                 .filter { it }
@@ -105,4 +104,3 @@ class FavoriteAppsViewModel(
         }
     }
 }
-
