@@ -28,6 +28,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
 
     if (showAds) {
         val adView = remember(adsConfig.bannerAdUnitId) {
+            AdViewPool.preload(context, adsConfig.bannerAdUnitId)
             AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
         }
         val adRequest = remember { AdRequest.Builder().build() }
