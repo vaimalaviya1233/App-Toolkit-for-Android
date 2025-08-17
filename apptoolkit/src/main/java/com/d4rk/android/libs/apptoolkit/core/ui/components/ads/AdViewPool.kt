@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.content.Context
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
 import kotlin.concurrent.fixedRateTimer
@@ -20,13 +21,21 @@ object AdViewPool {
     }
 
     @Synchronized
-    fun preload(context: Context, adUnitId: String, count: Int = 1) {
+    fun preload(
+        context: Context,
+        adUnitId: String,
+        count: Int = 1,
+        adRequest: AdRequest = AdRequest.Builder().build()
+    ) {
         val deque = pool.getOrPut(adUnitId) { ArrayDeque() }
         repeat(count) {
             if (deque.size < MAX_POOL_SIZE) {
                 deque.add(
                     PooledAdView(
-                        AdView(context).apply { this.adUnitId = adUnitId },
+                        AdView(context).apply {
+                            this.adUnitId = adUnitId
+                            loadAd(adRequest)
+                        },
                         System.currentTimeMillis()
                     )
                 )
@@ -35,12 +44,19 @@ object AdViewPool {
     }
 
     @Synchronized
-    fun acquire(context: Context, adUnitId: String): AdView {
+    fun acquire(
+        context: Context,
+        adUnitId: String,
+        adRequest: AdRequest = AdRequest.Builder().build()
+    ): AdView {
         val deque = pool[adUnitId]
         return if (deque != null && deque.isNotEmpty()) {
             deque.removeFirst().view
         } else {
-            AdView(context).apply { this.adUnitId = adUnitId }
+            AdView(context).apply {
+                this.adUnitId = adUnitId
+                loadAd(adRequest)
+            }
         }
     }
 

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.LifecycleEventObserver
@@ -27,18 +26,12 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle()
 
     if (showAds) {
-        val adView = remember(adsConfig.bannerAdUnitId) {
-            AdViewPool.preload(context, adsConfig.bannerAdUnitId)
-            AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
-        }
         val adRequest = remember { AdRequest.Builder().build() }
-        val lifecycle = LocalLifecycleOwner.current.lifecycle
-
-        LaunchedEffect(adView) {
-            if (adView.responseInfo == null) {
-                adView.loadAd(adRequest)
-            }
+        val adView = remember(adsConfig.bannerAdUnitId) {
+            AdViewPool.preload(context, adsConfig.bannerAdUnitId, adRequest = adRequest)
+            AdViewPool.acquire(context, adsConfig.bannerAdUnitId, adRequest = adRequest)
         }
+        val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         DisposableEffect(lifecycle, adView) {
             val observer = LifecycleEventObserver { _, event ->
