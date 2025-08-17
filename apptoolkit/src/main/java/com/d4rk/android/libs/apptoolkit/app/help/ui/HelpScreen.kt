@@ -1,6 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.help.ui
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -41,7 +41,7 @@ import androidx.lifecycle.lifecycleScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
+fun HelpScreen(activity : ComponentActivity , config : HelpScreenConfig) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
     val context : Context = LocalContext.current
     val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
@@ -63,7 +63,7 @@ fun HelpScreen(activity : Activity , config : HelpScreenConfig) {
 }
 
 @Composable
-fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : Activity) {
+fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
