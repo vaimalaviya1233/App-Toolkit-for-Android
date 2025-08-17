@@ -43,10 +43,10 @@ fun AppsList(
     val columnCount: Int = if (isTabletOrLandscape) 4 else 2
 
     val bannerType: String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
-    val adsConfig: AdsConfig = koinInject(qualifier = named(bannerType))
+    val adsConfig: AdsConfig = remember { koinInject(qualifier = named(bannerType)) }
     val listState: LazyGridState = rememberLazyGridState()
     val adFrequency = 4
-    val dataStore: DataStore = koinInject()
+    val dataStore: DataStore = remember { koinInject<DataStore>() }
     val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
     val items: List<AppListItem> = remember(key1 = apps, key2 = adsEnabled) {
         buildList {
