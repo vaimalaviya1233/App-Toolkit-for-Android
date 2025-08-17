@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.content.Context
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
 import kotlin.concurrent.fixedRateTimer
@@ -20,16 +21,15 @@ object AdViewPool {
     }
 
     @Synchronized
-    fun preload(context: Context, adUnitId: String, count: Int = 1) {
+    fun preload(context: Context, adUnitId: String, adRequest: AdRequest, count: Int = 1) {
         val deque = pool.getOrPut(adUnitId) { ArrayDeque() }
         repeat(count) {
             if (deque.size < MAX_POOL_SIZE) {
-                deque.add(
-                    PooledAdView(
-                        AdView(context).apply { this.adUnitId = adUnitId },
-                        System.currentTimeMillis()
-                    )
-                )
+                val view = AdView(context).apply {
+                    this.adUnitId = adUnitId
+                    loadAd(adRequest)
+                }
+                deque.add(PooledAdView(view, System.currentTimeMillis()))
             }
         }
     }
@@ -37,11 +37,17 @@ object AdViewPool {
     @Synchronized
     fun acquire(context: Context, adUnitId: String): AdView {
         val deque = pool[adUnitId]
-        return if (deque != null && deque.isNotEmpty()) {
-            deque.removeFirst().view
-        } else {
-            AdView(context).apply { this.adUnitId = adUnitId }
+        if (deque != null && deque.isNotEmpty()) {
+            val iterator = deque.iterator()
+            while (iterator.hasNext()) {
+                val pooled = iterator.next()
+                if (pooled.view.responseInfo != null) {
+                    iterator.remove()
+                    return pooled.view
+                }
+            }
         }
+        return AdView(context).apply { this.adUnitId = adUnitId }
     }
 
     @Synchronized
