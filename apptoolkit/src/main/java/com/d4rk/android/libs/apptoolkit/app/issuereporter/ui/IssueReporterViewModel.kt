@@ -91,7 +91,7 @@ class IssueReporterViewModel(
         launch(dispatcherProvider.io) {
             screenState.updateState(ScreenState.IsLoading())
             yield()
-            val deviceInfo = DeviceInfo(context)
+            val deviceInfo = DeviceInfo.create(context)
             val extraInfo = ExtraInfo()
             val report = Report(
                 title = data.title,

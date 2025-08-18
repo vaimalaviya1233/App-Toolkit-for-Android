@@ -3,9 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DeviceInfo(context: Context) {
@@ -32,20 +30,20 @@ class DeviceInfo(context: Context) {
     @SuppressLint("NewApi")
     private val abis64Bits: Array<String>? = Build.SUPPORTED_64_BIT_ABIS
 
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            val packageInfo = getPackageInfo(context)
+    companion object {
+        suspend fun create(context: Context): DeviceInfo {
+            val info = DeviceInfo(context)
+            val packageInfo = withContext(Dispatchers.IO) {
+                runCatching {
+                    context.packageManager.getPackageInfo(context.packageName, 0)
+                }.getOrNull()
+            }
 
             @Suppress("DEPRECATION")
-            versionCode = packageInfo?.versionCode ?: -1
-            versionName = packageInfo?.versionName
+            info.versionCode = packageInfo?.versionCode ?: -1
+            info.versionName = packageInfo?.versionName
+            return info
         }
-    }
-
-    private suspend fun getPackageInfo(context: Context) = withContext(Dispatchers.IO) {
-        runCatching {
-            context.packageManager.getPackageInfo(context.packageName, 0)
-        }.getOrNull()
     }
 
     fun toMarkdown(): String {
