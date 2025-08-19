@@ -31,7 +31,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
  */
 @Composable
 fun AnimatedExtendedFloatingActionButton(
-    visible : Boolean = true , onClick : () -> Unit , icon : @Composable () -> Unit , text : (@Composable () -> Unit)? = null , expanded : Boolean = true , modifier : Modifier = Modifier , containerColor : Color = FloatingActionButtonDefaults.containerColor
+    modifier : Modifier = Modifier, visible : Boolean = true , onClick : () -> Unit , icon : @Composable () -> Unit , text : (@Composable () -> Unit)? = null , expanded : Boolean = true , containerColor : Color = FloatingActionButtonDefaults.containerColor
 ) {
     val animatedScale : Float by animateFloatAsState(
         targetValue = if (visible) 1f else 0f , animationSpec = tween(durationMillis = 400 , easing = FastOutSlowInEasing) , label = "FAB Scale"
