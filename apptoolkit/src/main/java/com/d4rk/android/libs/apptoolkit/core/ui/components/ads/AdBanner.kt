@@ -8,17 +8,16 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdRequest
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdViewPool
 
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
@@ -60,10 +59,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
                 .fillMaxWidth()
                 .height(adsConfig.adSize.height.dp),
             factory = {
-                adView.apply {
-                    setAdSize(adsConfig.adSize)
-                  //  adUnitId = adsConfig.bannerAdUnitId
-                }
+                adView
             }
         )
     }
