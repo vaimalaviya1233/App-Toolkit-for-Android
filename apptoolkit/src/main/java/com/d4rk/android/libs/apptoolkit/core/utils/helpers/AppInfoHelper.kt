@@ -43,15 +43,24 @@ open class AppInfoHelper {
             if (context !is Activity) {
                 launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            runCatching {
-                context.startActivity(launchIntent)
-                true
-            }.onFailure {
+            if (launchIntent.resolveActivity(context.packageManager) == null) {
                 Toast.makeText(
                     context ,
                     context.getString(R.string.app_not_installed) ,
                     Toast.LENGTH_SHORT
                 ).show()
+                Result.failure(IllegalStateException("App not installed"))
+            } else {
+                runCatching {
+                    context.startActivity(launchIntent)
+                    true
+                }.onFailure {
+                    Toast.makeText(
+                        context ,
+                        context.getString(R.string.app_not_installed) ,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
         else {
