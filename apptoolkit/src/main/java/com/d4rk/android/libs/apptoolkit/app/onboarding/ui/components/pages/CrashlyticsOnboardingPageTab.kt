@@ -237,15 +237,13 @@ fun LearnMoreSection(context: Context) {
         OutlinedIconButtonWithText(
             onClick = {
                 val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
-                if (intent.resolveActivity(context.packageManager) != null) {
+                intent.resolveActivity(context.packageManager)?.let {
                     runCatching { context.startActivity(intent) }
-                } else {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.error),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                } ?: Toast.makeText(
+                    context,
+                    context.getString(R.string.error),
+                    Toast.LENGTH_SHORT
+                ).show()
             },
             icon = Icons.AutoMirrored.Filled.Launch,
             iconContentDescription = null,

@@ -33,12 +33,9 @@ class GeneralSettingsActivity : AppCompatActivity() {
             }
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            val resolvedActivity = intent.resolveActivity(context.packageManager)
-            if (resolvedActivity != null) {
+            intent.resolveActivity(context.packageManager)?.let {
                 runCatching { context.startActivity(intent) }
-            } else {
-                Log.e("GeneralSettingsActivity" , "Unable to resolve activity to handle intent")
-            }
+            } ?: Log.e("GeneralSettingsActivity" , "Unable to resolve activity to handle intent")
         }
     }
 

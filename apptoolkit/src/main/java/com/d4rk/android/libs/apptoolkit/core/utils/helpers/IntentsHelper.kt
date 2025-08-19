@@ -33,7 +33,7 @@ object IntentsHelper {
         val intent = Intent(Intent.ACTION_VIEW , url.toUri()).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return if (intent.resolveActivity(context.packageManager) != null) {
+        return intent.resolveActivity(context.packageManager)?.let {
             runCatching {
                 context.startActivity(intent)
                 true
@@ -41,10 +41,7 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            false
-        }
+        } ?: false
     }
 
     /**
@@ -60,7 +57,7 @@ object IntentsHelper {
         val intent = Intent(context , activityClass).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return if (intent.resolveActivity(context.packageManager) != null) {
+        return intent.resolveActivity(context.packageManager)?.let {
             runCatching {
                 context.startActivity(intent)
                 true
@@ -68,10 +65,7 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            false
-        }
+        } ?: false
     }
 
     /**
@@ -96,7 +90,7 @@ object IntentsHelper {
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        return if (intent.resolveActivity(context.packageManager) != null) {
+        return intent.resolveActivity(context.packageManager)?.let {
             runCatching {
                 context.startActivity(intent)
                 true
@@ -104,10 +98,7 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            false
-        }
+        } ?: false
     }
 
     /**
@@ -130,27 +121,23 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        return when {
-            displayIntent.resolveActivity(packageManager) != null -> {
-                runCatching {
-                    context.startActivity(displayIntent)
-                    true
-                }.getOrElse {
-                    it.printStackTrace()
-                    false
-                }
+        return displayIntent.resolveActivity(packageManager)?.let {
+            runCatching {
+                context.startActivity(displayIntent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
             }
-            settingsIntent.resolveActivity(packageManager) != null -> {
-                runCatching {
-                    context.startActivity(settingsIntent)
-                    true
-                }.getOrElse {
-                    it.printStackTrace()
-                    false
-                }
+        } ?: settingsIntent.resolveActivity(packageManager)?.let {
+            runCatching {
+                context.startActivity(settingsIntent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
             }
-            else -> false
-        }
+        } ?: false
     }
 
     /**
@@ -168,7 +155,7 @@ object IntentsHelper {
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return if (marketIntent.resolveActivity(context.packageManager) != null) {
+        return marketIntent.resolveActivity(context.packageManager)?.let {
             runCatching {
                 context.startActivity(marketIntent)
                 true
@@ -176,10 +163,7 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
-        }
+        } ?: openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
     }
 
     /**
@@ -206,7 +190,7 @@ object IntentsHelper {
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return if (chooser.resolveActivity(context.packageManager) != null) {
+        return chooser.resolveActivity(context.packageManager)?.let {
             runCatching {
                 context.startActivity(chooser)
                 true
@@ -214,10 +198,7 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            false
-        }
+        } ?: false
     }
 
     /**
@@ -240,7 +221,7 @@ object IntentsHelper {
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
         val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
-        return if (emailIntent.resolveActivity(context.packageManager) != null) {
+        return emailIntent.resolveActivity(context.packageManager)?.let {
             val chooser = Intent.createChooser(
                 emailIntent , context.getString(R.string.send_email_using)
             ).apply {
@@ -253,9 +234,6 @@ object IntentsHelper {
                 it.printStackTrace()
                 false
             }
-        }
-        else {
-            false
-        }
+        } ?: false
     }
 }
