@@ -9,6 +9,10 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.apps.apptoolkit.core.data.favorites.FavoritesRepositoryImpl
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
@@ -21,6 +25,10 @@ val appModule : Module = module {
     single<DataStore> { DataStore.getInstance(context = get()) }
     single<AdsCoreManager> { AdsCoreManager(context = get() , get()) }
     single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
+
+    single<FavoritesRepository> { FavoritesRepositoryImpl(dataStore = get()) }
+    single { ObserveFavoritesUseCase(repository = get()) }
+    single { ToggleFavoriteUseCase(repository = get()) }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()
@@ -45,7 +53,8 @@ val appModule : Module = module {
     viewModel {
         FavoriteAppsViewModel(
             fetchDeveloperAppsUseCase = get(),
-            dataStore = get(),
+            observeFavoritesUseCase = get(),
+            toggleFavoriteUseCase = get(),
             dispatcherProvider = get()
         )
     }

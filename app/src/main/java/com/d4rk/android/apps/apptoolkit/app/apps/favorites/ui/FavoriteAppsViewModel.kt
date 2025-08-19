@@ -5,7 +5,8 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.Favori
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
-import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -27,9 +28,10 @@ import kotlinx.coroutines.launch
 
 class FavoriteAppsViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
-    val dataStore: DataStore,
+    private val observeFavoritesUseCase: ObserveFavoritesUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val dispatcherProvider: DispatcherProvider
-) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
+ ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
 
@@ -45,7 +47,7 @@ class FavoriteAppsViewModel(
     init {
         viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
             runCatching {
-                dataStore.favoriteApps
+                observeFavoritesUseCase()
                     .onEach {
                         favoritesLoaded.value = true
                         _favorites.value = it
@@ -99,7 +101,7 @@ class FavoriteAppsViewModel(
     fun toggleFavorite(packageName: String) {
         viewModelScope.launch(context = dispatcherProvider.io) {
             runCatching {
-                dataStore.toggleFavoriteApp(packageName)
+                toggleFavoriteUseCase(packageName)
             }
         }
     }
