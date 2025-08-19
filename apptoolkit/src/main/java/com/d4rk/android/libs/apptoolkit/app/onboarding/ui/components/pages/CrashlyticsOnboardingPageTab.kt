@@ -236,7 +236,7 @@ fun LearnMoreSection(context: Context) {
         OutlinedIconButtonWithText(
             onClick = {
                 val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
-                context.startActivity(intent)
+                runCatching { context.startActivity(intent) }
             },
             icon = Icons.AutoMirrored.Filled.Launch,
             iconContentDescription = null,

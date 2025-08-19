@@ -203,11 +203,11 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                         when {
                             context.packageManager.resolveActivity(
                                 localeIntent , 0
-                            ) != null -> context.startActivity(localeIntent)
+                            ) != null -> runCatching { context.startActivity(localeIntent) }
 
                             context.packageManager.resolveActivity(
                                 detailsIntent , 0
-                            ) != null -> context.startActivity(detailsIntent)
+                            ) != null -> runCatching { context.startActivity(detailsIntent) }
 
                             else -> {
                                 showLanguageDialog = true
