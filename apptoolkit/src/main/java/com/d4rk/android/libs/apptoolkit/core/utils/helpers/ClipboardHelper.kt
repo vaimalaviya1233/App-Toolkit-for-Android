@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 
 /**
  *  A helper object for managing clipboard operations.
@@ -21,12 +22,19 @@ object ClipboardHelper {
      *                     This callback is typically used to display a visual confirmation (e.g., a Snackbar).
      */
     fun copyTextToClipboard(context : Context , label : String , text : String , onShowSnackbar : () -> Unit = {}) {
-        val clipboard : ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip : ClipData = ClipData.newPlainText(label , text)
-        clipboard.setPrimaryClip(clip)
+        val clipboard : ClipboardManager? = runCatching {
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        }.getOrNull()
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            onShowSnackbar()
+        if (clipboard != null) {
+            val clip : ClipData = ClipData.newPlainText(label , text)
+            clipboard.setPrimaryClip(clip)
+
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                onShowSnackbar()
+            }
+        } else {
+            Log.w("ClipboardHelper" , "Clipboard service unavailable")
         }
     }
 }

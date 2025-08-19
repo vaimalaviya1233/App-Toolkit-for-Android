@@ -41,15 +41,15 @@ class TestClipboardHelper {
     }
 
     @Test
-    fun `copyTextToClipboard throws when manager missing`() {
-        println("🚀 [TEST] copyTextToClipboard throws when manager missing")
+    fun `copyTextToClipboard handles missing manager gracefully`() {
+        println("🚀 [TEST] copyTextToClipboard handles missing manager gracefully")
         val context = mockk<Context>()
         every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns null
 
-        assertFailsWith<NullPointerException> {
-            ClipboardHelper.copyTextToClipboard(context, "l", "t")
-        }
-        println("🏁 [TEST DONE] copyTextToClipboard throws when manager missing")
+        ClipboardHelper.copyTextToClipboard(context, "l", "t")
+
+        verify { context.getSystemService(Context.CLIPBOARD_SERVICE) }
+        println("🏁 [TEST DONE] copyTextToClipboard handles missing manager gracefully")
     }
 
     @Test
@@ -208,15 +208,15 @@ class TestClipboardHelper {
     }
 
     @Test
-    fun `copyTextToClipboard throws when clipboard service type unexpected`() {
-        println("🚀 [TEST] copyTextToClipboard throws when clipboard service type unexpected")
+    fun `copyTextToClipboard handles unexpected clipboard service type`() {
+        println("🚀 [TEST] copyTextToClipboard handles unexpected clipboard service type")
         val context = mockk<Context>()
         every { context.getSystemService(Context.CLIPBOARD_SERVICE) } returns "not a manager"
 
-        assertFailsWith<ClassCastException> {
-            ClipboardHelper.copyTextToClipboard(context, "l", "t")
-        }
-        println("🏁 [TEST DONE] copyTextToClipboard throws when clipboard service type unexpected")
+        ClipboardHelper.copyTextToClipboard(context, "l", "t")
+
+        verify { context.getSystemService(Context.CLIPBOARD_SERVICE) }
+        println("🏁 [TEST DONE] copyTextToClipboard handles unexpected clipboard service type")
     }
 }
 
