@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.advanced.utils
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.d4rk.android.libs.apptoolkit.R
 import io.mockk.every
@@ -8,9 +9,11 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.Test
+import kotlin.coroutines.ContinuationInterceptor
 import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
 import kotlin.test.assertFailsWith
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.runTest
 
 class TestCleanHelper {
@@ -32,7 +35,8 @@ class TestCleanHelper {
         val toast = mockk<Toast>(relaxed = true)
         every { Toast.makeText(context, "success", Toast.LENGTH_SHORT) } returns toast
 
-        CleanHelper.clearApplicationCache(context)
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
+        CleanHelper.clearApplicationCache(context, dispatcher)
 
         assertFalse(dir1.exists())
         assertFalse(dir2.exists())
@@ -61,13 +65,16 @@ class TestCleanHelper {
         val toast = mockk<Toast>(relaxed = true)
         every { Toast.makeText(context, "error", Toast.LENGTH_SHORT) } returns toast
 
-        CleanHelper.clearApplicationCache(context)
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
+        mockkStatic(Log::class)
+        CleanHelper.clearApplicationCache(context, dispatcher)
 
         assertFalse(dir1.exists())
         assertFalse(dir3.exists())
         verify { failing.deleteRecursively() }
         verify { context.getString(R.string.cache_cleared_error) }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+        verify { Log.w(any(), match { it.contains(failing.toString()) }) }
         println("🏁 [TEST DONE] clearApplicationCache shows error toast when deletion fails")
     }
 
@@ -77,8 +84,9 @@ class TestCleanHelper {
         val context = mockk<Context>()
         every { context.cacheDir } throws SecurityException("denied")
 
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
         assertFailsWith<SecurityException> {
-            CleanHelper.clearApplicationCache(context)
+            CleanHelper.clearApplicationCache(context, dispatcher)
         }
         println("🏁 [TEST DONE] clearApplicationCache throws when directory inaccessible")
     }
@@ -100,7 +108,8 @@ class TestCleanHelper {
         val toast = mockk<Toast>(relaxed = true)
         every { Toast.makeText(context, "success", Toast.LENGTH_SHORT) } returns toast
 
-        CleanHelper.clearApplicationCache(context)
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
+        CleanHelper.clearApplicationCache(context, dispatcher)
 
         verify { context.getString(R.string.cache_cleared_success) }
         verify { Toast.makeText(context, "success", Toast.LENGTH_SHORT) }
@@ -108,8 +117,8 @@ class TestCleanHelper {
     }
 
     @Test
-    fun `clearApplicationCache propagates io exception`() = runTest {
-        println("🚀 [TEST] clearApplicationCache propagates io exception")
+    fun `clearApplicationCache shows error toast when delete throws`() = runTest {
+        println("🚀 [TEST] clearApplicationCache shows error toast when delete throws")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
         every { failing.deleteRecursively() } throws java.io.IOException("io")
@@ -121,10 +130,20 @@ class TestCleanHelper {
         every { context.codeCacheDir } returns failing
         every { context.filesDir } returns dir3
 
-        assertFailsWith<java.io.IOException> {
-            CleanHelper.clearApplicationCache(context)
-        }
-        println("🏁 [TEST DONE] clearApplicationCache propagates io exception")
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
+        every { context.getString(R.string.cache_cleared_error) } returns "error"
+        mockkStatic(Toast::class)
+        val toast = mockk<Toast>(relaxed = true)
+        every { Toast.makeText(context, "error", Toast.LENGTH_SHORT) } returns toast
+        mockkStatic(Log::class)
+        CleanHelper.clearApplicationCache(context, dispatcher)
+        assertFalse(dir1.exists())
+        assertFalse(dir3.exists())
+        verify { failing.deleteRecursively() }
+        verify { context.getString(R.string.cache_cleared_error) }
+        verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+        verify { Log.w(any(), match { it.contains(failing.toString()) }) }
+        println("🏁 [TEST DONE] clearApplicationCache shows error toast when delete throws")
     }
 
     @Test
@@ -143,8 +162,9 @@ class TestCleanHelper {
         mockkStatic(Toast::class)
         every { Toast.makeText(context, "success", Toast.LENGTH_SHORT) } throws RuntimeException("toast")
 
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
         assertFailsWith<RuntimeException> {
-            CleanHelper.clearApplicationCache(context)
+            CleanHelper.clearApplicationCache(context, dispatcher)
         }
         println("🏁 [TEST DONE] clearApplicationCache propagates toast exception")
     }
@@ -170,13 +190,16 @@ class TestCleanHelper {
         val toast = mockk<Toast>(relaxed = true)
         every { Toast.makeText(context, "error", Toast.LENGTH_SHORT) } returns toast
 
-        CleanHelper.clearApplicationCache(context)
+        val dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher
+        mockkStatic(Log::class)
+        CleanHelper.clearApplicationCache(context, dispatcher)
 
         assertFalse(dir1.exists())
         verify { failing2.deleteRecursively() }
         verify { failing3.deleteRecursively() }
         verify { context.getString(R.string.cache_cleared_error) }
         verify { Toast.makeText(context, "error", Toast.LENGTH_SHORT) }
+        verify { Log.w(any(), match { it.contains(failing2.toString()) && it.contains(failing3.toString()) }) }
         println("🏁 [TEST DONE] clearApplicationCache handles partial deletion")
     }
 }
