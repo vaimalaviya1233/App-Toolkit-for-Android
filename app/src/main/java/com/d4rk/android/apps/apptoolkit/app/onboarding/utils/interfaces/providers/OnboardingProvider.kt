@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.provide
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Build
@@ -66,9 +67,14 @@ class AppOnboardingProvider : OnboardingProvider {
     }
 
     override fun onOnboardingFinished(context: Context) {
-        context.startActivity(Intent(context, MainActivity::class.java))
-        if (context is Activity) {
-            context.finish()
+        val intent = Intent(context, MainActivity::class.java)
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+            if (context is Activity) {
+                context.finish()
+            }
+        } else {
+            Log.w("AppOnboardingProvider", "MainActivity not found to handle intent")
         }
     }
 }
