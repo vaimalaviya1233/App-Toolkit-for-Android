@@ -20,6 +20,7 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +40,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVertical
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppCard(
@@ -50,6 +52,7 @@ fun AppCard(
     val context: Context = LocalContext.current
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
+    val coroutineScope = rememberCoroutineScope()
     Card(
         modifier = modifier
             .bounceClick()
@@ -60,26 +63,28 @@ fun AppCard(
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 if (appInfo.packageName.isNotEmpty()) {
-                    if (AppInfoHelper().isAppInstalled(
-                            context = context,
-                            packageName = appInfo.packageName
-                        )
-                    ) {
-                        if (!AppInfoHelper().openApp(
+                    coroutineScope.launch {
+                        if (AppInfoHelper().isAppInstalled(
                                 context = context,
                                 packageName = appInfo.packageName
                             )
                         ) {
+                            if (!AppInfoHelper().openApp(
+                                    context = context,
+                                    packageName = appInfo.packageName
+                                )
+                            ) {
+                                IntentsHelper.openPlayStoreForApp(
+                                    context = context,
+                                    packageName = appInfo.packageName
+                                )
+                            }
+                        } else {
                             IntentsHelper.openPlayStoreForApp(
                                 context = context,
                                 packageName = appInfo.packageName
                             )
                         }
-                    } else {
-                        IntentsHelper.openPlayStoreForApp(
-                            context = context,
-                            packageName = appInfo.packageName
-                        )
                     }
                 }
             }) {
