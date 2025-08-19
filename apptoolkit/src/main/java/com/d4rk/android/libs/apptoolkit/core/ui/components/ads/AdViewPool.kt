@@ -64,6 +64,7 @@ object AdViewPool {
                 val pooled = iterator.next()
                 if (pooled.view.responseInfo != null) {
                     iterator.remove()
+                    pooled.view.resume()
                     return pooled.view
                 }
             }
@@ -86,6 +87,7 @@ object AdViewPool {
         if (deque.size >= MAX_POOL_SIZE) {
             adView.destroy()
         } else {
+            adView.pause()
             deque.add(PooledAdView(adView, System.currentTimeMillis()))
         }
     }
