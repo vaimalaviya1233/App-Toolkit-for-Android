@@ -29,8 +29,8 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
     if (showAds) {
         val adRequest = remember { AdRequest.Builder().build() }
         val adView = remember(adsConfig.bannerAdUnitId) {
-            AdViewPool.preload(context, adsConfig.bannerAdUnitId, adRequest)
-            AdViewPool.acquire(context, adsConfig.bannerAdUnitId)
+            AdViewPool.preload(context, adsConfig.bannerAdUnitId, adsConfig.adSize, adRequest)
+            AdViewPool.acquire(context, adsConfig.bannerAdUnitId, adsConfig.adSize)
         }
         val lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -51,7 +51,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
             lifecycle.addObserver(observer)
             onDispose {
                 lifecycle.removeObserver(observer)
-                AdViewPool.release(adsConfig.bannerAdUnitId, adView)
+                AdViewPool.release(adsConfig.bannerAdUnitId, adsConfig.adSize, adView)
             }
         }
 

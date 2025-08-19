@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.content.Context
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
 import kotlin.concurrent.fixedRateTimer
@@ -12,7 +13,7 @@ private const val TIMEOUT_MS = 5 * 60 * 1000L
 private data class PooledAdView(val view: AdView, var lastUsed: Long)
 
 object AdViewPool {
-    private val pool: MutableMap<String, ArrayDeque<PooledAdView>> = mutableMapOf()
+    private val pool: MutableMap<Pair<String, AdSize>, ArrayDeque<PooledAdView>> = mutableMapOf()
 
     init {
         fixedRateTimer("AdViewPoolCleanup", daemon = true, initialDelay = TIMEOUT_MS, period = TIMEOUT_MS) {
@@ -21,12 +22,20 @@ object AdViewPool {
     }
 
     @Synchronized
-    fun preload(context: Context, adUnitId: String, adRequest: AdRequest, count: Int = 1) {
-        val deque = pool.getOrPut(adUnitId) { ArrayDeque() }
+    fun preload(
+        context: Context,
+        adUnitId: String,
+        adSize: AdSize,
+        adRequest: AdRequest,
+        count: Int = 1,
+    ) {
+        val key = adUnitId to adSize
+        val deque = pool.getOrPut(key) { ArrayDeque() }
         repeat(count) {
             if (deque.size < MAX_POOL_SIZE) {
                 val view = AdView(context).apply {
                     this.adUnitId = adUnitId
+                    setAdSize(adSize)
                     loadAd(adRequest)
                 }
                 deque.add(PooledAdView(view, System.currentTimeMillis()))
@@ -35,8 +44,9 @@ object AdViewPool {
     }
 
     @Synchronized
-    fun acquire(context: Context, adUnitId: String): AdView {
-        val deque = pool[adUnitId]
+    fun acquire(context: Context, adUnitId: String, adSize: AdSize): AdView {
+        val key = adUnitId to adSize
+        val deque = pool[key]
         if (deque != null && deque.isNotEmpty()) {
             val iterator = deque.iterator()
             while (iterator.hasNext()) {
@@ -47,13 +57,17 @@ object AdViewPool {
                 }
             }
         }
-        return AdView(context).apply { this.adUnitId = adUnitId }
+        return AdView(context).apply {
+            this.adUnitId = adUnitId
+            setAdSize(adSize)
+        }
     }
 
     @Synchronized
-    fun release(adUnitId: String, adView: AdView) {
+    fun release(adUnitId: String, adSize: AdSize, adView: AdView) {
         cleanup()
-        val deque = pool.getOrPut(adUnitId) { ArrayDeque() }
+        val key = adUnitId to adSize
+        val deque = pool.getOrPut(key) { ArrayDeque() }
         if (deque.size >= MAX_POOL_SIZE) {
             adView.destroy()
         } else {
