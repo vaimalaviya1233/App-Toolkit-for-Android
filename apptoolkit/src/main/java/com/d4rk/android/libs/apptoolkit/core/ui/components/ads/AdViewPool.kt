@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val MAX_POOL_SIZE = 3
 private const val TIMEOUT_MS = 5 * 60 * 1000L
@@ -36,17 +37,24 @@ object AdViewPool {
         val key = adUnitId to adSize
         repeat(count) {
             scope.launch {
-                synchronized(this@AdViewPool) {
-                    val deque = pool.getOrPut(key) { ArrayDeque() }
-                    if (deque.size < MAX_POOL_SIZE) {
-                        runCatching {
-                            AdView(context.applicationContext).apply {
-                                this.adUnitId = adUnitId
-                                setAdSize(adSize)
-                                loadAd(adRequest)
-                            }
-                        }.onSuccess { view ->
+                val view = try {
+                    withContext(Dispatchers.Main) {
+                        AdView(context.applicationContext).apply {
+                            this.adUnitId = adUnitId
+                            setAdSize(adSize)
+                            loadAd(adRequest)
+                        }
+                    }
+                } catch (_: Exception) {
+                    null
+                }
+                if (view != null) {
+                    synchronized(this@AdViewPool) {
+                        val deque = pool.getOrPut(key) { ArrayDeque() }
+                        if (deque.size < MAX_POOL_SIZE) {
                             deque.add(PooledAdView(view, System.currentTimeMillis()))
+                        } else {
+                            view.destroy()
                         }
                     }
                 }
