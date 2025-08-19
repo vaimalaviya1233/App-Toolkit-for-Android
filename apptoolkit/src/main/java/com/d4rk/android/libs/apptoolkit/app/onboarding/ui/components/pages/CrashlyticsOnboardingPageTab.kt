@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.SoundEffectConstants
 import android.view.View
+import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -236,7 +237,15 @@ fun LearnMoreSection(context: Context) {
         OutlinedIconButtonWithText(
             onClick = {
                 val intent = Intent(Intent.ACTION_VIEW, AppLinks.PRIVACY_POLICY.toUri())
-                runCatching { context.startActivity(intent) }
+                if (intent.resolveActivity(context.packageManager) != null) {
+                    runCatching { context.startActivity(intent) }
+                } else {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             },
             icon = Icons.AutoMirrored.Filled.Launch,
             iconContentDescription = null,
