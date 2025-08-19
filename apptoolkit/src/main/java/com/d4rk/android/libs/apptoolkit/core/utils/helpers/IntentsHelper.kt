@@ -34,8 +34,13 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-            true
+            runCatching {
+                context.startActivity(intent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             false
@@ -56,8 +61,13 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-            true
+            runCatching {
+                context.startActivity(intent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             false
@@ -87,8 +97,13 @@ object IntentsHelper {
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-            true
+            runCatching {
+                context.startActivity(intent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             false
@@ -117,12 +132,22 @@ object IntentsHelper {
 
         return when {
             displayIntent.resolveActivity(packageManager) != null -> {
-                context.startActivity(displayIntent)
-                true
+                runCatching {
+                    context.startActivity(displayIntent)
+                    true
+                }.getOrElse {
+                    it.printStackTrace()
+                    false
+                }
             }
             settingsIntent.resolveActivity(packageManager) != null -> {
-                context.startActivity(settingsIntent)
-                true
+                runCatching {
+                    context.startActivity(settingsIntent)
+                    true
+                }.getOrElse {
+                    it.printStackTrace()
+                    false
+                }
             }
             else -> false
         }
@@ -144,8 +169,13 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return if (marketIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(marketIntent)
-            true
+            runCatching {
+                context.startActivity(marketIntent)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
@@ -177,8 +207,13 @@ object IntentsHelper {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return if (chooser.resolveActivity(context.packageManager) != null) {
-            context.startActivity(chooser)
-            true
+            runCatching {
+                context.startActivity(chooser)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             false
@@ -211,8 +246,13 @@ object IntentsHelper {
             ).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            context.startActivity(chooser)
-            true
+            runCatching {
+                context.startActivity(chooser)
+                true
+            }.getOrElse {
+                it.printStackTrace()
+                false
+            }
         }
         else {
             false
