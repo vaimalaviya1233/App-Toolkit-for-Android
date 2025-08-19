@@ -24,7 +24,7 @@ class UiTextHelperInstrumentationTest {
     fun asString_uses_updated_configuration() {
         val baseContext = InstrumentationRegistry.getInstrumentation().targetContext
         val config = Configuration(baseContext.resources.configuration)
-        config.setLocale(Locale("fr", "FR"))
+        config.setLocale(Locale.FRANCE)
         val localizedContext = baseContext.createConfigurationContext(config)
 
         val expected = localizedContext.getString(R.string.welcome)
