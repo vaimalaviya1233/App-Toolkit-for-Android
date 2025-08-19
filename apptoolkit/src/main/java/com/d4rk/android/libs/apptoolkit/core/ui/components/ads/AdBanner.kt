@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdRequest
+import kotlinx.coroutines.delay
 
 @Composable
 fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
@@ -35,6 +36,7 @@ fun AdBanner(modifier : Modifier = Modifier , adsConfig : AdsConfig) {
 
         LaunchedEffect(adView) {
             if (adView.responseInfo == null) {
+                delay(100)
                 adView.loadAd(adRequest)
             }
         }

@@ -6,6 +6,10 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
 import kotlin.concurrent.fixedRateTimer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 private const val MAX_POOL_SIZE = 3
 private const val TIMEOUT_MS = 5 * 60 * 1000L
@@ -14,6 +18,7 @@ private data class PooledAdView(val view: AdView, var lastUsed: Long)
 
 object AdViewPool {
     private val pool: MutableMap<Pair<String, AdSize>, ArrayDeque<PooledAdView>> = mutableMapOf()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     init {
         fixedRateTimer("AdViewPoolCleanup", daemon = true, initialDelay = TIMEOUT_MS, period = TIMEOUT_MS) {
@@ -21,7 +26,6 @@ object AdViewPool {
         }
     }
 
-    @Synchronized
     fun preload(
         context: Context,
         adUnitId: String,
@@ -30,17 +34,21 @@ object AdViewPool {
         count: Int = 1,
     ) {
         val key = adUnitId to adSize
-        val deque = pool.getOrPut(key) { ArrayDeque() }
         repeat(count) {
-            if (deque.size < MAX_POOL_SIZE) {
-                runCatching {
-                    AdView(context.applicationContext).apply {
-                        this.adUnitId = adUnitId
-                        setAdSize(adSize)
-                        loadAd(adRequest)
+            scope.launch {
+                synchronized(this@AdViewPool) {
+                    val deque = pool.getOrPut(key) { ArrayDeque() }
+                    if (deque.size < MAX_POOL_SIZE) {
+                        runCatching {
+                            AdView(context.applicationContext).apply {
+                                this.adUnitId = adUnitId
+                                setAdSize(adSize)
+                                loadAd(adRequest)
+                            }
+                        }.onSuccess { view ->
+                            deque.add(PooledAdView(view, System.currentTimeMillis()))
+                        }
                     }
-                }.onSuccess { view ->
-                    deque.add(PooledAdView(view, System.currentTimeMillis()))
                 }
             }
         }
