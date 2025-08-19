@@ -1,6 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import com.d4rk.android.libs.apptoolkit.R
 import kotlinx.coroutines.Dispatchers
@@ -18,19 +20,47 @@ open class AppInfoHelper {
 
     /**
      * Opens a specific app if installed.
-     * @return True if the app was opened, false otherwise.
+     *
+     * Returns `true` if the app was successfully launched and `false` otherwise.
+     * For callers that need to react programmatically to failures, use
+     * [openAppResult].
      */
-    suspend fun openApp(context : Context , packageName : String) : Boolean {
+    suspend fun openApp(context : Context , packageName : String) : Boolean =
+        openAppResult(context = context , packageName = packageName).getOrElse { false }
+
+    /**
+     * Opens a specific app if installed and exposes the operation result.
+     *
+     * @return A [Result] containing `true` when the app was launched or a failure when
+     *         the launch intent could not be obtained or starting the activity failed.
+     */
+    suspend fun openAppResult(context : Context , packageName : String) : Result<Boolean> {
         val launchIntent = withContext(Dispatchers.IO) {
             runCatching { context.packageManager.getLaunchIntentForPackage(packageName) }.getOrNull()
         }
 
         return if (launchIntent != null) {
-            context.startActivity(launchIntent)
-            true
-        } else {
-            Toast.makeText(context , context.getString(R.string.app_not_installed) , Toast.LENGTH_SHORT).show()
-            false
+            if (context !is Activity) {
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            runCatching {
+                context.startActivity(launchIntent)
+                true
+            }.onFailure {
+                Toast.makeText(
+                    context ,
+                    context.getString(R.string.app_not_installed) ,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        else {
+            Toast.makeText(
+                context ,
+                context.getString(R.string.app_not_installed) ,
+                Toast.LENGTH_SHORT
+            ).show()
+            Result.failure(IllegalStateException("App not installed"))
         }
     }
 }
