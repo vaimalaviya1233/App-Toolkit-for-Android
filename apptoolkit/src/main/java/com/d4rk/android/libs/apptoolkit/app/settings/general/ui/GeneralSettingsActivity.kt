@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.settings.general.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,12 @@ class GeneralSettingsActivity : AppCompatActivity() {
             }
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            runCatching { context.startActivity(intent) }
+            val resolvedActivity = intent.resolveActivity(context.packageManager)
+            if (resolvedActivity != null) {
+                runCatching { context.startActivity(intent) }
+            } else {
+                Log.e("GeneralSettingsActivity" , "Unable to resolve activity to handle intent")
+            }
         }
     }
 
