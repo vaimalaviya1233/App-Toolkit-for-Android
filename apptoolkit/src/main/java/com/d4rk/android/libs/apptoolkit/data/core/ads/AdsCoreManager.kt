@@ -27,7 +27,7 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
             dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
         }
         if (isAdsChecked) {
-            MobileAds.initialize(context)
+            withContext(Dispatchers.IO) { MobileAds.initialize(context) }
             appOpenAdManager = AppOpenAdManager(appOpenUnitId)
         }
     }

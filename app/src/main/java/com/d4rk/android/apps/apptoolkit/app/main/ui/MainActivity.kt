@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         lifecycleScope.launch {
             coroutineScope {
-                val adsInitialization = async { MobileAds.initialize(this@MainActivity) {} }
+                val adsInitialization = async(Dispatchers.Default) { MobileAds.initialize(this@MainActivity) {} }
                 val consentInitialization = async(Dispatchers.IO) {
                     ConsentManagerHelper.applyInitialConsent(dataStore)
                 }
