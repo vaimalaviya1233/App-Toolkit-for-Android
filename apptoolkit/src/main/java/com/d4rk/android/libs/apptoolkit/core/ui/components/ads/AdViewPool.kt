@@ -33,12 +33,15 @@ object AdViewPool {
         val deque = pool.getOrPut(key) { ArrayDeque() }
         repeat(count) {
             if (deque.size < MAX_POOL_SIZE) {
-                val view = AdView(context).apply {
-                    this.adUnitId = adUnitId
-                    setAdSize(adSize)
-                    loadAd(adRequest)
+                runCatching {
+                    AdView(context.applicationContext).apply {
+                        this.adUnitId = adUnitId
+                        setAdSize(adSize)
+                        loadAd(adRequest)
+                    }
+                }.onSuccess { view ->
+                    deque.add(PooledAdView(view, System.currentTimeMillis()))
                 }
-                deque.add(PooledAdView(view, System.currentTimeMillis()))
             }
         }
     }
@@ -57,9 +60,13 @@ object AdViewPool {
                 }
             }
         }
-        return AdView(context).apply {
-            this.adUnitId = adUnitId
-            setAdSize(adSize)
+        return runCatching {
+            AdView(context.applicationContext).apply {
+                this.adUnitId = adUnitId
+                setAdSize(adSize)
+            }
+        }.getOrElse {
+            AdView(context.applicationContext)
         }
     }
 
