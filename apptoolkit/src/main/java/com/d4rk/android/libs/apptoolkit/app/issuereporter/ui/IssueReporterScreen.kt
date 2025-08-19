@@ -43,6 +43,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -317,9 +318,11 @@ fun IssueReporterScreenContent(
                         )
                     }
                     AnimatedVisibility(visible = deviceExpanded) {
-                        val info = remember { DeviceInfo(context).toString() }
+                        val info = produceState(initialValue = "") {
+                            value = DeviceInfo.create(context).toString()
+                        }
                         Text(
-                            text = info,
+                            text = info.value,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier
                                 .padding(SizeConstants.LargeSize)
