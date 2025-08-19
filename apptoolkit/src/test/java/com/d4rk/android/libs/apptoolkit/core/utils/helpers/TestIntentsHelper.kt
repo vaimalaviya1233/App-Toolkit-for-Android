@@ -54,27 +54,25 @@ class TestIntentsHelper {
     }
 
     @Test
-    fun `openUrl propagates exception`() {
-        println("🚀 [TEST] openUrl propagates exception")
+    fun `openUrl returns false on failure`() {
+        println("🚀 [TEST] openUrl returns false on failure")
         val context = mockk<Context>()
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.openUrl(context, "https://example.com")
-        }
-        println("🏁 [TEST DONE] openUrl propagates exception")
+        val result = IntentsHelper.openUrl(context, "https://example.com")
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] openUrl returns false on failure")
     }
 
     @Test
-    fun `openActivity propagates exception`() {
-        println("🚀 [TEST] openActivity propagates exception")
+    fun `openActivity returns false on failure`() {
+        println("🚀 [TEST] openActivity returns false on failure")
         val context = mockk<Context>()
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.openActivity(context, String::class.java)
-        }
-        println("🏁 [TEST DONE] openActivity propagates exception")
+        val result = IntentsHelper.openActivity(context, String::class.java)
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] openActivity returns false on failure")
     }
 
     @Test
@@ -199,21 +197,20 @@ class TestIntentsHelper {
     }
 
     @Test
-    fun `openAppNotificationSettings propagates exception`() {
-        println("🚀 [TEST] openAppNotificationSettings propagates exception")
+    fun `openAppNotificationSettings returns false on failure`() {
+        println("🚀 [TEST] openAppNotificationSettings returns false on failure")
         val context = mockk<Context>()
         every { context.packageName } returns "pkg"
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.openAppNotificationSettings(context)
-        }
-        println("🏁 [TEST DONE] openAppNotificationSettings propagates exception")
+        val result = IntentsHelper.openAppNotificationSettings(context)
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] openAppNotificationSettings returns false on failure")
     }
 
     @Test
-    fun `openPlayStoreForApp propagates exception`() {
-        println("🚀 [TEST] openPlayStoreForApp propagates exception")
+    fun `openPlayStoreForApp returns false on failure`() {
+        println("🚀 [TEST] openPlayStoreForApp returns false on failure")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
         every { context.packageManager } returns pm
@@ -221,15 +218,14 @@ class TestIntentsHelper {
         every { anyConstructed<Intent>().resolveActivity(pm) } returns mockk()
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.openPlayStoreForApp(context, "com.test")
-        }
-        println("🏁 [TEST DONE] openPlayStoreForApp propagates exception")
+        val result = IntentsHelper.openPlayStoreForApp(context, "com.test")
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] openPlayStoreForApp returns false on failure")
     }
 
     @Test
-    fun `shareApp propagates exception`() {
-        println("🚀 [TEST] shareApp propagates exception")
+    fun `shareApp returns false on failure`() {
+        println("🚀 [TEST] shareApp returns false on failure")
         val context = mockk<Context>()
         val res = mockk<Resources>()
         every { context.packageName } returns "pkg"
@@ -243,25 +239,23 @@ class TestIntentsHelper {
         } returns "msg"
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.shareApp(context, R.string.summary_share_message)
-        }
-        println("🏁 [TEST DONE] shareApp propagates exception")
+        val result = IntentsHelper.shareApp(context, R.string.summary_share_message)
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] shareApp returns false on failure")
     }
 
     @Test
-    fun `sendEmailToDeveloper propagates exception`() {
-        println("🚀 [TEST] sendEmailToDeveloper propagates exception")
+    fun `sendEmailToDeveloper returns false on failure`() {
+        println("🚀 [TEST] sendEmailToDeveloper returns false on failure")
         val context = mockk<Context>()
         every { context.getString(R.string.feedback_for, "App") } returns "subject"
         every { context.getString(R.string.dear_developer) } returns "body"
         every { context.getString(R.string.send_email_using) } returns "send"
         every { context.startActivity(any()) } throws RuntimeException("fail")
 
-        assertFailsWith<RuntimeException> {
-            IntentsHelper.sendEmailToDeveloper(context, R.string.app_name)
-        }
-        println("🏁 [TEST DONE] sendEmailToDeveloper propagates exception")
+        val result = IntentsHelper.sendEmailToDeveloper(context, R.string.app_name)
+        assertEquals(false, result)
+        println("🏁 [TEST DONE] sendEmailToDeveloper returns false on failure")
     }
 
     @Test
