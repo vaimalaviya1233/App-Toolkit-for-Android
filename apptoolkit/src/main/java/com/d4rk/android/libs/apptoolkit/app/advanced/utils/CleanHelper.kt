@@ -5,6 +5,9 @@ import android.widget.Toast
 import com.d4rk.android.libs.apptoolkit.R
 import java.io.File
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 object CleanHelper {
@@ -13,13 +16,14 @@ object CleanHelper {
         val cacheDirectories : List<File> = listOf(context.cacheDir , context.codeCacheDir , context.filesDir)
 
         val allDeleted : Boolean = withContext(context = Dispatchers.IO) {
-            var allDeleted = true
-            for (directory in cacheDirectories) {
-                if (! directory.deleteRecursively()) {
-                    allDeleted = false
-                }
+            coroutineScope {
+                cacheDirectories
+                    .map { directory ->
+                        async { directory.deleteRecursively() }
+                    }
+                    .awaitAll()
+                    .all { it }
             }
-            allDeleted
         }
 
         val messageResId : Int = if (allDeleted) R.string.cache_cleared_success else R.string.cache_cleared_error
