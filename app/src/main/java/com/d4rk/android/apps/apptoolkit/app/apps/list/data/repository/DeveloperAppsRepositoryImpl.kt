@@ -2,7 +2,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list.data.repository
 
 import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.ApiResponse
-import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.toAppInfo
+import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.toDomain
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiConstants
@@ -32,8 +32,8 @@ class DeveloperAppsRepositoryImpl(
             val httpResponse: HttpResponse = client.get(url)
             val apiResponse: ApiResponse = httpResponse.body()
 
-            apiResponse.data.apps
-                .map { it.toAppInfo() }
+              apiResponse.data.apps
+                  .map { it.toDomain() }
                 .sortedBy { it.name.lowercase() }
         }.onSuccess { apps ->
             emit(DataState.Success(data = apps))
