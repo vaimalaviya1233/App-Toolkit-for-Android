@@ -4,6 +4,8 @@ import android.content.Context
 import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewModel
+import com.d4rk.android.apps.apptoolkit.app.apps.list.data.repository.DeveloperAppsRepositoryImpl
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
@@ -34,7 +36,8 @@ val appModule : Module = module {
 
     viewModel { MainViewModel(dispatcherProvider = get()) }
 
-    single { FetchDeveloperAppsUseCase(client = get()) }
+    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
+    single { FetchDeveloperAppsUseCase(repository = get()) }
     viewModel {
         AppsListViewModel(
             fetchDeveloperAppsUseCase = get(),
@@ -50,3 +53,4 @@ val appModule : Module = module {
         )
     }
 }
+

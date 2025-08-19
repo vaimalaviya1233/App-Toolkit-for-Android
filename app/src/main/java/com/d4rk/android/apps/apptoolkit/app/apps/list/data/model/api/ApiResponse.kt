@@ -11,5 +11,19 @@ data class ApiResponse(
 
 @Serializable
 data class AppDataWrapper(
-    @SerialName("apps") val apps: List<AppInfo>
+    @SerialName("apps") val apps: List<ApiAppInfo>
 )
+
+@Serializable
+data class ApiAppInfo(
+    @SerialName("name") val name: String,
+    @SerialName("packageName") val packageName: String,
+    @SerialName("iconLogo") val iconUrl: String,
+)
+
+fun ApiAppInfo.toAppInfo(): AppInfo = AppInfo(
+    name = name,
+    packageName = packageName,
+    iconUrl = iconUrl
+)
+
