@@ -68,13 +68,11 @@ class AppOnboardingProvider : OnboardingProvider {
 
     override fun onOnboardingFinished(context: Context) {
         val intent = Intent(context, MainActivity::class.java)
-        if (intent.resolveActivity(context.packageManager) != null) {
+        intent.resolveActivity(context.packageManager)?.let {
             context.startActivity(intent)
             if (context is Activity) {
                 context.finish()
             }
-        } else {
-            Log.w("AppOnboardingProvider", "MainActivity not found to handle intent")
-        }
+        } ?: Log.w("AppOnboardingProvider", "MainActivity not found to handle intent")
     }
 }

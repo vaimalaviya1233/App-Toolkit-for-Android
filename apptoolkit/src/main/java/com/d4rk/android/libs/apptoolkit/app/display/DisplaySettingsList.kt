@@ -200,18 +200,12 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                                 "package" , context.packageName , null
                             )
                         )
-                        when {
-                            context.packageManager.resolveActivity(
-                                localeIntent , 0
-                            ) != null -> runCatching { context.startActivity(localeIntent) }
-
-                            context.packageManager.resolveActivity(
-                                detailsIntent , 0
-                            ) != null -> runCatching { context.startActivity(detailsIntent) }
-
-                            else -> {
-                                showLanguageDialog = true
-                            }
+                        localeIntent.resolveActivity(context.packageManager)?.let {
+                            runCatching { context.startActivity(localeIntent) }
+                        } ?: detailsIntent.resolveActivity(context.packageManager)?.let {
+                            runCatching { context.startActivity(detailsIntent) }
+                        } ?: run {
+                            showLanguageDialog = true
                         }
                     }
                     else {
