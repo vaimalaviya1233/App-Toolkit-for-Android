@@ -26,7 +26,7 @@ class DeveloperAppsRepositoryImpl(
 ) : DeveloperAppsRepository {
 
     override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, RootError>> = flow {
-        runCatching {
+        try {
             val url = BuildConfig.DEBUG.let { isDebug ->
                 val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
                 "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
@@ -34,12 +34,12 @@ class DeveloperAppsRepositoryImpl(
             val httpResponse: HttpResponse = client.get(url)
             val apiResponse: ApiResponse = httpResponse.body()
 
-              apiResponse.data.apps
-                  .map { it.toDomain() }
+            val apps = apiResponse.data.apps
+                .map { it.toDomain() }
                 .sortedBy { it.name.lowercase() }
-        }.onSuccess { apps ->
+
             emit(DataState.Success(data = apps))
-        }.onFailure { error ->
+        } catch (error: Throwable) {
             emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
         }
     }.flowOn(Dispatchers.IO)
