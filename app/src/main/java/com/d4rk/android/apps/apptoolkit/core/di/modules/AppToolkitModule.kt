@@ -19,12 +19,11 @@ val appToolkitModule : Module = module {
 
     single(createdAtStart = true) { BillingRepository.getInstance(context = get()) }
     viewModel {
-        SupportViewModel(billingRepository = get(), dispatcherProvider = get())
+        SupportViewModel(billingRepository = get())
     }
 
     viewModel {
         IssueReporterViewModel(
-            dispatcherProvider = get(),
             httpClient = get(),
             githubTarget = get(),
             githubToken = get(named("github_token"))

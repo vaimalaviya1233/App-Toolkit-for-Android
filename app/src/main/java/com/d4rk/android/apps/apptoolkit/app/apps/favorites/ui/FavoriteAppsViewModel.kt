@@ -3,17 +3,17 @@ package com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsAction
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
@@ -25,12 +25,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavoriteAppsViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    private val dispatcherProvider: DispatcherProvider
  ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
@@ -45,7 +45,7 @@ class FavoriteAppsViewModel(
     )
 
     init {
-        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
+        viewModelScope.launch(context = Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) {
             runCatching {
                 observeFavoritesUseCase()
                     .onEach {
@@ -56,7 +56,7 @@ class FavoriteAppsViewModel(
             }
         }
 
-        viewModelScope.launch(context = dispatcherProvider.io, start = CoroutineStart.UNDISPATCHED) {
+        viewModelScope.launch(context = Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) {
             favoritesLoaded
                 .filter { it }
                 .first()
@@ -72,11 +72,11 @@ class FavoriteAppsViewModel(
 
     private fun loadFavorites() {
         viewModelScope.launch(
-            context = dispatcherProvider.io,
+            context = Dispatchers.IO,
             start = CoroutineStart.UNDISPATCHED
         ) {
             combine(
-                flow = fetchDeveloperAppsUseCase().flowOn(dispatcherProvider.io),
+                flow = fetchDeveloperAppsUseCase().flowOn(Dispatchers.IO),
                 flow2 = favorites
             ) { dataState, favorites ->
                 dataState to favorites
@@ -84,13 +84,15 @@ class FavoriteAppsViewModel(
                 if (!favoritesLoaded.value) return@collect
                 if (result is DataState.Success) {
                     val apps = result.data.filter { saved.contains(it.packageName) }
-                    if (apps.isEmpty()) {
-                        screenState.update { current ->
-                            current.copy(screenState = ScreenState.NoData(), data = current.data?.copy(apps = emptyList()))
-                        }
-                    } else {
-                        screenState.updateData(ScreenState.Success()) { current ->
-                            current.copy(apps = apps)
+                    withContext(Dispatchers.Main) {
+                        if (apps.isEmpty()) {
+                            screenState.update { current ->
+                                current.copy(screenState = ScreenState.NoData(), data = current.data?.copy(apps = emptyList()))
+                            }
+                        } else {
+                            screenState.updateData(ScreenState.Success()) { current ->
+                                current.copy(apps = apps)
+                            }
                         }
                     }
                 }
@@ -99,7 +101,7 @@ class FavoriteAppsViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        viewModelScope.launch(context = dispatcherProvider.io) {
+        viewModelScope.launch(context = Dispatchers.IO) {
             runCatching {
                 toggleFavoriteUseCase(packageName)
             }

@@ -37,7 +37,7 @@ object AdViewPool {
         val key = adUnitId to adSize
         repeat(count) {
             scope.launch {
-                val view = try {
+                val view = runCatching {
                     withContext(Dispatchers.Main) {
                         AdView(context.applicationContext).apply {
                             this.adUnitId = adUnitId
@@ -45,9 +45,7 @@ object AdViewPool {
                             loadAd(adRequest)
                         }
                     }
-                } catch (_: Exception) {
-                    null
-                }
+                }.getOrNull()
                 if (view != null) {
                     synchronized(this@AdViewPool) {
                         val deque = pool.getOrPut(key) { ArrayDeque() }

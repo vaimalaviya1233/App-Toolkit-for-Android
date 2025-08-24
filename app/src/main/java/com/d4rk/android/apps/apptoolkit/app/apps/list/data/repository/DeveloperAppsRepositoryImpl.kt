@@ -16,8 +16,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient
@@ -30,16 +32,20 @@ class DeveloperAppsRepositoryImpl(
                 "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
             }
             val httpResponse: HttpResponse = client.get(url)
-            val apiResponse: ApiResponse = httpResponse.body()
+            val apiResponse: ApiResponse = httpResponse.body<ApiResponse>()
 
-              apiResponse.data.apps
-                  .map { it.toDomain() }
+            apiResponse.data.apps
+                .map { it.toDomain() }
                 .sortedBy { it.name.lowercase() }
         }.onSuccess { apps ->
-            emit(DataState.Success(data = apps))
+            emit(DataState.Success<List<AppInfo>, RootError>(data = apps))
         }.onFailure { error ->
-            emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
+            emit(
+                DataState.Error<List<AppInfo>, RootError>(
+                    error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)
+                )
+            )
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }
 

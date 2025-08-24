@@ -8,7 +8,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
@@ -27,15 +26,13 @@ class TestSettingsViewModel {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
-    private lateinit var dispatcherProvider: TestDispatchers
     private lateinit var viewModel: SettingsViewModel
     private lateinit var provider: SettingsProvider
 
     private fun setup(config: SettingsConfig, dispatcher: TestDispatcher) {
-        dispatcherProvider = TestDispatchers(dispatcher)
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returns config
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        viewModel = SettingsViewModel(provider)
     }
 
     @Test
@@ -70,10 +67,9 @@ class TestSettingsViewModel {
     @Test
     fun `load settings provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load settings provider returns null")
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returns SettingsConfig(title = "null test", categories = emptyList())
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        viewModel = SettingsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(SettingsEvent.Load(context))
@@ -88,13 +84,12 @@ class TestSettingsViewModel {
     fun `sequential loads reflect latest config`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] sequential loads reflect latest config")
         val context = mockk<Context>(relaxed = true)
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returnsMany listOf(
             SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one"))),
             SettingsConfig(title = "second", categories = emptyList())
         )
-        viewModel = SettingsViewModel(provider, dispatcherProvider)
+        viewModel = SettingsViewModel(provider)
 
         viewModel.onEvent(SettingsEvent.Load(context))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()

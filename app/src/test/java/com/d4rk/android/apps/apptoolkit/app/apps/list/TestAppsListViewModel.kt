@@ -39,8 +39,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = apps.size, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        viewModel.uiState.testSuccess(expectedSize = apps.size)
         println("\uD83C\uDFC1 [TEST DONE] fetch apps - success list")
     }
 
@@ -51,8 +51,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(emptyList()))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testEmpty(testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        viewModel.uiState.testEmpty()
         println("\uD83C\uDFC1 [TEST DONE] fetch apps - empty list")
     }
 
@@ -63,8 +63,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Error<List<AppInfo>, Error>(error = object : Error {}))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        viewModel.uiState.testError()
         println("\uD83C\uDFC1 [TEST DONE] fetch apps - error")
     }
 
@@ -76,9 +76,9 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "pkg", expected = false, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        toggleAndAssert(packageName = "pkg", expected = true)
+        toggleAndAssert(packageName = "pkg", expected = false)
         println("\uD83C\uDFC1 [TEST DONE] toggle favorite")
     }
 
@@ -89,8 +89,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "missing.pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        toggleAndAssert(packageName = "missing.pkg", expected = true)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -99,13 +99,13 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         val apps = listOf(AppInfo("App", "pkg", "url"))
         val flow = flow {
             emit(DataState.Loading<List<AppInfo>, Error>())
-            delay(100)
+            delay(10)
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        dispatcherExtension.testDispatcher.scheduler.advanceTimeBy(50)
+        setup(fetchFlow = flow)
+        delay(5)
         viewModel.toggleFavorite("pkg")
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(20)
         assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
     }
@@ -114,18 +114,18 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
     @Test
     fun `error state clears after reload`() = runTest(dispatcherExtension.testDispatcher) {
         val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
-        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = shared)
 
         shared.emit(DataState.Loading())
         shared.emit(DataState.Error(error = object : Error {}))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
 
         val apps = listOf(AppInfo("App", "pkg", "url"))
         viewModel.onEvent(HomeEvent.FetchApps)
         shared.emit(DataState.Loading())
         shared.emit(DataState.Success(apps))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
 
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
@@ -139,9 +139,9 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher, toggleError = RuntimeException("ds fail"))
+        setup(fetchFlow = flow, toggleError = RuntimeException("ds fail"))
         viewModel.toggleFavorite("pkg")
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
     }
 
@@ -155,8 +155,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        viewModel.uiState.testSuccess(expectedSize = 2)
     }
 
     @Test
@@ -167,12 +167,12 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
         val failingFavs = flow<Set<String>> { throw RuntimeException("fail") }
-        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = failingFavs)
+        setup(fetchFlow = fetchFlow, favoritesFlow = failingFavs)
 
         viewModel.uiState.test {
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            delay(10)
             expectNoEvents()
             assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
         }
@@ -185,8 +185,8 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = apps.size, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
+        viewModel.uiState.testSuccess(expectedSize = apps.size)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -197,12 +197,12 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow)
 
         coroutineScope {
             repeat(5) { launch { viewModel.toggleFavorite("pkg") } }
         }
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(20)
         assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
     }
 
@@ -213,26 +213,25 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
                 val flow = flow<DataState<List<AppInfo>, Error>> { }
                 setup(
                     fetchFlow = flow,
-                    testDispatcher = dispatcherExtension.testDispatcher,
                     fetchThrows = RuntimeException("boom")
                 )
-                dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+                delay(10)
+                }
             }
         }
-    }
 
     @Test
     fun `favorites update during fetch`() = runTest(dispatcherExtension.testDispatcher) {
         val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(emptySet()) }
         val fetchFlow = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
-        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
+        setup(fetchFlow = fetchFlow, favoritesFlow = favorites)
 
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         val apps = listOf(AppInfo("App", "pkg", "url"))
         fetchFlow.emit(DataState.Loading())
         favorites.emit(setOf("pkg"))
         fetchFlow.emit(DataState.Success(apps))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
 
         assertThat(viewModel.favorites.value.contains("pkg")).isTrue()
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)

@@ -5,18 +5,19 @@ import androidx.compose.material.icons.automirrored.outlined.EventNote
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Share
+import androidx.lifecycle.viewModelScope
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.launch
 
 
-class MainViewModel(private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
+class MainViewModel() : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
 
     init {
         onEvent(event = MainEvent.LoadNavigation)
@@ -29,7 +30,7 @@ class MainViewModel(private val dispatcherProvider : DispatcherProvider) : Scree
     }
 
     private fun loadNavigationItems() {
-        launch(context = dispatcherProvider.default) {
+        viewModelScope.launch {
             screenState.successData {
                 copy(
                     navigationDrawerItems = listOf(
