@@ -17,6 +17,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.cancel
+import androidx.lifecycle.viewModelScope
+import org.junit.jupiter.api.AfterEach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -139,5 +142,12 @@ open class TestAppsListViewModelBase {
         }
         assertThat(favorites.contains(packageName)).isEqualTo(expected)
         println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
+    }
+
+    @AfterEach
+    fun tearDown() {
+        if (this::viewModel.isInitialized) {
+            viewModel.viewModelScope.cancel()
+        }
     }
 }

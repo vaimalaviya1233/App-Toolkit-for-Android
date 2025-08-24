@@ -23,6 +23,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertTrue
+import kotlinx.coroutines.cancel
+import androidx.lifecycle.viewModelScope
+import org.junit.jupiter.api.AfterEach
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestFavoriteAppsViewModelBase {
@@ -149,5 +152,12 @@ open class TestFavoriteAppsViewModelBase {
         }
         assertThat(favorites.contains(packageName)).isEqualTo(expected)
         println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
+    }
+
+    @AfterEach
+    fun tearDown() {
+        if (this::viewModel.isInitialized) {
+            viewModel.viewModelScope.cancel()
+        }
     }
 }
