@@ -26,10 +26,8 @@ open class AboutViewModel :
     }
 
     private fun copyDeviceInfo() {
-        updateUi {
-            copy(showDeviceInfoCopiedSnackbar = true)
-        }
         viewModelScope.launch {
+            updateUi { copy(showDeviceInfoCopiedSnackbar = true) }
             screenState.showSnackbar(
                 snackbar = UiSnackbar(
                     message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
@@ -42,15 +40,13 @@ open class AboutViewModel :
     }
 
     private fun dismissSnack() {
-        updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
         viewModelScope.launch {
+            updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
             screenState.dismissSnackbar()
         }
     }
 
     private inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
-        }
+        screenState.updateData(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
     }
 }
