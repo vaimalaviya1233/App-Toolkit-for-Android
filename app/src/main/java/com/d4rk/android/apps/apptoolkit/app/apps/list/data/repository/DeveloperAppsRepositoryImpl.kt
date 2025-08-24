@@ -38,9 +38,13 @@ class DeveloperAppsRepositoryImpl(
                 .map { it.toDomain() }
                 .sortedBy { it.name.lowercase() }
 
-            emit(DataState.Success(data = apps))
+            emit(DataState.Success<List<AppInfo>, RootError>(data = apps))
         } catch (error: Throwable) {
-            emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
+            emit(
+                DataState.Error<List<AppInfo>, RootError>(
+                    error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)
+                )
+            )
         }
     }.flowOn(Dispatchers.IO)
 }
