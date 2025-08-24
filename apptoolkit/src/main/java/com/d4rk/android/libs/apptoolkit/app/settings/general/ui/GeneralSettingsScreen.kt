@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.model.ui.UiGeneralSettingsScreen
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -27,7 +27,7 @@ fun GeneralSettingsScreen(title : String , viewModel : GeneralSettingsViewModel 
 
 @Composable
 fun GeneralSettingsContent(viewModel : GeneralSettingsViewModel , contentProvider : GeneralSettingsContentProvider , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
-    val screenState : UiStateScreen<UiGeneralSettingsScreen> by viewModel.uiState.collectAsState()
+    val screenState : UiStateScreen<UiGeneralSettingsScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { data : UiGeneralSettingsScreen ->
         contentProvider.ProvideContent(contentKey = data.contentKey , paddingValues = paddingValues , snackbarHostState = snackbarHostState)
     })

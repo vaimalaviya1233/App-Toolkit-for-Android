@@ -12,6 +12,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
@@ -25,8 +26,11 @@ class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , Gener
         }
     }
 
+    private var loadJob : Job? = null
+
     private fun loadContent(contentKey : String?) {
-        viewModelScope.launch {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
             screenState.setLoading()
             yield()
 
