@@ -7,6 +7,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDevel
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewModel
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -17,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -47,7 +47,9 @@ class FavoriteAppsViewModelTest {
         val favoritesFlow = MutableStateFlow(setOf("pkg"))
         every { observeFavoritesUseCase.invoke() } returns favoritesFlow
         val app = AppInfo(name = "App", packageName = "pkg", iconUrl = "")
-        coEvery { fetchUseCase.invoke() } returns flowOf(DataState.Success<List<AppInfo>, Error>(listOf(app)))
+        coEvery { fetchUseCase.invoke() } returns flowOf(
+            DataState.Success<List<AppInfo>, RootError>(listOf(app))
+        )
 
         val viewModel = FavoriteAppsViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
 
@@ -55,7 +57,7 @@ class FavoriteAppsViewModelTest {
             val initial = awaitItem()
             assertThat(initial.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
 
-            advanceUntilIdle()
+            dispatcher.scheduler.advanceUntilIdle()
 
             val success = awaitItem()
             assertThat(success.screenState).isInstanceOf(ScreenState.Success::class.java)
@@ -67,13 +69,15 @@ class FavoriteAppsViewModelTest {
     @Test
     fun `toggle favorite delegates to use case`() = runTest(dispatcher) {
         every { observeFavoritesUseCase.invoke() } returns MutableStateFlow(emptySet())
-        coEvery { fetchUseCase.invoke() } returns flowOf(DataState.Success<List<AppInfo>, Error>(emptyList()))
+        coEvery { fetchUseCase.invoke() } returns flowOf(
+            DataState.Success<List<AppInfo>, RootError>(emptyList())
+        )
         coEvery { toggleFavoriteUseCase.invoke("pkg") } returns Unit
 
         val viewModel = FavoriteAppsViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
 
         viewModel.toggleFavorite("pkg")
-        advanceUntilIdle()
+        dispatcher.scheduler.advanceUntilIdle()
 
         coVerify { toggleFavoriteUseCase.invoke("pkg") }
     }

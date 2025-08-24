@@ -15,7 +15,6 @@ import io.ktor.http.HttpStatusCode
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -66,7 +65,7 @@ class IssueReporterViewModelTest {
         viewModel.screenState.test {
             awaitItem() // initial state
             viewModel.onEvent(IssueReporterEvent.Send(context))
-            advanceUntilIdle()
+            dispatcher.scheduler.advanceUntilIdle()
             val state = awaitItem()
             val snackbar = state.snackbar!!
             assertThat(snackbar.isError).isTrue()
