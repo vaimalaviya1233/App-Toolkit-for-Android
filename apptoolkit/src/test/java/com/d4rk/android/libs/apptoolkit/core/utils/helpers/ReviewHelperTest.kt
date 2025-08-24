@@ -1,0 +1,138 @@
+package com.d4rk.android.libs.apptoolkit.core.utils.helpers
+
+import android.app.Activity
+import com.google.android.gms.tasks.Tasks
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
+import io.mockk.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class ReviewHelperTest {
+
+    @AfterEach
+    fun tearDown() {
+        unmockkAll()
+    }
+
+    @Test
+    fun `no coroutine launched when sessionCount less than 3`() = runTest {
+        val helper = spyk(ReviewHelper)
+        coEvery { helper.launchReview(any()) } returns true
+
+        helper.launchInAppReviewIfEligible(
+            activity = mockk(),
+            sessionCount = 2,
+            hasPromptedBefore = false,
+            scope = this,
+            onReviewLaunched = {}
+        )
+
+        coVerify(exactly = 0) { helper.launchReview(any()) }
+    }
+
+    @Test
+    fun `no coroutine launched when hasPromptedBefore true`() = runTest {
+        val helper = spyk(ReviewHelper)
+        coEvery { helper.launchReview(any()) } returns true
+
+        helper.launchInAppReviewIfEligible(
+            activity = mockk(),
+            sessionCount = 3,
+            hasPromptedBefore = true,
+            scope = this,
+            onReviewLaunched = {}
+        )
+
+        coVerify(exactly = 0) { helper.launchReview(any()) }
+    }
+
+    @Test
+    fun `onReviewLaunched invoked when launchReview returns true`() = runTest {
+        val helper = spyk(ReviewHelper)
+        coEvery { helper.launchReview(any()) } returns true
+        var launched = false
+
+        helper.launchInAppReviewIfEligible(
+            activity = mockk(),
+            sessionCount = 3,
+            hasPromptedBefore = false,
+            scope = this,
+            onReviewLaunched = { launched = true }
+        )
+        runCurrent()
+
+        assertTrue(launched)
+        coVerify(exactly = 1) { helper.launchReview(any()) }
+    }
+
+    @Test
+    fun `onReviewLaunched not invoked when launchReview returns false`() = runTest {
+        val helper = spyk(ReviewHelper)
+        coEvery { helper.launchReview(any()) } returns false
+        var launched = false
+
+        helper.launchInAppReviewIfEligible(
+            activity = mockk(),
+            sessionCount = 3,
+            hasPromptedBefore = false,
+            scope = this,
+            onReviewLaunched = { launched = true }
+        )
+        runCurrent()
+
+        assertFalse(launched)
+        coVerify(exactly = 1) { helper.launchReview(any()) }
+    }
+
+    @Test
+    fun `launchReview returns true when request and flow succeed`() = runTest {
+        val activity = mockk<Activity>()
+        val reviewManager = mockk<ReviewManager>()
+        val reviewInfo = mockk<ReviewInfo>()
+        mockkStatic(ReviewManagerFactory::class)
+        every { ReviewManagerFactory.create(activity) } returns reviewManager
+        every { reviewManager.requestReviewFlow() } returns Tasks.forResult(reviewInfo)
+        every { reviewManager.launchReviewFlow(activity, reviewInfo) } returns Tasks.forResult(null)
+
+        val result = ReviewHelper.launchReview(activity)
+
+        assertTrue(result)
+    }
+
+    @Test
+    fun `launchReview returns false when requestReviewFlow fails`() = runTest {
+        val activity = mockk<Activity>()
+        val reviewManager = mockk<ReviewManager>()
+        mockkStatic(ReviewManagerFactory::class)
+        every { ReviewManagerFactory.create(activity) } returns reviewManager
+        every { reviewManager.requestReviewFlow() } returns Tasks.forException(Exception())
+
+        val result = ReviewHelper.launchReview(activity)
+
+        assertFalse(result)
+    }
+
+    @Test
+    fun `launchReview returns false when launchReviewFlow fails`() = runTest {
+        val activity = mockk<Activity>()
+        val reviewManager = mockk<ReviewManager>()
+        val reviewInfo = mockk<ReviewInfo>()
+        mockkStatic(ReviewManagerFactory::class)
+        every { ReviewManagerFactory.create(activity) } returns reviewManager
+        every { reviewManager.requestReviewFlow() } returns Tasks.forResult(reviewInfo)
+        every { reviewManager.launchReviewFlow(activity, reviewInfo) } returns Tasks.forException(Exception())
+
+        val result = ReviewHelper.launchReview(activity)
+
+        assertFalse(result)
+    }
+}
+
