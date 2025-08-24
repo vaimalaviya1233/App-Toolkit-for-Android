@@ -22,7 +22,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import io.ktor.client.HttpClient
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 
 class IssueReporterViewModel(
-    httpClient: HttpClient,
+    private val repository: IssueReporterRepository,
     private val githubTarget: GithubTarget,
     private val githubToken: String,
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
@@ -39,9 +38,6 @@ class IssueReporterViewModel(
         data = UiIssueReporterScreen()
     )
 ) {
-
-    private val repository = IssueReporterRepository(httpClient)
-
     override fun onEvent(event: IssueReporterEvent) {
         when (event) {
             is IssueReporterEvent.UpdateTitle -> updateTitle(event.value)

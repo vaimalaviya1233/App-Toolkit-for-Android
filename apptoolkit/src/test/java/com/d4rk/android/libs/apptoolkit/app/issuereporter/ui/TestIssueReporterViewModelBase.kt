@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.ui
 
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -25,7 +26,8 @@ open class TestIssueReporterViewModelBase {
                 json()
             }
         }
-        viewModel = IssueReporterViewModel(client, githubTarget, githubToken)
+        val repository = IssueReporterRepository(client)
+        viewModel = IssueReporterViewModel(repository, githubTarget, githubToken)
         println("\u2705 [SETUP] ViewModel initialized")
     }
 }
