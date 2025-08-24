@@ -49,4 +49,16 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     override fun onActivityStarted(activity : Activity) {
         currentActivity = activity
     }
+
+    override fun onActivityStopped(activity : Activity) {
+        if (currentActivity === activity) {
+            currentActivity = null
+        }
+    }
+
+    override fun onActivityDestroyed(activity : Activity) {
+        if (currentActivity === activity) {
+            currentActivity = null
+        }
+    }
 }
