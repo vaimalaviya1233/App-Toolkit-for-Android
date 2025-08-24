@@ -1,20 +1,45 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier
+fun LoadingScreen(
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues = PaddingValues(0.dp),
+    indicatorSize: Dp = 96.dp,
+    showText: Boolean = true
+) {
+    Column(
+        modifier = modifier
                 .fillMaxSize()
-                .animateContentSize() , contentAlignment = Alignment.Center
+                .padding(paddingValues)
+                .animateContentSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularProgressIndicator()
+        LoadingIndicator(modifier = Modifier.size(size = indicatorSize))
+        if (showText) {
+            MediumVerticalSpacer()
+            Text(text = stringResource(R.string.loading), style = MaterialTheme.typography.bodyMedium)
+        }
     }
 }

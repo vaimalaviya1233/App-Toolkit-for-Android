@@ -11,6 +11,7 @@
     <string name="agree">Agree</string>
     <string name="error_loading_consent_info">Failed to load consent information</string>
 
+    <string name="loading">Loading…</string>
     <string name="skip_button_text">SKIP</string>
     <string name="skip_button_content_description">Skip"</string>
     <string name="back_button_content_description">Back</string>

@@ -9,6 +9,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScre
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.*
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
@@ -49,8 +50,8 @@ class FavoriteAppsViewModel(
             runCatching {
                 observeFavoritesUseCase()
                     .onEach {
-                        favoritesLoaded.value = true
                         _favorites.value = it
+                        favoritesLoaded.value = true
                     }
                     .collect()
             }
@@ -78,20 +79,37 @@ class FavoriteAppsViewModel(
             combine(
                 flow = fetchDeveloperAppsUseCase().flowOn(Dispatchers.IO),
                 flow2 = favorites
-            ) { dataState, favorites ->
-                dataState to favorites
-            }.collect { (result, saved) ->
-                if (!favoritesLoaded.value) return@collect
-                if (result is DataState.Success) {
-                    val apps = result.data.filter { saved.contains(it.packageName) }
-                    withContext(Dispatchers.Main) {
-                        if (apps.isEmpty()) {
-                            screenState.update { current ->
-                                current.copy(screenState = ScreenState.NoData(), data = current.data?.copy(apps = emptyList()))
+            ) { dataState, favsSet ->
+                dataState to favsSet
+            }.collect { (result, savedFavs) ->
+                when (result) {
+                    is DataState.Success -> {
+                        val apps = result.data.filter { appInfo -> savedFavs.contains(appInfo.packageName) }
+                        println("[ViewModel logic] Filtered apps size: ${apps.size}, savedFavs: $savedFavs, result.data size: ${result.data.size}")
+                        withContext(Dispatchers.Main) {
+                            if (apps.isEmpty()) {
+                                screenState.update { current ->
+                                    current.copy(screenState = NoData(), data = current.data?.copy(apps = emptyList()))
+                                }
+                            } else {
+                                screenState.updateData(Success()) { current ->
+                                    current.copy(apps = apps)
+                                }
                             }
-                        } else {
-                            screenState.updateData(ScreenState.Success()) { current ->
-                                current.copy(apps = apps)
+                        }
+                    }
+
+                    is DataState.Loading -> {
+                        withContext(Dispatchers.Main) {
+                            screenState.update { it.copy(screenState = IsLoading()) }
+                        }
+                    }
+
+                    is DataState.Error -> {
+                        withContext(Dispatchers.Main) {
+                            // Corrected error handling:
+                            screenState.update { current ->
+                                current.copy(screenState = ScreenState.Error("An error occurred"), data = null)
                             }
                         }
                     }
