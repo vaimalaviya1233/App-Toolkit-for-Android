@@ -31,20 +31,27 @@ class PermissionsViewModel(private val settingsProvider: PermissionsProvider) :
     }
 
     private fun loadPermissions(context: Context) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch {
             runCatching {
-                settingsProvider.providePermissionsConfig(context = context)
-            }.onSuccess { result: SettingsConfig ->
-                withContext(Dispatchers.Main) {
-                    if (result.categories.isNotEmpty()) {
-                        screenState.successData {
-                            copy(title = result.title, categories = result.categories)
-                        }
-                    } else {
-                        screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
-                        screenState.updateState(ScreenState.NoData())
-                    }
+                withContext(Dispatchers.IO) {
+                    settingsProvider.providePermissionsConfig(context = context)
                 }
+            }.onSuccess { result: SettingsConfig ->
+                if (result.categories.isNotEmpty()) {
+                    screenState.successData {
+                        copy(title = result.title, categories = result.categories)
+                    }
+                } else {
+                    screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
+                    screenState.updateState(ScreenState.NoData())
+                }
+            }.onFailure { error ->
+                screenState.setErrors(
+                    listOf(
+                        UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Something went wrong"))
+                    )
+                )
+                screenState.updateState(ScreenState.Error())
             }
         }
     }
