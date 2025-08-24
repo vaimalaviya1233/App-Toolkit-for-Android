@@ -95,8 +95,7 @@ class SupportViewModelTest {
             awaitItem()
             purchaseResultFlow.emit(PurchaseResult.Failed(error))
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            awaitItem() // state after updateData
-            val state = awaitItem() // state after showSnackbar
+            val state = awaitItem()
             assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
             assertThat(state.data!!.error).isEqualTo(error)
             val snackbar = state.snackbar!!
