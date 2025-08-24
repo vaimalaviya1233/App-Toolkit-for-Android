@@ -14,23 +14,30 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHa
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AppsListScreen(paddingValues : PaddingValues) {
-    val viewModel : AppsListViewModel = koinViewModel()
-    val screenState : UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
+fun AppsListScreen(paddingValues: PaddingValues) {
+    val viewModel: AppsListViewModel = koinViewModel()
+    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
     val favorites by viewModel.favorites.collectAsState()
 
-    ScreenStateHandler(screenState = screenState , onLoading = {
-        HomeLoadingScreen(paddingValues = paddingValues)
-    } , onEmpty = {
-        NoDataScreen(showRetry = true , onRetry = {
-            viewModel.onEvent(HomeEvent.FetchApps)
-        })
-    } , onSuccess = { uiHomeScreen ->
-        AppsList(
-            uiHomeScreen = uiHomeScreen,
-            favorites = favorites,
-            paddingValues = paddingValues,
-            onFavoriteToggle = { pkg -> viewModel.toggleFavorite(pkg) }
-        )
-    })
+    ScreenStateHandler(
+        screenState = screenState, onLoading = {
+            HomeLoadingScreen(paddingValues = paddingValues)
+        },
+        onEmpty = {
+            NoDataScreen()
+        },
+        onSuccess = { uiHomeScreen ->
+            AppsList(
+                uiHomeScreen = uiHomeScreen,
+                favorites = favorites,
+                paddingValues = paddingValues,
+                onFavoriteToggle = { pkg -> viewModel.toggleFavorite(pkg) }
+            )
+        },
+        onError = {
+            NoDataScreen(showRetry = true, onRetry = {
+                viewModel.onEvent(HomeEvent.FetchApps)
+            }, isError = true)
+        }
+    )
 }

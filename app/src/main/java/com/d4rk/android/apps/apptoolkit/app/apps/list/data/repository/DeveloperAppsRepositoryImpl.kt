@@ -49,7 +49,7 @@ class DeveloperAppsRepositoryImpl(
                 .map { it.toDomain() }
                 .sortedBy { it.name.lowercase() }
         }.onSuccess { apps ->
-            emit(DataState.Success<List<AppInfo>, RootError>(data = apps))
+            emit(DataState.Success(data = apps))
         }.onFailure { error ->
             emit(
                 DataState.Error<List<AppInfo>, RootError>(

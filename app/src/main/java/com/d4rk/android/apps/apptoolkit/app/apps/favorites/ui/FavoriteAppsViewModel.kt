@@ -33,7 +33,7 @@ class FavoriteAppsViewModel(
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
  ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
-    initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
+    initialState = UiStateScreen(screenState = IsLoading(), data = UiHomeScreen())
 ) {
 
     private val _favorites = MutableStateFlow<Set<String>>(emptySet())
@@ -107,9 +107,8 @@ class FavoriteAppsViewModel(
 
                     is DataState.Error -> {
                         withContext(Dispatchers.Main) {
-                            // Corrected error handling:
                             screenState.update { current ->
-                                current.copy(screenState = ScreenState.Error("An error occurred"), data = null)
+                                current.copy(screenState = Error("An error occurred"), data = null)
                             }
                         }
                     }
