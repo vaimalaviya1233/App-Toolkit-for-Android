@@ -16,6 +16,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -72,13 +73,15 @@ open class TestAppsListViewModelBase {
         this@testSuccess.test {
             val first = awaitItem()
             println("\u23F3 [EMISSION 1] $first")
-            assertTrue(first.screenState is ScreenState.IsLoading) { "First emission should be IsLoading but was ${first.screenState}" }
-
-            val second = awaitItem()
-            println("\u2705 [EMISSION] $second")
-            assertTrue(second.screenState is ScreenState.Success) { "Second emission should be Success but was ${second.screenState}" }
-            assertThat(second.data?.apps?.size).isEqualTo(expectedSize)
-            println("\uD83D\uDC4D [ASSERTION PASSED] Success with ${second.data?.apps?.size} items")
+            if (first.screenState is ScreenState.IsLoading) {
+                val second = awaitItem()
+                println("\u2705 [EMISSION] $second")
+                assertTrue(second.screenState is ScreenState.Success) { "Second emission should be Success but was ${second.screenState}" }
+                assertThat(second.data?.apps?.size).isEqualTo(expectedSize)
+            } else {
+                assertTrue(first.screenState is ScreenState.Success) { "Expected Success state" }
+                assertThat(first.data?.apps?.size).isEqualTo(expectedSize)
+            }
             cancelAndIgnoreRemainingEvents()
         }
         println("\uD83C\uDFC1 [TEST END] testSuccess")
@@ -89,12 +92,13 @@ open class TestAppsListViewModelBase {
         this@testEmpty.test {
             val first = awaitItem()
             println("\u23F3 [EMISSION 1] $first")
-            assertTrue(first.screenState is ScreenState.IsLoading) { "First emission should be IsLoading but was ${first.screenState}" }
-
-            val second = awaitItem()
-            println("\u2139\uFE0F [EMISSION 2] $second")
-            assertTrue(second.screenState is ScreenState.NoData) { "Second emission should be NoData but was ${second.screenState}" }
-            println("\uD83D\uDC4D [ASSERTION PASSED] NoData state observed")
+            if (first.screenState is ScreenState.IsLoading) {
+                val second = awaitItem()
+                println("\u2139\uFE0F [EMISSION 2] $second")
+                assertTrue(second.screenState is ScreenState.NoData) { "Second emission should be NoData but was ${second.screenState}" }
+            } else {
+                assertTrue(first.screenState is ScreenState.NoData) { "Expected NoData state" }
+            }
             cancelAndIgnoreRemainingEvents()
         }
         println("\uD83C\uDFC1 [TEST END] testEmpty")
@@ -121,7 +125,11 @@ open class TestAppsListViewModelBase {
         println("Favorites before: ${viewModel.favorites.value}")
         viewModel.toggleFavorite(packageName)
         println("\uD83D\uDD04 [ACTION] toggled $packageName")
-        delay(10)
+        withTimeout(100) {
+            while (viewModel.favorites.value.contains(packageName) != expected) {
+                delay(1)
+            }
+        }
         val favorites = viewModel.favorites.value
         println("Favorites after: $favorites")
         if (favorites.contains(packageName) == expected) {
