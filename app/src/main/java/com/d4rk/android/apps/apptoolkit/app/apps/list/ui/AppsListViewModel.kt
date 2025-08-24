@@ -12,6 +12,11 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -74,10 +79,9 @@ class AppsListViewModel(
                         withContext(Dispatchers.Main) {
                             if (apps.isEmpty()) {
                                 screenState.update { currentState ->
-                                    currentState.copy(screenState = ScreenState.NoData() , data = currentState.data?.copy(apps = emptyList()))
+                                    currentState.copy(screenState = ScreenState.NoData(), data = currentState.data?.copy(apps = emptyList()))
                                 }
-                            }
-                            else {
+                            } else {
                                 screenState.updateData(newState = ScreenState.Success()) { currentData ->
                                     currentData.copy(apps = apps)
                                 }
@@ -85,7 +89,21 @@ class AppsListViewModel(
                         }
                     }
 
-                    else -> {}
+                    is DataState.Error -> {
+                        withContext(Dispatchers.Main) {
+                            screenState.updateState(ScreenState.Error())
+                            screenState.showSnackbar(
+                                UiSnackbar(
+                                    message = UiTextHelper.DynamicString("Failed to load apps"),
+                                    isError = true,
+                                    timeStamp = System.currentTimeMillis(),
+                                    type = ScreenMessageType.SNACKBAR
+                                )
+                            )
+                        }
+                    }
+
+                    is DataState.Loading -> {}
                 }
             }
         }
