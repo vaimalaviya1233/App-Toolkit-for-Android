@@ -13,8 +13,6 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -25,7 +23,7 @@ class IssueReporterRepository(private val client : HttpClient) {
         report: Report,
         target: GithubTarget,
         token: String? = null
-    ): IssueReportResult = withContext(Dispatchers.IO) {
+    ): IssueReportResult {
         val url = "https://api.github.com/repos/${target.username}/${target.repository}/issues"
         val response: HttpResponse = client.post(url) {
             contentType(ContentType.Application.Json)
@@ -40,7 +38,7 @@ class IssueReporterRepository(private val client : HttpClient) {
         }
 
         val responseBody = response.bodyAsText()
-        if (response.status == HttpStatusCode.Created) {
+        return if (response.status == HttpStatusCode.Created) {
             val json = Json.parseToJsonElement(responseBody).jsonObject
             val issueUrl = json["html_url"]?.jsonPrimitive?.content ?: ""
             IssueReportResult.Success(issueUrl)
