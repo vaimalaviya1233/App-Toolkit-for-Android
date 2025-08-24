@@ -45,7 +45,7 @@ class FavoriteAppsViewModelTest {
     @Test
     fun `load favorites success`() = runTest(dispatcher) {
         val favoritesFlow = MutableStateFlow(setOf("pkg"))
-        every { observeFavoritesUseCase.invoke() } returns favoritesFlow
+        coEvery { observeFavoritesUseCase.invoke() } returns favoritesFlow
         val app = AppInfo(name = "App", packageName = "pkg", iconUrl = "")
         coEvery { fetchUseCase.invoke() } returns flowOf(
             DataState.Success<List<AppInfo>, RootError>(listOf(app))
@@ -68,7 +68,7 @@ class FavoriteAppsViewModelTest {
 
     @Test
     fun `toggle favorite delegates to use case`() = runTest(dispatcher) {
-        every { observeFavoritesUseCase.invoke() } returns MutableStateFlow(emptySet())
+        coEvery { observeFavoritesUseCase.invoke() } returns MutableStateFlow(emptySet())
         coEvery { fetchUseCase.invoke() } returns flowOf(
             DataState.Success<List<AppInfo>, RootError>(emptyList())
         )
