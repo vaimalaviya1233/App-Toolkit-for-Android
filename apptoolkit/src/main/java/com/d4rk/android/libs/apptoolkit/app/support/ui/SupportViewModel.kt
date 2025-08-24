@@ -22,6 +22,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SupportViewModel(
     private val billingRepository: BillingRepository,
@@ -35,8 +36,10 @@ class SupportViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             billingRepository.productDetails.collectLatest { map ->
-                screenState.updateData(newState = ScreenState.Success()) { current ->
-                    current.copy(error = null, products = map.values.toList())
+                withContext(Dispatchers.Main) {
+                    screenState.updateData(newState = ScreenState.Success()) { current ->
+                        current.copy(error = null, products = map.values.toList())
+                    }
                 }
             }
         }

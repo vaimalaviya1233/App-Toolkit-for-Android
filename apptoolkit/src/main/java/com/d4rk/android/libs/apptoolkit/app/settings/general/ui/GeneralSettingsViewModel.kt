@@ -28,11 +28,9 @@ class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , Gener
     private fun loadContent(contentKey : String?) {
         viewModelScope.launch {
             screenState.setLoading()
-            // ensure a state observation of Loading before processing result
             yield()
 
             if (! contentKey.isNullOrBlank()) {
-                // clear previous errors on successful load
                 screenState.setErrors(errors = emptyList())
                 screenState.updateData(newState = ScreenState.Success()) { current : UiGeneralSettingsScreen ->
                     current.copy(contentKey = contentKey)
