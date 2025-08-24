@@ -3,13 +3,9 @@ package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -47,7 +43,8 @@ class TestPermissionsViewModel {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.IsLoading::class.java)
+        assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+        assertThat(state.errors).isNotEmpty()
         println("🏁 [TEST DONE] load permissions provider throws")
     }
 }
