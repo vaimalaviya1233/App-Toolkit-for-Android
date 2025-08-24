@@ -16,6 +16,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.isSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -32,6 +34,15 @@ class DeveloperAppsRepositoryImpl(
                 "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
             }
             val httpResponse: HttpResponse = client.get(url)
+            if (!httpResponse.status.isSuccess()) {
+                val rootError = when (httpResponse.status) {
+                    HttpStatusCode.RequestTimeout -> Errors.Network.REQUEST_TIMEOUT
+                    else -> Errors.UseCase.FAILED_TO_LOAD_APPS
+                }
+                emit(DataState.Error<List<AppInfo>, RootError>(error = rootError))
+                return@flow
+            }
+
             val apiResponse: ApiResponse = httpResponse.body<ApiResponse>()
 
             apiResponse.data.apps
