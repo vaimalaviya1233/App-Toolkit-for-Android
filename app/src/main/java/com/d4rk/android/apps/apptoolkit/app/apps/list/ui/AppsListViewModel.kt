@@ -113,6 +113,13 @@ class AppsListViewModel(
         viewModelScope.launch(context = Dispatchers.IO) {
             runCatching {
                 dataStore.toggleFavoriteApp(packageName)
+            }.onFailure { error ->
+                error.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    screenState.update { currentState ->
+                        currentState.copy(screenState = ScreenState.Error())
+                    }
+                }
             }
         }
     }
