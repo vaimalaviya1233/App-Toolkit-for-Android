@@ -16,7 +16,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,20 +27,20 @@ class SettingsViewModel(private val settingsProvider : SettingsProvider) : Scree
         }
     }
 
-    private fun loadSettings(context : Context) {
-        viewModelScope.launch(context = Dispatchers.IO) {
-            flowOf(value = settingsProvider.provideSettingsConfig(context = context)).collect { result : SettingsConfig ->
-                withContext(Dispatchers.Main) {
-                    if (result.categories.isNotEmpty()) {
-                        screenState.successData {
-                            copy(title = result.title , categories = result.categories)
-                        }
-                    }
-                    else {
-                        screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.StringResource(R.string.error_no_settings_found))))
-                        screenState.updateState(ScreenState.NoData())
-                    }
+    private fun loadSettings(context: Context) {
+        viewModelScope.launch {
+            val result: SettingsConfig = withContext(Dispatchers.IO) {
+                settingsProvider.provideSettingsConfig(context = context)
+            }
+            if (result.categories.isNotEmpty()) {
+                screenState.successData {
+                    copy(title = result.title, categories = result.categories)
                 }
+            } else {
+                screenState.setErrors(
+                    listOf(UiSnackbar(message = UiTextHelper.StringResource(R.string.error_no_settings_found)))
+                )
+                screenState.updateState(ScreenState.NoData())
             }
         }
     }
