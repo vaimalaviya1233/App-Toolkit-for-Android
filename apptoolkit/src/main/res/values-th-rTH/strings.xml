@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">โปรดอ่านและยอมรับเงื่อนไขการให้บริการและนโยบายความเป็นส่วนตัวเพื่อดำเนินการต่อ</string>
     <string name="agree">ยอมรับ</string>
     <string name="error_loading_consent_info">ไม่สามารถโหลดข้อมูลความยินยอมได้</string>
+    <string name="loading">กำลังโหลด…</string>
 
     <string name="skip_button_text">ข้าม</string>
     <string name="skip_button_content_description">ข้าม</string>

@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Citește și acceptă Termenii de utilizare și Politica de confidențialitate pentru a continua</string>
     <string name="agree">Sunt de acord</string>
     <string name="error_loading_consent_info">Încărcarea informațiilor privind consimțământul a eșuat</string>
+    <string name="loading">Se încarcă…</string>
 
     <string name="skip_button_text">OMITE</string>
     <string name="skip_button_content_description">Omite</string>

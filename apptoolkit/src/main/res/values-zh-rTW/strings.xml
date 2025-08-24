@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">閱讀並同意我們的服務條款和隱私政策以繼續</string>
     <string name="agree">同意</string>
     <string name="error_loading_consent_info">載入同意資訊失敗</string>
+    <string name="loading">載入中…</string>
 
     <string name="skip_button_text">跳過</string>
     <string name="skip_button_content_description">跳過</string>

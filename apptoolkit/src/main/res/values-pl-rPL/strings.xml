@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Przeczytaj i zaakceptuj nasze Warunki korzystania z usługi oraz Politykę prywatności, aby kontynuować</string>
     <string name="agree">Zgadzam się</string>
     <string name="error_loading_consent_info">Nie udało się załadować informacji o zgodzie</string>
+    <string name="loading">Ładowanie…</string>
 
     <string name="skip_button_text">POMIŃ</string>
     <string name="skip_button_content_description">Pomiń</string>

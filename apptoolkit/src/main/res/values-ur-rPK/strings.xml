@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">جاری رکھنے کے لیے ہماری سروس کی شرائط اور رازداری کی پالیسی کو پڑھیں اور ان سے اتفاق کریں</string>
     <string name="agree">متفق ہوں</string>
     <string name="error_loading_consent_info">رضامندی کی معلومات لوڈ کرنے میں ناکام</string>
+    <string name="loading">لوڈ ہو رہا ہے…</string>
 
     <string name="skip_button_text">اسکپ کریں</string>
     <string name="skip_button_content_description">اسکپ کریں</string>

@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Basahin at sumang-ayon sa aming Mga Tuntunin ng Serbisyo at Patakaran sa Privacy upang magpatuloy</string>
     <string name="agree">Sumang-ayon</string>
     <string name="error_loading_consent_info">Nabigong i-load ang impormasyon ng pahintulot</string>
+    <string name="loading">Naglo-load…</string>
 
     <string name="skip_button_text">LAKTAWAN</string>
     <string name="skip_button_content_description">Laktawan</string>

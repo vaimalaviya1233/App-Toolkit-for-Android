@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Läs och godkänn våra användarvillkor och integritetspolicy för att fortsätta</string>
     <string name="agree">Godkänn</string>
     <string name="error_loading_consent_info">Misslyckades med att läsa in samtyckesinformationen</string>
+    <string name="loading">Läser in…</string>
 
     <string name="skip_button_text">HOPPA ÖVER</string>
     <string name="skip_button_content_description">Hoppa över</string>

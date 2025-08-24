@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Đọc và đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư của chúng tôi để tiếp tục</string>
     <string name="agree">Đồng ý</string>
     <string name="error_loading_consent_info">Không thể tải thông tin chấp thuận</string>
+    <string name="loading">Đang tải…</string>
 
     <string name="skip_button_text">BỎ QUA</string>
     <string name="skip_button_content_description">Bỏ qua\"</string>

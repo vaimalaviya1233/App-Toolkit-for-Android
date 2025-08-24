@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Leggi e accetta i nostri Termini di Servizio e la Politica sulla Privacy per continuare</string>
     <string name="agree">Accetto</string>
     <string name="error_loading_consent_info">Caricamento delle informazioni sul consenso non riuscito</string>
+    <string name="loading">Caricamento…</string>
 
     <string name="skip_button_text">SALTA</string>
     <string name="skip_button_content_description">Salta</string>

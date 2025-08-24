@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">जारी रखने के लिए हमारी सेवा की शर्तें और गोपनीयता नीति पढ़ें और सहमति दें</string>
     <string name="agree">सहमत</string>
     <string name="error_loading_consent_info">सहमति जानकारी लोड करने में विफल</string>
+    <string name="loading">लोड हो रहा है…</string>
 
     <string name="skip_button_text">छोड़ें</string>
     <string name="skip_button_content_description">छोड़ें</string>

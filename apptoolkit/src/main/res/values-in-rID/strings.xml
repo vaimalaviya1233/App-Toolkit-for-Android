@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Baca dan setujui Ketentuan Layanan dan Kebijakan Privasi kami untuk melanjutkan</string>
     <string name="agree">Setuju</string>
     <string name="error_loading_consent_info">Gagal memuat informasi persetujuan</string>
+    <string name="loading">Memuat…</string>
 
     <string name="skip_button_text">LEWATI</string>
     <string name="skip_button_content_description">Lewati</string>

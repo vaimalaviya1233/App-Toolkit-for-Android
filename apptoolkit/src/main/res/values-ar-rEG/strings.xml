@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">اقرأ ووافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا للمتابعة</string>
     <string name="agree">أوافق</string>
     <string name="error_loading_consent_info">فشل تحميل معلومات الموافقة</string>
+    <string name="loading">جارٍ التحميل…</string>
 
     <string name="skip_button_text">تخطي</string>
     <string name="skip_button_content_description">تخطي</string>
