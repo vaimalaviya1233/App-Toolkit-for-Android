@@ -1,10 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.app.about.ui
 
+import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.events.AboutActions
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
@@ -13,8 +13,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.launch
 
-open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiAboutScreen , AboutEvents , AboutActions>(initialState = UiStateScreen(data = UiAboutScreen())) {
+open class AboutViewModel :
+    ScreenViewModel<UiAboutScreen, AboutEvents, AboutActions>(initialState = UiStateScreen(data = UiAboutScreen())) {
 
     override fun onEvent(event : AboutEvents) {
         when (event) {
@@ -40,8 +42,8 @@ open class AboutViewModel(private val dispatcherProvider : DispatcherProvider) :
         )
     }
 
-    private inline fun updateUi(crossinline transform : UiAboutScreen.() -> UiAboutScreen) {
-        launch {
+    private inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
+        viewModelScope.launch {
             screenState.updateData(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
         }
     }

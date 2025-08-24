@@ -16,8 +16,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient
@@ -40,6 +42,6 @@ class DeveloperAppsRepositoryImpl(
         }.onFailure { error ->
             emit(DataState.Error(error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }
 

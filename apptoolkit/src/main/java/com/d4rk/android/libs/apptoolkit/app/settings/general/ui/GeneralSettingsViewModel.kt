@@ -11,6 +11,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.yield
@@ -24,7 +26,7 @@ class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , Gener
     }
 
     private fun loadContent(contentKey : String?) {
-        launch {
+        viewModelScope.launch {
             screenState.setLoading()
             // ensure a state observation of Loading before processing result
             yield()

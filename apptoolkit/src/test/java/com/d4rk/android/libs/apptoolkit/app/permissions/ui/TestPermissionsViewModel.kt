@@ -8,7 +8,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
@@ -27,15 +26,13 @@ class TestPermissionsViewModel {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
-    private lateinit var dispatcherProvider: TestDispatchers
     private lateinit var viewModel: PermissionsViewModel
     private lateinit var provider: PermissionsProvider
 
     private fun setup(config: SettingsConfig, dispatcher: TestDispatcher) {
-        dispatcherProvider = TestDispatchers(dispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returns config
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
     }
 
     @Test
@@ -70,10 +67,9 @@ class TestPermissionsViewModel {
     @Test
     fun `load permissions provider throws`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load permissions provider throws")
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } throws IllegalStateException("boom")
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(PermissionsEvent.Load(context))
@@ -105,10 +101,9 @@ class TestPermissionsViewModel {
         println("🚀 [TEST] load permissions valid after error")
         val errorConfig = SettingsConfig(title = "title", categories = emptyList())
         val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returns errorConfig andThen successConfig
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(PermissionsEvent.Load(context))
@@ -129,10 +124,9 @@ class TestPermissionsViewModel {
         println("🚀 [TEST] load permissions error after success")
         val successConfig = SettingsConfig(title = "title", categories = listOf(SettingsCategory(title = "c")))
         val errorConfig = SettingsConfig(title = "title", categories = emptyList())
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returns successConfig andThen errorConfig
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(PermissionsEvent.Load(context))
@@ -150,10 +144,9 @@ class TestPermissionsViewModel {
     @Test
     fun `load permissions provider returns null`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load permissions provider returns null")
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returns SettingsConfig(title = "null test", categories = emptyList())
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(PermissionsEvent.Load(context))
@@ -169,10 +162,9 @@ class TestPermissionsViewModel {
         println("🚀 [TEST] concurrent load events yield latest state")
         val first = SettingsConfig(title = "first", categories = listOf(SettingsCategory(title = "one")))
         val second = SettingsConfig(title = "second", categories = emptyList())
-        dispatcherProvider = TestDispatchers(dispatcherExtension.testDispatcher)
         provider = mockk()
         every { provider.providePermissionsConfig(any()) } returnsMany listOf(first, second)
-        viewModel = PermissionsViewModel(provider, dispatcherProvider)
+        viewModel = PermissionsViewModel(provider)
         val context = mockk<Context>(relaxed = true)
 
         viewModel.onEvent(PermissionsEvent.Load(context))

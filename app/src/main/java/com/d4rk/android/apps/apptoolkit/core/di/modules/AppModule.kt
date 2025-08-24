@@ -42,14 +42,13 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    viewModel { MainViewModel(dispatcherProvider = get()) }
+    viewModel { MainViewModel() }
 
     single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
     single { FetchDeveloperAppsUseCase(repository = get()) }
     viewModel {
         AppsListViewModel(
             fetchDeveloperAppsUseCase = get(),
-            dispatcherProvider = get(),
             dataStore = get()
         )
     }
@@ -57,8 +56,7 @@ val appModule : Module = module {
         FavoriteAppsViewModel(
             fetchDeveloperAppsUseCase = get(),
             observeFavoritesUseCase = get(),
-            toggleFavoriteUseCase = get(),
-            dispatcherProvider = get()
+            toggleFavoriteUseCase = get()
         )
     }
 }

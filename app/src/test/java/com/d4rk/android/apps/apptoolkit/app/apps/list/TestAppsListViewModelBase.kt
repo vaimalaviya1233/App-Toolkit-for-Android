@@ -5,7 +5,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
-import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
@@ -24,7 +23,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestAppsListViewModelBase {
 
-    protected lateinit var dispatcherProvider: TestDispatchers
     protected lateinit var viewModel: AppsListViewModel
     private lateinit var fetchUseCase: FetchDeveloperAppsUseCase
     private lateinit var dataStore: DataStore
@@ -38,7 +36,6 @@ open class TestAppsListViewModelBase {
         fetchThrows: Throwable? = null
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
-        dispatcherProvider = TestDispatchers(testDispatcher)
         fetchUseCase = mockk()
         dataStore = mockk(relaxed = true)
         val favFlow = favoritesFlow ?: MutableStateFlow(initialFavorites)
@@ -65,7 +62,7 @@ open class TestAppsListViewModelBase {
             coEvery { fetchUseCase.invoke() } returns fetchFlow
         }
 
-        viewModel = AppsListViewModel(fetchUseCase, dispatcherProvider, dataStore)
+        viewModel = AppsListViewModel(fetchUseCase, dataStore)
         println("\u2705 [SETUP] ViewModel initialized")
     }
 

@@ -8,7 +8,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.Toggl
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
-import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -27,7 +26,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestFavoriteAppsViewModelBase {
 
-    protected lateinit var dispatcherProvider: TestDispatchers
     protected lateinit var viewModel: FavoriteAppsViewModel
     private lateinit var fetchUseCase: FetchDeveloperAppsUseCase
     private lateinit var favoritesRepository: FavoritesRepository
@@ -40,7 +38,6 @@ open class TestFavoriteAppsViewModelBase {
         toggleError: Throwable? = null
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
-        dispatcherProvider = TestDispatchers(testDispatcher)
         fetchUseCase = mockk()
         favoritesRepository = mockk(relaxed = true)
 
@@ -74,8 +71,7 @@ open class TestFavoriteAppsViewModelBase {
         viewModel = FavoriteAppsViewModel(
             fetchDeveloperAppsUseCase = fetchUseCase,
             observeFavoritesUseCase = observeFavoritesUseCase,
-            toggleFavoriteUseCase = toggleFavoriteUseCase,
-            dispatcherProvider = dispatcherProvider
+            toggleFavoriteUseCase = toggleFavoriteUseCase
         )
         println("\u2705 [SETUP] ViewModel initialized")
     }
