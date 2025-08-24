@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
 import android.app.Activity
+import android.content.Context
 import com.google.android.gms.tasks.Tasks
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -56,12 +57,15 @@ class ReviewHelperTest {
 
     @Test
     fun `onReviewLaunched invoked when launchReview returns true`() = runTest {
+        val activity = mockk<Activity>()
+        val context = mockk<Context>()
+        every { activity.applicationContext } returns context
         val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(any()) } returns true
+        coEvery { helper.launchReview(activity) } returns true
         var launched = false
 
         helper.launchInAppReviewIfEligible(
-            activity = mockk(),
+            activity = activity,
             sessionCount = 3,
             hasPromptedBefore = false,
             scope = this,
@@ -70,17 +74,20 @@ class ReviewHelperTest {
         runCurrent()
 
         assertTrue(launched)
-        coVerify(exactly = 1) { helper.launchReview(any()) }
+        coVerify(exactly = 1) { helper.launchReview(activity) }
     }
 
     @Test
     fun `onReviewLaunched not invoked when launchReview returns false`() = runTest {
+        val activity = mockk<Activity>()
+        val context = mockk<Context>()
+        every { activity.applicationContext } returns context
         val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(any()) } returns false
+        coEvery { helper.launchReview(activity) } returns false
         var launched = false
 
         helper.launchInAppReviewIfEligible(
-            activity = mockk(),
+            activity = activity,
             sessionCount = 3,
             hasPromptedBefore = false,
             scope = this,
@@ -89,12 +96,14 @@ class ReviewHelperTest {
         runCurrent()
 
         assertFalse(launched)
-        coVerify(exactly = 1) { helper.launchReview(any()) }
+        coVerify(exactly = 1) { helper.launchReview(activity) }
     }
 
     @Test
     fun `launchReview returns true when request and flow succeed`() = runTest {
         val activity = mockk<Activity>()
+        val context = mockk<Context>()
+        every { activity.applicationContext } returns context
         val reviewManager = mockk<ReviewManager>()
         val reviewInfo = mockk<ReviewInfo>()
         mockkStatic(ReviewManagerFactory::class)
@@ -110,6 +119,8 @@ class ReviewHelperTest {
     @Test
     fun `launchReview returns false when requestReviewFlow fails`() = runTest {
         val activity = mockk<Activity>()
+        val context = mockk<Context>()
+        every { activity.applicationContext } returns context
         val reviewManager = mockk<ReviewManager>()
         mockkStatic(ReviewManagerFactory::class)
         every { ReviewManagerFactory.create(activity) } returns reviewManager
@@ -123,6 +134,8 @@ class ReviewHelperTest {
     @Test
     fun `launchReview returns false when launchReviewFlow fails`() = runTest {
         val activity = mockk<Activity>()
+        val context = mockk<Context>()
+        every { activity.applicationContext } returns context
         val reviewManager = mockk<ReviewManager>()
         val reviewInfo = mockk<ReviewInfo>()
         mockkStatic(ReviewManagerFactory::class)
@@ -135,4 +148,3 @@ class ReviewHelperTest {
         assertFalse(result)
     }
 }
-
