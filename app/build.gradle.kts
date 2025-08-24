@@ -150,6 +150,7 @@ dependencies {
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testImplementation(dependencyNotation = libs.test.kotlin.coroutines)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
 
     // Instrumentation Tests
