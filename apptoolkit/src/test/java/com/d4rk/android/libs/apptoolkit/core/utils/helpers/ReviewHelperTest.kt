@@ -25,34 +25,44 @@ class ReviewHelperTest {
 
     @Test
     fun `no coroutine launched when sessionCount less than 3`() = runTest {
-        val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(any()) } returns true
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(any()) } returns true
+        every {
+            ReviewHelper.launchInAppReviewIfEligible(
+                any(), any(), any(), any(), any()
+            )
+        } answers { callOriginal() }
 
-        helper.launchInAppReviewIfEligible(
+        ReviewHelper.launchInAppReviewIfEligible(
             activity = mockk(),
             sessionCount = 2,
             hasPromptedBefore = false,
             scope = this,
-            onReviewLaunched = {}
+            onReviewLaunched = {},
         )
 
-        coVerify(exactly = 0) { helper.launchReview(any()) }
+        coVerify(exactly = 0) { ReviewHelper.launchReview(any()) }
     }
 
     @Test
     fun `no coroutine launched when hasPromptedBefore true`() = runTest {
-        val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(any()) } returns true
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(any()) } returns true
+        every {
+            ReviewHelper.launchInAppReviewIfEligible(
+                any(), any(), any(), any(), any()
+            )
+        } answers { callOriginal() }
 
-        helper.launchInAppReviewIfEligible(
+        ReviewHelper.launchInAppReviewIfEligible(
             activity = mockk(),
             sessionCount = 3,
             hasPromptedBefore = true,
             scope = this,
-            onReviewLaunched = {}
+            onReviewLaunched = {},
         )
 
-        coVerify(exactly = 0) { helper.launchReview(any()) }
+        coVerify(exactly = 0) { ReviewHelper.launchReview(any()) }
     }
 
     @Test
@@ -60,11 +70,16 @@ class ReviewHelperTest {
         val activity = mockk<Activity>()
         val context = mockk<Context>()
         every { activity.applicationContext } returns context
-        val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(activity) } returns true
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(activity) } returns true
+        every {
+            ReviewHelper.launchInAppReviewIfEligible(
+                any(), any(), any(), any(), any()
+            )
+        } answers { callOriginal() }
         var launched = false
 
-        helper.launchInAppReviewIfEligible(
+        ReviewHelper.launchInAppReviewIfEligible(
             activity = activity,
             sessionCount = 3,
             hasPromptedBefore = false,
@@ -74,7 +89,7 @@ class ReviewHelperTest {
         runCurrent()
 
         assertTrue(launched)
-        coVerify(exactly = 1) { helper.launchReview(activity) }
+        coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
     }
 
     @Test
@@ -82,11 +97,16 @@ class ReviewHelperTest {
         val activity = mockk<Activity>()
         val context = mockk<Context>()
         every { activity.applicationContext } returns context
-        val helper = spyk(ReviewHelper)
-        coEvery { helper.launchReview(activity) } returns false
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(activity) } returns false
+        every {
+            ReviewHelper.launchInAppReviewIfEligible(
+                any(), any(), any(), any(), any()
+            )
+        } answers { callOriginal() }
         var launched = false
 
-        helper.launchInAppReviewIfEligible(
+        ReviewHelper.launchInAppReviewIfEligible(
             activity = activity,
             sessionCount = 3,
             hasPromptedBefore = false,
@@ -96,7 +116,7 @@ class ReviewHelperTest {
         runCurrent()
 
         assertFalse(launched)
-        coVerify(exactly = 1) { helper.launchReview(activity) }
+        coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
     }
 
     @Test
