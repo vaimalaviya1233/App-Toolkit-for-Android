@@ -33,8 +33,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = setOf("pkg1"), testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = 1, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg1"))
+        viewModel.uiState.testSuccess(expectedSize = 1)
         println("\uD83C\uDFC1 [TEST DONE] load favorites - success")
     }
 
@@ -46,8 +46,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testEmpty(testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = emptySet())
+        viewModel.uiState.testEmpty()
         println("\uD83C\uDFC1 [TEST DONE] load favorites - empty")
     }
 
@@ -58,8 +58,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Error<List<AppInfo>, Error>(error = object : Error {}))
         }
-        setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testError(testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = emptySet())
+        viewModel.uiState.testError()
         println("\uD83C\uDFC1 [TEST DONE] load favorites - error")
     }
 
@@ -70,9 +70,9 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         val flow = flow {
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = setOf("pkg"), testDispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "pkg", expected = false, testDispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "pkg", expected = true, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg"))
+        toggleAndAssert(packageName = "pkg", expected = false)
+        toggleAndAssert(packageName = "pkg", expected = true)
         println("\uD83C\uDFC1 [TEST DONE] toggle favorite")
     }
 
@@ -84,8 +84,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = setOf("pkg1", "pkg2", "pkg3"), testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg1", "pkg2", "pkg3"))
+        viewModel.uiState.testSuccess(expectedSize = 2)
         println("\uD83C\uDFC1 [TEST DONE] mismatched favorites filtered")
     }
 
@@ -96,13 +96,13 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         val apps = listOf(AppInfo("App", "pkg", "url"))
         val flow = flow {
             emit(DataState.Loading<List<AppInfo>, Error>())
-            delay(100) // Ensures that the data is not emitted immediately
+            delay(10)
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = emptySet(), testDispatcher = dispatcherExtension.testDispatcher)
-        dispatcherExtension.testDispatcher.scheduler.advanceTimeBy(50)
+        setup(fetchFlow = flow, initialFavorites = emptySet())
+        delay(5)
         viewModel.toggleFavorite("pkg")
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(20)
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
         println("\uD83C\uDFC1 [TEST DONE] favorites change during loading")
@@ -112,18 +112,18 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     fun `state recovers after reload`() = runTest(dispatcherExtension.testDispatcher) {
         println("\uD83D\uDE80 [TEST] state recovers after reload")
         val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
-        setup(fetchFlow = shared, initialFavorites = setOf("pkg"), testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = shared, initialFavorites = setOf("pkg"))
 
         shared.emit(DataState.Loading())
         shared.emit(DataState.Error(error = object : Error {}))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
 
         viewModel.onEvent(FavoriteAppsEvent.LoadFavorites)
         val apps = listOf(AppInfo("App", "pkg", "url"))
         shared.emit(DataState.Loading())
         shared.emit(DataState.Success(apps))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
 
         assertTrue(viewModel.uiState.value.screenState is ScreenState.Success)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
@@ -139,12 +139,12 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
         val failingFavs = flow<Set<String>> { throw RuntimeException("fail") }
-        setup(fetchFlow = fetchFlow, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = failingFavs)
+        setup(fetchFlow = fetchFlow, favoritesFlow = failingFavs)
 
         viewModel.uiState.test {
             val first = awaitItem()
             assertTrue(first.screenState is ScreenState.IsLoading)
-            dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            delay(10)
             expectNoEvents()
             assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
         }
@@ -156,24 +156,23 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         println("\uD83D\uDE80 [TEST] toggle favorite after removal")
         val shared = MutableSharedFlow<DataState<List<AppInfo>, Error>>()
         val favorites = MutableSharedFlow<Set<String>>(replay = 1).apply { tryEmit(setOf("pkg")) }
-        setup(fetchFlow = shared, testDispatcher = dispatcherExtension.testDispatcher, favoritesFlow = favorites)
+        setup(fetchFlow = shared, favoritesFlow = favorites)
 
-        // allow view model initialization to complete before emitting values
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
 
         // initial list contains the app
         shared.emit(DataState.Success(listOf(AppInfo("App", "pkg", "url"))))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertThat(viewModel.uiState.value.data?.apps?.size).isEqualTo(1)
 
         // list updates without the app
         shared.emit(DataState.Success(emptyList()))
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
 
         // toggle favorite on removed app
         viewModel.toggleFavorite("pkg")
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
         println("\uD83C\uDFC1 [TEST DONE] toggle favorite after removal")
     }
@@ -189,8 +188,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             emit(DataState.Loading<List<AppInfo>, Error>())
             emit(DataState.Success<List<AppInfo>, Error>(apps))
         }
-        setup(fetchFlow = flow, initialFavorites = setOf("pkg"), testDispatcher = dispatcherExtension.testDispatcher)
-        viewModel.uiState.testSuccess(expectedSize = 2, testDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg"))
+        viewModel.uiState.testSuccess(expectedSize = 2)
         println("\uD83C\uDFC1 [TEST DONE] duplicate apps kept in favorites list")
     }
 
@@ -205,13 +204,12 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         setup(
             fetchFlow = flow,
             initialFavorites = emptySet(),
-            testDispatcher = dispatcherExtension.testDispatcher,
             toggleError = RuntimeException("fail")
         )
 
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         viewModel.toggleFavorite("pkg")
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        delay(10)
         assertThat(viewModel.favorites.value.contains("pkg")).isFalse()
         println("\uD83C\uDFC1 [TEST DONE] toggle favorite throws after load")
     }
