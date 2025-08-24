@@ -24,7 +24,9 @@ open class AboutViewModel : ScreenViewModel<UiAboutScreen , AboutEvents , AboutA
         when (event) {
             is AboutEvents.CopyDeviceInfo -> copyDeviceInfo()
             is AboutEvents.DismissSnackbar -> {
-                updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
+                screenState.updateData(newState = screenState.value.screenState) { current ->
+                    current.copy(showDeviceInfoCopiedSnackbar = false)
+                }
                 screenState.dismissSnackbar()
             }
         }
