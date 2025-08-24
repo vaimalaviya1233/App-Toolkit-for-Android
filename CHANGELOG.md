@@ -1,3 +1,7 @@
+# Version 1.1.2:
+
+- **Patch**: Addressed various minor bugs to enhance overall stability.
+
 # Version 1.1.1:
 
 - **Patch**: Corrected the close button colors in snackbars for better visibility.
