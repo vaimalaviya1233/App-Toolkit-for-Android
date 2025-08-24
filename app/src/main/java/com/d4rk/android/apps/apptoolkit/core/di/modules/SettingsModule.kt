@@ -26,7 +26,7 @@ val settingsModule = module {
     single<SettingsProvider> { AppSettingsProvider() }
 
     viewModel {
-        SettingsViewModel(settingsProvider = get() , dispatcherProvider = get())
+        SettingsViewModel(settingsProvider = get())
     }
 
     single<AboutSettingsProvider> { AppAboutSettingsProvider(context = get()) }
@@ -41,10 +41,10 @@ val settingsModule = module {
 
     single<PermissionsProvider> { PermissionsSettingsProvider() }
     viewModel {
-        PermissionsViewModel(settingsProvider = get() , dispatcherProvider = get())
+        PermissionsViewModel(settingsProvider = get())
     }
 
     viewModel {
-        AboutViewModel(dispatcherProvider = get())
+        AboutViewModel()
     }
 }

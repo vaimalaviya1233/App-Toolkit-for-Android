@@ -9,14 +9,17 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
-class MainViewModel(private val dispatcherProvider : DispatcherProvider) : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
+class MainViewModel : ScreenViewModel<UiMainScreen , MainEvent , MainAction>(initialState = UiStateScreen(data = UiMainScreen())) {
 
     init {
         onEvent(event = MainEvent.LoadNavigation)
@@ -29,21 +32,23 @@ class MainViewModel(private val dispatcherProvider : DispatcherProvider) : Scree
     }
 
     private fun loadNavigationItems() {
-        launch(context = dispatcherProvider.default) {
-            screenState.successData {
-                copy(
-                    navigationDrawerItems = listOf(
-                        NavigationDrawerItem(
-                            title = R.string.settings , selectedIcon = Icons.Outlined.Settings
-                        ) , NavigationDrawerItem(
-                            title = R.string.help_and_feedback , selectedIcon = Icons.AutoMirrored.Outlined.HelpOutline
-                        ) , NavigationDrawerItem(
-                            title = R.string.updates , selectedIcon = Icons.AutoMirrored.Outlined.EventNote
-                        ) , NavigationDrawerItem(
-                            title = R.string.share , selectedIcon = Icons.Outlined.Share
+        viewModelScope.launch(context = Dispatchers.Default) {
+            withContext(Dispatchers.Main) {
+                screenState.successData {
+                    copy(
+                        navigationDrawerItems = listOf(
+                            NavigationDrawerItem(
+                                title = R.string.settings , selectedIcon = Icons.Outlined.Settings
+                            ) , NavigationDrawerItem(
+                                title = R.string.help_and_feedback , selectedIcon = Icons.AutoMirrored.Outlined.HelpOutline
+                            ) , NavigationDrawerItem(
+                                title = R.string.updates , selectedIcon = Icons.AutoMirrored.Outlined.EventNote
+                            ) , NavigationDrawerItem(
+                                title = R.string.share , selectedIcon = Icons.Outlined.Share
+                            )
                         )
                     )
-                )
+                }
             }
         }
     }
