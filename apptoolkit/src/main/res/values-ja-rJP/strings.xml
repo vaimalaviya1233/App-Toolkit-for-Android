@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">続行するには、利用規約およびプライバシーポリシーをお読みいただき、同意してください</string>
     <string name="agree">同意する</string>
     <string name="error_loading_consent_info">同意情報の読み込みに失敗しました</string>
+    <string name="loading">読み込み中…</string>
 
     <string name="skip_button_text">スキップ</string>
     <string name="skip_button_content_description">スキップ</string>

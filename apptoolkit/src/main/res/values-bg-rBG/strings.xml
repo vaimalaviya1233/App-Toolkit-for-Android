@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Прочетете и се съгласете с нашите Общи условия и Политика за поверителност, за да продължите</string>
     <string name="agree">Съгласен съм</string>
     <string name="error_loading_consent_info">Неуспешно зареждане на информация за съгласие</string>
+    <string name="loading">Зареждане…</string>
 
     <string name="skip_button_text">ПРОПУСНИ</string>
     <string name="skip_button_content_description">Пропусни</string>

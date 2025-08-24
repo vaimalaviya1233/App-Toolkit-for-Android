@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">계속하려면 서비스 약관 및 개인정보처리방침을 읽고 동의하세요.</string>
     <string name="agree">동의</string>
     <string name="error_loading_consent_info">동의 정보를 로드하지 못했습니다.</string>
+    <string name="loading">로딩 중…</string>
 
     <string name="skip_button_text">건너뛰기</string>
     <string name="skip_button_content_description">건너뛰기</string>

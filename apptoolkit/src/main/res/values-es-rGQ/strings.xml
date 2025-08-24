@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lee y acepta nuestros Términos de servicio y Política de privacidad para continuar</string>
     <string name="agree">Aceptar</string>
     <string name="error_loading_consent_info">Error al cargar la información de consentimiento</string>
+    <string name="loading">Cargando…</string>
 
     <string name="skip_button_text">OMITIR</string>
     <string name="skip_button_content_description">Omitir</string>

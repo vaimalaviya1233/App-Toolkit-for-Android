@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">Olvasd el és fogadd el a Szolgáltatási feltételeinket és az Adatvédelmi irányelveinket a folytatáshoz</string>
     <string name="agree">Elfogadom</string>
     <string name="error_loading_consent_info">A hozzájárulási információ betöltése sikertelen</string>
+    <string name="loading">Betöltés…</string>
 
     <string name="skip_button_text">KIHAGYÁS</string>
     <string name="skip_button_content_description">Kihagyás</string>

@@ -10,6 +10,7 @@
     <string name="summary_browse_terms_of_service_and_privacy_policy">চালিয়ে যেতে আমাদের পরিষেবার শর্তাবলী এবং গোপনীয়তা নীতি পড়ুন এবং সম্মত হন</string>
     <string name="agree">রাজি</string>
     <string name="error_loading_consent_info">সম্মতি তথ্য লোড করতে ব্যর্থ</string>
+    <string name="loading">লোড হচ্ছে…</string>
 
     <string name="skip_button_text">এড়িয়ে যান</string>
     <string name="skip_button_content_description">এড়িয়ে যান</string>
