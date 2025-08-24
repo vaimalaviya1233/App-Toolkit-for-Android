@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.firebase.Firebase
 import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
@@ -67,6 +68,7 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     override fun onTerminate() {
         super.onTerminate()
         billingRepository.close()
+        CommonDataStore.getInstance(this).close()
         applicationScope.cancel()
     }
 }

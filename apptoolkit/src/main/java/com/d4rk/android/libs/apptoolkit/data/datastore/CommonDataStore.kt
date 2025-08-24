@@ -14,6 +14,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +36,7 @@ val Context.commonDataStore : DataStore<Preferences> by preferencesDataStore(nam
  */
 open class CommonDataStore(context : Context) {
     val dataStore : DataStore<Preferences> = context.commonDataStore
-    private val scope = CoroutineScope(context = Dispatchers.IO)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     companion object {
         @Volatile
@@ -45,6 +47,10 @@ open class CommonDataStore(context : Context) {
                 instance ?: CommonDataStore(context.applicationContext).also { instance = it }
             }
         }
+    }
+
+    fun close() {
+        scope.cancel()
     }
 
     // Last used app notifications
