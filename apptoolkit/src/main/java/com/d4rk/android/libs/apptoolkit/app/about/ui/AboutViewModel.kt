@@ -21,10 +21,7 @@ open class AboutViewModel :
     override fun onEvent(event : AboutEvents) {
         when (event) {
             is AboutEvents.CopyDeviceInfo -> copyDeviceInfo()
-            is AboutEvents.DismissSnackbar -> {
-                updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
-                screenState.dismissSnackbar()
-            }
+            is AboutEvents.DismissSnackbar -> dismissSnack()
         }
     }
 
@@ -32,14 +29,23 @@ open class AboutViewModel :
         updateUi {
             copy(showDeviceInfoCopiedSnackbar = true)
         }
-        screenState.showSnackbar(
-            snackbar = UiSnackbar(
-                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
-                isError = false,
-                timeStamp = System.nanoTime(),
-                type = ScreenMessageType.SNACKBAR
+        viewModelScope.launch {
+            screenState.showSnackbar(
+                snackbar = UiSnackbar(
+                    message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
+                    isError = false,
+                    timeStamp = System.nanoTime(),
+                    type = ScreenMessageType.SNACKBAR
+                )
             )
-        )
+        }
+    }
+
+    private fun dismissSnack() {
+        updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
+        viewModelScope.launch {
+            screenState.dismissSnackbar()
+        }
     }
 
     private inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
