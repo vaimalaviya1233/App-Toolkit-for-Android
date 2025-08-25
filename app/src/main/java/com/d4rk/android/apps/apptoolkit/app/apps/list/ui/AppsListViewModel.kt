@@ -6,7 +6,8 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
-import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -34,7 +35,8 @@ import kotlinx.coroutines.withContext
 
 class AppsListViewModel(
     private val fetchDeveloperAppsUseCase : FetchDeveloperAppsUseCase,
-    private val dataStore: DataStore
+    private val observeFavoritesUseCase: ObserveFavoritesUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ScreenViewModel<UiHomeScreen , HomeEvent , HomeAction>(initialState = UiStateScreen(screenState = ScreenState.IsLoading() , data = UiHomeScreen())) {
 
     private val _favorites = MutableStateFlow<Set<String>>(emptySet())
@@ -49,7 +51,7 @@ class AppsListViewModel(
     init {
         viewModelScope.launch(context = Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) {
             runCatching {
-                dataStore.favoriteApps
+                observeFavoritesUseCase()
                     .onEach {
                         favoritesLoaded.value = true
                         _favorites.value = it
@@ -116,7 +118,7 @@ class AppsListViewModel(
     fun toggleFavorite(packageName: String) {
         viewModelScope.launch(context = Dispatchers.IO) {
             runCatching {
-                dataStore.toggleFavoriteApp(packageName)
+                toggleFavoriteUseCase(packageName)
             }.onFailure { error ->
                 error.printStackTrace()
                 withContext(Dispatchers.Main) {
