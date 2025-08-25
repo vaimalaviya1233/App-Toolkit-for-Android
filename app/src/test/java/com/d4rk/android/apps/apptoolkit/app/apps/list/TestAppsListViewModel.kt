@@ -27,4 +27,23 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         setup(fetchFlow = flow)
         viewModel.uiState.testSuccess(expectedSize = apps.size)
     }
+
+    @Test
+    fun `toggle favorite updates state`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Success<List<AppInfo>, Error>(listOf(AppInfo("App", "pkg", "url"))))
+        }
+        setup(fetchFlow = flow)
+        toggleAndAssert(packageName = "pkg", expected = true)
+        toggleAndAssert(packageName = "pkg", expected = false)
+    }
+
+    @Test
+    fun `toggle favorite removes preexisting favorite`() = runTest(dispatcherExtension.testDispatcher) {
+        val flow = flow {
+            emit(DataState.Success<List<AppInfo>, Error>(listOf(AppInfo("App", "pkg", "url"))))
+        }
+        setup(fetchFlow = flow, initialFavorites = setOf("pkg"))
+        toggleAndAssert(packageName = "pkg", expected = false)
+    }
 }
