@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class SendIssueReportUseCase(
     private val repository: IssueReporterRepository
-) : Repository<SendIssueReportUseCase.Params, IssueReportResult?> {
+) : Repository<SendIssueReportUseCase.Params, Result<IssueReportResult>> {
 
     data class Params(
         val report: Report,
@@ -18,11 +18,10 @@ class SendIssueReportUseCase(
         val token: String?
     )
 
-    override suspend fun invoke(param: Params): IssueReportResult? =
+    override suspend fun invoke(param: Params): Result<IssueReportResult> =
         withContext(Dispatchers.IO) {
             runCatching {
                 repository.sendReport(param.report, param.target, param.token)
-            }.onFailure { it.printStackTrace() }
-                .getOrNull()
+            }
         }
 }
