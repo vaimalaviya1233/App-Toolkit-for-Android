@@ -51,6 +51,9 @@ android {
             it.jvmArgs("-XX:+EnableDynamicAgentLoading")
         }
     }
+    publishing {
+        singleVariant("release") {}
+    }
 }
 
 dependencies {
