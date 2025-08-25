@@ -103,7 +103,11 @@ class AppsListViewModel(
                         }
                     }
 
-                    is DataState.Loading -> {}
+                    is DataState.Loading -> {
+                        withContext(Dispatchers.Main) {
+                            screenState.updateState(ScreenState.IsLoading())
+                        }
+                    }
                 }
             }
         }
