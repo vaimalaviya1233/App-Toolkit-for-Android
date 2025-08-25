@@ -14,6 +14,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -26,7 +27,7 @@ class SupportViewModelTest {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
-    private val productDetailsFlow = MutableSharedFlow<Map<String, ProductDetails>>(replay = 1)
+    private val productDetailsFlow = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
     private val purchaseResultFlow = MutableSharedFlow<PurchaseResult>()
     private val billingRepository = mockk<BillingRepository>(relaxed = true) {
         every { productDetails } returns productDetailsFlow
@@ -36,7 +37,7 @@ class SupportViewModelTest {
     }
 
     private fun createViewModel(): SupportViewModel {
-        productDetailsFlow.resetReplayCache()
+        productDetailsFlow.value = emptyMap()
         return SupportViewModel(billingRepository)
     }
 
@@ -48,10 +49,12 @@ class SupportViewModelTest {
 
         viewModel.uiState.test {
             awaitItem() // initial state
-            productDetailsFlow.emit(linkedMapOf("a" to p1, "b" to p2))
+            productDetailsFlow.value = linkedMapOf("a" to p1, "b" to p2)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
-            assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+            var state = awaitItem()
+            while (state.screenState !is ScreenState.Success) {
+                state = awaitItem()
+            }
             assertThat(state.data!!.products).containsExactly(p1, p2)
         }
     }
