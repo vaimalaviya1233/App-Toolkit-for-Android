@@ -5,9 +5,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
-import io.mockk.anyConstructed
+import io.mockk.Runs
 import io.mockk.every
-import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkConstructor
 import io.mockk.unmockkConstructor
@@ -35,10 +34,10 @@ class AdViewPoolTest {
         mockkConstructor(AdView::class)
         val context = mockk<Context>(relaxed = true)
         every { context.applicationContext } returns context
-        every { anyConstructed<AdView>().adUnitId = any() } justRun {}
-        every { anyConstructed<AdView>().setAdSize(any()) } justRun {}
-        every { anyConstructed<AdView>().loadAd(any()) } justRun {}
-        every { anyConstructed<AdView>().destroy() } justRun {}
+        every { anyConstructed<AdView>().adUnitId = any() } just Runs
+        every { anyConstructed<AdView>().setAdSize(any()) } just Runs
+        every { anyConstructed<AdView>().loadAd(any()) } just Runs
+        every { anyConstructed<AdView>().destroy() } just Runs
         every { anyConstructed<AdView>().post(any()) } answers {
             firstArg<Runnable>().run()
             true
