@@ -14,7 +14,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -27,7 +26,7 @@ class SupportViewModelTest {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
-    private val productDetailsFlow = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
+    private val productDetailsFlow = MutableSharedFlow<Map<String, ProductDetails>>(replay = 1)
     private val purchaseResultFlow = MutableSharedFlow<PurchaseResult>()
     private val billingRepository = mockk<BillingRepository>(relaxed = true) {
         every { productDetails } returns productDetailsFlow
@@ -36,7 +35,10 @@ class SupportViewModelTest {
         every { launchPurchaseFlow(any(), any()) } returns Unit
     }
 
-    private fun createViewModel() = SupportViewModel(billingRepository)
+    private fun createViewModel(): SupportViewModel {
+        productDetailsFlow.resetReplayCache()
+        return SupportViewModel(billingRepository)
+    }
 
     @Test
     fun `products update screenState to success with mapped list`() = runTest(dispatcherExtension.testDispatcher) {
@@ -46,7 +48,7 @@ class SupportViewModelTest {
 
         viewModel.uiState.test {
             awaitItem() // initial state
-            productDetailsFlow.value = linkedMapOf("a" to p1, "b" to p2)
+            productDetailsFlow.emit(linkedMapOf("a" to p1, "b" to p2))
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             val state = awaitItem()
             assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
