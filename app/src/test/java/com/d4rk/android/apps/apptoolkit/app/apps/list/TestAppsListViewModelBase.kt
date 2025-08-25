@@ -5,7 +5,9 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
-import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -29,7 +31,7 @@ open class TestAppsListViewModelBase {
 
     protected lateinit var viewModel: AppsListViewModel
     private lateinit var fetchUseCase: FetchDeveloperAppsUseCase
-    private lateinit var dataStore: DataStore
+    private lateinit var favoritesRepository: FavoritesRepository
 
     protected fun setup(
         fetchFlow: Flow<DataState<List<AppInfo>, RootError>>,
@@ -40,16 +42,16 @@ open class TestAppsListViewModelBase {
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         fetchUseCase = mockk()
-        dataStore = mockk(relaxed = true)
+        favoritesRepository = mockk(relaxed = true)
         val favFlow = favoritesFlow ?: MutableStateFlow(initialFavorites)
-        every { dataStore.favoriteApps } returns favFlow
+        every { favoritesRepository.observeFavorites() } returns favFlow
 
         if (toggleError != null) {
-            coEvery { dataStore.toggleFavoriteApp(any()) } throws toggleError
+            coEvery { favoritesRepository.toggleFavorite(any()) } throws toggleError
         } else if (favFlow is MutableStateFlow<Set<String>>) {
-            coEvery { dataStore.toggleFavoriteApp(any()) } coAnswers {
+            coEvery { favoritesRepository.toggleFavorite(any()) } coAnswers {
                 val pkg = it.invocation.args[0] as String
-                println("\uD83D\uDD04 [DATASTORE MOCK] toggleFavoriteApp($pkg)")
+                println("\uD83D\uDD04 [REPO MOCK] toggleFavorite($pkg)")
                 val current = favFlow.value.toMutableSet()
                 if (!current.add(pkg)) {
                     current.remove(pkg)
@@ -57,7 +59,7 @@ open class TestAppsListViewModelBase {
                 favFlow.value = current
             }
         } else {
-            coEvery { dataStore.toggleFavoriteApp(any()) } returns Unit
+            coEvery { favoritesRepository.toggleFavorite(any()) } returns Unit
         }
         if (fetchThrows != null) {
             coEvery { fetchUseCase.invoke() } throws fetchThrows
@@ -65,7 +67,10 @@ open class TestAppsListViewModelBase {
             coEvery { fetchUseCase.invoke() } returns fetchFlow
         }
 
-        viewModel = AppsListViewModel(fetchUseCase, dataStore)
+        val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
+        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository)
+
+        viewModel = AppsListViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
         println("\u2705 [SETUP] ViewModel initialized")
     }
 

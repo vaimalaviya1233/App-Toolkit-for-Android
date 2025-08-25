@@ -50,7 +50,8 @@ val appModule : Module = module {
     viewModel {
         AppsListViewModel(
             fetchDeveloperAppsUseCase = get(),
-            dataStore = get()
+            observeFavoritesUseCase = get(),
+            toggleFavoriteUseCase = get()
         )
     }
     viewModel {
