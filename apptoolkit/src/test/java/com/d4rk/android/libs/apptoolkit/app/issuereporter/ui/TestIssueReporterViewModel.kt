@@ -264,12 +264,19 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             awaitItem()
             viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
             viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
-            skipItems(2)
+
+            var updated = awaitItem()
+            while (updated.data?.description != "Desc") {
+                updated = awaitItem()
+            }
+
             viewModel.onEvent(IssueReporterEvent.Send(context))
 
-            awaitItem()
+            var state = awaitItem() // loading
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
+            while (state.screenState is ScreenState.IsLoading) {
+                state = awaitItem()
+            }
             val snackbar = state.snackbar!!
             assertThat(snackbar.isError).isTrue()
             val msg = snackbar.message as UiTextHelper.StringResource
