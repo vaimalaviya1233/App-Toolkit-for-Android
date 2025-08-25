@@ -12,6 +12,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.*
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -101,7 +102,7 @@ class FavoriteAppsViewModel(
 
                     is DataState.Loading -> {
                         withContext(Dispatchers.Main) {
-                            screenState.update { it.copy(screenState = IsLoading()) }
+                            screenState.updateState(IsLoading())
                         }
                     }
 
