@@ -1,7 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.support.ui
 
 import android.app.Activity
-import app.cash.turbine.cancelAndIgnoreRemainingEvents
 import app.cash.turbine.test
 import com.android.billingclient.api.ProductDetails
 import com.d4rk.android.libs.apptoolkit.R
