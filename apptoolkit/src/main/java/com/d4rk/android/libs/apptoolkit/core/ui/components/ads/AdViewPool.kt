@@ -5,10 +5,11 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
-import kotlin.concurrent.fixedRateTimer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -20,10 +21,14 @@ private data class PooledAdView(val view: AdView, var lastUsed: Long)
 object AdViewPool {
     private val pool: MutableMap<Pair<String, AdSize>, ArrayDeque<PooledAdView>> = mutableMapOf()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val mainScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     init {
-        fixedRateTimer("AdViewPoolCleanup", daemon = true, initialDelay = TIMEOUT_MS, period = TIMEOUT_MS) {
-            cleanup()
+        mainScope.launch {
+            while (isActive) {
+                delay(TIMEOUT_MS)
+                cleanup()
+            }
         }
     }
 
@@ -52,7 +57,7 @@ object AdViewPool {
                         if (deque.size < MAX_POOL_SIZE) {
                             deque.add(PooledAdView(view, System.currentTimeMillis()))
                         } else {
-                            view.destroy()
+                            view.post { view.destroy() }
                         }
                     }
                 }
@@ -70,7 +75,7 @@ object AdViewPool {
                 val pooled = iterator.next()
                 if (pooled.view.responseInfo != null) {
                     iterator.remove()
-                    pooled.view.resume()
+                    pooled.view.post { pooled.view.resume() }
                     return pooled.view
                 }
             }
@@ -91,9 +96,9 @@ object AdViewPool {
         val key = adUnitId to adSize
         val deque = pool.getOrPut(key) { ArrayDeque() }
         if (deque.size >= MAX_POOL_SIZE) {
-            adView.destroy()
+            adView.post { adView.destroy() }
         } else {
-            adView.pause()
+            adView.post { adView.pause() }
             deque.add(PooledAdView(adView, System.currentTimeMillis()))
         }
     }
@@ -109,7 +114,7 @@ object AdViewPool {
             while (viewIterator.hasNext()) {
                 val pooled = viewIterator.next()
                 if (now - pooled.lastUsed > TIMEOUT_MS) {
-                    pooled.view.destroy()
+                    pooled.view.post { pooled.view.destroy() }
                     viewIterator.remove()
                 }
             }
