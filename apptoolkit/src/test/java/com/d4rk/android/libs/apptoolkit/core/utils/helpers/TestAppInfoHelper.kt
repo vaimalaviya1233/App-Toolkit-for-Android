@@ -11,6 +11,7 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -27,6 +28,7 @@ class TestAppInfoHelper {
         val intent = mockk<Intent>(relaxed = true)
         every { context.packageManager } returns pm
         every { pm.getLaunchIntentForPackage("pkg") } returns intent
+        every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
         AppInfoHelper().openApp(context, "pkg")
@@ -90,14 +92,18 @@ class TestAppInfoHelper {
         every { pm.getLaunchIntentForPackage("pkg") } returns null
         every { context.getString(any()) } returns "not installed"
         mockkStatic(Toast::class)
-        val toast = mockk<Toast>(relaxed = true)
-        every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
+        try {
+            val toast = mockk<Toast>(relaxed = true)
+            every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
 
-        val result = AppInfoHelper().openApp(context, "pkg")
+            val result = AppInfoHelper().openApp(context, "pkg")
 
-        assertEquals(false, result)
-        verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
-        println("🏁 [TEST DONE] openApp shows toast and returns false when launch intent missing")
+            assertEquals(false, result)
+            verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
+            println("🏁 [TEST DONE] openApp shows toast and returns false when launch intent missing")
+        } finally {
+            unmockkStatic(Toast::class)
+        }
     }
 
     @Test
@@ -128,14 +134,18 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         every { context.getString(any()) } returns "not installed"
         mockkStatic(Toast::class)
-        val toast = mockk<Toast>(relaxed = true)
-        every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
-        every { context.startActivity(intent) } throws RuntimeException("fail")
+        try {
+            val toast = mockk<Toast>(relaxed = true)
+            every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
+            every { context.startActivity(intent) } throws RuntimeException("fail")
 
-        val result = AppInfoHelper().openApp(context, "pkg")
-        assertEquals(false, result)
-        verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
-        println("🏁 [TEST DONE] openApp returns false on start failure")
+            val result = AppInfoHelper().openApp(context, "pkg")
+            assertEquals(false, result)
+            verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
+            println("🏁 [TEST DONE] openApp returns false on start failure")
+        } finally {
+            unmockkStatic(Toast::class)
+        }
     }
 
     @Test
@@ -149,13 +159,17 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         every { context.getString(any()) } returns "not installed"
         mockkStatic(Toast::class)
-        val toast = mockk<Toast>(relaxed = true)
-        every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
-        every { context.startActivity(intent) } throws RuntimeException("fail")
+        try {
+            val toast = mockk<Toast>(relaxed = true)
+            every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
+            every { context.startActivity(intent) } throws RuntimeException("fail")
 
-        val result = AppInfoHelper().openAppResult(context, "pkg")
-        assertTrue(result.isFailure)
-        verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
-        println("🏁 [TEST DONE] openAppResult exposes failure")
-    }
+            val result = AppInfoHelper().openAppResult(context, "pkg")
+            assertTrue(result.isFailure)
+            verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
+            println("🏁 [TEST DONE] openAppResult exposes failure")
+        } finally {
+            unmockkStatic(Toast::class)
+        }
+}
 }
