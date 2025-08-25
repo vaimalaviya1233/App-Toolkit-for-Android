@@ -1,6 +1,5 @@
 package com.d4rk.android.apps.apptoolkit.core.data.favorites
 
-import android.app.RemoteServiceException
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -22,8 +21,12 @@ class FavoritesRepositoryImpl(
         }
         try {
             context.sendBroadcast(intent)
-        } catch (e: RemoteServiceException) {
-            Log.w("FavoritesRepositoryImpl", "Failed to send favorites broadcast", e)
+        } catch (e: Exception) {
+            if (e.javaClass.name == "android.app.RemoteServiceException") {
+                Log.w("FavoritesRepositoryImpl", "Failed to send favorites broadcast", e)
+            } else {
+                throw e
+            }
         }
     }
 }
