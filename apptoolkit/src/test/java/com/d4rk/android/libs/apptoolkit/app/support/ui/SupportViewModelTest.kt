@@ -14,6 +14,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -26,7 +27,7 @@ class SupportViewModelTest {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
-    private val productDetailsFlow = MutableSharedFlow<Map<String, ProductDetails>>(replay = 1)
+    private val productDetailsFlow = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
     private val purchaseResultFlow = MutableSharedFlow<PurchaseResult>()
     private val billingRepository = mockk<BillingRepository>(relaxed = true) {
         every { productDetails } returns productDetailsFlow
@@ -36,7 +37,7 @@ class SupportViewModelTest {
     }
 
     private fun createViewModel(): SupportViewModel {
-        productDetailsFlow.resetReplayCache()
+        productDetailsFlow.value = emptyMap()
         return SupportViewModel(billingRepository)
     }
 
