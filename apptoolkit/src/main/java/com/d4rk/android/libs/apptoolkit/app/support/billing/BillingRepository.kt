@@ -175,6 +175,7 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
                 PurchaseResult.Failed(billingResult.debugMessage)
             }
             scope.launch { _purchaseResult.emit(result) }
+            return
         }
     }
 

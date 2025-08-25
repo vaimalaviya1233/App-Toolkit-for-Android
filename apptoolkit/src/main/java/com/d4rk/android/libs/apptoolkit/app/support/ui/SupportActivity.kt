@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
+import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,21 +28,9 @@ class SupportActivity : AppCompatActivity() {
         }
     }
 
-    fun initiatePurchase(productId : String , productDetailsMap : Map<String , ProductDetails> , billingClient : BillingClient) {
-        if (!billingClient.isReady) {
-            return
-        }
-
+    fun initiatePurchase(productId : String , productDetailsMap : Map<String , ProductDetails>) {
         productDetailsMap[productId]?.let { productDetails : ProductDetails ->
-            productDetails.oneTimePurchaseOfferDetails?.let {
-                val productDetailsParams : BillingFlowParams.ProductDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
-                    .setProductDetails(productDetails)
-                    .build()
-                val billingFlowParams : BillingFlowParams = BillingFlowParams.newBuilder()
-                    .setProductDetailsParamsList(listOf(productDetailsParams))
-                    .build()
-                billingClient.launchBillingFlow(this , billingFlowParams)
-            }
+            BillingRepository.getInstance(this).launchPurchaseFlow(this , productDetails)
         }
     }
 }
