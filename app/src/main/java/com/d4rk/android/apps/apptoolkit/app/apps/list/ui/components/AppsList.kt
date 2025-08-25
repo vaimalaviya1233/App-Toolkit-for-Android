@@ -1,14 +1,15 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,7 +24,6 @@ import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NonLazyGrid
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
@@ -67,63 +67,44 @@ fun AppsList(
         gridState = listState, itemCount = items.size
     )
 
-    Column(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = columnCount),
+        state = listState,
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(paddingValues)
-            .padding(horizontal = SizeConstants.LargeSize)
+            .padding(paddingValues),
+        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize)
     ) {
-        val appItemsBuffer = mutableListOf<AppListItem.App>()
-        items.forEach { item: AppListItem ->
+        itemsIndexed(
+            items = items,
+            span = { _, item ->
+                if (item is AppListItem.Ad) GridItemSpan(columnCount) else GridItemSpan(1)
+            }
+        ) { index: Int, item: AppListItem ->
             when (item) {
-                is AppListItem.Ad -> {
-                    if (appItemsBuffer.isNotEmpty()) {
-                        NonLazyGrid(
-                            columns = columnCount,
-                            itemCount = appItemsBuffer.size,
-                            modifier = Modifier.fillMaxWidth()
-                        ) { index ->
-                            val appInfo = appItemsBuffer[index].appInfo
-                            AppCard(
-                                appInfo = appInfo,
-                                isFavorite = favorites.contains(appInfo.packageName),
-                                onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
-                                modifier = Modifier.animateVisibility(
-                                    visible = visibilityStates.getOrElse(index = index) { false },
-                                    index = index
-                                )
-                            )
-                        }
-                        appItemsBuffer.clear()
-                    }
-                    AdBanner(
+                is AppListItem.App -> {
+                    val appInfo = item.appInfo
+                    AppCard(
+                        appInfo = appInfo,
+                        isFavorite = favorites.contains(appInfo.packageName),
+                        onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize), adsConfig = adsConfig
+                            .animateVisibility(
+                                visible = visibilityStates.getOrElse(index = index) { false },
+                                index = index
+                            )
+                            .padding(all = SizeConstants.SmallSize)
                     )
                 }
 
-                is AppListItem.App -> {
-                    appItemsBuffer.add(item)
-                }
-            }
-        }
-        if (appItemsBuffer.isNotEmpty()) {
-            NonLazyGrid(
-                columns = columnCount,
-                itemCount = appItemsBuffer.size,
-                modifier = Modifier.fillMaxWidth()
-            ) { index: Int ->
-                val appInfo = appItemsBuffer[index].appInfo
-                AppCard(
-                    appInfo = appInfo,
-                    isFavorite = favorites.contains(appInfo.packageName),
-                    onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
-                    modifier = Modifier.animateVisibility(
-                        visible = visibilityStates.getOrElse(index = index) { false }, index = index
+                AppListItem.Ad -> {
+                    AdBanner(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = SizeConstants.MediumSize),
+                        adsConfig = adsConfig
                     )
-                )
+                }
             }
         }
     }
