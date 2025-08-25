@@ -59,10 +59,13 @@ class SupportViewModelTest {
         val viewModel = createViewModel()
 
         viewModel.uiState.test {
-            awaitItem() // initial
+            skipItems(1) // initial
             purchaseResultFlow.emit(PurchaseResult.Pending)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
+            var state = awaitItem()
+            while (state.snackbar == null) {
+                state = awaitItem()
+            }
             val snackbar = state.snackbar!!
             assertThat(snackbar.isError).isFalse()
             val msg = snackbar.message as UiTextHelper.StringResource
@@ -75,10 +78,13 @@ class SupportViewModelTest {
         val viewModel = createViewModel()
 
         viewModel.uiState.test {
-            awaitItem()
+            skipItems(1)
             purchaseResultFlow.emit(PurchaseResult.Success)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
+            var state = awaitItem()
+            while (state.snackbar == null) {
+                state = awaitItem()
+            }
             val snackbar = state.snackbar!!
             assertThat(snackbar.isError).isFalse()
             val msg = snackbar.message as UiTextHelper.StringResource
@@ -92,10 +98,13 @@ class SupportViewModelTest {
         val error = "boom"
 
         viewModel.uiState.test {
-            awaitItem()
+            skipItems(1)
             purchaseResultFlow.emit(PurchaseResult.Failed(error))
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
+            var state = awaitItem()
+            while (state.snackbar == null) {
+                state = awaitItem()
+            }
             assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
             assertThat(state.data!!.error).isEqualTo(error)
             val snackbar = state.snackbar!!
@@ -110,10 +119,13 @@ class SupportViewModelTest {
         val viewModel = createViewModel()
 
         viewModel.uiState.test {
-            awaitItem()
+            skipItems(1)
             purchaseResultFlow.emit(PurchaseResult.UserCancelled)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
+            var state = awaitItem()
+            while (state.snackbar == null) {
+                state = awaitItem()
+            }
             val snackbar = state.snackbar!!
             assertThat(snackbar.isError).isFalse()
             val msg = snackbar.message as UiTextHelper.StringResource
