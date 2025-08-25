@@ -17,6 +17,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.Flow
@@ -69,7 +70,7 @@ open class TestFavoriteAppsViewModelBase {
         coEvery { fetchUseCase.invoke() } returns fetchFlow
 
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
-        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository)
+        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository, dispatcher = Dispatchers.IO)
 
         viewModel = FavoriteAppsViewModel(
             fetchDeveloperAppsUseCase = fetchUseCase,
