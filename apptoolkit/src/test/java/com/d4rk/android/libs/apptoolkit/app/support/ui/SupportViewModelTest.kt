@@ -49,10 +49,12 @@ class SupportViewModelTest {
 
         viewModel.uiState.test {
             awaitItem() // initial state
-            productDetailsFlow.emit(linkedMapOf("a" to p1, "b" to p2))
+            productDetailsFlow.value = linkedMapOf("a" to p1, "b" to p2)
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-            val state = awaitItem()
-            assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
+            var state = awaitItem()
+            while (state.screenState !is ScreenState.Success) {
+                state = awaitItem()
+            }
             assertThat(state.data!!.products).containsExactly(p1, p2)
         }
     }
