@@ -23,6 +23,13 @@ object AdViewPool {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val mainScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
+    internal var viewFactory: (Context, String, AdSize) -> AdView = { ctx, adUnitId, size ->
+        AdView(ctx.applicationContext).apply {
+            this.adUnitId = adUnitId
+            setAdSize(size)
+        }
+    }
+
     init {
         mainScope.launch {
             while (isActive) {
@@ -44,9 +51,7 @@ object AdViewPool {
             scope.launch {
                 val view = runCatching {
                     withContext(Dispatchers.Main) {
-                        AdView(context.applicationContext).apply {
-                            this.adUnitId = adUnitId
-                            setAdSize(adSize)
+                        viewFactory(context, adUnitId, adSize).apply {
                             loadAd(adRequest)
                         }
                     }
@@ -80,14 +85,7 @@ object AdViewPool {
                 }
             }
         }
-        return runCatching {
-            AdView(context.applicationContext).apply {
-                this.adUnitId = adUnitId
-                setAdSize(adSize)
-            }
-        }.getOrElse {
-            AdView(context.applicationContext)
-        }
+        return viewFactory(context, adUnitId, adSize)
     }
 
     @Synchronized
