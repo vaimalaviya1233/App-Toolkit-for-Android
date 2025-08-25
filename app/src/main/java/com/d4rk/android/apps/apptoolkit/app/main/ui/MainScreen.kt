@@ -175,7 +175,12 @@ fun MainScaffoldTabletContent() {
             currentRoute = currentRoute,
             isRailExpanded = isRailExpanded,
             paddingValues = paddingValues,
-            onBottomItemClick = { item: BottomBarItem -> navController.navigate(item.route) },
+            onBottomItemClick = { item: BottomBarItem ->
+                navController.navigate(item.route) {
+                    launchSingleTop = true
+                    popUpTo(navController.graph.startDestinationId)
+                }
+            },
             onDrawerItemClick = { item: NavigationDrawerItem ->
                 handleNavigationItemClick(
                     context = context,
