@@ -477,6 +477,8 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
 
             awaitItem() // loading
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            // Skip intermediate emissions for data and snackbar updates
+            skipItems(2)
             val state = awaitItem()
             assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
             assertThat(state.data?.issueUrl).isEqualTo("https://ex.com/1")

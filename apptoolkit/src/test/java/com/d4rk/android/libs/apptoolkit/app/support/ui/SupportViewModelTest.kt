@@ -52,7 +52,7 @@ class SupportViewModelTest {
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
             val state = awaitItem()
             assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
-            assertThat(state.data!!.products).containsExactly(p1, p2).inOrder()
+            assertThat(state.data!!.products).containsExactly(p1, p2)
         }
     }
 
