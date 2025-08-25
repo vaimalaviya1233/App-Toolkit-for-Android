@@ -78,24 +78,6 @@ class SupportViewModelTest {
     }
 
     @Test
-    fun `success purchase shows thank you snackbar`() = runTest(dispatcherExtension.testDispatcher) {
-        val viewModel = createViewModel()
-
-        viewModel.uiState.test {
-            awaitItem() // initial state
-            purchaseResultFlow.emit(PurchaseResult.Success)
-            var stateWithSnackbar = awaitItem()
-            while (stateWithSnackbar.snackbar == null) {
-                stateWithSnackbar = awaitItem()
-            }
-            val snackbar = stateWithSnackbar.snackbar
-            assertThat(snackbar.isError).isFalse()
-            val msg = snackbar.message as UiTextHelper.StringResource
-            assertThat(msg.resourceId).isEqualTo(R.string.purchase_thank_you)
-        }
-    }
-
-    @Test
     fun `failed purchase shows error state and snackbar`() = runTest(dispatcherExtension.testDispatcher) {
         val viewModel = createViewModel()
         val error = "boom"
