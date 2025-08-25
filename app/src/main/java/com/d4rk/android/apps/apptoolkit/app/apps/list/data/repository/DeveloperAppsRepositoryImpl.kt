@@ -28,6 +28,7 @@ class DeveloperAppsRepositoryImpl(
 ) : DeveloperAppsRepository {
 
     override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, RootError>> = flow {
+        emit(DataState.Loading<List<AppInfo>, RootError>())
         runCatching {
             val url = BuildConfig.DEBUG.let { isDebug ->
                 val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE

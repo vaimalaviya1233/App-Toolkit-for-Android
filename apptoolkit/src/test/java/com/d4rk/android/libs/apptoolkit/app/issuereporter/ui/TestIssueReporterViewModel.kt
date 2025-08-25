@@ -471,12 +471,19 @@ class TestIssueReporterViewModel : TestIssueReporterViewModelBase() {
             awaitItem()
             viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
             viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
-            skipItems(2)
+
+            // Wait until both title and description updates are reflected in the state
+            var updated = awaitItem()
+            while (updated.data?.description != "Desc") {
+                updated = awaitItem()
+            }
 
             viewModel.onEvent(IssueReporterEvent.Send(context))
 
             awaitItem() // loading
             dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+            // Skip intermediate emissions for data and snackbar updates
+            skipItems(2)
             val state = awaitItem()
             assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
             assertThat(state.data?.issueUrl).isEqualTo("https://ex.com/1")

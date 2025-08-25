@@ -17,12 +17,16 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertTrue
+import kotlinx.coroutines.cancel
+import androidx.lifecycle.viewModelScope
+import org.junit.jupiter.api.AfterEach
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestFavoriteAppsViewModelBase {
@@ -66,7 +70,7 @@ open class TestFavoriteAppsViewModelBase {
         coEvery { fetchUseCase.invoke() } returns fetchFlow
 
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
-        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository)
+        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository, dispatcher = Dispatchers.IO)
 
         viewModel = FavoriteAppsViewModel(
             fetchDeveloperAppsUseCase = fetchUseCase,
@@ -149,5 +153,12 @@ open class TestFavoriteAppsViewModelBase {
         }
         assertThat(favorites.contains(packageName)).isEqualTo(expected)
         println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
+    }
+
+    @AfterEach
+    fun tearDown() {
+        if (this::viewModel.isInitialized) {
+            viewModel.viewModelScope.cancel()
+        }
     }
 }

@@ -18,6 +18,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.Toggl
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -30,7 +31,7 @@ val appModule : Module = module {
 
     single<FavoritesRepository> { FavoritesRepositoryImpl(dataStore = get()) }
     single { ObserveFavoritesUseCase(repository = get()) }
-    single { ToggleFavoriteUseCase(repository = get()) }
+    single { ToggleFavoriteUseCase(repository = get(), dispatcher = Dispatchers.IO) }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()

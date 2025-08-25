@@ -113,41 +113,44 @@ class IssueReporterViewModel(
                 )
             )
 
-            when (result) {
-                is IssueReportResult.Success -> {
-                    screenState.updateData(screenState.value.screenState) { current ->
-                        current.copy(issueUrl = result.url)
+            result.fold(
+                onSuccess = { outcome ->
+                    when (outcome) {
+                        is IssueReportResult.Success -> {
+                            screenState.updateData(screenState.value.screenState) { current ->
+                                current.copy(issueUrl = outcome.url)
+                            }
+                            screenState.showSnackbar(
+                                snackbar = UiSnackbar(
+                                    message = UiTextHelper.StringResource(R.string.snack_report_success),
+                                    isError = false,
+                                    timeStamp = System.currentTimeMillis(),
+                                    type = ScreenMessageType.SNACKBAR,
+                                )
+                            )
+                            screenState.updateState(ScreenState.Success())
+                        }
+
+                        is IssueReportResult.Error -> {
+                            screenState.showSnackbar(
+                                snackbar = UiSnackbar(
+                                    message = when (outcome.status) {
+                                        HttpStatusCode.Unauthorized -> UiTextHelper.StringResource(R.string.error_unauthorized)
+                                        HttpStatusCode.Forbidden -> UiTextHelper.StringResource(R.string.error_forbidden)
+                                        HttpStatusCode.Gone -> UiTextHelper.StringResource(R.string.error_gone)
+                                        HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)
+                                        else -> UiTextHelper.StringResource(R.string.snack_report_failed)
+                                    },
+                                    isError = true,
+                                    timeStamp = System.currentTimeMillis(),
+                                    type = ScreenMessageType.SNACKBAR,
+                                )
+                            )
+                            screenState.updateState(ScreenState.Error())
+                        }
                     }
-                    screenState.showSnackbar(
-                        snackbar = UiSnackbar(
-                            message = UiTextHelper.StringResource(R.string.snack_report_success),
-                            isError = false,
-                            timeStamp = System.currentTimeMillis(),
-                            type = ScreenMessageType.SNACKBAR,
-                        )
-                    )
-                    screenState.updateState(ScreenState.Success())
-                }
-
-                is IssueReportResult.Error -> {
-                    screenState.showSnackbar(
-                        snackbar = UiSnackbar(
-                            message = when (result.status) {
-                                HttpStatusCode.Unauthorized -> UiTextHelper.StringResource(R.string.error_unauthorized)
-                                HttpStatusCode.Forbidden -> UiTextHelper.StringResource(R.string.error_forbidden)
-                                HttpStatusCode.Gone -> UiTextHelper.StringResource(R.string.error_gone)
-                                HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)
-                                else -> UiTextHelper.StringResource(R.string.snack_report_failed)
-                            },
-                            isError = true,
-                            timeStamp = System.currentTimeMillis(),
-                            type = ScreenMessageType.SNACKBAR,
-                        )
-                    )
-                    screenState.updateState(ScreenState.Error())
-                }
-
-                else -> {
+                },
+                onFailure = {
                     screenState.showSnackbar(
                         snackbar = UiSnackbar(
                             message = UiTextHelper.StringResource(R.string.snack_report_failed),
@@ -158,7 +161,7 @@ class IssueReporterViewModel(
                     )
                     screenState.updateState(ScreenState.Error())
                 }
-            }
+            )
         }
     }
 }
