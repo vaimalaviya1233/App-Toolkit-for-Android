@@ -19,7 +19,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -137,18 +136,23 @@ open class TestFavoriteAppsViewModelBase {
 
     protected suspend fun toggleAndAssert(packageName: String, expected: Boolean) {
         println("\uD83D\uDE80 [TEST START] toggleAndAssert for $packageName expecting $expected")
-        println("Favorites before: ${viewModel.favorites.value}")
-        viewModel.toggleFavorite(packageName)
-        println("\uD83D\uDD04 [ACTION] toggled $packageName")
-        advanceUntilIdle()
-        val favorites = viewModel.favorites.value
-        println("Favorites after: $favorites")
-        if (favorites.contains(packageName) == expected) {
-            println("\uD83D\uDC4D [ASSERTION PASSED] favorite state matches $expected")
-        } else {
-            println("\u274C [ASSERTION FAILED] expected $expected but was ${favorites.contains(packageName)}")
+        viewModel.favorites.test {
+            val before = awaitItem()
+            println("Favorites before: $before")
+
+            viewModel.toggleFavorite(packageName)
+            println("\uD83D\uDD04 [ACTION] toggled $packageName")
+
+            val after = awaitItem()
+            println("Favorites after: $after")
+            if (after.contains(packageName) == expected) {
+                println("\uD83D\uDC4D [ASSERTION PASSED] favorite state matches $expected")
+            } else {
+                println("\u274C [ASSERTION FAILED] expected $expected but was ${after.contains(packageName)}")
+            }
+            assertThat(after.contains(packageName)).isEqualTo(expected)
+            cancelAndIgnoreRemainingEvents()
         }
-        assertThat(favorites.contains(packageName)).isEqualTo(expected)
         println("\uD83C\uDFC1 [TEST END] toggleAndAssert")
     }
 
