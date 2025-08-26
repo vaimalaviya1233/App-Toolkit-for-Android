@@ -46,7 +46,7 @@ open class AboutViewModel :
         }
     }
 
-    private inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
+    internal inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
         screenState.updateData(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
     }
 }
