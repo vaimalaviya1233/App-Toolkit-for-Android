@@ -26,6 +26,7 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,6 +37,7 @@ fun ChangelogDialog(
     changelogUrl: String,
     buildInfoProvider: BuildInfoProvider,
     onDismiss: () -> Unit,
+    ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     val context = LocalContext.current
     val changelogText: MutableState<String?> = remember {
@@ -46,7 +48,7 @@ fun ChangelogDialog(
     val httpClient: HttpClient = koinInject()
 
     suspend fun loadChangelog() {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             runCatching {
                 val content: String = httpClient.get(changelogUrl).body()
                 val section = extractChangesForVersion(content, buildInfoProvider.appVersion)

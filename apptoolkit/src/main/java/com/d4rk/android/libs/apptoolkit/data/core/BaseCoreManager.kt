@@ -13,6 +13,7 @@ import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderF
 import com.google.firebase.initialize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
@@ -24,7 +25,8 @@ import org.koin.android.ext.android.inject
 open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
 
     protected val billingRepository: BillingRepository by inject()
-    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    protected open val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val applicationScope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     companion object {
         var isAppLoaded : Boolean = false
