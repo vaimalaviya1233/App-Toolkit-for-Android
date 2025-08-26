@@ -13,6 +13,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,9 +25,12 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class BillingRepository private constructor(context: Context) : PurchasesUpdatedListener {
+class BillingRepository private constructor(
+    context: Context,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) : PurchasesUpdatedListener {
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     private val _productDetails = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
     val productDetails: StateFlow<Map<String, ProductDetails>> = _productDetails.asStateFlow()
@@ -49,9 +53,13 @@ class BillingRepository private constructor(context: Context) : PurchasesUpdated
         @Volatile
         private var INSTANCE: BillingRepository? = null
 
-        fun getInstance(context: Context): BillingRepository {
+        fun getInstance(
+            context: Context,
+            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        ): BillingRepository {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BillingRepository(context.applicationContext).also { INSTANCE = it }
+                INSTANCE ?: BillingRepository(context.applicationContext, ioDispatcher)
+                    .also { INSTANCE = it }
             }
         }
     }
