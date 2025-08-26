@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
@@ -129,7 +128,7 @@ class TestAboutViewModel {
         assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isTrue()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
 
-        viewModel.screenState.updateData(viewModel.uiState.value.screenState) { UiAboutScreen() }
+        viewModel.updateUi { UiAboutScreen() }
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value

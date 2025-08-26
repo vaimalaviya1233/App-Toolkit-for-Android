@@ -20,13 +20,17 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySett
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val settingsModule = module {
     single<SettingsProvider> { AppSettingsProvider() }
 
     viewModel {
-        SettingsViewModel(settingsProvider = get())
+        SettingsViewModel(
+            settingsProvider = get(),
+            dispatcher = get(named("io"))
+        )
     }
 
     single<AboutSettingsProvider> { AppAboutSettingsProvider(context = get()) }
@@ -41,7 +45,10 @@ val settingsModule = module {
 
     single<PermissionsProvider> { PermissionsSettingsProvider() }
     viewModel {
-        PermissionsViewModel(settingsProvider = get())
+        PermissionsViewModel(
+            settingsProvider = get(),
+            dispatcher = get(named("io"))
+        )
     }
 
     viewModel {
