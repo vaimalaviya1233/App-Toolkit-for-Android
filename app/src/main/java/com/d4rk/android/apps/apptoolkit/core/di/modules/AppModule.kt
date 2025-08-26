@@ -26,14 +26,16 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule : Module = module {
-    single<CoroutineDispatcher> { Dispatchers.IO }
+    single<CoroutineDispatcher>(qualifier = named("io")) { Dispatchers.IO }
+    single<CoroutineDispatcher>(qualifier = named("default")) { Dispatchers.Default }
+    single<CoroutineDispatcher>(qualifier = named("main")) { Dispatchers.Main }
     single<DataStore> { DataStore(context = get()) }
-    single<AdsCoreManager> { AdsCoreManager(context = get() , get()) }
+    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), ioDispatcher = get(named("io"))) }
     single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
 
     single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get()) }
     single { ObserveFavoritesUseCase(repository = get()) }
-    single { ToggleFavoriteUseCase(repository = get(), dispatcher = get()) }
+    single { ToggleFavoriteUseCase(repository = get(), dispatcher = get(named("io"))) }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()
@@ -47,7 +49,7 @@ val appModule : Module = module {
 
     viewModel { MainViewModel() }
 
-    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get(), dispatcher = get()) }
+    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get(), dispatcher = get(named("io"))) }
     single { FetchDeveloperAppsUseCase(repository = get()) }
     viewModel {
         AppsListViewModel(

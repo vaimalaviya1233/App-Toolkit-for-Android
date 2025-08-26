@@ -25,17 +25,20 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class MainActivity : AppCompatActivity() {
 
     private val dataStore: DataStore by inject()
+    private val defaultDispatcher: CoroutineDispatcher by inject(named("default"))
+    private val ioDispatcher: CoroutineDispatcher by inject(named("io"))
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private var keepSplashVisible: Boolean = true
@@ -59,8 +62,8 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         lifecycleScope.launch {
             coroutineScope {
-                val adsInitialization = async(Dispatchers.Default) { MobileAds.initialize(this@MainActivity) {} }
-                val consentInitialization = async(Dispatchers.IO) {
+                val adsInitialization = async(defaultDispatcher) { MobileAds.initialize(this@MainActivity) {} }
+                val consentInitialization = async(ioDispatcher) {
                     ConsentManagerHelper.applyInitialConsent(dataStore)
                 }
                 awaitAll(adsInitialization, consentInitialization)

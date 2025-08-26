@@ -12,22 +12,27 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
 
-open class AdsCoreManager(protected val context : Context , val buildInfoProvider : BuildInfoProvider) {
+open class AdsCoreManager(
+    protected val context : Context,
+    val buildInfoProvider : BuildInfoProvider,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) {
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
     suspend fun initializeAds(appOpenUnitId : String) {
-        val isAdsChecked : Boolean = withContext(Dispatchers.IO) {
+        val isAdsChecked : Boolean = withContext(ioDispatcher) {
             dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
         }
         if (isAdsChecked) {
-            withContext(Dispatchers.IO) { MobileAds.initialize(context) }
+            withContext(ioDispatcher) { MobileAds.initialize(context) }
             appOpenAdManager = AppOpenAdManager(appOpenUnitId)
         }
     }
@@ -84,7 +89,7 @@ open class AdsCoreManager(protected val context : Context , val buildInfoProvide
         suspend fun showAdIfAvailable(
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
-            val isAdsChecked : Boolean = withContext(Dispatchers.IO) {
+            val isAdsChecked : Boolean = withContext(ioDispatcher) {
                 dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
             }
 
