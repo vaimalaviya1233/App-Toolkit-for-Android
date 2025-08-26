@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
 import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
@@ -9,13 +10,16 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import android.content.Context
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.api.Test
+import kotlin.OptIn
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TestPermissionsViewModel {
 
     companion object {
@@ -39,7 +43,7 @@ class TestPermissionsViewModel {
 
     @Test
     fun `load permissions success`() = runTest(dispatcherExtension.testDispatcher) {
-        val config = SettingsConfig(title = "P", categories = listOf("c"))
+        val config = SettingsConfig(title = "P", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
         val context = mockk<Context>(relaxed = true)
         setup(config = config, dispatcher = dispatcherExtension.testDispatcher)
 

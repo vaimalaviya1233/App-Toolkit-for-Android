@@ -4,6 +4,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import io.mockk.every
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import io.mockk.mockk
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -11,9 +12,11 @@ import kotlinx.coroutines.test.runTest
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.api.Test
+@OptIn(ExperimentalCoroutinesApi::class)
 
 class TestSettingsViewModel {
 
@@ -34,7 +37,7 @@ class TestSettingsViewModel {
 
     @Test
     fun `load settings success`() = runTest(dispatcherExtension.testDispatcher) {
-        val config = SettingsConfig(title = "Title", categories = listOf("cat"))
+        val config = SettingsConfig(title = "Title", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
         val context = mockk<Context>(relaxed = true)
         setup(config, dispatcherExtension.testDispatcher)
 
