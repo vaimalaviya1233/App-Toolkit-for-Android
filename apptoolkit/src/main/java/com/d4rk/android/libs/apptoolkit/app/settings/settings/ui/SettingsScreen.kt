@@ -26,7 +26,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,7 +67,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(viewModel : SettingsViewModel , contentProvider : GeneralSettingsContentProvider) {
-    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsState()
+    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsStateWithLifecycle()
     val context : Context = LocalContext.current
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.settings) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->

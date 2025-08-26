@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -27,7 +27,7 @@ fun AppNavigationHost(
     navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues
 ) {
     val dataStore : DataStore = koinInject()
-    val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsState(initial = NavigationRoutes.ROUTE_APPS_LIST)
+    val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(
         navController = navController , startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }

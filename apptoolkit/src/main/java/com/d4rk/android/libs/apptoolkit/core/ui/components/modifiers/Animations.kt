@@ -8,7 +8,7 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +39,7 @@ fun Modifier.bounceClick(
     var buttonState : ButtonState by remember { mutableStateOf(value = ButtonState.Idle) }
     val context: Context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val bouncyButtonsEnabled : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
+    val bouncyButtonsEnabled : Boolean by dataStore.bouncyButtons.collectAsStateWithLifecycle(initialValue = true)
     val scale : Float by animateFloatAsState(
         if (buttonState == ButtonState.Pressed && animationEnabled && bouncyButtonsEnabled) 0.96f else 1f , label = "Button Press Scale Animation"
     )

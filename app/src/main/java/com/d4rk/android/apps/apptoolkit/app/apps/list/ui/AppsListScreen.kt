@@ -2,7 +2,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
@@ -16,8 +16,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AppsListScreen(paddingValues: PaddingValues) {
     val viewModel: AppsListViewModel = koinViewModel()
-    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
-    val favorites by viewModel.favorites.collectAsState()
+    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
+    val favorites by viewModel.favorites.collectAsStateWithLifecycle()
 
     ScreenStateHandler(
         screenState = screenState, onLoading = {

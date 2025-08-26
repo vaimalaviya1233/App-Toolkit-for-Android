@@ -38,7 +38,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,7 +85,7 @@ fun CrashlyticsOnboardingPageTab(configProvider: BuildInfoProvider = koinInject(
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val switchState: State<Boolean> =
         dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
-            .collectAsState(initial = !configProvider.isDebugBuild)
+            .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
     val showCrashlyticsDialog = CrashlyticsOnboardingStateManager.showCrashlyticsDialog
 
     Column(
@@ -266,16 +266,16 @@ fun CrashlyticsConsentDialog(
 
     val analyticsState: State<Boolean> =
         dataStore.analyticsConsent(default = initialConsentValue)
-            .collectAsState(initial = initialConsentValue)
+            .collectAsStateWithLifecycle(initialValue = initialConsentValue)
     val adStorageState: State<Boolean> =
         dataStore.adStorageConsent(default = initialConsentValue)
-            .collectAsState(initial = initialConsentValue)
+            .collectAsStateWithLifecycle(initialValue = initialConsentValue)
     val adUserDataState: State<Boolean> =
         dataStore.adUserDataConsent(default = initialConsentValue)
-            .collectAsState(initial = initialConsentValue)
+            .collectAsStateWithLifecycle(initialValue = initialConsentValue)
     val adPersonalizationState: State<Boolean> =
         dataStore.adPersonalizationConsent(default = initialConsentValue)
-            .collectAsState(initial = initialConsentValue)
+            .collectAsStateWithLifecycle(initialValue = initialConsentValue)
 
     fun updateConsentState(type: String, value: Boolean) {
         coroutineScope.launch {

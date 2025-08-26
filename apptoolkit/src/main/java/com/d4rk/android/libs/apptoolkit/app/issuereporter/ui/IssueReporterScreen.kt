@@ -40,7 +40,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -88,7 +88,7 @@ fun IssueReporterScreen(activity: Activity) {
     val isFabExtended: MutableState<Boolean> = remember { mutableStateOf(value = true) }
     val viewModel: IssueReporterViewModel = koinViewModel()
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
-    val uiStateScreen: UiStateScreen<UiIssueReporterScreen> by viewModel.uiState.collectAsState()
+    val uiStateScreen: UiStateScreen<UiIssueReporterScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val target: GithubTarget = koinInject()
 
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {

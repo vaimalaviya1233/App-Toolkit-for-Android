@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -48,7 +48,7 @@ fun AppsList(
     val listState: LazyGridState = rememberLazyGridState()
     val adFrequency = 4
     val dataStore: DataStore = remember { koin.get() }
-    val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsState(initial = true)
+    val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsStateWithLifecycle(initialValue = true)
     val items: List<AppListItem> = remember(key1 = apps, key2 = adsEnabled) {
         buildList {
             apps.forEachIndexed { index: Int, appInfo: AppInfo ->

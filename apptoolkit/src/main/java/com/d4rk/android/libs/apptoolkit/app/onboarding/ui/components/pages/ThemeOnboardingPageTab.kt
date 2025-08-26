@@ -15,7 +15,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -44,8 +44,8 @@ fun ThemeOnboardingPageTab() {
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
 
     val defaultThemeModeName: String = stringResource(id = R.string.follow_system)
-    val currentThemeMode: String by dataStore.themeMode.collectAsState(initial = defaultThemeModeName)
-    val isAmoledMode: Boolean by dataStore.amoledMode.collectAsState(initial = false)
+    val currentThemeMode: String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = defaultThemeModeName)
+    val isAmoledMode: Boolean by dataStore.amoledMode.collectAsStateWithLifecycle(initialValue = false)
 
     val themeChoices: List<OnboardingThemeChoice> = listOf(
         OnboardingThemeChoice(

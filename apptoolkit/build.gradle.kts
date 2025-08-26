@@ -132,7 +132,7 @@ dependencies {
     api(dependencyNotation = libs.androidx.lifecycle.process)
     api(dependencyNotation = libs.androidx.lifecycle.viewmodel.ktx)
     api(dependencyNotation = libs.androidx.lifecycle.viewmodel.compose)
-    api(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
+    implementation(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
 
     // About
     api(dependencyNotation = libs.aboutlibraries.compose.m3)

@@ -19,7 +19,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,7 +60,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun MainScreen() {
     val viewModel: MainViewModel = koinViewModel()
-    val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val context: Context = LocalContext.current
     val isTabletOrLandscape: Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
 
@@ -132,7 +132,7 @@ fun MainScaffoldTabletContent() {
     var showChangelog by rememberSaveable { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
-    val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiMainScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val uiState: UiMainScreen = screenState.data ?: UiMainScreen()
     val navController: NavHostController = rememberNavController()
 
