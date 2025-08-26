@@ -15,7 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,7 +49,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
     var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
     var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
 
-    val currentThemeModeKey : String by dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
+    val currentThemeModeKey : String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
     val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
 
     val isDarkThemeActive : Boolean = when (currentThemeModeKey) {
@@ -67,9 +67,9 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             stringResource(id = R.string.will_turn_on_automatically_by_system)
     }
 
-    val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsState(initial = true)
-    val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsState(initial = true)
-    val showLabelsOnBottomBar : Boolean by dataStore.getShowBottomBarLabels().collectAsState(initial = true)
+    val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsStateWithLifecycle(initialValue = true)
+    val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsStateWithLifecycle(initialValue = true)
+    val showLabelsOnBottomBar : Boolean by dataStore.getShowBottomBarLabels().collectAsStateWithLifecycle(initialValue = true)
 
     LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {

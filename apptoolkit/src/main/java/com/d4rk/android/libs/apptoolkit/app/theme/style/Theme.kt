@@ -15,7 +15,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -64,9 +64,9 @@ private fun getColorScheme(isDarkTheme : Boolean , isAmoledMode : Boolean , isDy
 fun AppTheme(content : @Composable () -> Unit) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
-    val themeMode : String = dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM).value
-    val isDynamicColors : Boolean = dataStore.dynamicColors.collectAsState(initial = true).value
-    val isAmoledMode : Boolean = dataStore.amoledMode.collectAsState(initial = false).value
+    val themeMode : String = dataStore.themeMode.collectAsStateWithLifecycle(initialValue = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM).value
+    val isDynamicColors : Boolean = dataStore.dynamicColors.collectAsStateWithLifecycle(initialValue = true).value
+    val isAmoledMode : Boolean = dataStore.amoledMode.collectAsStateWithLifecycle(initialValue = false).value
 
     val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
     val isDarkTheme : Boolean = when (themeMode) {

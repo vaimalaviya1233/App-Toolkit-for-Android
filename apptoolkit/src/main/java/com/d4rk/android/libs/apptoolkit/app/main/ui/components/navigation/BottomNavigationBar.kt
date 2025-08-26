@@ -10,7 +10,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
@@ -46,7 +46,7 @@ fun BottomNavigationBar(
     val adsConfig: AdsConfig = koinInject(qualifier = named("full_banner"))
 
     val showLabels: Boolean =
-        dataStore.getShowBottomBarLabels().collectAsState(initial = true).value
+        dataStore.getShowBottomBarLabels().collectAsStateWithLifecycle(initialValue = true).value
 
     Column(modifier = modifier) {
         key("bottom_ad") {

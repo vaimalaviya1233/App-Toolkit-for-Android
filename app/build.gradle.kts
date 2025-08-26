@@ -147,6 +147,7 @@ android {
 
 dependencies {
     implementation(dependencyNotation = project(path = ":apptoolkit"))
+    implementation(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)

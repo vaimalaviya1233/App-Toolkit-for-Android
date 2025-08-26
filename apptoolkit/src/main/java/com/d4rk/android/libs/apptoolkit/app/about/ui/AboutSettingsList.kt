@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +36,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider , snackbarHostState : SnackbarHostState) {
     val context : Context = LocalContext.current
     val viewModel : AboutViewModel = koinViewModel()
-    val screenState : UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsState()
+    val screenState : UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val deviceInfo : String = stringResource(id = R.string.device_info)
     LazyColumn(modifier = Modifier.fillMaxHeight() , contentPadding = paddingValues) {
         item {

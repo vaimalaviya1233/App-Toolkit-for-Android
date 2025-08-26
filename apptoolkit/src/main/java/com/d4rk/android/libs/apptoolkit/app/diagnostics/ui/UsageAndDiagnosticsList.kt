@@ -17,7 +17,7 @@ import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,16 +49,16 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val switchState: State<Boolean> =
         dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
-            .collectAsState(initial = !configProvider.isDebugBuild)
+            .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
 
     val analyticsState: State<Boolean> = dataStore.analyticsConsent(default = !configProvider.isDebugBuild)
-        .collectAsState(initial = !configProvider.isDebugBuild)
+        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
     val adStorageState: State<Boolean> = dataStore.adStorageConsent(default = !configProvider.isDebugBuild)
-        .collectAsState(initial = !configProvider.isDebugBuild)
+        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
     val adUserDataState: State<Boolean> = dataStore.adUserDataConsent(default = !configProvider.isDebugBuild)
-        .collectAsState(initial = !configProvider.isDebugBuild)
+        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
     val adPersonalizationState: State<Boolean> = dataStore.adPersonalizationConsent(default = !configProvider.isDebugBuild)
-        .collectAsState(initial = !configProvider.isDebugBuild)
+        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
 
 
     var advancedSettingsExpanded: Boolean by remember { mutableStateOf(value = false) }

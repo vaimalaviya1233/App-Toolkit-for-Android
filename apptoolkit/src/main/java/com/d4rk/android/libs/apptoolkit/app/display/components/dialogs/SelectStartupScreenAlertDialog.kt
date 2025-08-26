@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +33,7 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
     val selectedPage = remember { mutableStateOf("") }
     val entries: List<String> = koinInject(qualifier = named("startup_entries"))
     val values: List<String> = koinInject(qualifier = named("startup_values"))
-    val startupRoute by dataStore.getStartupPage(default = values.first()).collectAsState(initial = values.first())
+    val startupRoute by dataStore.getStartupPage(default = values.first()).collectAsStateWithLifecycle(initialValue = values.first())
 
     LaunchedEffect(startupRoute) {
         selectedPage.value = startupRoute

@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
@@ -19,7 +19,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun FavoriteAppsScreen(paddingValues: PaddingValues) {
     val viewModel: FavoriteAppsViewModel = koinViewModel()
-    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
     ScreenStateHandler(
         screenState = screenState,
@@ -31,7 +31,7 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
             )
         },
         onSuccess = { uiHomeScreen ->
-            val favorites by viewModel.favorites.collectAsState()
+            val favorites by viewModel.favorites.collectAsStateWithLifecycle()
             AppsList(
                 uiHomeScreen = uiHomeScreen,
                 favorites = favorites,

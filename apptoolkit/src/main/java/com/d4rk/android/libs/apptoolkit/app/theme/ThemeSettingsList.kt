@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -37,8 +37,8 @@ fun ThemeSettingsList(paddingValues : PaddingValues) {
     val context : Context = LocalContext.current
     val dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
 
-    val currentThemeModeKey : String by dataStore.themeMode.collectAsState(initial = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
-    val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsState(initial = false)
+    val currentThemeModeKey : String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
+    val isAmoledMode : State<Boolean> = dataStore.amoledMode.collectAsStateWithLifecycle(initialValue = false)
 
     val themeOptions : List<ThemeSettingOption> = listOf(
         ThemeSettingOption(
