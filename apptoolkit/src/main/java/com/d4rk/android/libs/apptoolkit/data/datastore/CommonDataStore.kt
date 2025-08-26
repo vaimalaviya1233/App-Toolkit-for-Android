@@ -13,6 +13,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -34,9 +35,12 @@ val Context.commonDataStore : DataStore<Preferences> by preferencesDataStore(nam
  *
  * @property dataStore The DataStore instance for storing preferences.
  */
-open class CommonDataStore(context : Context) {
+open class CommonDataStore(
+    context : Context,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     val dataStore : DataStore<Preferences> = context.commonDataStore
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     companion object {
         @Volatile
