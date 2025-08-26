@@ -25,21 +25,17 @@ open class AboutViewModel :
     }
 
     private fun copyDeviceInfo() {
-        viewModelScope.launch {
-            screenState.showSnackbar(
-                snackbar = UiSnackbar(
-                    message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
-                    isError = false,
-                    timeStamp = System.nanoTime(),
-                    type = ScreenMessageType.SNACKBAR
-                )
+        screenState.showSnackbar(
+            snackbar = UiSnackbar(
+                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
+                isError = false,
+                timeStamp = System.nanoTime(),
+                type = ScreenMessageType.SNACKBAR
             )
-        }
+        )
     }
 
     private fun dismissSnack() {
-        viewModelScope.launch {
-            screenState.dismissSnackbar()
-        }
+        screenState.dismissSnackbar()
     }
 }
