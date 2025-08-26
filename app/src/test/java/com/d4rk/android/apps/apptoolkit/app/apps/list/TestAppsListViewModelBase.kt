@@ -5,17 +5,15 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.FakeFavoritesRepository
+import com.d4rk.android.apps.apptoolkit.app.apps.list.FakeDeveloperAppsRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.google.common.truth.Truth.assertThat
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,16 +21,12 @@ import kotlinx.coroutines.cancel
 import androidx.lifecycle.viewModelScope
 import org.junit.jupiter.api.AfterEach
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestAppsListViewModelBase {
 
     protected lateinit var viewModel: AppsListViewModel
-    private lateinit var fetchUseCase: FetchDeveloperAppsUseCase
-    private lateinit var favoritesRepository: FavoritesRepository
-
     protected fun setup(
         fetchFlow: Flow<DataState<List<AppInfo>, RootError>>,
         initialFavorites: Set<String> = emptySet(),
@@ -42,35 +36,11 @@ open class TestAppsListViewModelBase {
         dispatcher: CoroutineDispatcher = Dispatchers.Main,
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
-        fetchUseCase = mockk()
-        favoritesRepository = mockk(relaxed = true)
-        val favFlow = favoritesFlow ?: MutableStateFlow(initialFavorites)
-        every { favoritesRepository.observeFavorites() } returns favFlow
-
-        if (toggleError != null) {
-            coEvery { favoritesRepository.toggleFavorite(any()) } throws toggleError
-        } else if (favFlow is MutableStateFlow<Set<String>>) {
-            coEvery { favoritesRepository.toggleFavorite(any()) } coAnswers {
-                val pkg = it.invocation.args[0] as String
-                println("\uD83D\uDD04 [REPO MOCK] toggleFavorite($pkg)")
-                val current = favFlow.value.toMutableSet()
-                if (!current.add(pkg)) {
-                    current.remove(pkg)
-                }
-                favFlow.value = current
-            }
-        } else {
-            coEvery { favoritesRepository.toggleFavorite(any()) } returns Unit
-        }
-        if (fetchThrows != null) {
-            coEvery { fetchUseCase.invoke() } throws fetchThrows
-        } else {
-            coEvery { fetchUseCase.invoke() } returns fetchFlow
-        }
-
+        val developerAppsRepository = FakeDeveloperAppsRepository(fetchFlow, fetchThrows)
+        val fetchUseCase = FetchDeveloperAppsUseCase(developerAppsRepository)
+        val favoritesRepository = FakeFavoritesRepository(initialFavorites, favoritesFlow, toggleError)
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
         val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository, dispatcher)
-
         viewModel = AppsListViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
         println("\u2705 [SETUP] ViewModel initialized")
     }
