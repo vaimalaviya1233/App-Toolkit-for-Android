@@ -19,7 +19,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -140,7 +139,6 @@ open class TestFavoriteAppsViewModelBase {
         println("Favorites before: ${viewModel.favorites.value}")
         viewModel.toggleFavorite(packageName)
         println("\uD83D\uDD04 [ACTION] toggled $packageName")
-        advanceUntilIdle()
         val favorites = viewModel.favorites.value
         println("Favorites after: $favorites")
         if (favorites.contains(packageName) == expected) {

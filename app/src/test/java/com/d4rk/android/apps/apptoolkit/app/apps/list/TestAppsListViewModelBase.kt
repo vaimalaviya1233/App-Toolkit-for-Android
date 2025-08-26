@@ -19,7 +19,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.cancel
 import androidx.lifecycle.viewModelScope
 import org.junit.jupiter.api.AfterEach
@@ -135,7 +134,6 @@ open class TestAppsListViewModelBase {
         println("Favorites before: ${viewModel.favorites.value}")
         viewModel.toggleFavorite(packageName)
         println("\uD83D\uDD04 [ACTION] toggled $packageName")
-        advanceUntilIdle()
         val favorites = viewModel.favorites.value
         println("Favorites after: $favorites")
         if (favorites.contains(packageName) == expected) {
