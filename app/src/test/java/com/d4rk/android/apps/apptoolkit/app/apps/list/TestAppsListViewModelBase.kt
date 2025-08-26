@@ -71,7 +71,7 @@ open class TestAppsListViewModelBase {
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
         val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository, dispatcher)
 
-        viewModel = AppsListViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase, dispatcher)
+        viewModel = AppsListViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
         println("\u2705 [SETUP] ViewModel initialized")
     }
 

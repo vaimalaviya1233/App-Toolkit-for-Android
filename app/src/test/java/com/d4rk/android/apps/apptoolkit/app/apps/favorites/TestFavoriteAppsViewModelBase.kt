@@ -76,7 +76,6 @@ open class TestFavoriteAppsViewModelBase {
             fetchDeveloperAppsUseCase = fetchUseCase,
             observeFavoritesUseCase = observeFavoritesUseCase,
             toggleFavoriteUseCase = toggleFavoriteUseCase,
-            ioDispatcher = dispatcher
         )
         println("\u2705 [SETUP] ViewModel initialized")
     }
