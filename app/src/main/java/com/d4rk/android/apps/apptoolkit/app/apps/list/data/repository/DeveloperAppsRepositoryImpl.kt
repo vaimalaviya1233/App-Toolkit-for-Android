@@ -18,13 +18,14 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class DeveloperAppsRepositoryImpl(
-    private val client: HttpClient
+    private val client: HttpClient,
+    private val dispatcher: CoroutineDispatcher,
 ) : DeveloperAppsRepository {
 
     override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, RootError>> = flow {
@@ -58,6 +59,6 @@ class DeveloperAppsRepositoryImpl(
                 )
             )
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 }
 
