@@ -52,20 +52,23 @@ object ConsentFormHelper {
             ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
 
         consentInfo.requestConsentInfoUpdate(activity , params , {
+            if (consentInfo.consentStatus != ConsentInformation.ConsentStatus.REQUIRED &&
+                consentInfo.consentStatus != ConsentInformation.ConsentStatus.UNKNOWN) {
+                onFormShown()
+                return@requestConsentInfoUpdate
+            }
+
             runCatching {
                 UserMessagingPlatform.loadConsentForm(activity , { consentForm : ConsentForm ->
                     runCatching {
                         consentForm.show(activity) { onFormShown() }
                     }.onFailure {
-                        Log.e("ConsentFormHelper", "Failed to load consent form", it)
                         onFormShown()
                     }
                 } , { t ->
-                    Log.e("ConsentFormHelper", "Failed to load consent form: ${t.message}")
                     onFormShown()
                 })
             }.onFailure {
-                Log.e("ConsentFormHelper", "Failed to load consent form", it)
                 onFormShown()
             }
         } , {})

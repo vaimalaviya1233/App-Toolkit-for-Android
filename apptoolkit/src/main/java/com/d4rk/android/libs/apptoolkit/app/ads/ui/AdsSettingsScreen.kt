@@ -37,13 +37,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun AdsSettingsScreen(activity : Activity , buildInfoProvider : BuildInfoProvider) {
     val context : Context = LocalContext.current
+    val appContext = context.applicationContext
     val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
-    val adsEnabled : Boolean by dataStore.ads(default = ! buildInfoProvider.isDebugBuild)
-        .collectAsStateWithLifecycle(initialValue = ! buildInfoProvider.isDebugBuild)
+    val dataStore = remember(appContext) { CommonDataStore.getInstance(appContext) }
+
+    val defaultAds = !buildInfoProvider.isDebugBuild
+    val adsEnabled by dataStore
+        .ads(default = defaultAds)
+        .collectAsStateWithLifecycle(initialValue = defaultAds)
 
     LargeTopAppBarWithScaffold(
-        title = stringResource(id = R.string.ads) , onBackClicked = { (context as? Activity)?.finish() }) { paddingValues : PaddingValues ->
+        title = stringResource(id = R.string.ads) , onBackClicked = { activity.finish() }) { paddingValues : PaddingValues ->
         LazyColumn(
             modifier = Modifier
                     .fillMaxSize()
