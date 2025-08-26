@@ -9,7 +9,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
@@ -27,7 +26,6 @@ open class AboutViewModel :
 
     private fun copyDeviceInfo() {
         viewModelScope.launch {
-            updateUi { copy(showDeviceInfoCopiedSnackbar = true) }
             screenState.showSnackbar(
                 snackbar = UiSnackbar(
                     message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
@@ -41,12 +39,7 @@ open class AboutViewModel :
 
     private fun dismissSnack() {
         viewModelScope.launch {
-            updateUi { copy(showDeviceInfoCopiedSnackbar = false) }
             screenState.dismissSnackbar()
         }
-    }
-
-    internal inline fun updateUi(crossinline transform: UiAboutScreen.() -> UiAboutScreen) {
-        screenState.updateData(newState = screenState.value.screenState) { current: UiAboutScreen -> transform(current) }
     }
 }

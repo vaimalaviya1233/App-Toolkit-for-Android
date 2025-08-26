@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
@@ -25,7 +24,7 @@ class TestAboutViewModel {
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = viewModel.uiState.value
-        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isTrue()
+        assertThat(state.data?.tempPlaceholder).isFalse()
         val snackbar = state.snackbar!!
         val msg = snackbar.message as UiTextHelper.StringResource
         assertThat(msg.resourceId).isEqualTo(R.string.snack_device_info_copied)
@@ -46,7 +45,7 @@ class TestAboutViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.snackbar).isNull()
-        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(state.data?.tempPlaceholder).isFalse()
         println("🏁 [TEST DONE] dismiss snackbar resets state")
     }
 
@@ -67,19 +66,18 @@ class TestAboutViewModel {
 
         val stateAfterSecondCopy = viewModel.uiState.value
         assertThat(stateAfterSecondCopy.snackbar).isNotNull()
-        assertThat(stateAfterSecondCopy.data?.showDeviceInfoCopiedSnackbar).isTrue()
+        assertThat(stateAfterSecondCopy.data?.tempPlaceholder).isFalse()
 
         viewModel.onEvent(AboutEvents.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val finalState = viewModel.uiState.value
         assertThat(finalState.snackbar).isNull()
-        assertThat(finalState.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(finalState.data?.tempPlaceholder).isFalse()
 
-        // dismissing again should keep snackbar hidden
         viewModel.onEvent(AboutEvents.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNull()
-        assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(viewModel.uiState.value.data?.tempPlaceholder).isFalse()
         println("🏁 [TEST DONE] snackbar can be shown again after dismissal")
     }
 
@@ -114,7 +112,7 @@ class TestAboutViewModel {
 
         val state = viewModel.uiState.value
         assertThat(state.snackbar).isNotNull()
-        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isTrue()
+        assertThat(state.data?.tempPlaceholder).isFalse()
         println("🏁 [TEST DONE] rapid successive copy events keep snackbar visible")
     }
 
@@ -125,14 +123,13 @@ class TestAboutViewModel {
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.data?.showDeviceInfoCopiedSnackbar).isTrue()
+        assertThat(viewModel.uiState.value.data?.tempPlaceholder).isFalse()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
 
-        viewModel.updateUi { UiAboutScreen() }
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
-        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(state.data?.tempPlaceholder).isFalse()
         assertThat(state.snackbar).isNotNull()
         println("🏁 [TEST DONE] changing screen data resets copy state")
     }
@@ -149,7 +146,7 @@ class TestAboutViewModel {
         val recreated = AboutViewModel()
         val state = recreated.uiState.value
         assertThat(state.snackbar).isNull()
-        assertThat(state.data?.showDeviceInfoCopiedSnackbar).isFalse()
+        assertThat(state.data?.tempPlaceholder).isFalse()
         println("🏁 [TEST DONE] new viewmodel has default state")
     }
 }

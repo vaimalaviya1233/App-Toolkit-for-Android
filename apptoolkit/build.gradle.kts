@@ -45,12 +45,14 @@ android {
     buildFeatures {
         compose = true
     }
+
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
             it.jvmArgs("-XX:+EnableDynamicAgentLoading")
         }
     }
+
     publishing {
         singleVariant("release") {}
     }
