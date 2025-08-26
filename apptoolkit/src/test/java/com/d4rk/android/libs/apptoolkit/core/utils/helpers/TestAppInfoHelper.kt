@@ -13,7 +13,8 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -21,7 +22,8 @@ import kotlin.test.assertTrue
 class TestAppInfoHelper {
 
     @Test
-    fun `openApp adds new task flag when context not Activity`() = runBlocking {
+    fun `openApp adds new task flag when context not Activity`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openApp adds new task flag when context not Activity")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -31,14 +33,15 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        AppInfoHelper().openApp(context, "pkg")
+        AppInfoHelper(dispatcher).openApp(context, "pkg")
 
         verify { intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         println("🏁 [TEST DONE] openApp adds new task flag when context not Activity")
     }
 
     @Test
-    fun `isAppInstalled returns true when app exists`() = runBlocking {
+    fun `isAppInstalled returns true when app exists`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] isAppInstalled returns true when app exists")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -46,28 +49,30 @@ class TestAppInfoHelper {
         every { context.packageManager } returns pm
         every { pm.getApplicationInfo("pkg", 0) } returns appInfo
 
-        val result = AppInfoHelper().isAppInstalled(context, "pkg")
+        val result = AppInfoHelper(dispatcher).isAppInstalled(context, "pkg")
 
         assertEquals(true, result)
         println("🏁 [TEST DONE] isAppInstalled returns true when app exists")
     }
 
     @Test
-    fun `isAppInstalled returns false when app missing`() = runBlocking {
+    fun `isAppInstalled returns false when app missing`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] isAppInstalled returns false when app missing")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
         every { context.packageManager } returns pm
         every { pm.getApplicationInfo("pkg", 0) } throws PackageManager.NameNotFoundException()
 
-        val result = AppInfoHelper().isAppInstalled(context, "pkg")
+        val result = AppInfoHelper(dispatcher).isAppInstalled(context, "pkg")
 
         assertEquals(false, result)
         println("🏁 [TEST DONE] isAppInstalled returns false when app missing")
     }
 
     @Test
-    fun `openApp does not add new task flag when context is Activity`() = runBlocking {
+    fun `openApp does not add new task flag when context is Activity`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openApp does not add new task flag when context is Activity")
         val context = mockk<Activity>()
         val pm = mockk<PackageManager>()
@@ -77,14 +82,15 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        AppInfoHelper().openApp(context, "pkg")
+        AppInfoHelper(dispatcher).openApp(context, "pkg")
 
         verify(exactly = 0) { intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         println("🏁 [TEST DONE] openApp does not add new task flag when context is Activity")
     }
 
     @Test
-    fun `openApp shows toast and returns false when launch intent missing`() = runBlocking {
+    fun `openApp shows toast and returns false when launch intent missing`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openApp shows toast and returns false when launch intent missing")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -96,7 +102,7 @@ class TestAppInfoHelper {
             val toast = mockk<Toast>(relaxed = true)
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
 
-            val result = AppInfoHelper().openApp(context, "pkg")
+            val result = AppInfoHelper(dispatcher).openApp(context, "pkg")
 
             assertEquals(false, result)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
@@ -107,7 +113,8 @@ class TestAppInfoHelper {
     }
 
     @Test
-    fun `openAppResult returns success when launch succeeds`() = runBlocking {
+    fun `openAppResult returns success when launch succeeds`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openAppResult returns success when launch succeeds")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -117,14 +124,15 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        val result = AppInfoHelper().openAppResult(context, "pkg")
+        val result = AppInfoHelper(dispatcher).openAppResult(context, "pkg")
 
         assertEquals(Result.success(true), result)
         println("🏁 [TEST DONE] openAppResult returns success when launch succeeds")
     }
 
     @Test
-    fun `openApp returns false on start failure`() = runBlocking {
+    fun `openApp returns false on start failure`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openApp returns false on start failure")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -139,7 +147,7 @@ class TestAppInfoHelper {
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
             every { context.startActivity(intent) } throws RuntimeException("fail")
 
-            val result = AppInfoHelper().openApp(context, "pkg")
+            val result = AppInfoHelper(dispatcher).openApp(context, "pkg")
             assertEquals(false, result)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
             println("🏁 [TEST DONE] openApp returns false on start failure")
@@ -149,7 +157,8 @@ class TestAppInfoHelper {
     }
 
     @Test
-    fun `openAppResult exposes failure`() = runBlocking {
+    fun `openAppResult exposes failure`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
         println("🚀 [TEST] openAppResult exposes failure")
         val context = mockk<Context>()
         val pm = mockk<PackageManager>()
@@ -164,7 +173,7 @@ class TestAppInfoHelper {
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
             every { context.startActivity(intent) } throws RuntimeException("fail")
 
-            val result = AppInfoHelper().openAppResult(context, "pkg")
+            val result = AppInfoHelper(dispatcher).openAppResult(context, "pkg")
             assertTrue(result.isFailure)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
             println("🏁 [TEST DONE] openAppResult exposes failure")

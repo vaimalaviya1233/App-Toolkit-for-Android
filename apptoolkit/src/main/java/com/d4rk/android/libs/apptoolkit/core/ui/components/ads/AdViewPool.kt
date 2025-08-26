@@ -5,6 +5,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import kotlin.collections.ArrayDeque
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -20,8 +21,18 @@ private data class PooledAdView(val view: AdView, var lastUsed: Long)
 
 object AdViewPool {
     private val pool: MutableMap<Pair<String, AdSize>, ArrayDeque<PooledAdView>> = mutableMapOf()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val mainScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    internal var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+        set(value) {
+            field = value
+            scope = CoroutineScope(SupervisorJob() + value)
+        }
+    internal var mainDispatcher: CoroutineDispatcher = Dispatchers.Main
+        set(value) {
+            field = value
+            mainScope = CoroutineScope(SupervisorJob() + value)
+        }
+    private var scope = CoroutineScope(SupervisorJob() + ioDispatcher)
+    private var mainScope = CoroutineScope(SupervisorJob() + mainDispatcher)
 
     internal var viewFactory: (Context, String, AdSize) -> AdView = { ctx, adUnitId, size ->
         AdView(ctx.applicationContext).apply {
@@ -50,7 +61,7 @@ object AdViewPool {
         repeat(count) {
             scope.launch {
                 val view = runCatching {
-                    withContext(Dispatchers.Main) {
+                    withContext(mainDispatcher) {
                         viewFactory(context, adUnitId, adSize).apply {
                             loadAd(adRequest)
                         }
