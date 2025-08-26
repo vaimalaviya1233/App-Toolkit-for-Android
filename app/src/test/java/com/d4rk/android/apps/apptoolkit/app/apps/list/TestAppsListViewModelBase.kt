@@ -18,6 +18,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.cancel
 import androidx.lifecycle.viewModelScope
@@ -39,7 +40,7 @@ open class TestAppsListViewModelBase {
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
         fetchThrows: Throwable? = null,
-        dispatcher: kotlinx.coroutines.CoroutineDispatcher = Dispatchers.Main,
+        dispatcher: CoroutineDispatcher = Dispatchers.Main,
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         fetchUseCase = mockk()
