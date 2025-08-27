@@ -24,7 +24,6 @@ fun GeneralSettingsScreen(title : String , viewModel : GeneralSettingsViewModel 
     }
 }
 
-
 @Composable
 fun GeneralSettingsContent(viewModel : GeneralSettingsViewModel , contentProvider : GeneralSettingsContentProvider , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
     val screenState : UiStateScreen<UiGeneralSettingsScreen> by viewModel.uiState.collectAsStateWithLifecycle()
