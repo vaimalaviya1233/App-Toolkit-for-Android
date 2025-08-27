@@ -7,6 +7,7 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.repository.Onboard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,16 @@ class OnboardingViewModel(
 
     private val _uiState = MutableStateFlow(OnboardingUiState())
     val uiState: StateFlow<OnboardingUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            repository.observeOnboardingCompletion()
+                .catch { emit(false) }
+                .collect { completed ->
+                    _uiState.update { it.copy(isOnboardingCompleted = completed) }
+                }
+        }
+    }
 
     fun updateCurrentTab(index: Int) {
         _uiState.update { it.copy(currentTabIndex = index) }
