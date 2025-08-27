@@ -1,26 +1,25 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list
 
+import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.FakeFavoritesRepository
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.FakeFavoritesRepository
-import com.d4rk.android.apps.apptoolkit.app.apps.list.FakeDeveloperAppsRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
-import androidx.lifecycle.viewModelScope
-import org.junit.jupiter.api.AfterEach
 import kotlinx.coroutines.flow.Flow
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -64,39 +63,6 @@ open class TestAppsListViewModelBase {
             cancelAndIgnoreRemainingEvents()
         }
         println("\uD83C\uDFC1 [TEST END] testSuccess")
-    }
-
-    protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testEmpty() {
-        println("\uD83D\uDE80 [TEST START] testEmpty")
-        this@testEmpty.test {
-            val first = awaitItem()
-            println("\u23F3 [EMISSION 1] $first")
-            if (first.screenState is ScreenState.IsLoading) {
-                val second = awaitItem()
-                println("\u2139\uFE0F [EMISSION 2] $second")
-                assertTrue(second.screenState is ScreenState.NoData) { "Second emission should be NoData but was ${second.screenState}" }
-            } else {
-                assertTrue(first.screenState is ScreenState.NoData) { "Expected NoData state" }
-            }
-            cancelAndIgnoreRemainingEvents()
-        }
-        println("\uD83C\uDFC1 [TEST END] testEmpty")
-    }
-
-    protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testError() {
-        println("\uD83D\uDE80 [TEST START] testError")
-        this@testError.test {
-            val first = awaitItem()
-            println("\u23F3 [EMISSION 1] $first")
-            assertTrue(first.screenState is ScreenState.IsLoading) { "First emission should be IsLoading but was ${first.screenState}" }
-            expectNoEvents()
-            println("checking state after dispatcher idle...")
-            val current = viewModel.uiState.value
-            // Error flow leaves state unchanged, so it should remain loading
-            assertTrue(current.screenState is ScreenState.IsLoading) { "State should remain Loading on error" }
-            cancelAndIgnoreRemainingEvents()
-        }
-        println("\uD83C\uDFC1 [TEST END] testError")
     }
 
     protected suspend fun toggleAndAssert(packageName: String, expected: Boolean) {
