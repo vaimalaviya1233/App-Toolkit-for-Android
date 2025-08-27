@@ -16,7 +16,7 @@ class PermissionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        viewModel.onEvent(PermissionsEvent.Load(context = this))
+        viewModel.onEvent(PermissionsEvent.Load)
 
         setContent {
             AppTheme {

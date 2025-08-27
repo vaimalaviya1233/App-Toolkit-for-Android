@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
-import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsAction
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
@@ -16,10 +15,10 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 
 class PermissionsViewModel(
@@ -32,13 +31,13 @@ class PermissionsViewModel(
 
     override fun onEvent(event : PermissionsEvent) {
         when (event) {
-            is PermissionsEvent.Load -> loadPermissions(context = event.context)
+            PermissionsEvent.Load -> loadPermissions()
         }
     }
 
-    private fun loadPermissions(context: Context) {
+    private fun loadPermissions() {
         viewModelScope.launch {
-            settingsProvider.providePermissionsConfig(context)
+            settingsProvider.providePermissionsConfig()
                 .flowOn(dispatcher)
                 .catch { error ->
                     screenState.setErrors(
