@@ -49,7 +49,13 @@ class AdsSettingsViewModel(
 
     private fun setAdsEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            repository.setAdsEnabled(enabled)
+            try {
+                repository.setAdsEnabled(enabled)
+            } catch (e: Exception) {
+                screenState.updateData(newState = ScreenState.Error()) { current ->
+                    current.copy(adsEnabled = !enabled)
+                }
+            }
         }
     }
 }
