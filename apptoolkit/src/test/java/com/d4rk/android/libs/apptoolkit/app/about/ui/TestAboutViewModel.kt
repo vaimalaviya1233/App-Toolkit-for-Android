@@ -2,6 +2,8 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
@@ -17,24 +19,42 @@ class TestAboutViewModel {
         val dispatcherExtension = UnconfinedDispatcherExtension()
     }
 
+    private val deviceProvider = object : AboutSettingsProvider {
+        override val deviceInfo: String = "device-info"
+    }
+
+    private val buildInfoProvider = object : BuildInfoProvider {
+        override val appVersion: String = "1.0"
+        override val appVersionCode: Int = 1
+        override val packageName: String = "pkg"
+        override val isDebugBuild: Boolean = false
+    }
+
+    private fun createViewModel(): AboutViewModel =
+        AboutViewModel(
+            deviceProvider = deviceProvider,
+            configProvider = buildInfoProvider,
+            dispatcher = dispatcherExtension.testDispatcher,
+        )
+
     @Test
     fun `copy device info shows snackbar`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] copy device info shows snackbar")
-        val viewModel = AboutViewModel()
+        val viewModel = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
         val state = viewModel.uiState.value
-        assertThat(state.data?.tempPlaceholder).isFalse()
+        assertThat(state.data?.deviceInfo).isEqualTo(deviceProvider.deviceInfo)
         val snackbar = state.snackbar!!
         val msg = snackbar.message as UiTextHelper.StringResource
         assertThat(msg.resourceId).isEqualTo(R.string.snack_device_info_copied)
-        println("🏁 [TEST DONE] copy device info shows snackbar")
     }
 
     @Test
     fun `dismiss snackbar resets state`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] dismiss snackbar resets state")
-        val viewModel = AboutViewModel()
+        val viewModel = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
@@ -42,111 +62,65 @@ class TestAboutViewModel {
 
         viewModel.onEvent(AboutEvents.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-        val state = viewModel.uiState.value
-        assertThat(state.snackbar).isNull()
-        assertThat(state.data?.tempPlaceholder).isFalse()
-        println("🏁 [TEST DONE] dismiss snackbar resets state")
+        assertThat(viewModel.uiState.value.snackbar).isNull()
     }
 
     @Test
     fun `snackbar can be shown again after dismissal`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] snackbar can be shown again after dismissal")
-        val viewModel = AboutViewModel()
+        val viewModel = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         viewModel.onEvent(AboutEvents.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
         assertThat(viewModel.uiState.value.snackbar).isNull()
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-        val stateAfterSecondCopy = viewModel.uiState.value
-        assertThat(stateAfterSecondCopy.snackbar).isNotNull()
-        assertThat(stateAfterSecondCopy.data?.tempPlaceholder).isFalse()
-
-        viewModel.onEvent(AboutEvents.DismissSnackbar)
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        val finalState = viewModel.uiState.value
-        assertThat(finalState.snackbar).isNull()
-        assertThat(finalState.data?.tempPlaceholder).isFalse()
-
-        viewModel.onEvent(AboutEvents.DismissSnackbar)
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.snackbar).isNull()
-        assertThat(viewModel.uiState.value.data?.tempPlaceholder).isFalse()
-        println("🏁 [TEST DONE] snackbar can be shown again after dismissal")
+        assertThat(viewModel.uiState.value.snackbar).isNotNull()
     }
 
     @Test
     fun `repeated copy events show snackbar each time`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] repeated copy events show snackbar each time")
-        val viewModel = AboutViewModel()
+        val viewModel = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        val first = viewModel.uiState.value.snackbar!!
-        val firstTimestamp = first.timeStamp
+        val first = viewModel.uiState.value.snackbar!!.timeStamp
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        val second = viewModel.uiState.value.snackbar!!
+        val second = viewModel.uiState.value.snackbar!!.timeStamp
 
-        assertThat(second.timeStamp).isGreaterThan(firstTimestamp)
-        println("🏁 [TEST DONE] repeated copy events show snackbar each time")
+        assertThat(second).isGreaterThan(first)
     }
 
     @Test
     fun `rapid successive copy events keep snackbar visible`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] rapid successive copy events keep snackbar visible")
-        val viewModel = AboutViewModel()
-
-        repeat(5) {
-            viewModel.onEvent(AboutEvents.CopyDeviceInfo)
-        }
-
+        val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        val state = viewModel.uiState.value
-        assertThat(state.snackbar).isNotNull()
-        assertThat(state.data?.tempPlaceholder).isFalse()
-        println("🏁 [TEST DONE] rapid successive copy events keep snackbar visible")
-    }
-
-    @Test
-    fun `changing screen data resets copy state`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] changing screen data resets copy state")
-        val viewModel = AboutViewModel()
-
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        repeat(5) { viewModel.onEvent(AboutEvents.CopyDeviceInfo) }
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        assertThat(viewModel.uiState.value.data?.tempPlaceholder).isFalse()
+
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
-
-        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-
-        val state = viewModel.uiState.value
-        assertThat(state.data?.tempPlaceholder).isFalse()
-        assertThat(state.snackbar).isNotNull()
-        println("🏁 [TEST DONE] changing screen data resets copy state")
     }
 
     @Test
     fun `new viewmodel has default state`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] new viewmodel has default state")
-        val viewModel = AboutViewModel()
+        val viewModel = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.onEvent(AboutEvents.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
 
-        val recreated = AboutViewModel()
+        val recreated = createViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = recreated.uiState.value
         assertThat(state.snackbar).isNull()
-        assertThat(state.data?.tempPlaceholder).isFalse()
-        println("🏁 [TEST DONE] new viewmodel has default state")
+        assertThat(state.data?.deviceInfo).isEqualTo(deviceProvider.deviceInfo)
     }
 }

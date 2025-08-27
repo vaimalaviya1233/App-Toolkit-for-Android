@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -19,8 +19,6 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
@@ -33,11 +31,11 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , deviceProvider : AboutSettingsProvider , configProvider : BuildInfoProvider , snackbarHostState : SnackbarHostState) {
-    val context : Context = LocalContext.current
-    val viewModel : AboutViewModel = koinViewModel()
-    val screenState : UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsStateWithLifecycle()
-    val deviceInfo : String = stringResource(id = R.string.device_info)
+fun AboutSettingsList(paddingValues: PaddingValues = PaddingValues(), snackbarHostState: SnackbarHostState) {
+    val context: Context = LocalContext.current
+    val viewModel: AboutViewModel = koinViewModel()
+    val screenState: UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsStateWithLifecycle()
+    val deviceInfo: String = stringResource(id = R.string.device_info)
     LazyColumn(modifier = Modifier.fillMaxHeight() , contentPadding = paddingValues) {
         item {
             PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
@@ -47,11 +45,14 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
                         .padding(horizontal = SizeConstants.LargeSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
-                SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name) , summary = stringResource(id = R.string.copyright))
+                SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name), summary = stringResource(id = R.string.copyright))
                 ExtraTinyVerticalSpacer()
-                SettingsPreferenceItem(title = stringResource(id = R.string.app_build_version) , summary = configProvider.appVersion + " (${configProvider.appVersionCode})")
+                SettingsPreferenceItem(
+                    title = stringResource(id = R.string.app_build_version),
+                    summary = "${screenState.data?.appVersion} (${screenState.data?.appVersionCode})",
+                )
                 ExtraTinyVerticalSpacer()
-                SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title) , summary = stringResource(id = R.string.summary_preference_settings_oss)) {
+                SettingsPreferenceItem(title = stringResource(id = R.string.oss_license_title), summary = stringResource(id = R.string.summary_preference_settings_oss)) {
                     IntentsHelper.openActivity(context = context, activityClass = LicensesActivity::class.java)
                 }
             }
@@ -65,15 +66,17 @@ fun AboutSettingsList(paddingValues : PaddingValues = PaddingValues() , devicePr
                         .padding(horizontal = SizeConstants.LargeSize)
                         .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
             ) {
-                SettingsPreferenceItem(title = deviceInfo , summary = deviceProvider.deviceInfo) {
+                SettingsPreferenceItem(title = deviceInfo, summary = screenState.data?.deviceInfo ?: "") {
                     ClipboardHelper.copyTextToClipboard(
-                        context = context , label = deviceInfo , text = deviceProvider.deviceInfo , onShowSnackbar = {
-                            viewModel.onEvent(event = AboutEvents.CopyDeviceInfo)
-                        })
+                        context = context,
+                        label = deviceInfo,
+                        text = screenState.data?.deviceInfo ?: "",
+                        onShowSnackbar = { viewModel.onEvent(event = AboutEvents.CopyDeviceInfo) },
+                    )
                 }
             }
         }
     }
 
-    DefaultSnackbarHandler(screenState = screenState , snackbarHostState = snackbarHostState , getDismissEvent = { AboutEvents.DismissSnackbar } , onEvent = { viewModel.onEvent(it) })
+    DefaultSnackbarHandler(screenState = screenState, snackbarHostState = snackbarHostState, getDismissEvent = { AboutEvents.DismissSnackbar }, onEvent = { viewModel.onEvent(it) })
 }
