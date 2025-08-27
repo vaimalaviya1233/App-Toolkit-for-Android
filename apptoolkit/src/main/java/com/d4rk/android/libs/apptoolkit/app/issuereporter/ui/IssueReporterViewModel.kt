@@ -74,8 +74,8 @@ class IssueReporterViewModel(
         }
 
         sendJob = viewModelScope.launch {
-            try {
-                screenState.updateState(ScreenState.IsLoading())
+            screenState.updateState(ScreenState.IsLoading())
+            runCatching {
                 val deviceInfo = deviceInfoProvider.capture()
                 val extraInfo = ExtraInfo()
                 val report = Report(
@@ -94,7 +94,19 @@ class IssueReporterViewModel(
 
                 val outcome = sendIssueReport(params)
                 handleResult(outcome)
-            } finally {
+            }.onFailure {
+                screenState.update { current ->
+                    current.copy(
+                        screenState = ScreenState.Error(),
+                        snackbar = UiSnackbar(
+                            message = UiTextHelper.StringResource(R.string.snack_report_failed),
+                            isError = true,
+                            timeStamp = System.currentTimeMillis(),
+                            type = ScreenMessageType.SNACKBAR,
+                        )
+                    )
+                }
+            }.also {
                 sendJob = null
             }
         }

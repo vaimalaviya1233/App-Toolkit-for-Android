@@ -23,14 +23,13 @@ class SendIssueReportUseCase(
 
     override suspend fun invoke(param: Params): IssueReportResult =
         withContext(dispatchers.io) {
-            try {
+            runCatching {
                 repository.sendReport(param.report, param.target, param.token)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Throwable) {
+            }.getOrElse {
+                if (it is CancellationException) throw it
                 IssueReportResult.Error(
                     status = HttpStatusCode.InternalServerError,
-                    message = e.message ?: ""
+                    message = it.message ?: ""
                 )
             }
         }
