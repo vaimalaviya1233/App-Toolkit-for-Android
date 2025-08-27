@@ -38,7 +38,7 @@ val appToolkitModule : Module = module {
 
     single<AppDispatchers> { AppDispatchersImpl() }
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }
-    single<IssueReporterRepository> { DefaultIssueReporterRepository(get()) }
+    single<IssueReporterRepository> { DefaultIssueReporterRepository(get(), get()) }
     single { SendIssueReportUseCase(get(), get()) }
 
     val githubTokenQualifier = qualifier<GithubToken>()
