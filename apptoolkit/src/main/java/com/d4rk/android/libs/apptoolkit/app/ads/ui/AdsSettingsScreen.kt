@@ -15,6 +15,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsEvent
+import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.ui.UiAdsSettingsScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
@@ -28,41 +34,58 @@ import com.google.android.ump.UserMessagingPlatform
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
-    val adsEnabled by viewModel.adsEnabled.collectAsStateWithLifecycle()
+    val screenState: UiStateScreen<UiAdsSettingsScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
     LargeTopAppBarWithScaffold(
-        title = stringResource(id = R.string.ads) , onBackClicked = { activity.finish() }) { paddingValues : PaddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = paddingValues)
-        ) {
-            item {
-                SwitchCardItem(
-                    title = stringResource(id = R.string.display_ads),
-                    switchState = rememberUpdatedState(newValue = adsEnabled)
-                ) { isChecked: Boolean ->
-                    viewModel.setAdsEnabled(isChecked)
-                }
-            }
-
-            item {
-                Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
-                    PreferenceItem(
-                        title = stringResource(id = R.string.personalized_ads) , enabled = adsEnabled , summary = stringResource(id = R.string.summary_ads_personalized_ads) , onClick = {
-                            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
-                            ConsentFormHelper.showConsentForm(activity = activity , consentInfo = consentInfo)
-                        })
-                }
-            }
-
-            item {
-                InfoMessageSection(
+        title = stringResource(id = R.string.ads),
+        onBackClicked = { activity.finish() }
+    ) { paddingValues: PaddingValues ->
+        ScreenStateHandler(
+            screenState = screenState,
+            onLoading = { LoadingScreen() },
+            onEmpty = { NoDataScreen() },
+            onError = { NoDataScreen(isError = true) },
+            onSuccess = { data: UiAdsSettingsScreen ->
+                LazyColumn(
                     modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(all = SizeConstants.MediumSize * 2) , message = stringResource(id = R.string.summary_ads) , learnMoreText = stringResource(id = R.string.learn_more) , learnMoreUrl = AppLinks.ADS_HELP_CENTER
-                )
+                        .fillMaxSize()
+                        .padding(paddingValues = paddingValues)
+                ) {
+                    item {
+                        SwitchCardItem(
+                            title = stringResource(id = R.string.display_ads),
+                            switchState = rememberUpdatedState(newValue = data.adsEnabled)
+                        ) { isChecked: Boolean ->
+                            viewModel.onEvent(AdsSettingsEvent.SetAdsEnabled(isChecked))
+                        }
+                    }
+
+                    item {
+                        Box(modifier = Modifier.padding(horizontal = SizeConstants.SmallSize)) {
+                            PreferenceItem(
+                                title = stringResource(id = R.string.personalized_ads),
+                                enabled = data.adsEnabled,
+                                summary = stringResource(id = R.string.summary_ads_personalized_ads),
+                                onClick = {
+                                    val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
+                                    ConsentFormHelper.showConsentForm(activity = activity, consentInfo = consentInfo)
+                                }
+                            )
+                        }
+                    }
+
+                    item {
+                        InfoMessageSection(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(all = SizeConstants.MediumSize * 2),
+                            message = stringResource(id = R.string.summary_ads),
+                            learnMoreText = stringResource(id = R.string.learn_more),
+                            learnMoreUrl = AppLinks.ADS_HELP_CENTER
+                        )
+                    }
+                }
             }
-        }
+        )
     }
 }
