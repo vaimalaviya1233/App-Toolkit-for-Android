@@ -6,11 +6,14 @@ import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.Permiss
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class PermissionsSettingsProvider : PermissionsProvider {
-    override fun providePermissionsConfig(context : Context) : SettingsConfig {
-        return SettingsConfig(
-            title = context.getString(R.string.permissions) , categories = listOf(
+    override fun providePermissionsConfig(context: Context): Flow<SettingsConfig> {
+        return flowOf(
+            SettingsConfig(
+                title = context.getString(R.string.permissions) , categories = listOf(
                 SettingsCategory(
                     title = context.getString(R.string.normal) ,
                     preferences = listOf(
@@ -61,6 +64,6 @@ class PermissionsSettingsProvider : PermissionsProvider {
                     ) ,
                 )
             )
-        )
+        ))
     }
 }

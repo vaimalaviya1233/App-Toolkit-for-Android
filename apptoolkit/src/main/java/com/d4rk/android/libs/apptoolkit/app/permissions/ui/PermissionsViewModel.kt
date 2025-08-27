@@ -17,7 +17,9 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 
 
 class PermissionsViewModel(
@@ -36,27 +38,30 @@ class PermissionsViewModel(
 
     private fun loadPermissions(context: Context) {
         viewModelScope.launch {
-            runCatching {
-                withContext(dispatcher) {
-                    settingsProvider.providePermissionsConfig(context = context)
-                }
-            }.onSuccess { result: SettingsConfig ->
-                if (result.categories.isNotEmpty()) {
-                    screenState.successData {
-                        copy(title = result.title, categories = result.categories)
-                    }
-                } else {
-                    screenState.setErrors(listOf(UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))))
-                    screenState.updateState(ScreenState.NoData())
-                }
-            }.onFailure { error ->
-                screenState.setErrors(
-                    listOf(
-                        UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Something went wrong"))
+            settingsProvider.providePermissionsConfig(context)
+                .flowOn(dispatcher)
+                .catch { error ->
+                    screenState.setErrors(
+                        listOf(
+                            UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Something went wrong"))
+                        )
                     )
-                )
-                screenState.updateState(ScreenState.Error())
-            }
+                    screenState.updateState(ScreenState.Error())
+                }
+                .collect { result: SettingsConfig ->
+                    if (result.categories.isNotEmpty()) {
+                        screenState.successData {
+                            copy(title = result.title, categories = result.categories)
+                        }
+                    } else {
+                        screenState.setErrors(
+                            listOf(
+                                UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))
+                            )
+                        )
+                        screenState.updateState(ScreenState.NoData())
+                    }
+                }
         }
     }
 }
