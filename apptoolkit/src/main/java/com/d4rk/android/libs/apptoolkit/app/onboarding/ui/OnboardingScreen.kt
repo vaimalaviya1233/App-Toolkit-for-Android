@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.onboarding.ui
 
-import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -44,11 +43,11 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen() {
-    val activity = LocalContext.current as Activity
+    val context = LocalContext.current
     val onboardingProvider: OnboardingProvider = koinInject()
-    val pages: List<OnboardingPage> = remember { onboardingProvider.getOnboardingPages(context = activity) }
+    val pages: List<OnboardingPage> = remember { onboardingProvider.getOnboardingPages(context = context) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val repository = remember { DefaultOnboardingRepository(CommonDataStore.getInstance(activity)) }
+    val repository = remember { DefaultOnboardingRepository(CommonDataStore.getInstance(context)) }
     val viewModel: OnboardingViewModel = viewModel(factory = OnboardingViewModel.provideFactory(repository))
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState: PagerState = rememberPagerState(initialPage = uiState.currentTabIndex) { pages.size }
@@ -59,7 +58,7 @@ fun OnboardingScreen() {
 
     val onSkipRequested = {
         viewModel.completeOnboarding {
-            onboardingProvider.onOnboardingFinished(activity)
+            onboardingProvider.onOnboardingFinished(context)
         }
     }
 
@@ -94,7 +93,7 @@ fun OnboardingScreen() {
                             }
                         } else {
                             viewModel.completeOnboarding {
-                                onboardingProvider.onOnboardingFinished(activity)
+                                onboardingProvider.onOnboardingFinished(context)
                             }
                         }
                     },
