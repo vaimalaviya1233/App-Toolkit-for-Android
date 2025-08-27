@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository
 
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -17,25 +16,25 @@ class TestGeneralSettingsRepository {
     }
 
     @Test
-    fun `getContentKeyStream emits provided key`() = runTest(dispatcherExtension.testDispatcher) {
+    fun `getContentKey returns provided key`() = runTest(dispatcherExtension.testDispatcher) {
         val repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
-        val result = repository.getContentKeyStream("valid").first()
+        val result = repository.getContentKey("valid")
         assertThat(result).isEqualTo("valid")
     }
 
     @Test
-    fun `getContentKeyStream throws on null key`() = runTest(dispatcherExtension.testDispatcher) {
+    fun `getContentKey throws on null key`() = runTest(dispatcherExtension.testDispatcher) {
         val repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
         assertThrows<IllegalArgumentException> {
-            repository.getContentKeyStream(null).first()
+            repository.getContentKey(null)
         }
     }
 
     @Test
-    fun `getContentKeyStream throws on blank key`() = runTest(dispatcherExtension.testDispatcher) {
+    fun `getContentKey throws on blank key`() = runTest(dispatcherExtension.testDispatcher) {
         val repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
         assertThrows<IllegalArgumentException> {
-            repository.getContentKeyStream("").first()
+            repository.getContentKey("")
         }
     }
 }
