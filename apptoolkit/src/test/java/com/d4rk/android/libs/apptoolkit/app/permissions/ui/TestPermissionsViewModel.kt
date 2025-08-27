@@ -12,7 +12,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -31,20 +30,20 @@ class TestPermissionsViewModel {
     private lateinit var viewModel: PermissionsViewModel
     private lateinit var repository: PermissionsRepository
 
-    private fun setup(config: SettingsConfig? = null, error: Throwable? = null, dispatcher: TestDispatcher) {
+    private fun setup(config: SettingsConfig? = null, error: Throwable? = null) {
         repository = mockk()
         if (error != null) {
             every { repository.getPermissionsConfig() } returns flow { throw error }
         } else {
             every { repository.getPermissionsConfig() } returns flowOf(config!!)
         }
-        viewModel = PermissionsViewModel(repository, dispatcher)
+        viewModel = PermissionsViewModel(repository)
     }
 
     @Test
     fun `load permissions success`() = runTest(dispatcherExtension.testDispatcher) {
         val config = SettingsConfig(title = "P", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
-        setup(config = config, dispatcher = dispatcherExtension.testDispatcher)
+        setup(config = config)
 
         viewModel.onEvent(PermissionsEvent.Load)
         advanceUntilIdle()
@@ -55,7 +54,7 @@ class TestPermissionsViewModel {
 
     @Test
     fun `load permissions error`() = runTest(dispatcherExtension.testDispatcher) {
-        setup(error = RuntimeException("fail"), dispatcher = dispatcherExtension.testDispatcher)
+        setup(error = RuntimeException("fail"))
 
         viewModel.onEvent(PermissionsEvent.Load)
         advanceUntilIdle()

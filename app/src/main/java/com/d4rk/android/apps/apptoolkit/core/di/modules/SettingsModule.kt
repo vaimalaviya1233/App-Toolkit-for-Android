@@ -43,11 +43,10 @@ val settingsModule = module {
         GeneralSettingsViewModel()
     }
 
-    single<PermissionsRepository> { PermissionsSettingsRepository(context = get()) }
+    single<PermissionsRepository> { PermissionsSettingsRepository(context = get(), dispatcher = get(named("io"))) }
     viewModel {
         PermissionsViewModel(
             permissionsRepository = get(),
-            dispatcher = get(named("io"))
         )
     }
 
