@@ -70,6 +70,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedE
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.SmallFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.RadioButtonPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraExtraLargeVerticalSpacer
@@ -128,8 +131,18 @@ fun IssueReporterScreen(activity: Activity) {
                 )
             }
         }) { paddingValues: PaddingValues ->
-        IssueReporterScreenContent(
-            paddingValues = paddingValues, viewModel = viewModel, uiStateScreen = uiStateScreen
+        ScreenStateHandler(
+            screenState = uiStateScreen,
+            onLoading = { LoadingScreen() },
+            onEmpty = { NoDataScreen() },
+            onError = { NoDataScreen(isError = true) },
+            onSuccess = { data: UiIssueReporterScreen ->
+                IssueReporterScreenContent(
+                    paddingValues = paddingValues,
+                    viewModel = viewModel,
+                    data = data,
+                )
+            }
         )
         DefaultSnackbarHandler(
             screenState = uiStateScreen,
@@ -143,10 +156,8 @@ fun IssueReporterScreen(activity: Activity) {
 fun IssueReporterScreenContent(
     paddingValues: PaddingValues,
     viewModel: IssueReporterViewModel,
-    uiStateScreen: UiStateScreen<UiIssueReporterScreen>
+    data: UiIssueReporterScreen,
 ) {
-    val data = uiStateScreen.data ?: UiIssueReporterScreen()
-
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
