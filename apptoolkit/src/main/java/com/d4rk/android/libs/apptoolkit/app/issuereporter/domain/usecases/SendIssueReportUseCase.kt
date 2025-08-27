@@ -5,9 +5,13 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.core.domain.usecases.Repository
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.withContext
 
 class SendIssueReportUseCase(
-    private val repository: IssueReporterRepository
+    private val repository: IssueReporterRepository,
+    private val dispatchers: AppDispatchers,
 ) : Repository<SendIssueReportUseCase.Params, Result<IssueReportResult>> {
 
     data class Params(
@@ -17,7 +21,13 @@ class SendIssueReportUseCase(
     )
 
     override suspend fun invoke(param: Params): Result<IssueReportResult> =
-        runCatching {
-            repository.sendReport(param.report, param.target, param.token)
+        withContext(dispatchers.io) {
+            try {
+                Result.success(repository.sendReport(param.report, param.target, param.token))
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Throwable) {
+                Result.failure(e)
+            }
         }
 }

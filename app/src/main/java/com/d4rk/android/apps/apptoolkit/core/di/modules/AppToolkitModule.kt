@@ -5,8 +5,13 @@ import com.d4rk.android.apps.apptoolkit.app.startup.utils.interfaces.providers.A
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.DeviceInfoProvider
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.DeviceInfoProviderImpl
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.usecases.SendIssueReportUseCase
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewModel
+import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
@@ -14,6 +19,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConsta
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 val appToolkitModule : Module = module {
@@ -29,13 +35,18 @@ val appToolkitModule : Module = module {
         SupportViewModel(billingRepository = get())
     }
 
+    single<AppDispatchers> { AppDispatchersImpl() }
+    single<DeviceInfoProvider> { DeviceInfoProviderImpl(get()) }
     single { IssueReporterRepository(get()) }
-    single { SendIssueReportUseCase(get()) }
+    single { SendIssueReportUseCase(get(), get()) }
+
+    val githubTokenQualifier = qualifier<GithubToken>()
     viewModel {
         IssueReporterViewModel(
             sendIssueReport = get(),
             githubTarget = get(),
-            githubToken = get(named("github_token"))
+            githubToken = get(githubTokenQualifier),
+            deviceInfoProvider = get()
         )
     }
 
@@ -51,7 +62,7 @@ val appToolkitModule : Module = module {
         GithubConstants.githubChangelog(get<String>(named("github_repository")))
     }
 
-    single(qualifier = named("github_token")) { BuildConfig.GITHUB_TOKEN }
+    single(githubTokenQualifier) { BuildConfig.GITHUB_TOKEN }
 
     single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }
 }
