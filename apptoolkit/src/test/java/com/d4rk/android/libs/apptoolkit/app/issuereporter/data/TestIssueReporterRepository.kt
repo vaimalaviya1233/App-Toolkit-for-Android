@@ -4,8 +4,8 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.DefaultIssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.google.common.truth.Truth.assertThat
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -18,10 +18,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.runTest
-import com.google.common.truth.Truth.assertThat
-import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 import java.net.SocketTimeoutException
+import kotlin.test.assertFailsWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestIssueReporterRepository {
