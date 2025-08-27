@@ -4,6 +4,3 @@ import javax.inject.Qualifier
 
 @Qualifier
 annotation class GithubToken
-
-@Qualifier
-annotation class ApplicationScope
