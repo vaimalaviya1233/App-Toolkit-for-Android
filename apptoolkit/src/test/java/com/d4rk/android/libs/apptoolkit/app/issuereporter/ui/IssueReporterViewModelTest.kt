@@ -11,13 +11,14 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
 import io.ktor.http.HttpStatusCode
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -53,7 +54,7 @@ class IssueReporterViewModelTest {
             val snackbar = viewModel.uiState.value.snackbar!!
             val msg = snackbar.message as UiTextHelper.StringResource
             assertThat(msg.resourceId).isEqualTo(R.string.error_invalid_report)
-            coVerify(exactly = 0) { useCase.invoke(any()) }
+            verify(exactly = 0) { useCase.invoke(any()) }
         } finally {
             Dispatchers.resetMain()
         }
@@ -66,7 +67,7 @@ class IssueReporterViewModelTest {
         try {
             val useCase = mockk<SendIssueReportUseCase>()
             val captured = slot<SendIssueReportUseCase.Params>()
-            coEvery { useCase.invoke(capture(captured)) } returns IssueReportResult.Success("url")
+            every { useCase.invoke(capture(captured)) } returns flowOf(IssueReportResult.Success("url"))
             val viewModel = IssueReporterViewModel(useCase, githubTarget, "token", deviceInfoProvider)
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
 
@@ -106,7 +107,7 @@ class IssueReporterViewModelTest {
         Dispatchers.setMain(dispatcher)
         try {
             val useCase = mockk<SendIssueReportUseCase>()
-            coEvery { useCase.invoke(any()) } returns IssueReportResult.Error(status, "")
+            every { useCase.invoke(any()) } returns flowOf(IssueReportResult.Error(status, ""))
             val viewModel = IssueReporterViewModel(useCase, githubTarget, "tok", deviceInfoProvider)
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
 

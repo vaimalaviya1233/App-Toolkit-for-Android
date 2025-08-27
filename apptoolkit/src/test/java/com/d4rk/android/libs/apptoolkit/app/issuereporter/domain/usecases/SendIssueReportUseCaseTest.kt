@@ -11,6 +11,7 @@ import io.ktor.http.HttpStatusCode
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -37,7 +38,7 @@ class SendIssueReportUseCaseTest {
         coEvery { repository.sendReport(any(), any(), any()) } returns IssueReportResult.Success("url")
 
         val useCase = SendIssueReportUseCase(repository, dispatchers)
-        val result = useCase(params)
+        val result = useCase(params).first()
 
         assertThat(result).isInstanceOf(IssueReportResult.Success::class.java)
         assertThat((result as IssueReportResult.Success).url).isEqualTo("url")
@@ -49,7 +50,7 @@ class SendIssueReportUseCaseTest {
         coEvery { repository.sendReport(any(), any(), any()) } throws IllegalStateException("boom")
 
         val useCase = SendIssueReportUseCase(repository, dispatchers)
-        val result = useCase(params)
+        val result = useCase(params).first()
 
         assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
         val error = result as IssueReportResult.Error
