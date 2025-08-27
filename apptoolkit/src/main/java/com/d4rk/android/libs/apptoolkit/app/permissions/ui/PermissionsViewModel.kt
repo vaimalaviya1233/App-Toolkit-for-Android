@@ -1,9 +1,9 @@
 package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
 import androidx.lifecycle.viewModelScope
+import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsAction
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
-import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
@@ -15,7 +15,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
