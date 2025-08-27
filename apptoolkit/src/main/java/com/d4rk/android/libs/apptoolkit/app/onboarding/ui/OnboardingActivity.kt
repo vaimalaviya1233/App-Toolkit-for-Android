@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.google.android.ump.ConsentInformation
@@ -15,8 +17,15 @@ import com.google.android.ump.UserMessagingPlatform
 
 class OnboardingActivity : ComponentActivity() {
 
+    private val lifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onResume(owner: LifecycleOwner) {
+            checkUserConsent()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lifecycle.addObserver(lifecycleObserver)
         enableEdgeToEdge()
         setContent {
             AppTheme {
@@ -24,20 +33,14 @@ class OnboardingActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    OnboardingScreen(activity = this@OnboardingActivity)
+                    OnboardingScreen()
                 }
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkUserConsent()
-        // Recheck permissions when returning to this activity
-    }
-
     private fun checkUserConsent() {
         val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        ConsentFormHelper.showConsentFormIfRequired(activity = this , consentInfo = consentInfo)
+        ConsentFormHelper.showConsentFormIfRequired(activity = this, consentInfo = consentInfo)
     }
 }

@@ -20,89 +20,98 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.onboarding.data.repository.DefaultOnboardingRepository
 import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.data.model.ui.OnboardingPage
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.OnboardingBottomNavigation
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.OnboardingDefaultPageLayout
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun OnboardingScreen(activity : Activity) {
+fun OnboardingScreen() {
+    val activity = LocalContext.current as Activity
     val onboardingProvider: OnboardingProvider = koinInject()
-    val pages: List<OnboardingPage> =
-        remember { onboardingProvider.getOnboardingPages(context = activity) }
+    val pages: List<OnboardingPage> = remember { onboardingProvider.getOnboardingPages(context = activity) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val viewModel: OnboardingViewModel = viewModel()
-    val pagerState: PagerState = rememberPagerState(
-        initialPage = viewModel.currentTabIndex,
-    ) { pages.size }
+    val repository = remember { DefaultOnboardingRepository(CommonDataStore.getInstance(activity)) }
+    val viewModel: OnboardingViewModel = viewModel(factory = OnboardingViewModel.provideFactory(repository))
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagerState: PagerState = rememberPagerState(initialPage = uiState.currentTabIndex) { pages.size }
+
     LaunchedEffect(pagerState.currentPage) {
         viewModel.updateCurrentTab(pagerState.currentPage)
     }
 
     val onSkipRequested = {
-        viewModel.completeOnboarding(context = activity) {
-            onboardingProvider.onOnboardingFinished(context = activity)
+        viewModel.completeOnboarding {
+            onboardingProvider.onOnboardingFinished(activity)
         }
     }
 
-    Scaffold(topBar = {
-        if (pages.isNotEmpty()) {
-            TopAppBar(title = { }, actions = {
-                AnimatedVisibility(
-                    visible = pagerState.currentPage < pages.size - 1,
-                    enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(),
-                    exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
-                ) {
-                    OutlinedIconButtonWithText(
-                        onClick = {
-                            onSkipRequested()
-                        },
-                        icon = Icons.Filled.SkipNext,
-                        iconContentDescription = stringResource(id = R.string.skip_button_content_description),
-                        label = stringResource(id = R.string.skip_button_text)
-                    )
-                }
-            })
-        }
-    }, bottomBar = {
-        if (pages.isNotEmpty()) {
-            OnboardingBottomNavigation(
-                pagerState = pagerState,
-                pageCount = pages.size,
-                onNextClicked = {
-                    if (pagerState.currentPage < pages.size - 1) {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                        }
-                    } else {
-                        viewModel.completeOnboarding(context = activity) {
-                            onboardingProvider.onOnboardingFinished(activity)
-                        }
-                    }
-                },
-                onBackClicked = {
-                    if (pagerState.currentPage > 0) {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                        }
+    Scaffold(
+        topBar = {
+            if (pages.isNotEmpty()) {
+                TopAppBar(title = { }, actions = {
+                    AnimatedVisibility(
+                        visible = pagerState.currentPage < pages.size - 1,
+                        enter = slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn(),
+                        exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
+                    ) {
+                        OutlinedIconButtonWithText(
+                            onClick = { onSkipRequested() },
+                            icon = Icons.Filled.SkipNext,
+                            iconContentDescription = stringResource(id = R.string.skip_button_content_description),
+                            label = stringResource(id = R.string.skip_button_text)
+                        )
                     }
                 })
+            }
+        },
+        bottomBar = {
+            if (pages.isNotEmpty()) {
+                OnboardingBottomNavigation(
+                    pagerState = pagerState,
+                    pageCount = pages.size,
+                    onNextClicked = {
+                        if (pagerState.currentPage < pages.size - 1) {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            }
+                        } else {
+                            viewModel.completeOnboarding {
+                                onboardingProvider.onOnboardingFinished(activity)
+                            }
+                        }
+                    },
+                    onBackClicked = {
+                        if (pagerState.currentPage > 0) {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                            }
+                        }
+                    }
+                )
+            }
         }
-    }) { paddingValues: PaddingValues ->
+    ) { paddingValues: PaddingValues ->
         HorizontalPager(
-            state = pagerState, modifier = Modifier
+            state = pagerState,
+            modifier = Modifier
                 .fillMaxSize()
                 .hapticPagerSwipe(pagerState = pagerState)
                 .padding(paddingValues = paddingValues)
