@@ -50,10 +50,8 @@ class IssueReporterViewModel(
     }
 
     private fun update(mutator: (UiIssueReporterScreen) -> UiIssueReporterScreen) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current ->
-                mutator(current)
-            }
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            mutator(current)
         }
     }
 
@@ -90,11 +88,9 @@ class IssueReporterViewModel(
                 token = githubToken.takeIf { it.isNotBlank() }
             )
 
-            try {
+            runCatching {
                 sendIssueReport(params).fold(::handleSuccess, ::handleFailure)
-            } catch (e: CancellationException) {
-                throw e
-            }
+            }.onFailure(::handleFailure)
         }
     }
 
@@ -154,4 +150,3 @@ class IssueReporterViewModel(
         }
     }
 }
-
