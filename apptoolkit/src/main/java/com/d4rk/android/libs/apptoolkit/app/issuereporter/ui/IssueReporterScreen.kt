@@ -116,7 +116,7 @@ fun IssueReporterScreen(activity: Activity) {
                     })
                 AnimatedExtendedFloatingActionButton(
                     visible = true,
-                    onClick = { viewModel.onEvent(IssueReporterEvent.Send(context)) },
+                    onClick = { viewModel.onEvent(IssueReporterEvent.Send) },
                     text = { Text(text = stringResource(id = R.string.issue_send)) },
                     icon = {
                         Icon(
