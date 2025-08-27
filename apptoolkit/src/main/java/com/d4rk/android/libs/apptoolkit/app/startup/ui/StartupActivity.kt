@@ -6,10 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
@@ -38,15 +35,10 @@ class StartupActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 val consentFormLoadedState by consentFormLoaded.collectAsStateWithLifecycle()
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    StartupScreen(
-                        consentFormLoaded = consentFormLoadedState,
-                        onContinueClick = { navigateToNext() }
-                    )
-                }
+                StartupScreen(
+                    consentFormLoaded = consentFormLoadedState,
+                    onContinueClick = { navigateToNext() }
+                )
             }
         }
     }

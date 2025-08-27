@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
+import kotlinx.coroutines.launch
 
 class OnboardingActivity : ComponentActivity() {
 
@@ -31,7 +33,9 @@ class OnboardingActivity : ComponentActivity() {
     }
 
     private fun checkUserConsent() {
-        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this)
-        ConsentFormHelper.showConsentFormIfRequired(activity = this, consentInfo = consentInfo)
+        lifecycleScope.launch {
+            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this@OnboardingActivity)
+            ConsentFormHelper.showConsentFormIfRequired(activity = this@OnboardingActivity, consentInfo = consentInfo)
+        }
     }
 }
