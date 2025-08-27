@@ -2,7 +2,9 @@ package com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Repository responsible for providing the content key for the General Settings screen.
@@ -13,21 +15,22 @@ import kotlinx.coroutines.withContext
  */
 interface GeneralSettingsRepository {
     /**
-     * Returns a valid content key. If the provided key is null or blank, the
-     * function throws an [IllegalArgumentException]. This function is marked as
-     * [suspend] to ensure callers handle it from within a coroutine.
+     * Returns a [Flow] that emits a valid content key. If the provided key is
+     * null or blank, the flow throws an [IllegalArgumentException] when
+     * collected. Using a [Flow] allows the repository to expose asynchronous
+     * data streams in line with recommended architecture guidelines.
      */
-    suspend fun getContentKey(contentKey: String?): String
+    fun getContentKey(contentKey: String?): Flow<String>
 }
 
 class DefaultGeneralSettingsRepository(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : GeneralSettingsRepository {
-    override suspend fun getContentKey(contentKey: String?): String = withContext(dispatcher) {
+    override fun getContentKey(contentKey: String?): Flow<String> = flow {
         if (contentKey.isNullOrBlank()) {
             throw IllegalArgumentException("Invalid content key")
         }
-        contentKey
-    }
+        emit(contentKey)
+    }.flowOn(dispatcher)
 }
 

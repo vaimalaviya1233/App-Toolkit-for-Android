@@ -16,6 +16,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.GeneralSettingsRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel(
@@ -35,26 +37,26 @@ class GeneralSettingsViewModel(
     private fun loadContent(contentKey: String?) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            screenState.setLoading()
-            val key : String = try {
-                repository.getContentKey(contentKey)
-            } catch (e : Exception) {
-                screenState.setErrors(
-                    errors = listOf(
-                        UiSnackbar(
-                            message = UiTextHelper.StringResource(
-                                resourceId = R.string.error_invalid_content_key
+            repository.getContentKey(contentKey)
+                .onStart { screenState.setLoading() }
+                .catch {
+                    screenState.setErrors(
+                        errors = listOf(
+                            UiSnackbar(
+                                message = UiTextHelper.StringResource(
+                                    resourceId = R.string.error_invalid_content_key
+                                )
                             )
                         )
                     )
-                )
-                screenState.updateState(newValues = ScreenState.NoData())
-                return@launch
-            }
-            screenState.setErrors(errors = emptyList())
-            screenState.updateData(newState = ScreenState.Success()) { current : UiGeneralSettingsScreen ->
-                current.copy(contentKey = key)
-            }
+                    screenState.updateState(newValues = ScreenState.NoData())
+                }
+                .collect { key ->
+                    screenState.setErrors(errors = emptyList())
+                    screenState.updateData(newState = ScreenState.Success()) { current: UiGeneralSettingsScreen ->
+                        current.copy(contentKey = key)
+                    }
+                }
         }
     }
 }
