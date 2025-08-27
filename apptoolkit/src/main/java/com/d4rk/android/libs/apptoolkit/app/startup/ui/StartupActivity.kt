@@ -64,12 +64,13 @@ class StartupActivity : AppCompatActivity() {
     }
 
     private fun navigateToNext() {
-        lifecycleScope.launch {
-            IntentsHelper.openActivity(context = this@StartupActivity , activityClass = provider.getNextIntent(this@StartupActivity).component?.className?.let {
-                Class.forName(it)
-            } ?: StartupActivity::class.java)
-            finish()
-        }
+        IntentsHelper.openActivity(
+            context = this@StartupActivity,
+            activityClass = provider.getNextIntent(this@StartupActivity)
+                .component?.className?.let { Class.forName(it) }
+                ?: StartupActivity::class.java
+        )
+        finish()
     }
 
     private fun checkUserConsent() {

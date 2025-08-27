@@ -11,13 +11,16 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.Devic
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.usecases.SendIssueReportUseCase
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewModel
 import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -28,9 +31,11 @@ val appToolkitModule : Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
     single(createdAtStart = true) {
+        val ioDispatcher = get<CoroutineDispatcher>(named("io"))
         BillingRepository.getInstance(
             context = get(),
-            ioDispatcher = get(named("io"))
+            ioDispatcher = ioDispatcher,
+            externalScope = CoroutineScope(SupervisorJob() + ioDispatcher)
         )
     }
     viewModel {

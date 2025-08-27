@@ -28,9 +28,10 @@ import kotlinx.coroutines.launch
 class BillingRepository private constructor(
     context: Context,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
 ) : PurchasesUpdatedListener {
 
-    private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
+    private val scope = CoroutineScope(externalScope.coroutineContext + SupervisorJob() + ioDispatcher)
 
     private val _productDetails = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
     val productDetails: StateFlow<Map<String, ProductDetails>> = _productDetails.asStateFlow()
@@ -56,9 +57,10 @@ class BillingRepository private constructor(
         fun getInstance(
             context: Context,
             ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+            externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
         ): BillingRepository {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BillingRepository(context.applicationContext, ioDispatcher)
+                INSTANCE ?: BillingRepository(context.applicationContext, ioDispatcher, externalScope)
                     .also { INSTANCE = it }
             }
         }
