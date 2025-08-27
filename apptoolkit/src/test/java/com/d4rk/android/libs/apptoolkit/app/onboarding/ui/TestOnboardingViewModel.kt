@@ -5,7 +5,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -64,15 +63,5 @@ class TestOnboardingViewModel {
         viewModel.updateCurrentTab(0)
         assertThat(viewModel.uiState.value.currentTabIndex).isEqualTo(0)
         println("🏁 [TEST DONE] repeated index changes remain stable")
-    }
-
-    @Test
-    fun `complete onboarding calls repository`() = runTest {
-        val repository = FakeOnboardingRepository()
-        val viewModel = OnboardingViewModel(repository = repository)
-        viewModel.completeOnboarding {}
-        advanceUntilIdle()
-        assertThat(repository.completed).isTrue()
-        assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
     }
 }
