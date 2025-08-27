@@ -7,10 +7,11 @@ import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatc
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.google.common.truth.Truth.assertThat
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -34,9 +35,9 @@ class TestPermissionsViewModel {
     private fun setup(config: SettingsConfig? = null, error: Throwable? = null, dispatcher: TestDispatcher) {
         provider = mockk()
         if (error != null) {
-            coEvery { provider.providePermissionsConfig(any()) } throws error
+            every { provider.providePermissionsConfig(any()) } returns flow { throw error }
         } else {
-            every { provider.providePermissionsConfig(any()) } returns config!!
+            every { provider.providePermissionsConfig(any()) } returns flowOf(config!!)
         }
         viewModel = PermissionsViewModel(provider, dispatcher)
     }
