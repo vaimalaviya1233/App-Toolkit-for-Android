@@ -10,9 +10,11 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 /** ViewModel for Ads settings screen. */
 class AdsSettingsViewModel(
@@ -28,7 +30,8 @@ class AdsSettingsViewModel(
         viewModelScope.launch {
             repository.observeAdsEnabled()
                 .onStart { screenState.setLoading() }
-                .catch {
+                .catch { throwable ->
+                    if (throwable is CancellationException) throw throwable
                     screenState.updateData(newState = ScreenState.Error()) { current ->
                         current.copy(adsEnabled = repository.defaultAdsEnabled)
                     }
@@ -51,7 +54,7 @@ class AdsSettingsViewModel(
         viewModelScope.launch {
             try {
                 repository.setAdsEnabled(enabled)
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 screenState.updateData(newState = ScreenState.Error()) { current ->
                     current.copy(adsEnabled = !enabled)
                 }
