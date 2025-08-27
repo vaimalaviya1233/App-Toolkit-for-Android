@@ -22,8 +22,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.update
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class IssueReporterViewModel(
@@ -48,34 +48,26 @@ class IssueReporterViewModel(
     }
 
     private fun updateTitle(value: String) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current ->
-                current.copy(title = value)
-            }
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            current.copy(title = value)
         }
     }
 
     private fun updateDescription(value: String) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current ->
-                current.copy(description = value)
-            }
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            current.copy(description = value)
         }
     }
 
     private fun updateEmail(value: String) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current ->
-                current.copy(email = value)
-            }
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            current.copy(email = value)
         }
     }
 
     private fun setAnonymous(value: Boolean) {
-        viewModelScope.launch {
-            screenState.updateData(newState = screenState.value.screenState) { current ->
-                current.copy(anonymous = value)
-            }
+        screenState.updateData(newState = screenState.value.screenState) { current ->
+            current.copy(anonymous = value)
         }
     }
 
@@ -136,7 +128,7 @@ class IssueReporterViewModel(
                         is IssueReportResult.Error -> {
                             val msg = when (outcome.status) {
                                 HttpStatusCode.Unauthorized -> UiTextHelper.StringResource(R.string.error_unauthorized)
-                
+
                                 HttpStatusCode.Forbidden -> UiTextHelper.StringResource(R.string.error_forbidden)
                                 HttpStatusCode.Gone -> UiTextHelper.StringResource(R.string.error_gone)
                                 HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)

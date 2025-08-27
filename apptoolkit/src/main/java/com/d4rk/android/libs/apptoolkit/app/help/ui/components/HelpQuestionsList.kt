@@ -1,8 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.app.help.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
@@ -19,13 +21,14 @@ fun HelpQuestionsList(questions : List<UiHelpQuestion>) {
     val listState : LazyListState = rememberLazyListState()
 
     val (visibilityStates : SnapshotStateList<Boolean>) = rememberAnimatedVisibilityState(listState = listState , itemCount = questions.size)
-
-    Column {
-        questions.forEachIndexed { index : Int , question : UiHelpQuestion ->
-            val isExpanded = expandedStates[index] == true
-            QuestionCard(title = question.question , summary = question.answer , isExpanded = isExpanded , onToggleExpand = {
-                expandedStates[index] = ! isExpanded
-            } , modifier = Modifier.animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index))
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column {
+            questions.forEachIndexed { index : Int , question : UiHelpQuestion ->
+                val isExpanded = expandedStates[index] == true
+                QuestionCard(title = question.question , summary = question.answer , isExpanded = isExpanded , onToggleExpand = {
+                    expandedStates[index] = ! isExpanded
+                } , modifier = Modifier.animateVisibility(visible = visibilityStates.getOrElse(index = index) { false } , index = index))
+            }
         }
     }
 }

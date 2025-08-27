@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.about.ui
 
-import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.events.AboutActions
@@ -12,7 +11,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.launch
 
 open class AboutViewModel :
     ScreenViewModel<UiAboutScreen, AboutEvents, AboutActions>(initialState = UiStateScreen(data = UiAboutScreen())) {

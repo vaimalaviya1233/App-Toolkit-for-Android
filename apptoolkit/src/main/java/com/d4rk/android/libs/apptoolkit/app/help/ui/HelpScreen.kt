@@ -1,16 +1,12 @@
 package com.d4rk.android.libs.apptoolkit.app.help.ui
 
-import androidx.activity.ComponentActivity
 import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.RateReview
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -33,6 +29,7 @@ import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -89,14 +86,18 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
         item {
             Text(text = stringResource(id = R.string.popular_help_resources))
             MediumVerticalSpacer()
-            Card(modifier = Modifier.fillMaxWidth()) {
-                HelpQuestionsList(questions = questions)
-            }
+        }
+        item {
+            HelpQuestionsList(questions = questions)
             MediumVerticalSpacer()
+        }
+        item {
             ContactUsCard(onClick = {
                 IntentsHelper.sendEmailToDeveloper(context = activity , applicationNameRes = R.string.app_name)
             })
-            Spacer(modifier = Modifier.height(height = SizeConstants.ExtraExtraLargeSize * 2))
+            repeat(2) {
+                ExtraLargeVerticalSpacer()
+            }
         }
     }
 }
