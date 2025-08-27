@@ -37,7 +37,7 @@ val Context.commonDataStore : DataStore<Preferences> by preferencesDataStore(nam
  */
 open class CommonDataStore(
     context : Context,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     val dataStore : DataStore<Preferences> = context.commonDataStore
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)

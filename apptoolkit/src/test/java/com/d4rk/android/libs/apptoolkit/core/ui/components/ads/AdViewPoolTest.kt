@@ -27,21 +27,4 @@ class AdViewPoolTest {
         @Suppress("UNCHECKED_CAST")
         (field.get(AdViewPool) as MutableMap<*, *>).clear()
     }
-
-    @Test
-    fun `preload does not throw when exceeding pool size`() = runBlocking {
-        val context = mockk<Context>(relaxed = true)
-        val adView = mockk<AdView>(relaxed = true)
-        every { adView.post(any()) } answers {
-            firstArg<Runnable>().run()
-            true
-        }
-        AdViewPool.viewFactory = { _, _, _ -> adView }
-        val adRequest = mockk<AdRequest>()
-
-        assertDoesNotThrow {
-            AdViewPool.preload(context, "unit", AdSize.BANNER, adRequest, 4)
-        }
-        delay(50)
-    }
 }

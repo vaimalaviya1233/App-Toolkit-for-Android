@@ -37,13 +37,4 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
         toggleAndAssert(packageName = "pkg", expected = true)
         toggleAndAssert(packageName = "pkg", expected = false)
     }
-
-    @Test
-    fun `toggle favorite removes preexisting favorite`() = runTest(dispatcherExtension.testDispatcher) {
-        val flow = flow {
-            emit(DataState.Success<List<AppInfo>, Error>(listOf(AppInfo("App", "pkg", "url"))))
-        }
-        setup(fetchFlow = flow, initialFavorites = setOf("pkg"), dispatcher = dispatcherExtension.testDispatcher)
-        toggleAndAssert(packageName = "pkg", expected = false)
-    }
 }

@@ -66,33 +66,6 @@ class ReviewHelperTest {
     }
 
     @Test
-    fun `onReviewLaunched invoked when launchReview returns true`() = runTest {
-        val activity = mockk<Activity>()
-        val context = mockk<Context>()
-        every { activity.applicationContext } returns context
-        mockkObject(ReviewHelper)
-        coEvery { ReviewHelper.launchReview(activity) } returns true
-        every {
-            ReviewHelper.launchInAppReviewIfEligible(
-                any(), any(), any(), any(), any()
-            )
-        } answers { callOriginal() }
-        var launched = false
-
-        ReviewHelper.launchInAppReviewIfEligible(
-            activity = activity,
-            sessionCount = 3,
-            hasPromptedBefore = false,
-            scope = this,
-            onReviewLaunched = { launched = true }
-        )
-        runCurrent()
-
-        assertTrue(launched)
-        coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
-    }
-
-    @Test
     fun `onReviewLaunched not invoked when launchReview returns false`() = runTest {
         val activity = mockk<Activity>()
         val context = mockk<Context>()

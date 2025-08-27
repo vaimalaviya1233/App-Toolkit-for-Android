@@ -21,9 +21,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.test.Test
+import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -54,7 +53,7 @@ class DeveloperAppsRepositoryImplTest {
         assertEquals(1, results.size)
         val success = results[0]
         assertTrue(success is DataState.Success)
-        assertEquals(apps, (success as DataState.Success<List<AppInfo>, RootError>).data)
+        assertEquals(apps, success.data)
     }
 
     @Test
@@ -79,7 +78,7 @@ class DeveloperAppsRepositoryImplTest {
         assertEquals(1, results.size)
         val errorState = results[0]
         assertTrue(errorState is DataState.Error)
-        assertEquals(Errors.Network.REQUEST_TIMEOUT, (errorState as DataState.Error<List<AppInfo>, RootError>).error)
+        assertEquals(Errors.Network.REQUEST_TIMEOUT, errorState.error)
     }
 }
 
