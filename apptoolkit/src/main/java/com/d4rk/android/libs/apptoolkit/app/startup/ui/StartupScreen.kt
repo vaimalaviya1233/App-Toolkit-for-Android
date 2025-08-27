@@ -33,29 +33,34 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
-fun StartupScreen(activity: StartupActivity) {
-
-    TopAppBarScaffold(title = stringResource(R.string.welcome), content = { paddingValues ->
-        StartupScreenContent(paddingValues = paddingValues)
-    }, floatingActionButton = {
-        AnimatedExtendedFloatingActionButton(
-            visible = activity.consentFormLoaded,
-            modifier = Modifier.bounceClick(),
-            containerColor = if (activity.consentFormLoaded) {
-                FloatingActionButtonDefaults.containerColor
-            } else {
-                Gray
-            },
-            text = { Text(text = stringResource(id = R.string.agree)) },
-            onClick = {
-                activity.navigateToNext()
-            },
-            icon = {
-                Icon(
-                    imageVector = Icons.Outlined.CheckCircle, contentDescription = null
-                )
-            })
-    })
+fun StartupScreen(
+    consentFormLoaded: Boolean,
+    onContinueClick: () -> Unit
+) {
+    TopAppBarScaffold(
+        title = stringResource(R.string.welcome),
+        content = { paddingValues ->
+            StartupScreenContent(paddingValues = paddingValues)
+        },
+        floatingActionButton = {
+            AnimatedExtendedFloatingActionButton(
+                visible = consentFormLoaded,
+                modifier = Modifier.bounceClick(),
+                containerColor = if (consentFormLoaded) {
+                    FloatingActionButtonDefaults.containerColor
+                } else {
+                    Gray
+                },
+                text = { Text(text = stringResource(id = R.string.agree)) },
+                onClick = onContinueClick,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.CheckCircle, contentDescription = null
+                    )
+                }
+            )
+        }
+    )
 }
 
 @Composable
