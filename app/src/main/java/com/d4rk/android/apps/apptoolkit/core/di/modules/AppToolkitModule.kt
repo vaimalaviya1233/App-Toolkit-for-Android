@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.core.di.modules
 import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.startup.utils.interfaces.providers.AppStartupProvider
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.DefaultIssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.DeviceInfoProvider
@@ -37,7 +38,7 @@ val appToolkitModule : Module = module {
 
     single<AppDispatchers> { AppDispatchersImpl() }
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }
-    single { IssueReporterRepository(get()) }
+    single<IssueReporterRepository> { DefaultIssueReporterRepository(get()) }
     single { SendIssueReportUseCase(get(), get()) }
 
     val githubTokenQualifier = qualifier<GithubToken>()
