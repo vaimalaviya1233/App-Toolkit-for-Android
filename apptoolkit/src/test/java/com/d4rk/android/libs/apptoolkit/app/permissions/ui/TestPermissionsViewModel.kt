@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import android.content.Context
 import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.api.Test
 import kotlin.OptIn
@@ -35,9 +34,9 @@ class TestPermissionsViewModel {
     private fun setup(config: SettingsConfig? = null, error: Throwable? = null, dispatcher: TestDispatcher) {
         provider = mockk()
         if (error != null) {
-            every { provider.providePermissionsConfig(any()) } returns flow { throw error }
+            every { provider.providePermissionsConfig() } returns flow { throw error }
         } else {
-            every { provider.providePermissionsConfig(any()) } returns flowOf(config!!)
+            every { provider.providePermissionsConfig() } returns flowOf(config!!)
         }
         viewModel = PermissionsViewModel(provider, dispatcher)
     }
@@ -45,10 +44,9 @@ class TestPermissionsViewModel {
     @Test
     fun `load permissions success`() = runTest(dispatcherExtension.testDispatcher) {
         val config = SettingsConfig(title = "P", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
-        val context = mockk<Context>(relaxed = true)
         setup(config = config, dispatcher = dispatcherExtension.testDispatcher)
 
-        viewModel.onEvent(PermissionsEvent.Load(context))
+        viewModel.onEvent(PermissionsEvent.Load)
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.data?.title).isEqualTo("P")
@@ -57,10 +55,9 @@ class TestPermissionsViewModel {
 
     @Test
     fun `load permissions error`() = runTest(dispatcherExtension.testDispatcher) {
-        val context = mockk<Context>(relaxed = true)
         setup(error = RuntimeException("fail"), dispatcher = dispatcherExtension.testDispatcher)
 
-        viewModel.onEvent(PermissionsEvent.Load(context))
+        viewModel.onEvent(PermissionsEvent.Load)
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.Error::class.java)

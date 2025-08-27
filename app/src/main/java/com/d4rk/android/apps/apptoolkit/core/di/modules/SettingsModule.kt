@@ -43,7 +43,7 @@ val settingsModule = module {
         GeneralSettingsViewModel()
     }
 
-    single<PermissionsProvider> { PermissionsSettingsProvider() }
+    single<PermissionsProvider> { PermissionsSettingsProvider(context = get()) }
     viewModel {
         PermissionsViewModel(
             settingsProvider = get(),

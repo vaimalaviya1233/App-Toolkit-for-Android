@@ -42,7 +42,7 @@ fun PermissionsScreen(viewModel : PermissionsViewModel) {
         ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
             NoDataScreen(
                 icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
-                    viewModel.onEvent(PermissionsEvent.Load(context = context))
+                    viewModel.onEvent(PermissionsEvent.Load)
                 })
         } , onSuccess = { settingsConfig ->
             PermissionsContent(paddingValues , settingsConfig)

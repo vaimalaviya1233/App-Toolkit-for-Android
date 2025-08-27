@@ -9,8 +9,13 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class PermissionsSettingsProvider : PermissionsProvider {
-    override fun providePermissionsConfig(context: Context): Flow<SettingsConfig> {
+/**
+ * Default implementation of [PermissionsProvider] that builds the permissions
+ * configuration using string resources from the provided [Context].
+ */
+class PermissionsSettingsProvider(private val context: Context) : PermissionsProvider {
+
+    override fun providePermissionsConfig(): Flow<SettingsConfig> {
         return flowOf(
             SettingsConfig(
                 title = context.getString(R.string.permissions) , categories = listOf(
