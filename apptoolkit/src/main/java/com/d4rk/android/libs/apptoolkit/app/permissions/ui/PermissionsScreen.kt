@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -34,18 +35,23 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PermissionsScreen(viewModel : PermissionsViewModel) {
-    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsStateWithLifecycle()
+    val screenState: UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.onEvent(PermissionsEvent.Load)
+    }
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.permissions) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->
-        ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
+        ScreenStateHandler(screenState = screenState, onLoading = { LoadingScreen() }, onEmpty = {
             NoDataScreen(
-                icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
-                    viewModel.onEvent(PermissionsEvent.Load)
-                })
-        } , onSuccess = { settingsConfig ->
-            PermissionsContent(paddingValues , settingsConfig)
+                icon = Icons.Outlined.Settings,
+                showRetry = true,
+                onRetry = { viewModel.onEvent(PermissionsEvent.Load) },
+            )
+        }, onSuccess = { settingsConfig ->
+            PermissionsContent(paddingValues, settingsConfig)
         })
     }
 }

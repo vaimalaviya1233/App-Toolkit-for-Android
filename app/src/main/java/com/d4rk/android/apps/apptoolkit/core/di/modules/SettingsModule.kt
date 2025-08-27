@@ -6,10 +6,10 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Ap
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppDisplaySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppPrivacySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppSettingsProvider
-import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsProvider
+import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
-import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
+import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
@@ -43,10 +43,10 @@ val settingsModule = module {
         GeneralSettingsViewModel()
     }
 
-    single<PermissionsProvider> { PermissionsSettingsProvider(context = get()) }
+    single<PermissionsRepository> { PermissionsSettingsRepository(context = get()) }
     viewModel {
         PermissionsViewModel(
-            settingsProvider = get(),
+            permissionsRepository = get(),
             dispatcher = get(named("io"))
         )
     }

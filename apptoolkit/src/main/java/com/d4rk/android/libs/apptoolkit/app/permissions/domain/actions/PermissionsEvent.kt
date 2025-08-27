@@ -15,3 +15,4 @@ sealed interface PermissionsEvent : UiEvent {
      */
     data object Load : PermissionsEvent
 }
+

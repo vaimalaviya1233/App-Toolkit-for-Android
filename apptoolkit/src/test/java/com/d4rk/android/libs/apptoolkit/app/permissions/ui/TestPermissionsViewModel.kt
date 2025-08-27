@@ -1,6 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
-import com.d4rk.android.libs.apptoolkit.app.permissions.utils.interfaces.PermissionsProvider
+import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
@@ -29,16 +29,16 @@ class TestPermissionsViewModel {
     }
 
     private lateinit var viewModel: PermissionsViewModel
-    private lateinit var provider: PermissionsProvider
+    private lateinit var repository: PermissionsRepository
 
     private fun setup(config: SettingsConfig? = null, error: Throwable? = null, dispatcher: TestDispatcher) {
-        provider = mockk()
+        repository = mockk()
         if (error != null) {
-            every { provider.providePermissionsConfig() } returns flow { throw error }
+            every { repository.getPermissionsConfig() } returns flow { throw error }
         } else {
-            every { provider.providePermissionsConfig() } returns flowOf(config!!)
+            every { repository.getPermissionsConfig() } returns flowOf(config!!)
         }
-        viewModel = PermissionsViewModel(provider, dispatcher)
+        viewModel = PermissionsViewModel(repository, dispatcher)
     }
 
     @Test
@@ -63,3 +63,4 @@ class TestPermissionsViewModel {
         assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.Error::class.java)
     }
 }
+
