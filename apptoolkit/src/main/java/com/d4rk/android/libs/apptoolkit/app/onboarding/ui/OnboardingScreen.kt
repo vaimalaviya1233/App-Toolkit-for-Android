@@ -38,7 +38,6 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.OnboardingB
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.OnboardingDefaultPageLayout
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -55,16 +54,14 @@ fun OnboardingScreen(activity : Activity) {
         initialPage = viewModel.currentTabIndex,
     ) { pages.size }
     LaunchedEffect(pagerState.currentPage) {
-        viewModel.currentTabIndex = pagerState.currentPage
+        viewModel.updateCurrentTab(pagerState.currentPage)
     }
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = activity)
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
     val onSkipRequested = {
-        coroutineScope.launch {
-            dataStore.saveStartup(isFirstTime = false)
+        viewModel.completeOnboarding(context = activity) {
+            onboardingProvider.onOnboardingFinished(context = activity)
         }
-        onboardingProvider.onOnboardingFinished(context = activity)
     }
 
     Scaffold(topBar = {
@@ -99,8 +96,7 @@ fun OnboardingScreen(activity : Activity) {
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
                         }
                     } else {
-                        coroutineScope.launch {
-                            dataStore.saveStartup(isFirstTime = false)
+                        viewModel.completeOnboarding(context = activity) {
                             onboardingProvider.onOnboardingFinished(activity)
                         }
                     }
