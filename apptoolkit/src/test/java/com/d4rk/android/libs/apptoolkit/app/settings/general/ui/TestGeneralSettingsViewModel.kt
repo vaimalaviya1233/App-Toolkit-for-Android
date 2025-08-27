@@ -5,6 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.actions.Gene
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.DefaultGeneralSettingsRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -21,7 +22,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load content success`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load content success")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load("key"))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = viewModel.uiState.value
@@ -33,7 +36,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load content invalid`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load content invalid")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load(null))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = viewModel.uiState.value
@@ -46,7 +51,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load content blank`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load content blank")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load(""))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val state = viewModel.uiState.value
@@ -59,7 +66,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `multiple load calls update key`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] multiple load calls update key")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load("one"))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         var state = viewModel.uiState.value
@@ -75,7 +84,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `errors cleared after successful load`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] errors cleared after successful load")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load(""))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         var state = viewModel.uiState.value
@@ -92,7 +103,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `content persists across config changes`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] content persists across config changes")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load("rotate"))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val stateBefore = viewModel.uiState.value
@@ -106,7 +119,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `reload with same key retains state`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] reload with same key retains state")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load("keep"))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val stateBefore = viewModel.uiState.value
@@ -121,7 +136,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load extremely long content key`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load extremely long content key")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         val longKey = "a".repeat(1000)
         viewModel.onEvent(GeneralSettingsEvent.Load(longKey))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
@@ -134,7 +151,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `load content key with special characters`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] load content key with special characters")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         val key = "!@#$%^&*()_+漢字"
         viewModel.onEvent(GeneralSettingsEvent.Load(key))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
@@ -147,7 +166,9 @@ class TestGeneralSettingsViewModel {
     @Test
     fun `concurrent load events yield latest state`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] concurrent load events yield latest state")
-        val viewModel = GeneralSettingsViewModel()
+        val viewModel = GeneralSettingsViewModel(
+            repository = DefaultGeneralSettingsRepository(dispatcherExtension.testDispatcher)
+        )
         viewModel.onEvent(GeneralSettingsEvent.Load("first"))
         viewModel.onEvent(GeneralSettingsEvent.Load("second"))
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
