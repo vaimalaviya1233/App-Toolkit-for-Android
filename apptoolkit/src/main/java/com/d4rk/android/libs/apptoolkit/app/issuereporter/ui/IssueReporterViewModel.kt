@@ -24,6 +24,8 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -74,7 +76,6 @@ class IssueReporterViewModel(
         }
 
         sendJob = viewModelScope.launch {
-            screenState.updateState(ScreenState.IsLoading())
             runCatching {
                 val deviceInfo = deviceInfoProvider.capture()
                 val extraInfo = ExtraInfo()
@@ -92,8 +93,9 @@ class IssueReporterViewModel(
                     token = githubToken.takeIf { it.isNotBlank() }
                 )
 
-                val outcome = sendIssueReport(params)
-                handleResult(outcome)
+                sendIssueReport(params)
+                    .onStart { screenState.updateState(ScreenState.IsLoading()) }
+                    .collect { outcome -> handleResult(outcome) }
             }.onFailure {
                 screenState.update { current ->
                     current.copy(
@@ -106,9 +108,8 @@ class IssueReporterViewModel(
                         )
                     )
                 }
-            }.also {
-                sendJob = null
             }
+            sendJob = null
         }
     }
 

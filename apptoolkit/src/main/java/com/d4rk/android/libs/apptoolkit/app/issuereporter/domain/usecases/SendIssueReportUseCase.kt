@@ -4,16 +4,18 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.IssueReporterRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueReportResult
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
-import com.d4rk.android.libs.apptoolkit.core.domain.usecases.Repository
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class SendIssueReportUseCase(
     private val repository: IssueReporterRepository,
     private val dispatchers: AppDispatchers,
-) : Repository<SendIssueReportUseCase.Params, IssueReportResult> {
+) {
 
     data class Params(
         val report: Report,
@@ -21,16 +23,19 @@ class SendIssueReportUseCase(
         val token: String?
     )
 
-    override suspend fun invoke(param: Params): IssueReportResult =
-        withContext(dispatchers.io) {
-            runCatching {
-                repository.sendReport(param.report, param.target, param.token)
-            }.getOrElse {
-                if (it is CancellationException) throw it
-                IssueReportResult.Error(
-                    status = HttpStatusCode.InternalServerError,
-                    message = it.message ?: ""
+    operator fun invoke(param: Params): Flow<IssueReportResult> =
+        flow {
+            val result = repository.sendReport(param.report, param.target, param.token)
+            emit(result)
+        }
+            .catch { throwable ->
+                if (throwable is CancellationException) throw throwable
+                emit(
+                    IssueReportResult.Error(
+                        status = HttpStatusCode.InternalServerError,
+                        message = throwable.message ?: "",
+                    ),
                 )
             }
-        }
+            .flowOn(dispatchers.io)
 }
