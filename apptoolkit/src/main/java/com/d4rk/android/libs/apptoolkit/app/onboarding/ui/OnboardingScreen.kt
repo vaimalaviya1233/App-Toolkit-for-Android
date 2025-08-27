@@ -1,8 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.onboarding.ui
 
 import android.app.Activity
-import android.view.SoundEffectConstants
-import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -19,17 +17,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedback
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.d4rk.android.libs.apptoolkit.R
@@ -37,6 +30,7 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.data.model.ui.Onbo
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.OnboardingBottomNavigation
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.OnboardingDefaultPageLayout
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -56,8 +50,7 @@ fun OnboardingScreen(activity : Activity) {
     LaunchedEffect(pagerState.currentPage) {
         viewModel.updateCurrentTab(pagerState.currentPage)
     }
-    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
-    val view : View = LocalView.current
+
     val onSkipRequested = {
         viewModel.completeOnboarding(context = activity) {
             onboardingProvider.onOnboardingFinished(context = activity)
@@ -74,8 +67,6 @@ fun OnboardingScreen(activity : Activity) {
                 ) {
                     OutlinedIconButtonWithText(
                         onClick = {
-                            view.playSoundEffect(SoundEffectConstants.CLICK)
-                            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                             onSkipRequested()
                         },
                         icon = Icons.Filled.SkipNext,
