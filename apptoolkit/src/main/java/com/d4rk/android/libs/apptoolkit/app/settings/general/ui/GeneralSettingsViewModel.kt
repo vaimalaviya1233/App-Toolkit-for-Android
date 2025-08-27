@@ -12,11 +12,16 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.yield
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , GeneralSettingsEvent , GeneralSettingsAction>(initialState = UiStateScreen(data = UiGeneralSettingsScreen())) {
 
@@ -31,19 +36,29 @@ class GeneralSettingsViewModel : ScreenViewModel<UiGeneralSettingsScreen , Gener
     private fun loadContent(contentKey : String?) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            screenState.setLoading()
-            yield()
-
-            if (! contentKey.isNullOrBlank()) {
-                screenState.setErrors(errors = emptyList())
-                screenState.updateData(newState = ScreenState.Success()) { current : UiGeneralSettingsScreen ->
-                    current.copy(contentKey = contentKey)
+            flow {
+                emit(contentKey)
+            }
+                .onStart {
+                    screenState.setLoading()
                 }
-            }
-            else {
-                screenState.setErrors(errors = listOf(element = UiSnackbar(message = UiTextHelper.StringResource(resourceId = R.string.error_invalid_content_key))))
-                screenState.updateState(newValues = ScreenState.NoData())
-            }
+                .map { key ->
+                    if (key.isNullOrBlank()) {
+                        throw IllegalArgumentException("Invalid content key")
+                    }
+                    key
+                }
+                .flowOn(Dispatchers.Default)
+                .catch {
+                    screenState.setErrors(errors = listOf(UiSnackbar(message = UiTextHelper.StringResource(resourceId = R.string.error_invalid_content_key))))
+                    screenState.updateState(newValues = ScreenState.NoData())
+                }
+                .collect { key ->
+                    screenState.setErrors(errors = emptyList())
+                    screenState.updateData(newState = ScreenState.Success()) { current : UiGeneralSettingsScreen ->
+                        current.copy(contentKey = key)
+                    }
+                }
         }
     }
 }
