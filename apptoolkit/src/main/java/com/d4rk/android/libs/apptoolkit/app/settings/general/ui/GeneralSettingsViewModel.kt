@@ -37,7 +37,7 @@ class GeneralSettingsViewModel(
     private fun loadContent(contentKey: String?) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            repository.loadContent(contentKey)
+            repository.getContentKeyStream(contentKey)
                 .onStart { screenState.setLoading() }
                 .catch {
                     screenState.setErrors(
