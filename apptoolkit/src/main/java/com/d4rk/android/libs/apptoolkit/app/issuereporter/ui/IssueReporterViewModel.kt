@@ -24,7 +24,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -47,8 +46,8 @@ class IssueReporterViewModel(
             is IssueReporterEvent.UpdateDescription -> update { it.copy(description = event.value) }
             is IssueReporterEvent.UpdateEmail -> update { it.copy(email = event.value) }
             is IssueReporterEvent.SetAnonymous -> update { it.copy(anonymous = event.anonymous) }
-            IssueReporterEvent.Send -> sendReport()
-            IssueReporterEvent.DismissSnackbar -> screenState.dismissSnackbar()
+            is IssueReporterEvent.Send -> sendReport()
+            is IssueReporterEvent.DismissSnackbar -> screenState.dismissSnackbar()
         }
     }
 

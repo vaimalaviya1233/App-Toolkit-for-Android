@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CreateIssueRequest(
-    val title: String,
-    val body: String,
-    val labels: List<String>? = null,
+    @SerialName("title") val title: String,
+    @SerialName("body") val body: String,
+    @SerialName("labels") val labels: List<String>? = null,
     @SerialName("assignees") val assignees: List<String>? = null
 )

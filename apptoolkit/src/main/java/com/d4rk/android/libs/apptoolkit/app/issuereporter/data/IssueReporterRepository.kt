@@ -14,4 +14,3 @@ interface IssueReporterRepository {
         token: String? = null,
     ): IssueReportResult
 }
-
