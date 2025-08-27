@@ -36,7 +36,7 @@ val appToolkitModule : Module = module {
     }
 
     single<AppDispatchers> { AppDispatchersImpl() }
-    single<DeviceInfoProvider> { DeviceInfoProviderImpl(get()) }
+    single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }
     single { IssueReporterRepository(get()) }
     single { SendIssueReportUseCase(get(), get()) }
 
