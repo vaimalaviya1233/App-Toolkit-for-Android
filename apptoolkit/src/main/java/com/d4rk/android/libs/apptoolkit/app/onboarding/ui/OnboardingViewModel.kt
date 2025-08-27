@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 /**
  * ViewModel for handling onboarding state and actions.
@@ -40,8 +41,12 @@ class OnboardingViewModel(
 
     fun completeOnboarding(onFinished: () -> Unit) {
         viewModelScope.launch {
-            repository.setOnboardingCompleted()
-            onFinished()
+            try {
+                repository.setOnboardingCompleted()
+                onFinished()
+            } catch (e: IOException) {
+                _uiState.update { it.copy(isOnboardingCompleted = false) }
+            }
         }
     }
 

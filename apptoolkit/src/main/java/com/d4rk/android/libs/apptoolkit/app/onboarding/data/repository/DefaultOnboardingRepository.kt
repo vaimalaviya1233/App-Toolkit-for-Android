@@ -5,8 +5,9 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 /**
  * Default implementation of [OnboardingRepository] backed by [CommonDataStore].
@@ -21,7 +22,7 @@ class DefaultOnboardingRepository(
             .map { isFirstTime -> !isFirstTime }
             .flowOn(ioDispatcher)
 
-    override suspend fun setOnboardingCompleted() {
+    override suspend fun setOnboardingCompleted() = withContext(ioDispatcher) {
         dataStore.saveStartup(isFirstTime = false)
     }
 }
