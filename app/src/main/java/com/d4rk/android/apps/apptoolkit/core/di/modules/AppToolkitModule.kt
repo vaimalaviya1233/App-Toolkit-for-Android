@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
 import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
+import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
@@ -35,6 +36,7 @@ val appToolkitModule : Module = module {
     viewModel {
         SupportViewModel(billingRepository = get())
     }
+    viewModel { StartupViewModel() }
 
     single<AppDispatchers> { AppDispatchersImpl() }
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }

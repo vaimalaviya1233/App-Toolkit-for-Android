@@ -25,7 +25,12 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.startup.domain.model.ui.UiStartupScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.TopAppBarScaffold
@@ -34,33 +39,35 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun StartupScreen(
-    consentFormLoaded: Boolean,
-    onContinueClick: () -> Unit
+    screenState : UiStateScreen<UiStartupScreen> ,
+    onContinueClick : () -> Unit
 ) {
-    TopAppBarScaffold(
-        title = stringResource(R.string.welcome),
-        content = { paddingValues ->
-            StartupScreenContent(paddingValues = paddingValues)
-        },
-        floatingActionButton = {
-            AnimatedExtendedFloatingActionButton(
-                visible = consentFormLoaded,
-                modifier = Modifier.bounceClick(),
-                containerColor = if (consentFormLoaded) {
-                    FloatingActionButtonDefaults.containerColor
-                } else {
-                    Gray
-                },
-                text = { Text(text = stringResource(id = R.string.agree)) },
-                onClick = onContinueClick,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.CheckCircle, contentDescription = null
-                    )
-                }
-            )
-        }
-    )
+    ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { data : UiStartupScreen ->
+        TopAppBarScaffold(
+            title = stringResource(R.string.welcome) ,
+            content = { paddingValues ->
+                StartupScreenContent(paddingValues = paddingValues)
+            } ,
+            floatingActionButton = {
+                AnimatedExtendedFloatingActionButton(
+                    visible = data.consentFormLoaded ,
+                    modifier = Modifier.bounceClick() ,
+                    containerColor = if (data.consentFormLoaded) {
+                        FloatingActionButtonDefaults.containerColor
+                    } else {
+                        Gray
+                    } ,
+                    text = { Text(text = stringResource(id = R.string.agree)) } ,
+                    onClick = onContinueClick ,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.CheckCircle , contentDescription = null
+                        )
+                    }
+                )
+            }
+        )
+    })
 }
 
 @Composable
