@@ -23,7 +23,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -38,6 +38,7 @@ class IssueReporterViewModel(
         data = UiIssueReporterScreen()
     )
 ) {
+    private var sendJob: Job? = null
     override fun onEvent(event: IssueReporterEvent) {
         when (event) {
             is IssueReporterEvent.UpdateTitle -> update { it.copy(title = event.value) }
@@ -56,45 +57,50 @@ class IssueReporterViewModel(
     }
 
     private fun sendReport() {
-        viewModelScope.launch {
-            val data = screenState.value.data ?: return@launch
+        val data = screenState.value.data ?: return
 
-            if (data.title.isBlank() || data.description.isBlank()) {
-                screenState.showSnackbar(
-                    snackbar = UiSnackbar(
-                        message = UiTextHelper.StringResource(R.string.error_invalid_report),
-                        timeStamp = System.currentTimeMillis(),
-                        isError = true,
-                        type = ScreenMessageType.SNACKBAR
-                    )
+        if (sendJob?.isActive == true) return
+
+        if (data.title.isBlank() || data.description.isBlank()) {
+            screenState.showSnackbar(
+                snackbar = UiSnackbar(
+                    message = UiTextHelper.StringResource(R.string.error_invalid_report),
+                    timeStamp = System.currentTimeMillis(),
+                    isError = true,
+                    type = ScreenMessageType.SNACKBAR
                 )
-                return@launch
+            )
+            return
+        }
+
+        sendJob = viewModelScope.launch {
+            try {
+                screenState.updateState(ScreenState.IsLoading())
+                val deviceInfo = deviceInfoProvider.capture()
+                val extraInfo = ExtraInfo()
+                val report = Report(
+                    title = data.title,
+                    description = data.description,
+                    deviceInfo = deviceInfo,
+                    extraInfo = extraInfo,
+                    email = data.email.ifBlank { null }
+                )
+
+                val params = SendIssueReportUseCase.Params(
+                    report = report,
+                    target = githubTarget,
+                    token = githubToken.takeIf { it.isNotBlank() }
+                )
+
+                val outcome = sendIssueReport(params)
+                handleResult(outcome)
+            } finally {
+                sendJob = null
             }
-
-            screenState.updateState(ScreenState.IsLoading())
-            val deviceInfo = deviceInfoProvider.capture()
-            val extraInfo = ExtraInfo()
-            val report = Report(
-                title = data.title,
-                description = data.description,
-                deviceInfo = deviceInfo,
-                extraInfo = extraInfo,
-                email = data.email.ifBlank { null }
-            )
-
-            val params = SendIssueReportUseCase.Params(
-                report = report,
-                target = githubTarget,
-                token = githubToken.takeIf { it.isNotBlank() }
-            )
-
-            runCatching {
-                sendIssueReport(params).fold(::handleSuccess, ::handleFailure)
-            }.onFailure(::handleFailure)
         }
     }
 
-    private fun handleSuccess(outcome: IssueReportResult) {
+    private fun handleResult(outcome: IssueReportResult) {
         when (outcome) {
             is IssueReportResult.Success -> {
                 screenState.update { current ->
@@ -132,21 +138,6 @@ class IssueReporterViewModel(
                     )
                 }
             }
-        }
-    }
-
-    private fun handleFailure(error: Throwable) {
-        if (error is CancellationException) throw error
-        screenState.update { current ->
-            current.copy(
-                screenState = ScreenState.Error(),
-                snackbar = UiSnackbar(
-                    message = UiTextHelper.StringResource(R.string.snack_report_failed),
-                    isError = true,
-                    timeStamp = System.currentTimeMillis(),
-                    type = ScreenMessageType.SNACKBAR,
-                )
-            )
         }
     }
 }

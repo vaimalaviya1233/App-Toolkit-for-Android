@@ -66,7 +66,7 @@ class IssueReporterViewModelTest {
         try {
             val useCase = mockk<SendIssueReportUseCase>()
             val captured = slot<SendIssueReportUseCase.Params>()
-            coEvery { useCase.invoke(capture(captured)) } returns Result.success(IssueReportResult.Success("url"))
+            coEvery { useCase.invoke(capture(captured)) } returns IssueReportResult.Success("url")
             val viewModel = IssueReporterViewModel(useCase, githubTarget, "token", deviceInfoProvider)
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
 
@@ -106,7 +106,7 @@ class IssueReporterViewModelTest {
         Dispatchers.setMain(dispatcher)
         try {
             val useCase = mockk<SendIssueReportUseCase>()
-            coEvery { useCase.invoke(any()) } returns Result.success(IssueReportResult.Error(status, ""))
+            coEvery { useCase.invoke(any()) } returns IssueReportResult.Error(status, "")
             val viewModel = IssueReporterViewModel(useCase, githubTarget, "tok", deviceInfoProvider)
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
 
