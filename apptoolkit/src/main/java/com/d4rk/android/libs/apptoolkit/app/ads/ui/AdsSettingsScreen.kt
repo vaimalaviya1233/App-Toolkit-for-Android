@@ -1,7 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.ads.ui
 
 import android.app.Activity
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,15 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceItem
@@ -27,24 +22,13 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCar
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdsSettingsScreen(activity : Activity , buildInfoProvider : BuildInfoProvider) {
-    val context : Context = LocalContext.current
-    val appContext = context.applicationContext
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val dataStore = remember(appContext) { CommonDataStore.getInstance(appContext) }
-
-    val defaultAds = !buildInfoProvider.isDebugBuild
-    val adsEnabled by dataStore
-        .ads(default = defaultAds)
-        .collectAsStateWithLifecycle(initialValue = defaultAds)
+fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
+    val adsEnabled by viewModel.adsEnabled.collectAsStateWithLifecycle()
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.ads) , onBackClicked = { activity.finish() }) { paddingValues : PaddingValues ->
@@ -55,11 +39,10 @@ fun AdsSettingsScreen(activity : Activity , buildInfoProvider : BuildInfoProvide
         ) {
             item {
                 SwitchCardItem(
-                    title = stringResource(id = R.string.display_ads) , switchState = rememberUpdatedState(newValue = adsEnabled)
-                ) { isChecked : Boolean ->
-                    coroutineScope.launch {
-                        dataStore.saveAds(isChecked = isChecked)
-                    }
+                    title = stringResource(id = R.string.display_ads),
+                    switchState = rememberUpdatedState(newValue = adsEnabled)
+                ) { isChecked: Boolean ->
+                    viewModel.setAdsEnabled(isChecked)
                 }
             }
 
