@@ -32,11 +32,11 @@ class DefaultIssueReporterRepository(
         target: GithubTarget,
         token: String?,
     ): IssueReportResult = withContext(dispatchers.io) {
-        val url = "https://api.github.com/repos/${'$'}{target.username}/${'$'}{target.repository}/issues"
+        val url = "https://api.github.com/repos/${target.username}/${target.repository}/issues"
         val response: HttpResponse = client.post(url) {
             contentType(ContentType.Application.Json)
             header("Accept", "application/vnd.github+json")
-            token?.let { header("Authorization", "Bearer ${'$'}it") }
+            token?.let { header("Authorization", "Bearer $it") }
             val issueRequest = CreateIssueRequest(
                 title = report.title,
                 body = report.getDescription(),

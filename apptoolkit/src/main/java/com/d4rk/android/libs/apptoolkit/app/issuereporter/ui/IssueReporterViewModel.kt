@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class IssueReporterViewModel(
     private val sendIssueReport: SendIssueReportUseCase,
     private val githubTarget: GithubTarget,
-    @GithubToken private val githubToken: String,
+    @param:GithubToken private val githubToken: String,
     private val deviceInfoProvider: DeviceInfoProvider,
 ) : ScreenViewModel<UiIssueReporterScreen, IssueReporterEvent, IssueReporterAction>(
     initialState = UiStateScreen(
