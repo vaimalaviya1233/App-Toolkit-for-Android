@@ -18,6 +18,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterActivity
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AdvancedSettingsProvider
+import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
+import com.d4rk.android.libs.apptoolkit.app.advanced.domain.model.ui.UiAdvancedSettingsScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.PreferenceCategoryItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SettingsPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
@@ -32,50 +38,57 @@ fun AdvancedSettingsList(
     viewModel: AdvancedSettingsViewModel = koinViewModel(),
 ) {
     val context: Context = LocalContext.current
-    val uiState: AdvancedSettingsUiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    val screenState: UiStateScreen<UiAdvancedSettingsScreen> = viewModel.uiState.collectAsStateWithLifecycle().value
 
-    LaunchedEffect(uiState.cacheClearMessage) {
-        uiState.cacheClearMessage?.let { messageRes ->
+    LaunchedEffect(screenState.data?.cacheClearMessage) {
+        screenState.data?.cacheClearMessage?.let { messageRes ->
             Toast.makeText(context, context.getString(messageRes), Toast.LENGTH_SHORT).show()
-            viewModel.onMessageShown()
+            viewModel.onEvent(AdvancedSettingsEvent.MessageShown)
         }
     }
 
-    LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxHeight()) {
-        item {
-            PreferenceCategoryItem(title = stringResource(id = R.string.error_reporting))
-            SmallVerticalSpacer()
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = SizeConstants.LargeSize)
-                    .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            ) {
-                SettingsPreferenceItem(
-                    title = stringResource(id = R.string.bug_report),
-                    summary = stringResource(id = R.string.summary_preference_settings_bug_report),
-                    onClick = {
-                        IntentsHelper.openActivity(
-                            context = context,
-                            activityClass = IssueReporterActivity::class.java,
+    ScreenStateHandler(
+        screenState = screenState,
+        onLoading = { LoadingScreen() },
+        onEmpty = { NoDataScreen() },
+        onSuccess = {
+            LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxHeight()) {
+                item {
+                    PreferenceCategoryItem(title = stringResource(id = R.string.error_reporting))
+                    SmallVerticalSpacer()
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                    ) {
+                        SettingsPreferenceItem(
+                            title = stringResource(id = R.string.bug_report),
+                            summary = stringResource(id = R.string.summary_preference_settings_bug_report),
+                            onClick = {
+                                IntentsHelper.openActivity(
+                                    context = context,
+                                    activityClass = IssueReporterActivity::class.java,
+                                )
+                            },
                         )
-                    },
-                )
+                    }
+                }
+                item {
+                    PreferenceCategoryItem(title = stringResource(id = R.string.cache_management))
+                    SmallVerticalSpacer()
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = SizeConstants.LargeSize)
+                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                    ) {
+                        SettingsPreferenceItem(
+                            title = stringResource(id = R.string.clear_cache),
+                            summary = stringResource(id = R.string.summary_preference_settings_clear_cache),
+                            onClick = { viewModel.onEvent(AdvancedSettingsEvent.ClearCache) },
+                        )
+                    }
+                }
             }
-        }
-        item {
-            PreferenceCategoryItem(title = stringResource(id = R.string.cache_management))
-            SmallVerticalSpacer()
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = SizeConstants.LargeSize)
-                    .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
-            ) {
-                SettingsPreferenceItem(
-                    title = stringResource(id = R.string.clear_cache),
-                    summary = stringResource(id = R.string.summary_preference_settings_clear_cache),
-                    onClick = { viewModel.onClearCache() },
-                )
-            }
-        }
-    }
+        },
+    )
 }

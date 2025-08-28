@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.advanced.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
+import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -17,11 +18,11 @@ class TestAdvancedSettingsViewModel {
         println("\uD83D\uDE80 [TEST] onClearCache emits success message")
         val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(true))
 
-        viewModel.onClearCache()
+        viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
 
-        assertThat(viewModel.uiState.value.cacheClearMessage).isEqualTo(R.string.cache_cleared_success)
-        viewModel.onMessageShown()
-        assertThat(viewModel.uiState.value.cacheClearMessage).isNull()
+        assertThat(viewModel.uiState.value.data?.cacheClearMessage).isEqualTo(R.string.cache_cleared_success)
+        viewModel.onEvent(AdvancedSettingsEvent.MessageShown)
+        assertThat(viewModel.uiState.value.data?.cacheClearMessage).isNull()
         println("\uD83C\uDFC1 [TEST DONE] onClearCache emits success message")
     }
 
@@ -30,9 +31,9 @@ class TestAdvancedSettingsViewModel {
         println("\uD83D\uDE80 [TEST] onClearCache emits error message when failure")
         val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(false))
 
-        viewModel.onClearCache()
+        viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
 
-        assertThat(viewModel.uiState.value.cacheClearMessage).isEqualTo(R.string.cache_cleared_error)
+        assertThat(viewModel.uiState.value.data?.cacheClearMessage).isEqualTo(R.string.cache_cleared_error)
         println("\uD83C\uDFC1 [TEST DONE] onClearCache emits error message when failure")
     }
 }
