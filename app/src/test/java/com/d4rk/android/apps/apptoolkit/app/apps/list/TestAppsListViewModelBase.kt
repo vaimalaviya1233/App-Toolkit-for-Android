@@ -9,8 +9,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.google.common.truth.Truth.assertThat
@@ -27,7 +25,7 @@ open class TestAppsListViewModelBase {
 
     protected lateinit var viewModel: AppsListViewModel
     protected fun setup(
-        fetchFlow: Flow<DataState<List<AppInfo>, RootError>>,
+        fetchApps: List<AppInfo>,
         initialFavorites: Set<String> = emptySet(),
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
@@ -35,7 +33,7 @@ open class TestAppsListViewModelBase {
         dispatcher: CoroutineDispatcher = Dispatchers.Main,
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
-        val developerAppsRepository = FakeDeveloperAppsRepository(fetchFlow, fetchThrows)
+        val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps, fetchThrows)
         val fetchUseCase = FetchDeveloperAppsUseCase(developerAppsRepository)
         val favoritesRepository = FakeFavoritesRepository(initialFavorites, favoritesFlow, toggleError)
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
