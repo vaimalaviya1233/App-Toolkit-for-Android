@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 
 /**
  * Default implementation of [AboutRepository] that gathers device and build
@@ -21,6 +22,7 @@ class DefaultAboutRepository(
     private val configProvider: BuildInfoProvider,
     private val context: Context,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
 ) : AboutRepository {
 
     override fun getAboutInfoStream(): Flow<UiAboutScreen> =
@@ -34,11 +36,13 @@ class DefaultAboutRepository(
             )
         }.flowOn(ioDispatcher)
 
-    override fun copyDeviceInfo(label: String, deviceInfo: String) {
-        ClipboardHelper.copyTextToClipboard(
-            context = context,
-            label = label,
-            text = deviceInfo,
-        )
+    override suspend fun copyDeviceInfo(label: String, deviceInfo: String) {
+        withContext(mainDispatcher) {
+            ClipboardHelper.copyTextToClipboard(
+                context = context,
+                label = label,
+                text = deviceInfo,
+            )
+        }
     }
 }

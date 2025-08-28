@@ -47,7 +47,7 @@ class TestAboutViewModel {
                     )
                 }
 
-                override fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
             },
         )
 
@@ -58,7 +58,7 @@ class TestAboutViewModel {
                     throw Exception("fail")
                 }
 
-                override fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
             },
         )
 
