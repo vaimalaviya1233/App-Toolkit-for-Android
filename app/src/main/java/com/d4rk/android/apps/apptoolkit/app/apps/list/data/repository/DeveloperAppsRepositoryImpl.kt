@@ -14,17 +14,15 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.net.SocketTimeoutException
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : DeveloperAppsRepository {
 
-    override suspend fun fetchDeveloperApps(): List<AppInfo> = withContext(ioDispatcher) {
+    override fun fetchDeveloperApps(): Flow<List<AppInfo>> = flow {
         val url = BuildConfig.DEBUG.let { isDebug ->
             val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
             "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
@@ -40,9 +38,11 @@ class DeveloperAppsRepositoryImpl(
         }
 
         val apiResponse: ApiResponse = httpResponse.body()
-        apiResponse.data.apps
-            .map { it.toDomain() }
-            .sortedBy { it.name.lowercase() }
+        emit(
+            apiResponse.data.apps
+                .map { it.toDomain() }
+                .sortedBy { it.name.lowercase() }
+        )
     }
 }
 
