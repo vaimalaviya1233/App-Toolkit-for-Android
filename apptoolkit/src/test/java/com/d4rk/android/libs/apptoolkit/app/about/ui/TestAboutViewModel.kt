@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
 import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
@@ -44,7 +44,7 @@ class TestAboutViewModel {
     fun `copy device info shows snackbar`() = runTest(dispatcherExtension.testDispatcher) {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
@@ -59,11 +59,11 @@ class TestAboutViewModel {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
 
-        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        viewModel.onEvent(AboutEvent.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNull()
     }
@@ -73,13 +73,13 @@ class TestAboutViewModel {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
-        viewModel.onEvent(AboutEvents.DismissSnackbar)
+        viewModel.onEvent(AboutEvent.DismissSnackbar)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNull()
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
     }
@@ -89,11 +89,11 @@ class TestAboutViewModel {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val first = viewModel.uiState.value.snackbar!!.timeStamp
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         val second = viewModel.uiState.value.snackbar!!.timeStamp
 
@@ -105,7 +105,7 @@ class TestAboutViewModel {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        repeat(5) { viewModel.onEvent(AboutEvents.CopyDeviceInfo) }
+        repeat(5) { viewModel.onEvent(AboutEvent.CopyDeviceInfo) }
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
@@ -116,7 +116,7 @@ class TestAboutViewModel {
         val viewModel = createViewModel()
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
-        viewModel.onEvent(AboutEvents.CopyDeviceInfo)
+        viewModel.onEvent(AboutEvent.CopyDeviceInfo)
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
 

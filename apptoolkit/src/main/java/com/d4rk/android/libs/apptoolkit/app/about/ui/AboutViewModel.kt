@@ -2,8 +2,8 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.events.AboutActions
+import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
+import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutAction
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
@@ -19,16 +19,16 @@ import kotlinx.coroutines.launch
 open class AboutViewModel(
     private val repository: AboutRepository,
 ) :
-    ScreenViewModel<UiAboutScreen, AboutEvents, AboutActions>(initialState = UiStateScreen(data = UiAboutScreen())) {
+    ScreenViewModel<UiAboutScreen, AboutEvent, AboutAction>(initialState = UiStateScreen(data = UiAboutScreen())) {
 
     init {
         loadAboutInfo()
     }
 
-    override fun onEvent(event: AboutEvents) {
+    override fun onEvent(event: AboutEvent) {
         when (event) {
-            is AboutEvents.CopyDeviceInfo -> copyDeviceInfo()
-            is AboutEvents.DismissSnackbar -> dismissSnack()
+            is AboutEvent.CopyDeviceInfo -> copyDeviceInfo()
+            is AboutEvent.DismissSnackbar -> dismissSnack()
         }
     }
 

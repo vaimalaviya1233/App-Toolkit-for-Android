@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.licenses.LicensesActivity
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -71,12 +71,12 @@ fun AboutSettingsList(paddingValues: PaddingValues = PaddingValues(), snackbarHo
                         context = context,
                         label = deviceInfo,
                         text = screenState.data?.deviceInfo ?: "",
-                        onShowSnackbar = { viewModel.onEvent(event = AboutEvents.CopyDeviceInfo) },
+                        onShowSnackbar = { viewModel.onEvent(event = AboutEvent.CopyDeviceInfo) },
                     )
                 }
             }
         }
     }
 
-    DefaultSnackbarHandler(screenState = screenState, snackbarHostState = snackbarHostState, getDismissEvent = { AboutEvents.DismissSnackbar }, onEvent = { viewModel.onEvent(it) })
+    DefaultSnackbarHandler(screenState = screenState, snackbarHostState = snackbarHostState, getDismissEvent = { AboutEvent.DismissSnackbar }, onEvent = { viewModel.onEvent(it) })
 }
