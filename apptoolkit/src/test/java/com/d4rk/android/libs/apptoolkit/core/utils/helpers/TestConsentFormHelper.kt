@@ -5,13 +5,13 @@ import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import io.mockk.*
-import kotlin.test.assertTrue
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class TestConsentFormHelper {
     @Test
-    fun `showConsentForm success invokes onFormShown`() {
-        println("🚀 [TEST] showConsentForm success invokes onFormShown")
+    fun `showConsentForm success returns`() = runBlocking {
+        println("🚀 [TEST] showConsentForm success returns")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
         val consentForm = mockk<ConsentForm>()
@@ -31,15 +31,13 @@ class TestConsentFormHelper {
             onDismissed()
         }
 
-        var called = false
-        ConsentFormHelper.showConsentForm(activity, consentInfo) { called = true }
-
-        assertTrue(called)
-        println("🏁 [TEST DONE] showConsentForm success invokes onFormShown")
+        ConsentFormHelper.showConsentForm(activity, consentInfo)
+        verify { consentForm.show(activity, any()) }
+        println("🏁 [TEST DONE] showConsentForm success returns")
     }
 
     @Test
-    fun `showConsentForm handles exception from loadConsentForm`() {
+    fun `showConsentForm handles exception from loadConsentForm`() = runBlocking {
         println("🚀 [TEST] showConsentForm handles exception from loadConsentForm")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
@@ -52,14 +50,12 @@ class TestConsentFormHelper {
         mockkStatic(UserMessagingPlatform::class)
         every { UserMessagingPlatform.loadConsentForm(any(), any(), any()) } throws RuntimeException("fail")
 
-        var called = false
-        ConsentFormHelper.showConsentForm(activity, consentInfo) { called = true }
-
-        assertTrue(called)
+        ConsentFormHelper.showConsentForm(activity, consentInfo)
         println("🏁 [TEST DONE] showConsentForm handles exception from loadConsentForm")
     }
+
     @Test
-    fun `showConsentForm handles OutOfMemoryError from loadConsentForm`() {
+    fun `showConsentForm handles OutOfMemoryError from loadConsentForm`() = runBlocking {
         println("🚀 [TEST] showConsentForm handles OutOfMemoryError from loadConsentForm")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
@@ -72,10 +68,7 @@ class TestConsentFormHelper {
         mockkStatic(UserMessagingPlatform::class)
         every { UserMessagingPlatform.loadConsentForm(any(), any(), any()) } throws OutOfMemoryError("oom")
 
-        var called = false
-        ConsentFormHelper.showConsentForm(activity, consentInfo) { called = true }
-
-        assertTrue(called)
+        ConsentFormHelper.showConsentForm(activity, consentInfo)
         println("🏁 [TEST DONE] showConsentForm handles OutOfMemoryError from loadConsentForm")
     }
 }

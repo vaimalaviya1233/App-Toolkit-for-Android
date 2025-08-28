@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
@@ -30,11 +31,13 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
     val screenState: UiStateScreen<UiAdsSettingsScreen> by viewModel.uiState.collectAsStateWithLifecycle()
+    val coroutineScope = rememberCoroutineScope()
 
     LargeTopAppBarWithScaffold(
         title = stringResource(id = R.string.ads),
@@ -67,8 +70,11 @@ fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
                                 enabled = data.adsEnabled,
                                 summary = stringResource(id = R.string.summary_ads_personalized_ads),
                                 onClick = {
-                                    val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
-                                    ConsentFormHelper.showConsentForm(activity = activity, consentInfo = consentInfo)
+                                    coroutineScope.launch {
+                                        val consentInfo: ConsentInformation =
+                                            UserMessagingPlatform.getConsentInformation(activity)
+                                        ConsentFormHelper.showConsentForm(activity = activity, consentInfo = consentInfo)
+                                    }
                                 }
                             )
                         }
