@@ -76,12 +76,6 @@ object ConsentFormHelper {
 
         suspendCancellableCoroutine { continuation ->
             consentInfo.requestConsentInfoUpdate(activity, params, {
-                if (consentInfo.consentStatus != ConsentInformation.ConsentStatus.REQUIRED &&
-                    consentInfo.consentStatus != ConsentInformation.ConsentStatus.UNKNOWN) {
-                    if (continuation.isActive) continuation.resume(Unit)
-                    return@requestConsentInfoUpdate
-                }
-
                 runCatching {
                     UserMessagingPlatform.loadConsentForm(activity, { consentForm: ConsentForm ->
                         runCatching {

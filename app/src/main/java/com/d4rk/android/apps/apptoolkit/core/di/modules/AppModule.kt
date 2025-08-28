@@ -49,7 +49,7 @@ val appModule : Module = module {
 
     viewModel { MainViewModel() }
 
-    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get(), ioDispatcher = get(named("io"))) }
+    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
     single { FetchDeveloperAppsUseCase(repository = get()) }
     viewModel {
         AppsListViewModel(

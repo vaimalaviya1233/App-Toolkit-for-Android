@@ -71,9 +71,8 @@ fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
                                 summary = stringResource(id = R.string.summary_ads_personalized_ads),
                                 onClick = {
                                     coroutineScope.launch {
-                                        val consentInfo: ConsentInformation =
-                                            UserMessagingPlatform.getConsentInformation(activity)
-                                        ConsentFormHelper.showConsentForm(activity = activity, consentInfo = consentInfo)
+                                        val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(activity)
+                                        ConsentFormHelper.showConsentForm(activity = activity , consentInfo = consentInfo)
                                     }
                                 }
                             )
