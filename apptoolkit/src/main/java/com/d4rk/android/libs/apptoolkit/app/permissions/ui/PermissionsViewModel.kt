@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
+import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsAction
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig

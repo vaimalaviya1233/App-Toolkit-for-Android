@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.permissions.data
+package com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository
 
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import kotlinx.coroutines.flow.Flow
@@ -15,4 +15,3 @@ interface PermissionsRepository {
      */
     fun getPermissionsConfig(): Flow<SettingsConfig>
 }
-
