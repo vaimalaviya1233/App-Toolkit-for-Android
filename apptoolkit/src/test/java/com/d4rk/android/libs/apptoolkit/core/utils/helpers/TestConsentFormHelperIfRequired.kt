@@ -6,12 +6,12 @@ import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import io.mockk.*
-import kotlin.test.assertTrue
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class TestConsentFormHelperIfRequired {
     @Test
-    fun `showConsentFormIfRequired when required loads and shows form`() {
+    fun `showConsentFormIfRequired when required loads and shows form`() = runBlocking {
         println("🚀 [TEST] showConsentFormIfRequired when required loads and shows form")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
@@ -33,17 +33,15 @@ class TestConsentFormHelperIfRequired {
             onDismissed()
         }
 
-        var called = false
-        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo) { called = true }
+        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo)
 
-        assertTrue(called)
         verify { UserMessagingPlatform.loadConsentForm(any(), any(), any()) }
         verify { consentForm.show(activity, any()) }
         println("🏁 [TEST DONE] showConsentFormIfRequired when required loads and shows form")
     }
 
     @Test
-    fun `showConsentFormIfRequired when not required skips loading`() {
+    fun `showConsentFormIfRequired when not required skips loading`() = runBlocking {
         println("🚀 [TEST] showConsentFormIfRequired when not required skips loading")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
@@ -56,16 +54,14 @@ class TestConsentFormHelperIfRequired {
 
         mockkStatic(UserMessagingPlatform::class)
 
-        var called = false
-        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo) { called = true }
+        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo)
 
-        assertTrue(called)
         verify(exactly = 0) { UserMessagingPlatform.loadConsentForm(any(), any(), any()) }
         println("🏁 [TEST DONE] showConsentFormIfRequired when not required skips loading")
     }
 
     @Test
-    fun `showConsentFormIfRequired handles load error`() {
+    fun `showConsentFormIfRequired handles load error`() = runBlocking {
         println("🚀 [TEST] showConsentFormIfRequired handles load error")
         val activity = mockk<Activity>()
         val consentInfo = mockk<ConsentInformation>()
@@ -81,10 +77,8 @@ class TestConsentFormHelperIfRequired {
         mockkStatic(Log::class)
         every { Log.e(any(), any(), any()) } returns 0
 
-        var called = false
-        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo) { called = true }
+        ConsentFormHelper.showConsentFormIfRequired(activity, consentInfo)
 
-        assertTrue(called)
         verify { Log.e(any(), any(), any()) }
         println("🏁 [TEST DONE] showConsentFormIfRequired handles load error")
     }

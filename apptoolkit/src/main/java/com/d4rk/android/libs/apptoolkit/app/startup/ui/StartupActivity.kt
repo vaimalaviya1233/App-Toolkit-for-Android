@@ -73,13 +73,13 @@ class StartupActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun checkUserConsent() {
-        val consentInfo : ConsentInformation =
+    private suspend fun checkUserConsent() {
+        val consentInfo: ConsentInformation =
             UserMessagingPlatform.getConsentInformation(this)
         ConsentFormHelper.showConsentFormIfRequired(
             activity = this,
             consentInfo = consentInfo,
-            onFormShown = { viewModel.onEvent(StartupEvent.ConsentFormLoaded) }
         )
+        viewModel.onEvent(StartupEvent.ConsentFormLoaded)
     }
 }
