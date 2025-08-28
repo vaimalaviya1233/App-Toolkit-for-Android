@@ -88,20 +88,7 @@ class SupportViewModel(
         }
 
         viewModelScope.launch {
-            billingRepository.queryProductDetails(
-                listOf(
-                    DonationProductIds.LOW_DONATION,
-                    DonationProductIds.NORMAL_DONATION,
-                    DonationProductIds.HIGH_DONATION,
-                    DonationProductIds.EXTREME_DONATION
-                )
-            )
-        }
-    }
-
-    override fun onEvent(event: SupportEvent) {
-        when (event) {
-            is SupportEvent.QueryProductDetails -> viewModelScope.launch {
+            try {
                 billingRepository.queryProductDetails(
                     listOf(
                         DonationProductIds.LOW_DONATION,
@@ -110,6 +97,47 @@ class SupportViewModel(
                         DonationProductIds.EXTREME_DONATION
                     )
                 )
+            } catch (e: Exception) {
+                screenState.updateData(newState = ScreenState.Error()) { current ->
+                    current.copy(error = e.message)
+                }
+                screenState.showSnackbar(
+                    UiSnackbar(
+                        message = UiTextHelper.DynamicString(e.message ?: ""),
+                        isError = true,
+                        timeStamp = System.currentTimeMillis(),
+                        type = ScreenMessageType.SNACKBAR
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onEvent(event: SupportEvent) {
+        when (event) {
+            is SupportEvent.QueryProductDetails -> viewModelScope.launch {
+                try {
+                    billingRepository.queryProductDetails(
+                        listOf(
+                            DonationProductIds.LOW_DONATION,
+                            DonationProductIds.NORMAL_DONATION,
+                            DonationProductIds.HIGH_DONATION,
+                            DonationProductIds.EXTREME_DONATION
+                        )
+                    )
+                } catch (e: Exception) {
+                    screenState.updateData(newState = ScreenState.Error()) { current ->
+                        current.copy(error = e.message)
+                    }
+                    screenState.showSnackbar(
+                        UiSnackbar(
+                            message = UiTextHelper.DynamicString(e.message ?: ""),
+                            isError = true,
+                            timeStamp = System.currentTimeMillis(),
+                            type = ScreenMessageType.SNACKBAR
+                        )
+                    )
+                }
             }
 
             SupportEvent.DismissSnackbar -> screenState.dismissSnackbar()

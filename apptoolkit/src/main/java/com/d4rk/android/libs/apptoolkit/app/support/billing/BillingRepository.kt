@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
 
 class BillingRepository private constructor(
     context: Context,
@@ -131,22 +134,31 @@ class BillingRepository private constructor(
         }
     }
 
-    fun queryProductDetails(productIds: List<String>) {
-        val products = productIds.map {
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(it)
-                .setProductType(BillingClient.ProductType.INAPP)
+    suspend fun queryProductDetails(productIds: List<String>) {
+        withContext(ioDispatcher) {
+            val products = productIds.map {
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(it)
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
+            }
+            val params = QueryProductDetailsParams.newBuilder()
+                .setProductList(products)
                 .build()
-        }
-        val params = QueryProductDetailsParams.newBuilder()
-            .setProductList(products)
-            .build()
-        billingClient.queryProductDetailsAsync(params) { billingResult, result ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                val map = result.productDetailsList.associateBy { it.productId }
-                scope.launch { _productDetails.emit(map) }
-            } else {
-                scope.launch { _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage)) }
+            suspendCancellableCoroutine<Unit> { continuation ->
+                billingClient.queryProductDetailsAsync(params) { billingResult, result ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        val map = result.productDetailsList.associateBy { it.productId }
+                        scope.launch { _productDetails.emit(map) }
+                    } else {
+                        scope.launch {
+                            _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage))
+                        }
+                    }
+                    if (continuation.isActive) {
+                        continuation.resume(Unit)
+                    }
+                }
             }
         }
     }
