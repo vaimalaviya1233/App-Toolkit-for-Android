@@ -47,6 +47,7 @@ val settingsModule = module {
         DefaultAboutRepository(
             deviceProvider = get(),
             configProvider = get(),
+            context = get(),
             ioDispatcher = get(named("io")),
         )
     }

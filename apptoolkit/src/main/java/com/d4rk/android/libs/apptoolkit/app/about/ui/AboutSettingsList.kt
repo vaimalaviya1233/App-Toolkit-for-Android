@@ -29,7 +29,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnack
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -72,12 +71,7 @@ fun AboutSettingsList(paddingValues: PaddingValues = PaddingValues(), snackbarHo
                             .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     SettingsPreferenceItem(title = deviceInfo, summary = data.deviceInfo) {
-                        ClipboardHelper.copyTextToClipboard(
-                            context = context,
-                            label = deviceInfo,
-                            text = data.deviceInfo,
-                            onShowSnackbar = { viewModel.onEvent(event = AboutEvent.CopyDeviceInfo) },
-                        )
+                        viewModel.onEvent(event = AboutEvent.CopyDeviceInfo(label = deviceInfo))
                     }
                 }
             }

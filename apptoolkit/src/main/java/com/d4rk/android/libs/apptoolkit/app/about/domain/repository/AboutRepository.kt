@@ -13,4 +13,9 @@ interface AboutRepository {
      * @return A [Flow] emitting [UiAboutScreen] data.
      */
     fun getAboutInfoStream(): Flow<UiAboutScreen>
+
+    /**
+     * Copy the provided [deviceInfo] string to the clipboard with the given [label].
+     */
+    fun copyDeviceInfo(label: String, deviceInfo: String)
 }
