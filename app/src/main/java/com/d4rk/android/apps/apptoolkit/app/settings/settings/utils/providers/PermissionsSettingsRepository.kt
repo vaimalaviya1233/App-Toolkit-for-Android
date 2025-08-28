@@ -2,7 +2,7 @@ package com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers
 
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
+import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference

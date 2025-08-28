@@ -11,7 +11,7 @@ import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
-import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
+import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.DefaultGeneralSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.GeneralSettingsRepository
