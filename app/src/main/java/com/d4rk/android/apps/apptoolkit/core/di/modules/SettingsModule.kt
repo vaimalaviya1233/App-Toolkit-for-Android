@@ -10,6 +10,9 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Pe
 import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutViewModel
+import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
+import com.d4rk.android.libs.apptoolkit.app.advanced.data.DefaultCacheRepository
+import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
@@ -43,6 +46,7 @@ val settingsModule = module {
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
     single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
     single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(advancedProvider = get() , displayProvider = get() , privacyProvider = get() , configProvider = get()) }
+    single<CacheRepository> { DefaultCacheRepository(context = get(), ioDispatcher = get(named("io"))) }
     single<AboutRepository> {
         DefaultAboutRepository(
             deviceProvider = get(),
@@ -63,6 +67,8 @@ val settingsModule = module {
             permissionsRepository = get(),
         )
     }
+
+    viewModel { AdvancedSettingsViewModel(repository = get()) }
 
     viewModel {
         AboutViewModel(
