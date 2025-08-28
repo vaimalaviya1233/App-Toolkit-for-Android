@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -74,9 +73,8 @@ class AppsListViewModel(
 
     private fun fetchDeveloperApps() {
         viewModelScope.launch {
-            fetchDeveloperAppsUseCase()
-                .catch { showLoadAppsError() }
-                .collect { result: DataState<List<AppInfo>, RootError> ->
+            try {
+                fetchDeveloperAppsUseCase().collect { result: DataState<List<AppInfo>, RootError> ->
                     when (result) {
                         is DataState.Success -> {
                             val apps = result.data
@@ -101,6 +99,9 @@ class AppsListViewModel(
                         }
                     }
                 }
+            } catch (error: Throwable) {
+                showLoadAppsError()
+            }
         }
     }
 
