@@ -3,6 +3,8 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
 import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
+import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
+import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
@@ -38,6 +40,14 @@ class TestAboutViewModel {
                 configProvider = buildInfoProvider,
                 ioDispatcher = dispatcherExtension.testDispatcher,
             ),
+        )
+
+    private fun createFailingViewModel(): AboutViewModel =
+        AboutViewModel(
+            repository = object : AboutRepository {
+                override suspend fun getAboutInfo(): Result<UiAboutScreen> =
+                    Result.failure(Exception("fail"))
+            },
         )
 
     @Test
@@ -109,6 +119,16 @@ class TestAboutViewModel {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
+    }
+
+    @Test
+    fun `repository error shows snackbar`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = createFailingViewModel()
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        val snackbar = viewModel.uiState.value.snackbar!!
+        val msg = snackbar.message as UiTextHelper.StringResource
+        assertThat(msg.resourceId).isEqualTo(R.string.snack_device_info_failed)
     }
 
     @Test

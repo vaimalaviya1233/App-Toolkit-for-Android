@@ -18,11 +18,13 @@ class DefaultAboutRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AboutRepository {
 
-    override suspend fun getAboutInfo(): UiAboutScreen = withContext(ioDispatcher) {
-        UiAboutScreen(
-            appVersion = configProvider.appVersion,
-            appVersionCode = configProvider.appVersionCode,
-            deviceInfo = deviceProvider.deviceInfo,
-        )
+    override suspend fun getAboutInfo(): Result<UiAboutScreen> = withContext(ioDispatcher) {
+        runCatching {
+            UiAboutScreen(
+                appVersion = configProvider.appVersion,
+                appVersionCode = configProvider.appVersionCode,
+                deviceInfo = deviceProvider.deviceInfo,
+            )
+        }
     }
 }

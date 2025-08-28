@@ -35,21 +35,23 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            try {
-                val info = repository.getAboutInfo()
-                screenState.successData { info }
-            } catch (cancellation: CancellationException) {
-                throw cancellation
-            } catch (error: Exception) {
-                screenState.showSnackbar(
-                    snackbar = UiSnackbar(
-                        message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
-                        isError = true,
-                        timeStamp = System.nanoTime(),
-                        type = ScreenMessageType.SNACKBAR,
-                    ),
-                )
-            }
+            repository.getAboutInfo()
+                .onSuccess { info ->
+                    screenState.successData { info }
+                }
+                .onFailure { error ->
+                    if (error is CancellationException) {
+                        throw error
+                    }
+                    screenState.showSnackbar(
+                        snackbar = UiSnackbar(
+                            message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
+                            isError = true,
+                            timeStamp = System.nanoTime(),
+                            type = ScreenMessageType.SNACKBAR,
+                        ),
+                    )
+                }
         }
     }
 
