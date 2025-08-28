@@ -10,6 +10,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -32,7 +33,7 @@ class SupportViewModelTest {
     private val billingRepository = mockk<BillingRepository>(relaxed = true) {
         every { productDetails } returns productDetailsFlow
         every { purchaseResult } returns purchaseResultFlow
-        every { queryProductDetails(any()) } returns Unit
+        coEvery { queryProductDetails(any()) } returns Unit
         every { launchPurchaseFlow(any(), any()) } returns Unit
     }
 
