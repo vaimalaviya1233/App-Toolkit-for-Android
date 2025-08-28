@@ -15,6 +15,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
@@ -35,11 +37,8 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            repository.getAboutInfo()
-                .onSuccess { info ->
-                    screenState.successData { info }
-                }
-                .onFailure { error ->
+            repository.getAboutInfoStream()
+                .catch { error ->
                     if (error is CancellationException) {
                         throw error
                     }
@@ -51,6 +50,9 @@ open class AboutViewModel(
                             type = ScreenMessageType.SNACKBAR,
                         ),
                     )
+                }
+                .collect { info ->
+                    screenState.successData { info }
                 }
         }
     }
