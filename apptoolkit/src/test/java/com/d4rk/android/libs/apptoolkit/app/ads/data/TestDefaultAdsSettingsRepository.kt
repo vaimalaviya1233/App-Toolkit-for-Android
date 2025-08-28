@@ -9,6 +9,8 @@ import io.mockk.every
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -62,6 +64,23 @@ class TestDefaultAdsSettingsRepository {
             assertThat(awaitItem()).isTrue()
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `observeAdsEnabled rethrows cancellation`() = runTest(dispatcherExtension.testDispatcher) {
+        println("\uD83D\uDE80 [TEST] observeAdsEnabled rethrows cancellation")
+        val dataStore = mockk<CommonDataStore>()
+        every { dataStore.ads(default = true) } returns flow { throw CancellationException("boom") }
+        val repository = createRepository(dataStore, isDebugBuild = false)
+
+        var thrown: Throwable? = null
+        try {
+            repository.observeAdsEnabled().collect()
+        } catch (e: Throwable) {
+            thrown = e
+        }
+
+        assertThat(thrown).isInstanceOf(CancellationException::class.java)
     }
 
     @Test
