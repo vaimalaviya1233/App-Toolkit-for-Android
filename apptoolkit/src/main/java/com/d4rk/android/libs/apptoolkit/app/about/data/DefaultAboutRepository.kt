@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 /**
@@ -27,14 +26,15 @@ class DefaultAboutRepository(
 
     override fun getAboutInfoStream(): Flow<UiAboutScreen> =
         flow {
-            emit(
+            val info = withContext(ioDispatcher) {
                 UiAboutScreen(
                     appVersion = configProvider.appVersion,
                     appVersionCode = configProvider.appVersionCode,
                     deviceInfo = deviceProvider.deviceInfo,
                 )
-            )
-        }.flowOn(ioDispatcher)
+            }
+            emit(info)
+        }
 
     override suspend fun copyDeviceInfo(label: String, deviceInfo: String) {
         withContext(mainDispatcher) {

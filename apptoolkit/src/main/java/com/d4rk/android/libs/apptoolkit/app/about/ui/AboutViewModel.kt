@@ -16,8 +16,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
@@ -37,24 +36,25 @@ open class AboutViewModel(
     }
 
     private fun loadAboutInfo() {
-        repository.getAboutInfoStream()
-            .onEach { info ->
-                screenState.successData { info }
-            }
-            .catch { error ->
-                if (error is CancellationException) {
-                    throw error
+        viewModelScope.launch {
+            repository.getAboutInfoStream()
+                .catch { error ->
+                    if (error is CancellationException) {
+                        throw error
+                    }
+                    screenState.showSnackbar(
+                        snackbar = UiSnackbar(
+                            message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
+                            isError = true,
+                            timeStamp = System.nanoTime(),
+                            type = ScreenMessageType.SNACKBAR,
+                        ),
+                    )
                 }
-                screenState.showSnackbar(
-                    snackbar = UiSnackbar(
-                        message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
-                        isError = true,
-                        timeStamp = System.nanoTime(),
-                        type = ScreenMessageType.SNACKBAR,
-                    ),
-                )
-            }
-            .launchIn(viewModelScope)
+                .collect { info ->
+                    screenState.successData { info }
+                }
+        }
     }
 
     private fun copyDeviceInfo(label: String) {
