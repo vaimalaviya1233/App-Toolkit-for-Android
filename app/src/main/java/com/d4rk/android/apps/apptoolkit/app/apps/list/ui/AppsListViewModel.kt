@@ -5,11 +5,9 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.Obser
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeAction
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -19,11 +17,12 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -32,15 +31,14 @@ class AppsListViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ScreenViewModel<UiHomeScreen, HomeEvent, HomeAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
 
     private val fetchAppsTrigger = MutableSharedFlow<Unit>(replay = 1)
 
-    val favorites = flow {
-        emitAll(observeFavoritesUseCase())
-    }.stateIn(
+    val favorites = observeFavoritesUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = emptySet()
@@ -49,12 +47,7 @@ class AppsListViewModel(
     init {
         viewModelScope.launch {
             fetchAppsTrigger
-                .flatMapLatest {
-                    flow {
-                        emit(DataState.Loading<List<AppInfo>, RootError>())
-                        emit(fetchDeveloperAppsUseCase())
-                    }
-                }
+                .flatMapLatest { fetchDeveloperAppsUseCase().flowOn(ioDispatcher) }
                 .collect { result ->
                     when (result) {
                         is DataState.Success -> {
