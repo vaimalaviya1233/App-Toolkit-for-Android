@@ -1,16 +1,15 @@
 package com.d4rk.android.libs.apptoolkit.app.about.domain.repository
 
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Repository responsible for providing data for the about screen.
  */
 interface AboutRepository {
     /**
-     * Stream information displayed on the about screen.
+     * Retrieve information displayed on the about screen.
      *
-     * @return A [Flow] emitting [UiAboutScreen] data.
+     * @return A [UiAboutScreen] data object.
      */
     suspend fun getAboutInfoStream(): UiAboutScreen
 
