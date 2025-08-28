@@ -10,6 +10,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class AdvancedSettingsViewModel(
@@ -27,16 +29,15 @@ class AdvancedSettingsViewModel(
 
     private fun clearCache() {
         viewModelScope.launch {
-            val result = try {
-                repository.clearCache()
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
-            val message = when (result) {
-                is Result.Success -> R.string.cache_cleared_success
-                is Result.Error -> R.string.cache_cleared_error
-            }
-            screenState.copyData { copy(cacheClearMessage = message) }
+            repository.clearCache()
+                .catch { emit(Result.Error(it as Exception)) }
+                .collect { result ->
+                    val message = when (result) {
+                        is Result.Success -> R.string.cache_cleared_success
+                        is Result.Error -> R.string.cache_cleared_error
+                    }
+                    screenState.copyData { copy(cacheClearMessage = message) }
+                }
         }
     }
 

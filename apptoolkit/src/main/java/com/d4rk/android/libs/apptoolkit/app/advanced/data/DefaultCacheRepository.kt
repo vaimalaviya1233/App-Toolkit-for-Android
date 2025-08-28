@@ -8,7 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Default implementation of [CacheRepository] that clears cache directories using the provided [Context].
@@ -18,14 +21,14 @@ class DefaultCacheRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : CacheRepository {
 
-    override suspend fun clearCache(): Result<Unit> = withContext(ioDispatcher) {
+    override fun clearCache(): Flow<Result<Unit>> = flow {
         val cacheDirectories: List<File> = listOf(
             context.cacheDir,
             context.codeCacheDir,
             context.filesDir,
         )
 
-        return@withContext try {
+        val result = try {
             val allDeleted = coroutineScope {
                 cacheDirectories
                     .map { directory -> async { directory.deleteRecursively() } }
@@ -40,5 +43,8 @@ class DefaultCacheRepository(
         } catch (e: Exception) {
             Result.Error(e)
         }
+        emit(result)
     }
+        .catch { e -> emit(Result.Error(e as Exception)) }
+        .flowOn(ioDispatcher)
 }
