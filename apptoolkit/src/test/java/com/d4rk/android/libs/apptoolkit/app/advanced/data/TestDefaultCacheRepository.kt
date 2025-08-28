@@ -7,7 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
-import kotlin.test.assertFailsWith
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -26,7 +26,7 @@ class TestDefaultCacheRepository {
         every { context.filesDir } returns dir3
 
         val repository = DefaultCacheRepository(context)
-        val result = repository.clearCache()
+        val result = repository.clearCache().single()
 
         assertThat(result).isInstanceOf(Result.Success::class.java)
         assertFalse(dir1.exists())
@@ -50,7 +50,7 @@ class TestDefaultCacheRepository {
         every { context.filesDir } returns dir3
 
         val repository = DefaultCacheRepository(context)
-        val result = repository.clearCache()
+        val result = repository.clearCache().single()
 
         assertThat(result).isInstanceOf(Result.Error::class.java)
         assertFalse(dir1.exists())
@@ -59,14 +59,15 @@ class TestDefaultCacheRepository {
     }
 
     @Test
-    fun `clearCache throws when directory inaccessible`() = runTest {
-        println("\uD83D\uDE80 [TEST] clearCache throws when directory inaccessible")
+    fun `clearCache emits error when directory inaccessible`() = runTest {
+        println("\uD83D\uDE80 [TEST] clearCache emits error when directory inaccessible")
         val context = mockk<Context>()
         every { context.cacheDir } throws SecurityException("denied")
 
         val repository = DefaultCacheRepository(context)
-        assertFailsWith<SecurityException> { repository.clearCache() }
-        println("\uD83C\uDFC1 [TEST DONE] clearCache throws when directory inaccessible")
+        val result = repository.clearCache().single()
+        assertThat(result).isInstanceOf(Result.Error::class.java)
+        println("\uD83C\uDFC1 [TEST DONE] clearCache emits error when directory inaccessible")
     }
 
     @Test
@@ -82,15 +83,15 @@ class TestDefaultCacheRepository {
         every { context.filesDir } returns dir3
 
         val repository = DefaultCacheRepository(context)
-        val result = repository.clearCache()
+        val result = repository.clearCache().single()
 
         assertThat(result).isInstanceOf(Result.Success::class.java)
         println("\uD83C\uDFC1 [TEST DONE] clearCache handles missing directories")
     }
 
     @Test
-    fun `clearCache propagates io exception`() = runTest {
-        println("\uD83D\uDE80 [TEST] clearCache propagates io exception")
+    fun `clearCache emits error when io exception`() = runTest {
+        println("\uD83D\uDE80 [TEST] clearCache emits error when io exception")
         val dir1 = createTempDirectory().toFile()
         val failing = mockk<java.io.File>()
         every { failing.deleteRecursively() } throws java.io.IOException("io")
@@ -103,7 +104,8 @@ class TestDefaultCacheRepository {
         every { context.filesDir } returns dir3
 
         val repository = DefaultCacheRepository(context)
-        assertFailsWith<java.io.IOException> { repository.clearCache() }
-        println("\uD83C\uDFC1 [TEST DONE] clearCache propagates io exception")
+        val result = repository.clearCache().single()
+        assertThat(result).isInstanceOf(Result.Error::class.java)
+        println("\uD83C\uDFC1 [TEST DONE] clearCache emits error when io exception")
     }
 }
