@@ -10,6 +10,8 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -45,8 +47,9 @@ class TestAboutViewModel {
     private fun createFailingViewModel(): AboutViewModel =
         AboutViewModel(
             repository = object : AboutRepository {
-                override suspend fun getAboutInfo(): Result<UiAboutScreen> =
-                    Result.failure(Exception("fail"))
+                override fun getAboutInfoStream(): Flow<UiAboutScreen> = flow {
+                    throw Exception("fail")
+                }
             },
         )
 

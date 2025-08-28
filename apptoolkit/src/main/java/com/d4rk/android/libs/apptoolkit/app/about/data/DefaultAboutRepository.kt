@@ -6,7 +6,9 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettin
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Default implementation of [AboutRepository] that gathers device and build
@@ -18,13 +20,14 @@ class DefaultAboutRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AboutRepository {
 
-    override suspend fun getAboutInfo(): Result<UiAboutScreen> = withContext(ioDispatcher) {
-        runCatching {
-            UiAboutScreen(
-                appVersion = configProvider.appVersion,
-                appVersionCode = configProvider.appVersionCode,
-                deviceInfo = deviceProvider.deviceInfo,
+    override fun getAboutInfoStream(): Flow<UiAboutScreen> =
+        flow {
+            emit(
+                UiAboutScreen(
+                    appVersion = configProvider.appVersion,
+                    appVersionCode = configProvider.appVersionCode,
+                    deviceInfo = deviceProvider.deviceInfo,
+                )
             )
-        }
-    }
+        }.flowOn(ioDispatcher)
 }
