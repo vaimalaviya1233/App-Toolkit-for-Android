@@ -16,10 +16,3 @@ fun AppInfoDto.toDomain(): AppInfo = AppInfo(
     packageName = packageName,
     iconUrl = iconUrl,
 )
-
-fun AppInfo.toDto(): AppInfoDto = AppInfoDto(
-    name = name,
-    packageName = packageName,
-    iconUrl = iconUrl,
-)
-

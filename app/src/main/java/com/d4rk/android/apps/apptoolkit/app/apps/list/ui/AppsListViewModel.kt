@@ -19,17 +19,21 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class AppsListViewModel(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
-    private val observeFavoritesUseCase: ObserveFavoritesUseCase,
+    observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ScreenViewModel<UiHomeScreen, HomeEvent, HomeAction>(
@@ -38,7 +42,7 @@ class AppsListViewModel(
 
     private val fetchAppsTrigger = MutableSharedFlow<Unit>(replay = 1)
 
-    val favorites = observeFavoritesUseCase().stateIn(
+    val favorites = flow { emitAll(observeFavoritesUseCase()) }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = emptySet()
