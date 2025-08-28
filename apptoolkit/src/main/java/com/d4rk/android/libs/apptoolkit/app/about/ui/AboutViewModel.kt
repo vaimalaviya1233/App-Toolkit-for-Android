@@ -30,7 +30,7 @@ open class AboutViewModel(
 
     override fun onEvent(event: AboutEvent) {
         when (event) {
-            is AboutEvent.CopyDeviceInfo -> copyDeviceInfo()
+            is AboutEvent.CopyDeviceInfo -> copyDeviceInfo(event.label)
             is AboutEvent.DismissSnackbar -> dismissSnack()
         }
     }
@@ -57,15 +57,18 @@ open class AboutViewModel(
         }
     }
 
-    private fun copyDeviceInfo() {
-        screenState.showSnackbar(
-            snackbar = UiSnackbar(
-                message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
-                isError = false,
-                timeStamp = System.nanoTime(),
-                type = ScreenMessageType.SNACKBAR,
-            ),
-        )
+    private fun copyDeviceInfo(label: String) {
+        screenData?.let { data ->
+            repository.copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
+            screenState.showSnackbar(
+                snackbar = UiSnackbar(
+                    message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
+                    isError = false,
+                    timeStamp = System.nanoTime(),
+                    type = ScreenMessageType.SNACKBAR,
+                ),
+            )
+        }
     }
 
     private fun dismissSnack() {

@@ -9,7 +9,7 @@ sealed interface AboutEvent : UiEvent {
     /**
      * Copies the device information to the clipboard.
      */
-    data object CopyDeviceInfo : AboutEvent
+    data class CopyDeviceInfo(val label: String) : AboutEvent
 
     /**
      * Dismisses the currently displayed snackbar.

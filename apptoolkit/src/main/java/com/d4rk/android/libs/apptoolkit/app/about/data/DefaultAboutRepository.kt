@@ -1,9 +1,11 @@
 package com.d4rk.android.libs.apptoolkit.app.about.data
 
+import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.flowOn
 class DefaultAboutRepository(
     private val deviceProvider: AboutSettingsProvider,
     private val configProvider: BuildInfoProvider,
+    private val context: Context,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AboutRepository {
 
@@ -30,4 +33,12 @@ class DefaultAboutRepository(
                 )
             )
         }.flowOn(ioDispatcher)
+
+    override fun copyDeviceInfo(label: String, deviceInfo: String) {
+        ClipboardHelper.copyTextToClipboard(
+            context = context,
+            label = label,
+            text = deviceInfo,
+        )
+    }
 }
