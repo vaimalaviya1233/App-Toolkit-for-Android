@@ -8,10 +8,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.Develope
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiConstants
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiEnvironments
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiPaths
-import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
-import com.d4rk.android.apps.apptoolkit.core.utils.extensions.toError
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -20,47 +16,33 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
+import java.net.SocketTimeoutException
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : DeveloperAppsRepository {
 
-    override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, RootError>> =
-        flow {
-            emit(DataState.Loading<List<AppInfo>, RootError>())
+    override suspend fun fetchDeveloperApps(): List<AppInfo> = withContext(ioDispatcher) {
+        val url = BuildConfig.DEBUG.let { isDebug ->
+            val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
+            "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
+        }
 
-            val url = BuildConfig.DEBUG.let { isDebug ->
-                val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
-                "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
-            }
-
-            val httpResponse: HttpResponse = client.get(url)
-            if (!httpResponse.status.isSuccess()) {
-                val rootError = when (httpResponse.status) {
-                    HttpStatusCode.RequestTimeout -> Errors.Network.REQUEST_TIMEOUT
-                    else -> Errors.UseCase.FAILED_TO_LOAD_APPS
-                }
-                emit(DataState.Error<List<AppInfo>, RootError>(error = rootError))
+        val httpResponse: HttpResponse = client.get(url)
+        if (!httpResponse.status.isSuccess()) {
+            if (httpResponse.status == HttpStatusCode.RequestTimeout) {
+                throw SocketTimeoutException("Request timeout")
             } else {
-                val apiResponse: ApiResponse = httpResponse.body()
-                val apps = apiResponse.data.apps
-                    .map { it.toDomain() }
-                    .sortedBy { it.name.lowercase() }
-                emit(DataState.Success(data = apps))
+                throw IllegalStateException("Failed to load apps")
             }
         }
-            .catch { error ->
-                emit(
-                    DataState.Error<List<AppInfo>, RootError>(
-                        error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)
-                    )
-                )
-            }
-            .flowOn(ioDispatcher)
+
+        val apiResponse: ApiResponse = httpResponse.body()
+        apiResponse.data.apps
+            .map { it.toDomain() }
+            .sortedBy { it.name.lowercase() }
+    }
 }
 
