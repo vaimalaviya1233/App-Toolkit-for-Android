@@ -31,13 +31,15 @@ class DefaultAdsSettingsRepository(
             }
             .flowOn(ioDispatcher)
 
-    override suspend fun setAdsEnabled(enabled: Boolean): Result<Unit> = withContext(ioDispatcher) {
-        try {
-            dataStore.saveAds(isChecked = enabled)
-            Result.Success(Unit)
-        } catch (e: Exception) {
-            if (e is CancellationException) throw e
-            Result.Error(e)
-        }
-    }
+    override suspend fun setAdsEnabled(enabled: Boolean): Result<Unit> =
+        runCatching {
+            withContext(ioDispatcher) {
+                dataStore.saveAds(isChecked = enabled)
+            }
+        }.fold(
+            onSuccess = { Result.Success(Unit) },
+            onFailure = {
+                if (it is Exception) Result.Error(it) else throw it
+            }
+        )
 }

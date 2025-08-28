@@ -4,10 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import com.android.billingclient.api.ProductDetails
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
@@ -21,14 +17,12 @@ class SupportActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    SupportComposable(viewModel = viewModel , activity = this@SupportActivity)
-                }
+                SupportComposable(viewModel = viewModel , activity = this@SupportActivity)
             }
         }
     }
 
-    fun initiatePurchase(productId : String , productDetailsMap : Map<String , ProductDetails>) {
+    fun initiatePurchase(productId : String , productDetailsMap : Map<String , ProductDetails>) { // FIXME: Function "initiatePurchase" is never used
         productDetailsMap[productId]?.let { productDetails : ProductDetails ->
             BillingRepository.getInstance(this).launchPurchaseFlow(this , productDetails)
         }
