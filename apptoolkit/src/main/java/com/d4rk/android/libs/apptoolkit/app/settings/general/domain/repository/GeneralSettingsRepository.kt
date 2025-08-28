@@ -1,17 +1,12 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 /**
  * Repository responsible for providing the content key for the General Settings screen.
  *
- * This implementation performs a lightweight validation on the provided key and
- * executes the work on the provided [CoroutineDispatcher] to keep data
- * operations off the UI layer and allow easier testing.
+ * Implementations should validate the provided key and emit it through a
+ * [Flow]. This keeps the data operations asynchronous and testable.
  */
 interface GeneralSettingsRepository {
     /**
@@ -23,14 +18,4 @@ interface GeneralSettingsRepository {
     fun getContentKey(contentKey: String?): Flow<String>
 }
 
-class DefaultGeneralSettingsRepository(
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : GeneralSettingsRepository {
-    override fun getContentKey(contentKey: String?): Flow<String> = flow {
-        if (contentKey.isNullOrBlank()) {
-            throw IllegalArgumentException("Invalid content key")
-        }
-        emit(contentKey)
-    }.flowOn(dispatcher)
-}
 
