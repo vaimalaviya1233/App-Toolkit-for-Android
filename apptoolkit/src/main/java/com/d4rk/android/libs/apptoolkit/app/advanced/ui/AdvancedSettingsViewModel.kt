@@ -6,6 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsAction
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.model.ui.UiAdvancedSettingsScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
@@ -26,11 +27,14 @@ class AdvancedSettingsViewModel(
 
     private fun clearCache() {
         viewModelScope.launch {
-            val success = repository.clearCache()
-            val message = if (success) {
-                R.string.cache_cleared_success
-            } else {
-                R.string.cache_cleared_error
+            val result = try {
+                repository.clearCache()
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+            val message = when (result) {
+                is Result.Success -> R.string.cache_cleared_success
+                is Result.Error -> R.string.cache_cleared_error
             }
             screenState.copyData { copy(cacheClearMessage = message) }
         }

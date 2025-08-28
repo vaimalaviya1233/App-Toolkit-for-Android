@@ -2,13 +2,14 @@ package com.d4rk.android.libs.apptoolkit.app.advanced.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
+import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-private class FakeCacheRepository(var result: Boolean) : CacheRepository {
-    override suspend fun clearCache(): Boolean = result
+private class FakeCacheRepository(var result: Result<Unit>) : CacheRepository {
+    override suspend fun clearCache(): Result<Unit> = result
 }
 
 class TestAdvancedSettingsViewModel {
@@ -16,7 +17,7 @@ class TestAdvancedSettingsViewModel {
     @Test
     fun `onClearCache emits success message`() = runTest {
         println("\uD83D\uDE80 [TEST] onClearCache emits success message")
-        val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(true))
+        val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(Result.Success(Unit)))
 
         viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
 
@@ -29,7 +30,7 @@ class TestAdvancedSettingsViewModel {
     @Test
     fun `onClearCache emits error message when failure`() = runTest {
         println("\uD83D\uDE80 [TEST] onClearCache emits error message when failure")
-        val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(false))
+        val viewModel = AdvancedSettingsViewModel(repository = FakeCacheRepository(Result.Error(Exception("fail"))))
 
         viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
 

@@ -1,11 +1,12 @@
 package com.d4rk.android.libs.apptoolkit.app.advanced.data
 
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import kotlin.io.path.createTempDirectory
 import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import kotlin.test.assertFailsWith
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -27,7 +28,7 @@ class TestDefaultCacheRepository {
         val repository = DefaultCacheRepository(context)
         val result = repository.clearCache()
 
-        assertTrue(result)
+        assertThat(result).isInstanceOf(Result.Success::class.java)
         assertFalse(dir1.exists())
         assertFalse(dir2.exists())
         assertFalse(dir3.exists())
@@ -51,7 +52,7 @@ class TestDefaultCacheRepository {
         val repository = DefaultCacheRepository(context)
         val result = repository.clearCache()
 
-        assertFalse(result)
+        assertThat(result).isInstanceOf(Result.Error::class.java)
         assertFalse(dir1.exists())
         assertFalse(dir3.exists())
         println("\uD83C\uDFC1 [TEST DONE] clearCache returns false when deletion fails")
@@ -83,7 +84,7 @@ class TestDefaultCacheRepository {
         val repository = DefaultCacheRepository(context)
         val result = repository.clearCache()
 
-        assertTrue(result)
+        assertThat(result).isInstanceOf(Result.Success::class.java)
         println("\uD83C\uDFC1 [TEST DONE] clearCache handles missing directories")
     }
 
