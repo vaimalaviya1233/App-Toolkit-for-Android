@@ -16,7 +16,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
@@ -37,18 +37,18 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            repository.getAboutInfoStream()
+            flow { emit(repository.getAboutInfoStream()) }
                 .catch { error ->
                     if (error is CancellationException) {
                         throw error
                     }
                     screenState.showSnackbar(
-                        snackbar = UiSnackbar(
+                        UiSnackbar(
                             message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
                             isError = true,
                             timeStamp = System.nanoTime(),
                             type = ScreenMessageType.SNACKBAR,
-                        ),
+                        )
                     )
                 }
                 .collect { info ->
@@ -60,27 +60,28 @@ open class AboutViewModel(
     private fun copyDeviceInfo(label: String) {
         screenData?.let { data ->
             viewModelScope.launch {
-                try {
+                runCatching {
                     repository.copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
+                }.onSuccess {
                     screenState.showSnackbar(
-                        snackbar = UiSnackbar(
+                        UiSnackbar(
                             message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
                             isError = false,
                             timeStamp = System.nanoTime(),
                             type = ScreenMessageType.SNACKBAR,
-                        ),
+                        )
                     )
-                } catch (error: Throwable) {
+                }.onFailure { error ->
                     if (error is CancellationException) {
                         throw error
                     }
                     screenState.showSnackbar(
-                        snackbar = UiSnackbar(
+                        UiSnackbar(
                             message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
                             isError = true,
                             timeStamp = System.nanoTime(),
                             type = ScreenMessageType.SNACKBAR,
-                        ),
+                        )
                     )
                 }
             }

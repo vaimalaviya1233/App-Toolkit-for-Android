@@ -8,9 +8,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 /**
@@ -25,16 +22,14 @@ class DefaultAboutRepository(
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
 ) : AboutRepository {
 
-    override fun getAboutInfoStream(): Flow<UiAboutScreen> =
-        flow {
-            emit(
-                UiAboutScreen(
-                    appVersion = configProvider.appVersion,
-                    appVersionCode = configProvider.appVersionCode,
-                    deviceInfo = deviceProvider.deviceInfo,
-                )
+    override suspend fun getAboutInfoStream(): UiAboutScreen =
+        withContext(ioDispatcher) {
+            UiAboutScreen(
+                appVersion = configProvider.appVersion,
+                appVersionCode = configProvider.appVersionCode,
+                deviceInfo = deviceProvider.deviceInfo,
             )
-        }.flowOn(ioDispatcher)
+        }
 
     override suspend fun copyDeviceInfo(label: String, deviceInfo: String) {
         withContext(mainDispatcher) {
