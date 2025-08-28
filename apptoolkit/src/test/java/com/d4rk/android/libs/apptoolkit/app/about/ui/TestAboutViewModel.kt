@@ -9,8 +9,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -37,15 +35,12 @@ class TestAboutViewModel {
     private fun createViewModel(): AboutViewModel =
         AboutViewModel(
             repository = object : AboutRepository {
-                override fun getAboutInfoStream(): Flow<UiAboutScreen> = flow {
-                    emit(
-                        UiAboutScreen(
-                            appVersion = buildInfoProvider.appVersion,
-                            appVersionCode = buildInfoProvider.appVersionCode,
-                            deviceInfo = deviceProvider.deviceInfo,
-                        )
+                override suspend fun getAboutInfoStream(): UiAboutScreen =
+                    UiAboutScreen(
+                        appVersion = buildInfoProvider.appVersion,
+                        appVersionCode = buildInfoProvider.appVersionCode,
+                        deviceInfo = deviceProvider.deviceInfo,
                     )
-                }
 
                 override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
             },
@@ -54,7 +49,7 @@ class TestAboutViewModel {
     private fun createFailingViewModel(): AboutViewModel =
         AboutViewModel(
             repository = object : AboutRepository {
-                override fun getAboutInfoStream(): Flow<UiAboutScreen> = flow {
+                override suspend fun getAboutInfoStream(): UiAboutScreen {
                     throw Exception("fail")
                 }
 
