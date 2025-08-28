@@ -16,7 +16,7 @@ import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsViewMode
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
-import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.DefaultGeneralSettingsRepository
+import com.d4rk.android.libs.apptoolkit.app.settings.general.data.DefaultGeneralSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.GeneralSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
@@ -56,7 +56,9 @@ val settingsModule = module {
             mainDispatcher = get(named("main")),
         )
     }
-    single<GeneralSettingsRepository> { DefaultGeneralSettingsRepository() }
+    single<GeneralSettingsRepository> {
+        DefaultGeneralSettingsRepository(dispatcher = get(named("default")))
+    }
     viewModel {
         GeneralSettingsViewModel(repository = get())
     }

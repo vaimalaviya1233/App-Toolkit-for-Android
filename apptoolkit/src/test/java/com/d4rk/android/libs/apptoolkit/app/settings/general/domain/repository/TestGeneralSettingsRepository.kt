@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository
 
+import com.d4rk.android.libs.apptoolkit.app.settings.general.data.DefaultGeneralSettingsRepository
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
