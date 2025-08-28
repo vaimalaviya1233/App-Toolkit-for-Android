@@ -2,10 +2,11 @@ package com.d4rk.android.libs.apptoolkit.app.ads.data
 
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.repository.AdsSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -30,7 +31,13 @@ class DefaultAdsSettingsRepository(
             }
             .flowOn(ioDispatcher)
 
-    override suspend fun setAdsEnabled(enabled: Boolean) = withContext(ioDispatcher) {
-        dataStore.saveAds(isChecked = enabled)
+    override suspend fun setAdsEnabled(enabled: Boolean): Result<Unit> = withContext(ioDispatcher) {
+        try {
+            dataStore.saveAds(isChecked = enabled)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            Result.Error(e)
+        }
     }
 }

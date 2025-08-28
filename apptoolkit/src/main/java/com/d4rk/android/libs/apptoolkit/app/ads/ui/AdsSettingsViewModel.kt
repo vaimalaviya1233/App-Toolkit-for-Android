@@ -5,6 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsAction
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.actions.AdsSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.model.ui.UiAdsSettingsScreen
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.repository.AdsSettingsRepository
+import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
@@ -14,7 +15,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 /** ViewModel for Ads settings screen. */
 class AdsSettingsViewModel(
@@ -52,10 +52,9 @@ class AdsSettingsViewModel(
 
     private fun setAdsEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            try {
-                repository.setAdsEnabled(enabled)
-            } catch (e: IOException) {
-                screenState.updateData(newState = ScreenState.Error()) { current ->
+            when (repository.setAdsEnabled(enabled)) {
+                is Result.Success -> Unit
+                is Result.Error -> screenState.updateData(newState = ScreenState.Error()) { current ->
                     current.copy(adsEnabled = !enabled)
                 }
             }
