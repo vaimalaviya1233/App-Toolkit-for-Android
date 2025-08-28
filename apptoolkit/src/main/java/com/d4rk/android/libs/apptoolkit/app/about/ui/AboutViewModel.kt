@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
@@ -34,19 +35,21 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            runCatching {
+            try {
                 val info = repository.getAboutInfo()
                 screenState.successData { info }
-            }.onFailure {
-                    screenState.showSnackbar(
-                        snackbar = UiSnackbar(
-                            message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
-                            isError = true,
-                            timeStamp = System.nanoTime(),
-                            type = ScreenMessageType.SNACKBAR,
-                        ),
-                    )
-                }
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (error: Exception) {
+                screenState.showSnackbar(
+                    snackbar = UiSnackbar(
+                        message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
+                        isError = true,
+                        timeStamp = System.nanoTime(),
+                        type = ScreenMessageType.SNACKBAR,
+                    ),
+                )
+            }
         }
     }
 
