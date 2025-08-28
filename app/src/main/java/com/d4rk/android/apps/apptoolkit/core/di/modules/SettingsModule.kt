@@ -49,6 +49,7 @@ val settingsModule = module {
             configProvider = get(),
             context = get(),
             ioDispatcher = get(named("io")),
+            mainDispatcher = get(named("main")),
         )
     }
     single<GeneralSettingsRepository> { DefaultGeneralSettingsRepository() }

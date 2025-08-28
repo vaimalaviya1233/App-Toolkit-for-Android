@@ -18,6 +18,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 open class AboutViewModel(
     private val repository: AboutRepository,
@@ -58,15 +59,31 @@ open class AboutViewModel(
 
     private fun copyDeviceInfo(label: String) {
         screenData?.let { data ->
-            repository.copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
-            screenState.showSnackbar(
-                snackbar = UiSnackbar(
-                    message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
-                    isError = false,
-                    timeStamp = System.nanoTime(),
-                    type = ScreenMessageType.SNACKBAR,
-                ),
-            )
+            viewModelScope.launch {
+                try {
+                    repository.copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
+                    screenState.showSnackbar(
+                        snackbar = UiSnackbar(
+                            message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_copied),
+                            isError = false,
+                            timeStamp = System.nanoTime(),
+                            type = ScreenMessageType.SNACKBAR,
+                        ),
+                    )
+                } catch (error: Throwable) {
+                    if (error is CancellationException) {
+                        throw error
+                    }
+                    screenState.showSnackbar(
+                        snackbar = UiSnackbar(
+                            message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
+                            isError = true,
+                            timeStamp = System.nanoTime(),
+                            type = ScreenMessageType.SNACKBAR,
+                        ),
+                    )
+                }
+            }
         }
     }
 

@@ -16,6 +16,9 @@ interface AboutRepository {
 
     /**
      * Copy the provided [deviceInfo] string to the clipboard with the given [label].
+     *
+     * Implementations should handle threading to ensure this call is safe from the
+     * main thread and can be executed off the UI thread when necessary.
      */
-    fun copyDeviceInfo(label: String, deviceInfo: String)
+    suspend fun copyDeviceInfo(label: String, deviceInfo: String)
 }
