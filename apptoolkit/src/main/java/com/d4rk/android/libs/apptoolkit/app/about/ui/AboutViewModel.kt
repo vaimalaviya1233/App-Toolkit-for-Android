@@ -5,8 +5,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.events.AboutActions
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
@@ -14,15 +13,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 open class AboutViewModel(
-    private val deviceProvider: AboutSettingsProvider,
-    private val configProvider: BuildInfoProvider,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val repository: AboutRepository,
 ) :
     ScreenViewModel<UiAboutScreen, AboutEvents, AboutActions>(initialState = UiStateScreen(data = UiAboutScreen())) {
 
@@ -39,14 +33,19 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            val info = withContext(dispatcher) {
-                UiAboutScreen(
-                    appVersion = configProvider.appVersion,
-                    appVersionCode = configProvider.appVersionCode,
-                    deviceInfo = deviceProvider.deviceInfo,
+            try {
+                val info = repository.getAboutInfo()
+                screenState.successData { info }
+            } catch (e: Exception) {
+                screenState.showSnackbar(
+                    snackbar = UiSnackbar(
+                        message = UiTextHelper.StringResource(resourceId = R.string.snack_device_info_failed),
+                        isError = true,
+                        timeStamp = System.nanoTime(),
+                        type = ScreenMessageType.SNACKBAR,
+                    ),
                 )
             }
-            screenState.successData { info }
         }
     }
 

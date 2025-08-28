@@ -261,6 +261,7 @@
     <string name="android_version">Android Version:</string>
     <string name="api_level">API Level:</string>
     <string name="snack_device_info_copied">Device info copied to clipboard</string>
+    <string name="snack_device_info_failed">Unable to load device info</string>
 
     <string name="help_and_feedback">Help &amp; feedback</string>
     <string name="help">Help</string>
