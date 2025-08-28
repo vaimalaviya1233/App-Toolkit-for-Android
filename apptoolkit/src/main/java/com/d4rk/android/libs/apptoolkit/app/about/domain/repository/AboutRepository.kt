@@ -8,6 +8,9 @@ import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 interface AboutRepository {
     /**
      * Fetch information displayed on the about screen.
+     *
+     * @return A [Result] containing [UiAboutScreen] data or a failure when the
+     *         information could not be retrieved.
      */
-    suspend fun getAboutInfo(): UiAboutScreen
+    suspend fun getAboutInfo(): Result<UiAboutScreen>
 }
