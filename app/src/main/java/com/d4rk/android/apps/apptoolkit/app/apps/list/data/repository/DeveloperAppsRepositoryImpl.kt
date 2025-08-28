@@ -22,7 +22,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient,
@@ -31,35 +31,33 @@ class DeveloperAppsRepositoryImpl(
 
     override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, RootError>> = flow {
         emit(DataState.Loading<List<AppInfo>, RootError>())
-        runCatching {
-            val url = BuildConfig.DEBUG.let { isDebug ->
-                val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
-                "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
-            }
-            val httpResponse: HttpResponse = client.get(url)
-            if (!httpResponse.status.isSuccess()) {
-                val rootError = when (httpResponse.status) {
-                    HttpStatusCode.RequestTimeout -> Errors.Network.REQUEST_TIMEOUT
-                    else -> Errors.UseCase.FAILED_TO_LOAD_APPS
+        val result: DataState<List<AppInfo>, RootError> = withContext(ioDispatcher) {
+            try {
+                val url = BuildConfig.DEBUG.let { isDebug ->
+                    val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
+                    "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
                 }
-                emit(DataState.Error<List<AppInfo>, RootError>(error = rootError))
-                return@flow
-            }
-
-            val apiResponse: ApiResponse = httpResponse.body<ApiResponse>()
-
-            apiResponse.data.apps
-                .map { it.toDomain() }
-                .sortedBy { it.name.lowercase() }
-        }.onSuccess { apps ->
-            emit(DataState.Success(data = apps))
-        }.onFailure { error ->
-            emit(
+                val httpResponse: HttpResponse = client.get(url)
+                if (!httpResponse.status.isSuccess()) {
+                    val rootError = when (httpResponse.status) {
+                        HttpStatusCode.RequestTimeout -> Errors.Network.REQUEST_TIMEOUT
+                        else -> Errors.UseCase.FAILED_TO_LOAD_APPS
+                    }
+                    DataState.Error<List<AppInfo>, RootError>(error = rootError)
+                } else {
+                    val apiResponse: ApiResponse = httpResponse.body()
+                    val apps = apiResponse.data.apps
+                        .map { it.toDomain() }
+                        .sortedBy { it.name.lowercase() }
+                    DataState.Success(data = apps)
+                }
+            } catch (error: Throwable) {
                 DataState.Error<List<AppInfo>, RootError>(
                     error = error.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)
                 )
-            )
+            }
         }
-    }.flowOn(ioDispatcher)
+        emit(result)
+    }
 }
 
