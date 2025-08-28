@@ -9,7 +9,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -23,8 +22,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -47,33 +44,34 @@ class AppsListViewModel(
         )
 
     init {
-        fetchAppsTrigger
-            .flatMapLatest { fetchDeveloperAppsUseCase() }
-            .onEach { result ->
-                when (result) {
-                    is DataState.Success -> {
-                        val apps = result.data
-                        if (apps.isEmpty()) {
-                            screenState.update { current ->
-                                current.copy(
-                                    screenState = ScreenState.NoData(),
-                                    data = UiHomeScreen(apps = emptyList())
-                                )
-                            }
-                        } else {
-                            screenState.updateData(newState = ScreenState.Success()) { currentData ->
-                                currentData.copy(apps = apps)
+        viewModelScope.launch {
+            fetchAppsTrigger
+                .flatMapLatest { fetchDeveloperAppsUseCase() }
+                .catch { showLoadAppsError() }
+                .collect { result ->
+                    when (result) {
+                        is DataState.Success -> {
+                            val apps = result.data
+                            if (apps.isEmpty()) {
+                                screenState.update { current ->
+                                    current.copy(
+                                        screenState = ScreenState.NoData(),
+                                        data = UiHomeScreen(apps = emptyList())
+                                    )
+                                }
+                            } else {
+                                screenState.updateData(newState = ScreenState.Success()) { currentData ->
+                                    currentData.copy(apps = apps)
+                                }
                             }
                         }
+
+                        is DataState.Error -> showLoadAppsError()
+
+                        is DataState.Loading -> screenState.updateState(ScreenState.IsLoading())
                     }
-
-                    is DataState.Error -> showLoadAppsError()
-
-                    is DataState.Loading -> screenState.updateState(ScreenState.IsLoading())
                 }
-            }
-            .catch { showLoadAppsError() }
-            .launchIn(viewModelScope)
+        }
 
         fetchAppsTrigger.tryEmit(Unit)
     }
