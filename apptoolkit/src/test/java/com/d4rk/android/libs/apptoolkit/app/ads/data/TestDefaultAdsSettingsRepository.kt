@@ -29,10 +29,10 @@ class TestDefaultAdsSettingsRepository {
 
     private fun createRepository(
         dataStore: CommonDataStore,
-        isDebugBuild: Boolean = false,
+        debugBuild: Boolean = false,
     ): DefaultAdsSettingsRepository {
         val buildInfoProvider = mockk<BuildInfoProvider> {
-            every { isDebugBuild } returns isDebugBuild
+            every { isDebugBuild } returns debugBuild
         }
         return DefaultAdsSettingsRepository(
             dataStore = dataStore,
@@ -46,7 +46,7 @@ class TestDefaultAdsSettingsRepository {
         println("\uD83D\uDE80 [TEST] observeAdsEnabled emits datastore value")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(default = true) } returns flowOf(false)
-        val repository = createRepository(dataStore, isDebugBuild = false)
+        val repository = createRepository(dataStore, debugBuild = false)
 
         repository.observeAdsEnabled().test {
             assertThat(awaitItem()).isFalse()
@@ -59,7 +59,7 @@ class TestDefaultAdsSettingsRepository {
         println("\uD83D\uDE80 [TEST] observeAdsEnabled emits default on error")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(default = true) } returns flow { throw IOException("boom") }
-        val repository = createRepository(dataStore, isDebugBuild = false)
+        val repository = createRepository(dataStore, debugBuild = false)
 
         repository.observeAdsEnabled().test {
             assertThat(awaitItem()).isTrue()
@@ -72,7 +72,7 @@ class TestDefaultAdsSettingsRepository {
         println("\uD83D\uDE80 [TEST] observeAdsEnabled rethrows cancellation")
         val dataStore = mockk<CommonDataStore>()
         every { dataStore.ads(default = true) } returns flow { throw CancellationException("boom") }
-        val repository = createRepository(dataStore, isDebugBuild = false)
+        val repository = createRepository(dataStore, debugBuild = false)
 
         var thrown: Throwable? = null
         try {
@@ -89,7 +89,7 @@ class TestDefaultAdsSettingsRepository {
         println("\uD83D\uDE80 [TEST] setAdsEnabled returns success when persisted")
         val dataStore = mockk<CommonDataStore>()
         coEvery { dataStore.saveAds(any()) } returns Unit
-        val repository = createRepository(dataStore, isDebugBuild = false)
+        val repository = createRepository(dataStore, debugBuild = false)
 
         val result = repository.setAdsEnabled(true)
 
@@ -102,7 +102,7 @@ class TestDefaultAdsSettingsRepository {
         println("\uD83D\uDE80 [TEST] setAdsEnabled returns error on failure")
         val dataStore = mockk<CommonDataStore>()
         coEvery { dataStore.saveAds(any()) } throws IOException("boom")
-        val repository = createRepository(dataStore, isDebugBuild = false)
+        val repository = createRepository(dataStore, debugBuild = false)
 
         val result = repository.setAdsEnabled(true)
 
