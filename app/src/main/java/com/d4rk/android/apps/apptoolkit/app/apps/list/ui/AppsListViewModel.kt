@@ -22,9 +22,10 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -73,42 +74,46 @@ class AppsListViewModel(
 
     private fun fetchDeveloperApps() {
         viewModelScope.launch {
-            fetchDeveloperAppsUseCase().collect { result: DataState<List<AppInfo>, RootError> ->
-                when (result) {
-                    is DataState.Success -> {
-                        val apps = result.data
-                        if (apps.isEmpty()) {
-                            screenState.update { currentState ->
-                                currentState.copy(
-                                    screenState = ScreenState.NoData(),
-                                    data = currentState.data?.copy(apps = emptyList()),
-                                )
-                            }
-                        } else {
-                            screenState.updateData(newState = ScreenState.Success()) { currentData ->
-                                currentData.copy(apps = apps)
+            fetchDeveloperAppsUseCase()
+                .catch { showLoadAppsError() }
+                .collect { result: DataState<List<AppInfo>, RootError> ->
+                    when (result) {
+                        is DataState.Success -> {
+                            val apps = result.data
+                            if (apps.isEmpty()) {
+                                screenState.update { currentState ->
+                                    currentState.copy(
+                                        screenState = ScreenState.NoData(),
+                                        data = currentState.data?.copy(apps = emptyList()),
+                                    )
+                                }
+                            } else {
+                                screenState.updateData(newState = ScreenState.Success()) { currentData ->
+                                    currentData.copy(apps = apps)
+                                }
                             }
                         }
-                    }
 
-                    is DataState.Error -> {
-                        screenState.updateState(ScreenState.Error())
-                        screenState.showSnackbar(
-                            UiSnackbar(
-                                message = UiTextHelper.DynamicString("Failed to load apps"),
-                                isError = true,
-                                timeStamp = System.currentTimeMillis(),
-                                type = ScreenMessageType.SNACKBAR,
-                            )
-                        )
-                    }
+                        is DataState.Error -> showLoadAppsError()
 
-                    is DataState.Loading -> {
-                        screenState.updateState(ScreenState.IsLoading())
+                        is DataState.Loading -> {
+                            screenState.updateState(ScreenState.IsLoading())
+                        }
                     }
                 }
-            }
         }
+    }
+
+    private fun showLoadAppsError() {
+        screenState.updateState(ScreenState.Error())
+        screenState.showSnackbar(
+            UiSnackbar(
+                message = UiTextHelper.DynamicString("Failed to load apps"),
+                isError = true,
+                timeStamp = System.currentTimeMillis(),
+                type = ScreenMessageType.SNACKBAR,
+            )
+        )
     }
 
     fun toggleFavorite(packageName: String) {
