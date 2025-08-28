@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.about.ui
 
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.actions.AboutEvents
+import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
@@ -32,9 +33,11 @@ class TestAboutViewModel {
 
     private fun createViewModel(): AboutViewModel =
         AboutViewModel(
-            deviceProvider = deviceProvider,
-            configProvider = buildInfoProvider,
-            dispatcher = dispatcherExtension.testDispatcher,
+            repository = DefaultAboutRepository(
+                deviceProvider = deviceProvider,
+                configProvider = buildInfoProvider,
+                ioDispatcher = dispatcherExtension.testDispatcher,
+            ),
         )
 
     @Test

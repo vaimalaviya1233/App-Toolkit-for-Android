@@ -7,6 +7,8 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Ap
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppPrivacySettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.AppSettingsProvider
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsRepository
+import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
+import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.data.PermissionsRepository
@@ -41,6 +43,13 @@ val settingsModule = module {
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
     single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
     single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(advancedProvider = get() , displayProvider = get() , privacyProvider = get() , configProvider = get()) }
+    single<AboutRepository> {
+        DefaultAboutRepository(
+            deviceProvider = get(),
+            configProvider = get(),
+            ioDispatcher = get(named("io")),
+        )
+    }
     single<GeneralSettingsRepository> { DefaultGeneralSettingsRepository() }
     viewModel {
         GeneralSettingsViewModel(repository = get())
@@ -55,9 +64,7 @@ val settingsModule = module {
 
     viewModel {
         AboutViewModel(
-            deviceProvider = get(),
-            configProvider = get(),
-            dispatcher = get(named("default")),
+            repository = get(),
         )
     }
 }
