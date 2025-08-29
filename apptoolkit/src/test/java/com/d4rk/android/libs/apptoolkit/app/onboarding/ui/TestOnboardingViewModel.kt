@@ -6,6 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -27,6 +28,11 @@ private class FakeOnboardingRepository : OnboardingRepository {
     suspend fun emit(value: Boolean) {
         completion.emit(value)
     }
+}
+
+private class ErrorOnboardingRepository : OnboardingRepository {
+    override fun observeOnboardingCompletion(): Flow<Boolean> = flow { throw IllegalStateException("boom") }
+    override suspend fun setOnboardingCompleted() {}
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -123,5 +129,29 @@ class TestOnboardingViewModel {
         assertThat(callbackInvoked).isFalse()
         assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
         println("🏁 [TEST DONE] completeOnboarding failure resets completion")
+    }
+
+    @Test
+    fun `repository error results in false state`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] repository error results in false state")
+        val viewModel = OnboardingViewModel(repository = ErrorOnboardingRepository())
+
+        advanceUntilIdle()
+
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
+        println("🏁 [TEST DONE] repository error results in false state")
+    }
+
+    @Test
+    fun `provideFactory creates viewmodel`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] provideFactory creates viewmodel")
+        val repository = FakeOnboardingRepository()
+        val factory = OnboardingViewModel.provideFactory(repository)
+
+        val viewModel = factory.create(OnboardingViewModel::class.java)
+
+        assertThat(viewModel.uiState.value.currentTabIndex).isEqualTo(0)
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
+        println("🏁 [TEST DONE] provideFactory creates viewmodel")
     }
 }
