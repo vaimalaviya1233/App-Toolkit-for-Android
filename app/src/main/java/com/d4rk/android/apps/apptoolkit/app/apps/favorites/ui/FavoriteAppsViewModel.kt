@@ -19,17 +19,16 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class FavoriteAppsViewModel(
@@ -41,10 +40,11 @@ class FavoriteAppsViewModel(
     initialState = UiStateScreen(screenState = IsLoading(), data = UiHomeScreen())
 ) {
 
-    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
-    private val favoritesLoaded = MutableStateFlow(false)
+    private val favoritesFlow = observeFavoritesUseCase()
+        .catch { e -> if (e is CancellationException) throw e }
+        .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
 
-    val favorites = _favorites.stateIn(
+    val favorites: StateFlow<Set<String>> = favoritesFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptySet()
@@ -52,21 +52,7 @@ class FavoriteAppsViewModel(
 
     init {
         viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
-            observeFavoritesUseCase()
-                .onEach {
-                    _favorites.value = it
-                    favoritesLoaded.value = true
-                }
-                .catch { e ->
-                    if (e is CancellationException) throw e
-                }
-                .collect()
-        }
-
-        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
-            favoritesLoaded
-                .filter { it }
-                .first()
+            favoritesFlow.first()
             onEvent(FavoriteAppsEvent.LoadFavorites)
         }
     }
@@ -84,33 +70,40 @@ class FavoriteAppsViewModel(
                 flow2 = favorites
             ) { dataState, favsSet ->
                 dataState to favsSet
-            }.collect { (result, savedFavs) ->
-                when (result) {
-                    is DataState.Success -> {
-                        val apps = result.data.filter { appInfo -> savedFavs.contains(appInfo.packageName) }
-                        println("[ViewModel logic] Filtered apps size: ${apps.size}, savedFavs: $savedFavs, result.data size: ${result.data.size}")
-                        if (apps.isEmpty()) {
-                            screenState.update { current ->
-                                current.copy(screenState = NoData(), data = current.data?.copy(apps = emptyList()))
-                            }
-                        } else {
-                            screenState.updateData(Success()) { current ->
-                                current.copy(apps = apps)
+            }
+                .catch { e ->
+                    if (e is CancellationException) throw e
+                    screenState.update { current ->
+                        current.copy(screenState = Error("An error occurred"), data = null)
+                    }
+                }
+                .collect { (result, savedFavs) ->
+                    when (result) {
+                        is DataState.Success -> {
+                            val apps = result.data.filter { appInfo -> savedFavs.contains(appInfo.packageName) }
+                            println("[ViewModel logic] Filtered apps size: ${apps.size}, savedFavs: $savedFavs, result.data size: ${result.data.size}")
+                            if (apps.isEmpty()) {
+                                screenState.update { current ->
+                                    current.copy(screenState = NoData(), data = current.data?.copy(apps = emptyList()))
+                                }
+                            } else {
+                                screenState.updateData(Success()) { current ->
+                                    current.copy(apps = apps)
+                                }
                             }
                         }
-                    }
 
-                    is DataState.Loading -> {
-                        screenState.updateState(IsLoading())
-                    }
+                        is DataState.Loading -> {
+                            screenState.updateState(IsLoading())
+                        }
 
-                    is DataState.Error -> {
-                        screenState.update { current ->
-                            current.copy(screenState = Error("An error occurred"), data = null)
+                        is DataState.Error -> {
+                            screenState.update { current ->
+                                current.copy(screenState = Error("An error occurred"), data = null)
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
