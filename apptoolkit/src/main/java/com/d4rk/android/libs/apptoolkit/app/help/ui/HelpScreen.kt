@@ -16,18 +16,26 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpEvent
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
+import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
@@ -38,11 +46,15 @@ import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: CoroutineScope) {
-    val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
-    val context : Context = LocalContext.current
-    val isFabExtended : MutableState<Boolean> = remember { mutableStateOf(value = true) }
-    val faqList: List<UiHelpQuestion> = rememberFaqList()
+fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: CoroutineScope, viewModel: HelpViewModel) {
+    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
+    val context: Context = LocalContext.current
+    val isFabExtended: MutableState<Boolean> = remember { mutableStateOf(value = true) }
+    val screenState: UiStateScreen<UiHelpScreen> by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.onEvent(HelpEvent.LoadFaq)
+    }
 
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
@@ -72,7 +84,19 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
             )
         }
     ) { paddingValues ->
-        HelpScreenContent(questions = faqList, paddingValues = paddingValues, activity = activity)
+        ScreenStateHandler(
+            screenState = screenState,
+            onLoading = { LoadingScreen() },
+            onEmpty = {
+                NoDataScreen(showRetry = true, onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) })
+            },
+            onError = {
+                NoDataScreen(isError = true, showRetry = true, onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) })
+            },
+            onSuccess = { data: UiHelpScreen ->
+                HelpScreenContent(questions = data.questions, paddingValues = paddingValues, activity = activity)
+            }
+        )
     }
 }
 

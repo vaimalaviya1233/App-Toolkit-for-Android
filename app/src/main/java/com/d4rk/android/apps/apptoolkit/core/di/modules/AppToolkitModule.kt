@@ -3,6 +3,9 @@ package com.d4rk.android.apps.apptoolkit.core.di.modules
 import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.startup.utils.interfaces.providers.AppStartupProvider
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
+import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
+import com.d4rk.android.libs.apptoolkit.app.help.domain.data.DefaultHelpRepository
+import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpViewModel
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.DefaultIssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
@@ -42,6 +45,9 @@ val appToolkitModule : Module = module {
         SupportViewModel(billingRepository = get())
     }
     viewModel { StartupViewModel() }
+
+    single<HelpRepository> { DefaultHelpRepository(context = get(), ioDispatcher = get<AppDispatchers>().io) }
+    viewModel { HelpViewModel(helpRepository = get()) }
 
     single<AppDispatchers> { AppDispatchersImpl() }
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }
