@@ -9,9 +9,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CancellationException
@@ -39,9 +40,12 @@ class HelpViewModel(
                 .onStart { screenState.updateState(ScreenState.IsLoading()) }
                 .catch { error ->
                     if (error is CancellationException) throw error
-                    screenState.setErrors(
-                        listOf(
-                            UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Failed to load FAQs"))
+                    screenState.showSnackbar(
+                        UiSnackbar(
+                            message = UiTextHelper.DynamicString(error.message ?: "Failed to load FAQs"),
+                            type = ScreenMessageType.SNACKBAR,
+                            isError = true,
+                            timeStamp = System.currentTimeMillis(),
                         )
                     )
                     screenState.updateState(ScreenState.Error())
