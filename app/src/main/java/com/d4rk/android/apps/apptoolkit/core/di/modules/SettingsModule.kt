@@ -45,7 +45,7 @@ val settingsModule = module {
     single<DisplaySettingsProvider> { AppDisplaySettingsProvider(context = get()) }
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
     single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
-    single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(advancedProvider = get() , displayProvider = get() , privacyProvider = get() , configProvider = get()) }
+    single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(displayProvider = get() , privacyProvider = get() , configProvider = get()) }
     single<CacheRepository> { DefaultCacheRepository(context = get(), ioDispatcher = get(named("io"))) }
     single<AboutRepository> {
         DefaultAboutRepository(

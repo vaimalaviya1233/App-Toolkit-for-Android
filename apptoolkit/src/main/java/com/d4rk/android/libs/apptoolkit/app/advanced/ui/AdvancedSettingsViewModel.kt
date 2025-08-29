@@ -7,6 +7,7 @@ import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSett
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.model.ui.UiAdvancedSettingsScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
@@ -16,7 +17,10 @@ import kotlinx.coroutines.launch
 class AdvancedSettingsViewModel(
     private val repository: CacheRepository,
 ) : ScreenViewModel<UiAdvancedSettingsScreen, AdvancedSettingsEvent, AdvancedSettingsAction>(
-    initialState = UiStateScreen(data = UiAdvancedSettingsScreen()),
+    initialState = UiStateScreen(
+        screenState = ScreenState.Success(),
+        data = UiAdvancedSettingsScreen()
+    ),
 ) {
 
     override fun onEvent(event: AdvancedSettingsEvent) {
