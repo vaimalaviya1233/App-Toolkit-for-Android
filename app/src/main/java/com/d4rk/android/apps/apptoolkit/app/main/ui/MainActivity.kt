@@ -31,6 +31,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -73,7 +74,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleStartup() {
         lifecycleScope.launch {
-            val isFirstLaunch: Boolean = dataStore.startup.first()
+            val isFirstLaunch: Boolean = withContext(ioDispatcher) {
+                dataStore.startup.first()
+            }
             keepSplashVisible = false
             if (isFirstLaunch) {
                 startStartupActivity()
@@ -103,33 +106,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkUserConsent() {
         lifecycleScope.launch {
-            val consentInfo: ConsentInformation = UserMessagingPlatform.getConsentInformation(this@MainActivity)
-            ConsentFormHelper.showConsentFormIfRequired(activity = this@MainActivity, consentInfo = consentInfo)
+            val consentInfo: ConsentInformation = withContext(ioDispatcher) {
+                UserMessagingPlatform.getConsentInformation(this@MainActivity)
+            }
+            ConsentFormHelper.showConsentFormIfRequired(
+                activity = this@MainActivity,
+                consentInfo = consentInfo
+            )
         }
     }
 
     private fun checkInAppReview() {
         lifecycleScope.launch {
-            val sessionCount: Int = dataStore.sessionCount.first()
-            val hasPrompted: Boolean = dataStore.hasPromptedReview.first()
+            val (sessionCount: Int, hasPrompted: Boolean) = withContext(ioDispatcher) {
+                val sc = dataStore.sessionCount.first()
+                val hp = dataStore.hasPromptedReview.first()
+                sc to hp
+            }
             ReviewHelper.launchInAppReviewIfEligible(
                 activity = this@MainActivity,
                 sessionCount = sessionCount,
                 hasPromptedBefore = hasPrompted,
                 scope = this
             ) {
-                launch { dataStore.setHasPromptedReview(value = true) }
+                launch(ioDispatcher) { dataStore.setHasPromptedReview(value = true) }
             }
-            dataStore.incrementSessionCount()
+            withContext(ioDispatcher) { dataStore.incrementSessionCount() }
         }
     }
 
     private fun checkForUpdates() {
         lifecycleScope.launch {
-            InAppUpdateHelper.performUpdate(
-                appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity),
-                updateResultLauncher = updateResultLauncher,
-            )
+            withContext(ioDispatcher) {
+                InAppUpdateHelper.performUpdate(
+                    appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity),
+                    updateResultLauncher = updateResultLauncher,
+                )
+            }
         }
     }
 }
