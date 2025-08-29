@@ -8,7 +8,9 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.repository.MainRepositor
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainViewModel(
     private val repository: MainRepository
@@ -25,20 +27,19 @@ class MainViewModel(
     }
 
     private fun loadNavigationItems() {
-        viewModelScope.launch {
-            runCatching { repository.getNavigationDrawerItems() }
-                .onSuccess { items ->
-                    screenState.successData { copy(navigationDrawerItems = items) }
+        repository.getNavigationDrawerItems()
+            .onEach { items ->
+                screenState.successData { copy(navigationDrawerItems = items) }
+            }
+            .catch { error ->
+                screenState.successData {
+                    copy(
+                        showSnackbar = true,
+                        snackbarMessage = error.message ?: "Failed to load navigation"
+                    )
                 }
-                .onFailure { error ->
-                    screenState.successData {
-                        copy(
-                            showSnackbar = true,
-                            snackbarMessage = error.message ?: "Failed to load navigation"
-                        )
-                    }
-                }
-        }
+            }
+            .launchIn(viewModelScope)
     }
 }
 

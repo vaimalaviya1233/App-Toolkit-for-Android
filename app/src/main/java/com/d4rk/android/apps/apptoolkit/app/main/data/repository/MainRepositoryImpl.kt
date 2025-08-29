@@ -9,24 +9,31 @@ import com.d4rk.android.apps.apptoolkit.app.main.domain.repository.MainRepositor
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class MainRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : MainRepository {
-    override suspend fun getNavigationDrawerItems(): List<NavigationDrawerItem> =
-        withContext(ioDispatcher) {
-            listOf(
-                NavigationDrawerItem(
-                    title = R.string.settings, selectedIcon = Icons.Outlined.Settings
-                ), NavigationDrawerItem(
-                    title = R.string.help_and_feedback, selectedIcon = Icons.AutoMirrored.Outlined.HelpOutline
-                ), NavigationDrawerItem(
-                    title = R.string.updates, selectedIcon = Icons.AutoMirrored.Outlined.EventNote
-                ), NavigationDrawerItem(
-                    title = R.string.share, selectedIcon = Icons.Outlined.Share
+    override fun getNavigationDrawerItems(): Flow<List<NavigationDrawerItem>> =
+        flow {
+            emit(
+                listOf(
+                    NavigationDrawerItem(
+                        title = R.string.settings, selectedIcon = Icons.Outlined.Settings
+                    ),
+                    NavigationDrawerItem(
+                        title = R.string.help_and_feedback, selectedIcon = Icons.AutoMirrored.Outlined.HelpOutline
+                    ),
+                    NavigationDrawerItem(
+                        title = R.string.updates, selectedIcon = Icons.AutoMirrored.Outlined.EventNote
+                    ),
+                    NavigationDrawerItem(
+                        title = R.string.share, selectedIcon = Icons.Outlined.Share
+                    )
                 )
             )
-        }
+        }.flowOn(ioDispatcher)
 }
 
