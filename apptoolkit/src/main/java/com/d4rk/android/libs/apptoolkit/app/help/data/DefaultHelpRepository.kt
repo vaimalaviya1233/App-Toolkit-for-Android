@@ -1,4 +1,4 @@
-package com.d4rk.android.libs.apptoolkit.app.help.domain.data
+package com.d4rk.android.libs.apptoolkit.app.help.data
 
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
