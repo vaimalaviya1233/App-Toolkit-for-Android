@@ -9,6 +9,9 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -35,12 +38,16 @@ class TestAboutViewModel {
     private fun createViewModel(): AboutViewModel =
         AboutViewModel(
             repository = object : AboutRepository {
-                override suspend fun getAboutInfoStream(): UiAboutScreen =
-                    UiAboutScreen(
-                        appVersion = buildInfoProvider.appVersion,
-                        appVersionCode = buildInfoProvider.appVersionCode,
-                        deviceInfo = deviceProvider.deviceInfo,
-                    )
+                override fun getAboutInfoStream(): Flow<UiAboutScreen> =
+                    flow {
+                        emit(
+                            UiAboutScreen(
+                                appVersion = buildInfoProvider.appVersion,
+                                appVersionCode = buildInfoProvider.appVersionCode,
+                                deviceInfo = deviceProvider.deviceInfo,
+                            ),
+                        )
+                    }
 
                 override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
             },
@@ -49,9 +56,8 @@ class TestAboutViewModel {
     private fun createFailingViewModel(): AboutViewModel =
         AboutViewModel(
             repository = object : AboutRepository {
-                override suspend fun getAboutInfoStream(): UiAboutScreen {
-                    throw Exception("fail")
-                }
+                override fun getAboutInfoStream(): Flow<UiAboutScreen> =
+                    flow { throw Exception("fail") }
 
                 override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
             },
@@ -126,6 +132,26 @@ class TestAboutViewModel {
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.snackbar).isNotNull()
+    }
+
+    @Test
+    fun `repository updates propagate to ui state`() = runTest(dispatcherExtension.testDispatcher) {
+        val updates = MutableSharedFlow<UiAboutScreen>()
+        val viewModel = AboutViewModel(
+            repository = object : AboutRepository {
+                override fun getAboutInfoStream(): Flow<UiAboutScreen> = updates
+                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+            },
+        )
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+
+        updates.emit(UiAboutScreen(deviceInfo = "one"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.deviceInfo).isEqualTo("one")
+
+        updates.emit(UiAboutScreen(deviceInfo = "two"))
+        dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
+        assertThat(viewModel.uiState.value.data?.deviceInfo).isEqualTo("two")
     }
 
     @Test

@@ -16,7 +16,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
@@ -37,7 +36,7 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            flow { emit(repository.getAboutInfoStream()) }
+            repository.getAboutInfoStream()
                 .catch { error ->
                     if (error is CancellationException) {
                         throw error
