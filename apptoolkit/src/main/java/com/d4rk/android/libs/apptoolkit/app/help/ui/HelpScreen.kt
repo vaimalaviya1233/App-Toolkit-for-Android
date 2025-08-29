@@ -52,10 +52,6 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
     val isFabExtended: MutableState<Boolean> = remember { mutableStateOf(value = true) }
     val screenState: UiStateScreen<UiHelpScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.onEvent(HelpEvent.LoadFaq)
-    }
-
     LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
         isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
     }

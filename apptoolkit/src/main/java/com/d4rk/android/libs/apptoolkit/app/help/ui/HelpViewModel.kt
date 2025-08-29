@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpAction
 import com.d4rk.android.libs.apptoolkit.app.help.domain.actions.HelpEvent
 import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
-import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
+import com.d4rk.android.libs.apptoolkit.app.help.domain.usecases.ObserveFaqUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -18,10 +18,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class HelpViewModel(
-    private val helpRepository: HelpRepository,
+    private val observeFaqUseCase: ObserveFaqUseCase,
 ) : ScreenViewModel<UiHelpScreen, HelpEvent, HelpAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHelpScreen())
 ) {
+
+    init {
+        onEvent(HelpEvent.LoadFaq)
+    }
 
     override fun onEvent(event: HelpEvent) {
         when (event) {
@@ -32,7 +36,7 @@ class HelpViewModel(
 
     private fun loadFaq() {
         viewModelScope.launch {
-            helpRepository.observeFaq()
+            observeFaqUseCase()
                 .catch { error ->
                     screenState.setErrors(
                         listOf(
