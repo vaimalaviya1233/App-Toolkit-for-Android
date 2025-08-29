@@ -14,7 +14,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class HelpViewModel(
@@ -32,24 +32,24 @@ class HelpViewModel(
 
     private fun loadFaq() {
         viewModelScope.launch {
-            helpRepository.observeFaq()
-                .catch { error ->
-                    screenState.setErrors(
-                        listOf(
-                            UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Failed to load FAQs"))
-                        )
-                    )
-                    screenState.updateState(ScreenState.Error())
-                }
-                .collect { questions ->
-                    if (questions.isEmpty()) {
-                        screenState.updateState(ScreenState.NoData())
-                    } else {
-                        screenState.updateData(newState = ScreenState.Success()) { current ->
-                            current.copy(questions = questions)
-                        }
+            try {
+                val questions = helpRepository.fetchFaq()
+                if (questions.isEmpty()) {
+                    screenState.updateState(ScreenState.NoData())
+                } else {
+                    screenState.updateData(newState = ScreenState.Success()) { current ->
+                        current.copy(questions = questions)
                     }
                 }
+            } catch (error: Throwable) {
+                if (error is CancellationException) throw error
+                screenState.setErrors(
+                    listOf(
+                        UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Failed to load FAQs"))
+                    )
+                )
+                screenState.updateState(ScreenState.Error())
+            }
         }
     }
 }
