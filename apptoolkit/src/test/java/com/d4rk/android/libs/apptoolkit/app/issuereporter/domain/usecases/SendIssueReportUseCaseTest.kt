@@ -52,8 +52,8 @@ class SendIssueReportUseCaseTest {
         val useCase = SendIssueReportUseCase(repository, dispatchers)
         val result = useCase(params).first()
 
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Unknown::class.java)
+        val error = result as IssueReportResult.Error.Unknown
         assertThat(error.status).isEqualTo(HttpStatusCode.InternalServerError)
         assertThat(error.message).isEqualTo("boom")
     }

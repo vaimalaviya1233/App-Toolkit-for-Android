@@ -31,7 +31,7 @@ class SendIssueReportUseCase(
             .catch { throwable ->
                 if (throwable is CancellationException) throw throwable
                 emit(
-                    IssueReportResult.Error(
+                    IssueReportResult.Error.Unknown(
                         status = HttpStatusCode.InternalServerError,
                         message = throwable.message ?: "",
                     ),

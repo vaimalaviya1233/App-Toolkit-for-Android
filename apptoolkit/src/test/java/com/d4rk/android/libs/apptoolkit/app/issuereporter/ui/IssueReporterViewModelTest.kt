@@ -92,22 +92,31 @@ class IssueReporterViewModelTest {
     companion object {
         @JvmStatic
         fun errorCases() = listOf(
-            Arguments.of(HttpStatusCode.Unauthorized, R.string.error_unauthorized),
-            Arguments.of(HttpStatusCode.Forbidden, R.string.error_forbidden),
-            Arguments.of(HttpStatusCode.Gone, R.string.error_gone),
-            Arguments.of(HttpStatusCode.UnprocessableEntity, R.string.error_unprocessable),
-            Arguments.of(HttpStatusCode.InternalServerError, R.string.snack_report_failed),
+            Arguments.of(IssueReportResult.Error.Unauthorized(""), R.string.error_unauthorized),
+            Arguments.of(IssueReportResult.Error.Forbidden(""), R.string.error_forbidden),
+            Arguments.of(
+                IssueReportResult.Error.Unknown(HttpStatusCode.Gone, ""),
+                R.string.error_gone
+            ),
+            Arguments.of(
+                IssueReportResult.Error.Unknown(HttpStatusCode.UnprocessableEntity, ""),
+                R.string.error_unprocessable
+            ),
+            Arguments.of(
+                IssueReportResult.Error.Unknown(HttpStatusCode.InternalServerError, ""),
+                R.string.snack_report_failed
+            ),
         )
     }
 
     @ParameterizedTest
     @MethodSource("errorCases")
-    fun `send report error maps message`(status: HttpStatusCode, expected: Int) = runTest {
+    fun `send report error maps message`(error: IssueReportResult.Error, expected: Int) = runTest {
         val dispatcher = StandardTestDispatcher(testScheduler)
         Dispatchers.setMain(dispatcher)
         try {
             val useCase = mockk<SendIssueReportUseCase>()
-            every { useCase.invoke(any()) } returns flowOf(IssueReportResult.Error(status, ""))
+            every { useCase.invoke(any()) } returns flowOf(error)
             val viewModel = IssueReporterViewModel(useCase, githubTarget, "tok", deviceInfoProvider)
             backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
 

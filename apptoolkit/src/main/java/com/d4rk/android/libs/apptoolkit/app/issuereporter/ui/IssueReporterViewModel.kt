@@ -131,13 +131,19 @@ class IssueReporterViewModel(
             }
 
             is IssueReportResult.Error -> {
-                val msg = when (outcome.status) {
-                    HttpStatusCode.Unauthorized -> UiTextHelper.StringResource(R.string.error_unauthorized)
-                    HttpStatusCode.Forbidden -> UiTextHelper.StringResource(R.string.error_forbidden)
-                    HttpStatusCode.Gone -> UiTextHelper.StringResource(R.string.error_gone)
-                    HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)
+                val msg = when (outcome) {
+                    is IssueReportResult.Error.Unauthorized ->
+                        UiTextHelper.StringResource(R.string.error_unauthorized)
+                    is IssueReportResult.Error.Forbidden ->
+                        UiTextHelper.StringResource(R.string.error_forbidden)
+                    is IssueReportResult.Error.Unknown -> when (outcome.status) {
+                        HttpStatusCode.Gone -> UiTextHelper.StringResource(R.string.error_gone)
+                        HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)
+                        else -> UiTextHelper.StringResource(R.string.snack_report_failed)
+                    }
                     else -> UiTextHelper.StringResource(R.string.snack_report_failed)
                 }
+
                 screenState.update { current ->
                     current.copy(
                         screenState = ScreenState.Error(),

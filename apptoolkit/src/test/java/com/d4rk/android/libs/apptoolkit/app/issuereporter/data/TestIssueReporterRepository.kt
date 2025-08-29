@@ -65,10 +65,8 @@ class TestIssueReporterRepository {
         val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo.create(android.app.Application()), ExtraInfo(), null)
         val target = GithubTarget("user", "repo")
         val result = repository.sendReport(report, target)
-
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
-        assertThat(error.status).isEqualTo(HttpStatusCode.BadRequest)
+        assertThat(result).isInstanceOf(IssueReportResult.Error.BadRequest::class.java)
+        val error = result as IssueReportResult.Error.BadRequest
         assertThat(error.message).isEqualTo("fail")
         println("\uD83C\uDFC1 [TEST DONE] repository error")
     }
@@ -98,10 +96,8 @@ class TestIssueReporterRepository {
         val repository: IssueReporterRepository = DefaultIssueReporterRepository(client, testDispatchers(testScheduler))
         val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo.create(android.app.Application()), ExtraInfo(), null)
         val target = GithubTarget("user", "repo")
-
-        assertFailsWith<SocketTimeoutException> {
-            repository.sendReport(report, target)
-        }
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Network::class.java)
     }
 
     @Test
@@ -111,10 +107,8 @@ class TestIssueReporterRepository {
         val repository: IssueReporterRepository = DefaultIssueReporterRepository(client, testDispatchers(testScheduler))
         val report = Report("t", "d", com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.DeviceInfo.create(android.app.Application()), ExtraInfo(), null)
         val target = GithubTarget("user", "repo")
-
-        assertFailsWith<kotlinx.serialization.SerializationException> {
-            repository.sendReport(report, target)
-        }
+        val result = repository.sendReport(report, target)
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Serialization::class.java)
     }
 
     @Test
@@ -126,8 +120,8 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
 
         val result = repository.sendReport(report, target)
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Unknown::class.java)
+        val error = result as IssueReportResult.Error.Unknown
         assertThat(error.status).isEqualTo(HttpStatusCode.PaymentRequired)
         assertThat(error.message).isEqualTo("weird")
     }
@@ -157,8 +151,8 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
 
         val result = repository.sendReport(report, target)
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Unknown::class.java)
+        val error = result as IssueReportResult.Error.Unknown
         assertThat(error.status).isEqualTo(HttpStatusCode.BadGateway)
         assertThat(error.message).isEqualTo("broke")
     }
@@ -172,8 +166,8 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
 
         val result = repository.sendReport(report, target)
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Unknown::class.java)
+        val error = result as IssueReportResult.Error.Unknown
         assertThat(error.status).isEqualTo(HttpStatusCode.fromValue(418))
         assertThat(error.message).isEqualTo("hot")
     }
@@ -213,9 +207,8 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
 
         val result = repository.sendReport(report, target)
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
-        assertThat(error.status).isEqualTo(HttpStatusCode.Unauthorized)
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Unauthorized::class.java)
+        val error = result as IssueReportResult.Error.Unauthorized
         assertThat(error.message).isEqualTo("unauth")
     }
 
@@ -228,9 +221,8 @@ class TestIssueReporterRepository {
         val target = GithubTarget("user", "repo")
 
         val result = repository.sendReport(report, target)
-        assertThat(result).isInstanceOf(IssueReportResult.Error::class.java)
-        val error = result as IssueReportResult.Error
-        assertThat(error.status).isEqualTo(HttpStatusCode.Forbidden)
+        assertThat(result).isInstanceOf(IssueReportResult.Error.Forbidden::class.java)
+        val error = result as IssueReportResult.Error.Forbidden
         assertThat(error.message).isEqualTo("stop")
     }
 
