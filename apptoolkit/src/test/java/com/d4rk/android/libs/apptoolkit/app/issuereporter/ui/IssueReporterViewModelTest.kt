@@ -89,6 +89,62 @@ class IssueReporterViewModelTest {
         }
     }
 
+    @Test
+    fun `update events modify state`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        Dispatchers.setMain(dispatcher)
+        try {
+            val useCase = mockk<SendIssueReportUseCase>()
+            val viewModel = IssueReporterViewModel(useCase, githubTarget, "", deviceInfoProvider)
+            backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
+
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("T"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("D"))
+            viewModel.onEvent(IssueReporterEvent.UpdateEmail("E"))
+            viewModel.onEvent(IssueReporterEvent.SetAnonymous(true))
+            advanceUntilIdle()
+
+            val data = viewModel.uiState.value.data!!
+            assertThat(data.title).isEqualTo("T")
+            assertThat(data.description).isEqualTo("D")
+            assertThat(data.email).isEqualTo("E")
+            assertThat(data.anonymous).isTrue()
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test
+    fun `device info failure shows error and skips use case`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        Dispatchers.setMain(dispatcher)
+        val failingProvider = object : DeviceInfoProvider {
+            override suspend fun capture(): DeviceInfo {
+                throw IllegalStateException("boom")
+            }
+        }
+        try {
+            val useCase = mockk<SendIssueReportUseCase>()
+            val viewModel = IssueReporterViewModel(useCase, githubTarget, "", failingProvider)
+            backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.uiState.collect() }
+
+            viewModel.onEvent(IssueReporterEvent.UpdateTitle("Bug"))
+            viewModel.onEvent(IssueReporterEvent.UpdateDescription("Desc"))
+            advanceUntilIdle()
+            viewModel.onEvent(IssueReporterEvent.Send)
+            advanceUntilIdle()
+
+            val state = viewModel.uiState.value
+            val snackbar = state.snackbar!!
+            assertThat(state.screenState).isInstanceOf(ScreenState.Error::class.java)
+            assertThat((snackbar.message as UiTextHelper.StringResource).resourceId)
+                .isEqualTo(R.string.snack_report_failed)
+            verify(exactly = 0) { useCase.invoke(any()) }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
     companion object {
         @JvmStatic
         fun errorCases() = listOf(
