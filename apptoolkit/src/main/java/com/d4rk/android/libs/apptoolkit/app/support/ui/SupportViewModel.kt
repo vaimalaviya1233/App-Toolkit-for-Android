@@ -19,7 +19,10 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class SupportViewModel(
@@ -32,16 +35,30 @@ class SupportViewModel(
 ) {
 
     init {
-        viewModelScope.launch {
-            billingRepository.productDetails.collectLatest { map ->
+        billingRepository.productDetails
+            .map { it.values.toList() }
+            .onEach { products ->
                 screenState.updateData(newState = ScreenState.Success()) { current ->
-                    current.copy(error = null, products = map.values.toList())
+                    current.copy(error = null, products = products)
                 }
             }
-        }
+            .catch { e ->
+                screenState.updateData(newState = ScreenState.Error()) { current ->
+                    current.copy(error = e.message)
+                }
+                screenState.showSnackbar(
+                    UiSnackbar(
+                        message = UiTextHelper.DynamicString(e.message ?: ""),
+                        isError = true,
+                        timeStamp = System.currentTimeMillis(),
+                        type = ScreenMessageType.SNACKBAR
+                    )
+                )
+            }
+            .launchIn(viewModelScope)
 
-        viewModelScope.launch {
-            billingRepository.purchaseResult.collectLatest { result ->
+        billingRepository.purchaseResult
+            .onEach { result ->
                 when (result) {
                     PurchaseResult.Pending -> screenState.showSnackbar(
                         UiSnackbar(
@@ -85,7 +102,17 @@ class SupportViewModel(
                     )
                 }
             }
-        }
+            .catch { e ->
+                screenState.showSnackbar(
+                    UiSnackbar(
+                        message = UiTextHelper.DynamicString(e.message ?: ""),
+                        isError = true,
+                        timeStamp = System.currentTimeMillis(),
+                        type = ScreenMessageType.SNACKBAR
+                    )
+                )
+            }
+            .launchIn(viewModelScope)
 
         viewModelScope.launch {
             try {
