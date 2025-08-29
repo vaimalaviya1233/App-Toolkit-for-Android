@@ -33,9 +33,9 @@ val appModule : Module = module {
     single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), ioDispatcher = get(named("io"))) }
     single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
 
-    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), ioDispatcher = get(named("io"))) }
     single { ObserveFavoritesUseCase(repository = get()) }
-    single { ToggleFavoriteUseCase(repository = get(), dispatcher = get(named("io"))) }
+    single { ToggleFavoriteUseCase(repository = get()) }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()

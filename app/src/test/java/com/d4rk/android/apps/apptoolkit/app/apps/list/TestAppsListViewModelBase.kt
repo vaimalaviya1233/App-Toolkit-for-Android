@@ -12,8 +12,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -30,14 +28,13 @@ open class TestAppsListViewModelBase {
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
         fetchThrows: Throwable? = null,
-        dispatcher: CoroutineDispatcher = Dispatchers.Main,
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps, fetchThrows)
         val fetchUseCase = FetchDeveloperAppsUseCase(developerAppsRepository)
         val favoritesRepository = FakeFavoritesRepository(initialFavorites, favoritesFlow, toggleError)
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
-        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository, dispatcher)
+        val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository)
         viewModel = AppsListViewModel(fetchUseCase, observeFavoritesUseCase, toggleFavoriteUseCase)
         println("\u2705 [SETUP] ViewModel initialized")
     }
