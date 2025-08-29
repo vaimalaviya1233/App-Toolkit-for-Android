@@ -1,0 +1,33 @@
+package com.d4rk.android.apps.apptoolkit.app.main.data.repository
+
+import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainRepositoryImplTest {
+
+    @Test
+    fun `getNavigationDrawerItems emits expected items`() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val repository = MainRepositoryImpl(dispatcher)
+
+        val items = repository.getNavigationDrawerItems().first()
+
+        assertEquals(4, items.size)
+        assertEquals(
+            listOf(
+                R.string.settings,
+                R.string.help_and_feedback,
+                R.string.updates,
+                R.string.share
+            ),
+            items.map(NavigationDrawerItem::title)
+        )
+    }
+}

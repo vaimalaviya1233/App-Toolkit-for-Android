@@ -1,30 +1,45 @@
 package com.d4rk.android.libs.apptoolkit.app.onboarding.ui
 
 import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.repository.OnboardingRepository
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.RegisterExtension
 
 private class FakeOnboardingRepository : OnboardingRepository {
     var completed = false
+    var shouldFail = false
     private val completion = MutableStateFlow(false)
 
     override fun observeOnboardingCompletion(): Flow<Boolean> = completion
 
     override suspend fun setOnboardingCompleted() {
+        if (shouldFail) throw RuntimeException("fail")
         completed = true
         completion.value = true
+    }
+
+    suspend fun emit(value: Boolean) {
+        completion.emit(value)
     }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestOnboardingViewModel {
 
+    companion object {
+        @JvmField
+        @RegisterExtension
+        val dispatcherExtension = UnconfinedDispatcherExtension()
+    }
+
     @Test
-    fun `current tab index mutates as expected`() = runTest {
+    fun `current tab index mutates as expected`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] current tab index mutates as expected")
         val viewModel = OnboardingViewModel(repository = FakeOnboardingRepository())
 
@@ -50,7 +65,7 @@ class TestOnboardingViewModel {
     }
 
     @Test
-    fun `repeated index changes remain stable`() = runTest {
+    fun `repeated index changes remain stable`() = runTest(dispatcherExtension.testDispatcher) {
         println("🚀 [TEST] repeated index changes remain stable")
         val viewModel = OnboardingViewModel(repository = FakeOnboardingRepository())
 
@@ -63,5 +78,50 @@ class TestOnboardingViewModel {
         viewModel.updateCurrentTab(0)
         assertThat(viewModel.uiState.value.currentTabIndex).isEqualTo(0)
         println("🏁 [TEST DONE] repeated index changes remain stable")
+    }
+
+    @Test
+    fun `repository completion updates state`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] repository completion updates state")
+        val repository = FakeOnboardingRepository()
+        val viewModel = OnboardingViewModel(repository = repository)
+
+        repository.emit(true)
+        advanceUntilIdle()
+
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
+        println("🏁 [TEST DONE] repository completion updates state")
+    }
+
+    @Test
+    fun `completeOnboarding sets completion and calls callback`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] completeOnboarding sets completion and calls callback")
+        val repository = FakeOnboardingRepository()
+        val viewModel = OnboardingViewModel(repository = repository)
+        var callbackInvoked = false
+
+        viewModel.completeOnboarding { callbackInvoked = true }
+        advanceUntilIdle()
+
+        assertThat(repository.completed).isTrue()
+        assertThat(callbackInvoked).isTrue()
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
+        println("🏁 [TEST DONE] completeOnboarding sets completion and calls callback")
+    }
+
+    @Test
+    fun `completeOnboarding failure resets completion`() = runTest(dispatcherExtension.testDispatcher) {
+        println("🚀 [TEST] completeOnboarding failure resets completion")
+        val repository = FakeOnboardingRepository().apply { shouldFail = true }
+        val viewModel = OnboardingViewModel(repository = repository)
+        var callbackInvoked = false
+
+        viewModel.completeOnboarding { callbackInvoked = true }
+        advanceUntilIdle()
+
+        assertThat(repository.completed).isFalse()
+        assertThat(callbackInvoked).isFalse()
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
+        println("🏁 [TEST DONE] completeOnboarding failure resets completion")
     }
 }
