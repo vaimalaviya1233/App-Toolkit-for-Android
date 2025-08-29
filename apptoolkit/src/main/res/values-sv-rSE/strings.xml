@@ -258,6 +258,7 @@
     <string name="android_version">Android-version:</string>
     <string name="api_level">API-nivå:</string>
     <string name="snack_device_info_copied">Enhetsinformation kopierad till urklipp</string>
+    <string name="snack_device_info_failed">Det gick inte att läsa in enhetsinformation</string>
 
     <string name="help_and_feedback">Hjälp och feedback</string>
     <string name="help">Hjälp</string>

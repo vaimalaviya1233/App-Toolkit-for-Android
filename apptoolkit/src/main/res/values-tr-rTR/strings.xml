@@ -258,6 +258,7 @@
     <string name="android_version">Android Sürümü:</string>
     <string name="api_level">API Seviyesi:</string>
     <string name="snack_device_info_copied">Cihaz bilgileri panoya kopyalandı</string>
+    <string name="snack_device_info_failed">Cihaz bilgileri yüklenemedi</string>
 
     <string name="help_and_feedback">Yardım ve geri bildirim</string>
     <string name="help">Yardım</string>

@@ -258,6 +258,7 @@
     <string name="android_version">एंड्रॉइड संस्करण:</string>
     <string name="api_level">एपीआई स्तर:</string>
     <string name="snack_device_info_copied">डिवाइस जानकारी क्लिपबोर्ड में कॉपी की गई</string>
+    <string name="snack_device_info_failed">डिवाइस की जानकारी लोड नहीं हो सकी</string>
 
     <string name="help_and_feedback">मदद और प्रतिक्रिया</string>
     <string name="help">मदद</string>

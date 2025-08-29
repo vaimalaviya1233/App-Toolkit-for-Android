@@ -258,6 +258,7 @@
     <string name="android_version">Версия на Android:</string>
     <string name="api_level">API ниво:</string>
     <string name="snack_device_info_copied">Информацията за устройството е копирана в клипборда</string>
+    <string name="snack_device_info_failed">Неуспешно зареждане на информация за устройството</string>
 
     <string name="help_and_feedback">Помощ и обратна връзка</string>
     <string name="help">Помощ</string>

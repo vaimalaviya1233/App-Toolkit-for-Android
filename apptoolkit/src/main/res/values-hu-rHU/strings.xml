@@ -258,6 +258,7 @@
     <string name="android_version">Android verzió:</string>
     <string name="api_level">API szint:</string>
     <string name="snack_device_info_copied">Eszközinformáció másolva a vágólapra</string>
+    <string name="snack_device_info_failed">Nem sikerült betölteni az eszköz adatait</string>
 
     <string name="help_and_feedback">Segítség és visszajelzés</string>
     <string name="help">Segítség</string>

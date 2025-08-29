@@ -258,6 +258,7 @@
     <string name="android_version">Bersyon ng Android:</string>
     <string name="api_level">Antas ng API:</string>
     <string name="snack_device_info_copied">Nakopya sa clipboard ang impormasyon ng device</string>
+    <string name="snack_device_info_failed">Hindi ma-load ang impormasyon ng device</string>
 
     <string name="help_and_feedback">Tulong &amp; Feedback</string>
     <string name="help">Tulong</string>

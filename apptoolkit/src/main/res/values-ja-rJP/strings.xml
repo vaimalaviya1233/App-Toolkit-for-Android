@@ -258,6 +258,7 @@
     <string name="android_version">Androidバージョン:</string>
     <string name="api_level">APIレベル:</string>
     <string name="snack_device_info_copied">デバイス情報がクリップボードにコピーされました</string>
+    <string name="snack_device_info_failed">デバイス情報を読み込めませんでした</string>
 
     <string name="help_and_feedback">ヘルプとフィードバック</string>
     <string name="help">ヘルプ</string>

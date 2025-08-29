@@ -258,6 +258,7 @@
     <string name="android_version">Версія Android:</string>
     <string name="api_level">Рівень API:</string>
     <string name="snack_device_info_copied">Інформацію про пристрій скопійовано до буфера обміну</string>
+    <string name="snack_device_info_failed">Не вдалося завантажити інформацію про пристрій</string>
 
     <string name="help_and_feedback">Допомога та зворотній зв\'язок</string>
     <string name="help">Допомога</string>

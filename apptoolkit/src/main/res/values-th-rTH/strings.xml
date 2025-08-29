@@ -258,6 +258,7 @@
     <string name="android_version">เวอร์ชัน Android:</string>
     <string name="api_level">ระดับ API:</string>
     <string name="snack_device_info_copied">คัดลอกข้อมูลอุปกรณ์ไปยังคลิปบอร์ดแล้ว</string>
+    <string name="snack_device_info_failed">ไม่สามารถโหลดข้อมูลอุปกรณ์ได้</string>
 
     <string name="help_and_feedback">ความช่วยเหลือและข้อเสนอแนะ</string>
     <string name="help">ช่วยเหลือ</string>

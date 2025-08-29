@@ -258,6 +258,7 @@
     <string name="android_version">Phiên bản Android:</string>
     <string name="api_level">Cấp API:</string>
     <string name="snack_device_info_copied">Đã sao chép thông tin thiết bị vào khay nhớ tạm</string>
+    <string name="snack_device_info_failed">Không thể tải thông tin thiết bị</string>
 
     <string name="help_and_feedback">Trợ giúp &amp; phản hồi</string>
     <string name="help">Trợ giúp</string>

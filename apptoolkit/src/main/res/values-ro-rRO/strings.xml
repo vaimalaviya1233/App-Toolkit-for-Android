@@ -258,6 +258,7 @@
     <string name="android_version">Versiune Android:</string>
     <string name="api_level">Nivel API:</string>
     <string name="snack_device_info_copied">Informațiile dispozitivului au fost copiate în clipboard</string>
+    <string name="snack_device_info_failed">Nu s-a putut încărca informațiile despre dispozitiv</string>
 
     <string name="help_and_feedback">Ajutor și feedback</string>
     <string name="help">Ajutor</string>
