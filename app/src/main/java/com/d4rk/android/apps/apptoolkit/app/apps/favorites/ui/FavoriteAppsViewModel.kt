@@ -15,11 +15,13 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
@@ -50,14 +52,15 @@ class FavoriteAppsViewModel(
 
     init {
         viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
-            runCatching {
-                observeFavoritesUseCase()
-                    .onEach {
-                        _favorites.value = it
-                        favoritesLoaded.value = true
-                    }
-                    .collect()
-            }
+            observeFavoritesUseCase()
+                .onEach {
+                    _favorites.value = it
+                    favoritesLoaded.value = true
+                }
+                .catch { e ->
+                    if (e is CancellationException) throw e
+                }
+                .collect()
         }
 
         viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
@@ -113,8 +116,12 @@ class FavoriteAppsViewModel(
 
     fun toggleFavorite(packageName: String) {
         viewModelScope.launch {
-            runCatching {
+            try {
                 toggleFavoriteUseCase(packageName)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                // Ignored
             }
         }
     }
