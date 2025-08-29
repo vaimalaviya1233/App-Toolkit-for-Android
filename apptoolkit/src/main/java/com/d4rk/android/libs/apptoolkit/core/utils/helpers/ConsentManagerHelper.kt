@@ -2,10 +2,10 @@ package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.Firebase
 import com.google.firebase.perf.FirebasePerformance
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

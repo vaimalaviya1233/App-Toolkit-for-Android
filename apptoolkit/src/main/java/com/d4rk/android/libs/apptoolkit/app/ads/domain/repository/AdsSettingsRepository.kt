@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.ads.domain.repository
 
-import kotlinx.coroutines.flow.Flow
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Repository that exposes and persists the ads display preference.

@@ -1,9 +1,9 @@
 package com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.usecases
 
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueReportResult
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CancellationException

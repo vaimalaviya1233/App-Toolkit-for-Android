@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.core.data.favorites
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -17,17 +18,15 @@ class FavoritesRepositoryImpl(
     override suspend fun toggleFavorite(packageName: String) {
         dataStore.toggleFavoriteApp(packageName)
         val intent = Intent(FavoritesChangedReceiver.ACTION_FAVORITES_CHANGED).apply {
+            component = ComponentName(context, FavoritesChangedReceiver::class.java)
             putExtra(FavoritesChangedReceiver.EXTRA_PACKAGE_NAME, packageName)
         }
-        try {
+        runCatching {
             context.sendBroadcast(intent)
-        } catch (e: Exception) {
-            if (e.javaClass.name == "android.app.RemoteServiceException") {
-                Log.w("FavoritesRepositoryImpl", "Failed to send favorites broadcast", e)
-            } else {
-                throw e
-            }
+        }.onFailure { e ->
+            Log.w("FavoritesRepositoryImpl", "Failed to send favorites broadcast", e)
         }
+
     }
 }
 

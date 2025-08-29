@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.app.advanced.data
 
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
-import java.io.File
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.io.File
 
 /**
  * Default implementation of [CacheRepository] that clears cache directories using the provided [Context].

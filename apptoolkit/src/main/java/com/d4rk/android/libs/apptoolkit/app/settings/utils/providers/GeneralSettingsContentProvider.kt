@@ -12,7 +12,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsCon
 import com.d4rk.android.libs.apptoolkit.app.theme.ThemeSettingsList
 
 class GeneralSettingsContentProvider(
-    private val advancedProvider: AdvancedSettingsProvider,
     private val displayProvider: DisplaySettingsProvider,
     private val privacyProvider: PrivacySettingsProvider,
     private val configProvider: BuildInfoProvider,
@@ -22,7 +21,7 @@ class GeneralSettingsContentProvider(
     fun ProvideContent(contentKey : String? , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
         when (contentKey) {
             SettingsContent.ABOUT -> AboutSettingsList(paddingValues = paddingValues, snackbarHostState = snackbarHostState)
-            SettingsContent.ADVANCED -> AdvancedSettingsList(paddingValues = paddingValues, provider = advancedProvider)
+            SettingsContent.ADVANCED -> AdvancedSettingsList(paddingValues = paddingValues)
             SettingsContent.DISPLAY -> DisplaySettingsList(paddingValues = paddingValues, provider = displayProvider)
             SettingsContent.SECURITY_AND_PRIVACY -> PrivacySettingsList(paddingValues = paddingValues, provider = privacyProvider)
             SettingsContent.THEME -> ThemeSettingsList(paddingValues = paddingValues)
