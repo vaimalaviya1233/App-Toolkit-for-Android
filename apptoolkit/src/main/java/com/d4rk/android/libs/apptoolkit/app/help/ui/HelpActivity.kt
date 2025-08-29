@@ -9,12 +9,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
 
 class HelpActivity : AppCompatActivity() {
     private val config : HelpScreenConfig by inject()
+    private val viewModel: HelpViewModel by viewModel()
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,7 @@ class HelpActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize() , color = MaterialTheme.colorScheme.background) {
-                    HelpScreen(activity = this@HelpActivity , config = config, scope = lifecycleScope)
+                    HelpScreen(activity = this@HelpActivity , config = config, scope = lifecycleScope, viewModel = viewModel)
                 }
             }
         }

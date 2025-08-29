@@ -1,16 +1,21 @@
-package com.d4rk.android.libs.apptoolkit.app.help.ui
+package com.d4rk.android.libs.apptoolkit.app.help.domain.data
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
+import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
+import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
-@Composable
-fun rememberFaqList(): List<UiHelpQuestion> {
-    val context = LocalContext.current
-    return remember {
-        listOf(
+class DefaultHelpRepository(
+    private val context: Context,
+    private val ioDispatcher: CoroutineDispatcher
+) : HelpRepository {
+
+    override fun observeFaq(): Flow<List<UiHelpQuestion>> = flow {
+        val questions = listOf(
             R.string.question_1 to R.string.summary_preference_faq_1,
             R.string.question_2 to R.string.summary_preference_faq_2,
             R.string.question_3 to R.string.summary_preference_faq_3,
@@ -26,5 +31,6 @@ fun rememberFaqList(): List<UiHelpQuestion> {
                 answer = context.getString(answerRes)
             )
         }.filter { it.question.isNotBlank() && it.answer.isNotBlank() }
-    }
+        emit(questions)
+    }.flowOn(ioDispatcher)
 }
