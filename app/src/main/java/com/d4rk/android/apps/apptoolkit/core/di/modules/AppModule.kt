@@ -8,6 +8,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.data.repository.DeveloperA
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
+import com.d4rk.android.apps.apptoolkit.app.main.data.repository.MainRepositoryImpl
 import com.d4rk.android.apps.apptoolkit.app.main.ui.MainViewModel
 import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
@@ -18,6 +19,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.Toggl
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
+import com.d4rk.android.apps.apptoolkit.app.main.domain.repository.MainRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
@@ -47,7 +49,9 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    viewModel { MainViewModel() }
+    single<MainRepository> { MainRepositoryImpl(ioDispatcher = get(named("io"))) }
+
+    viewModel { MainViewModel(repository = get()) }
 
     single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
     single { FetchDeveloperAppsUseCase(repository = get()) }
