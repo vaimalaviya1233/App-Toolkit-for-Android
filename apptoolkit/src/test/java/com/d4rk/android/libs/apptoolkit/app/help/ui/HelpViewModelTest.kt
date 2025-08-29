@@ -6,6 +6,8 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepositor
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -25,8 +27,7 @@ class HelpViewModelTest {
         Dispatchers.setMain(dispatcher)
         try {
             val repository = object : HelpRepository {
-                override suspend fun fetchFaq(): List<UiHelpQuestion> =
-                    listOf(UiHelpQuestion("Q", "A"))
+                override fun fetchFaq() = flowOf(listOf(UiHelpQuestion("Q", "A")))
             }
             val viewModel = HelpViewModel(repository)
             viewModel.onEvent(HelpEvent.LoadFaq)
@@ -44,9 +45,7 @@ class HelpViewModelTest {
         Dispatchers.setMain(dispatcher)
         try {
             val repository = object : HelpRepository {
-                override suspend fun fetchFaq(): List<UiHelpQuestion> {
-                    throw IOException("error")
-                }
+                override fun fetchFaq() = flow<List<UiHelpQuestion>> { throw IOException("error") }
             }
             val viewModel = HelpViewModel(repository)
             viewModel.onEvent(HelpEvent.LoadFaq)

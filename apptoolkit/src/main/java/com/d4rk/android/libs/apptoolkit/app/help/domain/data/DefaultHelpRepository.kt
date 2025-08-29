@@ -5,15 +5,17 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class DefaultHelpRepository(
     private val context: Context,
     private val ioDispatcher: CoroutineDispatcher
 ) : HelpRepository {
 
-    override suspend fun fetchFaq(): List<UiHelpQuestion> = withContext(ioDispatcher) {
-        listOf(
+    override fun fetchFaq(): Flow<List<UiHelpQuestion>> = flow {
+        val faq = listOf(
             R.string.question_1 to R.string.summary_preference_faq_1,
             R.string.question_2 to R.string.summary_preference_faq_2,
             R.string.question_3 to R.string.summary_preference_faq_3,
@@ -29,5 +31,6 @@ class DefaultHelpRepository(
                 answer = context.getString(answerRes)
             )
         }.filter { it.question.isNotBlank() && it.answer.isNotBlank() }
-    }
+        emit(faq)
+    }.flowOn(ioDispatcher)
 }
