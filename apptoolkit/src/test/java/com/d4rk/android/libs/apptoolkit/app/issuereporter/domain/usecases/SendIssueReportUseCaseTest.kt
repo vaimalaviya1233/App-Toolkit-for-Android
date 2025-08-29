@@ -7,6 +7,8 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.Ex
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import com.google.common.truth.Truth.assertThat
+import kotlin.test.assertFailsWith
+import kotlinx.coroutines.CancellationException
 import io.ktor.http.HttpStatusCode
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -56,6 +58,18 @@ class SendIssueReportUseCaseTest {
         val error = result as IssueReportResult.Error
         assertThat(error.status).isEqualTo(HttpStatusCode.InternalServerError)
         assertThat(error.message).isEqualTo("boom")
+    }
+
+    @Test
+    fun `invoke cancellation rethrows`() = runTest(dispatcher) {
+        val repository = mockk<IssueReporterRepository>()
+        coEvery { repository.sendReport(any(), any(), any()) } throws CancellationException("cancel")
+
+        val useCase = SendIssueReportUseCase(repository, dispatchers)
+
+        assertFailsWith<CancellationException> {
+            useCase(params).first()
+        }
     }
 }
 
