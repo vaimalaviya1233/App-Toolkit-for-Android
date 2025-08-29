@@ -24,8 +24,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         setup(
             fetchApps = apps,
             initialFavorites = emptySet(),
-            toggleError = RuntimeException("fail"),
-            dispatcher = dispatcherExtension.testDispatcher
+            toggleError = RuntimeException("fail")
         )
 
         viewModel.favorites.test {
