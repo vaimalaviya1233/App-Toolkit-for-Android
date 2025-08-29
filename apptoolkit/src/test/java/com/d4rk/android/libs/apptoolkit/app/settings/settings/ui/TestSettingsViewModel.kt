@@ -6,6 +6,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatc
 import io.mockk.every
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -58,5 +59,39 @@ class TestSettingsViewModel {
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.NoData::class.java)
+    }
+
+    @Test
+    fun `load settings clears previous errors on success`() = runTest(dispatcherExtension.testDispatcher) {
+        val empty = SettingsConfig(title = "", categories = emptyList())
+        val valid = SettingsConfig(title = "Title", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
+        val context = mockk<Context>(relaxed = true)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returnsMany listOf(empty, valid)
+        viewModel = SettingsViewModel(provider, dispatcherExtension.testDispatcher)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        advanceUntilIdle()
+        assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.NoData::class.java)
+        assertThat(viewModel.uiState.value.errors).isNotEmpty()
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        advanceUntilIdle()
+        assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.Success::class.java)
+        assertThat(viewModel.uiState.value.errors).isEmpty()
+    }
+
+    @Test
+    fun `provider called once per load event`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "Title", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
+        val context = mockk<Context>(relaxed = true)
+        provider = mockk()
+        every { provider.provideSettingsConfig(any()) } returns config
+        viewModel = SettingsViewModel(provider, dispatcherExtension.testDispatcher)
+
+        viewModel.onEvent(SettingsEvent.Load(context))
+        advanceUntilIdle()
+
+        verify(exactly = 1) { provider.provideSettingsConfig(context) }
     }
 }

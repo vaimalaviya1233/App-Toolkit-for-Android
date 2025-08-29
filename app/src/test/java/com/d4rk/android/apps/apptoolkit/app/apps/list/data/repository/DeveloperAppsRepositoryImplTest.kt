@@ -20,6 +20,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import java.net.SocketTimeoutException
+import kotlin.test.assertTrue
 
 class DeveloperAppsRepositoryImplTest {
 
@@ -59,6 +60,48 @@ class DeveloperAppsRepositoryImplTest {
         val result = runCatching { repository.fetchDeveloperApps().first() }
         val exception = result.exceptionOrNull()
         assertIs<SocketTimeoutException>(exception)
+    }
+
+    @Test
+    fun `fetchDeveloperApps sorts apps alphabetically ignoring case`() = runTest {
+        val unsorted = listOf(
+            AppInfo("zeta", "pkg1", "icon"),
+            AppInfo("Alpha", "pkg2", "icon"),
+            AppInfo("beta", "pkg3", "icon"),
+        )
+        val response = ApiResponse(AppDataWrapper(unsorted.map { AppInfoDto(it.name, it.packageName, it.iconUrl) }))
+        val json = Json.encodeToString(response)
+        val client = HttpClient(MockEngine { request ->
+            respond(
+                content = json,
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            )
+        }) {
+            install(ContentNegotiation) { json() }
+        }
+        val repository = DeveloperAppsRepositoryImpl(client)
+
+        val result = repository.fetchDeveloperApps().first()
+        assertEquals(listOf("Alpha", "beta", "zeta"), result.map(AppInfo::name))
+    }
+
+    @Test
+    fun `fetchDeveloperApps throws IllegalStateException on http error`() = runTest {
+        val client = HttpClient(MockEngine { request ->
+            respond(
+                content = "",
+                status = HttpStatusCode.BadRequest,
+                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            )
+        }) {
+            install(ContentNegotiation) { json() }
+        }
+        val repository = DeveloperAppsRepositoryImpl(client)
+
+        val result = runCatching { repository.fetchDeveloperApps().first() }
+        val exception = result.exceptionOrNull()
+        assertTrue(exception is IllegalStateException)
     }
 }
 
