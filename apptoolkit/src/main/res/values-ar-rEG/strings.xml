@@ -258,6 +258,7 @@
     <string name="android_version">إصدار أندرويد:</string>
     <string name="api_level">مستوى API:</string>
     <string name="snack_device_info_copied">تم نسخ معلومات الجهاز إلى الحافظة</string>
+    <string name="snack_device_info_failed">تعذر تحميل معلومات الجهاز</string>
 
     <string name="help_and_feedback">المساعدة والملاحظات</string>
     <string name="help">مساعدة</string>

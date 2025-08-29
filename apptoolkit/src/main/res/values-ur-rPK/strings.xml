@@ -258,6 +258,7 @@
     <string name="android_version">اینڈرائیڈ ورژن:</string>
     <string name="api_level">API لیول:</string>
     <string name="snack_device_info_copied">ڈیوائس کی معلومات کلپ بورڈ پر کاپی ہو گئیں</string>
+    <string name="snack_device_info_failed">ڈیوائس کی معلومات لوڈ نہیں ہو سکی</string>
 
     <string name="help_and_feedback">مدد اور رائے</string>
     <string name="help">مدد</string>

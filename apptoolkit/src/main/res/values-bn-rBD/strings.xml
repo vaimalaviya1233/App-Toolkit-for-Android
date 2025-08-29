@@ -258,6 +258,7 @@
     <string name="android_version">অ্যান্ড্রয়েড সংস্করণ:</string>
     <string name="api_level">API লেভেল:</string>
     <string name="snack_device_info_copied">ডিভাইসের তথ্য ক্লিপবোর্ডে কপি করা হয়েছে</string>
+    <string name="snack_device_info_failed">ডিভাইসের তথ্য লোড করা যায়নি</string>
 
     <string name="help_and_feedback">সাহায্য ও প্রতিক্রিয়া</string>
     <string name="help">সাহায্য</string>

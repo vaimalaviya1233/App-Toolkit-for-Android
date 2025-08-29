@@ -258,6 +258,7 @@
     <string name="android_version">Versi Android:</string>
     <string name="api_level">Level API:</string>
     <string name="snack_device_info_copied">Informasi perangkat disalin ke papan klip</string>
+    <string name="snack_device_info_failed">Tidak dapat memuat info perangkat</string>
 
     <string name="help_and_feedback">Bantuan &amp; umpan balik</string>
     <string name="help">Bantuan</string>

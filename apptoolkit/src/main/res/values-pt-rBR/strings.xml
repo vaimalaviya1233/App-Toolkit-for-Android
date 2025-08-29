@@ -258,6 +258,7 @@
     <string name="android_version">Versão do Android:</string>
     <string name="api_level">Nível da API:</string>
     <string name="snack_device_info_copied">Informações do dispositivo copiadas para a área de transferência</string>
+    <string name="snack_device_info_failed">Não foi possível carregar as informações do dispositivo</string>
 
     <string name="help_and_feedback">Ajuda e feedback</string>
     <string name="help">Ajuda</string>
