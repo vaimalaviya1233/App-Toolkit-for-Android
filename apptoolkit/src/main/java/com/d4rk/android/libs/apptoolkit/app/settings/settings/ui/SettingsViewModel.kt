@@ -37,6 +37,7 @@ class SettingsViewModel(
                 settingsProvider.provideSettingsConfig(context = context)
             }
             if (result.categories.isNotEmpty()) {
+                screenState.setErrors(emptyList())
                 screenState.successData {
                     copy(title = result.title, categories = result.categories)
                 }
