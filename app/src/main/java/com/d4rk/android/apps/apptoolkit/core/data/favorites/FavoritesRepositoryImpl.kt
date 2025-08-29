@@ -10,6 +10,7 @@ import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
@@ -18,7 +19,10 @@ class FavoritesRepositoryImpl(
     private val dataStore: DataStore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FavoritesRepository {
-    override fun observeFavorites(): Flow<Set<String>> = dataStore.favoriteApps.flowOn(ioDispatcher)
+    override fun observeFavorites(): Flow<Set<String>> =
+        dataStore.favoriteApps
+            .catch { emit(emptySet()) }
+            .flowOn(ioDispatcher)
 
     override suspend fun toggleFavorite(packageName: String) {
         withContext(ioDispatcher) {

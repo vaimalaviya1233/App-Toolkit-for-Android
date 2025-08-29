@@ -5,7 +5,6 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.Favori
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
@@ -17,17 +16,12 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,34 +35,15 @@ class FavoriteAppsViewModel(
     initialState = UiStateScreen(screenState = IsLoading(), data = UiHomeScreen())
 ) {
 
-    private val _favorites = MutableStateFlow<Set<String>>(emptySet())
-    private val favoritesLoaded = MutableStateFlow(false)
-
-    val favorites = _favorites.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = emptySet()
-    )
+    val favorites = observeFavoritesUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = emptySet()
+        )
 
     init {
-        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
-            observeFavoritesUseCase()
-                .onEach {
-                    _favorites.value = it
-                    favoritesLoaded.value = true
-                }
-                .catch { e ->
-                    if (e is CancellationException) throw e
-                }
-                .collect()
-        }
-
-        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
-            favoritesLoaded
-                .filter { it }
-                .first()
-            onEvent(FavoriteAppsEvent.LoadFavorites)
-        }
+        onEvent(FavoriteAppsEvent.LoadFavorites)
     }
 
     override fun onEvent(event: FavoriteAppsEvent) {
@@ -78,13 +53,20 @@ class FavoriteAppsViewModel(
     }
 
     private fun loadFavorites() {
-        viewModelScope.launch(start = CoroutineStart.UNDISPATCHED) {
+        viewModelScope.launch {
             combine(
-                flow = fetchDeveloperAppsUseCase().flowOn(ioDispatcher),
-                flow2 = favorites
+                fetchDeveloperAppsUseCase().flowOn(ioDispatcher),
+                favorites
             ) { dataState, favsSet ->
                 dataState to favsSet
-            }.collect { (result, savedFavs) ->
+            }
+                .catch { e ->
+                    if (e is CancellationException) throw e
+                    screenState.update { current ->
+                        current.copy(screenState = Error("An error occurred"), data = null)
+                    }
+                }
+                .collect { (result, savedFavs) ->
                 when (result) {
                     is DataState.Success -> {
                         val apps = result.data.filter { appInfo -> savedFavs.contains(appInfo.packageName) }
