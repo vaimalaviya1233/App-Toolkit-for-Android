@@ -1,11 +1,15 @@
 package com.d4rk.android.apps.apptoolkit.core.data.favorites
 
 import android.content.Context
+import android.content.Intent
 import app.cash.turbine.test
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
+import io.mockk.mockkConstructor
+import io.mockk.Runs
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -34,6 +38,12 @@ class FavoritesRepositoryImplTest {
 
         val context = mockk<Context>(relaxed = true)
         every { context.packageName } returns "com.test"
+        justRun { context.sendBroadcast(any()) }
+
+        mockkConstructor(Intent::class)
+        every { anyConstructed<Intent>().component = any() } just Runs
+        every { anyConstructed<Intent>().putExtra(any<String>(), any<String>()) } returns mockk()
+
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val repository = FavoritesRepositoryImpl(context, dataStore, dispatcher)
 
