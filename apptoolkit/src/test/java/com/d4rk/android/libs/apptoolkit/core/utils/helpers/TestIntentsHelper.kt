@@ -172,6 +172,36 @@ class TestIntentsHelper {
     }
 
     @Test
+    fun `shareApp uses provided package name`() {
+        println("\uD83D\uDE80 [TEST] shareApp uses provided package name")
+        val context = mockk<Context>()
+        val res = mockk<Resources>()
+        every { context.packageName } returns "pkg"
+        every { context.resources } returns res
+        every { res.getText(R.string.send_email_using) } returns "send"
+        every {
+            context.getString(
+                R.string.summary_share_message,
+                "${AppLinks.PLAY_STORE_APP}other"
+            )
+        } returns "msg"
+        val slot = slot<Intent>()
+        justRun { context.startActivity(capture(slot)) }
+
+        IntentsHelper.shareApp(context, R.string.summary_share_message, packageName = "other")
+
+        val chooser = slot.captured
+        val sendIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT, Intent::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            chooser.getParcelableExtra(Intent.EXTRA_INTENT)
+        }
+        assertEquals("msg", sendIntent?.getStringExtra(Intent.EXTRA_TEXT))
+        println("\uD83C\uDFC1 [TEST DONE] shareApp uses provided package name")
+    }
+
+    @Test
     fun `sendEmailToDeveloper builds mailto chooser`() {
         println("🚀 [TEST] sendEmailToDeveloper builds mailto chooser")
         val context = mockk<Context>()

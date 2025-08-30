@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -115,12 +117,24 @@ fun AppCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            IconButton(
-                onClick = onFavoriteToggle,
-                modifier = Modifier.align(Alignment.TopEnd),
-                icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                iconContentDescription = null
-            )
+            Row(modifier = Modifier.align(Alignment.TopEnd)) {
+                IconButton(
+                    onClick = {
+                        IntentsHelper.shareApp(
+                            context = context,
+                            shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message,
+                            packageName = appInfo.packageName
+                        )
+                    },
+                    icon = Icons.Outlined.Share,
+                    iconContentDescription = null
+                )
+                IconButton(
+                    onClick = onFavoriteToggle,
+                    icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                    iconContentDescription = null
+                )
+            }
         }
     }
 }
