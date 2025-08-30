@@ -115,13 +115,9 @@ class FavoriteAppsViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launch(ioDispatcher) {
+            runCatching {
                 toggleFavoriteUseCase(packageName)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (_: Exception) {
-                // Ignored
             }
         }
     }

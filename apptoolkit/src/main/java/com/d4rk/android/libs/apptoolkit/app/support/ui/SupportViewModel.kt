@@ -115,7 +115,7 @@ class SupportViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
-            try {
+            runCatching {
                 billingRepository.queryProductDetails(
                     listOf(
                         DonationProductIds.LOW_DONATION,
@@ -124,7 +124,7 @@ class SupportViewModel(
                         DonationProductIds.EXTREME_DONATION
                     )
                 )
-            } catch (e: Exception) {
+            }.onFailure { e ->
                 screenState.updateData(newState = ScreenState.Error()) { current ->
                     current.copy(error = e.message)
                 }
@@ -143,7 +143,7 @@ class SupportViewModel(
     override fun onEvent(event: SupportEvent) {
         when (event) {
             is SupportEvent.QueryProductDetails -> viewModelScope.launch {
-                try {
+                runCatching {
                     billingRepository.queryProductDetails(
                         listOf(
                             DonationProductIds.LOW_DONATION,
@@ -152,7 +152,7 @@ class SupportViewModel(
                             DonationProductIds.EXTREME_DONATION
                         )
                     )
-                } catch (e: Exception) {
+                }.onFailure { e ->
                     screenState.updateData(newState = ScreenState.Error()) { current ->
                         current.copy(error = e.message)
                     }

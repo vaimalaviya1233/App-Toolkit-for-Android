@@ -28,22 +28,21 @@ class DefaultCacheRepository(
             context.filesDir,
         )
 
-        val result = try {
+        val result = runCatching {
             val allDeleted = coroutineScope {
                 cacheDirectories
                     .map { directory -> async { directory.deleteRecursively() } }
                     .awaitAll()
                     .all { it }
             }
-            if (allDeleted) {
-                Result.Success(Unit)
-            } else {
-                Result.Error(Exception("Failed to clear cache"))
+            if (!allDeleted) {
+                throw Exception("Failed to clear cache")
             }
-        } catch (e: Exception) {
-            Result.Error(e)
         }
-        emit(result)
+        emit(result.fold(
+            onSuccess = { Result.Success(Unit) },
+            onFailure = { Result.Error(it as Exception) }
+        ))
     }
         .catch { e -> emit(Result.Error(e as Exception)) }
         .flowOn(ioDispatcher)
