@@ -21,6 +21,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,9 +51,10 @@ fun AppCard(
     modifier: Modifier
 ) {
     val context: Context = LocalContext.current
-    val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
-    val view : View = LocalView.current
+    val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+    val view: View = LocalView.current
     val coroutineScope = rememberCoroutineScope()
+    val appInfoHelper = remember { AppInfoHelper() }
     Card(
         modifier = modifier
             .bounceClick()
@@ -64,12 +66,12 @@ fun AppCard(
                 hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 if (appInfo.packageName.isNotEmpty()) {
                     coroutineScope.launch {
-                        if (AppInfoHelper().isAppInstalled(
+                        if (appInfoHelper.isAppInstalled(
                                 context = context,
                                 packageName = appInfo.packageName
                             )
                         ) {
-                            if (!AppInfoHelper().openApp(
+                            if (!appInfoHelper.openApp(
                                     context = context,
                                     packageName = appInfo.packageName
                                 )
