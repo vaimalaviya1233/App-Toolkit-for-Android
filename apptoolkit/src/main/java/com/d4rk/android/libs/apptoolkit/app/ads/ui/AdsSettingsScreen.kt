@@ -33,6 +33,7 @@ import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import kotlinx.coroutines.launch
 
+/** Compose screen displaying ad preferences. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
