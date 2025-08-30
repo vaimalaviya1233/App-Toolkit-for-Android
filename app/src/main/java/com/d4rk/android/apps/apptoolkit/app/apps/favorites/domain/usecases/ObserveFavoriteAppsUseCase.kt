@@ -19,7 +19,7 @@ class ObserveFavoriteAppsUseCase(
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
-    operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
+    suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
         return combine(
             fetchDeveloperAppsUseCase().flowOn(ioDispatcher),
             observeFavoritesUseCase()
