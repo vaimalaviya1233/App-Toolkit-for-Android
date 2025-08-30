@@ -17,14 +17,14 @@ class TestAppsListViewModel : TestAppsListViewModelBase() {
     @Test
     fun `fetch apps - large list`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = (1..10_000).map { AppInfo("App$it", "pkg$it", "url$it") }
-        setup(fetchApps = apps)
+        setup(fetchApps = apps, ioDispatcher = dispatcherExtension.testDispatcher)
         viewModel.uiState.testSuccess(expectedSize = apps.size)
     }
 
     @Test
     fun `toggle favorite updates state`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
-        setup(fetchApps = apps)
+        setup(fetchApps = apps, ioDispatcher = dispatcherExtension.testDispatcher)
         toggleAndAssert(packageName = "pkg", expected = true)
         toggleAndAssert(packageName = "pkg", expected = false)
     }

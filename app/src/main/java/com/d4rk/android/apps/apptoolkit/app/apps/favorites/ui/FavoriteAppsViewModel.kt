@@ -41,7 +41,7 @@ class FavoriteAppsViewModel(
 
     val favorites = flow { emitAll(observeFavoritesUseCase()) }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = emptySet()
     )
 
@@ -89,6 +89,12 @@ class FavoriteAppsViewModel(
     fun toggleFavorite(packageName: String) {
         viewModelScope.launch(ioDispatcher) {
             runCatching { toggleFavoriteUseCase(packageName) }
+                .onFailure { error ->
+                    error.printStackTrace()
+                    screenState.update { current ->
+                        current.copy(screenState = Error("Failed to update favorite"))
+                    }
+                }
         }
     }
 }

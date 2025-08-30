@@ -99,7 +99,7 @@ class AppsListViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             runCatching { toggleFavoriteUseCase(packageName) }
                 .onFailure { error ->
                     error.printStackTrace()

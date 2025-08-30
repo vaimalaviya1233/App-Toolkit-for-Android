@@ -27,7 +27,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         setup(
             fetchApps = apps,
             initialFavorites = emptySet(),
-            toggleError = RuntimeException("fail")
+            toggleError = RuntimeException("fail"),
+            ioDispatcher = dispatcherExtension.testDispatcher,
         )
 
         viewModel.favorites.test {
@@ -49,7 +50,8 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         )
         setup(
             fetchApps = apps,
-            initialFavorites = setOf("pkg1")
+            initialFavorites = setOf("pkg1"),
+            ioDispatcher = dispatcherExtension.testDispatcher,
         )
 
         viewModel.uiState.test {
@@ -66,7 +68,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `toggle favorite updates favorites flow`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
-        setup(fetchApps = apps)
+        setup(fetchApps = apps, ioDispatcher = dispatcherExtension.testDispatcher)
 
         viewModel.favorites.test {
             assertThat(awaitItem()).isEmpty()
@@ -81,7 +83,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `load favorites with no saved apps shows no data`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
-        setup(fetchApps = apps, initialFavorites = emptySet())
+        setup(fetchApps = apps, initialFavorites = emptySet(), ioDispatcher = dispatcherExtension.testDispatcher)
 
         viewModel.uiState.test {
             awaitItem() // Initial loading
