@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
+import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.AppsList
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.rememberAdsConfig
@@ -19,6 +20,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
@@ -35,6 +38,29 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val adsEnabled = rememberAdsEnabled(koin)
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } }
+    val appInfoHelper = remember { AppInfoHelper() }
+    val onAppClick: (AppInfo) -> Unit = remember(context) {
+        {
+            if (it.packageName.isNotEmpty()) {
+                if (appInfoHelper.isAppInstalled(context, it.packageName)) {
+                    if (!appInfoHelper.openApp(context, it.packageName)) {
+                        IntentsHelper.openPlayStoreForApp(context, it.packageName)
+                    }
+                } else {
+                    IntentsHelper.openPlayStoreForApp(context, it.packageName)
+                }
+            }
+        }
+    }
+    val onShareClick: (AppInfo) -> Unit = remember(context) {
+        {
+            IntentsHelper.shareApp(
+                context = context,
+                shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message,
+                packageName = it.packageName
+            )
+        }
+    }
 
     FavoriteAppsScreen(
         screenState = screenState,
@@ -43,6 +69,8 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
         adsConfig = adsConfig,
         adsEnabled = adsEnabled,
         onFavoriteToggle = onFavoriteToggle,
+        onAppClick = onAppClick,
+        onShareClick = onShareClick,
         onRetry = onRetry
     )
 }
@@ -55,6 +83,8 @@ fun FavoriteAppsScreen(
     adsConfig: AdsConfig,
     adsEnabled: Boolean,
     onFavoriteToggle: (String) -> Unit,
+    onAppClick: (AppInfo) -> Unit,
+    onShareClick: (AppInfo) -> Unit,
     onRetry: () -> Unit,
 ) {
     ScreenStateHandler(
@@ -73,7 +103,9 @@ fun FavoriteAppsScreen(
                 paddingValues = paddingValues,
                 adsConfig = adsConfig,
                 adsEnabled = adsEnabled,
-                onFavoriteToggle = onFavoriteToggle
+                onFavoriteToggle = onFavoriteToggle,
+                onAppClick = onAppClick,
+                onShareClick = onShareClick
             )
         },
         onError = {

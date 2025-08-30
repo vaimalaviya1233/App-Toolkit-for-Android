@@ -36,6 +36,8 @@ fun AppsList(
     adsConfig: AdsConfig,
     adsEnabled: Boolean,
     onFavoriteToggle: (String) -> Unit,
+    onAppClick: (AppInfo) -> Unit,
+    onShareClick: (AppInfo) -> Unit,
 ) {
     val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
@@ -58,7 +60,9 @@ fun AppsList(
         columnCount = columnCount,
         listState = listState,
         adsConfig = adsConfig,
-        onFavoriteToggle = onFavoriteToggle
+        onFavoriteToggle = onFavoriteToggle,
+        onAppClick = onAppClick,
+        onShareClick = onShareClick
     )
 }
 
@@ -70,7 +74,9 @@ private fun AppsGrid(
     columnCount: Int,
     listState: LazyGridState,
     adsConfig: AdsConfig,
-    onFavoriteToggle: (String) -> Unit
+    onFavoriteToggle: (String) -> Unit,
+    onAppClick: (AppInfo) -> Unit,
+    onShareClick: (AppInfo) -> Unit
 ) {
     val (visibilityStates: SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(
         gridState = listState,
@@ -105,7 +111,9 @@ private fun AppsGrid(
                     isFavorite = favorites.contains(item.appInfo.packageName),
                     visibilityStates = visibilityStates,
                     index = index,
-                    onFavoriteToggle = onFavoriteToggle
+                    onFavoriteToggle = onFavoriteToggle,
+                    onAppClick = onAppClick,
+                    onShareClick = onShareClick
                 )
 
                 AppListItem.Ad -> AdListItem(adsConfig = adsConfig)
@@ -120,13 +128,17 @@ private fun AppCardItem(
     isFavorite: Boolean,
     visibilityStates: SnapshotStateList<Boolean>,
     index: Int,
-    onFavoriteToggle: (String) -> Unit
+    onFavoriteToggle: (String) -> Unit,
+    onAppClick: (AppInfo) -> Unit,
+    onShareClick: (AppInfo) -> Unit
 ) {
     val appInfo = item.appInfo
     AppCard(
         appInfo = appInfo,
         isFavorite = isFavorite,
         onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
+        onAppClick = onAppClick,
+        onShareClick = onShareClick,
         modifier = Modifier.animateVisibility(
             visible = visibilityStates.getOrElse(index = index) { false },
             index = index
