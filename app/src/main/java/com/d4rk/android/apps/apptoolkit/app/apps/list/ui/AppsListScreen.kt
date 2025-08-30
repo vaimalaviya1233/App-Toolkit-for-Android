@@ -2,9 +2,11 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
@@ -31,7 +33,10 @@ fun AppsListRoute(paddingValues: PaddingValues) {
     val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val isTabletOrLandscape = remember(context) { ScreenHelper.isLandscapeOrTablet(context) }
+    val configuration = LocalConfiguration.current
+    val isTabletOrLandscape by remember(configuration) {
+        derivedStateOf { ScreenHelper.isLandscapeOrTablet(context) }
+    }
     val koin = getKoin()
     val adsConfig = rememberAdsConfig(koin, isTabletOrLandscape)
     val adsEnabled = rememberAdsEnabled(koin)
