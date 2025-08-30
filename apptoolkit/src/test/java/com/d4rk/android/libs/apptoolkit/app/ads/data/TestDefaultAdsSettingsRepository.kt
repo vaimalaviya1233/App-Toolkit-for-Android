@@ -109,5 +109,17 @@ class TestDefaultAdsSettingsRepository {
         assertThat(result).isInstanceOf(Result.Error::class.java)
         coVerify { dataStore.saveAds(isChecked = true) }
     }
+    
+    @Test
+    fun `defaultAdsEnabled false in debug builds`() = runTest(dispatcherExtension.testDispatcher) {
+        val repository = createRepository(dataStore = mockk(), debugBuild = true)
+        assertThat(repository.defaultAdsEnabled).isFalse()
+    }
+
+    @Test
+    fun `defaultAdsEnabled true in release builds`() = runTest(dispatcherExtension.testDispatcher) {
+        val repository = createRepository(dataStore = mockk(), debugBuild = false)
+        assertThat(repository.defaultAdsEnabled).isTrue()
+    }
 }
 
