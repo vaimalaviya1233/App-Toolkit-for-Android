@@ -9,7 +9,6 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkConstructor
-import io.mockk.Runs
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -41,7 +40,7 @@ class FavoritesRepositoryImplTest {
         justRun { context.sendBroadcast(any()) }
 
         mockkConstructor(Intent::class)
-        every { anyConstructed<Intent>().component = any() } just Runs
+        every { anyConstructed<Intent>().component = any() } returns Unit
         every { anyConstructed<Intent>().putExtra(any<String>(), any<String>()) } returns mockk()
 
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
