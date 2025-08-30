@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.d4rk.android.libs.apptoolkit.app.onboarding.data.datasource.OnboardingPreferencesDataSource
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +39,7 @@ val Context.commonDataStore : DataStore<Preferences> by preferencesDataStore(nam
 open class CommonDataStore(
     context : Context,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+) : OnboardingPreferencesDataSource {
     val dataStore : DataStore<Preferences> = context.commonDataStore
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
@@ -71,7 +72,7 @@ open class CommonDataStore(
 
     // Startup
     private val startupKey = booleanPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP)
-    val startup : Flow<Boolean> = dataStore.data.map { preferences : Preferences ->
+    override val startup : Flow<Boolean> = dataStore.data.map { preferences : Preferences ->
         preferences[startupKey] != false
     }
 
@@ -80,7 +81,7 @@ open class CommonDataStore(
         preferences[startupPageKey] ?: default
     }
 
-    suspend fun saveStartup(isFirstTime : Boolean) {
+    override suspend fun saveStartup(isFirstTime : Boolean) {
         dataStore.edit { preferences : MutablePreferences ->
             preferences[startupKey] = isFirstTime
         }

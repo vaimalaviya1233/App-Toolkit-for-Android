@@ -39,8 +39,13 @@ class TestOnboardingViewModel {
     }
 
     @Test
+    fun `initial state is not completed`() = runTest(dispatcherExtension.testDispatcher) {
+        val viewModel = OnboardingViewModel(repository = FakeOnboardingRepository())
+        assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
+    }
+
+    @Test
     fun `current tab index mutates as expected`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] current tab index mutates as expected")
         val viewModel = OnboardingViewModel(repository = FakeOnboardingRepository())
 
         // Default value
@@ -61,12 +66,10 @@ class TestOnboardingViewModel {
         // Reset back to default
         viewModel.updateCurrentTab(0)
         assertThat(viewModel.uiState.value.currentTabIndex).isEqualTo(0)
-        println("🏁 [TEST DONE] current tab index mutates as expected")
     }
 
     @Test
     fun `repeated index changes remain stable`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] repeated index changes remain stable")
         val viewModel = OnboardingViewModel(repository = FakeOnboardingRepository())
 
         repeat(5) { index ->
@@ -77,12 +80,10 @@ class TestOnboardingViewModel {
 
         viewModel.updateCurrentTab(0)
         assertThat(viewModel.uiState.value.currentTabIndex).isEqualTo(0)
-        println("🏁 [TEST DONE] repeated index changes remain stable")
     }
 
     @Test
     fun `repository completion updates state`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] repository completion updates state")
         val repository = FakeOnboardingRepository()
         val viewModel = OnboardingViewModel(repository = repository)
 
@@ -90,12 +91,10 @@ class TestOnboardingViewModel {
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
-        println("🏁 [TEST DONE] repository completion updates state")
     }
 
     @Test
     fun `completeOnboarding sets completion and calls callback`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] completeOnboarding sets completion and calls callback")
         val repository = FakeOnboardingRepository()
         val viewModel = OnboardingViewModel(repository = repository)
         var callbackInvoked = false
@@ -106,12 +105,10 @@ class TestOnboardingViewModel {
         assertThat(repository.completed).isTrue()
         assertThat(callbackInvoked).isTrue()
         assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
-        println("🏁 [TEST DONE] completeOnboarding sets completion and calls callback")
     }
 
     @Test
     fun `completeOnboarding failure resets completion`() = runTest(dispatcherExtension.testDispatcher) {
-        println("🚀 [TEST] completeOnboarding failure resets completion")
         val repository = FakeOnboardingRepository().apply { shouldFail = true }
         val viewModel = OnboardingViewModel(repository = repository)
         var callbackInvoked = false
@@ -122,6 +119,5 @@ class TestOnboardingViewModel {
         assertThat(repository.completed).isFalse()
         assertThat(callbackInvoked).isFalse()
         assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
-        println("🏁 [TEST DONE] completeOnboarding failure resets completion")
     }
 }
