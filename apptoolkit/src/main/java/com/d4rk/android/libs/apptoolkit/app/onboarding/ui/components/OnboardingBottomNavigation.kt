@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FlexibleBottomAppBar
 import androidx.compose.runtime.Composable
@@ -29,7 +30,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButtonWit
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3ExpressiveApi::class
+)
 @Composable
 fun OnboardingBottomNavigation(
     pagerState : PagerState , pageCount : Int , onNextClicked : () -> Unit , onBackClicked : () -> Unit
