@@ -11,10 +11,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
@@ -39,26 +40,32 @@ fun AppsList(
 ) {
     val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
-    val isTabletOrLandscape: Boolean = ScreenHelper.isLandscapeOrTablet(context = context)
-    val columnCount: Int = if (isTabletOrLandscape) 4 else 2
+    val isTabletOrLandscape: Boolean = remember(context) {
+        ScreenHelper.isLandscapeOrTablet(context = context)
+    }
+    val columnCount: Int = remember(isTabletOrLandscape) { if (isTabletOrLandscape) 4 else 2 }
 
-    val bannerType: String = if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
+    val bannerType: String = remember(isTabletOrLandscape) {
+        if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
+    }
     val koin = getKoin()
-    val adsConfig: AdsConfig = remember { koin.get(qualifier = named(bannerType)) }
+    val adsConfig: AdsConfig = remember(bannerType) { koin.get(qualifier = named(bannerType)) }
     val listState: LazyGridState = rememberLazyGridState()
     val adFrequency = 4
     val dataStore: DataStore = remember { koin.get() }
     val adsEnabled: Boolean by remember { dataStore.ads(default = true) }.collectAsStateWithLifecycle(initialValue = true)
-    val items: List<AppListItem> = remember(key1 = apps, key2 = adsEnabled) {
-        buildList {
-            apps.forEachIndexed { index: Int, appInfo: AppInfo ->
-                add(element = AppListItem.App(appInfo = appInfo))
-                if (adsEnabled && (index + 1) % adFrequency == 0) {
-                    add(element = AppListItem.Ad)
+    val items: List<AppListItem> by remember(apps, adsEnabled) {
+        derivedStateOf {
+            buildList {
+                apps.forEachIndexed { index: Int, appInfo: AppInfo ->
+                    add(AppListItem.App(appInfo))
+                    if (adsEnabled && (index + 1) % adFrequency == 0) {
+                        add(AppListItem.Ad)
+                    }
                 }
-            }
-            if (adsEnabled && apps.isNotEmpty() && apps.size % adFrequency != 0) {
-                add(element = AppListItem.Ad)
+                if (adsEnabled && apps.isNotEmpty() && apps.size % adFrequency != 0) {
+                    add(AppListItem.Ad)
+                }
             }
         }
     }
@@ -77,6 +84,12 @@ fun AppsList(
     ) {
         itemsIndexed(
             items = items,
+            key = { index, item ->
+                when (item) {
+                    is AppListItem.App -> item.appInfo.packageName
+                    AppListItem.Ad -> "ad-$index"
+                }
+            },
             span = { _, item ->
                 if (item is AppListItem.Ad) GridItemSpan(columnCount) else GridItemSpan(1)
             }
