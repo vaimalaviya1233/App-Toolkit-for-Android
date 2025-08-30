@@ -36,9 +36,10 @@ private class FakeUsageAndDiagnosticsPreferencesDataSource : UsageAndDiagnostics
 }
 
 private class FakeBuildInfoProvider : BuildInfoProvider {
+    override val appVersion: String = ""
+    override val appVersionCode: Int = 0
+    override val packageName: String = ""
     override val isDebugBuild: Boolean = false
-    override val versionName: String = ""
-    override val versionCode: Int = 0
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
