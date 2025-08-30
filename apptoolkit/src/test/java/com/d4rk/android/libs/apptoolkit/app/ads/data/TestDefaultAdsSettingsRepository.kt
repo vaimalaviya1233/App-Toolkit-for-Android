@@ -74,12 +74,7 @@ class TestDefaultAdsSettingsRepository {
         every { dataStore.ads(default = true) } returns flow { throw CancellationException("boom") }
         val repository = createRepository(dataStore, debugBuild = false)
 
-        var thrown: Throwable? = null
-        try {
-            repository.observeAdsEnabled().collect()
-        } catch (e: Throwable) {
-            thrown = e
-        }
+        val thrown = runCatching { repository.observeAdsEnabled().collect() }.exceptionOrNull()
 
         assertThat(thrown).isInstanceOf(CancellationException::class.java)
     }
