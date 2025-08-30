@@ -1,6 +1,7 @@
-package com.d4rk.android.apps.apptoolkit.app.main.data.repository
+package com.d4rk.android.libs.apptoolkit.app.main.data.repository
 
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.main.utils.constants.NavigationDrawerRoutes
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -28,6 +29,15 @@ class MainRepositoryImplTest {
                 R.string.share
             ),
             items.map(NavigationDrawerItem::title)
+        )
+        assertEquals(
+            listOf(
+                NavigationDrawerRoutes.ROUTE_SETTINGS,
+                NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK,
+                NavigationDrawerRoutes.ROUTE_UPDATES,
+                NavigationDrawerRoutes.ROUTE_SHARE,
+            ),
+            items.map(NavigationDrawerItem::route)
         )
     }
 }

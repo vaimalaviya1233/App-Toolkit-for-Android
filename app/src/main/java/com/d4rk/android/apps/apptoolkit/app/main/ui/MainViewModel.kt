@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainAction
 import com.d4rk.android.apps.apptoolkit.app.main.domain.action.MainEvent
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
-import com.d4rk.android.apps.apptoolkit.app.main.domain.repository.MainRepository
+import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.MainRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
