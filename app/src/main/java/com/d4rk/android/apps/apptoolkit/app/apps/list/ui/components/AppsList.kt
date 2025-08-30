@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -87,7 +88,9 @@ fun AppsList(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues),
-        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize)
+        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
+        verticalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize),
+        horizontalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize)
     ) {
         itemsIndexed(
             items = items,
@@ -113,15 +116,13 @@ fun AppsList(
                                 visible = visibilityStates.getOrElse(index = index) { false },
                                 index = index
                             )
-                            .padding(all = SizeConstants.SmallSize)
                     )
                 }
 
                 AppListItem.Ad -> {
                     AdBanner(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize),
+                            .fillMaxWidth(),
                         adsConfig = adsConfig
                     )
                 }
