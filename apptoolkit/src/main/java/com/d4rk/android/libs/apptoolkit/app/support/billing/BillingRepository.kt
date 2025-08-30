@@ -15,7 +15,6 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +30,7 @@ import kotlin.coroutines.resume
 
 class BillingRepository private constructor(
     context: Context,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher,
     externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
 ) : PurchasesUpdatedListener {
 
@@ -62,7 +61,7 @@ class BillingRepository private constructor(
 
         fun getInstance(
             context: Context,
-            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+            ioDispatcher: CoroutineDispatcher,
             externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
         ): BillingRepository {
             return INSTANCE ?: synchronized(this) {
