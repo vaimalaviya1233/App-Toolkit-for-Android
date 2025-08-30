@@ -5,12 +5,13 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.Favori
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.FavoriteAppsEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
-import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.*
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.Error
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.IsLoading
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.NoData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.Success
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState

@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsScreen

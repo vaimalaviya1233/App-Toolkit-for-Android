@@ -19,7 +19,6 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.model.ui.UiAdvancedSettingsScreen
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterActivity
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AdvancedSettingsProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen

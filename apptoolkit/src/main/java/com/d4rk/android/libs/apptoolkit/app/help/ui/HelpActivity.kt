@@ -5,10 +5,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HelpActivity : AppCompatActivity() {
     private val config : HelpScreenConfig by inject()

@@ -2,8 +2,8 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.AppsList

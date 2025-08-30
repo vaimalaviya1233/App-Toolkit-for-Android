@@ -2,22 +2,22 @@ package com.d4rk.android.apps.apptoolkit.core.di.modules
 
 import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.startup.utils.interfaces.providers.AppStartupProvider
+import com.d4rk.android.libs.apptoolkit.app.help.data.DefaultHelpRepository
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.HelpScreenConfig
 import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
-import com.d4rk.android.libs.apptoolkit.app.help.data.DefaultHelpRepository
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpViewModel
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.data.DefaultIssueReporterRepository
-import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.DeviceInfoProvider
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.providers.DeviceInfoProviderImpl
+import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.usecases.SendIssueReportUseCase
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.ui.IssueReporterViewModel
-import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
-import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupViewModel
+import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.StartupProvider
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
+import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
