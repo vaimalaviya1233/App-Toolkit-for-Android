@@ -178,8 +178,15 @@ object IntentsHelper {
      *                           Example : "Check out this awesome app! Download it here: %s"
      *                           The %s will be replaced by the app's Play Store URL.
      */
-    fun shareApp(context : Context , @StringRes shareMessageFormat : Int) : Boolean {
-        val messageToShare : String = context.getString(shareMessageFormat , "${AppLinks.PLAY_STORE_APP}${context.packageName}")
+    fun shareApp(
+        context: Context,
+        @StringRes shareMessageFormat: Int,
+        packageName: String = context.packageName
+    ): Boolean {
+        val messageToShare: String = context.getString(
+            shareMessageFormat,
+            "${AppLinks.PLAY_STORE_APP}$packageName"
+        )
         val sendIntent : Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT , messageToShare)
