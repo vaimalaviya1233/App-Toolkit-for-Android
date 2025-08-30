@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -38,11 +37,11 @@ class BillingRepository private constructor(
 
     private val _productDetails = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
     val productDetails: Flow<Map<String, ProductDetails>> =
-        _productDetails.asStateFlow().flowOn(ioDispatcher)
+        _productDetails.asStateFlow()
 
     private val _purchaseResult = MutableSharedFlow<PurchaseResult>()
     val purchaseResult: Flow<PurchaseResult> =
-        _purchaseResult.asSharedFlow().flowOn(ioDispatcher)
+        _purchaseResult.asSharedFlow()
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
