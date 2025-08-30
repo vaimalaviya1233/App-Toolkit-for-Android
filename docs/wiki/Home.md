@@ -4,6 +4,7 @@ Welcome to the **AppToolkit** wiki! This section provides extended documentation
 
 ## Available Pages
 
+- [[Architecture]]
 - [[Installation]]
 - [[Contributing]]
 - [[Wiki-Guide]]
