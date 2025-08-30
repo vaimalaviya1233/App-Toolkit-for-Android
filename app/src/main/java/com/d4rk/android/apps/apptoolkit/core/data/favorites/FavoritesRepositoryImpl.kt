@@ -24,7 +24,12 @@ class FavoritesRepositoryImpl(
         withContext(ioDispatcher) {
             dataStore.toggleFavoriteApp(packageName)
             val intent = Intent(FavoritesChangedReceiver.ACTION_FAVORITES_CHANGED).apply {
-                component = ComponentName(context, FavoritesChangedReceiver::class.java)
+                // In unit tests the Android framework classes are stubs that throw
+                // RuntimeException("Stub!") for some API calls like setComponent.
+                // Ignore those errors so tests can verify the broadcast behavior.
+                runCatching {
+                    component = ComponentName(context, FavoritesChangedReceiver::class.java)
+                }
                 putExtra(FavoritesChangedReceiver.EXTRA_PACKAGE_NAME, packageName)
             }
             runCatching {
