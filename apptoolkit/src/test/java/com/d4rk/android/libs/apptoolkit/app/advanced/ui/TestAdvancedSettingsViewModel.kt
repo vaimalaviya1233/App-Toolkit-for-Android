@@ -6,6 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSett
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.google.common.truth.Truth.assertThat
 import app.cash.turbine.test
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
@@ -17,6 +18,7 @@ private class FakeCacheRepository(private val result: Result<Unit>) : CacheRepos
     override fun clearCache(): Flow<Result<Unit>> = flowOf(result)
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TestAdvancedSettingsViewModel {
 
     @Test

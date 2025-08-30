@@ -4,12 +4,14 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
 
     companion object {
