@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UsageAndDiagnosticsViewModel(
     private val dataStore: CommonDataStore,
@@ -69,35 +70,45 @@ class UsageAndDiagnosticsViewModel(
     }
 
     private fun updateUsageAndDiagnostics(enabled: Boolean) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.saveUsageAndDiagnostics(isChecked = enabled)
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                dataStore.saveUsageAndDiagnostics(isChecked = enabled)
+            }
         }
     }
 
     private fun updateAnalyticsConsent(granted: Boolean) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.saveAnalyticsConsent(isGranted = granted)
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                dataStore.saveAnalyticsConsent(isGranted = granted)
+            }
             updateAllConsents()
         }
     }
 
     private fun updateAdStorageConsent(granted: Boolean) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.saveAdStorageConsent(isGranted = granted)
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                dataStore.saveAdStorageConsent(isGranted = granted)
+            }
             updateAllConsents()
         }
     }
 
     private fun updateAdUserDataConsent(granted: Boolean) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.saveAdUserDataConsent(isGranted = granted)
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                dataStore.saveAdUserDataConsent(isGranted = granted)
+            }
             updateAllConsents()
         }
     }
 
     private fun updateAdPersonalizationConsent(granted: Boolean) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.saveAdPersonalizationConsent(isGranted = granted)
+        viewModelScope.launch {
+            withContext(dispatcher) {
+                dataStore.saveAdPersonalizationConsent(isGranted = granted)
+            }
             updateAllConsents()
         }
     }
