@@ -65,6 +65,86 @@ fun IconButton(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun FilledIconButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    iconContentDescription: String? = null,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
+    shapes: IconButtonShapes = IconButtonDefaults.shapes()
+) {
+    val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+    val view: View = LocalView.current
+
+    androidx.compose.material3.FilledIconButton(
+        onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+            onClick()
+        },
+        enabled = enabled,
+        modifier = modifier.bounceClick(),
+        shapes = shapes
+    ) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                imageVector = it,
+                contentDescription = iconContentDescription
+            )
+        } ?: painter?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                painter = it,
+                contentDescription = iconContentDescription
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun FilledTonalIconButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    iconContentDescription: String? = null,
+    icon: ImageVector? = null,
+    painter: Painter? = null,
+    shapes: IconButtonShapes = IconButtonDefaults.shapes()
+) {
+    val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
+    val view: View = LocalView.current
+
+    androidx.compose.material3.FilledTonalIconButton(
+        onClick = {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+            onClick()
+        },
+        enabled = enabled,
+        modifier = modifier.bounceClick(),
+        shapes = shapes
+    ) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                imageVector = it,
+                contentDescription = iconContentDescription
+            )
+        } ?: painter?.let {
+            Icon(
+                modifier = Modifier.size(size = SizeConstants.ButtonIconSize),
+                painter = it,
+                contentDescription = iconContentDescription
+            )
+        }
+    }
+}
+
 @Composable
 fun IconButtonWithText(
     modifier: Modifier = Modifier,
