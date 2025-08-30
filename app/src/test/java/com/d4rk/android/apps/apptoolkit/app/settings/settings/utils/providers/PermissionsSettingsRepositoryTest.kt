@@ -4,12 +4,14 @@ import android.content.Context
 import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.PermissionsSettingsRepository
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class PermissionsSettingsRepositoryTest {
 
     @Test

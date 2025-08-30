@@ -6,12 +6,14 @@ import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class FavoritesRepositoryImplTest {
 
     @Test
@@ -31,6 +33,7 @@ class FavoritesRepositoryImplTest {
         }
 
         val context = mockk<Context>(relaxed = true)
+        every { context.packageName } returns "com.test"
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val repository = FavoritesRepositoryImpl(context, dataStore, dispatcher)
 
