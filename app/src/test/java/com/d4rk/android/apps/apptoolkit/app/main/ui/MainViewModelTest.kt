@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -19,8 +20,8 @@ import kotlin.test.assertEquals
 class MainViewModelTest {
 
     private class FakeMainRepository : MainRepository {
-        val itemsFlow = MutableSharedFlow<List<NavigationDrawerItem>>()
-        private val errorFlow = MutableSharedFlow<Throwable>()
+        val itemsFlow = MutableSharedFlow<List<NavigationDrawerItem>>(replay = 1)
+        private val errorFlow = MutableSharedFlow<Throwable>(replay = 1)
 
         override fun getNavigationDrawerItems(): Flow<List<NavigationDrawerItem>> =
             merge(
@@ -41,6 +42,7 @@ class MainViewModelTest {
     fun `emitting items updates navigation drawer items`() = runTest {
         val repository = FakeMainRepository()
         val viewModel = MainViewModel(repository)
+        advanceUntilIdle()
         val icon = ImageVector.Builder(
             name = "test",
             defaultWidth = 24.dp,
@@ -63,6 +65,7 @@ class MainViewModelTest {
     fun `emitting error shows snackbar`() = runTest {
         val repository = FakeMainRepository()
         val viewModel = MainViewModel(repository)
+        advanceUntilIdle()
         val error = RuntimeException("boom")
 
         viewModel.uiState.test {
