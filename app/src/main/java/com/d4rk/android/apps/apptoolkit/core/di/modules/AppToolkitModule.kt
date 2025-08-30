@@ -21,7 +21,6 @@ import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
@@ -34,7 +33,7 @@ val appToolkitModule : Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
     single(createdAtStart = true) {
-        val ioDispatcher = get<CoroutineDispatcher>(named("io"))
+        val ioDispatcher = get<AppDispatchers>().io
         BillingRepository.getInstance(
             context = get(),
             ioDispatcher = ioDispatcher,

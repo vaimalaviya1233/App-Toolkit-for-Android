@@ -15,12 +15,11 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -30,17 +29,19 @@ import kotlin.coroutines.resume
 
 class BillingRepository private constructor(
     context: Context,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher,
     externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
 ) : PurchasesUpdatedListener {
 
     private val scope = CoroutineScope(externalScope.coroutineContext + SupervisorJob() + ioDispatcher)
 
     private val _productDetails = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
-    val productDetails: StateFlow<Map<String, ProductDetails>> = _productDetails.asStateFlow()
+    val productDetails: Flow<Map<String, ProductDetails>> =
+        _productDetails.asStateFlow()
 
     private val _purchaseResult = MutableSharedFlow<PurchaseResult>()
-    val purchaseResult = _purchaseResult.asSharedFlow()
+    val purchaseResult: Flow<PurchaseResult> =
+        _purchaseResult.asSharedFlow()
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
@@ -59,7 +60,7 @@ class BillingRepository private constructor(
 
         fun getInstance(
             context: Context,
-            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+            ioDispatcher: CoroutineDispatcher,
             externalScope: CoroutineScope = CoroutineScope(SupervisorJob() + ioDispatcher),
         ): BillingRepository {
             return INSTANCE ?: synchronized(this) {
