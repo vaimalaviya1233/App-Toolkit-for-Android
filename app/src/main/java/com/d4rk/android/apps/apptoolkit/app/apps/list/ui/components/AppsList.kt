@@ -88,7 +88,7 @@ fun AppsList(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues),
-        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
+        contentPadding = PaddingValues(SizeConstants.LargeSize),
         verticalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize),
         horizontalArrangement = Arrangement.spacedBy(space = SizeConstants.LargeSize)
     ) {
