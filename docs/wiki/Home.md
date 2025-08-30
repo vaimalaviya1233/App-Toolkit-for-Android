@@ -11,4 +11,22 @@ Welcome to the **AppToolkit** wiki! This section provides extended documentation
 - [[Library]]
 - [[UI-Components]]
 
+## Features
+- [[About]]
+- [[Ads]]
+- [[Advanced]]
+- [[Diagnostics]]
+- [[Display]]
+- [[Help]]
+- [[IssueReporter]]
+- [[Licenses]]
+- [[Main]]
+- [[Onboarding]]
+- [[Permissions]]
+- [[Privacy]]
+- [[Settings]]
+- [[Startup]]
+- [[Support]]
+- [[Theme]]
+
 Use the sidebar to navigate between pages.
