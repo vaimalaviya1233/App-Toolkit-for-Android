@@ -10,6 +10,8 @@ import com.d4rk.android.apps.apptoolkit.app.settings.settings.utils.providers.Pe
 import com.d4rk.android.libs.apptoolkit.app.about.data.DefaultAboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
 import com.d4rk.android.libs.apptoolkit.app.about.ui.AboutViewModel
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.CopyDeviceInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.ObserveAboutInfoUseCase
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.DefaultCacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsViewModel
@@ -56,6 +58,8 @@ val settingsModule = module {
             mainDispatcher = get(named("main")),
         )
     }
+    single { ObserveAboutInfoUseCase(repository = get()) }
+    single { CopyDeviceInfoUseCase(repository = get()) }
     single<GeneralSettingsRepository> {
         DefaultGeneralSettingsRepository(dispatcher = get(named("default")))
     }
@@ -74,7 +78,8 @@ val settingsModule = module {
 
     viewModel {
         AboutViewModel(
-            repository = get(),
+            observeAboutInfo = get(),
+            copyDeviceInfo = get(),
         )
     }
 }

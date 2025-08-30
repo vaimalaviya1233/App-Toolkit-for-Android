@@ -4,6 +4,8 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.CopyDeviceInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.ObserveAboutInfoUseCase
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
@@ -35,33 +37,39 @@ class TestAboutViewModel {
         override val isDebugBuild: Boolean = false
     }
 
-    private fun createViewModel(): AboutViewModel =
-        AboutViewModel(
-            repository = object : AboutRepository {
-                override fun getAboutInfoStream(): Flow<UiAboutScreen> =
-                    flow {
-                        emit(
-                            UiAboutScreen(
-                                appVersion = buildInfoProvider.appVersion,
-                                appVersionCode = buildInfoProvider.appVersionCode,
-                                deviceInfo = deviceProvider.deviceInfo,
-                            ),
-                        )
-                    }
+    private fun createViewModel(): AboutViewModel {
+        val repository = object : AboutRepository {
+            override fun getAboutInfoStream(): Flow<UiAboutScreen> =
+                flow {
+                    emit(
+                        UiAboutScreen(
+                            appVersion = buildInfoProvider.appVersion,
+                            appVersionCode = buildInfoProvider.appVersionCode,
+                            deviceInfo = deviceProvider.deviceInfo,
+                        ),
+                    )
+                }
 
-                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
-            },
+            override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+        }
+        return AboutViewModel(
+            observeAboutInfo = ObserveAboutInfoUseCase(repository),
+            copyDeviceInfo = CopyDeviceInfoUseCase(repository),
         )
+    }
 
-    private fun createFailingViewModel(): AboutViewModel =
-        AboutViewModel(
-            repository = object : AboutRepository {
-                override fun getAboutInfoStream(): Flow<UiAboutScreen> =
-                    flow { throw Exception("fail") }
+    private fun createFailingViewModel(): AboutViewModel {
+        val repository = object : AboutRepository {
+            override fun getAboutInfoStream(): Flow<UiAboutScreen> =
+                flow { throw Exception("fail") }
 
-                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
-            },
+            override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+        }
+        return AboutViewModel(
+            observeAboutInfo = ObserveAboutInfoUseCase(repository),
+            copyDeviceInfo = CopyDeviceInfoUseCase(repository),
         )
+    }
 
     @Test
     fun `copy device info shows snackbar`() = runTest(dispatcherExtension.testDispatcher) {
@@ -137,11 +145,13 @@ class TestAboutViewModel {
     @Test
     fun `repository updates propagate to ui state`() = runTest(dispatcherExtension.testDispatcher) {
         val updates = MutableSharedFlow<UiAboutScreen>()
+        val repository = object : AboutRepository {
+            override fun getAboutInfoStream(): Flow<UiAboutScreen> = updates
+            override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
+        }
         val viewModel = AboutViewModel(
-            repository = object : AboutRepository {
-                override fun getAboutInfoStream(): Flow<UiAboutScreen> = updates
-                override suspend fun copyDeviceInfo(label: String, deviceInfo: String) { /* no-op */ }
-            },
+            observeAboutInfo = ObserveAboutInfoUseCase(repository),
+            copyDeviceInfo = CopyDeviceInfoUseCase(repository),
         )
         dispatcherExtension.testDispatcher.scheduler.advanceUntilIdle()
 
