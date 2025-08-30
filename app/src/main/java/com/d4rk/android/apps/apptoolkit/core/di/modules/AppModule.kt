@@ -6,6 +6,7 @@ import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoriteAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewModel
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.repository.DeveloperAppsRepositoryImpl
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
@@ -38,6 +39,7 @@ val appModule : Module = module {
     single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), ioDispatcher = get(named("io"))) }
     single { ObserveFavoritesUseCase(repository = get()) }
     single { ToggleFavoriteUseCase(repository = get()) }
+    single { ObserveFavoriteAppsUseCase(fetchDeveloperAppsUseCase = get(), observeFavoritesUseCase = get()) }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()
@@ -64,7 +66,7 @@ val appModule : Module = module {
     }
     viewModel {
         FavoriteAppsViewModel(
-            fetchDeveloperAppsUseCase = get(),
+            observeFavoriteAppsUseCase = get(),
             observeFavoritesUseCase = get(),
             toggleFavoriteUseCase = get()
         )
