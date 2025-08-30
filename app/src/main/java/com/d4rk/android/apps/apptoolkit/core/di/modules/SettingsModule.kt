@@ -15,6 +15,8 @@ import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.ObserveAboutIn
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.DefaultCacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.diagnostics.data.repository.DefaultUsageAndDiagnosticsRepository
+import com.d4rk.android.libs.apptoolkit.app.diagnostics.domain.repository.UsageAndDiagnosticsRepository
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.UsageAndDiagnosticsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
@@ -85,11 +87,15 @@ val settingsModule = module {
         )
     }
 
-    viewModel {
-        UsageAndDiagnosticsViewModel(
-            dataStore = CommonDataStore.getInstance(get()),
+    single<UsageAndDiagnosticsRepository> {
+        DefaultUsageAndDiagnosticsRepository(
+            dataSource = CommonDataStore.getInstance(get()),
             configProvider = get(),
-            dispatcher = get(named("io")),
+            ioDispatcher = get(named("io")),
         )
+    }
+
+    viewModel {
+        UsageAndDiagnosticsViewModel(repository = get())
     }
 }
