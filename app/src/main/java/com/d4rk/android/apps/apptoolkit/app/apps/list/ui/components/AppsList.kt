@@ -30,6 +30,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisi
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import org.koin.compose.getKoin
+import org.koin.core.Koin
 import org.koin.core.qualifier.named
 
 @Composable
@@ -41,45 +42,52 @@ fun AppsList(
 ) {
     val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
-    val isTabletOrLandscape: Boolean = remember(context) {
+    val isTabletOrLandscape = remember(context) {
         ScreenHelper.isLandscapeOrTablet(context = context)
     }
-    val columnCount: Int by remember(isTabletOrLandscape) {
+    val columnCount by remember(isTabletOrLandscape) {
         derivedStateOf { if (isTabletOrLandscape) 4 else 2 }
     }
-
-    val bannerType: String by remember(isTabletOrLandscape) {
+    val bannerType by remember(isTabletOrLandscape) {
         derivedStateOf {
             if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
         }
     }
     val koin = getKoin()
-    val adsConfig: AdsConfig = remember(bannerType) {
-        koin.get(qualifier = named(bannerType))
-    }
-    val listState: LazyGridState = rememberLazyGridState()
+    val adsConfig: AdsConfig = rememberAdsConfig(koin = koin, bannerType = bannerType)
+    val listState = rememberLazyGridState()
     val adFrequency = 4
     val dataStore: DataStore = remember { koin.get() }
     val adsEnabled: Boolean by remember { dataStore.ads(default = true) }
         .collectAsStateWithLifecycle(initialValue = true)
-    val items: List<AppListItem> by remember(apps, adsEnabled) {
-        derivedStateOf {
-            buildList {
-                apps.forEachIndexed { index: Int, appInfo: AppInfo ->
-                    add(element = AppListItem.App(appInfo = appInfo))
-                    if (adsEnabled && (index + 1) % adFrequency == 0) {
-                        add(element = AppListItem.Ad)
-                    }
-                }
-                if (adsEnabled && apps.isNotEmpty() && apps.size % adFrequency != 0) {
-                    add(element = AppListItem.Ad)
-                }
-            }
-        }
+    val items by remember(apps, adsEnabled) {
+        derivedStateOf { buildAppListItems(apps, adsEnabled, adFrequency) }
     }
 
+    AppsGrid(
+        items = items,
+        favorites = favorites,
+        paddingValues = paddingValues,
+        columnCount = columnCount,
+        listState = listState,
+        adsConfig = adsConfig,
+        onFavoriteToggle = onFavoriteToggle
+    )
+}
+
+@Composable
+private fun AppsGrid(
+    items: List<AppListItem>,
+    favorites: Set<String>,
+    paddingValues: PaddingValues,
+    columnCount: Int,
+    listState: LazyGridState,
+    adsConfig: AdsConfig,
+    onFavoriteToggle: (String) -> Unit
+) {
     val (visibilityStates: SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(
-        gridState = listState, itemCount = items.size
+        gridState = listState,
+        itemCount = items.size
     )
 
     LazyVerticalGrid(
@@ -105,28 +113,67 @@ fun AppsList(
             }
         ) { index: Int, item: AppListItem ->
             when (item) {
-                is AppListItem.App -> {
-                    val appInfo = item.appInfo
-                    AppCard(
-                        appInfo = appInfo,
-                        isFavorite = favorites.contains(appInfo.packageName),
-                        onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
-                        modifier = Modifier
-                            .animateVisibility(
-                                visible = visibilityStates.getOrElse(index = index) { false },
-                                index = index
-                            )
-                    )
-                }
+                is AppListItem.App -> AppCardItem(
+                    item = item,
+                    isFavorite = favorites.contains(item.appInfo.packageName),
+                    visibilityStates = visibilityStates,
+                    index = index,
+                    onFavoriteToggle = onFavoriteToggle
+                )
 
-                AppListItem.Ad -> {
-                    AdBanner(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        adsConfig = adsConfig
-                    )
-                }
+                AppListItem.Ad -> AdListItem(adsConfig = adsConfig)
             }
         }
     }
+}
+
+@Composable
+private fun AppCardItem(
+    item: AppListItem.App,
+    isFavorite: Boolean,
+    visibilityStates: SnapshotStateList<Boolean>,
+    index: Int,
+    onFavoriteToggle: (String) -> Unit
+) {
+    val appInfo = item.appInfo
+    AppCard(
+        appInfo = appInfo,
+        isFavorite = isFavorite,
+        onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
+        modifier = Modifier.animateVisibility(
+            visible = visibilityStates.getOrElse(index = index) { false },
+            index = index
+        )
+    )
+}
+
+@Composable
+private fun AdListItem(adsConfig: AdsConfig) {
+    AdBanner(
+        modifier = Modifier.fillMaxWidth(),
+        adsConfig = adsConfig
+    )
+}
+
+private fun buildAppListItems(
+    apps: List<AppInfo>,
+    adsEnabled: Boolean,
+    adFrequency: Int
+): List<AppListItem> {
+    return buildList {
+        apps.forEachIndexed { index, appInfo ->
+            add(AppListItem.App(appInfo))
+            if (adsEnabled && (index + 1) % adFrequency == 0) {
+                add(AppListItem.Ad)
+            }
+        }
+        if (adsEnabled && apps.isNotEmpty() && apps.size % adFrequency != 0) {
+            add(AppListItem.Ad)
+        }
+    }
+}
+
+@Composable
+private fun rememberAdsConfig(koin: Koin, bannerType: String): AdsConfig {
+    return remember(bannerType) { koin.get(qualifier = named(bannerType)) }
 }
