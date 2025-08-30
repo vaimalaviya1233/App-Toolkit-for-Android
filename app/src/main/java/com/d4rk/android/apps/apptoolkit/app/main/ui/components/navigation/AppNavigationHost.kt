@@ -15,6 +15,7 @@ import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoute
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
+import com.d4rk.android.libs.apptoolkit.app.main.utils.constants.NavigationDrawerRoutes
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -48,11 +49,11 @@ fun handleNavigationItemClick(
     coroutineScope: CoroutineScope? = null,
     onChangelogRequested: () -> Unit = {},
 ) {
-    when (item.title) {
-        com.d4rk.android.libs.apptoolkit.R.string.settings -> IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
-        com.d4rk.android.libs.apptoolkit.R.string.help_and_feedback -> IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
-        com.d4rk.android.libs.apptoolkit.R.string.updates -> onChangelogRequested()
-        com.d4rk.android.libs.apptoolkit.R.string.share -> IntentsHelper.shareApp(context = context , shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
+    when (item.route) {
+        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(context = context, activityClass = SettingsActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(context = context, activityClass = HelpActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_UPDATES -> onChangelogRequested()
+        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(context = context, shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
     }
     if (drawerState != null && coroutineScope != null) {
         coroutineScope.launch { drawerState.close() }
