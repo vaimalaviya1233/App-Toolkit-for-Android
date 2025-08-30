@@ -1,6 +1,4 @@
-# AppToolkit Wiki
-
-Welcome to the **AppToolkit** wiki! This section provides extended documentation beyond the [README](../README.md).
+- [[Home]]
 
 ## Getting Started
 - [[Installation]]
@@ -27,5 +25,3 @@ Welcome to the **AppToolkit** wiki! This section provides extended documentation
 - [[Display-and-Theme|Display & Theme]]
 - [[About]]
 - [[Issue-Reporter|Issue Reporter]]
-
-Use the sidebar to navigate between pages.
