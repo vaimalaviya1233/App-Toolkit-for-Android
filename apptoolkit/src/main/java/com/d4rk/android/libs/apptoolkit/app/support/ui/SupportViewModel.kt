@@ -134,6 +134,12 @@ class SupportViewModel(
                         DonationProductIds.EXTREME_DONATION
                     )
                 )
+            }.onSuccess {
+                // When product details are already cached, querying again won't emit
+                // a new value. Ensure the UI exits the loading state in that case.
+                if (screenData?.products?.isNotEmpty() == true) {
+                    screenState.updateState(ScreenState.Success())
+                }
             }.onFailure { e ->
                 screenState.updateData(newState = ScreenState.Error()) { current ->
                     current.copy(error = e.message)
@@ -163,6 +169,10 @@ class SupportViewModel(
                             DonationProductIds.EXTREME_DONATION
                         )
                     )
+                }.onSuccess {
+                    if (screenData?.products?.isNotEmpty() == true) {
+                        screenState.updateState(ScreenState.Success())
+                    }
                 }.onFailure { e ->
                     screenState.updateData(newState = ScreenState.Error()) { current ->
                         current.copy(error = e.message)
