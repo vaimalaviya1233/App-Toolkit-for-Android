@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.favorites
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoriteAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewModel
 import com.d4rk.android.apps.apptoolkit.app.apps.list.FakeDeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
@@ -28,8 +29,9 @@ open class TestFavoriteAppsViewModelBase {
         val favoritesRepository = FakeFavoritesRepository(initialFavorites, favoritesFlow, toggleError)
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
         val toggleFavoriteUseCase = ToggleFavoriteUseCase(favoritesRepository)
+        val observeFavoriteAppsUseCase = ObserveFavoriteAppsUseCase(fetchUseCase, observeFavoritesUseCase)
         viewModel = FavoriteAppsViewModel(
-            fetchDeveloperAppsUseCase = fetchUseCase,
+            observeFavoriteAppsUseCase = observeFavoriteAppsUseCase,
             observeFavoritesUseCase = observeFavoritesUseCase,
             toggleFavoriteUseCase = toggleFavoriteUseCase,
         )
