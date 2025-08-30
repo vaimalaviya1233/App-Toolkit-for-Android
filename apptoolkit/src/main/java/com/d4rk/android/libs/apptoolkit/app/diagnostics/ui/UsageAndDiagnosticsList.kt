@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.app.diagnostics.ui
 
-import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -16,72 +15,48 @@ import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.app.diagnostics.domain.actions.UsageAndDiagnosticsEvent
+import com.d4rk.android.libs.apptoolkit.app.diagnostics.domain.model.ui.UiUsageAndDiagnosticsScreen
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components.ConsentSectionHeader
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components.ConsentToggleCard
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.components.ExpandableConsentSectionHeader
-import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchCardItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
-import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildInfoProvider) {
-    val context: Context = LocalContext.current
-    val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val switchState: State<Boolean> =
-        dataStore.usageAndDiagnostics(default = !configProvider.isDebugBuild)
-            .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
+fun UsageAndDiagnosticsList(
+    paddingValues: PaddingValues,
+    viewModel: UsageAndDiagnosticsViewModel = koinViewModel(),
+) {
+    val screenState: UiStateScreen<UiUsageAndDiagnosticsScreen> =
+        viewModel.uiState.collectAsStateWithLifecycle().value
+    val uiState = screenState.data ?: UiUsageAndDiagnosticsScreen()
 
-    val analyticsState: State<Boolean> = dataStore.analyticsConsent(default = !configProvider.isDebugBuild)
-        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
-    val adStorageState: State<Boolean> = dataStore.adStorageConsent(default = !configProvider.isDebugBuild)
-        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
-    val adUserDataState: State<Boolean> = dataStore.adUserDataConsent(default = !configProvider.isDebugBuild)
-        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
-    val adPersonalizationState: State<Boolean> = dataStore.adPersonalizationConsent(default = !configProvider.isDebugBuild)
-        .collectAsStateWithLifecycle(initialValue = !configProvider.isDebugBuild)
-
-
-    var advancedSettingsExpanded: Boolean by remember { mutableStateOf(value = false) }
-
-    fun updateAllConsents() {
-        ConsentManagerHelper.updateConsent(
-            analyticsGranted = analyticsState.value,
-            adStorageGranted = adStorageState.value,
-            adUserDataGranted = adUserDataState.value,
-            adPersonalizationGranted = adPersonalizationState.value
-        )
-    }
+    var advancedSettingsExpanded by remember { mutableStateOf(false) }
 
     LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxSize()) {
         item {
+            val usageState = remember { derivedStateOf { uiState.usageAndDiagnostics } }
             SwitchCardItem(
                 title = stringResource(id = R.string.usage_and_diagnostics),
-                switchState = switchState
-            ) { isChecked: Boolean ->
-                coroutineScope.launch {
-                    dataStore.saveUsageAndDiagnostics(isChecked = isChecked)
-
-                }
+                switchState = usageState,
+            ) { isChecked ->
+                viewModel.onEvent(UsageAndDiagnosticsEvent.SetUsageAndDiagnostics(isChecked))
             }
         }
 
@@ -89,7 +64,8 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
             ExpandableConsentSectionHeader(
                 title = stringResource(id = R.string.advanced_privacy_settings),
                 expanded = advancedSettingsExpanded,
-                onToggle = { advancedSettingsExpanded = !advancedSettingsExpanded })
+                onToggle = { advancedSettingsExpanded = !advancedSettingsExpanded },
+            )
         }
 
         item {
@@ -103,14 +79,12 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
                     ConsentToggleCard(
                         title = stringResource(id = R.string.consent_analytics_storage_title),
                         description = stringResource(id = R.string.consent_analytics_storage_description),
-                        switchState = analyticsState.value,
+                        switchState = uiState.analyticsConsent,
                         icon = Icons.Outlined.Analytics,
-                        onCheckedChange = { isChecked: Boolean ->
-                            coroutineScope.launch {
-                                dataStore.saveAnalyticsConsent(isGranted = isChecked)
-                                updateAllConsents()
-                            }
-                        })
+                        onCheckedChange = { isChecked ->
+                            viewModel.onEvent(UsageAndDiagnosticsEvent.SetAnalyticsConsent(isChecked))
+                        },
+                    )
 
                     SmallVerticalSpacer()
 
@@ -118,42 +92,36 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
                     ConsentToggleCard(
                         title = stringResource(id = R.string.consent_ad_storage_title),
                         description = stringResource(id = R.string.consent_ad_storage_description),
-                        switchState = adStorageState.value,
+                        switchState = uiState.adStorageConsent,
                         icon = Icons.Outlined.Storage,
-                        onCheckedChange = { isChecked: Boolean ->
-                            coroutineScope.launch {
-                                dataStore.saveAdStorageConsent(isGranted = isChecked)
-                                updateAllConsents()
-                            }
-                        })
+                        onCheckedChange = { isChecked ->
+                            viewModel.onEvent(UsageAndDiagnosticsEvent.SetAdStorageConsent(isChecked))
+                        },
+                    )
 
                     SmallVerticalSpacer()
 
                     ConsentToggleCard(
                         title = stringResource(id = R.string.consent_ad_user_data_title),
                         description = stringResource(id = R.string.consent_ad_user_data_description),
-                        switchState = adUserDataState.value,
+                        switchState = uiState.adUserDataConsent,
                         icon = Icons.AutoMirrored.Outlined.Send,
-                        onCheckedChange = { isChecked: Boolean ->
-                            coroutineScope.launch {
-                                dataStore.saveAdUserDataConsent(isGranted = isChecked)
-                                updateAllConsents()
-                            }
-                        })
+                        onCheckedChange = { isChecked ->
+                            viewModel.onEvent(UsageAndDiagnosticsEvent.SetAdUserDataConsent(isChecked))
+                        },
+                    )
 
                     SmallVerticalSpacer()
 
                     ConsentToggleCard(
                         title = stringResource(id = R.string.consent_ad_personalization_title),
                         description = stringResource(id = R.string.consent_ad_personalization_description),
-                        switchState = adPersonalizationState.value,
+                        switchState = uiState.adPersonalizationConsent,
                         icon = Icons.Outlined.Campaign,
-                        onCheckedChange = { isChecked: Boolean ->
-                            coroutineScope.launch {
-                                dataStore.saveAdPersonalizationConsent(isGranted = isChecked)
-                                updateAllConsents()
-                            }
-                        })
+                        onCheckedChange = { isChecked ->
+                            viewModel.onEvent(UsageAndDiagnosticsEvent.SetAdPersonalizationConsent(isChecked))
+                        },
+                    )
                 }
             }
         }
@@ -165,7 +133,7 @@ fun UsageAndDiagnosticsList(paddingValues: PaddingValues, configProvider: BuildI
                     .padding(all = SizeConstants.MediumSize * 2),
                 message = stringResource(id = R.string.summary_usage_and_diagnostics),
                 learnMoreText = stringResource(id = R.string.learn_more),
-                learnMoreUrl = AppLinks.PRIVACY_POLICY
+                learnMoreUrl = AppLinks.PRIVACY_POLICY,
             )
         }
     }
