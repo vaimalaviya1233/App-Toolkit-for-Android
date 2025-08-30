@@ -6,6 +6,7 @@ import androidx.compose.material.icons.outlined.Android
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.R
@@ -23,6 +24,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHa
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -39,15 +41,18 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } }
     val appInfoHelper = remember { AppInfoHelper() }
-    val onAppClick: (AppInfo) -> Unit = remember(context) {
-        {
-            if (it.packageName.isNotEmpty()) {
-                if (appInfoHelper.isAppInstalled(context, it.packageName)) {
-                    if (!appInfoHelper.openApp(context, it.packageName)) {
-                        IntentsHelper.openPlayStoreForApp(context, it.packageName)
+    val coroutineScope = rememberCoroutineScope()
+    val onAppClick: (AppInfo) -> Unit = remember(context, coroutineScope) {
+        { appInfo ->
+            coroutineScope.launch {
+                if (appInfo.packageName.isNotEmpty()) {
+                    if (appInfoHelper.isAppInstalled(context, appInfo.packageName)) {
+                        if (!appInfoHelper.openApp(context, appInfo.packageName)) {
+                            IntentsHelper.openPlayStoreForApp(context, appInfo.packageName)
+                        }
+                    } else {
+                        IntentsHelper.openPlayStoreForApp(context, appInfo.packageName)
                     }
-                } else {
-                    IntentsHelper.openPlayStoreForApp(context, it.packageName)
                 }
             }
         }
