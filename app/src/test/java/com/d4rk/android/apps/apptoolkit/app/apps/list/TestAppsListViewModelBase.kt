@@ -60,6 +60,44 @@ open class TestAppsListViewModelBase {
         println("\uD83C\uDFC1 [TEST END] testSuccess")
     }
 
+    protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testNoData() {
+        println("\uD83D\uDE80 [TEST START] testNoData")
+        this@testNoData.test {
+            val first = awaitItem()
+            println("\u23F3 [EMISSION 1] $first")
+            if (first.screenState is ScreenState.IsLoading) {
+                val second = awaitItem()
+                println("\u2705 [EMISSION] $second")
+                assertTrue(second.screenState is ScreenState.NoData) { "Second emission should be NoData but was ${second.screenState}" }
+                assertThat(second.data?.apps).isEmpty()
+            } else {
+                assertTrue(first.screenState is ScreenState.NoData) { "Expected NoData state" }
+                assertThat(first.data?.apps).isEmpty()
+            }
+            cancelAndIgnoreRemainingEvents()
+        }
+        println("\uD83C\uDFC1 [TEST END] testNoData")
+    }
+
+    protected suspend fun Flow<UiStateScreen<UiHomeScreen>>.testError() {
+        println("\uD83D\uDE80 [TEST START] testError")
+        this@testError.test {
+            val first = awaitItem()
+            println("\u23F3 [EMISSION 1] $first")
+            if (first.screenState is ScreenState.IsLoading) {
+                val second = awaitItem()
+                println("\u2705 [EMISSION] $second")
+                assertTrue(second.screenState is ScreenState.Error) { "Second emission should be Error but was ${second.screenState}" }
+                assertThat(second.snackbar).isNotNull()
+            } else {
+                assertTrue(first.screenState is ScreenState.Error) { "Expected Error state" }
+                assertThat(first.snackbar).isNotNull()
+            }
+            cancelAndIgnoreRemainingEvents()
+        }
+        println("\uD83C\uDFC1 [TEST END] testError")
+    }
+
     protected suspend fun toggleAndAssert(packageName: String, expected: Boolean) {
         println("\uD83D\uDE80 [TEST START] toggleAndAssert for $packageName expecting $expected")
         viewModel.favorites.test {

@@ -16,6 +16,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.SerializationException
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -102,6 +103,24 @@ class DeveloperAppsRepositoryImplTest {
         val result = runCatching { repository.fetchDeveloperApps().first() }
         val exception = result.exceptionOrNull()
         assertTrue(exception is IllegalStateException)
+    }
+
+    @Test
+    fun `fetchDeveloperApps throws SerializationException on malformed json`() = runTest {
+        val client = HttpClient(MockEngine { request ->
+            respond(
+                content = "{invalid}",
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            )
+        }) {
+            install(ContentNegotiation) { json() }
+        }
+        val repository = DeveloperAppsRepositoryImpl(client)
+
+        val result = runCatching { repository.fetchDeveloperApps().first() }
+        val exception = result.exceptionOrNull()
+        assertIs<SerializationException>(exception)
     }
 }
 
