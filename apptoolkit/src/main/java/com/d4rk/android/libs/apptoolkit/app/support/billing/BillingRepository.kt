@@ -74,7 +74,7 @@ class BillingRepository private constructor(
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    processPastPurchases()
+                    scope.launch { processPastPurchases() }
                 }
             }
 
@@ -123,13 +123,20 @@ class BillingRepository private constructor(
         }
     }
 
-    fun processPastPurchases() {
-        val params = QueryPurchasesParams.newBuilder()
-            .setProductType(BillingClient.ProductType.INAPP)
-            .build()
-        billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                handlePurchases(purchasesList)
+    suspend fun processPastPurchases() {
+        withContext(ioDispatcher) {
+            val params = QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+            suspendCancellableCoroutine<Unit> { continuation ->
+                billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        handlePurchases(purchasesList)
+                    }
+                    if (continuation.isActive) {
+                        continuation.resume(Unit)
+                    }
+                }
             }
         }
     }
