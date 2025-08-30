@@ -38,7 +38,13 @@ class SupportViewModel(
 
     init {
         billingRepository.productDetails
-            .onStart { screenState.updateState(ScreenState.IsLoading()) }
+            .onStart {
+                if (screenData?.products?.isNotEmpty() == true) {
+                    screenState.updateState(ScreenState.Success())
+                } else {
+                    screenState.updateState(ScreenState.IsLoading())
+                }
+            }
             .map { it.values.toList() }
             .onEach { products ->
                 if (products.isEmpty()) {
