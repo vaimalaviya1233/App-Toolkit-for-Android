@@ -20,7 +20,7 @@ android {
         applicationId = "com.d4rk.android.apps.apptoolkit"
         minSdk = 23
         targetSdk = 36
-        versionCode = 55
+        versionCode = 56
         versionName = "1.1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
