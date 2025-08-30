@@ -16,6 +16,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class SupportViewModel(
@@ -36,10 +38,17 @@ class SupportViewModel(
 
     init {
         billingRepository.productDetails
+            .onStart { screenState.updateState(ScreenState.IsLoading()) }
             .map { it.values.toList() }
             .onEach { products ->
-                screenState.updateData(newState = ScreenState.Success()) { current ->
-                    current.copy(error = null, products = products)
+                if (products.isEmpty()) {
+                    screenState.updateData(newState = ScreenState.NoData()) { current ->
+                        current.copy(error = null, products = emptyList())
+                    }
+                } else {
+                    screenState.updateData(newState = ScreenState.Success()) { current ->
+                        current.copy(error = null, products = products)
+                    }
                 }
             }
             .catch { e ->
@@ -115,6 +124,7 @@ class SupportViewModel(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
+            screenState.updateState(ScreenState.IsLoading())
             runCatching {
                 billingRepository.queryProductDetails(
                     listOf(
@@ -143,6 +153,7 @@ class SupportViewModel(
     override fun onEvent(event: SupportEvent) {
         when (event) {
             is SupportEvent.QueryProductDetails -> viewModelScope.launch {
+                screenState.updateState(ScreenState.IsLoading())
                 runCatching {
                     billingRepository.queryProductDetails(
                         listOf(
