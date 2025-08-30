@@ -15,6 +15,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.AppsList
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.rememberAdsConfig
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.rememberAdsEnabled
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.screens.loading.HomeLoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
@@ -23,7 +24,7 @@ import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun FavoriteAppsScreen(paddingValues: PaddingValues) {
+fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val viewModel: FavoriteAppsViewModel = koinViewModel()
     val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
@@ -33,7 +34,29 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
     val adsConfig = rememberAdsConfig(koin, isTabletOrLandscape)
     val adsEnabled = rememberAdsEnabled(koin)
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
+    val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } }
 
+    FavoriteAppsScreen(
+        screenState = screenState,
+        favorites = favorites,
+        paddingValues = paddingValues,
+        adsConfig = adsConfig,
+        adsEnabled = adsEnabled,
+        onFavoriteToggle = onFavoriteToggle,
+        onRetry = onRetry
+    )
+}
+
+@Composable
+fun FavoriteAppsScreen(
+    screenState: UiStateScreen<UiHomeScreen>,
+    favorites: Set<String>,
+    paddingValues: PaddingValues,
+    adsConfig: AdsConfig,
+    adsEnabled: Boolean,
+    onFavoriteToggle: (String) -> Unit,
+    onRetry: () -> Unit,
+) {
     ScreenStateHandler(
         screenState = screenState,
         onLoading = { HomeLoadingScreen(paddingValues = paddingValues) },
@@ -56,7 +79,7 @@ fun FavoriteAppsScreen(paddingValues: PaddingValues) {
         onError = {
             NoDataScreen(
                 showRetry = true,
-                onRetry = { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) },
+                onRetry = onRetry,
                 isError = true
             )
         }

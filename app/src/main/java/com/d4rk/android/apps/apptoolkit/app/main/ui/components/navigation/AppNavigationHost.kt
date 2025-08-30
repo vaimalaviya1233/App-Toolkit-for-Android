@@ -9,8 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsScreen
-import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListScreen
+import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsRoute
+import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListRoute
 import com.d4rk.android.apps.apptoolkit.app.main.utils.constants.NavigationRoutes
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
@@ -34,10 +34,10 @@ fun AppNavigationHost(
         navController = navController , startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
     ) {
         composable(route = NavigationRoutes.ROUTE_APPS_LIST) {
-            AppsListScreen(paddingValues = paddingValues)
+            AppsListRoute(paddingValues = paddingValues)
         }
         composable(route = NavigationRoutes.ROUTE_FAVORITE_APPS) {
-            FavoriteAppsScreen(paddingValues = paddingValues)
+            FavoriteAppsRoute(paddingValues = paddingValues)
         }
     }
 }
