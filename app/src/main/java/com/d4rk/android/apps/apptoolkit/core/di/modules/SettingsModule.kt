@@ -15,6 +15,7 @@ import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.ObserveAboutIn
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.DefaultCacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.ui.AdvancedSettingsViewModel
+import com.d4rk.android.libs.apptoolkit.app.diagnostics.ui.UsageAndDiagnosticsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.ui.PermissionsViewModel
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.ui.GeneralSettingsViewModel
@@ -28,6 +29,7 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoPr
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
+import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -47,7 +49,7 @@ val settingsModule = module {
     single<DisplaySettingsProvider> { AppDisplaySettingsProvider(context = get()) }
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
     single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
-    single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(displayProvider = get() , privacyProvider = get() , configProvider = get()) }
+    single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(displayProvider = get(), privacyProvider = get()) }
     single<CacheRepository> { DefaultCacheRepository(context = get(), ioDispatcher = get(named("io"))) }
     single<AboutRepository> {
         DefaultAboutRepository(
@@ -80,6 +82,14 @@ val settingsModule = module {
         AboutViewModel(
             observeAboutInfo = get(),
             copyDeviceInfo = get(),
+        )
+    }
+
+    viewModel {
+        UsageAndDiagnosticsViewModel(
+            dataStore = CommonDataStore.getInstance(get()),
+            configProvider = get(),
+            dispatcher = get(named("io")),
         )
     }
 }
