@@ -39,27 +39,27 @@ fun OnboardingBottomNavigation(
         contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize, vertical = SizeConstants.SmallSize),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Box(modifier = Modifier.weight(1f)) {
-            AnimatedVisibility(
-                visible = pagerState.currentPage > 0,
-                modifier = Modifier.fillMaxWidth(),
-                enter = slideInHorizontally(initialOffsetX = { -it }, animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                )) + fadeIn(animationSpec = spring(stiffness = Spring.StiffnessLow)),
-                exit = slideOutHorizontally(targetOffsetX = { -it }, animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessLow
-                )) + fadeOut(animationSpec = spring(stiffness = Spring.StiffnessLow))
-            ) {
-                Box(contentAlignment = Alignment.CenterStart) {
-                    OutlinedIconButtonWithText(
-                        onClick = onBackClicked,
-                        icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        iconContentDescription = stringResource(id = R.string.back_button_content_description),
-                        label = stringResource(id = R.string.back_button_text)
-                    )
-                }
+        AnimatedVisibility(
+            visible = pagerState.currentPage > 0,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            enter = slideInHorizontally(initialOffsetX = { -it }, animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )) + fadeIn(animationSpec = spring(stiffness = Spring.StiffnessLow)),
+            exit = slideOutHorizontally(targetOffsetX = { -it }, animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )) + fadeOut(animationSpec = spring(stiffness = Spring.StiffnessLow))
+        ) {
+            Box(contentAlignment = Alignment.CenterStart) {
+                OutlinedIconButtonWithText(
+                    onClick = onBackClicked,
+                    icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    iconContentDescription = stringResource(id = R.string.back_button_content_description),
+                    label = stringResource(id = R.string.back_button_text)
+                )
             }
         }
 
