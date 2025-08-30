@@ -1,8 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
 
-import android.content.Context
 import android.view.SoundEffectConstants
-import android.view.View
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,15 +21,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
@@ -43,9 +38,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -53,13 +45,12 @@ fun AppCard(
     appInfo: AppInfo,
     isFavorite: Boolean,
     onFavoriteToggle: () -> Unit,
+    onAppClick: (AppInfo) -> Unit,
+    onShareClick: (AppInfo) -> Unit,
     modifier: Modifier
 ) {
-    val context: Context = LocalContext.current
     val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
-    val view: View = LocalView.current
-    val coroutineScope = rememberCoroutineScope()
-    val appInfoHelper = remember { AppInfoHelper() }
+    val view = LocalView.current
     Card(
         modifier = modifier
             .bounceClick()
@@ -69,31 +60,7 @@ fun AppCard(
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
-                if (appInfo.packageName.isNotEmpty()) {
-                    coroutineScope.launch {
-                        if (appInfoHelper.isAppInstalled(
-                                context = context,
-                                packageName = appInfo.packageName
-                            )
-                        ) {
-                            if (!appInfoHelper.openApp(
-                                    context = context,
-                                    packageName = appInfo.packageName
-                                )
-                            ) {
-                                IntentsHelper.openPlayStoreForApp(
-                                    context = context,
-                                    packageName = appInfo.packageName
-                                )
-                            }
-                        } else {
-                            IntentsHelper.openPlayStoreForApp(
-                                context = context,
-                                packageName = appInfo.packageName
-                            )
-                        }
-                    }
-                }
+                onAppClick(appInfo)
             }) {
         Box(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -106,13 +73,7 @@ fun AppCard(
                     iconContentDescription = null
                 )
                 IconButton(
-                    onClick = {
-                        IntentsHelper.shareApp(
-                            context = context,
-                            shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message,
-                            packageName = appInfo.packageName
-                        )
-                    },
+                    onClick = { onShareClick(appInfo) },
                     icon = Icons.Outlined.Share,
                     iconContentDescription = null
                 )
