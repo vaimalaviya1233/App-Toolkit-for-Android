@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/** Activity that hosts [AdsSettingsScreen] and configures its ViewModel. */
 class AdsSettingsActivity : AppCompatActivity() {
     private val viewModel: AdsSettingsViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
