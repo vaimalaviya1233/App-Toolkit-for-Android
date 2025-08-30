@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -27,15 +28,11 @@ fun HomeLoadingScreen(paddingValues: PaddingValues, itemAspectRatio: Float = 1f)
         derivedStateOf { if (isTabletOrLandscape) 4 else 2 }
     }
 
-    val fittedRows: Int by remember(paddingValues) {
-        derivedStateOf {
-            WindowItemFit.count(
-                itemHeight = 180.dp,
-                itemSpacing = SizeConstants.LargeSize,
-                paddingValues = paddingValues
-            )
-        }
-    }
+    val fittedRows: Int = WindowItemFit.count(
+        itemHeight = 180.dp,
+        itemSpacing = SizeConstants.LargeSize,
+        paddingValues = paddingValues
+    )
 
     val totalRowsToDisplay: Int by remember(fittedRows) {
         derivedStateOf { if (fittedRows == 0) 1 else fittedRows + 1 }
@@ -52,7 +49,10 @@ fun HomeLoadingScreen(paddingValues: PaddingValues, itemAspectRatio: Float = 1f)
         modifier = Modifier.padding(horizontal = SizeConstants.LargeSize),
         userScrollEnabled = false
     ) {
-        items(actualItemCount) {
+        items(
+            count = actualItemCount,
+            key = { index: Int -> index }
+        ) {
             ShimmerPlaceholderAppCard(aspectRatio = itemAspectRatio)
         }
     }
