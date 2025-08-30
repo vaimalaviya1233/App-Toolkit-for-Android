@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.getKoin
 
@@ -41,7 +42,9 @@ class AppToolkit : BaseCoreManager(), DefaultLifecycleObserver {
     }
 
     override fun onResume(owner: LifecycleOwner) {
-        billingRepository.processPastPurchases()
+        owner.lifecycleScope.launch {
+            billingRepository.processPastPurchases()
+        }
     }
 
     override fun onActivityCreated(activity : Activity , savedInstanceState : Bundle?) {}
