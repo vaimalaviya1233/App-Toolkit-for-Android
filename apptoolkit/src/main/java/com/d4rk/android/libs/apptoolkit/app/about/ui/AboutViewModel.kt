@@ -5,7 +5,8 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutAction
 import com.d4rk.android.libs.apptoolkit.app.about.domain.actions.AboutEvent
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
-import com.d4rk.android.libs.apptoolkit.app.about.domain.repository.AboutRepository
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.CopyDeviceInfoUseCase
+import com.d4rk.android.libs.apptoolkit.app.about.domain.usecases.ObserveAboutInfoUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.dismissSnackbar
@@ -19,7 +20,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 open class AboutViewModel(
-    private val repository: AboutRepository,
+    private val observeAboutInfo: ObserveAboutInfoUseCase,
+    private val copyDeviceInfo: CopyDeviceInfoUseCase,
 ) :
     ScreenViewModel<UiAboutScreen, AboutEvent, AboutAction>(initialState = UiStateScreen(data = UiAboutScreen())) {
 
@@ -36,7 +38,7 @@ open class AboutViewModel(
 
     private fun loadAboutInfo() {
         viewModelScope.launch {
-            repository.getAboutInfoStream()
+            observeAboutInfo()
                 .catch { error ->
                     if (error is CancellationException) {
                         throw error
@@ -60,7 +62,7 @@ open class AboutViewModel(
         screenData?.let { data ->
             viewModelScope.launch {
                 runCatching {
-                    repository.copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
+                    copyDeviceInfo(label = label, deviceInfo = data.deviceInfo)
                 }.onSuccess {
                     screenState.showSnackbar(
                         UiSnackbar(
