@@ -14,7 +14,6 @@ import com.d4rk.android.libs.apptoolkit.app.theme.ThemeSettingsList
 class GeneralSettingsContentProvider(
     private val displayProvider: DisplaySettingsProvider,
     private val privacyProvider: PrivacySettingsProvider,
-    private val configProvider: BuildInfoProvider,
     private val customScreens: Map<String, @Composable (PaddingValues) -> Unit> = emptyMap(),
 ) {
     @Composable
@@ -25,7 +24,7 @@ class GeneralSettingsContentProvider(
             SettingsContent.DISPLAY -> DisplaySettingsList(paddingValues = paddingValues, provider = displayProvider)
             SettingsContent.SECURITY_AND_PRIVACY -> PrivacySettingsList(paddingValues = paddingValues, provider = privacyProvider)
             SettingsContent.THEME -> ThemeSettingsList(paddingValues = paddingValues)
-            SettingsContent.USAGE_AND_DIAGNOSTICS -> UsageAndDiagnosticsList(paddingValues = paddingValues, configProvider = configProvider)
+            SettingsContent.USAGE_AND_DIAGNOSTICS -> UsageAndDiagnosticsList(paddingValues = paddingValues)
             else -> customScreens[contentKey]?.invoke(paddingValues)
         }
     }
