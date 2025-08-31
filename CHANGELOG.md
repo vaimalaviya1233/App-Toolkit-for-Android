@@ -1,6 +1,7 @@
 # Version 1.1.2:
 
-- **Patch**: Addressed various minor bugs to enhance overall stability.
+- **Patch**: Made several quality of life improvements.
+- **Patch**: Addressed various bugs to enhance overall stability.
 
 # Version 1.1.1:
 
