@@ -4,9 +4,9 @@
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Üdvözli az App Toolkit</string>
     <string name="onboarding_welcome_description">Fedezze fel AppToolkit könyvtárunk képességeit. Fedezze fel alkalmazásainkat, melyek mindegyike az AppToolkit könyvtárunk erejének bemutatására és kihasználására készült, javítva ezzel Android fejlesztési és felhasználói élményét.</string>
-    <string name="onboarding_feature1_title">Fedezze Fel Alkalmazásainkat</string>
+    <string name="onboarding_feature1_title">Fedezze fel alkalmazásainkat</string>
     <string name="onboarding_feature1_description">Az App Toolkit bemutatja Önnek alkalmazásaink válogatását, melyek mindegyike az AppToolkit könyvtárunk különböző aspektusainak kiemelésére és Android élményének javítására lett tervezve. Nézze meg, mi minden lehetséges AppToolkit könyvtárunkkal!</string>
-    <string name="onboarding_personalization_title">Tekintse Meg AppToolkit Könyvtárunkat Működés Közben</string>
+    <string name="onboarding_personalization_title">Tekintse meg AppToolkit könyvtárunkat működés közben</string>
     <string name="onboarding_personalization_description">Ez az alkalmazás bemutatja, hogyan használható AppToolkit könyvtárunk sokoldalú és felhasználó-központú alkalmazások készítésére. Fedezze fel alkalmazásainkat, hogy megtekinthesse a könyvtár különböző funkcióit és implementációit.</string>
 
     <!-- Home screen -->

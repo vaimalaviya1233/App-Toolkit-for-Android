@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Échec du chargement des informations de consentement</string>
     <string name="loading">Chargement…</string>
 
-    <string name="skip_button_text">PASSER</string>
+    <string name="skip_button_text">Passer</string>
     <string name="skip_button_content_description">Passer</string>
     <string name="back_button_content_description">Retour</string>
-    <string name="back_button_text">RETOUR</string>
+    <string name="back_button_text">Retour</string>
     <string name="done_button_content_description">Terminé</string>
-    <string name="done_button_text">TERMINÉ</string>
+    <string name="done_button_text">Terminé</string>
     <string name="next_button_content_description">Suivant</string>
-    <string name="next_button_text">SUIVANT</string>
+    <string name="next_button_text">Suivant</string>
     <string name="onboarding_theme_title">Choisissez votre style</string>
     <string name="onboarding_theme_subtitle">Sélectionnez l\'apparence de l\'application.</string>
     <string name="onboarding_theme_light_desc">Lumineux et énergique.</string>
@@ -281,7 +281,7 @@
     <string name="paid_support">Support payant</string>
     <string name="summary_donations">Peu importe le montant que vous donnez, vous nous aiderez à maintenir notre application et à améliorer ses fonctionnalités. Nous apprécions votre générosité !</string>
     <string name="non_paid_support">Support non payant</string>
-    <string name="web_ad">Publicité Web</string>
+    <string name="web_ad">Publicité web</string>
     <string name="error_failed_to_load_sku_details">Échec du chargement des détails du SKU</string>
     <string name="purchase_pending">Votre don est traité par Google. Nous vous informerons quand il sera terminé. Merci!</string>
     <string name="purchase_thank_you">Merci pour votre don!</string>

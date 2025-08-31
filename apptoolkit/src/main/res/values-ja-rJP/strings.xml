@@ -256,7 +256,7 @@
     <string name="manufacturer">メーカー:</string>
     <string name="device_model">デバイスモデル:</string>
     <string name="android_version">Androidバージョン:</string>
-    <string name="api_level">APIレベル:</string>
+    <string name="api_level">Apiレベル:</string>
     <string name="snack_device_info_copied">デバイス情報がクリップボードにコピーされました</string>
     <string name="snack_device_info_failed">デバイス情報を読み込めませんでした</string>
 

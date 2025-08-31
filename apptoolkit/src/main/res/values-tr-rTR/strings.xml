@@ -12,39 +12,39 @@
     <string name="error_loading_consent_info">Onay bilgileri yüklenemedi</string>
     <string name="loading">Yükleniyor…</string>
 
-    <string name="skip_button_text">ATLA</string>
+    <string name="skip_button_text">Atla</string>
     <string name="skip_button_content_description">Atla</string>
     <string name="back_button_content_description">Geri</string>
-    <string name="back_button_text">GERİ</string>
+    <string name="back_button_text">Geri̇</string>
     <string name="done_button_content_description">Bitti</string>
-    <string name="done_button_text">BİTTİ</string>
+    <string name="done_button_text">Bi̇tti̇</string>
     <string name="next_button_content_description">İleri</string>
-    <string name="next_button_text">İLERİ</string>
-    <string name="onboarding_theme_title">Tarzınızı Seçin</string>
+    <string name="next_button_text">İleri̇</string>
+    <string name="onboarding_theme_title">Tarzınızı seçin</string>
     <string name="onboarding_theme_subtitle">Uygulamanın nasıl görünmesini istediğinizi seçin.</string>
     <string name="onboarding_theme_light_desc">Parlak ve enerjik.</string>
     <string name="onboarding_theme_dark_desc">Gözleri yormaz.</string>
     <string name="onboarding_theme_system_desc">Cihazınızla eşleşir.</string>
     <string name="onboarding_amoled_mode_desc">OLED ekranlar için daha derin siyahlar.</string>
     <string name="selected">Seçili</string>
-    <string name="onboarding_crashlytics_title">Geliştirmemize Yardım Edin</string>
+    <string name="onboarding_crashlytics_title">Geliştirmemize yardım edin</string>
     <string name="onboarding_crashlytics_description">Uygulamanın anonim kullanım verileri ve kilitlenme raporları göndermesine izin verin. Bu, hataları düzeltmemize ve deneyiminizi iyileştirmemize yardımcı olur. Hiçbir kişisel bilgi toplanmaz.</string>
     <string name="onboarding_crashlytics_enabled_desc">Veri raporlama aktif.</string>
     <string name="onboarding_crashlytics_disabled_desc">Veri raporlama pasif.</string>
     <string name="onboarding_crashlytics_privacy_info">Gizliliğiniz önemlidir. Bu verileri yalnızca hataları düzeltmek ve özellikleri geliştirmek için kullanırız. Daha fazla ayrıntı için lütfen gizlilik politikamızı inceleyin.</string>
     <string name="learn_more_privacy_policy">Gizlilik Politikamızı İnceleyin</string>
-    <string name="onboarding_crashlytics_title_dialog">Veri Onayını Yönet</string>
+    <string name="onboarding_crashlytics_title_dialog">Veri onayını yönet</string>
     <string name="onboarding_crashlytics_description_dialog">Lütfen onay tercihlerinizi inceleyip onaylayın. Bu veriler uygulamayı geliştirmemize yardımcı olur ve Gizlilik Politikamıza uygun olarak işlenir.</string>
     <string name="consent_analytics_storage_description_short">Uygulama kullanım analizi için veri toplanmasına izin verir.</string>
     <string name="consent_ad_storage_description_short">Reklam amaçlı veri depolamaya izin verir.</string>
     <string name="consent_ad_user_data_description_short">Reklamlar için kullanıcı verilerinin gönderilmesine izin verir.</string>
     <string name="consent_ad_personalization_description_short">Kişiselleştirilmiş reklamları etkinleştirir.</string>
-    <string name="onboarding_crashlytics_show_details_button">Ayrıntılı Bilgileri Göster</string>
+    <string name="onboarding_crashlytics_show_details_button">Ayrıntılı bilgileri göster</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Kullanım ve tanılama hakkında ayrıntılı bilgileri göster</string>
     <string name="button_acknowledge_consents">Kaydet ve Devam Et</string>
     <string name="button_continue">Devam Et</string>
-    <string name="onboarding_complete_icon_desc">Başlangıç Tamamlandı</string>
-    <string name="onboarding_final_title">Her Şey Hazır!</string>
+    <string name="onboarding_complete_icon_desc">Başlangıç tamamlandı</string>
+    <string name="onboarding_final_title">Her şey hazır!</string>
     <string name="onboarding_final_description">Deneyiminizi kişiselleştirdiğiniz için teşekkürler. Artık tüm özellikleri keşfetmeye hazırsınız. Keyfini çıkarın!</string>
 
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
@@ -73,7 +73,7 @@
     <string name="initialization_error">Başlatma başarısız oldu. Lütfen daha sonra tekrar deneyin.</string>
 
     <string name="settings">Ayarlar</string>
-    <string name="long_settings_label">Uygulama Ayarları</string>
+    <string name="long_settings_label">Uygulama ayarları</string>
     <string name="settings_disabled_message">Ayarlar şu anda kullanılamıyor.</string>
     <string name="settings_placeholder_description">Seçilen bir ayar yok. Ayrıntıları görüntülemek için bir seçenek seçin.</string>
     <string name="get_help">Yardım al</string>
@@ -89,8 +89,8 @@
     <string name="will_never_turn_on_automatically">Hiçbir zaman otomatik olarak açılmayacak</string>
     <string name="amoled_mode">AMOLED modu</string>
     <string name="follow_system">Sistem modunu takip et</string>
-    <string name="light_mode">Aydınlık Mod</string>
-    <string name="dark_mode">Koyu Mod</string>
+    <string name="light_mode">Aydınlık mod</string>
+    <string name="dark_mode">Koyu mod</string>
     <string name="summary_dark_theme">Karanlık tema, pil ömrünüzü önemli ölçüde uzatmak için derin bir arka plandan yararlanır. Etkinleştirmek için, Android\'in sistem yöneticisine gidin ve tercih ettiğiniz temayı seçin</string>
     <string name="screen_and_display_settings">Ekran ve görüntüleme ayarları.</string>
 
@@ -113,15 +113,15 @@
     <string name="dialog_startup_subtitle">Tercih ettiğiniz başlangıç sayfasını seçin:</string>
     <string name="dialog_info_startup">Uygulamanın açılışında kullanıcılara sunulan başlangıç ekranını yapılandırır.</string>
 
-    <string name="select_language_title">Dil Seç</string>
+    <string name="select_language_title">Dil seç</string>
     <string name="dialog_language_subtitle">Tercih ettiğiniz dili seçin</string>
     <string name="dialog_info_language">Tercih ettiğiniz dille deneyiminizi kişiselleştirin</string>
 
     <string name="notifications">Bildirimler</string>
     <string name="summary_preference_settings_notifications">Uygulama bildirimlerini yönetin</string>
 
-    <string name="app_usage_notifications">Uygulama Kullanım Bildirimleri</string>
-    <string name="update_notifications">Güncelleme Bildirimleri</string>
+    <string name="app_usage_notifications">Uygulama kullanım bildirimleri</string>
+    <string name="update_notifications">Güncelleme bildirimleri</string>
 
     <string name="advanced">Gelişmiş</string>
     <string name="summary_preference_settings_advanced">Daha gelişmiş ayarları keşfedin</string>
@@ -153,8 +153,8 @@
     <string name="error_reporting">Hata raporlama</string>
     <string name="bug_report">Hata raporu</string>
     <string name="summary_preference_settings_bug_report">Hata raporları ve istekleri GitHub sorunlar sayfasına gönderin</string>
-    <string name="cache_management">Önbellek Yönetimi</string>
-    <string name="clear_cache">Önbelleği Temizle</string>
+    <string name="cache_management">Önbellek yönetimi</string>
+    <string name="clear_cache">Önbelleği temizle</string>
     <string name="summary_preference_settings_clear_cache">Geçici uygulama verilerini temizle.</string>
     <string name="cache_cleared_success">Önbellek başarıyla temizlendi</string>
     <string name="cache_cleared_error">Önbellek bazı hatalarla temizlendi</string>
@@ -163,7 +163,7 @@
     <string name="summary_preference_settings_privacy_and_security">Gizlilik ayarlarınızı yönetin</string>
 
     <string name="privacy">Gizlilik</string>
-    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="privacy_policy">Gizlilik politikası</string>
     <string name="summary_preference_settings_privacy_policy">Verilerinizi nasıl ele aldığımızı açıklayan politikayı görüntüleyin</string>
     <string name="terms_of_service">Hizmet Şartları</string>
     <string name="summary_preference_settings_terms_of_service">Hizmetimizi kullanırken kabul ettiğiniz şartları gözden geçirin</string>
@@ -209,20 +209,20 @@
     <string name="usage_and_diagnostics">Kullanım ve teşhis</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Deneyimi geliştirmek için veri paylaşın</string>
     <string name="summary_usage_and_diagnostics">Otomatik teşhis ve kullanım verilerini göndererek deneyiminizi iyileştirin</string>
-    <string name="privacy_settings_title">Gizlilik Ayarları</string>
+    <string name="privacy_settings_title">Gizlilik ayarları</string>
     <string name="consent_category_analytics_title">Analiz</string>
-    <string name="consent_category_advertising_title">Kişiselleştirilmiş Reklamcılık</string>
-    <string name="consent_analytics_storage_title">Analiz Verilerini Depola</string>
+    <string name="consent_category_advertising_title">Kişiselleştirilmiş reklamcılık</string>
+    <string name="consent_analytics_storage_title">Analiz verilerini depola</string>
     <string name="consent_analytics_storage_description">Analizi ve uygulama performansını iyileştirmek için uygulama kullanımı ve ziyaret süresi gibi verilerin depolanmasına izin verin.</string>
-    <string name="consent_ad_storage_title">Reklam Verilerini Depola</string>
+    <string name="consent_ad_storage_title">Reklam verilerini depola</string>
     <string name="consent_ad_storage_description">Reklam performansını ölçmek ve alakalı reklamlar göstermek için verilerin (cihaz tanımlayıcıları veya çerezler gibi) depolanmasını etkinleştirin.</string>
-    <string name="consent_ad_user_data_title">Reklamlar İçin Veri Gönder</string>
+    <string name="consent_ad_user_data_title">Reklamlar i̇çin veri gönder</string>
     <string name="consent_ad_user_data_description">Dönüşümler ve kampanya optimizasyonu gibi reklamla ilgili özellikleri desteklemek için kullanım ve cihaz verilerinin Google\'a gönderilmesine izin verin.</string>
-    <string name="consent_ad_personalization_title">Kişiselleştirilmiş Reklamlar</string>
+    <string name="consent_ad_personalization_title">Kişiselleştirilmiş reklamlar</string>
     <string name="consent_ad_personalization_description">Google hizmetleri ve uygulamalarındaki etkinliğinize ve tercihlerinize göre kişiselleştirilmiş reklamları etkinleştirin.</string>
     <string name="privacy_settings_info">Aşağıda veri tercihlerinizi yönetin. Bu ayarları istediğiniz zaman değiştirebilirsiniz. Daha fazla ayrıntı için lütfen <a href="%s">Gizlilik Politikamıza</a> bakın.</string>
     <string name="learn_more_privacy_policy_settings">Gizlilik Politikamızda daha fazla bilgi edinin</string>
-    <string name="advanced_privacy_settings">Gelişmiş Gizlilik Ayarları</string>
+    <string name="advanced_privacy_settings">Gelişmiş gizlilik ayarları</string>
     <string name="icon_desc_expand_more">Genişlet</string>
     <string name="icon_desc_expand_less">Daralt</string>
     <string name="icon_desc_consent_category">Onay kategorisi simgesi</string>
@@ -242,21 +242,21 @@
     <string name="summary_preference_settings_oss">Açık kaynak yazılım lisansları hakkında detaylar</string>
 
     <string name="eula_title">Son Kullanıcı Lisans Sözleşmesi</string>
-    <string name="changelog_title">Uygulama Değişiklik Günlüğü</string>
+    <string name="changelog_title">Uygulama değişiklik günlüğü</string>
     <string name="loading_eula_message">Son Kullanıcı Lisans Sözleşmesi alınıyor…</string>
     <string name="loading_changelog_message">Değişiklik günlüğü alınıyor…</string>
     <string name="error_loading_eula_message">Son Kullanıcı Lisans Sözleşmesi yüklenemedi. Lütfen tekrar deneyin.</string>
     <string name="error_loading_changelog_message">Değişiklik günlüğü yüklenemedi. Lütfen tekrar deneyin.</string>
     <string name="no_new_updates_message">Yeni güncelleme yok.</string>
 
-    <string name="device_info">Cihaz Bilgileri</string>
-    <string name="app_build">Uygulama Yapısı: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="device_info">Cihaz bilgileri</string>
+    <string name="app_build">Uygulama yapısı: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Hata ayıklama</string>
     <string name="release">Yayın</string>
     <string name="manufacturer">Üretici:</string>
-    <string name="device_model">Cihaz Modeli:</string>
-    <string name="android_version">Android Sürümü:</string>
-    <string name="api_level">API Seviyesi:</string>
+    <string name="device_model">Cihaz modeli:</string>
+    <string name="android_version">Android sürümü:</string>
+    <string name="api_level">API seviyesi:</string>
     <string name="snack_device_info_copied">Cihaz bilgileri panoya kopyalandı</string>
     <string name="snack_device_info_failed">Cihaz bilgileri yüklenemedi</string>
 
@@ -281,7 +281,7 @@
     <string name="paid_support">Ücretli destek</string>
     <string name="summary_donations">Bağışlarınız sayesinde uygulamamızı geliştirip devam ettirebiliriz. Cömertliğiniz için teşekkür ederiz!</string>
     <string name="non_paid_support">Ücretsiz destek</string>
-    <string name="web_ad">Web Reklamı</string>
+    <string name="web_ad">Web reklamı</string>
     <string name="error_failed_to_load_sku_details">SKU ayrıntıları yüklenemedi</string>
     <string name="purchase_pending">Bağışınız Google tarafından işleniyor. Tamamlandığında sizi bilgilendireceğiz. Teşekkür ederim!</string>
     <string name="purchase_thank_you">Bağışınız için teşekkür ederiz!</string>

@@ -4,13 +4,13 @@
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Welcome to App Toolkit</string>
     <string name="onboarding_welcome_description">Explore the capabilities of our AppToolkit library. Discover our applications, all built to demonstrate and utilize the power of our AppToolkit library, enhancing your Android development and user experience.</string>
-    <string name="onboarding_feature1_title">Discover Our Applications</string>
+    <string name="onboarding_feature1_title">Discover our applications</string>
     <string name="onboarding_feature1_description">App Toolkit introduces you to a selection of our applications, each designed to highlight different aspects of our AppToolkit library and enhance your Android experience. See what\'s possible with our AppToolkit library!</string>
-    <string name="onboarding_personalization_title">See Our AppToolkit Library in Action</string>
+    <string name="onboarding_personalization_title">See our AppToolkit library in action</string>
     <string name="onboarding_personalization_description">This app demonstrates how our AppToolkit library can be used to build versatile and user-focused applications. Explore our apps to see different features and implementations of the library.</string>
 
     <!-- Home screen -->
-    <string name="all_apps">All Apps</string>
+    <string name="all_apps">All apps</string>
     <string name="favorite_apps">Favorites</string>
     <string name="no_apps_added_to_favorites">No apps added to favorites</string>
     <string name="error_failed_to_fetch_our_apps">Failed to fetch our app listings</string>

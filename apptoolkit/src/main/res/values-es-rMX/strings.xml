@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Error al cargar la información de consentimiento</string>
     <string name="loading">Cargando…</string>
 
-    <string name="skip_button_text">OMITIR</string>
+    <string name="skip_button_text">Omitir</string>
     <string name="skip_button_content_description">Omitir</string>
     <string name="back_button_content_description">Atrás</string>
-    <string name="back_button_text">ATRÁS</string>
+    <string name="back_button_text">Atrás</string>
     <string name="done_button_content_description">Hecho</string>
-    <string name="done_button_text">HECHO</string>
+    <string name="done_button_text">Hecho</string>
     <string name="next_button_content_description">Siguiente</string>
-    <string name="next_button_text">SIGUIENTE</string>
+    <string name="next_button_text">Siguiente</string>
     <string name="onboarding_theme_title">Elige tu estilo</string>
     <string name="onboarding_theme_subtitle">Selecciona cómo te gustaría que se viera la aplicación.</string>
     <string name="onboarding_theme_light_desc">Brillante y energético.</string>
@@ -44,7 +44,7 @@
     <string name="button_acknowledge_consents">Guardar y continuar</string>
     <string name="button_continue">Continuar</string>
     <string name="onboarding_complete_icon_desc">Integración completada</string>
-    <string name="onboarding_final_title">¡Todo listo!</string>
+    <string name="onboarding_final_title">¡todo listo!</string>
     <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
 
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
@@ -163,7 +163,7 @@
     <string name="summary_preference_settings_privacy_and_security">Administra tu configuración de privacidad</string>
 
     <string name="privacy">Privacidad</string>
-    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="privacy_policy">Política de privacidad</string>
     <string name="summary_preference_settings_privacy_policy">Consulta la política que rige cómo manejamos tus datos</string>
     <string name="terms_of_service">Términos de Servicio</string>
     <string name="summary_preference_settings_terms_of_service">Revisa los términos que aceptas al usar nuestro servicio</string>
@@ -250,7 +250,7 @@
     <string name="no_new_updates_message">No hay nuevas actualizaciones disponibles.</string>
 
     <string name="device_info">Información del dispositivo</string>
-    <string name="app_build">Compilación de la App: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="app_build">Compilación de la app: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Depuración</string>
     <string name="release">Lanzamiento</string>
     <string name="manufacturer">Fabricante:</string>

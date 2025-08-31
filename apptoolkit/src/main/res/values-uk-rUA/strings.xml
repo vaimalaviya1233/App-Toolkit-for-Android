@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Не вдалося завантажити інформацію про згоду</string>
     <string name="loading">Завантаження…</string>
 
-    <string name="skip_button_text">ПРОПУСТИТИ</string>
+    <string name="skip_button_text">Пропустити</string>
     <string name="skip_button_content_description">Пропустити</string>
     <string name="back_button_content_description">Назад</string>
-    <string name="back_button_text">НАЗАД</string>
+    <string name="back_button_text">Назад</string>
     <string name="done_button_content_description">Готово</string>
-    <string name="done_button_text">ГОТОВО</string>
+    <string name="done_button_text">Готово</string>
     <string name="next_button_content_description">Далі</string>
-    <string name="next_button_text">ДАЛІ</string>
+    <string name="next_button_text">Далі</string>
     <string name="onboarding_theme_title">Оберіть свій стиль</string>
     <string name="onboarding_theme_subtitle">Виберіть, як має виглядати додаток.</string>
     <string name="onboarding_theme_light_desc">Яскравий та енергійний.</string>

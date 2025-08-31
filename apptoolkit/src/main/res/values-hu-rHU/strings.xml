@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">A hozzájárulási információ betöltése sikertelen</string>
     <string name="loading">Betöltés…</string>
 
-    <string name="skip_button_text">KIHAGYÁS</string>
+    <string name="skip_button_text">Kihagyás</string>
     <string name="skip_button_content_description">Kihagyás</string>
     <string name="back_button_content_description">Vissza</string>
-    <string name="back_button_text">VISSZA</string>
+    <string name="back_button_text">Vissza</string>
     <string name="done_button_content_description">Kész</string>
-    <string name="done_button_text">KÉSZ</string>
+    <string name="done_button_text">Kész</string>
     <string name="next_button_content_description">Tovább</string>
-    <string name="next_button_text">TOVÁBB</string>
+    <string name="next_button_text">Tovább</string>
     <string name="onboarding_theme_title">Válassza ki a stílusát</string>
     <string name="onboarding_theme_subtitle">Válassza ki, hogyan nézzen ki az alkalmazás.</string>
     <string name="onboarding_theme_light_desc">Világos és energikus.</string>

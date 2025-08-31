@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Nie udało się załadować informacji o zgodzie</string>
     <string name="loading">Ładowanie…</string>
 
-    <string name="skip_button_text">POMIŃ</string>
+    <string name="skip_button_text">Pomiń</string>
     <string name="skip_button_content_description">Pomiń</string>
     <string name="back_button_content_description">Wstecz</string>
-    <string name="back_button_text">WSTECZ</string>
+    <string name="back_button_text">Wstecz</string>
     <string name="done_button_content_description">Gotowe</string>
-    <string name="done_button_text">GOTOWE</string>
+    <string name="done_button_text">Gotowe</string>
     <string name="next_button_content_description">Dalej</string>
-    <string name="next_button_text">DALEJ</string>
+    <string name="next_button_text">Dalej</string>
     <string name="onboarding_theme_title">Wybierz swój styl</string>
     <string name="onboarding_theme_subtitle">Wybierz, jak ma wyglądać aplikacja.</string>
     <string name="onboarding_theme_light_desc">Jasny i energiczny.</string>
@@ -255,7 +255,7 @@
     <string name="release">Wydanie</string>
     <string name="manufacturer">Producent:</string>
     <string name="device_model">Model urządzenia:</string>
-    <string name="android_version">Wersja Androida:</string>
+    <string name="android_version">Wersja androida:</string>
     <string name="api_level">Poziom API:</string>
     <string name="snack_device_info_copied">Informacje o urządzeniu zostały skopiowane do schowka</string>
     <string name="snack_device_info_failed">Nie można załadować informacji o urządzeniu</string>

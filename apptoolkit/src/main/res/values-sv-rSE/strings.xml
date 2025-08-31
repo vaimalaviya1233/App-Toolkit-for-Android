@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Misslyckades med att läsa in samtyckesinformationen</string>
     <string name="loading">Läser in…</string>
 
-    <string name="skip_button_text">HOPPA ÖVER</string>
+    <string name="skip_button_text">Hoppa över</string>
     <string name="skip_button_content_description">Hoppa över</string>
     <string name="back_button_content_description">Tillbaka</string>
-    <string name="back_button_text">TILLBAKA</string>
+    <string name="back_button_text">Tillbaka</string>
     <string name="done_button_content_description">Klar</string>
-    <string name="done_button_text">KLAR</string>
+    <string name="done_button_text">Klar</string>
     <string name="next_button_content_description">Nästa</string>
-    <string name="next_button_text">NÄSTA</string>
+    <string name="next_button_text">Nästa</string>
     <string name="onboarding_theme_title">Välj din stil</string>
     <string name="onboarding_theme_subtitle">Välj hur du vill att appen ska se ut.</string>
     <string name="onboarding_theme_light_desc">Ljust och energiskt.</string>
