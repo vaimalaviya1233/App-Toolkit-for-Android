@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Witamy w App Toolkit</string>
     <string name="onboarding_welcome_description">Poznaj możliwości naszej biblioteki AppToolkit. Odkryj nasze aplikacje, wszystkie stworzone, aby demonstrować i wykorzystywać moc naszej biblioteki AppToolkit, usprawniając rozwój Androida i wrażenia użytkownika.</string>
     <string name="onboarding_feature1_title">Odkryj nasze aplikacje</string>
-    <string name="onboarding_feature1_description">App Toolkit przedstawia wybór naszych aplikacji, z których każda została zaprojektowana, aby podkreślić różne aspekty naszej biblioteki AppToolkit i poprawić Twoje wrażenia z Androida. Zobacz, co jest możliwe dzięki naszej bibliotece AppToolkit!</string>
+    <string name="onboarding_feature1_description">App Toolkit przedstawia wybór naszych aplikacji, z których każda została zaprojektowana, aby podkreślić różne aspekty naszej biblioteki AppToolkit i poprawić Twoje wrażenia z Androida. Zobacz, co jest możliwe dzięki naszej bibliotece AppToolkit.</string>
     <string name="onboarding_personalization_title">Zobacz naszą bibliotekę AppToolkit w akcji</string>
     <string name="onboarding_personalization_description">Ta aplikacja demonstruje, jak nasza biblioteka AppToolkit może być używana do tworzenia wszechstronnych i zorientowanych na użytkownika aplikacji. Przeglądaj nasze aplikacje, aby zobaczyć różne funkcje i implementacje biblioteki.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Dlaczego App Toolkit potrzebuje uprawnień takich jak dostęp do Internetu?</string>
     <string name="summary_preference_faq_7">App Toolkit wymaga dostępu do Internetu, aby pobrać najnowszą listę naszych aplikacji ze sklepu Google Play i dokładnie wyświetlić ich informacje. Zazwyczaj nie wymaga innych inwazyjnych uprawnień.</string>
     <string name="question_8">Jak mogę przekazać opinię na temat App Toolkit lub Twoich aplikacji?</string>
-    <string name="summary_preference_faq_8">Cenimy Twoją opinię na temat App Toolkit i naszych indywidualnych aplikacji! Zazwyczaj możesz znaleźć opcję \"Opinia\" lub \"Skontaktuj się z nami\" w ustawieniach App Toolkit lub na naszej stronie dewelopera w Sklepie Play. Opinie na temat samej naszej biblioteki AppToolkit są również mile widziane za pośrednictwem odpowiednich kanałów.</string>
+    <string name="summary_preference_faq_8">Cenimy Twoją opinię na temat App Toolkit i naszych indywidualnych aplikacji. Zazwyczaj możesz znaleźć opcję \"Opinia\" lub \"Skontaktuj się z nami\" w ustawieniach App Toolkit lub na naszej stronie dewelopera w Sklepie Play. Opinie na temat samej naszej biblioteki AppToolkit są również mile widziane za pośrednictwem odpowiednich kanałów.</string>
     <string name="question_9">Czy moje dane są bezpieczne podczas korzystania z App Toolkit do wyszukiwania innych aplikacji?</string>
     <string name="summary_preference_faq_9">App Toolkit pobiera głównie publicznie dostępne informacje o naszych aplikacjach. Kiedy zdecydujesz się zainstalować lub używać jednej z naszych wymienionych aplikacji, zastosowanie będzie miała Polityka Prywatności tej aplikacji. Zachęcamy do jej przejrzenia. Sposób przetwarzania danych przez App Toolkit jest opisany w naszej Polityce Prywatności.</string>
 </resources>

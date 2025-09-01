@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">İş akışınızı daha verimli hale getirmek için tasarlanmış bu uygulama, görevlerinizde düzenli ve verimli kalmanıza yardımcı olacak temel araçlar ve özellikler sunar. 📱</string>
-    <string name="notification_update_title">Yeni bir güncelleme mevcut!</string>
-    <string name="summary_notification_update">Uygulamanın yeni bir sürümü mevcut. Güncellemek için tıklayın!</string>
-    <string name="notification_last_time_used_title">Uzun zamandır görüşmedik!</string>
-    <string name="default_notification_summary">Sizi bekleyen birçok özellik var. Uygulamayı açın!</string>
+    <string name="notification_update_title">Yeni bir güncelleme mevcut.</string>
+    <string name="summary_notification_update">Uygulamanın yeni bir sürümü mevcut. Güncellemek için tıklayın.</string>
+    <string name="notification_last_time_used_title">Uzun zamandır görüşmedik.</string>
+    <string name="default_notification_summary">Sizi bekleyen birçok özellik var. Uygulamayı açın.</string>
 
     <string name="welcome">Hoş geldiniz</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Devam etmek için Hizmet şartlarımızı ve Gizlilik Politikamızı okuyun ve kabul edin</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Kaydet ve devam et</string>
     <string name="button_continue">Devam Et</string>
     <string name="onboarding_complete_icon_desc">Başlangıç tamamlandı</string>
-    <string name="onboarding_final_title">Her şey hazır!</string>
-    <string name="onboarding_final_description">Deneyiminizi kişiselleştirdiğiniz için teşekkürler. Artık tüm özellikleri keşfetmeye hazırsınız. Keyfini çıkarın!</string>
+    <string name="onboarding_final_title">Her şey hazır.</string>
+    <string name="onboarding_final_description">Deneyiminizi kişiselleştirdiğiniz için teşekkürler. Artık tüm özellikleri keşfetmeye hazırsınız. Keyfini çıkarın.</string>
 
     <string name="navigation_drawer_open">Gezinti çekmecesini aç</string>
     <string name="content_description_more_options">Daha Fazla Seçenekler</string>
     <string name="go_back">Geri dön</string>
-    <string name="toast_review_already_done">Derecelendirdiğiniz için teşekkürler!</string>
+    <string name="toast_review_already_done">Derecelendirdiğiniz için teşekkürler.</string>
 
     <string name="error">Hata</string>
-    <string name="sort_by">Sırala:</string>
+    <string name="sort_by">Sırala</string>
     <string name="app_not_installed">Uygulama yüklü değil</string>
     <string name="snack_app_updated">Uygulama başarıyla güncellendi</string>
     <string name="snack_update_failed">Güncelleme işleminde bir sorun oluştu</string>
     <string name="try_again">Tekrar dene</string>
-    <string name="summary_share_message">Bu harika uygulamaya bir göz atın! Kullanmakta olduğum ve ilginizi çekebilecek bazı harika özelliklere sahip. Play Store\'dan indirilebilir: %1$s</string>
+    <string name="summary_share_message">Bu harika uygulamaya bir göz atın. Kullanmakta olduğum ve ilginizi çekebilecek bazı harika özelliklere sahip. Play Store\'dan indirilebilir: %1$s</string>
     <string name="learn_more">Daha fazla bilgi</string>
     <string name="close">Kapat?</string>
     <string name="summary_close">Çıkmak istediğinizden emin misiniz?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Seçilen bir ayar yok. Ayrıntıları görüntülemek için bir seçenek seçin.</string>
     <string name="get_help">Yardım al</string>
     <string name="error_no_settings_found">Ayar bulunamadı</string>
-    <string name="error_invalid_content_key">Geçersiz içerik anahtarı!</string>
+    <string name="error_invalid_content_key">Geçersiz içerik anahtarı.</string>
 
     <string name="display">Ekran</string>
     <string name="summary_preference_settings_display">Uygulamanızın görünümünü ve hissini kişiselleştirin</string>
@@ -110,7 +110,7 @@
     <string name="language">Dil</string>
     <string name="summary_preference_settings_language">Uygulamada kullanılan dili değiştirin</string>
 
-    <string name="dialog_startup_subtitle">Tercih ettiğiniz başlangıç sayfasını seçin:</string>
+    <string name="dialog_startup_subtitle">Tercih ettiğiniz başlangıç sayfasını seçin</string>
     <string name="dialog_info_startup">Uygulamanın açılışında kullanıcılara sunulan başlangıç ekranını yapılandırır.</string>
 
     <string name="select_language_title">Dil seç</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Giriş yap</string>
     <string name="use_github_account">GitHub hesabıyla gönder</string>
     <string name="send_anonymously">Anonim gönder</string>
-    <string name="optional_placeholder">(İsteğe bağlı)</string>
+    <string name="optional_placeholder">İsteğe bağlı</string>
     <string name="issue_username_label">Kullanıcı adı</string>
     <string name="issue_password_label">Şifre</string>
     <string name="issue_email_label">E-posta</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Başarılı bir şekilde gönderilen sorun</string>
     <string name="open_issue_in_browser">Tarayıcıda açın</string>
     <string name="open_button_label">Açık sorun</string>
-    <string name="issue_submitted">Sorununuz gönderildi!</string>
+    <string name="issue_submitted">Sorununuz gönderildi.</string>
     <string name="error_unauthorized">Yetkisiz: Geçersiz jeton</string>
     <string name="error_forbidden">Yasak: Yetersiz izinler</string>
     <string name="error_gone">API uç noktası kaldırıldı</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Uygulama yapısı: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Hata ayıklama</string>
     <string name="release">Yayın</string>
-    <string name="manufacturer">Üretici:</string>
-    <string name="device_model">Cihaz modeli:</string>
-    <string name="android_version">Android sürümü:</string>
-    <string name="api_level">API seviyesi:</string>
+    <string name="manufacturer">Üretici</string>
+    <string name="device_model">Cihaz modeli</string>
+    <string name="android_version">Android sürümü</string>
+    <string name="api_level">API seviyesi</string>
     <string name="snack_device_info_copied">Cihaz bilgileri panoya kopyalandı</string>
     <string name="snack_device_info_failed">Cihaz bilgileri yüklenemedi</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Bizi destekle</string>
     <string name="paid_support">Ücretli destek</string>
-    <string name="summary_donations">Bağışlarınız sayesinde uygulamamızı geliştirip devam ettirebiliriz. Cömertliğiniz için teşekkür ederiz!</string>
+    <string name="summary_donations">Bağışlarınız sayesinde uygulamamızı geliştirip devam ettirebiliriz. Cömertliğiniz için teşekkür ederiz.</string>
     <string name="non_paid_support">Ücretsiz destek</string>
     <string name="web_ad">Web reklamı</string>
     <string name="error_failed_to_load_sku_details">SKU ayrıntıları yüklenemedi</string>
-    <string name="purchase_pending">Bağışınız Google tarafından işleniyor. Tamamlandığında sizi bilgilendireceğiz. Teşekkür ederim!</string>
-    <string name="purchase_thank_you">Bağışınız için teşekkür ederiz!</string>
+    <string name="purchase_pending">Bağışınız Google tarafından işleniyor. Tamamlandığında sizi bilgilendireceğiz. Teşekkür ederim.</string>
+    <string name="purchase_thank_you">Bağışınız için teşekkür ederiz.</string>
     <string name="purchase_cancelled">Satınalma İptal edildi</string>
 </resources>

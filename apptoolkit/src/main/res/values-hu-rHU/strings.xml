@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">A munkafolyamat egyszerűsítésére tervezett alkalmazás alapvető eszközöket és funkciókat biztosít, hogy bármilyen feladatnál szervezett és hatékony maradhass. 📱</string>
-    <string name="notification_update_title">Új frissítés érhető el!</string>
-    <string name="summary_notification_update">Az alkalmazás új verziója elérhető. Kattints a frissítéshez!</string>
-    <string name="notification_last_time_used_title">Régen jártál itt!</string>
-    <string name="default_notification_summary">Rengeteg új funkció vár rád. Nyisd meg az alkalmazást!</string>
+    <string name="notification_update_title">Új frissítés érhető el.</string>
+    <string name="summary_notification_update">Az alkalmazás új verziója elérhető. Kattints a frissítéshez.</string>
+    <string name="notification_last_time_used_title">Régen jártál itt.</string>
+    <string name="default_notification_summary">Rengeteg új funkció vár rád. Nyisd meg az alkalmazást.</string>
 
     <string name="welcome">Üdvözlünk</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Olvasd el és fogadd el a Szolgáltatási feltételeinket és az Adatvédelmi irányelveinket a folytatáshoz</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Mentés és folytatás</string>
     <string name="button_continue">Folytatás</string>
     <string name="onboarding_complete_icon_desc">Bevezetés befejezve</string>
-    <string name="onboarding_final_title">Minden készen áll!</string>
-    <string name="onboarding_final_description">Köszönjük, hogy személyre szabta az élményét. Most már készen áll az összes funkció felfedezésére. Jó szórakozást!</string>
+    <string name="onboarding_final_title">Minden készen áll.</string>
+    <string name="onboarding_final_description">Köszönjük, hogy személyre szabta az élményét. Most már készen áll az összes funkció felfedezésére. Jó szórakozást.</string>
 
     <string name="navigation_drawer_open">Navigációs menü megnyitása</string>
     <string name="content_description_more_options">További lehetőségek</string>
     <string name="go_back">Vissza</string>
-    <string name="toast_review_already_done">Köszönöm a besorolást!</string>
+    <string name="toast_review_already_done">Köszönöm a besorolást.</string>
 
     <string name="error">Hiba</string>
-    <string name="sort_by">Rendezés:</string>
+    <string name="sort_by">Rendezés</string>
     <string name="app_not_installed">Az alkalmazás nincs telepítve</string>
     <string name="snack_app_updated">Az alkalmazás sikeresen frissült</string>
     <string name="snack_update_failed">Probléma merült fel a frissítés során</string>
     <string name="try_again">Próbáld újra</string>
-    <string name="summary_share_message">Nézd meg ezt a fantasztikus alkalmazást, amit használok! Nagyon érdekes funkciói vannak, amik neked is tetszhetnek. Letöltheted a Play Áruházból itt: %1$s</string>
+    <string name="summary_share_message">Nézd meg ezt a fantasztikus alkalmazást, amit használok. Nagyon érdekes funkciói vannak, amik neked is tetszhetnek. Letöltheted a Play Áruházból itt: %1$s</string>
     <string name="learn_more">Tudj meg többet</string>
     <string name="close">Bezárás?</string>
     <string name="summary_close">Biztosan kilépsz?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Nincs kiválasztott beállítás. Válassz egy lehetőséget a részletek megtekintéséhez.</string>
     <string name="get_help">Segítség kérése</string>
     <string name="error_no_settings_found">Nincs beállítás található</string>
-    <string name="error_invalid_content_key">Érvénytelen tartalomkulcs!</string>
+    <string name="error_invalid_content_key">Érvénytelen tartalomkulcs.</string>
 
     <string name="display">Kijelző</string>
     <string name="summary_preference_settings_display">Személyre szabhatod az alkalmazás megjelenését</string>
@@ -110,7 +110,7 @@
     <string name="language">Nyelv</string>
     <string name="summary_preference_settings_language">Módosítja az alkalmazásban használt nyelvet</string>
 
-    <string name="dialog_startup_subtitle">Válaszd ki a kedvenc indítóoldaladat:</string>
+    <string name="dialog_startup_subtitle">Válaszd ki a kedvenc indítóoldaladat</string>
     <string name="dialog_info_startup">Az indítóképernyő beállításai, amelyek befolyásolják a felhasználók első interakcióját az alkalmazással.</string>
 
     <string name="select_language_title">Nyelv kiválasztása</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Bejelentkezés</string>
     <string name="use_github_account">Küldés GitHub fiókkal</string>
     <string name="send_anonymously">Küldés névtelenül</string>
-    <string name="optional_placeholder">(Opcionális)</string>
+    <string name="optional_placeholder">Opcionális</string>
     <string name="issue_username_label">Felhasználónév</string>
     <string name="issue_password_label">Jelszó</string>
     <string name="issue_email_label">E-mail</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">A kiadás sikeresen benyújtva</string>
     <string name="open_issue_in_browser">Nyissa meg a böngészőben</string>
     <string name="open_button_label">Nyitott kérdés</string>
-    <string name="issue_submitted">A kérdését benyújtották!</string>
+    <string name="issue_submitted">A kérdését benyújtották.</string>
     <string name="error_unauthorized">Jogosulatlan: Érvénytelen token</string>
     <string name="error_forbidden">Tiltott: Nem elegendő engedély</string>
     <string name="error_gone">Az API végpontja eltávolítva</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Alkalmazásverzió: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Hibakeresés</string>
     <string name="release">Kiadás</string>
-    <string name="manufacturer">Gyártó:</string>
-    <string name="device_model">Eszközmodell:</string>
-    <string name="android_version">Android verzió:</string>
-    <string name="api_level">API szint:</string>
+    <string name="manufacturer">Gyártó</string>
+    <string name="device_model">Eszközmodell</string>
+    <string name="android_version">Android verzió</string>
+    <string name="api_level">API szint</string>
     <string name="snack_device_info_copied">Eszközinformáció másolva a vágólapra</string>
     <string name="snack_device_info_failed">Nem sikerült betölteni az eszköz adatait</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Támogass minket</string>
     <string name="paid_support">Fizetett támogatás</string>
-    <string name="summary_donations">Akármennyit adományozol, segítesz az alkalmazásunk működésének fenntartásában és a funkciók javításában. Nagyra értékeljük a nagylelkűségedet és kedvességedet!</string>
+    <string name="summary_donations">Akármennyit adományozol, segítesz az alkalmazásunk működésének fenntartásában és a funkciók javításában. Nagyra értékeljük a nagylelkűségedet és kedvességedet.</string>
     <string name="non_paid_support">Nem fizetett támogatás</string>
     <string name="web_ad">Webes hirdetés</string>
     <string name="error_failed_to_load_sku_details">Nem sikerült betölteni az SKU részleteit</string>
-    <string name="purchase_pending">Adományát a Google dolgozza fel. Értesítjük, ha teljes. Köszönöm!</string>
-    <string name="purchase_thank_you">Köszönöm az adományt!</string>
+    <string name="purchase_pending">Adományát a Google dolgozza fel. Értesítjük, ha teljes. Köszönöm.</string>
+    <string name="purchase_thank_you">Köszönöm az adományt.</string>
     <string name="purchase_cancelled">Vásárlás lemondva</string>
 </resources>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">آپ کے ورک فلو کو منظم کرنے کے لیے ڈیزائن کیا گیا، یہ ایپ ضروری ٹولز اور خصوصیات فراہم کرتی ہے تاکہ آپ کو کسی بھی کام میں منظم اور موثر رہنے میں مدد ملے۔ 📱</string>
-    <string name="notification_update_title">ایک نئی اپ ڈیٹ دستیاب ہے!</string>
-    <string name="summary_notification_update">ایپ کا نیا ورژن دستیاب ہے۔ اپ ڈیٹ کرنے کے لیے کلک کریں!</string>
-    <string name="notification_last_time_used_title">کافی وقت ہو گیا ہے!</string>
-    <string name="default_notification_summary">بہت ساری خصوصیات آپ کا انتظار کر رہی ہیں۔ ایپ کھولیں!</string>
+    <string name="notification_update_title">ایک نئی اپ ڈیٹ دستیاب ہے.</string>
+    <string name="summary_notification_update">ایپ کا نیا ورژن دستیاب ہے۔ اپ ڈیٹ کرنے کے لیے کلک کریں.</string>
+    <string name="notification_last_time_used_title">کافی وقت ہو گیا ہے.</string>
+    <string name="default_notification_summary">بہت ساری خصوصیات آپ کا انتظار کر رہی ہیں۔ ایپ کھولیں.</string>
 
     <string name="welcome">خوش آمدید</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">جاری رکھنے کے لیے ہماری سروس کی شرائط اور رازداری کی پالیسی کو پڑھیں اور ان سے اتفاق کریں</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">محفوظ کریں اور جاری رکھیں</string>
     <string name="button_continue">جاری رکھیں</string>
     <string name="onboarding_complete_icon_desc">آن بورڈنگ مکمل</string>
-    <string name="onboarding_final_title">آپ پوری طرح تیار ہیں!</string>
-    <string name="onboarding_final_description">اپنے تجربے کو ذاتی بنانے کا شکریہ۔ اب آپ تمام خصوصیات کو دریافت کرنے کے لیے تیار ہیں۔ لطف اٹھائیں!</string>
+    <string name="onboarding_final_title">آپ پوری طرح تیار ہیں.</string>
+    <string name="onboarding_final_description">اپنے تجربے کو ذاتی بنانے کا شکریہ۔ اب آپ تمام خصوصیات کو دریافت کرنے کے لیے تیار ہیں۔ لطف اٹھائیں.</string>
 
     <string name="navigation_drawer_open">نیویگیشن دراز کھولیں</string>
     <string name="content_description_more_options">مزید اختیارات</string>
     <string name="go_back">پیچھے جائیں</string>
-    <string name="toast_review_already_done">درجہ بندی کے لئے شکریہ!</string>
+    <string name="toast_review_already_done">درجہ بندی کے لئے شکریہ.</string>
 
-    <string name="sort_by">ترتیب دیں:</string>
+    <string name="sort_by">ترتیب دیں</string>
     <string name="error">خرابی</string>
     <string name="app_not_installed">ایپ انسٹال نہیں ہے</string>
     <string name="snack_app_updated">ایپ کامیابی سے اپ ڈیٹ ہو گئی ہے</string>
     <string name="snack_update_failed">اپ ڈیٹ کے عمل میں ایک مسئلہ درپیش ہوا</string>
     <string name="try_again">دوبارہ کوشش کریں</string>
-    <string name="summary_share_message">یہ حیرت انگیز ایپ دیکھیں جو میں استعمال کر رہا ہوں! اس میں کچھ واقعی عمدہ خصوصیات ہیں جو آپ کو دلچسپ لگ سکتی ہیں۔ آپ اسے پلے اسٹور سے یہاں سے ڈاؤن لوڈ کر سکتے ہیں: %1$s</string>
+    <string name="summary_share_message">یہ حیرت انگیز ایپ دیکھیں جو میں استعمال کر رہا ہوں. اس میں کچھ واقعی عمدہ خصوصیات ہیں جو آپ کو دلچسپ لگ سکتی ہیں۔ آپ اسے پلے اسٹور سے یہاں سے ڈاؤن لوڈ کر سکتے ہیں: %1$s</string>
     <string name="learn_more">مزید جانیں</string>
     <string name="close">بند کریں؟</string>
     <string name="summary_close">کیا آپ واقعی باہر نکلنا چاہتے ہیں؟</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">کوئی ترتیبات منتخب نہیں ہیں۔ اس کی تفصیلات یہاں دیکھنے کے لیے ایک آپشن منتخب کریں۔</string>
     <string name="get_help">مدد حاصل کریں</string>
     <string name="error_no_settings_found">کوئی ترتیبات نہیں ملیں</string>
-    <string name="error_invalid_content_key">غلط مواد کی کلید!</string>
+    <string name="error_invalid_content_key">غلط مواد کی کلید.</string>
 
     <string name="display">ڈسپلے</string>
     <string name="summary_preference_settings_display">اپنی ایپ کی شکل و صورت کو ذاتی بنائیں</string>
@@ -110,7 +110,7 @@
     <string name="language">زبان</string>
     <string name="summary_preference_settings_language">ایپ میں استعمال ہونے والی زبان کو تبدیل کرتا ہے</string>
 
-    <string name="dialog_startup_subtitle">اپنی ترجیحی شروعاتی صفحہ منتخب کریں:</string>
+    <string name="dialog_startup_subtitle">اپنی ترجیحی شروعاتی صفحہ منتخب کریں</string>
     <string name="dialog_info_startup">ایپلیکیشن لانچ کرنے پر صارفین کو پیش کی جانے والی ابتدائی اسکرین کو کنفیگر کرتا ہے۔ یہ ترتیب صارف کے ایپ کے ساتھ پہلے تعامل پر اثر انداز ہوتی ہے اور اسے مخصوص صارف طبقات یا مصنوعات کے اہداف کے مطابق بنایا جا سکتا ہے۔</string>
 
     <string name="select_language_title">زبان منتخب کریں</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">لاگ ان</string>
     <string name="use_github_account">GitHub اکاؤنٹ استعمال کرکے بھیجیں</string>
     <string name="send_anonymously">گمنام بھیجیں</string>
-    <string name="optional_placeholder">(اختیاری)</string>
+    <string name="optional_placeholder">اختیاری</string>
     <string name="issue_username_label">صارف نام</string>
     <string name="issue_password_label">پاس ورڈ</string>
     <string name="issue_email_label">ای میل</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">مسئلہ کامیابی کے ساتھ جمع کرایا گیا</string>
     <string name="open_issue_in_browser">براؤزر میں کھلا</string>
     <string name="open_button_label">کھلا مسئلہ</string>
-    <string name="issue_submitted">آپ کا مسئلہ پیش کیا گیا تھا!</string>
+    <string name="issue_submitted">آپ کا مسئلہ پیش کیا گیا تھا.</string>
     <string name="error_unauthorized">غیر مجاز: غلط ٹوکن</string>
     <string name="error_forbidden">ممنوع: ناکافی اجازتیں</string>
     <string name="error_gone">API اختتامی نقطہ ہٹا دیا گیا</string>
@@ -253,10 +253,10 @@
     <string name="app_build">ایپ بلڈ: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">ڈیبگ</string>
     <string name="release">ریلیز</string>
-    <string name="manufacturer">مینوفیکچرر:</string>
-    <string name="device_model">ڈیوائس ماڈل:</string>
-    <string name="android_version">اینڈرائیڈ ورژن:</string>
-    <string name="api_level">API لیول:</string>
+    <string name="manufacturer">مینوفیکچرر</string>
+    <string name="device_model">ڈیوائس ماڈل</string>
+    <string name="android_version">اینڈرائیڈ ورژن</string>
+    <string name="api_level">API لیول</string>
     <string name="snack_device_info_copied">ڈیوائس کی معلومات کلپ بورڈ پر کاپی ہو گئیں</string>
     <string name="snack_device_info_failed">ڈیوائس کی معلومات لوڈ نہیں ہو سکی</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">ہماری مدد کریں</string>
     <string name="paid_support">بامعاوضہ سپورٹ</string>
-    <string name="summary_donations">چاہے آپ کتنا ہی عطیہ دیں، آپ ہماری ایپ کو چلانے اور ہماری خصوصیات کو بہتر بنانے میں ہماری مدد کریں گے۔ ہم آپ کی فراخدلی اور مہربانی کی تعریف کرتے ہیں!</string>
+    <string name="summary_donations">چاہے آپ کتنا ہی عطیہ دیں، آپ ہماری ایپ کو چلانے اور ہماری خصوصیات کو بہتر بنانے میں ہماری مدد کریں گے۔ ہم آپ کی فراخدلی اور مہربانی کی تعریف کرتے ہیں.</string>
     <string name="non_paid_support">بغیر معاوضہ سپورٹ</string>
     <string name="web_ad">ویب اشتہار</string>
     <string name="error_failed_to_load_sku_details">SKU تفصیلات لوڈ کرنے میں ناکام</string>
-    <string name="purchase_pending">آپ کے عطیہ پر گوگل کے ذریعہ کارروائی کی جارہی ہے۔ جب یہ مکمل ہوجائے گا تو ہم آپ کو مطلع کریں گے۔ آپ کا شکریہ!</string>
-    <string name="purchase_thank_you">آپ کے عطیہ کا شکریہ!</string>
+    <string name="purchase_pending">آپ کے عطیہ پر گوگل کے ذریعہ کارروائی کی جارہی ہے۔ جب یہ مکمل ہوجائے گا تو ہم آپ کو مطلع کریں گے۔ آپ کا شکریہ.</string>
+    <string name="purchase_thank_you">آپ کے عطیہ کا شکریہ.</string>
     <string name="purchase_cancelled">خریداری منسوخ</string>
 </resources>

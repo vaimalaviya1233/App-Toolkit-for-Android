@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Bem-vindo ao App Toolkit</string>
     <string name="onboarding_welcome_description">Explore as capacidades da nossa biblioteca AppToolkit. Descubra nossos aplicativos, todos construídos para demonstrar e utilizar o poder da nossa biblioteca AppToolkit, aprimorando seu desenvolvimento Android e experiência do usuário.</string>
     <string name="onboarding_feature1_title">Descubra nossos aplicativos</string>
-    <string name="onboarding_feature1_description">O App Toolkit apresenta a você uma seleção de nossos aplicativos, cada um projetado para destacar diferentes aspectos da nossa biblioteca AppToolkit e aprimorar sua experiência Android. Veja o que é possível com nossa biblioteca AppToolkit!</string>
+    <string name="onboarding_feature1_description">O App Toolkit apresenta a você uma seleção de nossos aplicativos, cada um projetado para destacar diferentes aspectos da nossa biblioteca AppToolkit e aprimorar sua experiência Android. Veja o que é possível com nossa biblioteca AppToolkit.</string>
     <string name="onboarding_personalization_title">Veja nossa biblioteca AppToolkit em ação</string>
     <string name="onboarding_personalization_description">Este aplicativo demonstra como nossa biblioteca AppToolkit pode ser usada para construir aplicativos versáteis e focados no usuário. Explore nossos aplicativos para ver diferentes recursos e implementações da biblioteca.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Por que o App Toolkit precisa de permissões como acesso à Internet?</string>
     <string name="summary_preference_faq_7">O App Toolkit requer acesso à Internet para buscar a lista mais recente de nossos aplicativos na Google Play Store e exibir suas informações com precisão. Ele normalmente não requer outras permissões invasivas.</string>
     <string name="question_8">Como posso fornecer feedback sobre o App Toolkit ou seus aplicativos?</string>
-    <string name="summary_preference_faq_8">Valorizamos seu feedback sobre o App Toolkit e nossos aplicativos individuais! Você geralmente pode encontrar uma opção \"Feedback\" ou \"Entre em Contato\" nas configurações do App Toolkit ou em nossa página de desenvolvedor na Play Store. O feedback sobre nossa biblioteca AppToolkit em si também é bem-vindo através dos canais apropriados.</string>
+    <string name="summary_preference_faq_8">Valorizamos seu feedback sobre o App Toolkit e nossos aplicativos individuais. Você geralmente pode encontrar uma opção \"Feedback\" ou \"Entre em Contato\" nas configurações do App Toolkit ou em nossa página de desenvolvedor na Play Store. O feedback sobre nossa biblioteca AppToolkit em si também é bem-vindo através dos canais apropriados.</string>
     <string name="question_9">Meus dados estão seguros ao usar o App Toolkit para encontrar seus outros aplicativos?</string>
     <string name="summary_preference_faq_9">O App Toolkit busca principalmente informações publicamente disponíveis sobre nossos aplicativos. Quando você opta por instalar ou usar um de nossos aplicativos listados, a Política de Privacidade própria desse aplicativo será aplicada. Incentivamos você a revisá-la. O manuseio de dados do App Toolkit é descrito em nossa Política de Privacidade.</string>
 </resources>

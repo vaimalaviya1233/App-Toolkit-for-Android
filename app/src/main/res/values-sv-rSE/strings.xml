@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Välkommen till App Toolkit</string>
     <string name="onboarding_welcome_description">Utforska funktionerna i vårt AppToolkit-bibliotek. Upptäck våra applikationer, alla byggda för att demonstrera och utnyttja kraften i vårt AppToolkit-bibliotek, vilket förbättrar din Android-utveckling och användarupplevelse.</string>
     <string name="onboarding_feature1_title">Upptäck våra applikationer</string>
-    <string name="onboarding_feature1_description">App Toolkit presenterar ett urval av våra applikationer, var och en utformad för att belysa olika aspekter av vårt AppToolkit-bibliotek och förbättra din Android-upplevelse. Se vad som är möjligt med vårt AppToolkit-bibliotek!</string>
+    <string name="onboarding_feature1_description">App Toolkit presenterar ett urval av våra applikationer, var och en utformad för att belysa olika aspekter av vårt AppToolkit-bibliotek och förbättra din Android-upplevelse. Se vad som är möjligt med vårt AppToolkit-bibliotek.</string>
     <string name="onboarding_personalization_title">Se vårt AppToolkit-bibliotek i aktion</string>
     <string name="onboarding_personalization_description">Den här appen demonstrerar hur vårt AppToolkit-bibliotek kan användas för att bygga mångsidiga och användarfokuserade applikationer. Utforska våra appar för att se olika funktioner och implementeringar av biblioteket.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Varför behöver App Toolkit behörigheter som internetåtkomst?</string>
     <string name="summary_preference_faq_7">App Toolkit kräver internetåtkomst för att hämta den senaste listan över våra applikationer från Google Play Butik och visa deras information korrekt. Det kräver vanligtvis inga andra integritetskränkande behörigheter.</string>
     <string name="question_8">Hur kan jag ge feedback om App Toolkit eller era appar?</string>
-    <string name="summary_preference_faq_8">Vi värdesätter din feedback om App Toolkit och våra enskilda appar! Du kan vanligtvis hitta ett alternativ för \"Återkoppling\" eller \"Kontakta oss\" i App Toolkits inställningar eller på vår utvecklarsida i Play Butik. Feedback om vårt AppToolkit-bibliotek i sig är också välkommen via lämpliga kanaler.</string>
+    <string name="summary_preference_faq_8">Vi värdesätter din feedback om App Toolkit och våra enskilda appar. Du kan vanligtvis hitta ett alternativ för \"Återkoppling\" eller \"Kontakta oss\" i App Toolkits inställningar eller på vår utvecklarsida i Play Butik. Feedback om vårt AppToolkit-bibliotek i sig är också välkommen via lämpliga kanaler.</string>
     <string name="question_9">Är mina data säkra när jag använder App Toolkit för att hitta era andra appar?</string>
     <string name="summary_preference_faq_9">App Toolkit hämtar främst offentligt tillgänglig information om våra appar. När du väljer att installera eller använda en av våra listade appar gäller den appens egen integritetspolicy. Vi uppmuntrar dig att granska den. App Toolkits datahantering beskrivs i vår integritetspolicy.</string>
 </resources>

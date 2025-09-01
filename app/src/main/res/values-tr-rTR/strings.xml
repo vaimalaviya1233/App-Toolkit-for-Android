@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">App Toolkit\'e Hoş Geldiniz</string>
     <string name="onboarding_welcome_description">AppToolkit kütüphanemizin yeteneklerini keşfedin. Android geliştirmenizi ve kullanıcı deneyiminizi geliştiren AppToolkit kütüphanemizin gücünü göstermek ve kullanmak için oluşturulmuş uygulamalarımızı keşfedin.</string>
     <string name="onboarding_feature1_title">Uygulamalarımızı keşfedin</string>
-    <string name="onboarding_feature1_description">App Toolkit, her biri AppToolkit kütüphanemizin farklı yönlerini vurgulamak ve Android deneyiminizi geliştirmek için tasarlanmış uygulamalarımızdan bir seçki sunar. AppToolkit kütüphanemizle nelerin mümkün olduğunu görün!</string>
+    <string name="onboarding_feature1_description">App Toolkit, her biri AppToolkit kütüphanemizin farklı yönlerini vurgulamak ve Android deneyiminizi geliştirmek için tasarlanmış uygulamalarımızdan bir seçki sunar. AppToolkit kütüphanemizle nelerin mümkün olduğunu görün.</string>
     <string name="onboarding_personalization_title">AppToolkit kütüphanemizi çalışırken görün</string>
     <string name="onboarding_personalization_description">Bu uygulama, AppToolkit kütüphanemizin çok yönlü ve kullanıcı odaklı uygulamalar oluşturmak için nasıl kullanılabileceğini gösterir. Kütüphanenin farklı özelliklerini ve uygulamalarını görmek için uygulamalarımızı keşfedin.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">App Toolkit neden İnternet erişimi gibi izinlere ihtiyaç duyar?</string>
     <string name="summary_preference_faq_7">App Toolkit, uygulamalarımızın en son listesini Google Play Store\'dan almak ve bilgilerini doğru bir şekilde görüntülemek için İnternet erişimi gerektirir. Genellikle başka müdahaleci izinler gerektirmez.</string>
     <string name="question_8">App Toolkit veya uygulamalarınız hakkında nasıl geri bildirimde bulunabilirim?</string>
-    <string name="summary_preference_faq_8">App Toolkit ve bireysel uygulamalarımız hakkındaki geri bildirimlerinize değer veriyoruz! Genellikle App Toolkit\'in ayarlarında veya Play Store\'daki geliştirici sayfamızda bir \"Geri Bildirim\" veya \"Bize Ulaşın\" seçeneği bulabilirsiniz. AppToolkit kütüphanemiz hakkındaki geri bildirimler de uygun kanallar aracılığıyla memnuniyetle karşılanır.</string>
+    <string name="summary_preference_faq_8">App Toolkit ve bireysel uygulamalarımız hakkındaki geri bildirimlerinize değer veriyoruz. Genellikle App Toolkit\'in ayarlarında veya Play Store\'daki geliştirici sayfamızda bir \"Geri Bildirim\" veya \"Bize Ulaşın\" seçeneği bulabilirsiniz. AppToolkit kütüphanemiz hakkındaki geri bildirimler de uygun kanallar aracılığıyla memnuniyetle karşılanır.</string>
     <string name="question_9">Diğer uygulamalarınızı bulmak için App Toolkit\'i kullanırken verilerim güvende mi?</string>
     <string name="summary_preference_faq_9">App Toolkit öncelikle uygulamalarımız hakkında halka açık bilgileri alır. Listelenen uygulamalarımızdan birini yüklemeyi veya kullanmayı seçtiğinizde, o uygulamanın kendi Gizlilik Politikası geçerli olacaktır. Gözden geçirmenizi öneririz. App Toolkit\'in veri işleme şekli Gizlilik Politikamızda belirtilmiştir.</string>
 </resources>

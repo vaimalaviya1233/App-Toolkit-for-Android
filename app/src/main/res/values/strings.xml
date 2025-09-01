@@ -3,35 +3,35 @@
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Welcome to App Toolkit</string>
-    <string name="onboarding_welcome_description">Explore the capabilities of our AppToolkit library. Discover our applications, all built to demonstrate and utilize the power of our AppToolkit library, enhancing your Android development and user experience.</string>
-    <string name="onboarding_feature1_title">Discover our applications</string>
-    <string name="onboarding_feature1_description">App Toolkit introduces you to a selection of our applications, each designed to highlight different aspects of our AppToolkit library and enhance your Android experience. See what\'s possible with our AppToolkit library!</string>
-    <string name="onboarding_personalization_title">See our AppToolkit library in action</string>
-    <string name="onboarding_personalization_description">This app demonstrates how our AppToolkit library can be used to build versatile and user-focused applications. Explore our apps to see different features and implementations of the library.</string>
+    <string name="onboarding_welcome_description">Explore the capabilities of the AppToolkit library. Discover applications built to demonstrate the library\'s power and enhance your Android development and user experience.</string>
+    <string name="onboarding_feature1_title">Discover applications</string>
+    <string name="onboarding_feature1_description">App Toolkit introduces a selection of applications, each designed to highlight different aspects of the AppToolkit library and enhance your Android experience. See what\'s possible with the AppToolkit library.</string>
+    <string name="onboarding_personalization_title">See the AppToolkit library in action</string>
+    <string name="onboarding_personalization_description">This app demonstrates how the AppToolkit library builds versatile, user-focused applications. Explore the sample apps to see different features and implementations of the library.</string>
 
     <!-- Home screen -->
     <string name="all_apps">All apps</string>
     <string name="favorite_apps">Favorites</string>
     <string name="no_apps_added_to_favorites">No apps added to favorites</string>
-    <string name="error_failed_to_fetch_our_apps">Failed to fetch our app listings</string>
+    <string name="error_failed_to_fetch_our_apps">Failed to load app listings</string>
 
     <!-- Help screen -->
     <string name="question_1">What is App Toolkit?</string>
-    <string name="summary_preference_faq_1">App Toolkit is an application designed to feature and demonstrate apps developed by us using our AppToolkit library. It\'s your guide to exploring our ecosystem of applications and seeing our AppToolkit library in action.</string>
+    <string name="summary_preference_faq_1">App Toolkit is an application designed to feature and demonstrate apps built with the AppToolkit library. It\'s your guide to exploring this ecosystem and seeing the AppToolkit library in action.</string>
     <string name="question_2">How do I access the different apps shown in App Toolkit?</string>
-    <string name="summary_preference_faq_2">App Toolkit lists our various applications. Tapping on an app listing will typically provide more information and a link to install or open it from the Google Play Store, allowing you to experience it firsthand.</string>
+    <string name="summary_preference_faq_2">App Toolkit lists various applications. Tapping on an app listing typically provides more information and a link to install or open it from the Google Play Store, allowing you to experience it firsthand.</string>
     <string name="question_3">Are the apps featured in App Toolkit free?</string>
-    <string name="summary_preference_faq_3">Many of our apps featured in App Toolkit offer a core set of features for free. Some may have advanced functionalities available through a premium version or in-app purchases. Details for each app can be found on its respective Play Store page.</string>
+    <string name="summary_preference_faq_3">Many apps featured in App Toolkit offer a core set of features for free. Some may have advanced functionalities available through a premium version or in-app purchases. Details for each app can be found on its respective Play Store page.</string>
     <string name="question_4">How can I learn more about a specific app listed?</string>
-    <string name="summary_preference_faq_4">For complete details about one of our apps, its features, and user reviews, please tap on the app in App Toolkit to visit its page on the Google Play Store.</string>
+    <string name="summary_preference_faq_4">For complete details about a listed app, its features, and user reviews, tap the app in App Toolkit to visit its page on the Google Play Store.</string>
     <string name="question_5">Where can I find help or support for one of your listed apps?</string>
-    <string name="summary_preference_faq_5">Support for our individual apps is provided through their respective channels, usually detailed on their Play Store page or within the app itself. App Toolkit is for discovering these apps; for app-specific issues, please refer to that app\'s support options.</string>
+    <string name="summary_preference_faq_5">Each app has its own support channels, usually detailed on its Play Store page or within the app itself. App Toolkit is for discovering these apps; for app-specific issues, use that app\'s support options.</string>
     <string name="question_6">How often is the list of your apps updated in App Toolkit?</string>
-    <string name="summary_preference_faq_6">We aim to keep App Toolkit updated with our latest and most relevant applications that utilize our AppToolkit library. New apps or significant updates may be featured here.</string>
+    <string name="summary_preference_faq_6">App Toolkit is updated regularly so you always see the latest apps that use the AppToolkit library. New apps or significant updates may be featured here.</string>
     <string name="question_7">Why does App Toolkit need permissions like Internet access?</string>
-    <string name="summary_preference_faq_7">App Toolkit requires Internet access to fetch the latest list of our applications from the Google Play Store and display their information accurately. It doesn\'t typically require other invasive permissions.</string>
+    <string name="summary_preference_faq_7">To show the latest app list, App Toolkit uses Internet access to retrieve information from the Google Play Store and display it accurately. It doesn\'t typically require other invasive permissions.</string>
     <string name="question_8">How can I provide feedback on App Toolkit or your apps?</string>
-    <string name="summary_preference_faq_8">We value your feedback on App Toolkit and our individual apps! You can usually find a "Feedback" or "Contact Us" option within App Toolkit\'s settings or on our developer page on the Play Store. Feedback on our AppToolkit library itself is also welcome through appropriate channels.</string>
+    <string name="summary_preference_faq_8">Your feedback on App Toolkit and its listed apps is appreciated. You can usually find a "Feedback" or "Contact" option within App Toolkit\'s settings or on the developer page on the Play Store. Feedback on the AppToolkit library itself is also welcome through the appropriate channels.</string>
     <string name="question_9">Is my data safe when using App Toolkit to find your other apps?</string>
-    <string name="summary_preference_faq_9">App Toolkit primarily fetches publicly available information about our apps. When you choose to install or use one of our listed apps, that app\'s own Privacy Policy will apply. We encourage you to review it. App Toolkit\'s data handling is outlined in our Privacy Policy.</string>
+    <string name="summary_preference_faq_9">App Toolkit primarily fetches publicly available information about listed apps. When you choose to install or use one of these apps, that app\'s own Privacy Policy applies, so be sure to review it. App Toolkit\'s data handling is outlined in its Privacy Policy.</string>
 </resources>

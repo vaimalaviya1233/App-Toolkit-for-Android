@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Üdvözli az App Toolkit</string>
     <string name="onboarding_welcome_description">Fedezze fel AppToolkit könyvtárunk képességeit. Fedezze fel alkalmazásainkat, melyek mindegyike az AppToolkit könyvtárunk erejének bemutatására és kihasználására készült, javítva ezzel Android fejlesztési és felhasználói élményét.</string>
     <string name="onboarding_feature1_title">Fedezze fel alkalmazásainkat</string>
-    <string name="onboarding_feature1_description">Az App Toolkit bemutatja Önnek alkalmazásaink válogatását, melyek mindegyike az AppToolkit könyvtárunk különböző aspektusainak kiemelésére és Android élményének javítására lett tervezve. Nézze meg, mi minden lehetséges AppToolkit könyvtárunkkal!</string>
+    <string name="onboarding_feature1_description">Az App Toolkit bemutatja Önnek alkalmazásaink válogatását, melyek mindegyike az AppToolkit könyvtárunk különböző aspektusainak kiemelésére és Android élményének javítására lett tervezve. Nézze meg, mi minden lehetséges AppToolkit könyvtárunkkal.</string>
     <string name="onboarding_personalization_title">Tekintse meg AppToolkit könyvtárunkat működés közben</string>
     <string name="onboarding_personalization_description">Ez az alkalmazás bemutatja, hogyan használható AppToolkit könyvtárunk sokoldalú és felhasználó-központú alkalmazások készítésére. Fedezze fel alkalmazásainkat, hogy megtekinthesse a könyvtár különböző funkcióit és implementációit.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Miért van szüksége az App Toolkitnek olyan engedélyekre, mint az internet-hozzáférés?</string>
     <string name="summary_preference_faq_7">Az App Toolkitnek internet-hozzáférésre van szüksége ahhoz, hogy lekérje alkalmazásaink legfrissebb listáját a Google Play Áruházból, és pontosan megjelenítse azok információit. Általában nem igényel más invazív engedélyeket.</string>
     <string name="question_8">Hogyan adhatok visszajelzést az App Toolkitről vagy az alkalmazásairól?</string>
-    <string name="summary_preference_faq_8">Nagyra értékeljük visszajelzését az App Toolkitről és egyedi alkalmazásainkról! Általában talál egy \"Visszajelzés\" vagy \"Kapcsolatfelvétel\" opciót az App Toolkit beállításaiban vagy fejlesztői oldalunkon a Play Áruházban. Magáról az AppToolkit könyvtárunkról szóló visszajelzést is szívesen fogadjuk a megfelelő csatornákon keresztül.</string>
+    <string name="summary_preference_faq_8">Nagyra értékeljük visszajelzését az App Toolkitről és egyedi alkalmazásainkról. Általában talál egy \"Visszajelzés\" vagy \"Kapcsolatfelvétel\" opciót az App Toolkit beállításaiban vagy fejlesztői oldalunkon a Play Áruházban. Magáról az AppToolkit könyvtárunkról szóló visszajelzést is szívesen fogadjuk a megfelelő csatornákon keresztül.</string>
     <string name="question_9">Biztonságban vannak az adataim, amikor az App Toolkitet használom más alkalmazásai megkeresésére?</string>
     <string name="summary_preference_faq_9">Az App Toolkit elsősorban nyilvánosan elérhető információkat kér le alkalmazásainkról. Amikor úgy dönt, hogy telepíti vagy használja valamelyik listázott alkalmazásunkat, az adott alkalmazás saját Adatvédelmi Irányelvei érvényesülnek. Javasoljuk, hogy olvassa el. Az App Toolkit adatkezelését Adatvédelmi Irányelveink ismertetik.</string>
 </resources>

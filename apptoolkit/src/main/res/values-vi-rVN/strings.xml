@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Được thiết kế để hợp lý hóa quy trình làm việc của bạn, ứng dụng này cung cấp các công cụ và tính năng thiết yếu để giúp bạn luôn ngăn nắp và hiệu quả trong mọi tác vụ. 📱</string>
-    <string name="notification_update_title">Có bản cập nhật mới!</string>
-    <string name="summary_notification_update">Đã có phiên bản mới của ứng dụng. Nhấp để cập nhật!</string>
-    <string name="notification_last_time_used_title">Lâu rồi không gặp!</string>
-    <string name="default_notification_summary">Có rất nhiều tính năng đang chờ bạn. Hãy mở ứng dụng!</string>
+    <string name="notification_update_title">Có bản cập nhật mới.</string>
+    <string name="summary_notification_update">Đã có phiên bản mới của ứng dụng. Nhấp để cập nhật.</string>
+    <string name="notification_last_time_used_title">Lâu rồi không gặp.</string>
+    <string name="default_notification_summary">Có rất nhiều tính năng đang chờ bạn. Hãy mở ứng dụng.</string>
 
     <string name="welcome">Chào mừng</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Đọc và đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư của chúng tôi để tiếp tục</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Lưu và tiếp tục</string>
     <string name="button_continue">Tiếp tục</string>
     <string name="onboarding_complete_icon_desc">Hoàn tất giới thiệu</string>
-    <string name="onboarding_final_title">Bạn đã sẵn sàng!</string>
-    <string name="onboarding_final_description">Cảm ơn bạn đã cá nhân hóa trải nghiệm của mình. Bây giờ bạn đã sẵn sàng khám phá tất cả các tính năng. Chúc bạn vui vẻ!</string>
+    <string name="onboarding_final_title">Bạn đã sẵn sàng.</string>
+    <string name="onboarding_final_description">Cảm ơn bạn đã cá nhân hóa trải nghiệm của mình. Bây giờ bạn đã sẵn sàng khám phá tất cả các tính năng. Chúc bạn vui vẻ.</string>
 
     <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
     <string name="content_description_more_options">Nhiều lựa chọn hơn</string>
     <string name="go_back">Quay lại</string>
-    <string name="toast_review_already_done">Cảm ơn đã đánh giá!</string>
+    <string name="toast_review_already_done">Cảm ơn đã đánh giá.</string>
 
-    <string name="sort_by">Sắp xếp theo:</string>
+    <string name="sort_by">Sắp xếp theo</string>
     <string name="error">Lỗi</string>
     <string name="app_not_installed">Ứng dụng chưa được cài đặt</string>
     <string name="snack_app_updated">Ứng dụng đã được cập nhật thành công</string>
     <string name="snack_update_failed">Quá trình cập nhật đã gặp sự cố</string>
     <string name="try_again">Thử lại</string>
-    <string name="summary_share_message">Hãy xem ứng dụng tuyệt vời này mà tôi đang dùng! Nó có một số tính năng rất thú vị mà bạn có thể thấy hay. Bạn có thể tải xuống từ Play Store tại: %1$s</string>
+    <string name="summary_share_message">Hãy xem ứng dụng tuyệt vời này mà tôi đang dùng. Nó có một số tính năng rất thú vị mà bạn có thể thấy hay. Bạn có thể tải xuống từ Play Store tại: %1$s</string>
     <string name="learn_more">Tìm hiểu thêm</string>
     <string name="close">Đóng?</string>
     <string name="summary_close">Bạn có chắc chắn muốn thoát không?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Chưa chọn cài đặt nào. Chọn một tùy chọn để xem chi tiết tại đây.</string>
     <string name="get_help">Nhận trợ giúp</string>
     <string name="error_no_settings_found">Không tìm thấy cài đặt nào</string>
-    <string name="error_invalid_content_key">Khóa nội dung không hợp lệ!</string>
+    <string name="error_invalid_content_key">Khóa nội dung không hợp lệ.</string>
 
     <string name="display">Hiển thị</string>
     <string name="summary_preference_settings_display">Cá nhân hóa giao diện và cảm nhận của ứng dụng</string>
@@ -110,7 +110,7 @@
     <string name="language">Ngôn ngữ</string>
     <string name="summary_preference_settings_language">Thay đổi ngôn ngữ được sử dụng trong ứng dụng</string>
 
-    <string name="dialog_startup_subtitle">Chọn trang khởi động ưa thích của bạn:</string>
+    <string name="dialog_startup_subtitle">Chọn trang khởi động ưa thích của bạn</string>
     <string name="dialog_info_startup">Cấu hình màn hình ban đầu được hiển thị cho người dùng khi khởi chạy ứng dụng. Cài đặt này ảnh hưởng đến tương tác đầu tiên của người dùng với ứng dụng và có thể được điều chỉnh cho các phân khúc người dùng cụ thể hoặc mục tiêu sản phẩm.</string>
 
     <string name="select_language_title">Chọn ngôn ngữ</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Đăng nhập</string>
     <string name="use_github_account">Gửi bằng tài khoản GitHub</string>
     <string name="send_anonymously">Gửi ẩn danh</string>
-    <string name="optional_placeholder">(Tùy chọn)</string>
+    <string name="optional_placeholder">Tùy chọn</string>
     <string name="issue_username_label">Tên người dùng</string>
     <string name="issue_password_label">Mật khẩu</string>
     <string name="issue_email_label">Email</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Vấn đề được gửi thành công</string>
     <string name="open_issue_in_browser">Mở trong trình duyệt</string>
     <string name="open_button_label">Vấn đề mở</string>
-    <string name="issue_submitted">Vấn đề của bạn đã được gửi!</string>
+    <string name="issue_submitted">Vấn đề của bạn đã được gửi.</string>
     <string name="error_unauthorized">Nhập học: Mã thông báo không hợp lệ</string>
     <string name="error_forbidden">Cấm: Không đủ quyền</string>
     <string name="error_gone">Đã xóa điểm cuối API</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Bản dựng ứng dụng: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Gỡ lỗi</string>
     <string name="release">Phát hành</string>
-    <string name="manufacturer">Nhà sản xuất:</string>
-    <string name="device_model">Kiểu máy:</string>
-    <string name="android_version">Phiên bản Android:</string>
-    <string name="api_level">Cấp API:</string>
+    <string name="manufacturer">Nhà sản xuất</string>
+    <string name="device_model">Kiểu máy</string>
+    <string name="android_version">Phiên bản Android</string>
+    <string name="api_level">Cấp API</string>
     <string name="snack_device_info_copied">Đã sao chép thông tin thiết bị vào khay nhớ tạm</string>
     <string name="snack_device_info_failed">Không thể tải thông tin thiết bị</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Ủng hộ chúng tôi</string>
     <string name="paid_support">Hỗ trợ trả phí</string>
-    <string name="summary_donations">Dù bạn quyên góp bao nhiêu, bạn cũng sẽ giúp chúng tôi duy trì hoạt động của ứng dụng và cải thiện các tính năng. Chúng tôi đánh giá cao sự hào phóng và lòng tốt của bạn!</string>
+    <string name="summary_donations">Dù bạn quyên góp bao nhiêu, bạn cũng sẽ giúp chúng tôi duy trì hoạt động của ứng dụng và cải thiện các tính năng. Chúng tôi đánh giá cao sự hào phóng và lòng tốt của bạn.</string>
     <string name="non_paid_support">Hỗ trợ không trả phí</string>
     <string name="web_ad">Quảng cáo web</string>
     <string name="error_failed_to_load_sku_details">Không thể tải chi tiết SKU</string>
-    <string name="purchase_pending">Sự đóng góp của bạn đang được Google xử lý. Chúng tôi sẽ thông báo cho bạn khi nó hoàn thành. Cảm ơn!</string>
-    <string name="purchase_thank_you">Cảm ơn bạn đã đóng góp của bạn!</string>
+    <string name="purchase_pending">Sự đóng góp của bạn đang được Google xử lý. Chúng tôi sẽ thông báo cho bạn khi nó hoàn thành. Cảm ơn.</string>
+    <string name="purchase_thank_you">Cảm ơn bạn đã đóng góp của bạn.</string>
     <string name="purchase_cancelled">Mua hàng bị hủy bỏ</string>
 </resources>

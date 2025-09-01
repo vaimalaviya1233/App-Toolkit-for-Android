@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Bun venit la App Toolkit</string>
     <string name="onboarding_welcome_description">Explorați capabilitățile bibliotecii noastre AppToolkit. Descoperiți aplicațiile noastre, toate construite pentru a demonstra și utiliza puterea bibliotecii noastre AppToolkit, îmbunătățindu-vă dezvoltarea Android și experiența utilizatorului.</string>
     <string name="onboarding_feature1_title">Descoperiți aplicațiile noastre</string>
-    <string name="onboarding_feature1_description">App Toolkit vă prezintă o selecție a aplicațiilor noastre, fiecare concepută pentru a evidenția diferite aspecte ale bibliotecii noastre AppToolkit și pentru a vă îmbunătăți experiența Android. Vedeți ce este posibil cu biblioteca noastră AppToolkit!</string>
+    <string name="onboarding_feature1_description">App Toolkit vă prezintă o selecție a aplicațiilor noastre, fiecare concepută pentru a evidenția diferite aspecte ale bibliotecii noastre AppToolkit și pentru a vă îmbunătăți experiența Android. Vedeți ce este posibil cu biblioteca noastră AppToolkit.</string>
     <string name="onboarding_personalization_title">Vedeți biblioteca noastră AppToolkit în acțiune</string>
     <string name="onboarding_personalization_description">Această aplicație demonstrează cum biblioteca noastră AppToolkit poate fi utilizată pentru a construi aplicații versatile și axate pe utilizator. Explorați aplicațiile noastre pentru a vedea diferite caracteristici și implementări ale bibliotecii.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">De ce App Toolkit are nevoie de permisiuni precum accesul la Internet?</string>
     <string name="summary_preference_faq_7">App Toolkit necesită acces la Internet pentru a prelua cea mai recentă listă a aplicațiilor noastre din Magazinul Google Play și pentru a afișa informațiile acestora cu acuratețe. De obicei, nu necesită alte permisiuni invazive.</string>
     <string name="question_8">Cum pot oferi feedback despre App Toolkit sau aplicațiile dvs.?</string>
-    <string name="summary_preference_faq_8">Apreciem feedback-ul dumneavoastră despre App Toolkit și aplicațiile noastre individuale! De obicei, puteți găsi o opțiune \"Feedback\" sau \"Contactați-ne\" în setările App Toolkit sau pe pagina noastră de dezvoltator din Magazinul Play. Feedback-ul despre biblioteca noastră AppToolkit în sine este, de asemenea, binevenit prin canalele corespunzătoare.</string>
+    <string name="summary_preference_faq_8">Apreciem feedback-ul dumneavoastră despre App Toolkit și aplicațiile noastre individuale. De obicei, puteți găsi o opțiune \"Feedback\" sau \"Contactați-ne\" în setările App Toolkit sau pe pagina noastră de dezvoltator din Magazinul Play. Feedback-ul despre biblioteca noastră AppToolkit în sine este, de asemenea, binevenit prin canalele corespunzătoare.</string>
     <string name="question_9">Sunt datele mele în siguranță când utilizez App Toolkit pentru a găsi celelalte aplicații ale dvs.?</string>
     <string name="summary_preference_faq_9">App Toolkit preia în principal informații disponibile public despre aplicațiile noastre. Când alegeți să instalați sau să utilizați una dintre aplicațiile noastre listate, se va aplica Politica de Confidențialitate proprie a acelei aplicații. Vă încurajăm să o revizuiți. Gestionarea datelor de către App Toolkit este prezentată în Politica noastră de Confidențialitate.</string>
 </resources>

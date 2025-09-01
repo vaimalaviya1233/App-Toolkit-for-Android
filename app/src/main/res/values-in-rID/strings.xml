@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Selamat datang di App Toolkit</string>
     <string name="onboarding_welcome_description">Jelajahi kemampuan pustaka AppToolkit kami. Temukan aplikasi kami, semua dibuat untuk mendemonstrasikan dan memanfaatkan kekuatan pustaka AppToolkit kami, meningkatkan pengembangan Android dan pengalaman pengguna Anda.</string>
     <string name="onboarding_feature1_title">Temukan aplikasi kami</string>
-    <string name="onboarding_feature1_description">App Toolkit memperkenalkan Anda pada pilihan aplikasi kami, masing-masing dirancang untuk menyoroti berbagai aspek pustaka AppToolkit kami dan meningkatkan pengalaman Android Anda. Lihat apa yang mungkin dengan pustaka AppToolkit kami!</string>
+    <string name="onboarding_feature1_description">App Toolkit memperkenalkan Anda pada pilihan aplikasi kami, masing-masing dirancang untuk menyoroti berbagai aspek pustaka AppToolkit kami dan meningkatkan pengalaman Android Anda. Lihat apa yang mungkin dengan pustaka AppToolkit kami.</string>
     <string name="onboarding_personalization_title">Lihat pustaka AppToolkit kami beraksi</string>
     <string name="onboarding_personalization_description">Aplikasi ini menunjukkan bagaimana pustaka AppToolkit kami dapat digunakan untuk membangun aplikasi yang serbaguna dan berfokus pada pengguna. Jelajahi aplikasi kami untuk melihat berbagai fitur dan implementasi pustaka.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Mengapa App Toolkit memerlukan izin seperti akses Internet?</string>
     <string name="summary_preference_faq_7">App Toolkit memerlukan akses Internet untuk mengambil daftar terbaru aplikasi kami dari Google Play Store dan menampilkan informasinya secara akurat. Biasanya tidak memerlukan izin invasif lainnya.</string>
     <string name="question_8">Bagaimana cara memberikan umpan balik tentang App Toolkit atau aplikasi Anda?</string>
-    <string name="summary_preference_faq_8">Kami menghargai umpan balik Anda tentang App Toolkit dan masing-masing aplikasi kami! Anda biasanya dapat menemukan opsi \"Umpan Balik\" atau \"Hubungi Kami\" dalam pengaturan App Toolkit atau di halaman pengembang kami di Play Store. Umpan balik tentang pustaka AppToolkit kami sendiri juga diterima melalui saluran yang sesuai.</string>
+    <string name="summary_preference_faq_8">Kami menghargai umpan balik Anda tentang App Toolkit dan masing-masing aplikasi kami. Anda biasanya dapat menemukan opsi \"Umpan Balik\" atau \"Hubungi Kami\" dalam pengaturan App Toolkit atau di halaman pengembang kami di Play Store. Umpan balik tentang pustaka AppToolkit kami sendiri juga diterima melalui saluran yang sesuai.</string>
     <string name="question_9">Apakah data saya aman saat menggunakan App Toolkit untuk menemukan aplikasi Anda yang lain?</string>
     <string name="summary_preference_faq_9">App Toolkit terutama mengambil informasi yang tersedia untuk umum tentang aplikasi kami. Ketika Anda memilih untuk menginstal atau menggunakan salah satu aplikasi kami yang terdaftar, Kebijakan Privasi aplikasi itu sendiri akan berlaku. Kami mendorong Anda untuk meninjaunya. Penanganan data App Toolkit diuraikan dalam Kebijakan Privasi kami.</string>
 </resources>
