@@ -211,7 +211,7 @@
 
     <string name="usage_and_diagnostics">Usage and diagnostics</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve in-app experience</string>
-    <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data. This improves app performance, stability, and other enhancements. Some aggregate data also benefits the included apps.\n\nThis is general information about your device and how you use the apps, such as battery level, system and app activity, and errors. The data will be used to improve the apps.\n\nTurning off this feature doesn't affect your device's ability to send the information needed for essential services such as app updates and security.\n</string>
+    <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data. This improves app performance, stability, and other enhancements. Some aggregate data also benefits the included apps.\n\nThis is general information about your device and how you use the apps, such as battery level, system and app activity, and errors. The data will be used to improve the apps.\n\nTurning off this feature doesn\'t affect your device\'s ability to send the information needed for essential services such as app updates and security.\n</string>
     <string name="privacy_settings_title">Privacy settings</string>
     <string name="consent_category_analytics_title">Analytics</string>
     <string name="consent_category_advertising_title">Personalized advertising</string>
@@ -286,7 +286,7 @@
     <string name="non_paid_support">Non-paid support</string>
     <string name="web_ad">Web ad</string>
     <string name="error_failed_to_load_sku_details">Failed to load SKU details</string>
-    <string name="purchase_pending">Your donation is being processed by Google. You will be notified when it's complete. Thank you.</string>
+    <string name="purchase_pending">Your donation is being processed by Google. You will be notified when it\'s complete. Thank you.</string>
     <string name="purchase_thank_you">Thank you for your donation.</string>
     <string name="purchase_cancelled">Purchase cancelled</string>
 </resources>
