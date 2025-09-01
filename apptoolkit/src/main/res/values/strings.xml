@@ -7,7 +7,7 @@
     <string name="default_notification_summary">There are so many features waiting for you. Open the app!</string>
 
     <string name="welcome">Welcome</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Read and agree to our Terms of Service and Privacy Policy to continue</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Read and agree to our Terms of service and Privacy Policy to continue</string>
     <string name="agree">Agree</string>
     <string name="error_loading_consent_info">Failed to load consent information</string>
 
@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Enables personalized advertising.</string>
     <string name="onboarding_crashlytics_show_details_button">Show detailed information</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Show detailed information about usage and diagnostics</string>
-    <string name="button_acknowledge_consents">Save and Continue</string>
+    <string name="button_acknowledge_consents">Save and continue</string>
     <string name="button_continue">Continue</string>
     <string name="onboarding_complete_icon_desc">Onboarding complete</string>
     <string name="onboarding_final_title">You\'re all set!</string>
@@ -168,9 +168,9 @@
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="summary_preference_settings_privacy_policy">View the policy that governs how we handle your data</string>
-    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms_of_service">Terms of service</string>
     <string name="summary_preference_settings_terms_of_service">Review the terms you agree to when using our service</string>
-    <string name="code_of_conduct">Code of Conduct</string>
+    <string name="code_of_conduct">Code of conduct</string>
     <string name="summary_preference_settings_code_of_conduct">Understand the rules and guidelines for behavior within our service</string>
 
     <string name="permissions">Permissions</string>
@@ -283,7 +283,7 @@
     <string name="support_us">Support us</string>
     <string name="paid_support">Paid support</string>
     <string name="summary_donations">No matter how much you donate, you will help us keep our app running and improve our features. We appreciate your generosity and kindness!</string>
-    <string name="non_paid_support">Non-Paid Support</string>
+    <string name="non_paid_support">Non-paid support</string>
     <string name="web_ad">Web ad</string>
     <string name="error_failed_to_load_sku_details">Failed to load SKU details</string>
     <string name="purchase_pending">Your donation is being processed by Google. We will notify you when it\'s complete. Thank you!</string>

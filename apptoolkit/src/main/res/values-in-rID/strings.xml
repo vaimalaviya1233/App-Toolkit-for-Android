@@ -7,7 +7,7 @@
     <string name="default_notification_summary">Ada banyak fitur yang menunggu Anda. Buka aplikasinya!</string>
 
     <string name="welcome">Selamat datang</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Baca dan setujui Ketentuan Layanan dan Kebijakan Privasi kami untuk melanjutkan</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Baca dan setujui Ketentuan layanan dan Kebijakan Privasi kami untuk melanjutkan</string>
     <string name="agree">Setuju</string>
     <string name="error_loading_consent_info">Gagal memuat informasi persetujuan</string>
     <string name="loading">Memuat…</string>
@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Mengaktifkan iklan yang dipersonalisasi.</string>
     <string name="onboarding_crashlytics_show_details_button">Tampilkan informasi detail</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Tampilkan informasi detail tentang penggunaan dan diagnostik</string>
-    <string name="button_acknowledge_consents">Simpan dan Lanjutkan</string>
+    <string name="button_acknowledge_consents">Simpan dan lanjutkan</string>
     <string name="button_continue">Lanjutkan</string>
     <string name="onboarding_complete_icon_desc">Orientasi selesai</string>
     <string name="onboarding_final_title">Anda siap!</string>
@@ -165,9 +165,9 @@
     <string name="privacy">Privasi</string>
     <string name="privacy_policy">Kebijakan privasi</string>
     <string name="summary_preference_settings_privacy_policy">Lihat kebijakan yang mengatur bagaimana kami menangani data Anda</string>
-    <string name="terms_of_service">Ketentuan Layanan</string>
+    <string name="terms_of_service">Ketentuan layanan</string>
     <string name="summary_preference_settings_terms_of_service">Tinjau ketentuan yang Anda setujui saat menggunakan layanan kami</string>
-    <string name="code_of_conduct">Kode Etik</string>
+    <string name="code_of_conduct">Kode etik</string>
     <string name="summary_preference_settings_code_of_conduct">Pahami aturan dan pedoman perilaku dalam layanan kami</string>
 
     <string name="permissions">Izin</string>

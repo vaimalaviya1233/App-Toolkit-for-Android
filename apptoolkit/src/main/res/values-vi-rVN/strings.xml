@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Bật quảng cáo được cá nhân hóa.</string>
     <string name="onboarding_crashlytics_show_details_button">Hiển thị thông tin chi tiết</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Hiển thị thông tin chi tiết về việc sử dụng và chẩn đoán</string>
-    <string name="button_acknowledge_consents">Lưu và Tiếp tục</string>
+    <string name="button_acknowledge_consents">Lưu và tiếp tục</string>
     <string name="button_continue">Tiếp tục</string>
     <string name="onboarding_complete_icon_desc">Hoàn tất giới thiệu</string>
     <string name="onboarding_final_title">Bạn đã sẵn sàng!</string>

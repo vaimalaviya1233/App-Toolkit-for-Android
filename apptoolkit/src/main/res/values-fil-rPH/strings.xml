@@ -7,7 +7,7 @@
     <string name="default_notification_summary">Napakaraming feature ang naghihintay sa iyo. Buksan ang app!</string>
 
     <string name="welcome">Maligayang pagdating</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Basahin at sumang-ayon sa aming Mga Tuntunin ng Serbisyo at Patakaran sa Privacy upang magpatuloy</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Basahin at sumang-ayon sa aming Mga tuntunin ng serbisyo at Patakaran sa Privacy upang magpatuloy</string>
     <string name="agree">Sumang-ayon</string>
     <string name="error_loading_consent_info">Nabigong i-load ang impormasyon ng pahintulot</string>
     <string name="loading">Naglo-load…</string>
@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Pinapagana ang personalized na advertising.</string>
     <string name="onboarding_crashlytics_show_details_button">Ipakita ang detalyadong impormasyon</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Ipakita ang detalyadong impormasyon tungkol sa paggamit at diagnostics</string>
-    <string name="button_acknowledge_consents">I-save at Magpatuloy</string>
+    <string name="button_acknowledge_consents">I-save at magpatuloy</string>
     <string name="button_continue">Magpatuloy</string>
     <string name="onboarding_complete_icon_desc">Kumpleto na ang onboarding</string>
     <string name="onboarding_final_title">Handa ka na!</string>
@@ -165,9 +165,9 @@
     <string name="privacy">Pribasya</string>
     <string name="privacy_policy">Patakaran sa privacy</string>
     <string name="summary_preference_settings_privacy_policy">Tingnan ang patakaran na namamahala kung paano namin hinahawakan ang iyong data</string>
-    <string name="terms_of_service">Mga Tuntunin ng Serbisyo</string>
+    <string name="terms_of_service">Mga tuntunin ng serbisyo</string>
     <string name="summary_preference_settings_terms_of_service">Suriin ang mga tuntunin na sinasang-ayunan mo kapag ginagamit ang aming serbisyo</string>
-    <string name="code_of_conduct">Kodigo ng Pag-uugali</string>
+    <string name="code_of_conduct">Kodigo ng pag-uugali</string>
     <string name="summary_preference_settings_code_of_conduct">Unawain ang mga patakaran at alituntunin para sa pag-uugali sa loob ng aming serbisyo</string>
 
     <string name="permissions">Mga Pahintulot</string>
@@ -280,7 +280,7 @@
     <string name="support_us">Suportahan kami</string>
     <string name="paid_support">Bayad na suporta</string>
     <string name="summary_donations">Gaano man kalaki ang iyong ido-donate, matutulungan mo kaming panatilihing tumatakbo ang aming app at mapabuti ang aming mga feature. Pinahahalagahan namin ang iyong kabutihang-loob at kabaitan!</string>
-    <string name="non_paid_support">Hindi Bayad na Suporta</string>
+    <string name="non_paid_support">Hindi bayad na suporta</string>
     <string name="web_ad">Web ad</string>
     <string name="error_failed_to_load_sku_details">Nabigong i-load ang mga detalye ng SKU</string>
     <string name="purchase_pending">Ang iyong donasyon ay pinoproseso ng Google. Sasabihan ka namin kapag kumpleto na ito. Salamat!</string>
