@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Designed to streamline your workflow, this app provides essential tools and features to help you stay organized and efficient across any task. 📱</string>
-    <string name="notification_update_title">A new update available!</string>
-    <string name="summary_notification_update">A new version of the app is available. Click to update!</string>
-    <string name="notification_last_time_used_title">It\'s been a while!</string>
-    <string name="default_notification_summary">There are so many features waiting for you. Open the app!</string>
+    <string name="notification_update_title">A new update is available.</string>
+    <string name="summary_notification_update">A new version of the app is available. Click to update.</string>
+    <string name="notification_last_time_used_title">It\'s been a while.</string>
+    <string name="default_notification_summary">Lots of features are waiting for you. Open the app.</string>
 
     <string name="welcome">Welcome</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Read and agree to our Terms of service and Privacy Policy to continue</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Read and agree to the Terms of Service and Privacy Policy to continue</string>
     <string name="agree">Agree</string>
     <string name="error_loading_consent_info">Failed to load consent information</string>
 
@@ -27,14 +27,14 @@
     <string name="onboarding_theme_system_desc">Matches your device.</string>
     <string name="onboarding_amoled_mode_desc">Deeper blacks for OLED screens.</string>
     <string name="selected">Selected</string>
-    <string name="onboarding_crashlytics_title">Help us improve</string>
-    <string name="onboarding_crashlytics_description">Allow the app to send anonymous usage data and crash reports. This helps us fix bugs and make your experience better. No personal information is ever collected.</string>
+    <string name="onboarding_crashlytics_title">Help improve the app</string>
+    <string name="onboarding_crashlytics_description">Allow the app to send anonymous usage data and crash reports. This information fixes bugs and makes your experience better. No personal information is ever collected.</string>
     <string name="onboarding_crashlytics_enabled_desc">Data reporting is active.</string>
     <string name="onboarding_crashlytics_disabled_desc">Data reporting is inactive.</string>
-    <string name="onboarding_crashlytics_privacy_info">Your privacy is important. We only use this data to fix bugs and improve features. For more details, please review our privacy policy.</string>
-    <string name="learn_more_privacy_policy">Review our Privacy Policy</string>
+    <string name="onboarding_crashlytics_privacy_info">Your privacy is important. The data is used only to fix bugs and improve features. For more details, review the privacy policy.</string>
+    <string name="learn_more_privacy_policy">Review the Privacy Policy</string>
     <string name="onboarding_crashlytics_title_dialog">Manage data consent</string>
-    <string name="onboarding_crashlytics_description_dialog">Please review and confirm your consent preferences. This data helps us improve the app and is handled as per our Privacy Policy.</string>
+    <string name="onboarding_crashlytics_description_dialog">Please review and confirm your consent preferences. This data helps improve the app and is handled according to the Privacy Policy.</string>
     <string name="consent_analytics_storage_description_short">Allows data collection for app usage analysis.</string>
     <string name="consent_ad_storage_description_short">Permits storing data for advertising purposes.</string>
     <string name="consent_ad_user_data_description_short">Allows sending user data for ads.</string>
@@ -45,21 +45,21 @@
     <string name="button_continue">Continue</string>
     <string name="onboarding_complete_icon_desc">Onboarding complete</string>
     <string name="onboarding_final_title">You\'re all set!</string>
-    <string name="onboarding_final_description">Thanks for personalizing your experience. You\'re now ready to explore all the features. Enjoy!</string>
+    <string name="onboarding_final_description">Thanks for personalizing your experience. You\'re now ready to explore all the features. Enjoy.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
 
     <string name="content_description_more_options">More options</string>
     <string name="go_back">Go back</string>
-    <string name="toast_review_already_done">Thanks for rating!</string>
+    <string name="toast_review_already_done">Thanks for rating.</string>
 
-    <string name="sort_by">Sort by:</string>
+    <string name="sort_by">Sort by</string>
     <string name="error">Error</string>
     <string name="app_not_installed">App not installed</string>
     <string name="snack_app_updated">The app has been successfully updated</string>
     <string name="snack_update_failed">The update process encountered an issue</string>
     <string name="try_again">Try again</string>
-    <string name="summary_share_message">Check out this amazing app that I\'m using! It has some really cool features that you might find interesting. You can download it from the Play Store at: %1$s</string>
+    <string name="summary_share_message">Check out this app that I\'m using. It has some really cool features that you might find interesting. You can download it from the Play Store at: %1$s</string>
     <string name="learn_more">Learn more</string>
     <string name="close">Close?</string>
     <string name="summary_close">Are you sure you want to exit?</string>
@@ -79,7 +79,7 @@
     <string name="settings_placeholder_description">No settings selected. Choose an option to view its details here.</string>
     <string name="get_help">Get help</string>
     <string name="error_no_settings_found">No settings found</string>
-    <string name="error_invalid_content_key">Invalid content key!</string>
+    <string name="error_invalid_content_key">Invalid content key.</string>
 
     <string name="display">Display</string>
     <string name="summary_preference_settings_display">Personalize your app\'s look and feel</string>
@@ -111,7 +111,7 @@
     <string name="language">Language</string>
     <string name="summary_preference_settings_language">Changes the language used in the app</string>
 
-    <string name="dialog_startup_subtitle">Choose your preferred startup page:</string>
+    <string name="dialog_startup_subtitle">Choose your preferred startup page</string>
     <string name="dialog_info_startup">Configures the initial screen presented to users upon launching the application. This setting influences the user\'s first interaction with the app and can be tailored to specific user segments or product goals.</string>
 
     <string name="select_language_title">Select language</string>
@@ -134,7 +134,7 @@
     <string name="login_section_label">Login</string>
     <string name="use_github_account">Send using GitHub account</string>
     <string name="send_anonymously">Send anonymously</string>
-    <string name="optional_placeholder">(Optional)</string>
+    <string name="optional_placeholder">Optional</string>
     <string name="issue_username_label">Username</string>
     <string name="issue_password_label">Password</string>
     <string name="issue_email_label">Email</string>
@@ -147,7 +147,7 @@
     <string name="issue_submitted_successfully">Issue submitted successfully</string>
     <string name="open_issue_in_browser">Open in browser</string>
     <string name="open_button_label">Open issue</string>
-    <string name="issue_submitted">Your issue was submitted!</string>
+    <string name="issue_submitted">Your issue was submitted.</string>
     <string name="error_unauthorized">Unauthorized: Invalid token</string>
     <string name="error_forbidden">Forbidden: insufficient permissions</string>
     <string name="error_gone">API endpoint removed</string>
@@ -167,14 +167,14 @@
 
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy policy</string>
-    <string name="summary_preference_settings_privacy_policy">View the policy that governs how we handle your data</string>
+    <string name="summary_preference_settings_privacy_policy">View the policy that governs how your data is handled</string>
     <string name="terms_of_service">Terms of service</string>
-    <string name="summary_preference_settings_terms_of_service">Review the terms you agree to when using our service</string>
+    <string name="summary_preference_settings_terms_of_service">Review the terms you agree to when using this service</string>
     <string name="code_of_conduct">Code of conduct</string>
-    <string name="summary_preference_settings_code_of_conduct">Understand the rules and guidelines for behavior within our service</string>
+    <string name="summary_preference_settings_code_of_conduct">Understand the rules and guidelines for behavior within the service</string>
 
     <string name="permissions">Permissions</string>
-    <string name="summary_preference_settings_permissions">Manage the permissions granted to our service</string>
+    <string name="summary_preference_settings_permissions">Manage the permissions granted to the service</string>
     <string name="normal">Normal</string>
     <string name="runtime">Runtime</string>
     <string name="storage">Storage</string>
@@ -196,14 +196,14 @@
     <string name="foreground_service">Foreground service [FOREGROUND_SERVICE]</string>
     <string name="summary_preference_permissions_foreground_service">Allows the app to create and use services that run in the foreground, giving them priority over other background processes and improving performance and reliability.</string>
     <string name="wake_lock">Keep device awake [WAKE_LOCK]</string>
-    <string name="summary_preference_permissions_wake_lock">Allows the app to prevent the device from going to sleep (e.g., screen dimming or processor sleeping) during critical operations to ensure they complete without interruption. This is used sparingly to conserve battery.</string>
+    <string name="summary_preference_permissions_wake_lock">Allows the app to prevent the device from going to sleep, such as screen dimming or processor sleeping, during critical operations to ensure they complete without interruption. This is used sparingly to conserve battery.</string>
 
     <string name="ads">Ads</string>
-    <string name="summary_preference_settings_ads">Control how we use your information to show you relevant ads</string>
+    <string name="summary_preference_settings_ads">Control how your information is used to show relevant ads</string>
 
     <string name="display_ads">Display ads</string>
     <string name="personalized_ads">Personalized ads</string>
-    <string name="summary_ads_personalized_ads">Choose how we personalize ads for you based on your interests</string>
+    <string name="summary_ads_personalized_ads">Choose how ads are personalized for you based on your interests</string>
     <string name="summary_ads">See ads that are relevant to you. Manage the information used to show personalized ads based on your app activity. You can always turn off personalization here.\n</string>
     <string name="ads_enabled">Ads enabled</string>
     <string name="ads_disabled">Ads disabled</string>
@@ -211,20 +211,20 @@
 
     <string name="usage_and_diagnostics">Usage and diagnostics</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Share data to help improve in-app experience</string>
-    <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data to us. This will help improve app performance, stability, and other enhancements. Some aggregate data will also help our apps.\n\nThis is general information about your device and how you use our apps (such as battery level, system and app activity, and errors). The data will be used to improve our apps\n\nTurning off this feature doesn\'t affect your device\'s ability to send the information needed for essential services such as app updates and security.\n</string>
+    <string name="summary_usage_and_diagnostics">Help improve your experience by automatically sending diagnostic, device, and app usage data. This improves app performance, stability, and other enhancements. Some aggregate data also benefits the included apps.\n\nThis is general information about your device and how you use the apps, such as battery level, system and app activity, and errors. The data will be used to improve the apps.\n\nTurning off this feature doesn't affect your device's ability to send the information needed for essential services such as app updates and security.\n</string>
     <string name="privacy_settings_title">Privacy settings</string>
     <string name="consent_category_analytics_title">Analytics</string>
     <string name="consent_category_advertising_title">Personalized advertising</string>
     <string name="consent_analytics_storage_title">Store analytics data</string>
     <string name="consent_analytics_storage_description">Allow storing data such as app usage and visit duration to improve analytics and app performance.</string>
     <string name="consent_ad_storage_title">Store advertising data</string>
-    <string name="consent_ad_storage_description">Enable storing data (like device identifiers or cookies) for measuring ad performance and showing relevant ads.</string>
+    <string name="consent_ad_storage_description">Enable storing data like device identifiers or cookies for measuring ad performance and showing relevant ads.</string>
     <string name="consent_ad_user_data_title">Send data for ads</string>
     <string name="consent_ad_user_data_description">Allow sending usage and device data to Google to support ad-related features such as conversions and campaign optimization.</string>
     <string name="consent_ad_personalization_title">Personalized ads</string>
     <string name="consent_ad_personalization_description">Enable personalized ads based on your activity and preferences across Google services and apps.</string>
-    <string name="privacy_settings_info">Manage your data preferences below. You can change these settings at any time. For more details, please see our <a href="%s">Privacy Policy</a>.</string>
-    <string name="learn_more_privacy_policy_settings">Learn more in our Privacy Policy</string>
+    <string name="privacy_settings_info">Manage your data preferences below. You can change these settings at any time. For more details, please see the <a href="%s">Privacy Policy</a>.</string>
+    <string name="learn_more_privacy_policy_settings">Learn more in the Privacy Policy</string>
     <string name="advanced_privacy_settings">Advanced privacy settings</string>
     <string name="icon_desc_expand_more">Expand more</string>
     <string name="icon_desc_expand_less">Expand less</string>
@@ -233,7 +233,7 @@
 
     <string name="legal">Legal</string>
     <string name="legal_notices">Legal notices</string>
-    <string name="summary_preference_settings_legal_notices">View legal information about our service</string>
+    <string name="summary_preference_settings_legal_notices">View legal information about the service</string>
     <string name="license">License</string>
 
     <string name="about">About</string>
@@ -256,10 +256,10 @@
     <string name="app_build">App build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Release</string>
-    <string name="manufacturer">Manufacturer:</string>
-    <string name="device_model">Device model:</string>
-    <string name="android_version">Android version:</string>
-    <string name="api_level">API level:</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="device_model">Device model</string>
+    <string name="android_version">Android version</string>
+    <string name="api_level">API level</string>
     <string name="snack_device_info_copied">Device info copied to clipboard</string>
     <string name="snack_device_info_failed">Unable to load device info</string>
 
@@ -267,8 +267,8 @@
     <string name="help">Help</string>
     <string name="faq">FAQ</string>
     <string name="popular_help_resources">Popular help resources</string>
-    <string name="contact_us">Contact us</string>
-    <string name="contact_us_description">Tell us more and we\'ll help you get there</string>
+    <string name="contact_us">Contact support</string>
+    <string name="contact_us_description">Share details to get help reaching your goal</string>
     <string name="view_in_google_play_store">View in Google Play Store</string>
     <string name="version_info">Version info</string>
     <string name="version">Version %1$s</string>
@@ -280,13 +280,13 @@
 
     <string name="share">Share</string>
 
-    <string name="support_us">Support us</string>
+    <string name="support_us">Support the app</string>
     <string name="paid_support">Paid support</string>
-    <string name="summary_donations">No matter how much you donate, you will help us keep our app running and improve our features. We appreciate your generosity and kindness!</string>
+    <string name="summary_donations">Any amount you donate helps keep the app running and improve features. Your generosity is appreciated.</string>
     <string name="non_paid_support">Non-paid support</string>
     <string name="web_ad">Web ad</string>
     <string name="error_failed_to_load_sku_details">Failed to load SKU details</string>
-    <string name="purchase_pending">Your donation is being processed by Google. We will notify you when it\'s complete. Thank you!</string>
-    <string name="purchase_thank_you">Thank you for your donation!</string>
+    <string name="purchase_pending">Your donation is being processed by Google. You will be notified when it's complete. Thank you.</string>
+    <string name="purchase_thank_you">Thank you for your donation.</string>
     <string name="purchase_cancelled">Purchase cancelled</string>
 </resources>
