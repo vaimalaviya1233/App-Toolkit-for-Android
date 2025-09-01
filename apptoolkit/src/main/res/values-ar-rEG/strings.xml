@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">صُمم هذا التطبيق لتبسيط سير عملك، وهو يوفر أدوات وميزات أساسية لمساعدتك على البقاء منظمًا وفعالاً في أي مهمة. 📱</string>
-    <string name="notification_update_title">يتوفر تحديث جديد!</string>
-    <string name="summary_notification_update">يتوفر إصدار جديد من التطبيق. اضغط للتحديث!</string>
-    <string name="notification_last_time_used_title">لقد مر وقت طويل!</string>
-    <string name="default_notification_summary">هناك العديد من الميزات في انتظارك. افتح التطبيق!</string>
+    <string name="notification_update_title">يتوفر تحديث جديد.</string>
+    <string name="summary_notification_update">يتوفر إصدار جديد من التطبيق. اضغط للتحديث.</string>
+    <string name="notification_last_time_used_title">لقد مر وقت طويل.</string>
+    <string name="default_notification_summary">هناك العديد من الميزات في انتظارك. افتح التطبيق.</string>
 
     <string name="welcome">مرحباً</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">اقرأ ووافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا للمتابعة</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">حفظ ومتابعة</string>
     <string name="button_continue">متابعة</string>
     <string name="onboarding_complete_icon_desc">اكتمل الإعداد الأولي</string>
-    <string name="onboarding_final_title">أنت جاهز تمامًا!</string>
-    <string name="onboarding_final_description">شكرًا لتخصيص تجربتك. أنت الآن جاهز لاستكشاف جميع الميزات. استمتع!</string>
+    <string name="onboarding_final_title">أنت جاهز تمامًا.</string>
+    <string name="onboarding_final_description">شكرًا لتخصيص تجربتك. أنت الآن جاهز لاستكشاف جميع الميزات. استمتع.</string>
 
     <string name="navigation_drawer_open">فتح قائمة التنقل</string>
     <string name="content_description_more_options">المزيد من الخيارات</string>
     <string name="go_back">العودة</string>
-    <string name="toast_review_already_done">شكرا على التصنيف!</string>
+    <string name="toast_review_already_done">شكرا على التصنيف.</string>
 
-    <string name="sort_by">فرز حسب:</string>
+    <string name="sort_by">فرز حسب</string>
     <string name="error">خطأ</string>
     <string name="app_not_installed">التطبيق غير مثبت</string>
     <string name="snack_app_updated">تم تحديث التطبيق بنجاح</string>
     <string name="snack_update_failed">واجهت عملية التحديث مشكلة</string>
     <string name="try_again">حاول مرة أخرى</string>
-    <string name="summary_share_message">اطلع على هذا التطبيق الرائع الذي أستخدمه! يحتوي على بعض الميزات الرائعة التي قد تجدها مثيرة للاهتمام. يمكنك تنزيله من متجر Play على: %1$s</string>
+    <string name="summary_share_message">اطلع على هذا التطبيق الرائع الذي أستخدمه. يحتوي على بعض الميزات الرائعة التي قد تجدها مثيرة للاهتمام. يمكنك تنزيله من متجر Play على: %1$s</string>
     <string name="learn_more">اعرف المزيد</string>
     <string name="close">إغلاق؟</string>
     <string name="summary_close">هل أنت متأكد أنك تريد الخروج؟</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">لم يتم تحديد أي إعدادات. اختر خيارًا لعرض تفاصيله هنا.</string>
     <string name="get_help">احصل على مساعدة</string>
     <string name="error_no_settings_found">لم يتم العثور على إعدادات</string>
-    <string name="error_invalid_content_key">مفتاح محتوى غير صالح!</string>
+    <string name="error_invalid_content_key">مفتاح محتوى غير صالح.</string>
 
     <string name="display">العرض</string>
     <string name="summary_preference_settings_display">خصص شكل ومظهر تطبيقك</string>
@@ -110,7 +110,7 @@
     <string name="language">اللغة</string>
     <string name="summary_preference_settings_language">يغير اللغة المستخدمة في التطبيق</string>
 
-    <string name="dialog_startup_subtitle">اختر صفحة البدء المفضلة لديك:</string>
+    <string name="dialog_startup_subtitle">اختر صفحة البدء المفضلة لديك</string>
     <string name="dialog_info_startup">يقوم بتكوين الشاشة الأولية المقدمة للمستخدمين عند تشغيل التطبيق. يؤثر هذا الإعداد على التفاعل الأول للمستخدم مع التطبيق ويمكن تخصيصه لشرائح مستخدمين محددة أو أهداف المنتج.</string>
 
     <string name="select_language_title">اختر اللغة</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">تسجيل الدخول</string>
     <string name="use_github_account">أرسل باستخدام حساب GitHub</string>
     <string name="send_anonymously">أرسل مجهولاً</string>
-    <string name="optional_placeholder">(اختياري)</string>
+    <string name="optional_placeholder">اختياري</string>
     <string name="issue_username_label">اسم المستخدم</string>
     <string name="issue_password_label">كلمة المرور</string>
     <string name="issue_email_label">البريد الإلكتروني</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">تم تقديم القضية بنجاح</string>
     <string name="open_issue_in_browser">مفتوح في المتصفح</string>
     <string name="open_button_label">قضية مفتوحة</string>
-    <string name="issue_submitted">تم تقديم مشكلتك!</string>
+    <string name="issue_submitted">تم تقديم مشكلتك.</string>
     <string name="error_unauthorized">غير مصرح به: رمز غير صالح</string>
     <string name="error_forbidden">ممنوع: أذونات غير كافية</string>
     <string name="error_gone">أزياء نقطة نهاية API</string>
@@ -253,10 +253,10 @@
     <string name="app_build">إصدار التطبيق: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">تصحيح</string>
     <string name="release">إصدار</string>
-    <string name="manufacturer">الشركة المصنعة:</string>
-    <string name="device_model">طراز الجهاز:</string>
-    <string name="android_version">إصدار أندرويد:</string>
-    <string name="api_level">مستوى API:</string>
+    <string name="manufacturer">الشركة المصنعة</string>
+    <string name="device_model">طراز الجهاز</string>
+    <string name="android_version">إصدار أندرويد</string>
+    <string name="api_level">مستوى API</string>
     <string name="snack_device_info_copied">تم نسخ معلومات الجهاز إلى الحافظة</string>
     <string name="snack_device_info_failed">تعذر تحميل معلومات الجهاز</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">ادعمنا</string>
     <string name="paid_support">دعم مدفوع</string>
-    <string name="summary_donations">بغض النظر عن المبلغ الذي تتبرع به، ستساعدنا في الحفاظ على تشغيل تطبيقنا وتحسين ميزاتنا. نحن نقدر كرمك ولطفك!</string>
+    <string name="summary_donations">بغض النظر عن المبلغ الذي تتبرع به، ستساعدنا في الحفاظ على تشغيل تطبيقنا وتحسين ميزاتنا. نحن نقدر كرمك ولطفك.</string>
     <string name="non_paid_support">دعم غير مدفوع</string>
     <string name="web_ad">إعلان ويب</string>
     <string name="error_failed_to_load_sku_details">فشل تحميل تفاصيل SKU</string>
-    <string name="purchase_pending">تتم معالجة تبرعك بواسطة Google. سوف نعلمك عند اكتماله. شكرًا لك!</string>
-    <string name="purchase_thank_you">شكرا لك على تبرعك!</string>
+    <string name="purchase_pending">تتم معالجة تبرعك بواسطة Google. سوف نعلمك عند اكتماله. شكرًا لك.</string>
+    <string name="purchase_thank_you">شكرا لك على تبرعك.</string>
     <string name="purchase_cancelled">الشراء تم إلغاؤه</string>
 </resources>

@@ -44,7 +44,7 @@
     <string name="button_acknowledge_consents">Save and continue</string>
     <string name="button_continue">Continue</string>
     <string name="onboarding_complete_icon_desc">Onboarding complete</string>
-    <string name="onboarding_final_title">You\'re all set!</string>
+    <string name="onboarding_final_title">You\'re all set.</string>
     <string name="onboarding_final_description">Thanks for personalizing your experience. You\'re now ready to explore all the features. Enjoy.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

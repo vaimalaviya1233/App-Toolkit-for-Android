@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Dirancang untuk menyederhanakan alur kerja Anda, aplikasi ini menyediakan alat dan fitur penting untuk membantu Anda tetap terorganisir dan efisien dalam setiap tugas. 📱</string>
-    <string name="notification_update_title">Pembaruan baru tersedia!</string>
-    <string name="summary_notification_update">Versi baru dari aplikasi tersedia. Klik untuk memperbarui!</string>
-    <string name="notification_last_time_used_title">Sudah lama tidak bertemu!</string>
-    <string name="default_notification_summary">Ada banyak fitur yang menunggu Anda. Buka aplikasinya!</string>
+    <string name="notification_update_title">Pembaruan baru tersedia.</string>
+    <string name="summary_notification_update">Versi baru dari aplikasi tersedia. Klik untuk memperbarui.</string>
+    <string name="notification_last_time_used_title">Sudah lama tidak bertemu.</string>
+    <string name="default_notification_summary">Ada banyak fitur yang menunggu Anda. Buka aplikasinya.</string>
 
     <string name="welcome">Selamat datang</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Baca dan setujui Ketentuan layanan dan Kebijakan Privasi kami untuk melanjutkan</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Simpan dan lanjutkan</string>
     <string name="button_continue">Lanjutkan</string>
     <string name="onboarding_complete_icon_desc">Orientasi selesai</string>
-    <string name="onboarding_final_title">Anda siap!</string>
-    <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati!</string>
+    <string name="onboarding_final_title">Anda siap.</string>
+    <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati.</string>
 
     <string name="navigation_drawer_open">Buka menu navigasi</string>
     <string name="content_description_more_options">Lebih banyak opsi</string>
     <string name="go_back">Kembali</string>
-    <string name="toast_review_already_done">Terima kasih atas peringkatnya!</string>
+    <string name="toast_review_already_done">Terima kasih atas peringkatnya.</string>
 
     <string name="error">Kesalahan</string>
-    <string name="sort_by">Urutkan berdasarkan:</string>
+    <string name="sort_by">Urutkan berdasarkan</string>
     <string name="app_not_installed">Aplikasi tidak terpasang</string>
     <string name="snack_app_updated">Aplikasi berhasil diperbarui</string>
     <string name="snack_update_failed">Proses pembaruan mengalami masalah</string>
     <string name="try_again">Coba lagi</string>
-    <string name="summary_share_message">Lihat aplikasi luar biasa yang saya gunakan ini! Aplikasi ini memiliki beberapa fitur keren yang mungkin menarik bagi Anda. Unduh dari Play Store di: %1$s</string>
+    <string name="summary_share_message">Lihat aplikasi luar biasa yang saya gunakan ini. Aplikasi ini memiliki beberapa fitur keren yang mungkin menarik bagi Anda. Unduh dari Play Store di: %1$s</string>
     <string name="learn_more">Pelajari lebih lanjut</string>
     <string name="close">Tutup?</string>
     <string name="summary_close">Apakah Anda yakin ingin keluar?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Tidak ada pengaturan yang dipilih. Pilih opsi untuk melihat detailnya di sini.</string>
     <string name="get_help">Dapatkan bantuan</string>
     <string name="error_no_settings_found">Tidak ada pengaturan ditemukan</string>
-    <string name="error_invalid_content_key">Kunci konten tidak valid!</string>
+    <string name="error_invalid_content_key">Kunci konten tidak valid.</string>
 
     <string name="display">Tampilan</string>
     <string name="summary_preference_settings_display">Personalisasi tampilan dan nuansa aplikasi Anda</string>
@@ -110,7 +110,7 @@
     <string name="language">Bahasa</string>
     <string name="summary_preference_settings_language">Mengubah bahasa yang digunakan dalam aplikasi</string>
 
-    <string name="dialog_startup_subtitle">Pilih halaman awal yang Anda sukai:</string>
+    <string name="dialog_startup_subtitle">Pilih halaman awal yang Anda sukai</string>
     <string name="dialog_info_startup">Mengonfigurasi layar awal yang disajikan kepada pengguna saat meluncurkan aplikasi. Pengaturan ini memengaruhi interaksi pertama pengguna dengan aplikasi.</string>
 
     <string name="select_language_title">Pilih bahasa</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Masuk</string>
     <string name="use_github_account">Kirim menggunakan akun GitHub</string>
     <string name="send_anonymously">Kirim secara anonim</string>
-    <string name="optional_placeholder">(Opsional)</string>
+    <string name="optional_placeholder">Opsional</string>
     <string name="issue_username_label">Nama pengguna</string>
     <string name="issue_password_label">Kata sandi</string>
     <string name="issue_email_label">Email</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Masalah yang berhasil diserahkan</string>
     <string name="open_issue_in_browser">Buka di browser</string>
     <string name="open_button_label">Masalah terbuka</string>
-    <string name="issue_submitted">Masalah Anda telah diajukan!</string>
+    <string name="issue_submitted">Masalah Anda telah diajukan.</string>
     <string name="error_unauthorized">Tidak sah: token tidak valid</string>
     <string name="error_forbidden">Terlarang: Izin yang tidak mencukupi</string>
     <string name="error_gone">Titik akhir API dihapus</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Build aplikasi: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Rilis</string>
-    <string name="manufacturer">Pabrikan:</string>
-    <string name="device_model">Model perangkat:</string>
-    <string name="android_version">Versi Android:</string>
-    <string name="api_level">Level API:</string>
+    <string name="manufacturer">Pabrikan</string>
+    <string name="device_model">Model perangkat</string>
+    <string name="android_version">Versi Android</string>
+    <string name="api_level">Level API</string>
     <string name="snack_device_info_copied">Informasi perangkat disalin ke papan klip</string>
     <string name="snack_device_info_failed">Tidak dapat memuat info perangkat</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Dukung kami</string>
     <string name="paid_support">Dukungan berbayar</string>
-    <string name="summary_donations">Berapa pun jumlah yang Anda sumbangkan, Anda akan membantu kami menjaga aplikasi tetap berjalan dan meningkatkan fitur kami. Kami menghargai kemurahan hati dan kebaikan Anda!</string>
+    <string name="summary_donations">Berapa pun jumlah yang Anda sumbangkan, Anda akan membantu kami menjaga aplikasi tetap berjalan dan meningkatkan fitur kami. Kami menghargai kemurahan hati dan kebaikan Anda.</string>
     <string name="non_paid_support">Dukungan tidak berbayar</string>
     <string name="web_ad">Iklan web</string>
     <string name="error_failed_to_load_sku_details">Gagal memuat detail SKU</string>
-    <string name="purchase_pending">Donasi Anda sedang diproses oleh Google. Kami akan memberi tahu Anda saat selesai. Terima kasih!</string>
-    <string name="purchase_thank_you">Terima kasih atas donasi Anda!</string>
+    <string name="purchase_pending">Donasi Anda sedang diproses oleh Google. Kami akan memberi tahu Anda saat selesai. Terima kasih.</string>
+    <string name="purchase_thank_you">Terima kasih atas donasi Anda.</string>
     <string name="purchase_cancelled">Pembelian dibatalkan</string>
 </resources>

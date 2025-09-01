@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">앱 툴킷에 오신 것을 환영합니다</string>
     <string name="onboarding_welcome_description">저희 앱툴킷 라이브러리의 기능을 살펴보세요. 저희 앱툴킷 라이브러리의 강력한 기능을 시연하고 활용하기 위해 제작된 저희 애플리케이션들을 만나보세요. 이를 통해 안드로이드 개발 및 사용자 경험을 향상시킬 수 있습니다.</string>
     <string name="onboarding_feature1_title">저희 애플리케이션 살펴보기</string>
-    <string name="onboarding_feature1_description">앱 툴킷은 저희 앱툴킷 라이브러리의 다양한 측면을 부각하고 안드로이드 경험을 향상시키도록 설계된 엄선된 애플리케이션들을 소개합니다. 저희 앱툴킷 라이브러리로 어떤 것들이 가능한지 확인해보세요!</string>
+    <string name="onboarding_feature1_description">앱 툴킷은 저희 앱툴킷 라이브러리의 다양한 측면을 부각하고 안드로이드 경험을 향상시키도록 설계된 엄선된 애플리케이션들을 소개합니다. 저희 앱툴킷 라이브러리로 어떤 것들이 가능한지 확인해보세요.</string>
     <string name="onboarding_personalization_title">저희 앱툴킷 라이브러리 실제 활용 사례 보기</string>
     <string name="onboarding_personalization_description">이 앱은 저희 앱툴킷 라이브러리를 사용하여 다양하고 사용자 중심적인 애플리케이션을 구축하는 방법을 보여줍니다. 저희 앱들을 탐색하여 라이브러리의 다양한 기능과 구현 사례를 확인하세요.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">앱 툴킷에 인터넷 접속과 같은 권한이 필요한 이유는 무엇인가요?</string>
     <string name="summary_preference_faq_7">앱 툴킷은 Google Play 스토어에서 최신 애플리케이션 목록을 가져오고 해당 정보를 정확하게 표시하기 위해 인터넷 접속이 필요합니다. 일반적으로 다른 민감한 권한은 필요하지 않습니다.</string>
     <string name="question_8">앱 툴킷이나 저희 앱에 대한 피드백은 어떻게 제공할 수 있나요?</string>
-    <string name="summary_preference_faq_8">앱 툴킷과 개별 앱에 대한 여러분의 피드백을 소중하게 생각합니다! 일반적으로 앱 툴킷 설정 내 또는 Play 스토어의 개발자 페이지에서 \"피드백\" 또는 \"문의하기\" 옵션을 찾을 수 있습니다. 저희 앱툴킷 라이브러리 자체에 대한 피드백도 적절한 채널을 통해 환영합니다.</string>
+    <string name="summary_preference_faq_8">앱 툴킷과 개별 앱에 대한 여러분의 피드백을 소중하게 생각합니다. 일반적으로 앱 툴킷 설정 내 또는 Play 스토어의 개발자 페이지에서 \"피드백\" 또는 \"문의하기\" 옵션을 찾을 수 있습니다. 저희 앱툴킷 라이브러리 자체에 대한 피드백도 적절한 채널을 통해 환영합니다.</string>
     <string name="question_9">다른 앱을 찾기 위해 앱 툴킷을 사용할 때 제 데이터는 안전한가요?</string>
     <string name="summary_preference_faq_9">앱 툴킷은 주로 저희 앱에 대한 공개적으로 사용 가능한 정보를 가져옵니다. 목록에 있는 앱 중 하나를 설치하거나 사용하기로 선택하면 해당 앱 자체의 개인정보처리방침이 적용됩니다. 검토해 보시기를 권장합니다. 앱 툴킷의 데이터 처리는 저희 개인정보처리방침에 설명되어 있습니다.</string>
 </resources>

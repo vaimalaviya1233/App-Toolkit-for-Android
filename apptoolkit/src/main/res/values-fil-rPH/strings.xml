@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Dinisenyo upang pasimplehin ang iyong daloy ng trabaho, ang app na ito ay nagbibigay ng mahahalagang tool at feature upang matulungan kang manatiling organisado at episyente sa anumang gawain. 📱</string>
-    <string name="notification_update_title">May bagong update na available!</string>
-    <string name="summary_notification_update">May bagong bersyon ng app na available. I-click para mag-update!</string>
-    <string name="notification_last_time_used_title">Matagal-tagal na rin!</string>
-    <string name="default_notification_summary">Napakaraming feature ang naghihintay sa iyo. Buksan ang app!</string>
+    <string name="notification_update_title">May bagong update na available.</string>
+    <string name="summary_notification_update">May bagong bersyon ng app na available. I-click para mag-update.</string>
+    <string name="notification_last_time_used_title">Matagal-tagal na rin.</string>
+    <string name="default_notification_summary">Napakaraming feature ang naghihintay sa iyo. Buksan ang app.</string>
 
     <string name="welcome">Maligayang pagdating</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Basahin at sumang-ayon sa aming Mga tuntunin ng serbisyo at Patakaran sa Privacy upang magpatuloy</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">I-save at magpatuloy</string>
     <string name="button_continue">Magpatuloy</string>
     <string name="onboarding_complete_icon_desc">Kumpleto na ang onboarding</string>
-    <string name="onboarding_final_title">Handa ka na!</string>
-    <string name="onboarding_final_description">Salamat sa pag-personalize ng iyong karanasan. Handa ka na ngayong tuklasin ang lahat ng feature. Magsaya!</string>
+    <string name="onboarding_final_title">Handa ka na.</string>
+    <string name="onboarding_final_description">Salamat sa pag-personalize ng iyong karanasan. Handa ka na ngayong tuklasin ang lahat ng feature. Magsaya.</string>
 
     <string name="navigation_drawer_open">Buksan ang navigation drawer</string>
     <string name="content_description_more_options">Higit pang mga pagpipilian</string>
     <string name="go_back">Bumalik</string>
-    <string name="toast_review_already_done">Salamat sa rating!</string>
+    <string name="toast_review_already_done">Salamat sa rating.</string>
 
-    <string name="sort_by">Pagbukud-bukurin ayon sa:</string>
+    <string name="sort_by">Pagbukud-bukurin ayon sa</string>
     <string name="error">Error</string>
     <string name="app_not_installed">Hindi naka-install ang app</string>
     <string name="snack_app_updated">Matagumpay na na-update ang app</string>
     <string name="snack_update_failed">Nakaranas ng isyu ang proseso ng pag-update</string>
     <string name="try_again">Subukang muli</string>
-    <string name="summary_share_message">Tingnan itong kamangha-manghang app na ginagamit ko! Mayroon itong ilang mga talagang cool na feature na maaaring makita mong interesante. Maaari mo itong i-download mula sa Play Store sa: %1$s</string>
+    <string name="summary_share_message">Tingnan itong kamangha-manghang app na ginagamit ko. Mayroon itong ilang mga talagang cool na feature na maaaring makita mong interesante. Maaari mo itong i-download mula sa Play Store sa: %1$s</string>
     <string name="learn_more">Matuto pa</string>
     <string name="close">Isara?</string>
     <string name="summary_close">Sigurado ka bang gusto mong lumabas?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Walang napiling setting. Pumili ng opsyon para tingnan ang mga detalye nito dito.</string>
     <string name="get_help">Humingi ng tulong</string>
     <string name="error_no_settings_found">Walang nahanap na mga setting</string>
-    <string name="error_invalid_content_key">Hindi valid na content key!</string>
+    <string name="error_invalid_content_key">Hindi valid na content key.</string>
 
     <string name="display">Display</string>
     <string name="summary_preference_settings_display">I-personalize ang itsura at pakiramdam ng iyong app</string>
@@ -110,7 +110,7 @@
     <string name="language">Wika</string>
     <string name="summary_preference_settings_language">Binabago ang wikang ginagamit sa app</string>
 
-    <string name="dialog_startup_subtitle">Piliin ang iyong gustong startup page:</string>
+    <string name="dialog_startup_subtitle">Piliin ang iyong gustong startup page</string>
     <string name="dialog_info_startup">Kino-configure ang paunang screen na ipinapakita sa mga user sa paglunsad ng application. Nakakaimpluwensya ang setting na ito sa unang interaksyon ng user sa app at maaaring iakma sa mga partikular na segment ng user o layunin ng produkto.</string>
 
     <string name="select_language_title">Pumili ng wika</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Mag-login</string>
     <string name="use_github_account">Ipadala gamit ang GitHub account</string>
     <string name="send_anonymously">Ipadala nang hindi nagpapakilala</string>
-    <string name="optional_placeholder">(Opsyonal)</string>
+    <string name="optional_placeholder">Opsyonal</string>
     <string name="issue_username_label">Username</string>
     <string name="issue_password_label">Password</string>
     <string name="issue_email_label">Email</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Matagumpay na isinumite ang isyu</string>
     <string name="open_issue_in_browser">Buksan sa browser</string>
     <string name="open_button_label">Bukas na isyu</string>
-    <string name="issue_submitted">Isinumite ang iyong isyu!</string>
+    <string name="issue_submitted">Isinumite ang iyong isyu.</string>
     <string name="error_unauthorized">Hindi awtorisado: Di -wastong token</string>
     <string name="error_forbidden">Ipinagbabawal: Hindi sapat na pahintulot</string>
     <string name="error_gone">Inalis ang endpoint ng API</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Build ng app: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Release</string>
-    <string name="manufacturer">Manufacturer:</string>
-    <string name="device_model">Modelo ng device:</string>
-    <string name="android_version">Bersyon ng Android:</string>
-    <string name="api_level">Antas ng API:</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="device_model">Modelo ng device</string>
+    <string name="android_version">Bersyon ng Android</string>
+    <string name="api_level">Antas ng API</string>
     <string name="snack_device_info_copied">Nakopya sa clipboard ang impormasyon ng device</string>
     <string name="snack_device_info_failed">Hindi ma-load ang impormasyon ng device</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Suportahan kami</string>
     <string name="paid_support">Bayad na suporta</string>
-    <string name="summary_donations">Gaano man kalaki ang iyong ido-donate, matutulungan mo kaming panatilihing tumatakbo ang aming app at mapabuti ang aming mga feature. Pinahahalagahan namin ang iyong kabutihang-loob at kabaitan!</string>
+    <string name="summary_donations">Gaano man kalaki ang iyong ido-donate, matutulungan mo kaming panatilihing tumatakbo ang aming app at mapabuti ang aming mga feature. Pinahahalagahan namin ang iyong kabutihang-loob at kabaitan.</string>
     <string name="non_paid_support">Hindi bayad na suporta</string>
     <string name="web_ad">Web ad</string>
     <string name="error_failed_to_load_sku_details">Nabigong i-load ang mga detalye ng SKU</string>
-    <string name="purchase_pending">Ang iyong donasyon ay pinoproseso ng Google. Sasabihan ka namin kapag kumpleto na ito. Salamat!</string>
-    <string name="purchase_thank_you">Salamat sa iyong donasyon!</string>
+    <string name="purchase_pending">Ang iyong donasyon ay pinoproseso ng Google. Sasabihan ka namin kapag kumpleto na ito. Salamat.</string>
+    <string name="purchase_thank_you">Salamat sa iyong donasyon.</string>
     <string name="purchase_cancelled">Bumili ng kanselahin</string>
 </resources>

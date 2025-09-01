@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Diseñada para optimizar tu flujo de trabajo, esta aplicación proporciona herramientas y funciones esenciales para ayudarte a mantenerte organizado y eficiente en cualquier tarea. 📱</string>
-    <string name="notification_update_title">¡Nueva actualización disponible!</string>
-    <string name="summary_notification_update">Hay una nueva versión de la aplicación disponible. ¡Haz clic para actualizar!</string>
-    <string name="notification_last_time_used_title">¡Ha pasado un tiempo!</string>
-    <string name="default_notification_summary">Hay muchas funciones esperándote. ¡Abre la aplicación!</string>
+    <string name="notification_update_title">Nueva actualización disponible.</string>
+    <string name="summary_notification_update">Hay una nueva versión de la aplicación disponible. Haz clic para actualizar.</string>
+    <string name="notification_last_time_used_title">Ha pasado un tiempo.</string>
+    <string name="default_notification_summary">Hay muchas funciones esperándote. Abre la aplicación.</string>
 
     <string name="welcome">Bienvenido</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lee y acepta nuestros Términos de servicio y Política de Privacidad para continuar</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Guardar y continuar</string>
     <string name="button_continue">Continuar</string>
     <string name="onboarding_complete_icon_desc">Integración completada</string>
-    <string name="onboarding_final_title">¡todo listo!</string>
-    <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. ¡Disfruta!</string>
+    <string name="onboarding_final_title">todo listo.</string>
+    <string name="onboarding_final_description">Gracias por personalizar tu experiencia. Ya estás listo para explorar todas las funciones. Disfruta.</string>
 
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="content_description_more_options">Más opciones</string>
     <string name="go_back">Regresar</string>
-    <string name="toast_review_already_done">¡Gracias por la calificación!</string>
+    <string name="toast_review_already_done">Gracias por la calificación.</string>
 
-    <string name="sort_by">Ordenar por:</string>
+    <string name="sort_by">Ordenar por</string>
     <string name="error">Error</string>
     <string name="app_not_installed">Aplicación no instalada</string>
     <string name="snack_app_updated">La aplicación se ha actualizado correctamente</string>
     <string name="snack_update_failed">El proceso de actualización encontró un problema</string>
     <string name="try_again">Intentar de nuevo</string>
-    <string name="summary_share_message">¡Mira esta increíble aplicación que estoy usando! Tiene algunas funciones geniales que podrían interesarte. Puedes descargarla desde Play Store en: %1$s</string>
+    <string name="summary_share_message">Mira esta increíble aplicación que estoy usando. Tiene algunas funciones geniales que podrían interesarte. Puedes descargarla desde Play Store en: %1$s</string>
     <string name="learn_more">Más información</string>
     <string name="close">¿Cerrar?</string>
     <string name="summary_close">¿Estás seguro de que quieres salir?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">No hay configuraciones seleccionadas. Elige una opción para ver sus detalles aquí.</string>
     <string name="get_help">Obtener ayuda</string>
     <string name="error_no_settings_found">No se encontraron configuraciones</string>
-    <string name="error_invalid_content_key">¡Clave de contenido no válida!</string>
+    <string name="error_invalid_content_key">Clave de contenido no válida.</string>
 
     <string name="display">Pantalla</string>
     <string name="summary_preference_settings_display">Personaliza el aspecto y la sensación de tu aplicación</string>
@@ -110,7 +110,7 @@
     <string name="language">Idioma</string>
     <string name="summary_preference_settings_language">Cambia el idioma utilizado en la aplicación</string>
 
-    <string name="dialog_startup_subtitle">Elige tu página de inicio preferida:</string>
+    <string name="dialog_startup_subtitle">Elige tu página de inicio preferida</string>
     <string name="dialog_info_startup">Configura la pantalla inicial que se presenta a los usuarios al iniciar la aplicación. Esta configuración influye en la primera interacción del usuario con la aplicación y puede adaptarse a segmentos de usuarios específicos u objetivos del producto.</string>
 
     <string name="select_language_title">Seleccionar idioma</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Iniciar sesión</string>
     <string name="use_github_account">Enviar usando la cuenta de GitHub</string>
     <string name="send_anonymously">Enviar de forma anónima</string>
-    <string name="optional_placeholder">(Opcional)</string>
+    <string name="optional_placeholder">Opcional</string>
     <string name="issue_username_label">Nombre de usuario</string>
     <string name="issue_password_label">Contraseña</string>
     <string name="issue_email_label">Correo electrónico</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Problema enviado con éxito</string>
     <string name="open_issue_in_browser">Abrir en el navegador</string>
     <string name="open_button_label">Problema abierto</string>
-    <string name="issue_submitted">¡Su problema fue enviado!</string>
+    <string name="issue_submitted">Su problema fue enviado.</string>
     <string name="error_unauthorized">Unauthorized: Invalid token</string>
     <string name="error_forbidden">Prohibido: permisos insuficientes</string>
     <string name="error_gone">Punto final de la API eliminado</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Compilación de la app: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Depuración</string>
     <string name="release">Lanzamiento</string>
-    <string name="manufacturer">Fabricante:</string>
-    <string name="device_model">Modelo del dispositivo:</string>
-    <string name="android_version">Versión de Android:</string>
-    <string name="api_level">Nivel de API:</string>
+    <string name="manufacturer">Fabricante</string>
+    <string name="device_model">Modelo del dispositivo</string>
+    <string name="android_version">Versión de Android</string>
+    <string name="api_level">Nivel de API</string>
     <string name="snack_device_info_copied">Información del dispositivo copiada al portapapeles</string>
     <string name="snack_device_info_failed">No se pudo cargar la información del dispositivo</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Apóyanos</string>
     <string name="paid_support">Soporte de pago</string>
-    <string name="summary_donations">No importa cuánto dones, nos ayudarás a mantener nuestra aplicación en funcionamiento y mejorar nuestras funciones. ¡Apreciamos tu generosidad y amabilidad!</string>
+    <string name="summary_donations">No importa cuánto dones, nos ayudarás a mantener nuestra aplicación en funcionamiento y mejorar nuestras funciones. Apreciamos tu generosidad y amabilidad.</string>
     <string name="non_paid_support">Soporte gratuito</string>
     <string name="web_ad">Anuncio web</string>
     <string name="error_failed_to_load_sku_details">Error al cargar los detalles del SKU</string>
-    <string name="purchase_pending">Google procesa su donación. Te notificaremos cuando esté completo. ¡Gracias!</string>
-    <string name="purchase_thank_you">¡Gracias por tu donación!</string>
+    <string name="purchase_pending">Google procesa su donación. Te notificaremos cuando esté completo. Gracias.</string>
+    <string name="purchase_thank_you">Gracias por tu donación.</string>
     <string name="purchase_cancelled">Compra cancelada</string>
 </resources>

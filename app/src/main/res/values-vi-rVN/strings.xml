@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">Chào mừng đến với App Toolkit</string>
     <string name="onboarding_welcome_description">Khám phá các khả năng của thư viện AppToolkit của chúng tôi. Khám phá các ứng dụng của chúng tôi, tất cả được xây dựng để minh họa và tận dụng sức mạnh của thư viện AppToolkit, nâng cao trải nghiệm phát triển Android và người dùng của bạn.</string>
     <string name="onboarding_feature1_title">Khám phá các ứng dụng của chúng tôi</string>
-    <string name="onboarding_feature1_description">App Toolkit giới thiệu cho bạn một loạt các ứng dụng của chúng tôi, mỗi ứng dụng được thiết kế để làm nổi bật các khía cạnh khác nhau của thư viện AppToolkit và nâng cao trải nghiệm Android của bạn. Xem những gì có thể với thư viện AppToolkit của chúng tôi!</string>
+    <string name="onboarding_feature1_description">App Toolkit giới thiệu cho bạn một loạt các ứng dụng của chúng tôi, mỗi ứng dụng được thiết kế để làm nổi bật các khía cạnh khác nhau của thư viện AppToolkit và nâng cao trải nghiệm Android của bạn. Xem những gì có thể với thư viện AppToolkit của chúng tôi.</string>
     <string name="onboarding_personalization_title">Xem thư viện AppToolkit của chúng tôi hoạt động</string>
     <string name="onboarding_personalization_description">Ứng dụng này minh họa cách thư viện AppToolkit của chúng tôi có thể được sử dụng để xây dựng các ứng dụng linh hoạt và tập trung vào người dùng. Khám phá các ứng dụng của chúng tôi để xem các tính năng và cách triển khai khác nhau của thư viện.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">Tại sao App Toolkit cần các quyền như truy cập Internet?</string>
     <string name="summary_preference_faq_7">App Toolkit yêu cầu truy cập Internet để tìm nạp danh sách mới nhất các ứng dụng của chúng tôi từ Google Play Store và hiển thị thông tin của chúng một cách chính xác. Nó thường không yêu cầu các quyền xâm lấn khác.</string>
     <string name="question_8">Làm cách nào để tôi có thể cung cấp phản hồi về App Toolkit hoặc các ứng dụng của bạn?</string>
-    <string name="summary_preference_faq_8">Chúng tôi đánh giá cao phản hồi của bạn về App Toolkit và các ứng dụng riêng lẻ của chúng tôi! Bạn thường có thể tìm thấy tùy chọn \"Phản hồi\" hoặc \"Liên hệ với chúng tôi\" trong cài đặt của App Toolkit hoặc trên trang nhà phát triển của chúng tôi trên Play Store. Phản hồi về chính thư viện AppToolkit của chúng tôi cũng được hoan nghênh thông qua các kênh thích hợp.</string>
+    <string name="summary_preference_faq_8">Chúng tôi đánh giá cao phản hồi của bạn về App Toolkit và các ứng dụng riêng lẻ của chúng tôi. Bạn thường có thể tìm thấy tùy chọn \"Phản hồi\" hoặc \"Liên hệ với chúng tôi\" trong cài đặt của App Toolkit hoặc trên trang nhà phát triển của chúng tôi trên Play Store. Phản hồi về chính thư viện AppToolkit của chúng tôi cũng được hoan nghênh thông qua các kênh thích hợp.</string>
     <string name="question_9">Dữ liệu của tôi có an toàn khi sử dụng App Toolkit để tìm các ứng dụng khác của bạn không?</string>
     <string name="summary_preference_faq_9">App Toolkit chủ yếu tìm nạp thông tin công khai về các ứng dụng của chúng tôi. Khi bạn chọn cài đặt hoặc sử dụng một trong các ứng dụng được liệt kê của chúng tôi, Chính sách quyền riêng tư của chính ứng dụng đó sẽ được áp dụng. Chúng tôi khuyến khích bạn xem lại chính sách đó. Việc xử lý dữ liệu của App Toolkit được nêu trong Chính sách quyền riêng tư của chúng tôi.</string>
 </resources>

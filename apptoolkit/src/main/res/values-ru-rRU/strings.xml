@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Созданное для оптимизации рабочего процесса, это приложение предоставляет необходимые инструменты и функции, чтобы помочь вам оставаться организованным и эффективным в любой задаче. 📱</string>
-    <string name="notification_update_title">Доступно новое обновление!</string>
-    <string name="summary_notification_update">Доступна новая версия приложения. Нажмите для обновления!</string>
-    <string name="notification_last_time_used_title">Прошло много времени!</string>
-    <string name="default_notification_summary">Вас ждёт множество новых функций. Откройте приложение!</string>
+    <string name="notification_update_title">Доступно новое обновление.</string>
+    <string name="summary_notification_update">Доступна новая версия приложения. Нажмите для обновления.</string>
+    <string name="notification_last_time_used_title">Прошло много времени.</string>
+    <string name="default_notification_summary">Вас ждёт множество новых функций. Откройте приложение.</string>
 
     <string name="welcome">Добро пожаловать</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Прочтите и согласитесь с нашими Условиями использования и Политикой конфиденциальности, чтобы продолжить</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Сохранить и продолжить</string>
     <string name="button_continue">Продолжить</string>
     <string name="onboarding_complete_icon_desc">Начальная настройка завершена</string>
-    <string name="onboarding_final_title">Всё готово!</string>
-    <string name="onboarding_final_description">Спасибо за персонализацию вашего опыта. Теперь вы готовы исследовать все функции. Наслаждайтесь!</string>
+    <string name="onboarding_final_title">Всё готово.</string>
+    <string name="onboarding_final_description">Спасибо за персонализацию вашего опыта. Теперь вы готовы исследовать все функции. Наслаждайтесь.</string>
 
     <string name="navigation_drawer_open">Открыть меню навигации</string>
     <string name="content_description_more_options">Больше вариантов</string>
     <string name="go_back">Назад</string>
-    <string name="toast_review_already_done">Спасибо за рейтинг!</string>
+    <string name="toast_review_already_done">Спасибо за рейтинг.</string>
 
     <string name="error">Ошибка</string>
-    <string name="sort_by">Сортировать по:</string>
+    <string name="sort_by">Сортировать по</string>
     <string name="app_not_installed">Приложение не установлено</string>
     <string name="snack_app_updated">Приложение успешно обновлено</string>
     <string name="snack_update_failed">Во время обновления произошла ошибка</string>
     <string name="try_again">Попробуйте снова</string>
-    <string name="summary_share_message">Оцените это удивительное приложение, которое я использую! В нём есть интересные функции. Вы можете скачать его из Play Store по адресу: %1$s</string>
+    <string name="summary_share_message">Оцените это удивительное приложение, которое я использую. В нём есть интересные функции. Вы можете скачать его из Play Store по адресу: %1$s</string>
     <string name="learn_more">Узнать больше</string>
     <string name="close">Закрыть?</string>
     <string name="summary_close">Вы уверены, что хотите выйти?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Настройки не выбраны. Выберите опцию, чтобы увидеть её детали.</string>
     <string name="get_help">Получить помощь</string>
     <string name="error_no_settings_found">Настройки не найдены</string>
-    <string name="error_invalid_content_key">Недопустимый ключ контента!</string>
+    <string name="error_invalid_content_key">Недопустимый ключ контента.</string>
 
     <string name="display">Дисплей</string>
     <string name="summary_preference_settings_display">Настройте внешний вид и поведение приложения</string>
@@ -110,7 +110,7 @@
     <string name="language">Язык</string>
     <string name="summary_preference_settings_language">Измените язык, используемый в приложении</string>
 
-    <string name="dialog_startup_subtitle">Выберите предпочтительную стартовую страницу:</string>
+    <string name="dialog_startup_subtitle">Выберите предпочтительную стартовую страницу</string>
     <string name="dialog_info_startup">Настраивает начальный экран, представленный пользователям при запуске приложения. Эта настройка влияет на первое взаимодействие пользователя с приложением.</string>
 
     <string name="select_language_title">Выберите язык</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Войти</string>
     <string name="use_github_account">Отправить через аккаунт GitHub</string>
     <string name="send_anonymously">Отправить анонимно</string>
-    <string name="optional_placeholder">(Необязательно)</string>
+    <string name="optional_placeholder">Необязательно</string>
     <string name="issue_username_label">Имя пользователя</string>
     <string name="issue_password_label">Пароль</string>
     <string name="issue_email_label">Электронная почта</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Выпуск успешно</string>
     <string name="open_issue_in_browser">Открыт в браузере</string>
     <string name="open_button_label">Открытая проблема</string>
-    <string name="issue_submitted">Ваша проблема была отправлена!</string>
+    <string name="issue_submitted">Ваша проблема была отправлена.</string>
     <string name="error_unauthorized">Несанкционированный: недействительный токен</string>
     <string name="error_forbidden">Запрещено: недостаточные разрешения</string>
     <string name="error_gone">Конечная точка API удалена</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Сборка приложения: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Отладка</string>
     <string name="release">Релиз</string>
-    <string name="manufacturer">Производитель:</string>
-    <string name="device_model">Модель устройства:</string>
-    <string name="android_version">Версия Android:</string>
-    <string name="api_level">Уровень API:</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="device_model">Модель устройства</string>
+    <string name="android_version">Версия Android</string>
+    <string name="api_level">Уровень API</string>
     <string name="snack_device_info_copied">Информация об устройстве скопирована в буфер обмена</string>
     <string name="snack_device_info_failed">Не удалось загрузить информацию об устройстве</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Поддержите нас</string>
     <string name="paid_support">Платная поддержка</string>
-    <string name="summary_donations">Независимо от суммы пожертвования, вы поможете нам поддерживать работу приложения и улучшать его функции. Мы благодарны за вашу щедрость и доброту!</string>
+    <string name="summary_donations">Независимо от суммы пожертвования, вы поможете нам поддерживать работу приложения и улучшать его функции. Мы благодарны за вашу щедрость и доброту.</string>
     <string name="non_paid_support">Бесплатная поддержка</string>
     <string name="web_ad">Веб-реклама</string>
     <string name="error_failed_to_load_sku_details">Не удалось загрузить сведения о SKU</string>
-    <string name="purchase_pending">Ваше пожертвование обрабатывается Google. Мы уведомим вас, когда это будет завершено. Спасибо!</string>
-    <string name="purchase_thank_you">Спасибо за пожертвование!</string>
+    <string name="purchase_pending">Ваше пожертвование обрабатывается Google. Мы уведомим вас, когда это будет завершено. Спасибо.</string>
+    <string name="purchase_thank_you">Спасибо за пожертвование.</string>
     <string name="purchase_cancelled">Купить отменен</string>
 </resources>

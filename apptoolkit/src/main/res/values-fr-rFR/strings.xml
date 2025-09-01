@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Conçue pour simplifier votre flux de travail, cette application offre des outils et fonctionnalités essentiels pour vous aider à rester organisé et efficace dans vos tâches. 📱</string>
-    <string name="notification_update_title">Une nouvelle mise à jour est disponible!</string>
-    <string name="summary_notification_update">Une nouvelle version de l\'application est disponible. Cliquez pour mettre à jour!</string>
-    <string name="notification_last_time_used_title">Cela fait un moment!</string>
-    <string name="default_notification_summary">De nombreuses fonctionnalités vous attendent. Ouvrez l\'application!</string>
+    <string name="notification_update_title">Une nouvelle mise à jour est disponible.</string>
+    <string name="summary_notification_update">Une nouvelle version de l\'application est disponible. Cliquez pour mettre à jour.</string>
+    <string name="notification_last_time_used_title">Cela fait un moment.</string>
+    <string name="default_notification_summary">De nombreuses fonctionnalités vous attendent. Ouvrez l\'application.</string>
 
     <string name="welcome">Bienvenue</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Lisez et acceptez nos Conditions d\'utilisation et notre Politique de confidentialité pour continuer</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Enregistrer et continuer</string>
     <string name="button_continue">Continuer</string>
     <string name="onboarding_complete_icon_desc">Intégration terminée</string>
-    <string name="onboarding_final_title">Vous êtes prêt !</string>
-    <string name="onboarding_final_description">Merci d\'avoir personnalisé votre expérience. Vous êtes maintenant prêt à explorer toutes les fonctionnalités. Amusez-vous !</string>
+    <string name="onboarding_final_title">Vous êtes prêt .</string>
+    <string name="onboarding_final_description">Merci d\'avoir personnalisé votre expérience. Vous êtes maintenant prêt à explorer toutes les fonctionnalités. Amusez-vous .</string>
 
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="content_description_more_options">Plus d\'options</string>
     <string name="go_back">Retour</string>
-    <string name="toast_review_already_done">Merci de la notation!</string>
+    <string name="toast_review_already_done">Merci de la notation.</string>
 
     <string name="error">Erreur</string>
-    <string name="sort_by">Trier par :</string>
+    <string name="sort_by">Trier par </string>
     <string name="app_not_installed">Application non installée</string>
     <string name="snack_app_updated">L\'application a été mise à jour avec succès</string>
     <string name="snack_update_failed">Un problème est survenu lors de la mise à jour</string>
     <string name="try_again">Réessayer</string>
-    <string name="summary_share_message">Découvrez cette application incroyable que j\'utilise! Elle propose des fonctionnalités vraiment intéressantes que vous pourriez aimer. Vous pouvez la télécharger depuis le Play Store à: %1$s</string>
+    <string name="summary_share_message">Découvrez cette application incroyable que j\'utilise. Elle propose des fonctionnalités vraiment intéressantes que vous pourriez aimer. Vous pouvez la télécharger depuis le Play Store à: %1$s</string>
     <string name="learn_more">En savoir plus</string>
     <string name="close">Fermer?</string>
     <string name="summary_close">Êtes-vous sûr de vouloir quitter?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Aucun paramètre sélectionné. Choisissez une option pour afficher les détails ici.</string>
     <string name="get_help">Obtenir de l\'aide</string>
     <string name="error_no_settings_found">Aucun paramètre trouvé</string>
-    <string name="error_invalid_content_key">Clé de contenu invalide !</string>
+    <string name="error_invalid_content_key">Clé de contenu invalide .</string>
 
     <string name="display">Affichage</string>
     <string name="summary_preference_settings_display">Personnalisez l\'apparence de votre application</string>
@@ -110,7 +110,7 @@
     <string name="language">Langue</string>
     <string name="summary_preference_settings_language">Change la langue utilisée dans l\'application</string>
 
-    <string name="dialog_startup_subtitle">Choisissez votre page de démarrage préférée:</string>
+    <string name="dialog_startup_subtitle">Choisissez votre page de démarrage préférée</string>
     <string name="dialog_info_startup">Configure l\'écran initial présenté aux utilisateurs lors du lancement de l\'application. Cette configuration influence la première interaction de l\'utilisateur avec l\'application.</string>
 
     <string name="select_language_title">Choisir la langue</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Connexion</string>
     <string name="use_github_account">Envoyer avec le compte GitHub</string>
     <string name="send_anonymously">Envoyer anonymement</string>
-    <string name="optional_placeholder">(Facultatif)</string>
+    <string name="optional_placeholder">Facultatif</string>
     <string name="issue_username_label">Nom d\'utilisateur</string>
     <string name="issue_password_label">Mot de passe</string>
     <string name="issue_email_label">E-mail</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Numéro soumis avec succès</string>
     <string name="open_issue_in_browser">Ouvert dans le navigateur</string>
     <string name="open_button_label">Problème d\'ouverture</string>
-    <string name="issue_submitted">Votre problème a été soumis!</string>
+    <string name="issue_submitted">Votre problème a été soumis.</string>
     <string name="error_unauthorized">Non autorisé: jeton non valide</string>
     <string name="error_forbidden">Interdit: autorisation insuffisante</string>
     <string name="error_gone">Point de terminaison API supprimé</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Compilation de l\'application: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Débogage</string>
     <string name="release">Version</string>
-    <string name="manufacturer">Fabricant:</string>
-    <string name="device_model">Modèle de l\'appareil:</string>
-    <string name="android_version">Version d\'Android:</string>
-    <string name="api_level">Niveau d\'API:</string>
+    <string name="manufacturer">Fabricant</string>
+    <string name="device_model">Modèle de l\'appareil</string>
+    <string name="android_version">Version d\'Android</string>
+    <string name="api_level">Niveau d\'API</string>
     <string name="snack_device_info_copied">Les informations sur l\'appareil ont été copiées dans le presse-papiers</string>
     <string name="snack_device_info_failed">Impossible de charger les informations sur l\'appareil</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Soutenez-nous</string>
     <string name="paid_support">Support payant</string>
-    <string name="summary_donations">Peu importe le montant que vous donnez, vous nous aiderez à maintenir notre application et à améliorer ses fonctionnalités. Nous apprécions votre générosité !</string>
+    <string name="summary_donations">Peu importe le montant que vous donnez, vous nous aiderez à maintenir notre application et à améliorer ses fonctionnalités. Nous apprécions votre générosité .</string>
     <string name="non_paid_support">Support non payant</string>
     <string name="web_ad">Publicité web</string>
     <string name="error_failed_to_load_sku_details">Échec du chargement des détails du SKU</string>
-    <string name="purchase_pending">Votre don est traité par Google. Nous vous informerons quand il sera terminé. Merci!</string>
-    <string name="purchase_thank_you">Merci pour votre don!</string>
+    <string name="purchase_pending">Votre don est traité par Google. Nous vous informerons quand il sera terminé. Merci.</string>
+    <string name="purchase_thank_you">Merci pour votre don.</string>
     <string name="purchase_cancelled">Acheter annulé</string>
 </resources>

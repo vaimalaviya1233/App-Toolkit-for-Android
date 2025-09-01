@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Proiectată pentru a îmbunătăți fluxul de lucru, această aplicație oferă instrumente și funcții esențiale pentru a te ajuta să rămâi organizat și eficient în orice sarcină. 📱</string>
-    <string name="notification_update_title">O nouă actualizare este disponibilă!</string>
-    <string name="summary_notification_update">O nouă versiune a aplicației este disponibilă. Apasă pentru a actualiza!</string>
-    <string name="notification_last_time_used_title">A trecut ceva timp!</string>
-    <string name="default_notification_summary">Sunt multe funcții care te așteaptă. Deschide aplicația!</string>
+    <string name="notification_update_title">O nouă actualizare este disponibilă.</string>
+    <string name="summary_notification_update">O nouă versiune a aplicației este disponibilă. Apasă pentru a actualiza.</string>
+    <string name="notification_last_time_used_title">A trecut ceva timp.</string>
+    <string name="default_notification_summary">Sunt multe funcții care te așteaptă. Deschide aplicația.</string>
 
     <string name="welcome">Bine ai venit</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Citește și acceptă Termenii de utilizare și Politica de confidențialitate pentru a continua</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Salvați și continuați</string>
     <string name="button_continue">Continuați</string>
     <string name="onboarding_complete_icon_desc">Integrare completă</string>
-    <string name="onboarding_final_title">Ești gata!</string>
-    <string name="onboarding_final_description">Mulțumim că ți-ai personalizat experiența. Acum ești gata să explorezi toate funcționalitățile. Bucură-te!</string>
+    <string name="onboarding_final_title">Ești gata.</string>
+    <string name="onboarding_final_description">Mulțumim că ți-ai personalizat experiența. Acum ești gata să explorezi toate funcționalitățile. Bucură-te.</string>
 
     <string name="navigation_drawer_open">Deschide meniul de navigare</string>
     <string name="content_description_more_options">Mai multe opțiuni</string>
     <string name="go_back">Înapoi</string>
-    <string name="toast_review_already_done">Mulțumesc pentru evaluare!</string>
+    <string name="toast_review_already_done">Mulțumesc pentru evaluare.</string>
 
     <string name="error">Eroare</string>
-    <string name="sort_by">Sortează după:</string>
+    <string name="sort_by">Sortează după</string>
     <string name="app_not_installed">Aplicația nu este instalată</string>
     <string name="snack_app_updated">Aplicația a fost actualizată cu succes</string>
     <string name="snack_update_failed">A apărut o problemă în timpul actualizării</string>
     <string name="try_again">Încearcă din nou</string>
-    <string name="summary_share_message">Verifică această aplicație uimitoare pe care o folosesc! Are câteva funcții interesante. O poți descărca din Play Store la: %1$s</string>
+    <string name="summary_share_message">Verifică această aplicație uimitoare pe care o folosesc. Are câteva funcții interesante. O poți descărca din Play Store la: %1$s</string>
     <string name="learn_more">Află mai multe</string>
     <string name="close">Închide?</string>
     <string name="summary_close">Ești sigur că vrei să ieși?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Nicio setare selectată. Alege o opțiune pentru a vedea detalii aici.</string>
     <string name="get_help">Obține ajutor</string>
     <string name="error_no_settings_found">Nu s-au găsit setări</string>
-    <string name="error_invalid_content_key">Cheie de conținut invalidă!</string>
+    <string name="error_invalid_content_key">Cheie de conținut invalidă.</string>
 
     <string name="display">Afișaj</string>
     <string name="summary_preference_settings_display">Personalizează aspectul și funcționalitatea aplicației</string>
@@ -110,7 +110,7 @@
     <string name="language">Limbă</string>
     <string name="summary_preference_settings_language">Schimbă limba utilizată în aplicație</string>
 
-    <string name="dialog_startup_subtitle">Alege pagina de pornire preferată:</string>
+    <string name="dialog_startup_subtitle">Alege pagina de pornire preferată</string>
     <string name="dialog_info_startup">Configurează ecranul inițial prezentat utilizatorilor la lansarea aplicației. Această setare influențează prima interacțiune a utilizatorului cu aplicația.</string>
 
     <string name="select_language_title">Selectați limba</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Autentificare</string>
     <string name="use_github_account">Trimite folosind contul GitHub</string>
     <string name="send_anonymously">Trimite anonim</string>
-    <string name="optional_placeholder">(Opțional)</string>
+    <string name="optional_placeholder">Opțional</string>
     <string name="issue_username_label">Nume de utilizator</string>
     <string name="issue_password_label">Parolă</string>
     <string name="issue_email_label">Email</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Problema depusă cu succes</string>
     <string name="open_issue_in_browser">Deschis în browser</string>
     <string name="open_button_label">Problemă deschisă</string>
-    <string name="issue_submitted">Problema dvs. a fost trimisă!</string>
+    <string name="issue_submitted">Problema dvs. a fost trimisă.</string>
     <string name="error_unauthorized">Neautorizat: jeton nevalid</string>
     <string name="error_forbidden">Interzis: permisiuni insuficiente</string>
     <string name="error_gone">Punctul final API eliminat</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Compilare aplicație: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Depanare</string>
     <string name="release">Lansare</string>
-    <string name="manufacturer">Producător:</string>
-    <string name="device_model">Model dispozitiv:</string>
-    <string name="android_version">Versiune Android:</string>
-    <string name="api_level">Nivel API:</string>
+    <string name="manufacturer">Producător</string>
+    <string name="device_model">Model dispozitiv</string>
+    <string name="android_version">Versiune Android</string>
+    <string name="api_level">Nivel API</string>
     <string name="snack_device_info_copied">Informațiile dispozitivului au fost copiate în clipboard</string>
     <string name="snack_device_info_failed">Nu s-a putut încărca informațiile despre dispozitiv</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Susține-ne</string>
     <string name="paid_support">Suport plătit</string>
-    <string name="summary_donations">Indiferent de suma donată, ne vei ajuta să menținem aplicația în funcțiune și să îmbunătățim funcțiile. Îți apreciem generozitatea și bunătatea!</string>
+    <string name="summary_donations">Indiferent de suma donată, ne vei ajuta să menținem aplicația în funcțiune și să îmbunătățim funcțiile. Îți apreciem generozitatea și bunătatea.</string>
     <string name="non_paid_support">Suport neplătit</string>
     <string name="web_ad">Reclamă web</string>
     <string name="error_failed_to_load_sku_details">Nu s-au putut încărca detaliile SKU</string>
-    <string name="purchase_pending">Donația dvs. este procesată de Google. Vă vom anunța când va fi finalizat. Vă mulțumesc!</string>
-    <string name="purchase_thank_you">Vă mulțumim pentru donație!</string>
+    <string name="purchase_pending">Donația dvs. este procesată de Google. Vă vom anunța când va fi finalizat. Vă mulțumesc.</string>
+    <string name="purchase_thank_you">Vă mulțumim pentru donație.</string>
     <string name="purchase_cancelled">Achiziția a fost anulată</string>
 </resources>

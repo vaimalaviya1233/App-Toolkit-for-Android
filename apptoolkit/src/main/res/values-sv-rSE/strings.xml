@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_short_description">Utformad för att effektivisera ditt arbetsflöde, den här appen erbjuder viktiga verktyg och funktioner som hjälper dig att hålla dig organiserad och effektiv i alla uppgifter. 📱</string>
-    <string name="notification_update_title">En ny uppdatering är tillgänglig!</string>
-    <string name="summary_notification_update">En ny version av appen är tillgänglig. Klicka för att uppdatera!</string>
-    <string name="notification_last_time_used_title">Det var ett tag sedan!</string>
-    <string name="default_notification_summary">Det finns många nya funktioner som väntar på dig. Öppna appen!</string>
+    <string name="notification_update_title">En ny uppdatering är tillgänglig.</string>
+    <string name="summary_notification_update">En ny version av appen är tillgänglig. Klicka för att uppdatera.</string>
+    <string name="notification_last_time_used_title">Det var ett tag sedan.</string>
+    <string name="default_notification_summary">Det finns många nya funktioner som väntar på dig. Öppna appen.</string>
 
     <string name="welcome">Välkommen</string>
     <string name="summary_browse_terms_of_service_and_privacy_policy">Läs och godkänn våra användarvillkor och integritetspolicy för att fortsätta</string>
@@ -44,21 +44,21 @@
     <string name="button_acknowledge_consents">Spara och fortsätt</string>
     <string name="button_continue">Fortsätt</string>
     <string name="onboarding_complete_icon_desc">Introduktion klar</string>
-    <string name="onboarding_final_title">Allt är klart!</string>
-    <string name="onboarding_final_description">Tack för att du anpassade din upplevelse. Du är nu redo att utforska alla funktioner. Ha så kul!</string>
+    <string name="onboarding_final_title">Allt är klart.</string>
+    <string name="onboarding_final_description">Tack för att du anpassade din upplevelse. Du är nu redo att utforska alla funktioner. Ha så kul.</string>
 
     <string name="navigation_drawer_open">Öppna navigationsmeny</string>
     <string name="content_description_more_options">Fler alternativ</string>
     <string name="go_back">Tillbaka</string>
-    <string name="toast_review_already_done">Tack för betyg!</string>
+    <string name="toast_review_already_done">Tack för betyg.</string>
 
     <string name="error">Fel</string>
-    <string name="sort_by">Sortera efter:</string>
+    <string name="sort_by">Sortera efter</string>
     <string name="app_not_installed">Appen är inte installerad</string>
     <string name="snack_app_updated">Appen har uppdaterats framgångsrikt</string>
     <string name="snack_update_failed">Ett problem uppstod under uppdateringen</string>
     <string name="try_again">Försök igen</string>
-    <string name="summary_share_message">Kolla in den här fantastiska appen som jag använder! Den har några riktigt coola funktioner som du kanske tycker är intressanta. Du kan ladda ner den från Play Store på: %1$s</string>
+    <string name="summary_share_message">Kolla in den här fantastiska appen som jag använder. Den har några riktigt coola funktioner som du kanske tycker är intressanta. Du kan ladda ner den från Play Store på: %1$s</string>
     <string name="learn_more">Läs mer</string>
     <string name="close">Stäng?</string>
     <string name="summary_close">Är du säker på att du vill avsluta?</string>
@@ -78,7 +78,7 @@
     <string name="settings_placeholder_description">Inga inställningar valda. Välj ett alternativ för att se detaljer här.</string>
     <string name="get_help">Få hjälp</string>
     <string name="error_no_settings_found">Inga inställningar hittades</string>
-    <string name="error_invalid_content_key">Ogiltig innehållsnyckel!</string>
+    <string name="error_invalid_content_key">Ogiltig innehållsnyckel.</string>
 
     <string name="display">Skärm</string>
     <string name="summary_preference_settings_display">Anpassa appens utseende och känsla</string>
@@ -110,7 +110,7 @@
     <string name="language">Språk</string>
     <string name="summary_preference_settings_language">Ändra det språk som används i appen</string>
 
-    <string name="dialog_startup_subtitle">Välj din föredragna startsida:</string>
+    <string name="dialog_startup_subtitle">Välj din föredragna startsida</string>
     <string name="dialog_info_startup">Konfigurerar den första skärmen som presenteras för användarna vid appstart.</string>
 
     <string name="select_language_title">Välj språk</string>
@@ -131,7 +131,7 @@
     <string name="login_section_label">Logga in</string>
     <string name="use_github_account">Skicka med GitHub-konto</string>
     <string name="send_anonymously">Skicka anonymt</string>
-    <string name="optional_placeholder">(Valfritt)</string>
+    <string name="optional_placeholder">Valfritt</string>
     <string name="issue_username_label">Användarnamn</string>
     <string name="issue_password_label">Lösenord</string>
     <string name="issue_email_label">E-post</string>
@@ -144,7 +144,7 @@
     <string name="issue_submitted_successfully">Utfärdas framgångsrikt</string>
     <string name="open_issue_in_browser">Öppet i webbläsaren</string>
     <string name="open_button_label">Öppen fråga</string>
-    <string name="issue_submitted">Ditt problem lämnades in!</string>
+    <string name="issue_submitted">Ditt problem lämnades in.</string>
     <string name="error_unauthorized">Obehörig: Ogiltig token</string>
     <string name="error_forbidden">Förbjudet: Otillräckliga behörigheter</string>
     <string name="error_gone">API -slutpunkten borttagen</string>
@@ -253,10 +253,10 @@
     <string name="app_build">Appversion: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Felsökning</string>
     <string name="release">Utgåva</string>
-    <string name="manufacturer">Tillverkare:</string>
-    <string name="device_model">Enhetsmodell:</string>
-    <string name="android_version">Android-version:</string>
-    <string name="api_level">API-nivå:</string>
+    <string name="manufacturer">Tillverkare</string>
+    <string name="device_model">Enhetsmodell</string>
+    <string name="android_version">Android-version</string>
+    <string name="api_level">API-nivå</string>
     <string name="snack_device_info_copied">Enhetsinformation kopierad till urklipp</string>
     <string name="snack_device_info_failed">Det gick inte att läsa in enhetsinformation</string>
 
@@ -279,11 +279,11 @@
 
     <string name="support_us">Stöd oss</string>
     <string name="paid_support">Betalt stöd</string>
-    <string name="summary_donations">Oavsett hur mycket du donerar, hjälper du oss att hålla appen igång och förbättra funktionerna. Vi uppskattar din generositet och vänlighet!</string>
+    <string name="summary_donations">Oavsett hur mycket du donerar, hjälper du oss att hålla appen igång och förbättra funktionerna. Vi uppskattar din generositet och vänlighet.</string>
     <string name="non_paid_support">Obetalt stöd</string>
     <string name="web_ad">Webbannons</string>
     <string name="error_failed_to_load_sku_details">Det gick inte att läsa in SKU-detaljer</string>
-    <string name="purchase_pending">Din donation behandlas av Google. Vi kommer att meddela dig när den är klar. Tack!</string>
-    <string name="purchase_thank_you">Tack för din donation!</string>
+    <string name="purchase_pending">Din donation behandlas av Google. Vi kommer att meddela dig när den är klar. Tack.</string>
+    <string name="purchase_thank_you">Tack för din donation.</string>
     <string name="purchase_cancelled">Köp avbruten</string>
 </resources>

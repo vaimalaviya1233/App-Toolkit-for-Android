@@ -5,7 +5,7 @@
     <string name="onboarding_welcome_title">مرحبًا بك في App Toolkit</string>
     <string name="onboarding_welcome_description">استكشف إمكانيات مكتبة AppToolkit الخاصة بنا. اكتشف تطبيقاتنا، التي تم إنشاؤها جميعًا لعرض واستخدام قوة مكتبة AppToolkit الخاصة بنا، مما يعزز تطوير Android وتجربة المستخدم.</string>
     <string name="onboarding_feature1_title">اكتشف تطبيقاتنا</string>
-    <string name="onboarding_feature1_description">يقدم لك App Toolkit مجموعة مختارة من تطبيقاتنا، تم تصميم كل منها لتسليط الضوء على جوانب مختلفة من مكتبة AppToolkit الخاصة بنا وتعزيز تجربتك على Android. شاهد ما هو ممكن مع مكتبة AppToolkit الخاصة بنا!</string>
+    <string name="onboarding_feature1_description">يقدم لك App Toolkit مجموعة مختارة من تطبيقاتنا، تم تصميم كل منها لتسليط الضوء على جوانب مختلفة من مكتبة AppToolkit الخاصة بنا وتعزيز تجربتك على Android. شاهد ما هو ممكن مع مكتبة AppToolkit الخاصة بنا.</string>
     <string name="onboarding_personalization_title">شاهد مكتبة AppToolkit الخاصة بنا وهي تعمل</string>
     <string name="onboarding_personalization_description">يوضح هذا التطبيق كيف يمكن استخدام مكتبة AppToolkit الخاصة بنا لبناء تطبيقات متعددة الاستخدامات ومركزة على المستخدم. استكشف تطبيقاتنا للاطلاع على الميزات والتطبيقات المختلفة للمكتبة.</string>
 
@@ -31,7 +31,7 @@
     <string name="question_7">لماذا يحتاج App Toolkit إلى أذونات مثل الوصول إلى الإنترنت؟</string>
     <string name="summary_preference_faq_7">يتطلب App Toolkit الوصول إلى الإنترنت لجلب أحدث قائمة بتطبيقاتنا من متجر Google Play وعرض معلوماتها بدقة. لا يتطلب عادةً أذونات أخرى متطفلة.</string>
     <string name="question_8">كيف يمكنني تقديم ملاحظات حول App Toolkit أو تطبيقاتكم؟</string>
-    <string name="summary_preference_faq_8">نحن نقدر ملاحظاتك حول App Toolkit وتطبيقاتنا الفردية! يمكنك عادةً العثور على خيار "ملاحظات" أو "اتصل بنا" ضمن إعدادات App Toolkit أو في صفحة المطور الخاصة بنا على متجر Play. نرحب أيضًا بالملاحظات حول مكتبة AppToolkit نفسها من خلال القنوات المناسبة.</string>
+    <string name="summary_preference_faq_8">نحن نقدر ملاحظاتك حول App Toolkit وتطبيقاتنا الفردية. يمكنك عادةً العثور على خيار "ملاحظات" أو "اتصل بنا" ضمن إعدادات App Toolkit أو في صفحة المطور الخاصة بنا على متجر Play. نرحب أيضًا بالملاحظات حول مكتبة AppToolkit نفسها من خلال القنوات المناسبة.</string>
     <string name="question_9">هل بياناتي آمنة عند استخدام App Toolkit للعثور على تطبيقاتكم الأخرى؟</string>
     <string name="summary_preference_faq_9">يقوم App Toolkit بجمع المعلومات المتاحة للجمهور حول تطبيقاتنا بشكل أساسي. عندما تختار تثبيت أو استخدام أحد تطبيقاتنا المدرجة، سيتم تطبيق سياسة الخصوصية الخاصة بهذا التطبيق. نشجعك على مراجعتها. يتم تحديد معالجة البيانات بواسطة App Toolkit في سياسة الخصوصية الخاصة بنا.</string>
 </resources>
