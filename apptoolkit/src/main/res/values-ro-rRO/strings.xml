@@ -165,9 +165,9 @@
     <string name="privacy">Confidențialitate</string>
     <string name="privacy_policy">Politica de confidențialitate</string>
     <string name="summary_preference_settings_privacy_policy">Vezi politica care reglementează modul în care gestionăm datele tale</string>
-    <string name="terms_of_service">Termeni de Serviciu</string>
+    <string name="terms_of_service">Termeni de serviciu</string>
     <string name="summary_preference_settings_terms_of_service">Revizuiește termenii pe care îi accepți utilizând serviciul nostru</string>
-    <string name="code_of_conduct">Cod de Conduită</string>
+    <string name="code_of_conduct">Cod de conduită</string>
     <string name="summary_preference_settings_code_of_conduct">Înțelege regulile și liniile directoare pentru comportament în cadrul serviciului nostru</string>
 
     <string name="permissions">Permisiuni</string>

@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Ermöglicht personalisierte Werbung.</string>
     <string name="onboarding_crashlytics_show_details_button">Detaillierte informationen anzeigen</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Detaillierte Informationen zu Nutzung und Diagnose anzeigen</string>
-    <string name="button_acknowledge_consents">Speichern und Fortfahren</string>
+    <string name="button_acknowledge_consents">Speichern und fortfahren</string>
     <string name="button_continue">Fortfahren</string>
     <string name="onboarding_complete_icon_desc">Onboarding abgeschlossen</string>
     <string name="onboarding_final_title">Alles ist bereit!</string>
@@ -280,7 +280,7 @@
     <string name="support_us">Unterstützen sie uns</string>
     <string name="paid_support">Bezahlte unterstützung</string>
     <string name="summary_donations">Unabhängig vom Betrag Ihrer Spende helfen Sie uns, die App am Laufen zu halten und die Funktionen zu verbessern. Vielen Dank für Ihre Großzügigkeit!</string>
-    <string name="non_paid_support">Unbezahlte Unterstützung</string>
+    <string name="non_paid_support">Unbezahlte unterstützung</string>
     <string name="web_ad">Webanzeige</string>
     <string name="error_failed_to_load_sku_details">Fehler beim Laden der SKU-Details</string>
     <string name="purchase_pending">Ihre Spende wird von Google verarbeitet. Wir werden Sie benachrichtigen, wenn es abgeschlossen ist. Danke schön!</string>

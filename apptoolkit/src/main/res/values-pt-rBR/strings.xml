@@ -7,7 +7,7 @@
     <string name="default_notification_summary">Há muitos recursos esperando por você. Abra o aplicativo!</string>
 
     <string name="welcome">Bem-vindo</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Leia e concorde com nossos Termos de Serviço e Política de Privacidade para continuar</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Leia e concorde com nossos Termos de serviço e Política de Privacidade para continuar</string>
     <string name="agree">Concordo</string>
     <string name="error_loading_consent_info">Falha ao carregar as informações de consentimento</string>
     <string name="loading">Carregando…</string>
@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Ativa publicidade personalizada.</string>
     <string name="onboarding_crashlytics_show_details_button">Mostrar informações detalhadas</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Mostrar informações detalhadas sobre uso e diagnósticos</string>
-    <string name="button_acknowledge_consents">Salvar e Continuar</string>
+    <string name="button_acknowledge_consents">Salvar e continuar</string>
     <string name="button_continue">Continuar</string>
     <string name="onboarding_complete_icon_desc">Onboarding concluído</string>
     <string name="onboarding_final_title">Está tudo pronto!</string>
@@ -165,9 +165,9 @@
     <string name="privacy">Privacidade</string>
     <string name="privacy_policy">Política de privacidade</string>
     <string name="summary_preference_settings_privacy_policy">Veja a política que rege o tratamento dos seus dados</string>
-    <string name="terms_of_service">Termos de Serviço</string>
+    <string name="terms_of_service">Termos de serviço</string>
     <string name="summary_preference_settings_terms_of_service">Revise os termos que você aceita ao usar nosso serviço</string>
-    <string name="code_of_conduct">Código de Conduta</string>
+    <string name="code_of_conduct">Código de conduta</string>
     <string name="summary_preference_settings_code_of_conduct">Compreenda as regras e diretrizes de comportamento dentro do nosso serviço</string>
 
     <string name="permissions">Permissões</string>

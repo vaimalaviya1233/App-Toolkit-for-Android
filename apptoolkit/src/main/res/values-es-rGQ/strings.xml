@@ -41,7 +41,7 @@
     <string name="consent_ad_personalization_description_short">Habilita la publicidad personalizada.</string>
     <string name="onboarding_crashlytics_show_details_button">Mostrar información detallada</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Mostrar información detallada sobre el uso y los diagnósticos</string>
-    <string name="button_acknowledge_consents">Guardar y Continuar</string>
+    <string name="button_acknowledge_consents">Guardar y continuar</string>
     <string name="button_continue">Continuar</string>
     <string name="onboarding_complete_icon_desc">Proceso de incorporación completado</string>
     <string name="onboarding_final_title">¡todo listo!</string>

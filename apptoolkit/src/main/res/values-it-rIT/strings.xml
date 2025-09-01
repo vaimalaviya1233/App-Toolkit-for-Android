@@ -7,7 +7,7 @@
     <string name="default_notification_summary">Ci sono molte funzionalità che ti aspettano. Apri l\'app!</string>
 
     <string name="welcome">Benvenuto</string>
-    <string name="summary_browse_terms_of_service_and_privacy_policy">Leggi e accetta i nostri Termini di Servizio e la Politica sulla Privacy per continuare</string>
+    <string name="summary_browse_terms_of_service_and_privacy_policy">Leggi e accetta i nostri Termini di servizio e la Politica sulla Privacy per continuare</string>
     <string name="agree">Accetto</string>
     <string name="error_loading_consent_info">Caricamento delle informazioni sul consenso non riuscito</string>
     <string name="loading">Caricamento…</string>
@@ -165,9 +165,9 @@
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Politica sulla privacy</string>
     <string name="summary_preference_settings_privacy_policy">Visualizza la politica che regola come trattiamo i tuoi dati</string>
-    <string name="terms_of_service">Termini di Servizio</string>
+    <string name="terms_of_service">Termini di servizio</string>
     <string name="summary_preference_settings_terms_of_service">Esamina i termini che accetti utilizzando il nostro servizio</string>
-    <string name="code_of_conduct">Codice di Condotta</string>
+    <string name="code_of_conduct">Codice di condotta</string>
     <string name="summary_preference_settings_code_of_conduct">Comprendi le regole di comportamento previste dal nostro servizio</string>
 
     <string name="permissions">Permessi</string>
