@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Caricamento delle informazioni sul consenso non riuscito</string>
     <string name="loading">Caricamento…</string>
 
-    <string name="skip_button_text">SALTA</string>
+    <string name="skip_button_text">Salta</string>
     <string name="skip_button_content_description">Salta</string>
     <string name="back_button_content_description">Indietro</string>
-    <string name="back_button_text">INDIETRO</string>
+    <string name="back_button_text">Indietro</string>
     <string name="done_button_content_description">Fatto</string>
-    <string name="done_button_text">FATTO</string>
+    <string name="done_button_text">Fatto</string>
     <string name="next_button_content_description">Avanti</string>
-    <string name="next_button_text">AVANTI</string>
+    <string name="next_button_text">Avanti</string>
     <string name="onboarding_theme_title">Scegli il tuo stile</string>
     <string name="onboarding_theme_subtitle">Seleziona l\'aspetto desiderato per l\'app.</string>
     <string name="onboarding_theme_light_desc">Luminoso ed energico.</string>
@@ -163,7 +163,7 @@
     <string name="summary_preference_settings_privacy_and_security">Gestisci le impostazioni sulla privacy</string>
 
     <string name="privacy">Privacy</string>
-    <string name="privacy_policy">Politica sulla Privacy</string>
+    <string name="privacy_policy">Politica sulla privacy</string>
     <string name="summary_preference_settings_privacy_policy">Visualizza la politica che regola come trattiamo i tuoi dati</string>
     <string name="terms_of_service">Termini di Servizio</string>
     <string name="summary_preference_settings_terms_of_service">Esamina i termini che accetti utilizzando il nostro servizio</string>

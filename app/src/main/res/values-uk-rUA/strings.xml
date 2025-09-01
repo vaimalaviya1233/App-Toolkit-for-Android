@@ -4,9 +4,9 @@
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Ласкаво просимо до App Toolkit</string>
     <string name="onboarding_welcome_description">Ознайомтеся з можливостями нашої бібліотеки AppToolkit. Відкрийте для себе наші програми, створені для демонстрації та використання потужності нашої бібліотеки AppToolkit, покращуючи ваш досвід розробки для Android та взаємодії з користувачем.</string>
-    <string name="onboarding_feature1_title">Відкрийте Наші Програми</string>
+    <string name="onboarding_feature1_title">Відкрийте наші програми</string>
     <string name="onboarding_feature1_description">App Toolkit представляє вам добірку наших програм, кожна з яких розроблена для того, щоб висвітлити різні аспекти нашої бібліотеки AppToolkit та покращити ваш досвід роботи з Android. Подивіться, що можливо з нашою бібліотекою AppToolkit!</string>
-    <string name="onboarding_personalization_title">Подивіться Нашу Бібліотеку AppToolkit у Дії</string>
+    <string name="onboarding_personalization_title">Подивіться нашу бібліотеку AppToolkit у дії</string>
     <string name="onboarding_personalization_description">Ця програма демонструє, як нашу бібліотеку AppToolkit можна використовувати для створення універсальних та орієнтованих на користувача програм. Ознайомтеся з нашими програмами, щоб побачити різні функції та реалізації бібліотеки.</string>
 
     <!-- Home screen -->

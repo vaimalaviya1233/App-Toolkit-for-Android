@@ -12,39 +12,39 @@
     <string name="error_loading_consent_info">Gagal memuat informasi persetujuan</string>
     <string name="loading">Memuat…</string>
 
-    <string name="skip_button_text">LEWATI</string>
+    <string name="skip_button_text">Lewati</string>
     <string name="skip_button_content_description">Lewati</string>
     <string name="back_button_content_description">Kembali</string>
-    <string name="back_button_text">KEMBALI</string>
+    <string name="back_button_text">Kembali</string>
     <string name="done_button_content_description">Selesai</string>
-    <string name="done_button_text">SELESAI</string>
+    <string name="done_button_text">Selesai</string>
     <string name="next_button_content_description">Selanjutnya</string>
-    <string name="next_button_text">SELANJUTNYA</string>
-    <string name="onboarding_theme_title">Pilih Gaya Anda</string>
+    <string name="next_button_text">Selanjutnya</string>
+    <string name="onboarding_theme_title">Pilih gaya anda</string>
     <string name="onboarding_theme_subtitle">Pilih bagaimana Anda ingin tampilan aplikasi.</string>
     <string name="onboarding_theme_light_desc">Terang dan energik.</string>
     <string name="onboarding_theme_dark_desc">Nyaman di mata.</string>
     <string name="onboarding_theme_system_desc">Sesuai dengan perangkat Anda.</string>
     <string name="onboarding_amoled_mode_desc">Hitam lebih pekat untuk layar OLED.</string>
     <string name="selected">Terpilih</string>
-    <string name="onboarding_crashlytics_title">Bantu Kami Meningkatkan</string>
+    <string name="onboarding_crashlytics_title">Bantu kami meningkatkan</string>
     <string name="onboarding_crashlytics_description">Izinkan aplikasi mengirim data penggunaan anonim dan laporan kerusakan. Ini membantu kami memperbaiki bug dan membuat pengalaman Anda lebih baik. Tidak ada informasi pribadi yang pernah dikumpulkan.</string>
     <string name="onboarding_crashlytics_enabled_desc">Pelaporan data aktif.</string>
     <string name="onboarding_crashlytics_disabled_desc">Pelaporan data tidak aktif.</string>
     <string name="onboarding_crashlytics_privacy_info">Privasi Anda penting. Kami hanya menggunakan data ini untuk memperbaiki bug dan meningkatkan fitur. Untuk lebih jelasnya, harap tinjau kebijakan privasi kami.</string>
     <string name="learn_more_privacy_policy">Tinjau Kebijakan Privasi kami</string>
-    <string name="onboarding_crashlytics_title_dialog">Kelola Izin Data</string>
+    <string name="onboarding_crashlytics_title_dialog">Kelola izin data</string>
     <string name="onboarding_crashlytics_description_dialog">Harap tinjau dan konfirmasi preferensi izin Anda. Data ini membantu kami meningkatkan aplikasi dan ditangani sesuai Kebijakan Privasi kami.</string>
     <string name="consent_analytics_storage_description_short">Mengizinkan pengumpulan data untuk analisis penggunaan aplikasi.</string>
     <string name="consent_ad_storage_description_short">Mengizinkan penyimpanan data untuk tujuan periklanan.</string>
     <string name="consent_ad_user_data_description_short">Mengizinkan pengiriman data pengguna untuk iklan.</string>
     <string name="consent_ad_personalization_description_short">Mengaktifkan iklan yang dipersonalisasi.</string>
-    <string name="onboarding_crashlytics_show_details_button">Tampilkan Informasi Detail</string>
+    <string name="onboarding_crashlytics_show_details_button">Tampilkan informasi detail</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Tampilkan informasi detail tentang penggunaan dan diagnostik</string>
     <string name="button_acknowledge_consents">Simpan dan Lanjutkan</string>
     <string name="button_continue">Lanjutkan</string>
-    <string name="onboarding_complete_icon_desc">Orientasi Selesai</string>
-    <string name="onboarding_final_title">Anda Siap!</string>
+    <string name="onboarding_complete_icon_desc">Orientasi selesai</string>
+    <string name="onboarding_final_title">Anda siap!</string>
     <string name="onboarding_final_description">Terima kasih telah mempersonalisasi pengalaman Anda. Sekarang Anda siap untuk menjelajahi semua fitur. Selamat menikmati!</string>
 
     <string name="navigation_drawer_open">Buka menu navigasi</string>
@@ -73,7 +73,7 @@
     <string name="initialization_error">Inisialisasi gagal. Silakan coba lagi nanti.</string>
 
     <string name="settings">Pengaturan</string>
-    <string name="long_settings_label">Pengaturan Aplikasi</string>
+    <string name="long_settings_label">Pengaturan aplikasi</string>
     <string name="settings_disabled_message">Pengaturan saat ini tidak tersedia.</string>
     <string name="settings_placeholder_description">Tidak ada pengaturan yang dipilih. Pilih opsi untuk melihat detailnya di sini.</string>
     <string name="get_help">Dapatkan bantuan</string>
@@ -113,7 +113,7 @@
     <string name="dialog_startup_subtitle">Pilih halaman awal yang Anda sukai:</string>
     <string name="dialog_info_startup">Mengonfigurasi layar awal yang disajikan kepada pengguna saat meluncurkan aplikasi. Pengaturan ini memengaruhi interaksi pertama pengguna dengan aplikasi.</string>
 
-    <string name="select_language_title">Pilih Bahasa</string>
+    <string name="select_language_title">Pilih bahasa</string>
     <string name="dialog_language_subtitle">Pilih bahasa pilihan Anda</string>
     <string name="dialog_info_language">Personalisasi pengalaman Anda dengan bahasa pilihan Anda. Perubahan bahasa yang Anda buat akan langsung berlaku.</string>
 
@@ -153,8 +153,8 @@
     <string name="error_reporting">Pelaporan kesalahan</string>
     <string name="bug_report">Laporan bug</string>
     <string name="summary_preference_settings_bug_report">Kirim laporan bug dan permintaan fitur ke halaman masalah di repositori GitHub aplikasi</string>
-    <string name="cache_management">Manajemen Cache</string>
-    <string name="clear_cache">Bersihkan Cache</string>
+    <string name="cache_management">Manajemen cache</string>
+    <string name="clear_cache">Bersihkan cache</string>
     <string name="summary_preference_settings_clear_cache">Bersihkan data aplikasi sementara.</string>
     <string name="cache_cleared_success">Cache berhasil dibersihkan</string>
     <string name="cache_cleared_error">Cache dibersihkan dengan beberapa kesalahan</string>
@@ -163,7 +163,7 @@
     <string name="summary_preference_settings_privacy_and_security">Kelola pengaturan privasi Anda</string>
 
     <string name="privacy">Privasi</string>
-    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="privacy_policy">Kebijakan privasi</string>
     <string name="summary_preference_settings_privacy_policy">Lihat kebijakan yang mengatur bagaimana kami menangani data Anda</string>
     <string name="terms_of_service">Ketentuan Layanan</string>
     <string name="summary_preference_settings_terms_of_service">Tinjau ketentuan yang Anda setujui saat menggunakan layanan kami</string>
@@ -209,20 +209,20 @@
     <string name="usage_and_diagnostics">Penggunaan dan diagnostik</string>
     <string name="summary_preference_settings_usage_and_diagnostics">Bagikan data untuk membantu meningkatkan pengalaman dalam aplikasi</string>
     <string name="summary_usage_and_diagnostics">Bantu tingkatkan pengalaman Anda dengan mengirimkan data diagnostik, perangkat, dan penggunaan aplikasi secara otomatis kepada kami.</string>
-    <string name="privacy_settings_title">Pengaturan Privasi</string>
+    <string name="privacy_settings_title">Pengaturan privasi</string>
     <string name="consent_category_analytics_title">Analitik</string>
-    <string name="consent_category_advertising_title">Iklan yang Dipersonalisasi</string>
-    <string name="consent_analytics_storage_title">Simpan Data Analitik</string>
+    <string name="consent_category_advertising_title">Iklan yang dipersonalisasi</string>
+    <string name="consent_analytics_storage_title">Simpan data analitik</string>
     <string name="consent_analytics_storage_description">Izinkan penyimpanan data seperti penggunaan aplikasi dan durasi kunjungan untuk meningkatkan analitik dan performa aplikasi.</string>
-    <string name="consent_ad_storage_title">Simpan Data Iklan</string>
+    <string name="consent_ad_storage_title">Simpan data iklan</string>
     <string name="consent_ad_storage_description">Aktifkan penyimpanan data (seperti ID perangkat atau cookie) untuk mengukur performa iklan dan menampilkan iklan yang relevan.</string>
-    <string name="consent_ad_user_data_title">Kirim Data untuk Iklan</string>
+    <string name="consent_ad_user_data_title">Kirim data untuk iklan</string>
     <string name="consent_ad_user_data_description">Izinkan pengiriman data penggunaan dan perangkat ke Google untuk mendukung fitur terkait iklan seperti konversi dan optimalisasi kampanye.</string>
-    <string name="consent_ad_personalization_title">Iklan yang Dipersonalisasi</string>
+    <string name="consent_ad_personalization_title">Iklan yang dipersonalisasi</string>
     <string name="consent_ad_personalization_description">Aktifkan iklan yang dipersonalisasi berdasarkan aktivitas dan preferensi Anda di seluruh layanan dan aplikasi Google.</string>
     <string name="privacy_settings_info">Kelola preferensi data Anda di bawah ini. Anda dapat mengubah setelan ini kapan saja. Untuk detail selengkapnya, lihat <a href="%s">Kebijakan Privasi</a> kami.</string>
     <string name="learn_more_privacy_policy_settings">Pelajari lebih lanjut di Kebijakan Privasi kami</string>
-    <string name="advanced_privacy_settings">Pengaturan Privasi Lanjutan</string>
+    <string name="advanced_privacy_settings">Pengaturan privasi lanjutan</string>
     <string name="icon_desc_expand_more">Perluas</string>
     <string name="icon_desc_expand_less">Ciutkan</string>
     <string name="icon_desc_consent_category">Ikon kategori izin</string>
@@ -242,15 +242,15 @@
     <string name="summary_preference_settings_oss">Detail lisensi untuk perangkat lunak sumber terbuka</string>
 
     <string name="eula_title">Perjanjian Lisensi Pengguna Akhir</string>
-    <string name="changelog_title">Catatan Perubahan Aplikasi</string>
+    <string name="changelog_title">Catatan perubahan aplikasi</string>
     <string name="loading_eula_message">Mengambil Perjanjian Lisensi Pengguna Akhir…</string>
     <string name="loading_changelog_message">Mengambil catatan perubahan aplikasi…</string>
     <string name="error_loading_eula_message">Tidak dapat memuat Perjanjian Lisensi Pengguna Akhir. Silakan coba lagi.</string>
     <string name="error_loading_changelog_message">Tidak dapat memuat catatan perubahan aplikasi. Silakan coba lagi.</string>
     <string name="no_new_updates_message">Tidak ada pembaruan baru yang tersedia.</string>
 
-    <string name="device_info">Informasi Perangkat</string>
-    <string name="app_build">Build Aplikasi: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="device_info">Informasi perangkat</string>
+    <string name="app_build">Build aplikasi: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Rilis</string>
     <string name="manufacturer">Pabrikan:</string>

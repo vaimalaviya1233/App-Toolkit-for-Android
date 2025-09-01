@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Не удалось загрузить информацию о согласии</string>
     <string name="loading">Загрузка…</string>
 
-    <string name="skip_button_text">ПРОПУСТИТЬ</string>
+    <string name="skip_button_text">Пропустить</string>
     <string name="skip_button_content_description">Пропустить</string>
     <string name="back_button_content_description">Назад</string>
-    <string name="back_button_text">НАЗАД</string>
+    <string name="back_button_text">Назад</string>
     <string name="done_button_content_description">Готово</string>
-    <string name="done_button_text">ГОТОВО</string>
+    <string name="done_button_text">Готово</string>
     <string name="next_button_content_description">Далее</string>
-    <string name="next_button_text">ДАЛЕЕ</string>
+    <string name="next_button_text">Далее</string>
     <string name="onboarding_theme_title">Выберите свой стиль</string>
     <string name="onboarding_theme_subtitle">Выберите, как должно выглядеть приложение.</string>
     <string name="onboarding_theme_light_desc">Яркий и энергичный.</string>

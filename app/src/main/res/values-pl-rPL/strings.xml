@@ -4,9 +4,9 @@
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Witamy w App Toolkit</string>
     <string name="onboarding_welcome_description">Poznaj możliwości naszej biblioteki AppToolkit. Odkryj nasze aplikacje, wszystkie stworzone, aby demonstrować i wykorzystywać moc naszej biblioteki AppToolkit, usprawniając rozwój Androida i wrażenia użytkownika.</string>
-    <string name="onboarding_feature1_title">Odkryj Nasze Aplikacje</string>
+    <string name="onboarding_feature1_title">Odkryj nasze aplikacje</string>
     <string name="onboarding_feature1_description">App Toolkit przedstawia wybór naszych aplikacji, z których każda została zaprojektowana, aby podkreślić różne aspekty naszej biblioteki AppToolkit i poprawić Twoje wrażenia z Androida. Zobacz, co jest możliwe dzięki naszej bibliotece AppToolkit!</string>
-    <string name="onboarding_personalization_title">Zobacz Naszą Bibliotekę AppToolkit w Akcji</string>
+    <string name="onboarding_personalization_title">Zobacz naszą bibliotekę AppToolkit w akcji</string>
     <string name="onboarding_personalization_description">Ta aplikacja demonstruje, jak nasza biblioteka AppToolkit może być używana do tworzenia wszechstronnych i zorientowanych na użytkownika aplikacji. Przeglądaj nasze aplikacje, aby zobaczyć różne funkcje i implementacje biblioteki.</string>
 
     <!-- Home screen -->

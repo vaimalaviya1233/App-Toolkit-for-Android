@@ -12,15 +12,15 @@
     <string name="error_loading_consent_info">Fehler beim Laden der Einwilligungsinformationen</string>
     <string name="loading">Wird geladen…</string>
 
-    <string name="skip_button_text">ÜBERSPRINGEN</string>
+    <string name="skip_button_text">Überspringen</string>
     <string name="skip_button_content_description">Überspringen</string>
     <string name="back_button_content_description">Zurück</string>
-    <string name="back_button_text">ZURÜCK</string>
+    <string name="back_button_text">Zurück</string>
     <string name="done_button_content_description">Fertig</string>
-    <string name="done_button_text">FERTIG</string>
+    <string name="done_button_text">Fertig</string>
     <string name="next_button_content_description">Weiter</string>
-    <string name="next_button_text">WEITER</string>
-    <string name="onboarding_theme_title">Wähle deinen Stil</string>
+    <string name="next_button_text">Weiter</string>
+    <string name="onboarding_theme_title">Wähle deinen stil</string>
     <string name="onboarding_theme_subtitle">Wähle, wie die App aussehen soll.</string>
     <string name="onboarding_theme_light_desc">Hell und energiegeladen.</string>
     <string name="onboarding_theme_dark_desc">Angenehm für die Augen.</string>
@@ -39,7 +39,7 @@
     <string name="consent_ad_storage_description_short">Erlaubt das Speichern von Daten für Werbezwecke.</string>
     <string name="consent_ad_user_data_description_short">Ermöglicht das Senden von Nutzerdaten für Anzeigen.</string>
     <string name="consent_ad_personalization_description_short">Ermöglicht personalisierte Werbung.</string>
-    <string name="onboarding_crashlytics_show_details_button">Detaillierte Informationen anzeigen</string>
+    <string name="onboarding_crashlytics_show_details_button">Detaillierte informationen anzeigen</string>
     <string name="onboarding_crashlytics_show_details_button_cd">Detaillierte Informationen zu Nutzung und Diagnose anzeigen</string>
     <string name="button_acknowledge_consents">Speichern und Fortfahren</string>
     <string name="button_continue">Fortfahren</string>
@@ -89,8 +89,8 @@
     <string name="will_never_turn_on_automatically">Wird niemals automatisch aktiviert</string>
     <string name="amoled_mode">AMOLED-Modus</string>
     <string name="follow_system">Systemmodus folgen</string>
-    <string name="light_mode">Helles Thema</string>
-    <string name="dark_mode">Dunkles Thema</string>
+    <string name="light_mode">Helles thema</string>
+    <string name="dark_mode">Dunkles thema</string>
     <string name="summary_dark_theme">Das Dunkle Thema nutzt einen tiefen Hintergrund, um Ihre Akkulaufzeit erheblich zu verlängern. Um es zu aktivieren, navigieren Sie einfach zum Systemmanager Ihres Android -Systems und wählen Sie Ihr bevorzugtes Thema in</string>
     <string name="screen_and_display_settings">Bildschirm und Einstellungen anzeigen.</string>
 
@@ -120,8 +120,8 @@
     <string name="notifications">Benachrichtigungen</string>
     <string name="summary_preference_settings_notifications">Verwalten Sie die App-Benachrichtigungen</string>
 
-    <string name="app_usage_notifications">Benachrichtigungen zur App-Nutzung</string>
-    <string name="update_notifications">Update-Benachrichtigungen</string>
+    <string name="app_usage_notifications">Benachrichtigungen zur app-nutzung</string>
+    <string name="update_notifications">Update-benachrichtigungen</string>
 
     <string name="advanced">Erweitert</string>
     <string name="summary_preference_settings_advanced">Erkunden Sie erweiterte Einstellungen</string>
@@ -153,7 +153,7 @@
     <string name="error_reporting">Fehlerberichte</string>
     <string name="bug_report">Fehlerbericht</string>
     <string name="summary_preference_settings_bug_report">Senden Sie Fehlerberichte und Funktionsanfragen an die GitHub-Seite des Projekts</string>
-    <string name="cache_management">Cache-Verwaltung</string>
+    <string name="cache_management">Cache-verwaltung</string>
     <string name="clear_cache">Cache leeren</string>
     <string name="summary_preference_settings_clear_cache">Temporäre Anwendungsdaten löschen.</string>
     <string name="cache_cleared_success">Cache erfolgreich geleert</string>
@@ -211,18 +211,18 @@
     <string name="summary_usage_and_diagnostics">Verbessern Sie Ihre Erfahrung, indem Sie automatisch Diagnosedaten und Nutzungsinformationen senden.</string>
     <string name="privacy_settings_title">Datenschutzeinstellungen</string>
     <string name="consent_category_analytics_title">Analysen</string>
-    <string name="consent_category_advertising_title">Personalisierte Werbung</string>
+    <string name="consent_category_advertising_title">Personalisierte werbung</string>
     <string name="consent_analytics_storage_title">Analysedaten speichern</string>
     <string name="consent_analytics_storage_description">Das Speichern von Daten wie App-Nutzung und Besuchsdauer erlauben, um Analysen und die App-Leistung zu verbessern.</string>
     <string name="consent_ad_storage_title">Werbedaten speichern</string>
     <string name="consent_ad_storage_description">Das Speichern von Daten (wie Gerätekennungen oder Cookies) aktivieren, um die Anzeigenleistung zu messen und relevante Anzeigen anzuzeigen.</string>
-    <string name="consent_ad_user_data_title">Daten für Werbung senden</string>
+    <string name="consent_ad_user_data_title">Daten für werbung senden</string>
     <string name="consent_ad_user_data_description">Das Senden von Nutzungs- und Gerätedaten an Google erlauben, um werbebezogene Funktionen wie Conversions und Kampagnenoptimierung zu unterstützen.</string>
-    <string name="consent_ad_personalization_title">Personalisierte Anzeigen</string>
+    <string name="consent_ad_personalization_title">Personalisierte anzeigen</string>
     <string name="consent_ad_personalization_description">Personalisierte Anzeigen basierend auf Ihrer Aktivität und Ihren Präferenzen in Google-Diensten und -Apps aktivieren.</string>
     <string name="privacy_settings_info">Verwalten Sie unten Ihre Datenpräferenzen. Sie können diese Einstellungen jederzeit ändern. Weitere Informationen finden Sie in unserer <a href="%s">Datenschutzrichtlinie</a>.</string>
     <string name="learn_more_privacy_policy_settings">Mehr erfahren in unserer Datenschutzrichtlinie</string>
-    <string name="advanced_privacy_settings">Erweiterte Datenschutzeinstellungen</string>
+    <string name="advanced_privacy_settings">Erweiterte datenschutzeinstellungen</string>
     <string name="icon_desc_expand_more">Erweitern</string>
     <string name="icon_desc_expand_less">Reduzieren</string>
     <string name="icon_desc_consent_category">Symbol der Zustimmungskategorie</string>
@@ -250,13 +250,13 @@
     <string name="no_new_updates_message">Keine neuen Updates verfügbar.</string>
 
     <string name="device_info">Geräteinformationen</string>
-    <string name="app_build">App-Build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
+    <string name="app_build">App-build: %6$s\n%1$s\n%2$s\n%3$s\n%4$s\n%5$s</string>
     <string name="debug">Debug</string>
     <string name="release">Release</string>
     <string name="manufacturer">Hersteller:</string>
     <string name="device_model">Gerätemodell:</string>
-    <string name="android_version">Android-Version:</string>
-    <string name="api_level">API-Stufe:</string>
+    <string name="android_version">Android-version:</string>
+    <string name="api_level">API-stufe:</string>
     <string name="snack_device_info_copied">Geräteinformationen wurden in die Zwischenablage kopiert</string>
     <string name="snack_device_info_failed">Geräteinformationen konnten nicht geladen werden</string>
 
@@ -277,8 +277,8 @@
 
     <string name="share">Teilen</string>
 
-    <string name="support_us">Unterstützen Sie uns</string>
-    <string name="paid_support">Bezahlte Unterstützung</string>
+    <string name="support_us">Unterstützen sie uns</string>
+    <string name="paid_support">Bezahlte unterstützung</string>
     <string name="summary_donations">Unabhängig vom Betrag Ihrer Spende helfen Sie uns, die App am Laufen zu halten und die Funktionen zu verbessern. Vielen Dank für Ihre Großzügigkeit!</string>
     <string name="non_paid_support">Unbezahlte Unterstützung</string>
     <string name="web_ad">Webanzeige</string>

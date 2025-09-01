@@ -12,14 +12,14 @@
     <string name="error_loading_consent_info">Không thể tải thông tin chấp thuận</string>
     <string name="loading">Đang tải…</string>
 
-    <string name="skip_button_text">BỎ QUA</string>
+    <string name="skip_button_text">Bỏ qua</string>
     <string name="skip_button_content_description">Bỏ qua\"</string>
     <string name="back_button_content_description">Quay lại</string>
-    <string name="back_button_text">QUAY LẠI</string>
+    <string name="back_button_text">Quay lại</string>
     <string name="done_button_content_description">Xong</string>
-    <string name="done_button_text">XONG</string>
+    <string name="done_button_text">Xong</string>
     <string name="next_button_content_description">Tiếp theo</string>
-    <string name="next_button_text">TIẾP THEO</string>
+    <string name="next_button_text">Tiếp theo</string>
     <string name="onboarding_theme_title">Chọn phong cách của bạn</string>
     <string name="onboarding_theme_subtitle">Chọn giao diện bạn muốn cho ứng dụng.</string>
     <string name="onboarding_theme_light_desc">Sáng sủa và năng động.</string>

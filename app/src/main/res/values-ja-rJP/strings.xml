@@ -6,7 +6,7 @@
     <string name="onboarding_welcome_description">当社のAppToolkitライブラリの機能をご覧ください。当社のAppToolkitライブラリの能力を実証し活用するために構築された、当社のアプリケーションをご覧ください。Android開発とユーザーエクスペリエンスを向上させます。</string>
     <string name="onboarding_feature1_title">当社のアプリケーションを発見</string>
     <string name="onboarding_feature1_description">App Toolkitは、当社のAppToolkitライブラリのさまざまな側面を強調し、Androidエクスペリエンスを向上させるために設計された、当社のアプリケーションのセレクションを紹介します。当社のAppToolkitライブラリで何が可能かをご覧ください！</string>
-    <string name="onboarding_personalization_title">当社のAppToolkitライブラリの動作をご覧ください</string>
+    <string name="onboarding_personalization_title">当社のapptoolkitライブラリの動作をご覧ください</string>
     <string name="onboarding_personalization_description">このアプリは、当社のAppToolkitライブラリを使用して、多機能でユーザー中心のアプリケーションを構築する方法を示しています。ライブラリのさまざまな機能と実装を確認するには、当社のアプリをご覧ください。</string>
 
     <!-- Home screen -->

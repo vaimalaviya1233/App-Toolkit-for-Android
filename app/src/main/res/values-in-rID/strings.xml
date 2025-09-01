@@ -4,9 +4,9 @@
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Selamat datang di App Toolkit</string>
     <string name="onboarding_welcome_description">Jelajahi kemampuan pustaka AppToolkit kami. Temukan aplikasi kami, semua dibuat untuk mendemonstrasikan dan memanfaatkan kekuatan pustaka AppToolkit kami, meningkatkan pengembangan Android dan pengalaman pengguna Anda.</string>
-    <string name="onboarding_feature1_title">Temukan Aplikasi Kami</string>
+    <string name="onboarding_feature1_title">Temukan aplikasi kami</string>
     <string name="onboarding_feature1_description">App Toolkit memperkenalkan Anda pada pilihan aplikasi kami, masing-masing dirancang untuk menyoroti berbagai aspek pustaka AppToolkit kami dan meningkatkan pengalaman Android Anda. Lihat apa yang mungkin dengan pustaka AppToolkit kami!</string>
-    <string name="onboarding_personalization_title">Lihat Pustaka AppToolkit Kami Beraksi</string>
+    <string name="onboarding_personalization_title">Lihat pustaka AppToolkit kami beraksi</string>
     <string name="onboarding_personalization_description">Aplikasi ini menunjukkan bagaimana pustaka AppToolkit kami dapat digunakan untuk membangun aplikasi yang serbaguna dan berfokus pada pengguna. Jelajahi aplikasi kami untuk melihat berbagai fitur dan implementasi pustaka.</string>
 
     <!-- Home screen -->
