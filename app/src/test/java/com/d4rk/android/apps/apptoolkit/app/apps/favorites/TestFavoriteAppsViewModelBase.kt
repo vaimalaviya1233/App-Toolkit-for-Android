@@ -8,12 +8,12 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewMo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.FakeDeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import org.junit.jupiter.api.AfterEach
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestFavoriteAppsViewModelBase {
@@ -24,7 +24,7 @@ open class TestFavoriteAppsViewModelBase {
         initialFavorites: Set<String> = emptySet(),
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
-        ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        dispatchers: DispatcherProvider = TestDispatchers(),
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps)
@@ -37,7 +37,7 @@ open class TestFavoriteAppsViewModelBase {
             observeFavoriteAppsUseCase = observeFavoriteAppsUseCase,
             observeFavoritesUseCase = observeFavoritesUseCase,
             toggleFavoriteUseCase = toggleFavoriteUseCase,
-            ioDispatcher = ioDispatcher,
+            dispatchers = dispatchers,
         )
         println("\u2705 [SETUP] ViewModel initialized")
     }

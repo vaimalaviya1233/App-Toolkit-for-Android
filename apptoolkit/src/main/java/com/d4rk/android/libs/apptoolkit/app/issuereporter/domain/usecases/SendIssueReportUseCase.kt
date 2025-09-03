@@ -4,7 +4,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class SendIssueReportUseCase(
     private val repository: IssueReporterRepository,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: DispatcherProvider,
 ) {
 
     data class Params(

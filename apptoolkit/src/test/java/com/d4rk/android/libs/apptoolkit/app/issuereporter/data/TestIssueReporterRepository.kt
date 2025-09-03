@@ -5,7 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import com.google.common.truth.Truth.assertThat
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -26,12 +26,8 @@ import kotlin.test.assertFailsWith
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestIssueReporterRepository {
 
-    private fun testDispatchers(scheduler: TestCoroutineScheduler) = object : AppDispatchers {
-        private val dispatcher = StandardTestDispatcher(scheduler)
-        override val io = dispatcher
-        override val default = dispatcher
-        override val main = dispatcher
-    }
+    private fun testDispatchers(scheduler: TestCoroutineScheduler) =
+        TestDispatchers(StandardTestDispatcher(scheduler))
 
     @Test
     fun `sendReport returns success`() = runTest {

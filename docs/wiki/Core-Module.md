@@ -11,7 +11,7 @@ Defines reusable result wrappers and UI state models, plus base use case interfa
 Hosts composable components and base classes like `ScreenViewModel` and `DefaultSnackbarHost` that standardize screen state handling and Snackbar presentation.
 
 ### utils
-Includes helpers, extensions, constants and `AppDispatchers` to access standard `CoroutineDispatcher` instances.
+Includes helpers, extensions, constants and `DispatcherProvider` to access standard `CoroutineDispatcher` instances.
 
 ### di
 Contains qualifiers such as `GithubToken` to assist dependency injection frameworks.
@@ -36,9 +36,9 @@ Scaffold(
 ) { /* screen content */ }
 ```
 
-### AppDispatchers
+### DispatcherProvider
 ```kotlin
-class ExampleRepository(private val dispatchers: AppDispatchers) {
+class ExampleRepository(private val dispatchers: DispatcherProvider) {
     suspend fun load() = withContext(dispatchers.io) {
         /* blocking work */
     }
@@ -49,4 +49,4 @@ class ExampleRepository(private val dispatchers: AppDispatchers) {
 
 - [[Library]] – overview of all modules and features.
 - [[Issue-Reporter-Module]] – demonstrates use of `ScreenViewModel` and networking helpers.
-- [[Support-Module]] – integrates `AppDispatchers` for billing and donation flows.
+- [[Support-Module]] – integrates `DispatcherProvider` for billing and donation flows.
