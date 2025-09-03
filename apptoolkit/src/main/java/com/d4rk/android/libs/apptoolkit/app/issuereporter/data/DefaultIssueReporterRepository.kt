@@ -5,7 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.repository.IssueReporterRepository
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import io.ktor.client.HttpClient
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -25,7 +25,7 @@ import kotlinx.serialization.json.jsonPrimitive
  */
 class DefaultIssueReporterRepository(
     private val client: HttpClient,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: DispatcherProvider,
 ) : IssueReporterRepository {
 
     override suspend fun sendReport(

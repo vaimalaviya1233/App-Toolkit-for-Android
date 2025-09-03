@@ -21,25 +21,27 @@ import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.MainRepositor
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule : Module = module {
-    single<CoroutineDispatcher>(qualifier = named("io")) { Dispatchers.IO }
-    single<CoroutineDispatcher>(qualifier = named("default")) { Dispatchers.Default }
-    single<CoroutineDispatcher>(qualifier = named("main")) { Dispatchers.Main }
     single<DataStore> { DataStore(context = get()) }
-    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), ioDispatcher = get(named("io"))) }
+    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), ioDispatcher = get<DispatcherProvider>().io) }
     single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
 
-    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), ioDispatcher = get(named("io"))) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), ioDispatcher = get<DispatcherProvider>().io) }
     single { ObserveFavoritesUseCase(repository = get()) }
     single { ToggleFavoriteUseCase(repository = get()) }
-    single { ObserveFavoriteAppsUseCase(fetchDeveloperAppsUseCase = get(), observeFavoritesUseCase = get()) }
+    single {
+        ObserveFavoriteAppsUseCase(
+            fetchDeveloperAppsUseCase = get(),
+            observeFavoritesUseCase = get(),
+            ioDispatcher = get<DispatcherProvider>().io,
+        )
+    }
 
     single<List<String>>(qualifier = named(name = "startup_entries")) {
         get<Context>().resources.getStringArray(R.array.preference_startup_entries).toList()
@@ -51,7 +53,7 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    single<MainRepository> { MainRepositoryImpl(ioDispatcher = get(named("io"))) }
+    single<MainRepository> { MainRepositoryImpl(ioDispatcher = get<DispatcherProvider>().io) }
 
     viewModel { MainViewModel(repository = get()) }
 
@@ -61,14 +63,16 @@ val appModule : Module = module {
         AppsListViewModel(
             fetchDeveloperAppsUseCase = get(),
             observeFavoritesUseCase = get(),
-            toggleFavoriteUseCase = get()
+            toggleFavoriteUseCase = get(),
+            dispatchers = get(),
         )
     }
     viewModel {
         FavoriteAppsViewModel(
             observeFavoriteAppsUseCase = get(),
             observeFavoritesUseCase = get(),
-            toggleFavoriteUseCase = get()
+            toggleFavoriteUseCase = get(),
+            dispatchers = get(),
         )
     }
 }

@@ -16,8 +16,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -34,7 +33,7 @@ class FavoriteAppsViewModel(
     private val observeFavoriteAppsUseCase: ObserveFavoriteAppsUseCase,
     observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
     initialState = UiStateScreen(screenState = IsLoading(), data = UiHomeScreen())
 ) {
@@ -50,7 +49,7 @@ class FavoriteAppsViewModel(
     init {
         viewModelScope.launch {
             loadFavoritesTrigger
-                .flatMapLatest { observeFavoriteAppsUseCase().flowOn(ioDispatcher) }
+                .flatMapLatest { observeFavoriteAppsUseCase().flowOn(dispatchers.io) }
                 .collect { result ->
                     when (result) {
                         is DataState.Success -> {
@@ -89,7 +88,7 @@ class FavoriteAppsViewModel(
     }
 
     fun toggleFavorite(packageName: String) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch(dispatchers.io) {
             runCatching { toggleFavoriteUseCase(packageName) }
                 .onFailure { error ->
                     error.printStackTrace()

@@ -15,10 +15,10 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestAppsListViewModelBase {
@@ -30,7 +30,7 @@ open class TestAppsListViewModelBase {
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
         fetchThrows: Throwable? = null,
-        ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        dispatchers: DispatcherProvider = TestDispatchers(),
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
         val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps, fetchThrows)
@@ -42,7 +42,7 @@ open class TestAppsListViewModelBase {
             fetchUseCase,
             observeFavoritesUseCase,
             toggleFavoriteUseCase,
-            ioDispatcher,
+            dispatchers,
         )
         println("\u2705 [SETUP] ViewModel initialized")
     }

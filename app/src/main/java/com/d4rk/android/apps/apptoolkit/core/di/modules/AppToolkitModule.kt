@@ -19,8 +19,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchersImpl
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
@@ -33,7 +32,7 @@ val appToolkitModule : Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
     single(createdAtStart = true) {
-        val ioDispatcher = get<AppDispatchers>().io
+        val ioDispatcher = get<DispatcherProvider>().io
         BillingRepository.getInstance(
             context = get(),
             ioDispatcher = ioDispatcher,
@@ -45,10 +44,9 @@ val appToolkitModule : Module = module {
     }
     viewModel { StartupViewModel() }
 
-    single<HelpRepository> { DefaultHelpRepository(context = get(), ioDispatcher = get<AppDispatchers>().io) }
+    single<HelpRepository> { DefaultHelpRepository(context = get(), ioDispatcher = get<DispatcherProvider>().io) }
     viewModel { HelpViewModel(helpRepository = get()) }
 
-    single<AppDispatchers> { AppDispatchersImpl() }
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }
     single<IssueReporterRepository> { DefaultIssueReporterRepository(get(), get()) }
     single { SendIssueReportUseCase(get(), get()) }

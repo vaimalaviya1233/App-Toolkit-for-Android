@@ -2,6 +2,7 @@ package com.d4rk.android.apps.apptoolkit.app.apps.favorites
 
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +29,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             fetchApps = apps,
             initialFavorites = emptySet(),
             toggleError = RuntimeException("fail"),
-            ioDispatcher = dispatcherExtension.testDispatcher,
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher),
         )
 
         viewModel.favorites.test {
@@ -51,7 +52,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
         setup(
             fetchApps = apps,
             initialFavorites = setOf("pkg1"),
-            ioDispatcher = dispatcherExtension.testDispatcher,
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher),
         )
 
         viewModel.uiState.test {
@@ -68,7 +69,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `toggle favorite updates favorites flow`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
-        setup(fetchApps = apps, ioDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchApps = apps, dispatchers = TestDispatchers(dispatcherExtension.testDispatcher))
 
         viewModel.favorites.test {
             assertThat(awaitItem()).isEmpty()
@@ -83,7 +84,7 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `load favorites with no saved apps shows no data`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(AppInfo("App", "pkg", "url"))
-        setup(fetchApps = apps, initialFavorites = emptySet(), ioDispatcher = dispatcherExtension.testDispatcher)
+        setup(fetchApps = apps, initialFavorites = emptySet(), dispatchers = TestDispatchers(dispatcherExtension.testDispatcher))
 
         viewModel.uiState.test {
             awaitItem() // Initial loading

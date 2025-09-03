@@ -5,7 +5,7 @@ import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.IssueRepo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.Report
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.ExtraInfo
 import com.d4rk.android.libs.apptoolkit.app.issuereporter.domain.model.github.GithubTarget
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.AppDispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.assertFailsWith
 import kotlinx.coroutines.CancellationException
@@ -22,11 +22,7 @@ import org.junit.jupiter.api.Test
 class SendIssueReportUseCaseTest {
 
     private val dispatcher = StandardTestDispatcher()
-    private val dispatchers = object : AppDispatchers {
-        override val io = dispatcher
-        override val default = dispatcher
-        override val main = dispatcher
-    }
+    private val dispatchers = TestDispatchers(dispatcher)
 
     private val params = SendIssueReportUseCase.Params(
         report = Report("t", "d", mockk(), ExtraInfo(), null),

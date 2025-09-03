@@ -1,22 +1,22 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.settings.ui
 
+import android.content.Context
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.actions.SettingsEvent
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import android.content.Context
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.RegisterExtension
 @OptIn(ExperimentalCoroutinesApi::class)
 
 class TestSettingsViewModel {
@@ -30,17 +30,18 @@ class TestSettingsViewModel {
     private lateinit var viewModel: SettingsViewModel
     private lateinit var provider: SettingsProvider
 
-    private fun setup(config: SettingsConfig, dispatcher: TestDispatcher) {
+    private fun setup(config: SettingsConfig) {
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returns config
-        viewModel = SettingsViewModel(provider, dispatcher)
+        val dispatchers = TestDispatchers(dispatcherExtension.testDispatcher)
+        viewModel = SettingsViewModel(provider, dispatchers)
     }
 
     @Test
     fun `load settings success`() = runTest(dispatcherExtension.testDispatcher) {
         val config = SettingsConfig(title = "Title", categories = listOf(SettingsCategory(title = "c", preferences = emptyList())))
         val context = mockk<Context>(relaxed = true)
-        setup(config, dispatcherExtension.testDispatcher)
+        setup(config)
 
         viewModel.onEvent(SettingsEvent.Load(context))
         advanceUntilIdle()
@@ -53,7 +54,7 @@ class TestSettingsViewModel {
     fun `load settings no data`() = runTest(dispatcherExtension.testDispatcher) {
         val config = SettingsConfig(title = "", categories = emptyList())
         val context = mockk<Context>(relaxed = true)
-        setup(config, dispatcherExtension.testDispatcher)
+        setup(config)
 
         viewModel.onEvent(SettingsEvent.Load(context))
         advanceUntilIdle()
@@ -68,7 +69,8 @@ class TestSettingsViewModel {
         val context = mockk<Context>(relaxed = true)
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returnsMany listOf(empty, valid)
-        viewModel = SettingsViewModel(provider, dispatcherExtension.testDispatcher)
+        val dispatchers = TestDispatchers(dispatcherExtension.testDispatcher)
+        viewModel = SettingsViewModel(provider, dispatchers)
 
         viewModel.onEvent(SettingsEvent.Load(context))
         advanceUntilIdle()
@@ -87,7 +89,8 @@ class TestSettingsViewModel {
         val context = mockk<Context>(relaxed = true)
         provider = mockk()
         every { provider.provideSettingsConfig(any()) } returns config
-        viewModel = SettingsViewModel(provider, dispatcherExtension.testDispatcher)
+        val dispatchers = TestDispatchers(dispatcherExtension.testDispatcher)
+        viewModel = SettingsViewModel(provider, dispatchers)
 
         viewModel.onEvent(SettingsEvent.Load(context))
         advanceUntilIdle()
