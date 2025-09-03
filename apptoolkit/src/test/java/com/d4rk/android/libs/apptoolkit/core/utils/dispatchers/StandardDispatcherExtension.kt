@@ -20,7 +20,6 @@ class StandardDispatcherExtension : BeforeEachCallback, AfterEachCallback {
     }
 
     override fun afterEach(context: ExtensionContext?) {
-        testDispatcher.scheduler.advanceUntilIdle()
         Dispatchers.resetMain()
     }
 }
