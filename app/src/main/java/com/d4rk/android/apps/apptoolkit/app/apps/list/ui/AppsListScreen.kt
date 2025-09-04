@@ -26,6 +26,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
