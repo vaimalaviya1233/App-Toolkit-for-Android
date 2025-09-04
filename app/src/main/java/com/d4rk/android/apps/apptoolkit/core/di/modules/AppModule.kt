@@ -17,7 +17,7 @@ import com.d4rk.android.apps.apptoolkit.app.onboarding.utils.interfaces.provider
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
 import com.d4rk.android.apps.apptoolkit.core.data.favorites.FavoritesRepositoryImpl
 import com.d4rk.android.libs.apptoolkit.app.main.data.repository.MainRepositoryImpl
-import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.MainRepository
+import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
@@ -53,9 +53,9 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    single<MainRepository> { MainRepositoryImpl(ioDispatcher = get<DispatcherProvider>().io) }
+    single<NavigationRepository> { MainRepositoryImpl(ioDispatcher = get<DispatcherProvider>().io) }
 
-    viewModel { MainViewModel(repository = get()) }
+    viewModel { MainViewModel(navigationRepository = get()) }
 
     single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
     single { FetchDeveloperAppsUseCase(repository = get()) }

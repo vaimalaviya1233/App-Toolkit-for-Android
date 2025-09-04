@@ -3,7 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.main.ui
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import app.cash.turbine.test
-import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.MainRepository
+import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
 
-    private class FakeMainRepository : MainRepository {
+    private class FakeMainRepository : NavigationRepository {
         val itemsFlow = MutableSharedFlow<List<NavigationDrawerItem>>(replay = 1)
         private val errorFlow = MutableSharedFlow<Throwable>(replay = 1)
 
