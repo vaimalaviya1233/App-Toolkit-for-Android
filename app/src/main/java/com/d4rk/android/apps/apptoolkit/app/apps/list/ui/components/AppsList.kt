@@ -103,18 +103,30 @@ private fun AppsGrid(
             },
             span = { _, item ->
                 if (item is AppListItem.Ad) GridItemSpan(columnCount) else GridItemSpan(1)
+            },
+            contentType = { _, item ->
+                when (item) {
+                    is AppListItem.App -> "app"
+                    AppListItem.Ad -> "ad"
+                }
             }
         ) { index: Int, item: AppListItem ->
             when (item) {
-                is AppListItem.App -> AppCardItem(
-                    item = item,
-                    isFavorite = favorites.contains(item.appInfo.packageName),
-                    visibilityStates = visibilityStates,
-                    index = index,
-                    onFavoriteToggle = onFavoriteToggle,
-                    onAppClick = onAppClick,
-                    onShareClick = onShareClick
-                )
+                is AppListItem.App -> {
+                    val packageName = item.appInfo.packageName
+                    val isFavorite by remember(favorites, packageName) {
+                        derivedStateOf { favorites.contains(packageName) }
+                    }
+                    AppCardItem(
+                        item = item,
+                        isFavorite = isFavorite,
+                        visibilityStates = visibilityStates,
+                        index = index,
+                        onFavoriteToggle = onFavoriteToggle,
+                        onAppClick = onAppClick,
+                        onShareClick = onShareClick
+                    )
+                }
 
                 AppListItem.Ad -> AdListItem(adsConfig = adsConfig)
             }
