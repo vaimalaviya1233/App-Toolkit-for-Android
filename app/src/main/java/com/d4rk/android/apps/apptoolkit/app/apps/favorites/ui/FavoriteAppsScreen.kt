@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.R
@@ -16,17 +14,14 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.Favori
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.AppsList
-import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.rememberAdsConfig
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.rememberAdsEnabled
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.screens.loading.HomeLoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
 import org.koin.compose.koinInject
@@ -38,12 +33,7 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val configuration = LocalConfiguration.current
-    val isTabletOrLandscape by remember(configuration) {
-        derivedStateOf { ScreenHelper.isLandscapeOrTablet(context) }
-    }
     val koin = getKoin()
-    val adsConfig = rememberAdsConfig(koin, isTabletOrLandscape)
     val adsEnabled = rememberAdsEnabled(koin)
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } }
@@ -79,7 +69,6 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
         screenState = screenState,
         favorites = favorites,
         paddingValues = paddingValues,
-        adsConfig = adsConfig,
         adsEnabled = adsEnabled,
         onFavoriteToggle = onFavoriteToggle,
         onAppClick = onAppClick,
@@ -93,7 +82,6 @@ fun FavoriteAppsScreen(
     screenState: UiStateScreen<UiHomeScreen>,
     favorites: Set<String>,
     paddingValues: PaddingValues,
-    adsConfig: AdsConfig,
     adsEnabled: Boolean,
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
@@ -114,7 +102,6 @@ fun FavoriteAppsScreen(
                 uiHomeScreen = uiHomeScreen,
                 favorites = favorites,
                 paddingValues = paddingValues,
-                adsConfig = adsConfig,
                 adsEnabled = adsEnabled,
                 onFavoriteToggle = onFavoriteToggle,
                 onAppClick = onAppClick,
