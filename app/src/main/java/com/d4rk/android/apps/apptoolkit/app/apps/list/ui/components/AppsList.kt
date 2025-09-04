@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.apps.apptoolkit.core.ads.ui.NativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
@@ -33,7 +32,6 @@ fun AppsList(
     uiHomeScreen: UiHomeScreen,
     favorites: Set<String>,
     paddingValues: PaddingValues,
-    adsConfig: AdsConfig,
     adsEnabled: Boolean,
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
@@ -59,7 +57,6 @@ fun AppsList(
         paddingValues = paddingValues,
         columnCount = columnCount,
         listState = listState,
-        adsConfig = adsConfig,
         onFavoriteToggle = onFavoriteToggle,
         onAppClick = onAppClick,
         onShareClick = onShareClick
@@ -73,7 +70,6 @@ private fun AppsGrid(
     paddingValues: PaddingValues,
     columnCount: Int,
     listState: LazyGridState,
-    adsConfig: AdsConfig,
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
     onShareClick: (AppInfo) -> Unit
@@ -128,7 +124,7 @@ private fun AppsGrid(
                     )
                 }
 
-                AppListItem.Ad -> AdListItem(adsConfig = adsConfig)
+                AppListItem.Ad -> AdListItem()
             }
         }
     }
@@ -159,7 +155,7 @@ private fun AppCardItem(
 }
 
 @Composable
-private fun AdListItem(adsConfig: AdsConfig) {
+private fun AdListItem() {
     NativeAdBanner(
         modifier = Modifier.fillMaxWidth(),
     )
