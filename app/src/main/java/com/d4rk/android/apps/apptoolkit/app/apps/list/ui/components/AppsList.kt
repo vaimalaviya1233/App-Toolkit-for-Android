@@ -150,7 +150,6 @@ private fun AppCardItem(
 private fun AdListItem(adsConfig: AdsConfig) {
     NativeAdBanner(
         modifier = Modifier.fillMaxWidth(),
-        adsConfig = adsConfig
     )
 }
 

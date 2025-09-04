@@ -28,6 +28,10 @@ val adsModule : Module = module {
         AdsSettingsViewModel(repository = get())
     }
 
+    single<AdsConfig>(named(name = "native_ad")) {
+        AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
+    }
+
     single<AdsConfig> {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.BANNER)
     }

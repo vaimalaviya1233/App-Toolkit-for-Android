@@ -42,12 +42,14 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 
 @Composable
 fun NativeAdBanner(
     modifier: Modifier = Modifier,
-    adsConfig: AdsConfig,
+    adsConfig: AdsConfig = koinInject(qualifier = named("native_ad")) ,
 ) {
     if (LocalInspectionMode.current) {
         Card(
