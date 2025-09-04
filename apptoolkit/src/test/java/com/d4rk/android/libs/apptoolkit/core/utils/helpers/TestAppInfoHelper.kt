@@ -13,6 +13,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -35,7 +36,7 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        AppInfoHelper(dispatcher).openApp(context, "pkg")
+        AppInfoHelper(TestDispatchers(dispatcher)).openApp(context, "pkg")
 
         verify { intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         println("🏁 [TEST DONE] openApp adds new task flag when context not Activity")
@@ -51,7 +52,7 @@ class TestAppInfoHelper {
         every { context.packageManager } returns pm
         every { pm.getApplicationInfo("pkg", 0) } returns appInfo
 
-        val result = AppInfoHelper(dispatcher).isAppInstalled(context, "pkg")
+        val result = AppInfoHelper(TestDispatchers(dispatcher)).isAppInstalled(context, "pkg")
 
         assertEquals(true, result)
         println("🏁 [TEST DONE] isAppInstalled returns true when app exists")
@@ -66,7 +67,7 @@ class TestAppInfoHelper {
         every { context.packageManager } returns pm
         every { pm.getApplicationInfo("pkg", 0) } throws PackageManager.NameNotFoundException()
 
-        val result = AppInfoHelper(dispatcher).isAppInstalled(context, "pkg")
+        val result = AppInfoHelper(TestDispatchers(dispatcher)).isAppInstalled(context, "pkg")
 
         assertEquals(false, result)
         println("🏁 [TEST DONE] isAppInstalled returns false when app missing")
@@ -84,7 +85,7 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        AppInfoHelper(dispatcher).openApp(context, "pkg")
+        AppInfoHelper(TestDispatchers(dispatcher)).openApp(context, "pkg")
 
         verify(exactly = 0) { intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         println("🏁 [TEST DONE] openApp does not add new task flag when context is Activity")
@@ -104,7 +105,7 @@ class TestAppInfoHelper {
             val toast = mockk<Toast>(relaxed = true)
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
 
-            val result = AppInfoHelper(dispatcher).openApp(context, "pkg")
+        val result = AppInfoHelper(TestDispatchers(dispatcher)).openApp(context, "pkg")
 
             assertEquals(false, result)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
@@ -126,7 +127,7 @@ class TestAppInfoHelper {
         every { intent.resolveActivity(pm) } returns mockk<ComponentName>()
         justRun { context.startActivity(intent) }
 
-        val result = AppInfoHelper(dispatcher).openAppResult(context, "pkg")
+        val result = AppInfoHelper(TestDispatchers(dispatcher)).openAppResult(context, "pkg")
 
         assertEquals(Result.success(true), result)
         println("🏁 [TEST DONE] openAppResult returns success when launch succeeds")
@@ -149,7 +150,7 @@ class TestAppInfoHelper {
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
             every { context.startActivity(intent) } throws RuntimeException("fail")
 
-            val result = AppInfoHelper(dispatcher).openApp(context, "pkg")
+        val result = AppInfoHelper(TestDispatchers(dispatcher)).openApp(context, "pkg")
             assertEquals(false, result)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
             println("🏁 [TEST DONE] openApp returns false on start failure")
@@ -175,7 +176,7 @@ class TestAppInfoHelper {
             every { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) } returns toast
             every { context.startActivity(intent) } throws RuntimeException("fail")
 
-            val result = AppInfoHelper(dispatcher).openAppResult(context, "pkg")
+            val result = AppInfoHelper(TestDispatchers(dispatcher)).openAppResult(context, "pkg")
             assertTrue(result.isFailure)
             verify { Toast.makeText(context, "not installed", Toast.LENGTH_SHORT) }
             println("🏁 [TEST DONE] openAppResult exposes failure")

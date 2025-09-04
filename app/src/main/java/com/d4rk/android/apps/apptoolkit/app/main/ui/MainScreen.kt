@@ -51,6 +51,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationD
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -129,6 +130,7 @@ fun MainScaffoldTabletContent() {
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
     val buildInfoProvider: BuildInfoProvider = koinInject()
+    val dispatchers: DispatcherProvider = koinInject()
     var showChangelog by rememberSaveable { mutableStateOf(false) }
 
     val viewModel: MainViewModel = koinViewModel()
@@ -201,7 +203,8 @@ fun MainScaffoldTabletContent() {
         ChangelogDialog(
             changelogUrl = changelogUrl,
             buildInfoProvider = buildInfoProvider,
-            onDismiss = { showChangelog = false }
+            onDismiss = { showChangelog = false },
+            dispatchers = dispatchers
         )
     }
 }

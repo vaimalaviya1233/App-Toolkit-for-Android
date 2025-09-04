@@ -4,6 +4,7 @@ import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.about.domain.model.ui.UiAboutScreen
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.AboutSettingsProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ClipboardHelper
 import com.google.common.truth.Truth.assertThat
@@ -41,8 +42,7 @@ class TestDefaultAboutRepository {
             deviceProvider = deviceProvider,
             configProvider = buildInfoProvider,
             context = context,
-            ioDispatcher = dispatcherExtension.testDispatcher,
-            mainDispatcher = dispatcherExtension.testDispatcher,
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher),
         )
 
     @Test

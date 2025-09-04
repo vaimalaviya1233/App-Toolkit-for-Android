@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.ads.data
 
 import app.cash.turbine.test
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
@@ -37,7 +38,7 @@ class TestDefaultAdsSettingsRepository {
         return DefaultAdsSettingsRepository(
             dataStore = dataStore,
             buildInfoProvider = buildInfoProvider,
-            ioDispatcher = dispatcherExtension.testDispatcher,
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher),
         )
     }
 

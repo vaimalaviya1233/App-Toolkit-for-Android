@@ -23,6 +23,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHa
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
@@ -42,7 +43,8 @@ fun AppsListRoute(paddingValues: PaddingValues) {
     val adsEnabled = rememberAdsEnabled(koin)
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(HomeEvent.FetchApps) } }
-    val appInfoHelper = remember { AppInfoHelper() }
+    val dispatchers: DispatcherProvider = koinInject()
+    val appInfoHelper = remember { AppInfoHelper(dispatchers) }
     val coroutineScope = rememberCoroutineScope()
     val onAppClick: (AppInfo) -> Unit = remember(context, coroutineScope) {
         { appInfo ->

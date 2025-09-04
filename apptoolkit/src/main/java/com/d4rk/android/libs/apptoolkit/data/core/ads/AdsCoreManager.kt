@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.data.core.ads
 import android.app.Activity
 import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.interfaces.OnShowAdCompleteListener
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdError
@@ -11,9 +12,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.appopen.AppOpenAd
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,17 +21,17 @@ import java.util.Date
 open class AdsCoreManager(
     protected val context : Context,
     val buildInfoProvider : BuildInfoProvider,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) {
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
     suspend fun initializeAds(appOpenUnitId : String) {
-        val isAdsChecked : Boolean = withContext(ioDispatcher) {
+        val isAdsChecked : Boolean = withContext(dispatchers.io) {
             dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
         }
         if (isAdsChecked) {
-            withContext(ioDispatcher) { MobileAds.initialize(context) }
+            withContext(dispatchers.io) { MobileAds.initialize(context) }
             appOpenAdManager = AppOpenAdManager(appOpenUnitId)
         }
     }
@@ -89,7 +88,7 @@ open class AdsCoreManager(
         suspend fun showAdIfAvailable(
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {
-            val isAdsChecked : Boolean = withContext(ioDispatcher) {
+            val isAdsChecked : Boolean = withContext(dispatchers.io) {
                 dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
             }
 

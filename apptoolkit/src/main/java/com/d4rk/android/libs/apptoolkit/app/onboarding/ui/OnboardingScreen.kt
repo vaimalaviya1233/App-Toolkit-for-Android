@@ -35,6 +35,7 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.Onboa
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticPagerSwipe
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -47,7 +48,8 @@ fun OnboardingScreen() {
     val onboardingProvider: OnboardingProvider = koinInject()
     val pages: List<OnboardingPage> = remember { onboardingProvider.getOnboardingPages(context = context) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val repository = remember { DefaultOnboardingRepository(CommonDataStore.getInstance(context)) }
+    val dispatchers: DispatcherProvider = koinInject()
+    val repository = remember { DefaultOnboardingRepository(CommonDataStore.getInstance(context), dispatchers) }
     val viewModel: OnboardingViewModel = viewModel(factory = OnboardingViewModel.provideFactory(repository))
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState: PagerState = rememberPagerState(initialPage = uiState.currentTabIndex) { pages.size }

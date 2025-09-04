@@ -1,9 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.app.advanced.data
 
 import android.content.Context
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -18,7 +17,7 @@ import java.io.File
  */
 class DefaultCacheRepository(
     private val context: Context,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) : CacheRepository {
 
     override fun clearCache(): Flow<Result<Unit>> = flow {
@@ -45,5 +44,5 @@ class DefaultCacheRepository(
         ))
     }
         .catch { e -> emit(Result.Error(e as Exception)) }
-        .flowOn(ioDispatcher)
+        .flowOn(dispatchers.io)
 }

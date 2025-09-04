@@ -8,14 +8,14 @@ import androidx.compose.material.icons.outlined.Share
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.app.main.utils.constants.NavigationDrawerRoutes
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class MainRepositoryImpl(
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatchers: DispatcherProvider
 ) : NavigationRepository {
     override fun getNavigationDrawerItems(): Flow<List<NavigationDrawerItem>> =
         flow {
@@ -43,6 +43,6 @@ class MainRepositoryImpl(
                     )
                 )
             )
-        }.flowOn(ioDispatcher)
+        }.flowOn(dispatchers.io)
 }
 

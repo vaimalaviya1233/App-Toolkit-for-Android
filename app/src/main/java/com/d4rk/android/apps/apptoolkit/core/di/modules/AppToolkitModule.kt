@@ -18,8 +18,8 @@ import com.d4rk.android.libs.apptoolkit.app.startup.utils.interfaces.providers.S
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportViewModel
 import com.d4rk.android.libs.apptoolkit.core.di.GithubToken
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
@@ -32,11 +32,11 @@ val appToolkitModule : Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
     single(createdAtStart = true) {
-        val ioDispatcher = get<DispatcherProvider>().io
+        val dispatchers = get<DispatcherProvider>()
         BillingRepository.getInstance(
             context = get(),
-            ioDispatcher = ioDispatcher,
-            externalScope = CoroutineScope(SupervisorJob() + ioDispatcher)
+            dispatchers = dispatchers,
+            externalScope = CoroutineScope(SupervisorJob() + dispatchers.io)
         )
     }
     viewModel {
@@ -44,7 +44,7 @@ val appToolkitModule : Module = module {
     }
     viewModel { StartupViewModel() }
 
-    single<HelpRepository> { DefaultHelpRepository(context = get(), ioDispatcher = get<DispatcherProvider>().io) }
+    single<HelpRepository> { DefaultHelpRepository(context = get(), dispatchers = get()) }
     viewModel { HelpViewModel(helpRepository = get()) }
 
     single<DeviceInfoProvider> { DeviceInfoProviderImpl(get(), get()) }

@@ -5,19 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.d4rk.android.libs.apptoolkit.R
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.withContext
 
 open class AppInfoHelper(
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) {
 
     /**
      * Checks if a specific app is installed on the device.
      * @return True if the app is installed, false otherwise.
      */
-    suspend fun isAppInstalled(context : Context , packageName : String) : Boolean = withContext(ioDispatcher) {
+    suspend fun isAppInstalled(context : Context , packageName : String) : Boolean = withContext(dispatchers.io) {
         runCatching { context.packageManager.getApplicationInfo(packageName , 0) }.isSuccess
     }
 
@@ -38,7 +37,7 @@ open class AppInfoHelper(
      *         the launch intent could not be obtained or starting the activity failed.
      */
     suspend fun openAppResult(context : Context , packageName : String) : Result<Boolean> {
-        val launchIntent = withContext(ioDispatcher) {
+        val launchIntent = withContext(dispatchers.io) {
             runCatching { context.packageManager.getLaunchIntentForPackage(packageName) }.getOrNull()
         }
 

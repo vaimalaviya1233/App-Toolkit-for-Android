@@ -6,15 +6,15 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.multidex.MultiDexApplication
 import com.d4rk.android.libs.apptoolkit.app.support.billing.BillingRepository
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.di.StandardDispatchers
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.firebase.Firebase
 import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.initialize
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
@@ -25,8 +25,8 @@ import org.koin.android.ext.android.inject
 open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
 
     protected val billingRepository: BillingRepository by inject()
-    protected open val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-    private val applicationScope = CoroutineScope(SupervisorJob() + ioDispatcher)
+    protected open val dispatchers: DispatcherProvider = StandardDispatchers()
+    private val applicationScope = CoroutineScope(SupervisorJob() + dispatchers.io)
 
     companion object {
         var isAppLoaded : Boolean = false
