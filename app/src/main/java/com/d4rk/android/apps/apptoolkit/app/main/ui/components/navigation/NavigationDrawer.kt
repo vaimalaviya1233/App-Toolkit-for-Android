@@ -23,6 +23,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationD
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.hapticDrawerSwipe
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -34,6 +35,7 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
     val context : Context = LocalContext.current
     val changelogUrl: String = koinInject(qualifier = named("github_changelog"))
     val buildInfoProvider: BuildInfoProvider = koinInject()
+    val dispatchers: DispatcherProvider = koinInject()
     var showChangelog by rememberSaveable { mutableStateOf(false) }
     val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
 
@@ -61,7 +63,8 @@ fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
         ChangelogDialog(
             changelogUrl = changelogUrl,
             buildInfoProvider = buildInfoProvider,
-            onDismiss = { showChangelog = false }
+            onDismiss = { showChangelog = false },
+            dispatchers = dispatchers
         )
     }
 }

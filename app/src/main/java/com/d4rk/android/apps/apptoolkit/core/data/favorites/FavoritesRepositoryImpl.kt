@@ -7,8 +7,7 @@ import android.util.Log
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
 import com.d4rk.android.apps.apptoolkit.core.broadcast.FavoritesChangedReceiver
 import com.d4rk.android.apps.apptoolkit.core.data.datastore.DataStore
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
@@ -16,12 +15,12 @@ import kotlinx.coroutines.withContext
 class FavoritesRepositoryImpl(
     private val context: Context,
     private val dataStore: DataStore,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatchers: DispatcherProvider
 ) : FavoritesRepository {
-    override fun observeFavorites(): Flow<Set<String>> = dataStore.favoriteApps.flowOn(ioDispatcher)
+    override fun observeFavorites(): Flow<Set<String>> = dataStore.favoriteApps.flowOn(dispatchers.io)
 
     override suspend fun toggleFavorite(packageName: String) {
-        withContext(ioDispatcher) {
+        withContext(dispatchers.io) {
             dataStore.toggleFavoriteApp(packageName)
             val intent = Intent(FavoritesChangedReceiver.ACTION_FAVORITES_CHANGED).apply {
                 component = ComponentName(context, FavoritesChangedReceiver::class.java)

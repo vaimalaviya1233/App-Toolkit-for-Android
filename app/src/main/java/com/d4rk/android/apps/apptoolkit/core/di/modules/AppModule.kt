@@ -21,25 +21,24 @@ import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRep
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule : Module = module {
-    single<DataStore> { DataStore(context = get()) }
-    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), ioDispatcher = get<DispatcherProvider>().io) }
+    single<DataStore> { DataStore(context = get(), dispatchers = get()) }
+    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), dispatchers = get()) }
     single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
 
-    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), ioDispatcher = get<DispatcherProvider>().io) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), dispatchers = get()) }
     single { ObserveFavoritesUseCase(repository = get()) }
     single { ToggleFavoriteUseCase(repository = get()) }
     single {
         ObserveFavoriteAppsUseCase(
             fetchDeveloperAppsUseCase = get(),
             observeFavoritesUseCase = get(),
-            ioDispatcher = get<DispatcherProvider>().io,
+            dispatchers = get(),
         )
     }
 
@@ -53,7 +52,7 @@ val appModule : Module = module {
 
     single<OnboardingProvider> { AppOnboardingProvider() }
 
-    single<NavigationRepository> { MainRepositoryImpl(ioDispatcher = get<DispatcherProvider>().io) }
+    single<NavigationRepository> { MainRepositoryImpl(dispatchers = get()) }
 
     viewModel { MainViewModel(navigationRepository = get()) }
 

@@ -4,8 +4,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
@@ -17,11 +16,11 @@ import kotlinx.coroutines.flow.flowOn
 class ObserveFavoriteAppsUseCase(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) {
     suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
         return combine(
-            fetchDeveloperAppsUseCase().flowOn(ioDispatcher),
+            fetchDeveloperAppsUseCase().flowOn(dispatchers.io),
             observeFavoritesUseCase()
         ) { dataState, favorites ->
             when (dataState) {
@@ -32,7 +31,7 @@ class ObserveFavoriteAppsUseCase(
                 is DataState.Error -> dataState
                 is DataState.Loading -> DataState.Loading()
             }
-        }.flowOn(ioDispatcher)
+        }.flowOn(dispatchers.io)
     }
 }
 

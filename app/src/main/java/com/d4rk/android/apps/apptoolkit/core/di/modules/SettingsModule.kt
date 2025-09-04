@@ -32,7 +32,6 @@ import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySett
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.GeneralSettingsContentProvider
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.PrivacySettingsProvider
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -52,26 +51,25 @@ val settingsModule = module {
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
     single<BuildInfoProvider> { AppBuildInfoProvider(context = get()) }
     single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider(displayProvider = get(), privacyProvider = get()) }
-    single<CacheRepository> { DefaultCacheRepository(context = get(), ioDispatcher = get<DispatcherProvider>().io) }
+    single<CacheRepository> { DefaultCacheRepository(context = get(), dispatchers = get()) }
     single<AboutRepository> {
         DefaultAboutRepository(
             deviceProvider = get(),
             configProvider = get(),
             context = get(),
-            ioDispatcher = get<DispatcherProvider>().io,
-            mainDispatcher = get<DispatcherProvider>().main,
+            dispatchers = get(),
         )
     }
     single { ObserveAboutInfoUseCase(repository = get()) }
     single { CopyDeviceInfoUseCase(repository = get()) }
     single<GeneralSettingsRepository> {
-        DefaultGeneralSettingsRepository(dispatcher = get<DispatcherProvider>().default)
+        DefaultGeneralSettingsRepository(dispatchers = get())
     }
     viewModel {
         GeneralSettingsViewModel(repository = get())
     }
 
-    single<PermissionsRepository> { PermissionsSettingsRepository(context = get(), dispatcher = get<DispatcherProvider>().io) }
+    single<PermissionsRepository> { PermissionsSettingsRepository(context = get(), dispatchers = get()) }
     viewModel {
         PermissionsViewModel(
             permissionsRepository = get(),
@@ -91,7 +89,7 @@ val settingsModule = module {
         DefaultUsageAndDiagnosticsRepository(
             dataSource = CommonDataStore.getInstance(get()),
             configProvider = get(),
-            ioDispatcher = get<DispatcherProvider>().io,
+            dispatchers = get(),
         )
     }
 

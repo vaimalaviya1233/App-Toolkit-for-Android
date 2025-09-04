@@ -2,8 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.onboarding.data.repository
 
 import com.d4rk.android.libs.apptoolkit.app.onboarding.data.datasource.OnboardingPreferencesDataSource
 import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.repository.OnboardingRepository
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -14,15 +13,15 @@ import kotlinx.coroutines.withContext
  */
 class DefaultOnboardingRepository(
     private val dataStore: OnboardingPreferencesDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatchers: DispatcherProvider
 ) : OnboardingRepository {
 
     override fun observeOnboardingCompletion(): Flow<Boolean> =
         dataStore.startup
             .map { isFirstTime -> !isFirstTime }
-            .flowOn(ioDispatcher)
+            .flowOn(dispatchers.io)
 
-    override suspend fun setOnboardingCompleted() = withContext(ioDispatcher) {
+    override suspend fun setOnboardingCompleted() = withContext(dispatchers.io) {
         dataStore.saveStartup(isFirstTime = false)
     }
 }

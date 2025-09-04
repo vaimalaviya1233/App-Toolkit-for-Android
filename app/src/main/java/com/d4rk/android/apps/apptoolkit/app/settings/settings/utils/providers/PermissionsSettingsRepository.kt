@@ -6,8 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.Permis
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.flowOn
  */
 class PermissionsSettingsRepository(
     private val context: Context,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val dispatchers: DispatcherProvider,
 ) : PermissionsRepository {
 
     override fun getPermissionsConfig(): Flow<SettingsConfig> =
@@ -81,6 +80,6 @@ class PermissionsSettingsRepository(
                     ),
                 ),
             )
-        }.flowOn(dispatcher)
+        }.flowOn(dispatchers.io)
 }
 

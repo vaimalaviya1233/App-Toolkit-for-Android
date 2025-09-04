@@ -1,7 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.settings.general.data
 
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.GeneralSettingsRepository
-import kotlinx.coroutines.CoroutineDispatcher
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flowOn
  * thread.
  */
 class DefaultGeneralSettingsRepository(
-    private val dispatcher: CoroutineDispatcher,
+    private val dispatchers: DispatcherProvider,
 ) : GeneralSettingsRepository {
 
     override fun getContentKey(contentKey: String?): Flow<String> = flow {
@@ -22,6 +22,6 @@ class DefaultGeneralSettingsRepository(
             throw IllegalArgumentException("Invalid content key")
         }
         emit(contentKey)
-    }.flowOn(dispatcher)
+    }.flowOn(dispatchers.default)
 }
 

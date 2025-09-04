@@ -5,8 +5,8 @@ import com.d4rk.android.libs.apptoolkit.app.ads.data.DefaultAdsSettingsRepositor
 import com.d4rk.android.libs.apptoolkit.app.ads.domain.repository.AdsSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.ads.ui.AdsSettingsViewModel
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdSize
 import org.koin.core.module.Module
@@ -20,7 +20,7 @@ val adsModule : Module = module {
         DefaultAdsSettingsRepository(
             dataStore = CommonDataStore.getInstance(get()),
             buildInfoProvider = get<BuildInfoProvider>(),
-            ioDispatcher = get<DispatcherProvider>().io
+            dispatchers = get()
         )
     }
 

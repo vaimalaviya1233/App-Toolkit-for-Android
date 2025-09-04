@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.diagnostics.data.repository
 
 import com.d4rk.android.libs.apptoolkit.app.diagnostics.data.datasource.UsageAndDiagnosticsPreferencesDataSource
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
+import com.d4rk.android.libs.apptoolkit.core.di.TestDispatchers
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,7 +58,7 @@ class DefaultUsageAndDiagnosticsRepositoryTest {
         val repository = DefaultUsageAndDiagnosticsRepository(
             dataSource = dataSource,
             configProvider = FakeBuildInfoProvider(),
-            ioDispatcher = dispatcherExtension.testDispatcher,
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher),
         )
 
         // Initial state should reflect default true values

@@ -22,12 +22,11 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
@@ -37,7 +36,7 @@ fun ChangelogDialog(
     changelogUrl: String,
     buildInfoProvider: BuildInfoProvider,
     onDismiss: () -> Unit,
-    ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    dispatchers: DispatcherProvider,
 ) {
     val context = LocalContext.current
     val changelogText: MutableState<String?> = remember {
@@ -48,7 +47,7 @@ fun ChangelogDialog(
     val httpClient: HttpClient = koinInject()
 
     suspend fun loadChangelog() {
-        withContext(ioDispatcher) {
+        withContext(dispatchers.io) {
             runCatching {
                 val content: String = httpClient.get(changelogUrl).body()
                 val section = extractChangesForVersion(content, buildInfoProvider.appVersion)

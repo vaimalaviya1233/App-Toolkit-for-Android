@@ -4,14 +4,14 @@ import android.content.Context
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.app.help.domain.repository.HelpRepository
-import kotlinx.coroutines.CoroutineDispatcher
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class DefaultHelpRepository(
     private val context: Context,
-    private val ioDispatcher: CoroutineDispatcher
+    private val dispatchers: DispatcherProvider
 ) : HelpRepository {
 
     override fun fetchFaq(): Flow<List<UiHelpQuestion>> = flow {
@@ -32,5 +32,5 @@ class DefaultHelpRepository(
             )
         }.filter { it.question.isNotBlank() && it.answer.isNotBlank() }
         emit(faq)
-    }.flowOn(ioDispatcher)
+    }.flowOn(dispatchers.io)
 }
