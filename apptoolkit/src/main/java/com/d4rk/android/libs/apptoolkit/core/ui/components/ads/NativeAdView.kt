@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -130,6 +131,102 @@ fun NativeAdBanner(
                             LargeHorizontalSpacer()
                             Button(onClick = { view.performClick() }) {
                                 Text(text = cta)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LargeNativeAdBanner(
+    modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
+) {
+    val context = LocalContext.current
+    val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
+    val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
+
+    if (LocalInspectionMode.current) {
+        OutlinedCard(
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .background(Color.LightGray)
+            ) {
+                Text(text = "Native Ad", modifier = Modifier.align(Alignment.Center))
+            }
+        }
+        return
+    }
+
+    if (showAds) {
+        var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
+
+        DisposableEffect(key1 = nativeAd) {
+            onDispose { nativeAd?.destroy() }
+        }
+
+        LaunchedEffect(key1 = adsConfig.bannerAdUnitId) {
+            val loader = AdLoader.Builder(context, adsConfig.bannerAdUnitId)
+                .forNativeAd { ad -> nativeAd = ad }
+                .build()
+            loader.loadAd(AdRequest.Builder().build())
+        }
+
+        nativeAd?.let { ad ->
+            NativeAdView(ad = ad) { loadedAd, view ->
+                OutlinedCard(
+                    modifier = modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.LargeSize)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            loadedAd.icon?.drawable?.let { drawable ->
+                                Image(
+                                    painter = remember(drawable) {
+                                        BitmapPainter(drawable.toBitmap().asImageBitmap())
+                                    },
+                                    contentDescription = loadedAd.headline,
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraExtraLargeSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+                                )
+                                LargeHorizontalSpacer()
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = loadedAd.headline ?: "",
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                loadedAd.body?.let { body ->
+                                    Text(
+                                        text = body,
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                            }
+                            loadedAd.callToAction?.let { cta ->
+                                LargeHorizontalSpacer()
+                                Button(onClick = { view.performClick() }) {
+                                    Text(text = cta)
+                                }
                             }
                         }
                     }
