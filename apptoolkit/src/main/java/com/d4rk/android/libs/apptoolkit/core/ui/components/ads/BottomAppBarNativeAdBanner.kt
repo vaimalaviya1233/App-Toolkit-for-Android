@@ -1,14 +1,14 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -20,13 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.core.graphics.drawable.toBitmap
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -35,6 +33,7 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
+
 @Composable
 fun BottomAppBarNativeAdBanner(
     modifier: Modifier = Modifier,
@@ -43,12 +42,16 @@ fun BottomAppBarNativeAdBanner(
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
+
     if (LocalInspectionMode.current) {
-        NavigationBar(modifier = modifier.fillMaxWidth()) {
+        Card(
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+        ) {
             Box(
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(SizeConstants.MediumSize),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Native Ad")
@@ -72,39 +75,61 @@ fun BottomAppBarNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, view ->
-                NavigationBar(modifier = modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = SizeConstants.LargeSize),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        loadedAd.icon?.drawable?.let { drawable ->
-                            Image(
-                                painter = remember(drawable) {
-                                    BitmapPainter(drawable.toBitmap().asImageBitmap())
-                                },
-                                contentDescription = loadedAd.headline,
-                                modifier = Modifier
-                                    .size(SizeConstants.ExtraLargeIncreasedSize)
-                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+            NativeAdView(ad = ad) { loadedAd, assets ->
+                Card(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SizeConstants.LargeSize, vertical = SizeConstants.MediumSize),
+                    shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+                ) {
+                    Box {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(SizeConstants.MediumSize)
+                        ) {
+                            Text(
+                                text = "Ad",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary
                             )
-                            LargeHorizontalSpacer()
-                        }
-                        Text(
-                            text = loadedAd.headline ?: "",
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
-                        )
-                        loadedAd.callToAction?.let { cta ->
-                            LargeHorizontalSpacer()
-                            Button(onClick = { view.performClick() }) {
-                                Text(text = cta)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                loadedAd.icon?.drawable?.let { drawable ->
+                                    AndroidView(
+                                        factory = { assets.iconView },
+                                    update = { it.setImageDrawable(drawable) },
+                                        modifier = Modifier
+                                            .size(SizeConstants.ExtraLargeIncreasedSize)
+                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+                                    )
+                                    LargeHorizontalSpacer()
+                                }
+                                AndroidView(factory = { assets.headlineView }) { view ->
+                                    view.setContent {
+                                        Text(
+                                            text = loadedAd.headline ?: "",
+                                            fontWeight = FontWeight.Bold,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                loadedAd.callToAction?.let { cta ->
+                                    LargeHorizontalSpacer()
+                                    AndroidView(factory = { assets.callToActionView }) { button ->
+                                        button.text = cta
+                                    }
+                                }
                             }
                         }
+                        AndroidView(
+                            factory = { assets.adChoicesView },
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        )
                     }
                 }
             }

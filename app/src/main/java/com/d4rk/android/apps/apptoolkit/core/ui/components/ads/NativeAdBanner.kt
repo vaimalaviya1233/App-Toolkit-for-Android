@@ -1,6 +1,5 @@
 package com.d4rk.android.apps.apptoolkit.core.ui.components.ads
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,13 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
@@ -84,50 +80,71 @@ fun NativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, view ->
+            NativeAdView(ad = ad) { loadedAd, assets ->
                 Card(
                     modifier = modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(SizeConstants.LargeSize),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        loadedAd.icon?.drawable?.let { drawable ->
-                            Image(
-                                painter = remember(drawable) {
-                                    BitmapPainter(drawable.toBitmap().asImageBitmap())
-                                },
-                                contentDescription = loadedAd.headline,
-                                modifier = Modifier
-                                    .size(SizeConstants.ExtraLargeIncreasedSize)
-                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
-                            )
-                            LargeHorizontalSpacer()
-                        }
+                    Box {
                         Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.Center
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(SizeConstants.LargeSize)
                         ) {
                             Text(
-                                text = loadedAd.headline ?: "",
-                                fontWeight = FontWeight.Bold
+                                text = "Ad",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary
                             )
-                            loadedAd.body?.let { body ->
-                                Text(
-                                    text = body,
-                                    style = MaterialTheme.typography.bodySmall
-                                )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                loadedAd.icon?.drawable?.let { drawable ->
+                                    AndroidView(
+                                        factory = { assets.iconView },
+                                        update = { it.setImageDrawable(drawable) },
+                                        modifier = Modifier
+                                            .size(SizeConstants.ExtraLargeIncreasedSize)
+                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+                                    )
+                                    LargeHorizontalSpacer()
+                                }
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    AndroidView(factory = { assets.headlineView }) { view ->
+                                        view.setContent {
+                                            Text(
+                                                text = loadedAd.headline ?: "",
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                    loadedAd.body?.let { body ->
+                                        AndroidView(factory = { assets.bodyView }) { view ->
+                                            view.setContent {
+                                                Text(
+                                                    text = body,
+                                                    style = MaterialTheme.typography.bodySmall
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                                loadedAd.callToAction?.let { cta ->
+                                    LargeHorizontalSpacer()
+                                    AndroidView(factory = { assets.callToActionView }) { button ->
+                                        button.text = cta
+                                    }
+                                }
                             }
                         }
-                        loadedAd.callToAction?.let { cta ->
-                            LargeHorizontalSpacer()
-                            Button(onClick = { view.performClick() }) {
-                                Text(text = cta)
-                            }
-                        }
+                        AndroidView(
+                            factory = { assets.adChoicesView },
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        )
                     }
                 }
             }
