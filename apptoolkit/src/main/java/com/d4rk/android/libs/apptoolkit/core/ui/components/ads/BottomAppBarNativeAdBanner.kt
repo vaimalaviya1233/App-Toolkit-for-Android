@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,6 +81,12 @@ fun BottomAppBarNativeAdBanner(
                             .padding(horizontal = SizeConstants.LargeSize),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Text(
+                            text = "Ad",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        LargeHorizontalSpacer()
                         loadedAd.icon?.drawable?.let { drawable ->
                             Image(
                                 painter = remember(drawable) {

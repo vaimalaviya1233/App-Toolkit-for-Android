@@ -93,6 +93,11 @@ fun LargeNativeAdBanner(
                             .fillMaxWidth()
                             .padding(SizeConstants.LargeSize)
                     ) {
+                        Text(
+                            text = "Ad",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
