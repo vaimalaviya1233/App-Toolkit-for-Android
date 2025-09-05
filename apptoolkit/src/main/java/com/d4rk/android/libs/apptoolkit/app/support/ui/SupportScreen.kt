@@ -94,7 +94,7 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
 ) {
     val context: Context = LocalContext.current
-    val mediumRectangleAdsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    val largeBannerAdsConfig: AdsConfig = koinInject(qualifier = named(name = "large_banner"))
     val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "native_ad"))
 
     val productDetailsMap = data.products.associateBy { it.productId }
@@ -207,7 +207,7 @@ fun SupportScreenContent(
         item {
             AdBanner(
                 modifier = Modifier.padding(bottom = SizeConstants.MediumSize),
-                adsConfig = mediumRectangleAdsConfig
+                adsConfig = largeBannerAdsConfig
             )
         }
     }

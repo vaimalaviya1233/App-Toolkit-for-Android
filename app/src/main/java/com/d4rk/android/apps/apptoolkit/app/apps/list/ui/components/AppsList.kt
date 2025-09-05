@@ -21,7 +21,10 @@ import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
-import com.d4rk.android.apps.apptoolkit.core.ads.ui.NativeAdBanner
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBanner
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -156,8 +159,10 @@ private fun AppCardItem(
 
 @Composable
 private fun AdListItem() {
+    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     NativeAdBanner(
         modifier = Modifier.fillMaxWidth(),
+        adsConfig = adsConfig
     )
 }
 

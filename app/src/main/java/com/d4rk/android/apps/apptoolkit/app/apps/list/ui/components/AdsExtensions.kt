@@ -11,7 +11,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun rememberAdsConfig(koin: Koin, isTabletOrLandscape: Boolean): AdsConfig {
     val bannerType = remember(isTabletOrLandscape) {
-        if (isTabletOrLandscape) "full_banner" else "banner_medium_rectangle"
+        if (isTabletOrLandscape) "full_banner" else "large_banner"
     }
     return remember(bannerType) { koin.get<AdsConfig>(qualifier = named(bannerType)) }
 }
