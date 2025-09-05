@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">App Toolkit</string>
     <string name="app_full_name" translatable="false">App Toolkit for Android</string>
+    <string name="ad" translatable="false">Ad</string>
     <string name="bulgarian" translatable="false">Български</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">Français</string>
