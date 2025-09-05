@@ -25,10 +25,11 @@ class DefaultHelpRepository(
             R.string.question_7 to R.string.summary_preference_faq_7,
             R.string.question_8 to R.string.summary_preference_faq_8,
             R.string.question_9 to R.string.summary_preference_faq_9
-        ).map { (questionRes, answerRes) ->
+        ).mapIndexed { index, (questionRes, answerRes) ->
             UiHelpQuestion(
+                id = index,
                 question = context.getString(questionRes),
-                answer = context.getString(answerRes)
+                answer = context.getString(answerRes),
             )
         }.filter { it.question.isNotBlank() && it.answer.isNotBlank() }
         emit(faq)

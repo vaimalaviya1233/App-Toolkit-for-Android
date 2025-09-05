@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
@@ -26,7 +25,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBanner
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
-import com.d4rk.android.libs.apptoolkit.core.ui.components.animations.rememberAnimatedVisibilityStateForGrids
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
@@ -79,11 +77,6 @@ private fun AppsGrid(
     onAppClick: (AppInfo) -> Unit,
     onShareClick: (AppInfo) -> Unit
 ) {
-    val (visibilityStates: SnapshotStateList<Boolean>, _) = rememberAnimatedVisibilityStateForGrids(
-        gridState = listState,
-        itemCount = items.size
-    )
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = columnCount),
         state = listState,
@@ -123,10 +116,7 @@ private fun AppsGrid(
                         isFavorite = isFavorite,
                         modifier = Modifier
                             .animateItem()
-                            .animateVisibility(
-                                visible = visibilityStates.getOrElse(index) { false },
-                                index = index
-                            ),
+                            .animateVisibility(index = index),
                         onFavoriteToggle = onFavoriteToggle,
                         onAppClick = onAppClick,
                         onShareClick = onShareClick
@@ -134,11 +124,9 @@ private fun AppsGrid(
                 }
 
                 AppListItem.Ad -> AdListItem(
-                    modifier = Modifier.animateItem()
-                        .animateVisibility(
-                            visible = visibilityStates.getOrElse(index) { false },
-                            index = index
-                        ),
+                    modifier = Modifier
+                        .animateItem()
+                        .animateVisibility(index = index),
                 )
             }
         }

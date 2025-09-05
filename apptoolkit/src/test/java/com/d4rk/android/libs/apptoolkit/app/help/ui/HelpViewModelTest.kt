@@ -38,11 +38,11 @@ class HelpViewModelTest {
         assertThat(viewModel.uiState.value.screenState)
             .isInstanceOf(ScreenState.IsLoading::class.java)
 
-        faqFlow.emit(listOf(UiHelpQuestion("Q", "A")))
+        faqFlow.emit(listOf(UiHelpQuestion(id = 0 , question = "Q" , answer = "A")))
         advanceUntilIdle()
         val state = viewModel.uiState.value
         assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
-        assertThat(state.data?.questions).containsExactly(UiHelpQuestion("Q", "A"))
+        assertThat(state.data?.questions).containsExactly(UiHelpQuestion(id = 0 , question = "Q" , answer = "A"))
     }
 
     @Test
@@ -99,12 +99,12 @@ class HelpViewModelTest {
         val viewModel = HelpViewModel(repo)
 
         viewModel.onEvent(HelpEvent.LoadFaq)
-        faqFlow.emit(listOf(UiHelpQuestion("Q1", "A1")))
+        faqFlow.emit(listOf(UiHelpQuestion(id = 0 , question = "Q1" , answer = "A1")))
         advanceUntilIdle()
         assertThat(viewModel.uiState.value.data?.questions?.single()?.question)
             .isEqualTo("Q1")
 
-        faqFlow.emit(listOf(UiHelpQuestion("Q2", "A2")))
+        faqFlow.emit(listOf(UiHelpQuestion(id = 1 , question = "Q2" , answer = "A2")))
         advanceUntilIdle()
         assertThat(viewModel.uiState.value.data?.questions?.single()?.question)
             .isEqualTo("Q2")
