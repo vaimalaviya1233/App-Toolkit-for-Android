@@ -69,21 +69,13 @@ dependencies {
 
     // Compose
     api(dependencyNotation = platform(libs.androidx.compose.bom))
-    api(dependencyNotation = libs.androidx.ui)
     api(dependencyNotation = libs.androidx.activity.compose)
-    api(dependencyNotation = libs.androidx.ui.graphics)
-    api(dependencyNotation = libs.androidx.compose.runtime)
     api(dependencyNotation = libs.androidx.runtime.livedata)
     api(dependencyNotation = libs.androidx.ui.tooling.preview)
     api(dependencyNotation = libs.androidx.material3)
     api(dependencyNotation = libs.androidx.material.icons.extended)
-    api(dependencyNotation = libs.androidx.foundation)
-    api(dependencyNotation = libs.datastore.preferences.core)
     api(dependencyNotation = libs.androidx.datastore.preferences)
-    api(dependencyNotation = libs.androidx.datastore)
-    api(dependencyNotation = libs.androidx.datastore.core)
     api(dependencyNotation = libs.androidx.navigation.compose)
-    api(dependencyNotation = libs.androidx.graphics.shapes)
 
     // Firebase
     api(dependencyNotation = platform(libs.firebase.bom))
