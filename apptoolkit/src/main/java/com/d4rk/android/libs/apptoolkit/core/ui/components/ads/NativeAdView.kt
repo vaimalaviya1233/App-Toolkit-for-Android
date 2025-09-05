@@ -16,6 +16,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.material.button.MaterialButton
 import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 
 @Composable
@@ -31,6 +32,13 @@ fun NativeAdView(
     val ctaViewId by remember { mutableIntStateOf(View.generateViewId()) }
     val context = LocalContext.current
     val adChoicesView = remember { AdChoicesView(context) }
+    val ctaView = remember {
+        MaterialButton(context).apply {
+            id = ctaViewId
+            isAllCaps = false
+            visibility = View.GONE
+        }
+    }
 
     AndroidView(
         factory = { ctx ->
@@ -47,10 +55,6 @@ fun NativeAdView(
                 id = bodyViewId
                 visibility = View.GONE
             }
-            val ctaView = ComposeView(ctx).apply {
-                id = ctaViewId
-                visibility = View.GONE
-            }
 
             GoogleNativeAdView(ctx).apply {
                 id = adViewId
@@ -58,7 +62,7 @@ fun NativeAdView(
                 addView(headlineView)
                 addView(iconView)
                 addView(bodyView)
-                addView(ctaView)
+                // ctaView will be added via Compose `AndroidView`
             }
         },
         update = { view ->
@@ -67,14 +71,32 @@ fun NativeAdView(
             val headlineView = view.findViewById<ComposeView>(headlineViewId)
             val iconView = view.findViewById<ComposeView>(iconViewId)
             val bodyView = view.findViewById<ComposeView>(bodyViewId)
-            val ctaView = view.findViewById<ComposeView>(ctaViewId)
 
-            adView.setNativeAd(ad)
             adView.headlineView = headlineView
             adView.iconView = iconView
             adView.bodyView = bodyView
             adView.callToActionView = ctaView
             adView.adChoicesView = adChoicesView
+
+            if (adView.tag != ad) {
+                val bindAd = {
+                    adView.setNativeAd(ad)
+                    adView.tag = ad
+                }
+
+                if (ctaView.isAttachedToWindow) {
+                    bindAd()
+                } else {
+                    ctaView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                        override fun onViewAttachedToWindow(v: View) {
+                            bindAd()
+                            ctaView.removeOnAttachStateChangeListener(this)
+                        }
+
+                        override fun onViewDetachedFromWindow(v: View) = Unit
+                    })
+                }
+            }
 
             contentView.setContent {
                 Box {

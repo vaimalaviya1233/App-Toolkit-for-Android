@@ -1,5 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.core.ui.components.ads
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +42,8 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.material.button.MaterialButton
+import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun NativeAdBanner(
@@ -80,6 +84,8 @@ fun NativeAdBanner(
                 .build()
             loader.loadAd(AdRequest.Builder().build())
         }
+        val colorPrimary = MaterialTheme.colorScheme.primary.toArgb()
+        val colorOnPrimary = MaterialTheme.colorScheme.onPrimary.toArgb()
 
         nativeAd?.let { ad ->
             NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
@@ -124,9 +130,20 @@ fun NativeAdBanner(
                             }
                             loadedAd.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                Button(onClick = { ctaView.performClick() }) {
-                                    Text(text = cta)
-                                }
+                                AndroidView(
+                                    factory = {
+                                        (ctaView.parent as? ViewGroup)?.removeView(ctaView)
+                                        ctaView
+                                    },
+                                    update = { view ->
+                                        (view as MaterialButton).apply {
+                                            text = cta
+                                            setBackgroundColor(colorPrimary)
+                                            setTextColor(colorOnPrimary)
+                                            visibility = View.VISIBLE
+                                        }
+                                    }
+                                )
                             }
                         }
                     }
