@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -53,6 +54,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnack
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -77,26 +81,32 @@ fun MainScreen() {
 fun MainScaffoldContent(drawerState: DrawerState) {
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
-    val isFabExtended: MutableState<Boolean> = rememberSaveable { mutableStateOf(value = true) }
-    val isFabVisible: MutableState<Boolean> = rememberSaveable { mutableStateOf(value = false) }
+    val isFabExtended: MutableState<Boolean> = rememberSaveable { mutableStateOf(true) }
+    val isFabVisible: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val navController: NavHostController = rememberNavController()
-    val bottomItems = listOf(
-        BottomBarItem(
-            route = NavigationRoutes.ROUTE_APPS_LIST,
-            icon = Icons.Outlined.Apps,
-            selectedIcon = Icons.Rounded.Apps,
-            title = R.string.all_apps
-        ), BottomBarItem(
-            route = NavigationRoutes.ROUTE_FAVORITE_APPS,
-            icon = Icons.Outlined.StarOutline,
-            selectedIcon = Icons.Rounded.Star,
-            title = R.string.favorite_apps
+    val bottomItems: List<BottomBarItem> = remember {
+        listOf(
+            BottomBarItem(
+                route = NavigationRoutes.ROUTE_APPS_LIST,
+                icon = Icons.Outlined.Apps,
+                selectedIcon = Icons.Rounded.Apps,
+                title = R.string.all_apps
+            ),
+            BottomBarItem(
+                route = NavigationRoutes.ROUTE_FAVORITE_APPS,
+                icon = Icons.Outlined.StarOutline,
+                selectedIcon = Icons.Rounded.Star,
+                title = R.string.favorite_apps
+            )
         )
-    )
+    }
 
-    LaunchedEffect(key1 = scrollBehavior.state.contentOffset) {
-        isFabExtended.value = scrollBehavior.state.contentOffset >= 0f
+    LaunchedEffect(scrollBehavior.state) {
+        snapshotFlow { scrollBehavior.state.contentOffset }
+            .map { it >= 0f }
+            .distinctUntilChanged()
+            .collectLatest { isFabExtended.value = it }
     }
 
     Scaffold(
@@ -141,19 +151,22 @@ fun MainScaffoldTabletContent() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
 
-    val bottomItems = listOf(
-        BottomBarItem(
-            route = NavigationRoutes.ROUTE_APPS_LIST,
-            icon = Icons.Outlined.Apps,
-            selectedIcon = Icons.Rounded.Apps,
-            title = R.string.all_apps
-        ), BottomBarItem(
-            route = NavigationRoutes.ROUTE_FAVORITE_APPS,
-            icon = Icons.Outlined.StarOutline,
-            selectedIcon = Icons.Rounded.Star,
-            title = R.string.favorite_apps
+    val bottomItems: List<BottomBarItem> = remember {
+        listOf(
+            BottomBarItem(
+                route = NavigationRoutes.ROUTE_APPS_LIST,
+                icon = Icons.Outlined.Apps,
+                selectedIcon = Icons.Rounded.Apps,
+                title = R.string.all_apps
+            ),
+            BottomBarItem(
+                route = NavigationRoutes.ROUTE_FAVORITE_APPS,
+                icon = Icons.Outlined.StarOutline,
+                selectedIcon = Icons.Rounded.Star,
+                title = R.string.favorite_apps
+            )
         )
-    )
+    }
 
     val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
 
