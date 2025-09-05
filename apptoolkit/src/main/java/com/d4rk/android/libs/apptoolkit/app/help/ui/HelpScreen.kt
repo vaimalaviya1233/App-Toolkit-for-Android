@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui
 
 import android.content.Context
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,22 +33,21 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.HelpNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVerticalSpacer
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.HelpNativeAdBanner
+import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
-import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,15 +112,14 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
-        )
+        ),
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize)
     ) {
         item {
             Text(text = stringResource(id = R.string.popular_help_resources))
-            MediumVerticalSpacer()
         }
         item {
             HelpQuestionsList(questions = questions)
-            MediumVerticalSpacer()
         }
         item {
             HelpNativeAdBanner(
@@ -132,7 +131,7 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
             ContactUsCard(onClick = {
                 IntentsHelper.sendEmailToDeveloper(context = activity , applicationNameRes = R.string.app_name)
             })
-            repeat(2) {
+            repeat(3) {
                 ExtraLargeVerticalSpacer()
             }
         }
