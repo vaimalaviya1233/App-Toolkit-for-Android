@@ -122,7 +122,7 @@ fun LargeNativeAdBanner(
                             }
                             loadedAd.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                FilledTonalButton(onClick = { ctaView.performClick() }) {
+                                FilledTonalButton(onClick = { ctaView.callOnClick() }) {
                                     Text(text = cta)
                                 }
                             }

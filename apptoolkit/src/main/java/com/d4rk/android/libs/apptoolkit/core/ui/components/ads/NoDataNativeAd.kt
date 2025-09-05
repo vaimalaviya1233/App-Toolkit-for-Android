@@ -126,7 +126,7 @@ fun NoDataNativeAdBanner(
                             }
                             loadedAd.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                Button(onClick = { ctaView.performClick() }) {
+                                Button(onClick = { ctaView.callOnClick() }) {
                                     Text(text = cta)
                                 }
                             }
