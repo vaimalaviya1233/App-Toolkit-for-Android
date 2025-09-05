@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -77,7 +78,26 @@ fun NativeAdView(
             adView.bodyView = bodyView
             adView.callToActionView = ctaView
             adView.adChoicesView = adChoicesView
-            adView.setNativeAd(ad)
+
+            if (adView.tag != ad) {
+                val bindAd = {
+                    adView.setNativeAd(ad)
+                    adView.tag = ad
+                }
+
+                if (ViewCompat.isAttachedToWindow(ctaView)) {
+                    bindAd()
+                } else {
+                    ctaView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                        override fun onViewAttachedToWindow(v: View) {
+                            bindAd()
+                            ctaView.removeOnAttachStateChangeListener(this)
+                        }
+
+                        override fun onViewDetachedFromWindow(v: View) = Unit
+                    })
+                }
+            }
 
             contentView.setContent {
                 Box {
