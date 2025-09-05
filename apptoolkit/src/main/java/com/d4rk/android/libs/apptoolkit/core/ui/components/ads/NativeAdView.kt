@@ -17,6 +17,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
+import com.google.android.material.button.MaterialButton
 
 @Composable
 fun NativeAdView(
@@ -47,8 +48,9 @@ fun NativeAdView(
                 id = bodyViewId
                 visibility = View.GONE
             }
-            val ctaView = ComposeView(ctx).apply {
+            val ctaView = MaterialButton(ctx).apply {
                 id = ctaViewId
+                isAllCaps = false
                 visibility = View.GONE
             }
 
@@ -67,7 +69,7 @@ fun NativeAdView(
             val headlineView = view.findViewById<ComposeView>(headlineViewId)
             val iconView = view.findViewById<ComposeView>(iconViewId)
             val bodyView = view.findViewById<ComposeView>(bodyViewId)
-            val ctaView = view.findViewById<ComposeView>(ctaViewId)
+            val ctaView = view.findViewById<MaterialButton>(ctaViewId)
 
             adView.setNativeAd(ad)
             adView.headlineView = headlineView
