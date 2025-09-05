@@ -33,7 +33,7 @@ val adsModule : Module = module {
     }
 
     single<AdsConfig>(named(name = "help_native_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.HELP_NATIVE_AD_UNIT_ID)
+        AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
     }
 
     single<AdsConfig> {

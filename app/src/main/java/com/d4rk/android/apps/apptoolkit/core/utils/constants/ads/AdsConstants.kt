@@ -28,10 +28,4 @@ object AdsConstants {
             "ca-app-pub-5294151573817700/5578142927"
         }
 
-    val HELP_NATIVE_AD_UNIT_ID: String
-        get() = if (BuildConfig.DEBUG) {
-            DebugAdsConstants.NATIVE_AD_UNIT_ID
-        } else {
-            "ca-app-pub-5294151573817700/5578142927"
-        }
 }
