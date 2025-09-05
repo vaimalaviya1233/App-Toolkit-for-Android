@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +37,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
@@ -227,6 +230,85 @@ fun LargeNativeAdBanner(
                                 Button(onClick = { view.performClick() }) {
                                     Text(text = cta)
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomAppBarNativeAdBanner(
+    modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
+) {
+    val context = LocalContext.current
+    val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
+    val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
+
+    if (LocalInspectionMode.current) {
+        NavigationBar(modifier = modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Native Ad")
+            }
+        }
+        return
+    }
+
+    if (showAds) {
+        var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
+
+        DisposableEffect(key1 = nativeAd) {
+            onDispose { nativeAd?.destroy() }
+        }
+
+        LaunchedEffect(key1 = adsConfig.bannerAdUnitId) {
+            val loader = AdLoader.Builder(context, adsConfig.bannerAdUnitId)
+                .forNativeAd { ad -> nativeAd = ad }
+                .build()
+            loader.loadAd(AdRequest.Builder().build())
+        }
+
+        nativeAd?.let { ad ->
+            NativeAdView(ad = ad) { loadedAd, view ->
+                NavigationBar(modifier = modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .padding(horizontal = SizeConstants.LargeSize),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        loadedAd.icon?.drawable?.let { drawable ->
+                            Image(
+                                painter = remember(drawable) {
+                                    BitmapPainter(drawable.toBitmap().asImageBitmap())
+                                },
+                                contentDescription = loadedAd.headline,
+                                modifier = Modifier
+                                    .size(SizeConstants.ExtraLargeIncreasedSize)
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+                            )
+                            LargeHorizontalSpacer()
+                        }
+                        Text(
+                            text = loadedAd.headline ?: "",
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f)
+                        )
+                        loadedAd.callToAction?.let { cta ->
+                            LargeHorizontalSpacer()
+                            Button(onClick = { view.performClick() }) {
+                                Text(text = cta)
                             }
                         }
                     }

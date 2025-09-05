@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.BottomAppBarNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import org.koin.compose.koinInject
@@ -50,7 +50,7 @@ fun BottomNavigationBar(
 
     Column(modifier = modifier) {
         key("bottom_ad") {
-            AdBanner(modifier = Modifier.fillMaxWidth(), adsConfig = adsConfig)
+            BottomAppBarNativeAdBanner(modifier = Modifier.fillMaxWidth(), adsConfig = adsConfig)
         }
 
         NavigationBar {
