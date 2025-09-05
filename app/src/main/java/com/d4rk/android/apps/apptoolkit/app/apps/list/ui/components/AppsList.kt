@@ -52,6 +52,7 @@ fun AppsList(
     val items by remember(apps, adsEnabled) {
         derivedStateOf { buildAppListItems(apps, adsEnabled, adFrequency) }
     }
+    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
 
     AppsGrid(
         items = items,
@@ -61,7 +62,8 @@ fun AppsList(
         listState = listState,
         onFavoriteToggle = onFavoriteToggle,
         onAppClick = onAppClick,
-        onShareClick = onShareClick
+        onShareClick = onShareClick,
+        adsConfig = adsConfig
     )
 }
 
@@ -75,7 +77,8 @@ private fun AppsGrid(
     listState: LazyGridState,
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
-    onShareClick: (AppInfo) -> Unit
+    onShareClick: (AppInfo) -> Unit,
+    adsConfig: AdsConfig,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = columnCount),
@@ -127,6 +130,7 @@ private fun AppsGrid(
                     modifier = Modifier
                         .animateItem()
                         .animateVisibility(index = index),
+                    adsConfig = adsConfig
                 )
             }
         }
@@ -156,9 +160,8 @@ private fun AppCardItem(
 @Composable
 private fun AdListItem(
     modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
 ) {
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
-
     NativeAdBanner(
         modifier = modifier.fillMaxWidth(),
         adsConfig = adsConfig
