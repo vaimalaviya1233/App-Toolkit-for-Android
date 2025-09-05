@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.animateItem
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
@@ -64,6 +66,7 @@ fun AppsList(
 }
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 private fun AppsGrid(
     items: List<AppListItem>,
     favorites: Set<String>,
@@ -74,7 +77,7 @@ private fun AppsGrid(
     onAppClick: (AppInfo) -> Unit,
     onShareClick: (AppInfo) -> Unit
 ) {
-    val (visibilityStates: SnapshotStateList<Boolean>) = rememberAnimatedVisibilityStateForGrids(
+    val (visibilityStates: SnapshotStateList<Boolean>, _) = rememberAnimatedVisibilityStateForGrids(
         gridState = listState,
         itemCount = items.size
     )
@@ -106,7 +109,7 @@ private fun AppsGrid(
                     AppListItem.Ad -> "ad"
                 }
             }
-        ) { index: Int, item: AppListItem ->
+        ) { index, item: AppListItem ->
             when (item) {
                 is AppListItem.App -> {
                     val packageName = item.appInfo.packageName
@@ -124,7 +127,10 @@ private fun AppsGrid(
                     )
                 }
 
-                AppListItem.Ad -> AdListItem()
+                AppListItem.Ad -> AdListItem(
+                    visibilityStates = visibilityStates,
+                    index = index
+                )
             }
         }
     }
@@ -147,17 +153,28 @@ private fun AppCardItem(
         onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
         onAppClick = onAppClick,
         onShareClick = onShareClick,
-        modifier = Modifier.animateVisibility(
-            visible = visibilityStates.getOrElse(index = index) { false },
-            index = index
-        )
+        modifier = Modifier
+            .animateItem()
+            .animateVisibility(
+                visible = visibilityStates.getOrElse(index) { false },
+                index = index
+            )
     )
 }
 
 @Composable
-private fun AdListItem() {
+private fun AdListItem(
+    visibilityStates: SnapshotStateList<Boolean>,
+    index: Int
+) {
     NativeAdBanner(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateItem()
+            .animateVisibility(
+                visible = visibilityStates.getOrElse(index) { false },
+                index = index
+            )
     )
 }
 
