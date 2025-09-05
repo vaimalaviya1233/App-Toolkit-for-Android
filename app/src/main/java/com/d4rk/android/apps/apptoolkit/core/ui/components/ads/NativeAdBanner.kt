@@ -2,6 +2,7 @@ package com.d4rk.android.apps.apptoolkit.core.ui.components.ads
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.background
@@ -89,7 +90,11 @@ fun NativeAdBanner(
             AndroidView(
                 modifier = modifier.fillMaxWidth(),
                 factory = { ctx ->
-                    LayoutInflater.from(ctx).inflate(R.layout.native_ad_banner, null)
+                    LayoutInflater.from(ctx).inflate(
+                        R.layout.native_ad_banner,
+                        FrameLayout(ctx),
+                        false
+                    )
                 },
                 update = { view ->
                     val adView = view.findViewById<NativeAdView>(R.id.native_ad_view)
@@ -106,7 +111,7 @@ fun NativeAdBanner(
                         bodyView.text = it
                     } ?: run { bodyView.visibility = View.GONE }
 
-                    val clickableAssets = mutableMapOf(
+                    val clickableAssets = mutableMapOf<String, View>(
                         NativeAdAssetNames.ASSET_HEADLINE to headlineView,
                         NativeAdAssetNames.ASSET_CALL_TO_ACTION to ctaView
                     )
