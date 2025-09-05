@@ -83,7 +83,7 @@ fun NoDataNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, view ->
+            NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
                 OutlinedCard(
                     modifier = modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
@@ -126,7 +126,7 @@ fun NoDataNativeAdBanner(
                             }
                             loadedAd.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                Button(onClick = { view.performClick() }) {
+                                Button(onClick = { ctaView.performClick() }) {
                                     Text(text = cta)
                                 }
                             }

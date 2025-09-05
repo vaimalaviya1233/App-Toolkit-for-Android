@@ -82,7 +82,7 @@ fun HelpNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, view ->
+            NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
                 Card(
                     modifier = modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(size = SizeConstants.MediumSize)
@@ -125,7 +125,7 @@ fun HelpNativeAdBanner(
                             }
                             loadedAd.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                Button(onClick = { view.performClick() }) {
+                                Button(onClick = { ctaView.performClick() }) {
                                     Text(text = cta)
                                 }
                             }
