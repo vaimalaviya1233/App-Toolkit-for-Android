@@ -27,4 +27,5 @@ object AdsConstants {
         } else {
             "ca-app-pub-5294151573817700/5578142927"
         }
+
 }

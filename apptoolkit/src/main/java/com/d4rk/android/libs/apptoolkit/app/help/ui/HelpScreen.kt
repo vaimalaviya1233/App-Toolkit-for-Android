@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.RateReview
@@ -42,6 +43,10 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVertica
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.HelpNativeAdBanner
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,6 +107,8 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
 
 @Composable
 fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
+    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
+
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
@@ -114,6 +121,12 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
         item {
             HelpQuestionsList(questions = questions)
             MediumVerticalSpacer()
+        }
+        item {
+            HelpNativeAdBanner(
+                adsConfig = nativeAdsConfig,
+                modifier = Modifier.padding(vertical = SizeConstants.MediumSize)
+            )
         }
         item {
             ContactUsCard(onClick = {
