@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.animateItem
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
@@ -119,8 +118,12 @@ private fun AppsGrid(
                     AppCardItem(
                         item = item,
                         isFavorite = isFavorite,
-                        visibilityStates = visibilityStates,
-                        index = index,
+                        modifier = Modifier
+                            .animateItem()
+                            .animateVisibility(
+                                visible = visibilityStates.getOrElse(index) { false },
+                                index = index
+                            ),
                         onFavoriteToggle = onFavoriteToggle,
                         onAppClick = onAppClick,
                         onShareClick = onShareClick
@@ -128,8 +131,11 @@ private fun AppsGrid(
                 }
 
                 AppListItem.Ad -> AdListItem(
-                    visibilityStates = visibilityStates,
-                    index = index
+                    modifier = Modifier.animateItem()
+                        .animateVisibility(
+                            visible = visibilityStates.getOrElse(index) { false },
+                            index = index
+                        ),
                 )
             }
         }
@@ -140,8 +146,7 @@ private fun AppsGrid(
 private fun AppCardItem(
     item: AppListItem.App,
     isFavorite: Boolean,
-    visibilityStates: SnapshotStateList<Boolean>,
-    index: Int,
+    modifier: Modifier = Modifier,
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
     onShareClick: (AppInfo) -> Unit
@@ -153,28 +158,17 @@ private fun AppCardItem(
         onFavoriteToggle = { onFavoriteToggle(appInfo.packageName) },
         onAppClick = onAppClick,
         onShareClick = onShareClick,
-        modifier = Modifier
-            .animateItem()
-            .animateVisibility(
-                visible = visibilityStates.getOrElse(index) { false },
-                index = index
-            )
+        modifier = modifier
     )
 }
 
 @Composable
 private fun AdListItem(
-    visibilityStates: SnapshotStateList<Boolean>,
-    index: Int
+    modifier: Modifier = Modifier,
 ) {
     NativeAdBanner(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .animateItem()
-            .animateVisibility(
-                visible = visibilityStates.getOrElse(index) { false },
-                index = index
-            )
     )
 }
 
