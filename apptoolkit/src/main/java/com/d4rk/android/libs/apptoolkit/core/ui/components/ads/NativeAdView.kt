@@ -32,6 +32,13 @@ fun NativeAdView(
     val ctaViewId by remember { mutableIntStateOf(View.generateViewId()) }
     val context = LocalContext.current
     val adChoicesView = remember { AdChoicesView(context) }
+    val ctaView = remember {
+        MaterialButton(context).apply {
+            id = ctaViewId
+            isAllCaps = false
+            visibility = View.GONE
+        }
+    }
 
     AndroidView(
         factory = { ctx ->
@@ -46,11 +53,6 @@ fun NativeAdView(
             }
             val bodyView = ComposeView(ctx).apply {
                 id = bodyViewId
-                visibility = View.GONE
-            }
-            val ctaView = MaterialButton(ctx).apply {
-                id = ctaViewId
-                isAllCaps = false
                 visibility = View.GONE
             }
 
@@ -69,14 +71,13 @@ fun NativeAdView(
             val headlineView = view.findViewById<ComposeView>(headlineViewId)
             val iconView = view.findViewById<ComposeView>(iconViewId)
             val bodyView = view.findViewById<ComposeView>(bodyViewId)
-            val ctaView = view.findViewById<MaterialButton>(ctaViewId)
 
-            adView.setNativeAd(ad)
             adView.headlineView = headlineView
             adView.iconView = iconView
             adView.bodyView = bodyView
             adView.callToActionView = ctaView
             adView.adChoicesView = adChoicesView
+            adView.setNativeAd(ad)
 
             contentView.setContent {
                 Box {
