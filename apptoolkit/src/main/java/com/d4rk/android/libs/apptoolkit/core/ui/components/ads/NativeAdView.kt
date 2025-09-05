@@ -21,32 +21,64 @@ import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 @Composable
 fun NativeAdView(
     ad: NativeAd,
-    adContent: @Composable (ad: NativeAd, contentView: View) -> Unit,
+    adContent: @Composable (ad: NativeAd, ctaView: View, contentView: View) -> Unit,
 ) {
     val contentViewId by remember { mutableIntStateOf(View.generateViewId()) }
     val adViewId by remember { mutableIntStateOf(View.generateViewId()) }
+    val headlineViewId by remember { mutableIntStateOf(View.generateViewId()) }
+    val iconViewId by remember { mutableIntStateOf(View.generateViewId()) }
+    val bodyViewId by remember { mutableIntStateOf(View.generateViewId()) }
+    val ctaViewId by remember { mutableIntStateOf(View.generateViewId()) }
     val context = LocalContext.current
     val adChoicesView = remember { AdChoicesView(context) }
 
     AndroidView(
         factory = { ctx ->
             val contentView = ComposeView(ctx).apply { id = contentViewId }
+            val headlineView = ComposeView(ctx).apply {
+                id = headlineViewId
+                visibility = View.GONE
+            }
+            val iconView = ComposeView(ctx).apply {
+                id = iconViewId
+                visibility = View.GONE
+            }
+            val bodyView = ComposeView(ctx).apply {
+                id = bodyViewId
+                visibility = View.GONE
+            }
+            val ctaView = ComposeView(ctx).apply {
+                id = ctaViewId
+                visibility = View.GONE
+            }
+
             GoogleNativeAdView(ctx).apply {
                 id = adViewId
                 addView(contentView)
+                addView(headlineView)
+                addView(iconView)
+                addView(bodyView)
+                addView(ctaView)
             }
         },
         update = { view ->
             val adView = view.findViewById<GoogleNativeAdView>(adViewId)
             val contentView = view.findViewById<ComposeView>(contentViewId)
+            val headlineView = view.findViewById<ComposeView>(headlineViewId)
+            val iconView = view.findViewById<ComposeView>(iconViewId)
+            val bodyView = view.findViewById<ComposeView>(bodyViewId)
+            val ctaView = view.findViewById<ComposeView>(ctaViewId)
 
             adView.setNativeAd(ad)
-            adView.callToActionView = contentView
+            adView.headlineView = headlineView
+            adView.iconView = iconView
+            adView.bodyView = bodyView
+            adView.callToActionView = ctaView
             adView.adChoicesView = adChoicesView
 
             contentView.setContent {
                 Box {
-                    adContent(ad, contentView)
+                    adContent(ad, ctaView, contentView)
                     AndroidView(
                         factory = {
                             (adChoicesView.parent as? ViewGroup)?.removeView(adChoicesView)

@@ -70,7 +70,7 @@ fun BottomAppBarNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, view ->
+            NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
                 NavigationBar(modifier = modifier.fillMaxWidth()) {
                     Row(
                         modifier = Modifier
@@ -99,7 +99,7 @@ fun BottomAppBarNativeAdBanner(
                         )
                         loadedAd.callToAction?.let { cta ->
                             LargeHorizontalSpacer()
-                            Button(onClick = { view.performClick() }) {
+                            Button(onClick = { ctaView.performClick() }) {
                                 Text(text = cta)
                             }
                         }
