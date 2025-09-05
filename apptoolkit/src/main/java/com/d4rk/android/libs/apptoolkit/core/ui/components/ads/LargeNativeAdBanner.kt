@@ -1,6 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,15 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdLabel
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -93,19 +91,13 @@ fun LargeNativeAdBanner(
                             .fillMaxWidth()
                             .padding(SizeConstants.LargeSize)
                     ) {
-                        Text(
-                            text = "Ad",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                        AdLabel()
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            loadedAd.icon?.drawable?.let { drawable ->
-                                Image(
-                                    painter = remember(drawable) {
-                                        BitmapPainter(drawable.toBitmap().asImageBitmap())
-                                    },
+                            loadedAd.icon?.let { icon ->
+                                AsyncImage(
+                                    model = icon.uri ?: icon.drawable,
                                     contentDescription = loadedAd.headline,
                                     modifier = Modifier
                                         .size(SizeConstants.ExtraExtraLargeSize)
