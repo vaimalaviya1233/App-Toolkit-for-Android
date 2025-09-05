@@ -9,7 +9,6 @@ lottie = "6.6.7"
 datastorePreferences = "1.1.7"
 firebaseBom = "34.2.0"
 composeBom = "2025.08.01"
-graphicsShapes = "1.0.1"
 integrity = "1.5.0"
 konfettiCompose = "2.0.5"
 lifecycle = "2.9.3"
@@ -22,11 +21,10 @@ appUpdateKtx = "2.1.0"
 kotlin = "2.2.10"
 coreKtx = "1.17.0"
 activityCompose = "1.10.1"
-composeUi = "1.9.0"
 composeMaterial3 = "1.5.0-alpha03"
 reviewKtx = "2.0.2"
 billing = "8.0.0"
-material = "1.12.0"
+material = "1.13.0"
 playServicesAds = "24.5.0"
 multidex = "2.0.1"
 navigationCompose = "2.9.3"
@@ -48,12 +46,8 @@ slf4j = "2.0.17"
 # AndroidX & Material
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePreferences" }
-androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastorePreferences" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastorePreferences" }
-androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version.ref = "graphicsShapes" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -61,13 +55,9 @@ androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "mult
 
 # Compose
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-foundation = { module = "androidx.compose.foundation:foundation" }
-androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
-androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }

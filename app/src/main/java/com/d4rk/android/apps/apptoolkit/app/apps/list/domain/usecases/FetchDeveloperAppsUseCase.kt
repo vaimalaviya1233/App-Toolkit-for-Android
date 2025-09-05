@@ -22,11 +22,7 @@ class FetchDeveloperAppsUseCase(
             }
             .onStart { emit(DataState.Loading()) }
             .catch { throwable ->
-                emit(
-                    DataState.Error(
-                        error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)
-                    )
-                )
+                emit(DataState.Error(error = throwable.toError(default = Errors.UseCase.FAILED_TO_LOAD_APPS)))
             }
 }
 
