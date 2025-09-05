@@ -106,7 +106,7 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
 
 @Composable
 fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
-    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named("help_native_ad"))
+    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
 
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(

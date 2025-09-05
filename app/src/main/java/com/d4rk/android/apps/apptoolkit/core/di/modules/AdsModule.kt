@@ -32,10 +32,6 @@ val adsModule : Module = module {
         AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
     }
 
-    single<AdsConfig>(named(name = "help_native_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
-    }
-
     single<AdsConfig> {
         AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.BANNER)
     }
