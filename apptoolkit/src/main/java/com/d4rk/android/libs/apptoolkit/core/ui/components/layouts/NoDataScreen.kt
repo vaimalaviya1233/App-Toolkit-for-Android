@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NoDataNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -51,9 +51,9 @@ fun NoDataScreen(
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
     isError: Boolean = false,
-    adsConfig: AdsConfig = koinInject(qualifier = named(name = "large_banner")),
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "native_ad")),
 ) {
-    val bannerConfig: AdsConfig = remember { adsConfig }
+    val nativeAdConfig: AdsConfig = remember { adsConfig }
 
     Box(
         modifier = Modifier
@@ -89,11 +89,11 @@ fun NoDataScreen(
             LargeVerticalSpacer()
 
             if (showAd) {
-                AdBanner(
+                NoDataNativeAdBanner(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = SizeConstants.MediumSize),
-                    adsConfig = bannerConfig
+                    adsConfig = nativeAdConfig
                 )
             }
         }
