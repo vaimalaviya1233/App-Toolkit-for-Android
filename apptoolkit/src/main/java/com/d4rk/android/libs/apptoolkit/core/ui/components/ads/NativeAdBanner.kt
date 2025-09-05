@@ -1,4 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -40,17 +41,12 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
-/**
- * Help screen specific native ad banner composable.
- */
 @Composable
-fun HelpNativeAdBanner(
+fun NativeAdBanner(
     modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
 ) {
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
@@ -58,7 +54,7 @@ fun HelpNativeAdBanner(
     if (LocalInspectionMode.current) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+            shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
         ) {
             Box(
                 modifier = Modifier
@@ -90,55 +86,45 @@ fun HelpNativeAdBanner(
             NativeAdView(ad = ad) { loadedAd, view ->
                 Card(
                     modifier = modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
                 ) {
-                    Column(
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(SizeConstants.LargeSize)
+                            .padding(SizeConstants.LargeSize),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "Ad",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
+                        loadedAd.icon?.drawable?.let { drawable ->
+                            Image(
+                                painter = remember(drawable) {
+                                    BitmapPainter(drawable.toBitmap().asImageBitmap())
+                                },
+                                contentDescription = loadedAd.headline,
+                                modifier = Modifier
+                                    .size(SizeConstants.ExtraLargeIncreasedSize)
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
+                            )
+                            LargeHorizontalSpacer()
+                        }
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.Center
                         ) {
-                            loadedAd.icon?.drawable?.let { drawable ->
-                                Image(
-                                    painter = remember(drawable) {
-                                        BitmapPainter(drawable.toBitmap().asImageBitmap())
-                                    },
-                                    contentDescription = loadedAd.headline,
-                                    modifier = Modifier
-                                        .size(SizeConstants.ExtraLargeIncreasedSize)
-                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
-                                )
-                                LargeHorizontalSpacer()
-                            }
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.Center
-                            ) {
+                            Text(
+                                text = loadedAd.headline ?: "",
+                                fontWeight = FontWeight.Bold
+                            )
+                            loadedAd.body?.let { body ->
                                 Text(
-                                    text = loadedAd.headline ?: "",
-                                    fontWeight = FontWeight.Bold
+                                    text = body,
+                                    style = MaterialTheme.typography.bodySmall
                                 )
-                                loadedAd.body?.let { body ->
-                                    Text(
-                                        text = body,
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                }
                             }
-                            loadedAd.callToAction?.let { cta ->
-                                LargeHorizontalSpacer()
-                                Button(onClick = { view.performClick() }) {
-                                    Text(text = cta)
-                                }
+                        }
+                        loadedAd.callToAction?.let { cta ->
+                            LargeHorizontalSpacer()
+                            Button(onClick = { view.performClick() }) {
+                                Text(text = cta)
                             }
                         }
                     }
@@ -147,4 +133,3 @@ fun HelpNativeAdBanner(
         }
     }
 }
-

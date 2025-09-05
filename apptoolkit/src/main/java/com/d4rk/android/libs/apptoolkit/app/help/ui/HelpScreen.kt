@@ -33,7 +33,6 @@ import com.d4rk.android.libs.apptoolkit.app.help.domain.model.ui.UiHelpScreen
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.ContactUsCard
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.HelpNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
@@ -46,8 +45,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
 import kotlinx.coroutines.CoroutineScope
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,8 +104,6 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
 
 @Composable
 fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
-    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
-
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
@@ -123,8 +118,7 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
         }
         item {
             HelpNativeAdBanner(
-                adsConfig = nativeAdsConfig,
-                modifier = Modifier.padding(vertical = SizeConstants.MediumSize)
+                modifier = Modifier.padding(vertical = SizeConstants.MediumSize).animateItem()
             )
         }
         item {

@@ -1,4 +1,5 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -40,30 +41,25 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
-/**
- * Help screen specific native ad banner composable.
- */
 @Composable
-fun HelpNativeAdBanner(
+fun LargeNativeAdBanner(
     modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
 ) {
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
 
     if (LocalInspectionMode.current) {
-        Card(
+        OutlinedCard(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+            shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
+                    .height(120.dp)
                     .background(Color.LightGray)
             ) {
                 Text(text = "Native Ad", modifier = Modifier.align(Alignment.Center))
@@ -88,24 +84,17 @@ fun HelpNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(ad = ad) { loadedAd, view ->
-                Card(
+                OutlinedCard(
                     modifier = modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(size = SizeConstants.MediumSize)
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(SizeConstants.LargeSize)
                     ) {
-                        Text(
-                            text = "Ad",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             loadedAd.icon?.drawable?.let { drawable ->
                                 Image(
@@ -114,7 +103,7 @@ fun HelpNativeAdBanner(
                                     },
                                     contentDescription = loadedAd.headline,
                                     modifier = Modifier
-                                        .size(SizeConstants.ExtraLargeIncreasedSize)
+                                        .size(SizeConstants.ExtraExtraLargeSize)
                                         .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
                                 )
                                 LargeHorizontalSpacer()
@@ -125,12 +114,13 @@ fun HelpNativeAdBanner(
                             ) {
                                 Text(
                                     text = loadedAd.headline ?: "",
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.titleMedium
                                 )
                                 loadedAd.body?.let { body ->
                                     Text(
                                         text = body,
-                                        style = MaterialTheme.typography.bodySmall
+                                        style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
                             }
@@ -147,4 +137,3 @@ fun HelpNativeAdBanner(
         }
     }
 }
-

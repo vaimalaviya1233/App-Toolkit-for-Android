@@ -92,7 +92,7 @@ fun NoDataScreen(
                 NoDataNativeAdBanner(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = SizeConstants.MediumSize),
+                        .padding(all = SizeConstants.MediumSize),
                     adsConfig = nativeAdConfig
                 )
             }
