@@ -60,7 +60,7 @@ fun NativeAdView(
                 addView(headlineView)
                 addView(iconView)
                 addView(bodyView)
-                addView(ctaView)
+                // ctaView will be added via Compose `AndroidView`
             }
         },
         update = { view ->

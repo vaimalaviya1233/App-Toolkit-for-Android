@@ -1,5 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -71,6 +73,8 @@ fun BottomAppBarNativeAdBanner(
                 .build()
             loader.loadAd(AdRequest.Builder().build())
         }
+        val colorPrimary = MaterialTheme.colorScheme.primary.toArgb()
+        val colorOnPrimary = MaterialTheme.colorScheme.onPrimary.toArgb()
 
         nativeAd?.let { ad ->
             NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
@@ -103,12 +107,16 @@ fun BottomAppBarNativeAdBanner(
                         loadedAd.callToAction?.let { cta ->
                             LargeHorizontalSpacer()
                             AndroidView(
-                                factory = { ctaView },
+                                factory = {
+                                    (ctaView.parent as? ViewGroup)?.removeView(ctaView)
+                                    ctaView
+                                },
                                 update = { view ->
                                     (view as MaterialButton).apply {
                                         text = cta
-                                        setBackgroundColor(MaterialTheme.colorScheme.primary.toArgb())
-                                        setTextColor(MaterialTheme.colorScheme.onPrimary.toArgb())
+                                        setBackgroundColor(colorPrimary)
+                                        setTextColor(colorOnPrimary)
+                                        visibility = View.VISIBLE
                                     }
                                 }
                             )
