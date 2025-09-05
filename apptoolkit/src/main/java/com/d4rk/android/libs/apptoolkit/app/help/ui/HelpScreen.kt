@@ -44,6 +44,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraLargeVer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ReviewHelper
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,6 +107,7 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
 
 @Composable
 fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : PaddingValues , activity : ComponentActivity) {
+    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     LazyColumn(
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
@@ -118,7 +122,8 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
         }
         item {
             HelpNativeAdBanner(
-                modifier = Modifier.padding(vertical = SizeConstants.MediumSize).animateItem()
+                modifier = Modifier.padding(vertical = SizeConstants.MediumSize).animateItem(),
+                adsConfig = adsConfig
             )
         }
         item {

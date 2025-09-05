@@ -40,17 +40,14 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
-
 /**
  * Help screen specific native ad banner composable.
  */
 @Composable
 fun HelpNativeAdBanner(
     modifier: Modifier = Modifier,
+    adsConfig: AdsConfig,
 ) {
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
