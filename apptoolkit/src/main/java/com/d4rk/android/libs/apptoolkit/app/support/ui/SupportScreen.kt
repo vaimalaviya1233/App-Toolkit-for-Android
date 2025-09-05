@@ -31,8 +31,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProd
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.ShortenLinkConstants
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.LargeNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.TonalIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -94,7 +93,6 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
 ) {
     val context: Context = LocalContext.current
-    val mediumRectangleAdsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
     val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "native_ad"))
 
     val productDetailsMap = data.products.associateBy { it.productId }
@@ -199,15 +197,9 @@ fun SupportScreenContent(
             )
         }
         item {
-            NativeAdBanner(
+            LargeNativeAdBanner(
                 modifier = Modifier.padding(all = SizeConstants.LargeSize),
                 adsConfig = nativeAdsConfig
-            )
-        }
-        item {
-            AdBanner(
-                modifier = Modifier.padding(bottom = SizeConstants.MediumSize),
-                adsConfig = mediumRectangleAdsConfig
             )
         }
     }

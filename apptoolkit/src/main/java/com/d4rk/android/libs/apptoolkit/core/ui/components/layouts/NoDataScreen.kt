@@ -51,7 +51,7 @@ fun NoDataScreen(
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
     isError: Boolean = false,
-    adsConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle")),
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "large_banner")),
 ) {
     val bannerConfig: AdsConfig = remember { adsConfig }
 
