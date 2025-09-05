@@ -8,17 +8,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -49,6 +48,8 @@ import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 
 @Composable
@@ -240,14 +241,11 @@ fun LargeNativeAdBanner(
 }
 
 @Composable
-fun BottomAppBarNativeAdBanner(
-    modifier: Modifier = Modifier,
-    adsConfig: AdsConfig,
-) {
+fun BottomAppBarNativeAdBanner(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
-
+    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     if (LocalInspectionMode.current) {
         NavigationBar(modifier = modifier.fillMaxWidth()) {
             Box(
@@ -282,7 +280,6 @@ fun BottomAppBarNativeAdBanner(
                     Row(
                         modifier = Modifier
                             .weight(1f)
-                            .fillMaxHeight()
                             .padding(horizontal = SizeConstants.LargeSize),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
