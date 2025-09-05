@@ -24,6 +24,7 @@ import kotlinx.coroutines.delay
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.animations.button.ButtonState
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlin.math.min
 
 /**
  * A modifier that adds a bounce effect to a composable when it's clicked.
@@ -89,13 +90,18 @@ fun Modifier.bounceClick(
  * animation starts. Defaults to 64.
  */
 fun Modifier.animateVisibility(
-    index : Int = 0 , invisibleOffsetY : Int = 50 , animationDuration : Int = 300 , staggerDelay : Int = 64
+    index : Int = 0 ,
+    invisibleOffsetY : Int = 50 ,
+    animationDuration : Int = 300 ,
+    staggerDelay : Int = 64 ,
+    maxStaggeredItems : Int = 20 ,
 ) = composed {
     var visible by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (!visible) {
-            delay(timeMillis = index * staggerDelay.toLong())
+            val delayMillis : Int = min(index , maxStaggeredItems) * staggerDelay
+            delay(timeMillis = delayMillis.toLong())
             visible = true
         }
     }
