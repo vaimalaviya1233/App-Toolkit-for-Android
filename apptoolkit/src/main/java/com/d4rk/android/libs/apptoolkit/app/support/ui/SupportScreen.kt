@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoneyOff
 import androidx.compose.material.icons.outlined.Paid
@@ -110,7 +111,8 @@ fun SupportScreenContent(
             OutlinedCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = SizeConstants.LargeSize)
+                    .padding(all = SizeConstants.LargeSize),
+                shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
             ) {
                 Column {
                     Text(

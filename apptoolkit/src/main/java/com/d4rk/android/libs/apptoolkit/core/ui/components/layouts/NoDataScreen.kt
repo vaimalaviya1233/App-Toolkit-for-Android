@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NoDataNativeAdBanner
@@ -41,6 +44,7 @@ import org.koin.core.qualifier.named
  * Example Usage:
  * ```
  * NoDataScreen(text = R.string.no_items_found, icon = Icons.Default.Warning */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NoDataScreen(
     text: Int = R.string.try_again,
@@ -62,14 +66,22 @@ fun NoDataScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize)
-                    .padding(bottom = SizeConstants.LargeSize),
-                tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
-            )
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                LoadingIndicator(
+                    modifier = Modifier.size(size = 144.dp)
+                )
+
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize),
+                    tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primaryContainer
+                )
+            }
+
             Text(
                 text = stringResource(id = textMessage),
                 style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
