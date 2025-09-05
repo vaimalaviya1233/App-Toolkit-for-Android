@@ -2,7 +2,6 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -17,8 +16,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 import com.google.android.material.button.MaterialButton
+import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 
 @Composable
 fun NativeAdView(
@@ -85,7 +84,7 @@ fun NativeAdView(
                     adView.tag = ad
                 }
 
-                if (ViewCompat.isAttachedToWindow(ctaView)) {
+                if (ctaView.isAttachedToWindow) {
                     bindAd()
                 } else {
                     ctaView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
