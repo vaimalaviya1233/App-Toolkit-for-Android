@@ -7,10 +7,12 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
+import kotlinx.coroutines.delay
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.animations.button.ButtonState
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -71,39 +74,42 @@ fun Modifier.bounceClick(
 /**
  * Animates the visibility of a composable with a fade and vertical offset animation.
  *
- * @param visible Determines whether the composable should be visible (true) or invisible (false).
- * @param index An optional index used to stagger the animation start for multiple items.
- * @param invisibleOffsetY The vertical offset in pixels applied when the composable is invisible. Defaults to 50.
- * @param animationDuration The duration of the animation in milliseconds. Defaults to 300.
- * @param staggerDelay The delay in milliseconds added for each item based on its index, used for staggered animations. Defaults to 64.
+ * The composable will fade and slide into place the first time it enters the
+ * composition. The animation for each item can be staggered by providing an
+ * [index]. After the initial animation runs, the composable remains visible even
+ * if it leaves and re-enters the composition.
  *
- * @return A [Modifier] that applies the visibility animation to the composable.
- *
- * The animation consists of two parts:
- * 1. A fade in/out animation controlled by the [alpha] state.
- * 2. A vertical offset animation controlled by the [offsetYState] state.
- *
- * When [visible] is true, the composable fades in and the vertical offset is 0.
- * When [visible] is false, the composable fades out and the vertical offset is [invisibleOffsetY].
- *
- * The animation is staggered using the [staggerDelay] and [index] parameters,
- * such that each item starts its animation after a delay proportional to its index.
- *
- * The modifier also adds a vertical padding of 4.dp for visual spacing.
+ * @param index Used to stagger the start time of the animation for items in a
+ * list or grid.
+ * @param invisibleOffsetY The vertical offset in pixels applied before the
+ * animation starts. Defaults to 50.
+ * @param animationDuration Duration of the fade/offset animation in
+ * milliseconds. Defaults to 300.
+ * @param staggerDelay Amount of delay in milliseconds per [index] before the
+ * animation starts. Defaults to 64.
  */
 fun Modifier.animateVisibility(
-    visible : Boolean = true , index : Int = 0 , invisibleOffsetY : Int = 50 , animationDuration : Int = 300 , staggerDelay : Int = 64
+    index : Int = 0 , invisibleOffsetY : Int = 50 , animationDuration : Int = 300 , staggerDelay : Int = 64
 ) = composed {
+    var visible by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!visible) {
+            delay(timeMillis = index * staggerDelay.toLong())
+            visible = true
+        }
+    }
+
     val alpha : State<Float> = animateFloatAsState(
-        targetValue = if (visible) 1f else 0f , animationSpec = tween(
-            durationMillis = animationDuration , delayMillis = index * staggerDelay
-        ) , label = "Alpha"
+        targetValue = if (visible) 1f else 0f ,
+        animationSpec = tween(durationMillis = animationDuration) ,
+        label = "Alpha"
     )
 
     val offsetState : State<Float> = animateFloatAsState(
-        targetValue = if (visible) 0f else invisibleOffsetY.toFloat() , animationSpec = tween(
-            durationMillis = animationDuration , delayMillis = index * staggerDelay
-        ) , label = "OffsetY"
+        targetValue = if (visible) 0f else invisibleOffsetY.toFloat() ,
+        animationSpec = tween(durationMillis = animationDuration) ,
+        label = "OffsetY"
     )
 
     this
