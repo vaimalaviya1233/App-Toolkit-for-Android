@@ -1,7 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
@@ -29,14 +27,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.material.button.MaterialButton
-import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun BottomAppBarNativeAdBanner(
@@ -52,7 +52,7 @@ fun BottomAppBarNativeAdBanner(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = "Native Ad")
             }
@@ -68,58 +68,74 @@ fun BottomAppBarNativeAdBanner(
         }
 
         LaunchedEffect(key1 = adsConfig.bannerAdUnitId) {
-            val loader = AdLoader.Builder(context, adsConfig.bannerAdUnitId)
-                .forNativeAd { ad -> nativeAd = ad }
-                .build()
+            val loader =
+                AdLoader.Builder(context, adsConfig.bannerAdUnitId)
+                    .forNativeAd { ad -> nativeAd = ad }
+                    .withAdListener(
+                        object : AdListener() {
+                            override fun onAdFailedToLoad(error: LoadAdError) {
+                                Log.e(TAG, "Native ad failed to load: ${error.message}")
+                            }
+
+                            override fun onAdLoaded() {
+                                Log.d(TAG, "Native ad was loaded.")
+                            }
+
+                            override fun onAdImpression() {
+                                Log.d(TAG, "Native ad recorded an impression.")
+                            }
+
+                            override fun onAdClicked() {
+                                Log.d(TAG, "Native ad was clicked.")
+                            }
+                        },
+                    )
+                    .build()
             loader.loadAd(AdRequest.Builder().build())
         }
-        val colorPrimary = MaterialTheme.colorScheme.primary.toArgb()
-        val colorOnPrimary = MaterialTheme.colorScheme.onPrimary.toArgb()
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
-                NavigationBar(modifier = modifier.fillMaxWidth()) {
+            NativeAdView(nativeAd = ad, modifier = modifier.fillMaxWidth()) {
+                NavigationBar(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = SizeConstants.LargeSize),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AdLabel()
                         LargeHorizontalSpacer()
-                        loadedAd.icon?.let { icon ->
-                            AsyncImage(
-                                model = icon.uri ?: icon.drawable,
-                                contentDescription = loadedAd.headline,
+                        NativeAdChoicesView()
+                        LargeHorizontalSpacer()
+                        ad.icon?.let { icon ->
+                            NativeAdIconView(
                                 modifier = Modifier
                                     .size(SizeConstants.ExtraLargeIncreasedSize)
-                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
-                            )
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                            ) {
+                                AsyncImage(
+                                    model = icon.uri ?: icon.drawable,
+                                    contentDescription = ad.headline,
+                                )
+                            }
                             LargeHorizontalSpacer()
                         }
-                        Text(
-                            text = loadedAd.headline ?: "",
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
-                        )
-                        loadedAd.callToAction?.let { cta ->
+                        ad.headline?.let {
+                            NativeAdHeadlineView {
+                                Text(
+                                    text = it,
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+                        }
+                        ad.callToAction?.let { cta ->
                             LargeHorizontalSpacer()
-                            AndroidView(
-                                factory = {
-                                    (ctaView.parent as? ViewGroup)?.removeView(ctaView)
-                                    ctaView
-                                },
-                                update = { view ->
-                                    (view as MaterialButton).apply {
-                                        text = cta
-                                        setBackgroundColor(colorPrimary)
-                                        setTextColor(colorOnPrimary)
-                                        visibility = View.VISIBLE
-                                    }
-                                }
-                            )
+                            NativeAdCallToActionView {
+                                NativeAdButton(text = cta)
+                            }
                         }
                     }
                 }
