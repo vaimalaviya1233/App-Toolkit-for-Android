@@ -1,8 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.core.ui.components.ads
 
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
@@ -36,7 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdLabel
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -45,10 +42,12 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.material.button.MaterialButton
-import androidx.compose.ui.viewinterop.AndroidView
-
-private const val TAG = "NativeAdBanner"
+import com.google.android.gms.compose_util.NativeAdBodyView
+import com.google.android.gms.compose_util.NativeAdButton
+import com.google.android.gms.compose_util.NativeAdCallToActionView
+import com.google.android.gms.compose_util.NativeAdHeadlineView
+import com.google.android.gms.compose_util.NativeAdIconView
+import com.google.android.gms.compose_util.NativeAdView
 
 @Composable
 fun NativeAdBanner(
@@ -62,13 +61,13 @@ fun NativeAdBanner(
     if (LocalInspectionMode.current) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+            shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp)
-                    .background(Color.LightGray)
+                    .background(Color.LightGray),
             ) {
                 Text(text = "Native Ad", modifier = Modifier.align(Alignment.Center))
             }
@@ -104,71 +103,64 @@ fun NativeAdBanner(
                             override fun onAdClicked() {
                                 Log.d(TAG, "Native ad was clicked.")
                             }
-                        }
+                        },
                     )
                     .build()
             loader.loadAd(AdRequest.Builder().build())
         }
-        val colorPrimary = MaterialTheme.colorScheme.primary.toArgb()
-        val colorOnPrimary = MaterialTheme.colorScheme.onPrimary.toArgb()
 
         nativeAd?.let { ad ->
-            NativeAdView(ad = ad) { loadedAd, ctaView, _ ->
+            NativeAdView(nativeAd = ad) {
                 Card(
                     modifier = modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(SizeConstants.LargeSize)
+                            .padding(SizeConstants.LargeSize),
                     ) {
                         AdLabel()
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            loadedAd.icon?.let { icon ->
-                                AsyncImage(
-                                    model = icon.uri ?: icon.drawable,
-                                    contentDescription = loadedAd.headline,
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
                                     modifier = Modifier
                                         .size(SizeConstants.ExtraLargeIncreasedSize)
-                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize))
-                                )
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                                ) {
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
                                 LargeHorizontalSpacer()
                             }
                             Column(
                                 modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
                             ) {
-                                Text(
-                                    text = loadedAd.headline ?: "",
-                                    fontWeight = FontWeight.Bold
-                                )
-                                loadedAd.body?.let { body ->
-                                    Text(
-                                        text = body,
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
+                                ad.headline?.let {
+                                    NativeAdHeadlineView {
+                                        Text(text = it, fontWeight = FontWeight.Bold)
+                                    }
+                                }
+                                ad.body?.let { body ->
+                                    NativeAdBodyView {
+                                        Text(
+                                            text = body,
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
+                                    }
                                 }
                             }
-                            loadedAd.callToAction?.let { cta ->
+                            ad.callToAction?.let { cta ->
                                 LargeHorizontalSpacer()
-                                AndroidView(
-                                    factory = {
-                                        (ctaView.parent as? ViewGroup)?.removeView(ctaView)
-                                        ctaView
-                                    },
-                                    update = { view ->
-                                        (view as MaterialButton).apply {
-                                            text = cta
-                                            setBackgroundColor(colorPrimary)
-                                            setTextColor(colorOnPrimary)
-                                            visibility = View.VISIBLE
-                                        }
-                                    }
-                                )
+                                NativeAdCallToActionView {
+                                    NativeAdButton(text = cta)
+                                }
                             }
                         }
                     }
