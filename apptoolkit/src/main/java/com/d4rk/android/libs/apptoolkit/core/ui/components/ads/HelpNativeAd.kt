@@ -41,12 +41,6 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.compose_util.NativeAdBodyView
-import com.google.android.gms.compose_util.NativeAdButton
-import com.google.android.gms.compose_util.NativeAdCallToActionView
-import com.google.android.gms.compose_util.NativeAdHeadlineView
-import com.google.android.gms.compose_util.NativeAdIconView
-import com.google.android.gms.compose_util.NativeAdView
 
 /**
  * Help screen specific native ad banner composable.

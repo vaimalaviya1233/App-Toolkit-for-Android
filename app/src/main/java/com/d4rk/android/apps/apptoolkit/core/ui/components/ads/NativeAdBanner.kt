@@ -42,12 +42,12 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.compose_util.NativeAdBodyView
-import com.google.android.gms.compose_util.NativeAdButton
-import com.google.android.gms.compose_util.NativeAdCallToActionView
-import com.google.android.gms.compose_util.NativeAdHeadlineView
-import com.google.android.gms.compose_util.NativeAdIconView
-import com.google.android.gms.compose_util.NativeAdView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBodyView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 
 @Composable
 fun NativeAdBanner(
