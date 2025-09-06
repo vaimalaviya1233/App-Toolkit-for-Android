@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -103,6 +104,8 @@ fun BottomAppBarNativeAdBanner(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AdLabel()
+                        LargeHorizontalSpacer()
+                        NativeAdChoicesView()
                         LargeHorizontalSpacer()
                         ad.icon?.let { icon ->
                             NativeAdIconView(

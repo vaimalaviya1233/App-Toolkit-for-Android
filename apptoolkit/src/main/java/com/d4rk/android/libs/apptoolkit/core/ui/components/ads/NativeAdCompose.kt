@@ -175,7 +175,10 @@ fun NativeAdMediaView(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     AndroidView(
         factory = { MediaView(context) },
-        update = { adView.mediaView = it },
+        update = {
+            it.isClickable = true
+            adView.mediaView = it
+        },
         modifier = modifier,
     )
 }
