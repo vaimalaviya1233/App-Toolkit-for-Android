@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.view.View
 import android.view.ViewGroup
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
  * [NativeAdHeadlineView].
  */
 internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
+private const val TAG = "NativeAdCompose"
 
 /**
  * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]
@@ -68,7 +70,12 @@ fun NativeAdView(
         modifier = modifier,
     )
 
-    LaunchedEffect(nativeAd) { nativeAdView.setNativeAd(nativeAd) }
+    LaunchedEffect(nativeAd) {
+        nativeAdView.post {
+            Log.d(TAG, "setNativeAd invoked")
+            nativeAdView.setNativeAd(nativeAd)
+        }
+    }
 }
 
 /**
@@ -84,6 +91,7 @@ fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable (
                 isClickable = true
                 setContent(content)
                 adView.advertiserView = this
+                Log.d(TAG, "advertiserView registered")
             }
         },
         modifier = modifier,
@@ -100,6 +108,7 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.bodyView = composeView
+            Log.d(TAG, "bodyView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -115,6 +124,7 @@ fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable
     AndroidView(
         factory = {
             adView.callToActionView = composeView
+            Log.d(TAG, "callToActionView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -133,7 +143,10 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
                 minimumHeight = 15
             }
         },
-        update = { adView.adChoicesView = it },
+        update = {
+            adView.adChoicesView = it
+            Log.d(TAG, "adChoicesView registered")
+        },
         modifier = modifier,
     )
 }
@@ -147,6 +160,7 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
     AndroidView(
         factory = {
             adView.headlineView = composeView
+            Log.d(TAG, "headlineView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -162,6 +176,7 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.iconView = composeView
+            Log.d(TAG, "iconView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -178,6 +193,7 @@ fun NativeAdMediaView(modifier: Modifier = Modifier) {
         update = {
             it.isClickable = true
             adView.mediaView = it
+            Log.d(TAG, "mediaView registered")
         },
         modifier = modifier,
     )
@@ -192,6 +208,7 @@ fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> 
     AndroidView(
         factory = {
             adView.priceView = composeView
+            Log.d(TAG, "priceView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -207,6 +224,7 @@ fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable (
     AndroidView(
         factory = {
             adView.starRatingView = composeView
+            Log.d(TAG, "starRatingView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -222,6 +240,7 @@ fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> 
     AndroidView(
         factory = {
             adView.storeView = composeView
+            Log.d(TAG, "storeView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
