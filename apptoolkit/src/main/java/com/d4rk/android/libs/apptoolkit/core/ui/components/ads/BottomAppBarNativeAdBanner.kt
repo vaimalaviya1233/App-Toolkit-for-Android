@@ -94,8 +94,8 @@ fun BottomAppBarNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(nativeAd = ad) {
-                NavigationBar(modifier = modifier.fillMaxWidth()) {
+            NativeAdView(nativeAd = ad, modifier = modifier.fillMaxWidth()) {
+                NavigationBar(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         modifier = Modifier
                             .weight(1f)

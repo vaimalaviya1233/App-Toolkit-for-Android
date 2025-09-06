@@ -9,6 +9,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -46,14 +47,14 @@ fun NativeAdView(
                 layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
                     )
                 addView(
                     ComposeView(context).apply {
                         layoutParams =
                             ViewGroup.LayoutParams(
                                 ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
                             )
                         setContent {
                             CompositionLocalProvider(LocalNativeAdView provides nativeAdView) {
@@ -64,9 +65,10 @@ fun NativeAdView(
                 )
             }
         },
-        update = { nativeAdView.setNativeAd(nativeAd) },
         modifier = modifier,
     )
+
+    LaunchedEffect(nativeAd) { nativeAdView.setNativeAd(nativeAd) }
 }
 
 /**
@@ -79,6 +81,7 @@ fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable (
         factory = { context ->
             ComposeView(context).apply {
                 id = View.generateViewId()
+                isClickable = true
                 setContent(content)
                 adView.advertiserView = this
             }
@@ -93,7 +96,7 @@ fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable (
 fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.bodyView = composeView
@@ -108,7 +111,7 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.callToActionView = composeView
@@ -140,7 +143,7 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
 fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.headlineView = composeView
@@ -155,7 +158,7 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
 fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.iconView = composeView
@@ -182,7 +185,7 @@ fun NativeAdMediaView(modifier: Modifier = Modifier) {
 fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.priceView = composeView
@@ -197,7 +200,7 @@ fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> 
 fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.starRatingView = composeView
@@ -212,7 +215,7 @@ fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable (
 fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
             adView.storeView = composeView
@@ -227,7 +230,7 @@ fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> 
 fun NativeAdAttribution(text: String = "Ad", modifier: Modifier = Modifier) {
     val colors = ButtonDefaults.buttonColors()
     Box(
-        modifier = modifier.background(colors.containerColor).clip(ButtonDefaults.shape)
+        modifier = modifier.clip(ButtonDefaults.shape).background(colors.containerColor)
     ) {
         Text(color = colors.contentColor, text = text)
     }
@@ -238,10 +241,11 @@ fun NativeAdAttribution(text: String = "Ad", modifier: Modifier = Modifier) {
 fun NativeAdButton(text: String, modifier: Modifier = Modifier) {
     val colors = ButtonDefaults.buttonColors()
     Box(
-        modifier = modifier
-            .background(colors.containerColor)
-            .clip(ButtonDefaults.shape)
-            .padding(ButtonDefaults.ContentPadding)
+        modifier =
+            modifier
+                .clip(ButtonDefaults.shape)
+                .background(colors.containerColor)
+                .padding(ButtonDefaults.ContentPadding)
     ) {
         Text(color = colors.contentColor, text = text)
     }
