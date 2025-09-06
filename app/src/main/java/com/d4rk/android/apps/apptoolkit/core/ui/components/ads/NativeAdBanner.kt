@@ -1,5 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.core.ui.components.ads
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -39,11 +40,15 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.material.button.MaterialButton
 import androidx.compose.ui.viewinterop.AndroidView
+
+private const val TAG = "NativeAdBanner"
 
 @Composable
 fun NativeAdBanner(
@@ -79,9 +84,29 @@ fun NativeAdBanner(
         }
 
         LaunchedEffect(key1 = adsConfig.bannerAdUnitId) {
-            val loader = AdLoader.Builder(context, adsConfig.bannerAdUnitId)
-                .forNativeAd { ad -> nativeAd = ad }
-                .build()
+            val loader =
+                AdLoader.Builder(context, adsConfig.bannerAdUnitId)
+                    .forNativeAd { ad -> nativeAd = ad }
+                    .withAdListener(
+                        object : AdListener() {
+                            override fun onAdFailedToLoad(error: LoadAdError) {
+                                Log.e(TAG, "Native ad failed to load: ${error.message}")
+                            }
+
+                            override fun onAdLoaded() {
+                                Log.d(TAG, "Native ad was loaded.")
+                            }
+
+                            override fun onAdImpression() {
+                                Log.d(TAG, "Native ad recorded an impression.")
+                            }
+
+                            override fun onAdClicked() {
+                                Log.d(TAG, "Native ad was clicked.")
+                            }
+                        }
+                    )
+                    .build()
             loader.loadAd(AdRequest.Builder().build())
         }
         val colorPrimary = MaterialTheme.colorScheme.primary.toArgb()
