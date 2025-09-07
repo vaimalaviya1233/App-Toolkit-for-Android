@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.doOnNextLayout
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
@@ -71,12 +72,11 @@ fun NativeAdView(
     )
 
     DisposableEffect(nativeAd) {
-        val bindAd = Runnable {
+        nativeAdView.doOnNextLayout {
             Log.d(TAG, "setNativeAd invoked")
             nativeAdView.setNativeAd(nativeAd)
         }
-        nativeAdView.post(bindAd)
-        onDispose { nativeAdView.removeCallbacks(bindAd) }
+        onDispose { nativeAd.destroy() }
     }
 }
 
@@ -119,14 +119,22 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 
 /** Container for the call-to-action asset inside a native ad view. */
 @Composable
-fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun NativeAdCallToActionView(
+    modifier: Modifier = Modifier,
+    register: Boolean = true,
+    content: @Composable () -> Unit,
+) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
     val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
     AndroidView(
         factory = {
-            adView.callToActionView = composeView
-            Log.d(TAG, "callToActionView registered")
+            if (register) {
+                adView.callToActionView = composeView
+                Log.d(TAG, "callToActionView registered")
+            } else {
+                Log.d(TAG, "callToActionView (visual)")
+            }
             composeView.apply { setContent(content) }
         },
         modifier = modifier,

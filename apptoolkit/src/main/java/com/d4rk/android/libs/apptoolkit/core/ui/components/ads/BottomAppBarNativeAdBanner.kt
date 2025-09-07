@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.matchParentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -96,47 +97,54 @@ fun BottomAppBarNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(nativeAd = ad, modifier = modifier.fillMaxWidth()) {
-                NavigationBar(modifier = Modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = SizeConstants.LargeSize),
-                        verticalAlignment = Alignment.CenterVertically,
+                Box {
+                    NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(horizontal = SizeConstants.LargeSize),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AdLabel()
+                            LargeHorizontalSpacer()
+                            NativeAdChoicesView()
+                            LargeHorizontalSpacer()
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraLargeIncreasedSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                                ) {
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
+                                LargeHorizontalSpacer()
+                            }
+                            ad.headline?.let {
+                                NativeAdHeadlineView {
+                                    Text(
+                                        text = it,
+                                        fontWeight = FontWeight.Bold,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                }
+                            }
+                            ad.callToAction?.let { cta ->
+                                LargeHorizontalSpacer()
+                                NativeAdCallToActionView(register = false) {
+                                    NativeAdButton(text = cta)
+                                }
+                            }
+                        }
+                    }
+                    NativeAdCallToActionView(
+                        modifier = Modifier.matchParentSize()
                     ) {
-                        AdLabel()
-                        LargeHorizontalSpacer()
-                        NativeAdChoicesView()
-                        LargeHorizontalSpacer()
-                        ad.icon?.let { icon ->
-                            NativeAdIconView(
-                                modifier = Modifier
-                                    .size(SizeConstants.ExtraLargeIncreasedSize)
-                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                            ) {
-                                AsyncImage(
-                                    model = icon.uri ?: icon.drawable,
-                                    contentDescription = ad.headline,
-                                )
-                            }
-                            LargeHorizontalSpacer()
-                        }
-                        ad.headline?.let {
-                            NativeAdHeadlineView {
-                                Text(
-                                    text = it,
-                                    fontWeight = FontWeight.Bold,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.weight(1f),
-                                )
-                            }
-                        }
-                        ad.callToAction?.let { cta ->
-                            LargeHorizontalSpacer()
-                            NativeAdCallToActionView {
-                                NativeAdButton(text = cta)
-                            }
-                        }
+                        Box(modifier = Modifier.matchParentSize())
                     }
                 }
             }
