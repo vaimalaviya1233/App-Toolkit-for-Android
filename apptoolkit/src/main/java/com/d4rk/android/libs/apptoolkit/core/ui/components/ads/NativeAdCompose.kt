@@ -1,8 +1,8 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -29,7 +29,6 @@ import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
  * [NativeAdHeadlineView].
  */
 internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
-private const val TAG = "NativeAdCompose"
 
 /**
  * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.matchParentSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -33,9 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdLabel
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBodyView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -44,12 +50,6 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBodyView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 
 @Composable
 fun NativeAdBanner(
@@ -176,9 +176,9 @@ fun NativeAdBanner(
                         }
                     }
                     NativeAdCallToActionView(
-                        modifier = Modifier.matchParentSize()
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Box(modifier = Modifier.matchParentSize())
+                        Box(modifier = Modifier.fillMaxSize())
                     }
                 }
             }
