@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 import android.view.View
 import android.view.ViewGroup
 import android.util.Log
+import androidx.core.view.doOnNextLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -71,7 +72,7 @@ fun NativeAdView(
     )
 
     LaunchedEffect(nativeAd) {
-        nativeAdView.post {
+        nativeAdView.doOnNextLayout {
             Log.d(TAG, "setNativeAd invoked")
             nativeAdView.setNativeAd(nativeAd)
         }
