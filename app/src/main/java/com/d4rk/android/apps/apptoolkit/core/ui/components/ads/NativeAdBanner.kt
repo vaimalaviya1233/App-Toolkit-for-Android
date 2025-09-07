@@ -38,6 +38,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBodyView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdClickOverlay
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
@@ -168,18 +169,16 @@ fun NativeAdBanner(
                                 }
                                 ad.callToAction?.let { cta ->
                                     LargeHorizontalSpacer()
-                                    NativeAdCallToActionView(register = false) {
+                                    NativeAdCallToActionView {
                                         NativeAdButton(text = cta)
                                     }
                                 }
                             }
                         }
                     }
-                    NativeAdCallToActionView(
+                    NativeAdClickOverlay(
                         modifier = Modifier.fillMaxSize()
-                    ) {
-                        Box(modifier = Modifier.fillMaxSize())
-                    }
+                    )
                 }
             }
         }

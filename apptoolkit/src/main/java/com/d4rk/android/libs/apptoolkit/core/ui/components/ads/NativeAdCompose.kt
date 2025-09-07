@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -18,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.doOnAttach
 import androidx.core.view.doOnNextLayout
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
@@ -29,6 +32,7 @@ import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
  * [NativeAdHeadlineView].
  */
 internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
+internal val LocalNativeAd = staticCompositionLocalOf<NativeAd?> { null }
 
 /**
  * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]
@@ -59,7 +63,10 @@ fun NativeAdView(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                             )
                         setContent {
-                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) {
+                            CompositionLocalProvider(
+                                LocalNativeAdView provides nativeAdView,
+                                LocalNativeAd provides nativeAd,
+                            ) {
                                 content()
                             }
                         }
@@ -71,11 +78,11 @@ fun NativeAdView(
     )
 
     DisposableEffect(nativeAd) {
-        nativeAdView.doOnNextLayout {
-            Log.d(TAG, "setNativeAd invoked")
-            nativeAdView.setNativeAd(nativeAd)
+        onDispose {
+            Log.d(TAG, "disposing, ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
+            nativeAd.destroy()
+            Log.d(TAG, "destroyed, ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
         }
-        onDispose { nativeAd.destroy() }
     }
 }
 
@@ -120,23 +127,53 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 @Composable
 fun NativeAdCallToActionView(
     modifier: Modifier = Modifier,
-    register: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            if (register) {
-                adView.callToActionView = composeView
-                Log.d(TAG, "callToActionView registered")
-            } else {
-                Log.d(TAG, "callToActionView (visual)")
-            }
+            Log.d(TAG, "callToActionView (visual)")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
+    )
+}
+
+/** Full-size overlay that registers the SDK call-to-action hit area. */
+@Composable
+fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
+    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
+    val nativeAd = LocalNativeAd.current ?: error("NativeAd null")
+    val context = LocalContext.current
+    var bound by remember { mutableStateOf(false) }
+    AndroidView(
+        factory = {
+            FrameLayout(context).apply {
+                id = View.generateViewId()
+                isClickable = true
+                isEnabled = true
+                isFocusable = true
+                isHapticFeedbackEnabled = true
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            }
+        },
+        modifier = modifier,
+        update = { view ->
+            if (!bound) {
+                adView.callToActionView = view
+                Log.d(TAG, "callToActionView registered")
+                view.doOnAttach {
+                    view.doOnNextLayout {
+                        Log.d(TAG, "cta bounds ${'$'}{view.width}x${'$'}{view.height}")
+                        Log.d(TAG, "before bind ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
+                        adView.setNativeAd(nativeAd)
+                        Log.d(TAG, "setNativeAd invoked hasClick=${'$'}{adView.hasOnClickListeners()}")
+                    }
+                }
+                bound = true
+            }
+        },
     )
 }
 

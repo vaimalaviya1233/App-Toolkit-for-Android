@@ -163,18 +163,16 @@ fun NoDataNativeAdBanner(
                                 }
                                 ad.callToAction?.let { cta ->
                                     LargeHorizontalSpacer()
-                                    NativeAdCallToActionView(register = false) {
+                                    NativeAdCallToActionView {
                                         NativeAdButton(text = cta)
                                     }
                                 }
                             }
                         }
                     }
-                    NativeAdCallToActionView(
+                    NativeAdClickOverlay(
                         modifier = Modifier.fillMaxSize()
-                    ) {
-                        Box(modifier = Modifier.fillMaxSize())
-                    }
+                    )
                 }
             }
         }
