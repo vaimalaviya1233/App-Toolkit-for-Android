@@ -65,8 +65,7 @@ fun NoDataNativeAdBanner(
                     .background(Color.LightGray),
             ) {
                 Text(text = "Native Ad", modifier = Modifier.align(Alignment.Center))
-            }
-        }
+  }
         return
     }
 
@@ -114,49 +113,48 @@ fun NoDataNativeAdBanner(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(SizeConstants.LargeSize),
-                    ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                AdLabel()
-                                NativeAdChoicesView()
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start,
-                            ) {
-                                ad.icon?.let { icon ->
-                                    NativeAdIconView(
-                                        modifier = Modifier
-                                            .size(SizeConstants.ExtraLargeIncreasedSize)
-                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                    ) {
-                                        AsyncImage(
-                                            model = icon.uri ?: icon.drawable,
-                                            contentDescription = ad.headline,
-                                        )
-                                    }
-                                    LargeHorizontalSpacer()
-                                }
-                                Column(
-                                    modifier = Modifier.weight(1f),
-                                    verticalArrangement = Arrangement.Center,
+                      ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AdLabel()
+                            NativeAdChoicesView()
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start,
+                        ) {
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraLargeIncreasedSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
                                 ) {
-                                    ad.headline?.let {
-                                        NativeAdHeadlineView {
-                                            Text(text = it, fontWeight = FontWeight.Bold)
-                                        }
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
+                                LargeHorizontalSpacer()
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                ad.headline?.let {
+                                    NativeAdHeadlineView {
+                                        Text(text = it, fontWeight = FontWeight.Bold)
                                     }
-                                    ad.body?.let { body ->
-                                        NativeAdBodyView {
-                                            Text(
-                                                text = body,
-                                                style = MaterialTheme.typography.bodySmall,
-                                            )
-                                        }
+                                }
+                                ad.body?.let { body ->
+                                    NativeAdBodyView {
+                                        Text(
+                                            text = body,
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
                                     }
                                 }
                                 ad.callToAction?.let { cta ->

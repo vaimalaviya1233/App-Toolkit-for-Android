@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
@@ -153,8 +155,20 @@ fun NativeAdCallToActionView(
     AndroidView(
         factory = {
             adView.callToActionView = composeView
+            composeView.setOnTouchListener { _, event ->
+                Log.d(TAG, "cta onTouch action=${event.action}")
+                false
+            }
             Log.d(TAG, "callToActionView registered")
-            composeView.apply { setContent(content) }
+            composeView.setContent {
+                val interaction = remember { MutableInteractionSource() }
+                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
+                    Log.d(TAG, "cta performClick via wrapper")
+                    composeView.performClick()
+                }) {
+                    content()
+                }
+            }
         },
         modifier = modifier,
     )
@@ -189,8 +203,20 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
     AndroidView(
         factory = {
             adView.headlineView = composeView
+            composeView.setOnTouchListener { _, event ->
+                Log.d(TAG, "headline onTouch action=${event.action}")
+                false
+            }
             Log.d(TAG, "headlineView registered")
-            composeView.apply { setContent(content) }
+            composeView.setContent {
+                val interaction = remember { MutableInteractionSource() }
+                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
+                    Log.d(TAG, "headline performClick via wrapper")
+                    composeView.performClick()
+                }) {
+                    content()
+                }
+            }
         },
         modifier = modifier,
     )
@@ -205,8 +231,20 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.iconView = composeView
+            composeView.setOnTouchListener { _, event ->
+                Log.d(TAG, "icon onTouch action=${event.action}")
+                false
+            }
             Log.d(TAG, "iconView registered")
-            composeView.apply { setContent(content) }
+            composeView.setContent {
+                val interaction = remember { MutableInteractionSource() }
+                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
+                    Log.d(TAG, "icon performClick via wrapper")
+                    composeView.performClick()
+                }) {
+                    content()
+                }
+            }
         },
         modifier = modifier,
     )
