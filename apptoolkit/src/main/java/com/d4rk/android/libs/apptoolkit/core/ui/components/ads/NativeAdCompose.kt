@@ -4,8 +4,6 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
@@ -25,15 +23,12 @@ import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
 
-/**
- * A CompositionLocal that can provide a [GoogleNativeAdView] to ad attributes such as
- * [NativeAdHeadlineView].
- */
+/** Provides access to the current [GoogleNativeAdView] for asset registration. */
 internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
 
 /**
- * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]
- * to register individual asset views.
+ * Compose wrapper for a [GoogleNativeAdView].
+ * Binds the supplied [nativeAd] and exposes [content] to register its asset views.
  */
 @Composable
 fun NativeAdView(
@@ -64,7 +59,7 @@ fun NativeAdView(
                                 content()
                             }
                         }
-                    }
+                    },
                 )
             }
         },
@@ -72,44 +67,15 @@ fun NativeAdView(
     )
 
     DisposableEffect(nativeAd) {
-        val bindAd = object : Runnable {
-            override fun run() {
-                val hasHeadline = nativeAdView.headlineView != null
-                val hasCta = nativeAdView.callToActionView != null
-                val hasChoices = nativeAdView.adChoicesView != null
-                // Optional assets such as body, icon or media may not be present in every layout or
-                // ad creative. Requiring them prevents [setNativeAd] from ever being invoked when
-                // they are missing, which results in non-clickable ads. Only the mandatory views
-                // need to be ready before binding the ad.
-                val ready = hasHeadline && hasCta && hasChoices
-                if (ready) {
-                    val cta = nativeAdView.callToActionView
-                    if (cta != null && cta.width > 0 && cta.height > 0) {
-                        Log.d(TAG, "cta bounds ${cta.width}x${cta.height}")
-                        //Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
-                        nativeAdView.setNativeAd(nativeAd)
-                        Log.d(TAG, "setNativeAd invoked hasClick=${nativeAdView.hasOnClickListeners()}")
-                    } else {
-                        nativeAdView.post(this)
-                    }
-                } else {
-                    nativeAdView.post(this)
-                }
-            }
+        nativeAdView.post {
+            nativeAdView.setNativeAd(nativeAd)
+            Log.d(TAG, "native ad bound")
         }
-        nativeAdView.post(bindAd)
-        onDispose {
-            nativeAdView.removeCallbacks(bindAd)
-            //Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
-            nativeAd.destroy()
-            //Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
-        }
+        onDispose { nativeAd.destroy() }
     }
 }
 
-/**
- * Container for the advertiser asset inside a native ad view.
- */
+/** Container for the advertiser asset inside a native ad view. */
 @Composable
 fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
@@ -145,30 +111,15 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 
 /** Container for the call-to-action asset inside a native ad view. */
 @Composable
-fun NativeAdCallToActionView(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
+fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
     val context = LocalContext.current
     val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             adView.callToActionView = composeView
-            composeView.setOnTouchListener { _, event ->
-                Log.d(TAG, "cta onTouch action=${event.action}")
-                false
-            }
             Log.d(TAG, "callToActionView registered")
-            composeView.setContent {
-                val interaction = remember { MutableInteractionSource() }
-                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
-                    Log.d(TAG, "cta performClick via wrapper")
-                    composeView.performClick()
-                }) {
-                    content()
-                }
-            }
+            composeView.setContent(content)
         },
         modifier = modifier,
     )
@@ -203,20 +154,8 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
     AndroidView(
         factory = {
             adView.headlineView = composeView
-            composeView.setOnTouchListener { _, event ->
-                Log.d(TAG, "headline onTouch action=${event.action}")
-                false
-            }
             Log.d(TAG, "headlineView registered")
-            composeView.setContent {
-                val interaction = remember { MutableInteractionSource() }
-                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
-                    Log.d(TAG, "headline performClick via wrapper")
-                    composeView.performClick()
-                }) {
-                    content()
-                }
-            }
+            composeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
@@ -231,20 +170,8 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.iconView = composeView
-            composeView.setOnTouchListener { _, event ->
-                Log.d(TAG, "icon onTouch action=${event.action}")
-                false
-            }
             Log.d(TAG, "iconView registered")
-            composeView.setContent {
-                val interaction = remember { MutableInteractionSource() }
-                Box(modifier = Modifier.clickable(interactionSource = interaction, indication = null) {
-                    Log.d(TAG, "icon performClick via wrapper")
-                    composeView.performClick()
-                }) {
-                    content()
-                }
-            }
+            composeView.apply { setContent(content) }
         },
         modifier = modifier,
     )

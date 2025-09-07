@@ -65,7 +65,8 @@ fun NoDataNativeAdBanner(
                     .background(Color.LightGray),
             ) {
                 Text(text = "Native Ad", modifier = Modifier.align(Alignment.Center))
-  }
+            }
+        }
         return
     }
 
