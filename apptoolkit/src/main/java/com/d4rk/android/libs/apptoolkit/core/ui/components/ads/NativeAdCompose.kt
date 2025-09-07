@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 import android.view.View
 import android.view.ViewGroup
 import android.util.Log
-import androidx.core.view.doOnNextLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,7 +10,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -71,11 +70,13 @@ fun NativeAdView(
         modifier = modifier,
     )
 
-    LaunchedEffect(nativeAd) {
-        nativeAdView.doOnNextLayout {
+    DisposableEffect(nativeAd) {
+        val bindAd = Runnable {
             Log.d(TAG, "setNativeAd invoked")
             nativeAdView.setNativeAd(nativeAd)
         }
+        nativeAdView.post(bindAd)
+        onDispose { nativeAdView.removeCallbacks(bindAd) }
     }
 }
 
