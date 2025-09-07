@@ -1,7 +1,9 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -9,14 +11,19 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.doOnAttach
+import androidx.core.view.doOnNextLayout
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
@@ -68,7 +75,39 @@ fun NativeAdView(
         modifier = modifier,
     )
 
-    LaunchedEffect(nativeAd) { nativeAdView.setNativeAd(nativeAd) }
+    DisposableEffect(nativeAd) {
+        val bindAd = object : Runnable {
+            override fun run() {
+                val hasHeadline = nativeAdView.headlineView != null
+                val hasCta = nativeAdView.callToActionView != null
+                val hasChoices = nativeAdView.adChoicesView != null
+                val hasBody = nativeAd.body == null || nativeAdView.bodyView != null
+                val hasIcon = nativeAd.icon == null || nativeAdView.iconView != null
+                val hasMedia = nativeAd.mediaContent == null || nativeAdView.mediaView != null
+                val ready = hasHeadline && hasCta && hasChoices && hasBody && hasIcon && hasMedia
+                if (ready) {
+                    val cta = nativeAdView.callToActionView
+                    if (cta != null && cta.width > 0 && cta.height > 0) {
+                        Log.d(TAG, "cta bounds ${cta.width}x${cta.height}")
+                        //Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
+                        nativeAdView.setNativeAd(nativeAd)
+                        Log.d(TAG, "setNativeAd invoked hasClick=${nativeAdView.hasOnClickListeners()}")
+                    } else {
+                        nativeAdView.post(this)
+                    }
+                } else {
+                    nativeAdView.post(this)
+                }
+            }
+        }
+        nativeAdView.post(bindAd)
+        onDispose {
+            nativeAdView.removeCallbacks(bindAd)
+            //Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
+            nativeAd.destroy()
+            //Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
+        }
+    }
 }
 
 /**
@@ -84,6 +123,7 @@ fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable (
                 isClickable = true
                 setContent(content)
                 adView.advertiserView = this
+                Log.d(TAG, "advertiserView registered")
             }
         },
         modifier = modifier,
@@ -100,6 +140,7 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.bodyView = composeView
+            Log.d(TAG, "bodyView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -108,16 +149,55 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 
 /** Container for the call-to-action asset inside a native ad view. */
 @Composable
-fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
+fun NativeAdCallToActionView(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.callToActionView = composeView
+            Log.d(TAG, "callToActionView (visual)")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
+    )
+}
+
+/** Full-size overlay that registers the SDK call-to-action hit area. */
+@Composable
+fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
+    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
+    val context = LocalContext.current
+    var attached by remember { mutableStateOf(false) }
+    AndroidView(
+        factory = {
+            FrameLayout(context).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                )
+                id = View.generateViewId()
+                isClickable = true
+                isEnabled = true
+                isFocusable = true
+                isHapticFeedbackEnabled = true
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            }
+        },
+        modifier = modifier,
+        update = { view ->
+            if (!attached) {
+                adView.callToActionView = view
+                Log.d(TAG, "callToActionView registered")
+                view.doOnAttach {
+                    view.doOnNextLayout {
+                        Log.d(TAG, "cta bounds ${view.width}x${view.height}")
+                    }
+                }
+                attached = true
+            }
+        },
     )
 }
 
@@ -133,7 +213,10 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
                 minimumHeight = 15
             }
         },
-        update = { adView.adChoicesView = it },
+        update = {
+            adView.adChoicesView = it
+            Log.d(TAG, "adChoicesView registered")
+        },
         modifier = modifier,
     )
 }
@@ -147,6 +230,7 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
     AndroidView(
         factory = {
             adView.headlineView = composeView
+            Log.d(TAG, "headlineView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -162,6 +246,7 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
     AndroidView(
         factory = {
             adView.iconView = composeView
+            Log.d(TAG, "iconView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -178,6 +263,7 @@ fun NativeAdMediaView(modifier: Modifier = Modifier) {
         update = {
             it.isClickable = true
             adView.mediaView = it
+            Log.d(TAG, "mediaView registered")
         },
         modifier = modifier,
     )
@@ -192,6 +278,7 @@ fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> 
     AndroidView(
         factory = {
             adView.priceView = composeView
+            Log.d(TAG, "priceView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -207,6 +294,7 @@ fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable (
     AndroidView(
         factory = {
             adView.starRatingView = composeView
+            Log.d(TAG, "starRatingView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,
@@ -222,6 +310,7 @@ fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> 
     AndroidView(
         factory = {
             adView.storeView = composeView
+            Log.d(TAG, "storeView registered")
             composeView.apply { setContent(content) }
         },
         modifier = modifier,

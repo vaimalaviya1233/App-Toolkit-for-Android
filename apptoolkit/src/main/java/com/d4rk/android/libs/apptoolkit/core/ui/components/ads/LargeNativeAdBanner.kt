@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -105,69 +103,74 @@ fun LargeNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(nativeAd = ad) {
-                OutlinedCard(
-                    modifier = modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(SizeConstants.LargeSize),
+                Box {
+                    OutlinedCard(
+                        modifier = modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(SizeConstants.LargeSize),
                         ) {
-                            AdLabel()
-                            NativeAdChoicesView()
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            ad.icon?.let { icon ->
-                                NativeAdIconView(
-                                    modifier = Modifier
-                                        .size(SizeConstants.ExtraExtraLargeSize)
-                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                ) {
-                                    AsyncImage(
-                                        model = icon.uri ?: icon.drawable,
-                                        contentDescription = ad.headline,
-                                    )
-                                }
-                                LargeHorizontalSpacer()
-                            }
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.Center,
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                ad.headline?.let {
-                                    NativeAdHeadlineView {
-                                        Text(
-                                            text = it,
-                                            fontWeight = FontWeight.Bold,
-                                            style = MaterialTheme.typography.titleMedium,
-                                        )
-                                    }
-                                }
-                                ad.body?.let { body ->
-                                    NativeAdBodyView {
-                                        Text(
-                                            text = body,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                        )
-                                    }
-                                }
+                                AdLabel()
+                                NativeAdChoicesView()
                             }
-                            ad.callToAction?.let { cta ->
-                                LargeHorizontalSpacer()
-                                NativeAdCallToActionView {
-                                    NativeAdButton(text = cta)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                ad.icon?.let { icon ->
+                                    NativeAdIconView(
+                                        modifier = Modifier
+                                            .size(SizeConstants.ExtraExtraLargeSize)
+                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                                    ) {
+                                        AsyncImage(
+                                            model = icon.uri ?: icon.drawable,
+                                            contentDescription = ad.headline,
+                                        )
+                                    }
+                                    LargeHorizontalSpacer()
+                                }
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    verticalArrangement = Arrangement.Center,
+                                ) {
+                                    ad.headline?.let {
+                                        NativeAdHeadlineView {
+                                            Text(
+                                                text = it,
+                                                fontWeight = FontWeight.Bold,
+                                                style = MaterialTheme.typography.titleMedium,
+                                            )
+                                        }
+                                    }
+                                    ad.body?.let { body ->
+                                        NativeAdBodyView {
+                                            Text(
+                                                text = body,
+                                                style = MaterialTheme.typography.bodyMedium,
+                                            )
+                                        }
+                                    }
+                                }
+                                ad.callToAction?.let { cta ->
+                                    LargeHorizontalSpacer()
+                                    NativeAdCallToActionView {
+                                        NativeAdButton(text = cta)
+                                    }
                                 }
                             }
                         }
                     }
+                    NativeAdClickOverlay(
+                        modifier = Modifier.matchParentSize()
+                    )
                 }
             }
         }
