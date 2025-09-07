@@ -37,7 +37,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdBodyView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdClickOverlay
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
@@ -113,71 +112,66 @@ fun NativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(nativeAd = ad) {
-                Box {
-                    Card(
-                        modifier = modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                Card(
+                    modifier = modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.LargeSize),
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(SizeConstants.LargeSize),
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                AdLabel()
-                                NativeAdChoicesView()
+                            AdLabel()
+                            NativeAdChoicesView()
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraLargeIncreasedSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                                ) {
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
+                                LargeHorizontalSpacer()
                             }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.Center,
                             ) {
-                                ad.icon?.let { icon ->
-                                    NativeAdIconView(
-                                        modifier = Modifier
-                                            .size(SizeConstants.ExtraLargeIncreasedSize)
-                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                    ) {
-                                        AsyncImage(
-                                            model = icon.uri ?: icon.drawable,
-                                            contentDescription = ad.headline,
+                                ad.headline?.let {
+                                    NativeAdHeadlineView {
+                                        Text(text = it, fontWeight = FontWeight.Bold)
+                                    }
+                                }
+                                ad.body?.let { body ->
+                                    NativeAdBodyView {
+                                        Text(
+                                            text = body,
+                                            style = MaterialTheme.typography.bodySmall,
                                         )
                                     }
-                                    LargeHorizontalSpacer()
                                 }
-                                Column(
-                                    modifier = Modifier.weight(1f),
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    ad.headline?.let {
-                                        NativeAdHeadlineView {
-                                            Text(text = it, fontWeight = FontWeight.Bold)
-                                        }
-                                    }
-                                    ad.body?.let { body ->
-                                        NativeAdBodyView {
-                                            Text(
-                                                text = body,
-                                                style = MaterialTheme.typography.bodySmall,
-                                            )
-                                        }
-                                    }
-                                }
-                                ad.callToAction?.let { cta ->
-                                    LargeHorizontalSpacer()
-                                    NativeAdCallToActionView {
-                                        NativeAdButton(text = cta)
-                                    }
+                            }
+                            ad.callToAction?.let { cta ->
+                                LargeHorizontalSpacer()
+                                NativeAdCallToActionView {
+                                    NativeAdButton(text = cta)
                                 }
                             }
                         }
                     }
-                    NativeAdClickOverlay(
-                        modifier = Modifier.matchParentSize()
-                    )
                 }
             }
         }

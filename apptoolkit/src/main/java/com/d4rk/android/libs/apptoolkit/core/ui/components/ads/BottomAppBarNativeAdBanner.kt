@@ -93,53 +93,48 @@ fun BottomAppBarNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(nativeAd = ad, modifier = modifier.fillMaxWidth()) {
-                Box {
-                    NavigationBar(modifier = Modifier.fillMaxWidth()) {
-                        Row(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(horizontal = SizeConstants.LargeSize),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            AdLabel()
-                            LargeHorizontalSpacer()
-                            NativeAdChoicesView()
-                            LargeHorizontalSpacer()
-                            ad.icon?.let { icon ->
-                                NativeAdIconView(
-                                    modifier = Modifier
-                                        .size(SizeConstants.ExtraLargeIncreasedSize)
-                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                ) {
-                                    AsyncImage(
-                                        model = icon.uri ?: icon.drawable,
-                                        contentDescription = ad.headline,
-                                    )
-                                }
-                                LargeHorizontalSpacer()
+                NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = SizeConstants.LargeSize),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AdLabel()
+                        LargeHorizontalSpacer()
+                        NativeAdChoicesView()
+                        LargeHorizontalSpacer()
+                        ad.icon?.let { icon ->
+                            NativeAdIconView(
+                                modifier = Modifier
+                                    .size(SizeConstants.ExtraLargeIncreasedSize)
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                            ) {
+                                AsyncImage(
+                                    model = icon.uri ?: icon.drawable,
+                                    contentDescription = ad.headline,
+                                )
                             }
-                            ad.headline?.let {
-                                NativeAdHeadlineView {
-                                    Text(
-                                        text = it,
-                                        fontWeight = FontWeight.Bold,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                }
+                            LargeHorizontalSpacer()
+                        }
+                        ad.headline?.let {
+                            NativeAdHeadlineView {
+                                Text(
+                                    text = it,
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
                             }
-                            ad.callToAction?.let { cta ->
-                                LargeHorizontalSpacer()
-                                NativeAdCallToActionView {
-                                    NativeAdButton(text = cta)
-                                }
+                        }
+                        ad.callToAction?.let { cta ->
+                            LargeHorizontalSpacer()
+                            NativeAdCallToActionView {
+                                NativeAdButton(text = cta)
                             }
                         }
                     }
-                    NativeAdClickOverlay(
-                        modifier = Modifier.matchParentSize()
-                    )
                 }
             }
         }

@@ -106,16 +106,15 @@ fun NoDataNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(nativeAd = ad) {
-                Box {
-                    OutlinedCard(
-                        modifier = modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                OutlinedCard(
+                    modifier = modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.LargeSize),
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(SizeConstants.LargeSize),
-                        ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -169,9 +168,6 @@ fun NoDataNativeAdBanner(
                             }
                         }
                     }
-                    NativeAdClickOverlay(
-                        modifier = Modifier.matchParentSize()
-                    )
                 }
             }
         }
