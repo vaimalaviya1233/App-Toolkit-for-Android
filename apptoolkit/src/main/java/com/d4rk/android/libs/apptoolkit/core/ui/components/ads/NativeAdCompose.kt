@@ -34,7 +34,6 @@ import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
  * [NativeAdHeadlineView].
  */
 internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
-internal val LocalNativeAd = staticCompositionLocalOf<NativeAd?> { null }
 
 /**
  * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]
@@ -65,10 +64,7 @@ fun NativeAdView(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                             )
                         setContent {
-                            CompositionLocalProvider(
-                                LocalNativeAdView provides nativeAdView,
-                                LocalNativeAd provides nativeAd,
-                            ) {
+                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) {
                                 content()
                             }
                         }
@@ -80,7 +76,33 @@ fun NativeAdView(
     )
 
     DisposableEffect(nativeAd) {
+        val bindAd = object : Runnable {
+            override fun run() {
+                val hasHeadline = nativeAdView.headlineView != null
+                val hasCta = nativeAdView.callToActionView != null
+                val hasChoices = nativeAdView.adChoicesView != null
+                val hasBody = nativeAd.body == null || nativeAdView.bodyView != null
+                val hasIcon = nativeAd.icon == null || nativeAdView.iconView != null
+                val hasMedia = nativeAd.mediaContent == null || nativeAdView.mediaView != null
+                val ready = hasHeadline && hasCta && hasChoices && hasBody && hasIcon && hasMedia
+                if (ready) {
+                    val cta = nativeAdView.callToActionView
+                    if (cta != null && cta.width > 0 && cta.height > 0) {
+                        Log.d(TAG, "cta bounds ${cta.width}x${cta.height}")
+                        Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
+                        nativeAdView.setNativeAd(nativeAd)
+                        Log.d(TAG, "setNativeAd invoked hasClick=${nativeAdView.hasOnClickListeners()}")
+                    } else {
+                        nativeAdView.post(this)
+                    }
+                } else {
+                    nativeAdView.post(this)
+                }
+            }
+        }
+        nativeAdView.post(bindAd)
         onDispose {
+            nativeAdView.removeCallbacks(bindAd)
             Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
             nativeAd.destroy()
             Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
@@ -146,12 +168,15 @@ fun NativeAdCallToActionView(
 @Composable
 fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
     val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val nativeAd = LocalNativeAd.current ?: error("NativeAd null")
     val context = LocalContext.current
-    var bound by remember { mutableStateOf(false) }
+    var attached by remember { mutableStateOf(false) }
     AndroidView(
         factory = {
             FrameLayout(context).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                )
                 id = View.generateViewId()
                 isClickable = true
                 isEnabled = true
@@ -162,18 +187,15 @@ fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
         },
         modifier = modifier,
         update = { view ->
-            if (!bound) {
+            if (!attached) {
                 adView.callToActionView = view
                 Log.d(TAG, "callToActionView registered")
                 view.doOnAttach {
                     view.doOnNextLayout {
                         Log.d(TAG, "cta bounds ${view.width}x${view.height}")
-                        Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
-                        adView.setNativeAd(nativeAd)
-                        Log.d(TAG, "setNativeAd invoked hasClick=${adView.hasOnClickListeners()}")
                     }
                 }
-                bound = true
+                attached = true
             }
         },
     )
