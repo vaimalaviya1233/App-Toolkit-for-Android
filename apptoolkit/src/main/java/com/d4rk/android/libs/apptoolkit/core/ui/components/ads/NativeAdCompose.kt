@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -79,9 +81,9 @@ fun NativeAdView(
 
     DisposableEffect(nativeAd) {
         onDispose {
-            Log.d(TAG, "disposing, ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
+            Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
             nativeAd.destroy()
-            Log.d(TAG, "destroyed, ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
+            Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
         }
     }
 }
@@ -165,10 +167,10 @@ fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
                 Log.d(TAG, "callToActionView registered")
                 view.doOnAttach {
                     view.doOnNextLayout {
-                        Log.d(TAG, "cta bounds ${'$'}{view.width}x${'$'}{view.height}")
-                        Log.d(TAG, "before bind ad.isDestroyed=${'$'}{nativeAd.isDestroyed}")
+                        Log.d(TAG, "cta bounds ${view.width}x${view.height}")
+                        Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
                         adView.setNativeAd(nativeAd)
-                        Log.d(TAG, "setNativeAd invoked hasClick=${'$'}{adView.hasOnClickListeners()}")
+                        Log.d(TAG, "setNativeAd invoked hasClick=${adView.hasOnClickListeners()}")
                     }
                 }
                 bound = true
