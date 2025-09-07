@@ -89,7 +89,7 @@ fun NativeAdView(
                     val cta = nativeAdView.callToActionView
                     if (cta != null && cta.width > 0 && cta.height > 0) {
                         Log.d(TAG, "cta bounds ${cta.width}x${cta.height}")
-                        Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
+                        //Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
                         nativeAdView.setNativeAd(nativeAd)
                         Log.d(TAG, "setNativeAd invoked hasClick=${nativeAdView.hasOnClickListeners()}")
                     } else {
@@ -103,9 +103,9 @@ fun NativeAdView(
         nativeAdView.post(bindAd)
         onDispose {
             nativeAdView.removeCallbacks(bindAd)
-            Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
+            //Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
             nativeAd.destroy()
-            Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
+            //Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
         }
     }
 }
