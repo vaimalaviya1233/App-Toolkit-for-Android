@@ -130,11 +130,18 @@ fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable
     val localContext = LocalContext.current
     val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
-        factory = {
-            nativeAdView.callToActionView = localComposeView
-            localComposeView.apply { setContent(content) }
-        },
+        factory = { localComposeView },
         modifier = modifier,
+        update = { view ->
+            // Remove any overlay registered as the call-to-action view.
+            (nativeAdView.callToActionView as? View)?.let { overlay ->
+                if (overlay !== view) {
+                    (overlay.parent as? ViewGroup)?.removeView(overlay)
+                }
+            }
+            nativeAdView.callToActionView = view
+            view.setContent(content)
+        },
     )
 }
 
