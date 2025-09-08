@@ -1,52 +1,46 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.view.doOnAttach
-import androidx.core.view.doOnNextLayout
+import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView as GoogleNativeAdView
+import com.google.android.gms.ads.nativead.NativeAdView
 
 /**
- * A CompositionLocal that can provide a [GoogleNativeAdView] to ad attributes such as
- * [NativeAdHeadlineView].
+ * A CompositionLocal that can provide a `NativeAdView` to ad attributes such as `NativeHeadline`.
  */
-internal val LocalNativeAdView = staticCompositionLocalOf<GoogleNativeAdView?> { null }
+internal val LocalNativeAdView = staticCompositionLocalOf<NativeAdView?> { null }
 
 /**
- * Compose wrapper for a [GoogleNativeAdView]. It binds the provided [nativeAd] and allows [content]
- * to register individual asset views.
+ * This is the Compose wrapper for a NativeAdView.
+ *
+ * @param modifier The modifier to apply to the native ad.
+ * @param content A composable function that defines the rest of the native ad view's elements.
  */
 @Composable
-fun NativeAdView(
-    nativeAd: NativeAd,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    val context = LocalContext.current
-    val nativeAdView = remember { GoogleNativeAdView(context).apply { id = View.generateViewId() } }
+fun NativeAdView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val localContext = LocalContext.current
+    val nativeAdView = remember { NativeAdView(localContext).apply { id = View.generateViewId() } }
 
     AndroidView(
         factory = {
@@ -64,9 +58,12 @@ fun NativeAdView(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                             )
                         setContent {
-                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) {
-                                content()
-                            }
+                            // Set `nativeAdView` as the current LocalNativeAdView so that
+                            // `content` can access the `NativeAdView` via `LocalNativeAdView.current`.
+                            // This would allow ad attributes (such as `NativeHeadline`) to attribute
+                            // its contained View subclass via setter functions (e.g. nativeAdView.headlineView =
+                            // view)
+                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) { content.invoke() }
                         }
                     }
                 )
@@ -74,272 +71,264 @@ fun NativeAdView(
         },
         modifier = modifier,
     )
-
-    DisposableEffect(nativeAd) {
-        val bindAd = object : Runnable {
-            override fun run() {
-                val hasHeadline = nativeAdView.headlineView != null
-                val hasCta = nativeAdView.callToActionView != null
-                val hasChoices = nativeAdView.adChoicesView != null
-                val hasBody = nativeAd.body == null || nativeAdView.bodyView != null
-                val hasIcon = nativeAd.icon == null || nativeAdView.iconView != null
-                val hasMedia = nativeAd.mediaContent == null || nativeAdView.mediaView != null
-                val ready = hasHeadline && hasCta && hasChoices && hasBody && hasIcon && hasMedia
-                if (ready) {
-                    val cta = nativeAdView.callToActionView
-                    if (cta != null && cta.width > 0 && cta.height > 0) {
-                        Log.d(TAG, "cta bounds ${cta.width}x${cta.height}")
-                        //Log.d(TAG, "before bind ad.isDestroyed=${nativeAd.isDestroyed}")
-                        nativeAdView.setNativeAd(nativeAd)
-                        Log.d(TAG, "setNativeAd invoked hasClick=${nativeAdView.hasOnClickListeners()}")
-                    } else {
-                        nativeAdView.post(this)
-                    }
-                } else {
-                    nativeAdView.post(this)
-                }
-            }
-        }
-        nativeAdView.post(bindAd)
-        onDispose {
-            nativeAdView.removeCallbacks(bindAd)
-            //Log.d(TAG, "disposing, ad.isDestroyed=${nativeAd.isDestroyed}")
-            nativeAd.destroy()
-            //Log.d(TAG, "destroyed, ad.isDestroyed=${nativeAd.isDestroyed}")
-        }
-    }
 }
 
 /**
- * Container for the advertiser asset inside a native ad view.
+ * The ComposeWrapper container for an advertiserView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
  */
 @Composable
 fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     AndroidView(
         factory = { context ->
             ComposeView(context).apply {
                 id = View.generateViewId()
-                isClickable = true
                 setContent(content)
-                adView.advertiserView = this
-                Log.d(TAG, "advertiserView registered")
+                nativeAdView.advertiserView = this
             }
         },
         modifier = modifier,
-        update = { it.setContent(content) },
+        update = { view -> view.setContent(content) },
     )
 }
 
-/** Container for the body asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a bodyView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.bodyView = composeView
-            Log.d(TAG, "bodyView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.bodyView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Container for the call-to-action asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a callToActionView inside a NativeAdView. This composable must
+ * be invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
-fun NativeAdCallToActionView(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId() } }
+fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            Log.d(TAG, "callToActionView (visual)")
-            composeView.apply { setContent(content) }
+            nativeAdView.callToActionView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Full-size overlay that registers the SDK call-to-action hit area. */
-@Composable
-fun NativeAdClickOverlay(modifier: Modifier = Modifier) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    var attached by remember { mutableStateOf(false) }
-    AndroidView(
-        factory = {
-            FrameLayout(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                )
-                id = View.generateViewId()
-                isClickable = true
-                isEnabled = true
-                isFocusable = true
-                isHapticFeedbackEnabled = true
-                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-            }
-        },
-        modifier = modifier,
-        update = { view ->
-            if (!attached) {
-                adView.callToActionView = view
-                Log.d(TAG, "callToActionView registered")
-                view.doOnAttach {
-                    view.doOnNextLayout {
-                        Log.d(TAG, "cta bounds ${view.width}x${view.height}")
-                    }
-                }
-                attached = true
-            }
-        },
-    )
-}
-
-/** Compose wrapper for the AdChoices overlay. */
+/**
+ * The ComposeWrapper for a adChoicesView inside a NativeAdView. This composable must be invoked
+ * from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ */
 @Composable
 fun NativeAdChoicesView(modifier: Modifier = Modifier) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
     AndroidView(
         factory = {
-            AdChoicesView(context).apply {
+            AdChoicesView(localContext).apply {
                 minimumWidth = 15
                 minimumHeight = 15
             }
         },
-        update = {
-            adView.adChoicesView = it
-            Log.d(TAG, "adChoicesView registered")
-        },
+        update = { view -> nativeAdView.adChoicesView = view },
         modifier = modifier,
     )
 }
 
-/** Container for the headline asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a headlineView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.headlineView = composeView
-            Log.d(TAG, "headlineView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.headlineView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Container for the icon asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a iconView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.iconView = composeView
-            Log.d(TAG, "iconView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.iconView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Compose wrapper for the media asset inside a native ad view. */
+/**
+ * The ComposeWrapper for a mediaView inside a NativeAdView. This composable must be invoked from
+ * within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ */
 @Composable
 fun NativeAdMediaView(modifier: Modifier = Modifier) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
     AndroidView(
-        factory = { MediaView(context) },
-        update = {
-            it.isClickable = true
-            adView.mediaView = it
-            Log.d(TAG, "mediaView registered")
-        },
+        factory = { MediaView(localContext) },
+        update = { view -> nativeAdView.mediaView = view },
         modifier = modifier,
     )
 }
 
-/** Container for the price asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a priceView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.priceView = composeView
-            Log.d(TAG, "priceView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.priceView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Container for the star rating asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a starRatingView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.starRatingView = composeView
-            Log.d(TAG, "starRatingView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.starRatingView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Container for the store asset inside a native ad view. */
+/**
+ * The ComposeWrapper container for a storeView inside a NativeAdView. This composable must be
+ * invoked from within a `NativeAdView`.
+ *
+ * @param modifier modify the native ad view element.
+ * @param content A composable function that defines the content of this native asset.
+ */
 @Composable
 fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val adView = LocalNativeAdView.current ?: error("NativeAdView null")
-    val context = LocalContext.current
-    val composeView = remember { ComposeView(context).apply { id = View.generateViewId(); isClickable = true } }
+    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
-            adView.storeView = composeView
-            Log.d(TAG, "storeView registered")
-            composeView.apply { setContent(content) }
+            nativeAdView.storeView = localComposeView
+            localComposeView.apply { setContent(content) }
         },
         modifier = modifier,
     )
 }
 
-/** Simple ad attribution label. */
+/**
+ * The composable for a ad attribution inside a NativeAdView. This composable must be invoked from
+ * within a `NativeAdView`.
+ *
+ * @param text The string identifying this view as an advertisement.
+ * @param modifier modify the native ad view element.
+ */
 @Composable
-fun NativeAdAttribution(text: String = "Ad", modifier: Modifier = Modifier) {
-    val colors = ButtonDefaults.buttonColors()
+fun NativeAdAttribution(modifier: Modifier = Modifier, text: String = stringResource(R.string.ad)) {
     Box(
-        modifier = modifier.clip(ButtonDefaults.shape).background(colors.containerColor)
+        modifier =
+            modifier
+                .border(
+                    width = 1.dp,
+                    color = ButtonDefaults.buttonColors().containerColor,
+                    shape = RoundedCornerShape(SizeConstants.ExtraSmallSize)
+                )
+                .clip(RoundedCornerShape(SizeConstants.ExtraSmallSize))
     ) {
-        Text(color = colors.contentColor, text = text)
+        Text(
+            modifier = Modifier.padding(horizontal = SizeConstants.ExtraTinySize),
+            color = ButtonDefaults.buttonColors().containerColor,
+            text = text,
+        )
     }
 }
 
-/** Button styled for native ad call-to-action content. */
+/**
+ * The composable for a button inside a NativeAdView. This composable must be invoked from within a
+ * NativeAdView.
+ *
+ * The Jetpack Compose button implements a click handler which overrides the native ad click
+ * handler, causing issues. The NativeAdButton does not implement a click handler. To handle native
+ * ad clicks, use the NativeAd AdListener onAdClicked callback.
+ *
+ * @param text The string identifying this view as an advertisement.
+ * @param modifier modify the native ad view element.
+ */
 @Composable
 fun NativeAdButton(text: String, modifier: Modifier = Modifier) {
-    val colors = ButtonDefaults.buttonColors()
     Box(
         modifier =
             modifier
                 .clip(ButtonDefaults.shape)
-                .background(colors.containerColor)
+                .background(ButtonDefaults.buttonColors().containerColor)
                 .padding(ButtonDefaults.ContentPadding)
     ) {
-        Text(color = colors.contentColor, text = text)
+        Text(color = ButtonDefaults.buttonColors().contentColor, text = text)
     }
 }
-

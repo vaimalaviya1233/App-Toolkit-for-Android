@@ -105,59 +105,57 @@ fun NoDataNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(nativeAd = ad) {
-                Box {
-                    OutlinedCard(
-                        modifier = modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(SizeConstants.LargeSize),
+            NativeAdView {
+                OutlinedCard(
+                    modifier = modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.LargeSize),
+                      ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                AdLabel()
-                                NativeAdChoicesView()
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start,
-                            ) {
-                                ad.icon?.let { icon ->
-                                    NativeAdIconView(
-                                        modifier = Modifier
-                                            .size(SizeConstants.ExtraLargeIncreasedSize)
-                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                    ) {
-                                        AsyncImage(
-                                            model = icon.uri ?: icon.drawable,
-                                            contentDescription = ad.headline,
-                                        )
-                                    }
-                                    LargeHorizontalSpacer()
-                                }
-                                Column(
-                                    modifier = Modifier.weight(1f),
-                                    verticalArrangement = Arrangement.Center,
+                            AdLabel()
+                            NativeAdChoicesView()
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start,
+                        ) {
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraLargeIncreasedSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
                                 ) {
-                                    ad.headline?.let {
-                                        NativeAdHeadlineView {
-                                            Text(text = it, fontWeight = FontWeight.Bold)
-                                        }
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
+                                LargeHorizontalSpacer()
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                ad.headline?.let {
+                                    NativeAdHeadlineView {
+                                        Text(text = it, fontWeight = FontWeight.Bold)
                                     }
-                                    ad.body?.let { body ->
-                                        NativeAdBodyView {
-                                            Text(
-                                                text = body,
-                                                style = MaterialTheme.typography.bodySmall,
-                                            )
-                                        }
+                                }
+                                ad.body?.let { body ->
+                                    NativeAdBodyView {
+                                        Text(
+                                            text = body,
+                                            style = MaterialTheme.typography.bodySmall,
+                                        )
                                     }
                                 }
                                 ad.callToAction?.let { cta ->
@@ -169,9 +167,6 @@ fun NoDataNativeAdBanner(
                             }
                         }
                     }
-                    NativeAdClickOverlay(
-                        modifier = Modifier.matchParentSize()
-                    )
                 }
             }
         }

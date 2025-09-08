@@ -102,75 +102,70 @@ fun LargeNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView(nativeAd = ad) {
-                Box {
-                    OutlinedCard(
-                        modifier = modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+            NativeAdView {
+                OutlinedCard(
+                    modifier = modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(SizeConstants.LargeSize),
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(SizeConstants.LargeSize),
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                AdLabel()
-                                NativeAdChoicesView()
+                            AdLabel()
+                            NativeAdChoicesView()
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            ad.icon?.let { icon ->
+                                NativeAdIconView(
+                                    modifier = Modifier
+                                        .size(SizeConstants.ExtraExtraLargeSize)
+                                        .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                                ) {
+                                    AsyncImage(
+                                        model = icon.uri ?: icon.drawable,
+                                        contentDescription = ad.headline,
+                                    )
+                                }
+                                LargeHorizontalSpacer()
                             }
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.Center,
                             ) {
-                                ad.icon?.let { icon ->
-                                    NativeAdIconView(
-                                        modifier = Modifier
-                                            .size(SizeConstants.ExtraExtraLargeSize)
-                                            .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                                    ) {
-                                        AsyncImage(
-                                            model = icon.uri ?: icon.drawable,
-                                            contentDescription = ad.headline,
+                                ad.headline?.let {
+                                    NativeAdHeadlineView {
+                                        Text(
+                                            text = it,
+                                            fontWeight = FontWeight.Bold,
+                                            style = MaterialTheme.typography.titleMedium,
                                         )
                                     }
-                                    LargeHorizontalSpacer()
                                 }
-                                Column(
-                                    modifier = Modifier.weight(1f),
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    ad.headline?.let {
-                                        NativeAdHeadlineView {
-                                            Text(
-                                                text = it,
-                                                fontWeight = FontWeight.Bold,
-                                                style = MaterialTheme.typography.titleMedium,
-                                            )
-                                        }
-                                    }
-                                    ad.body?.let { body ->
-                                        NativeAdBodyView {
-                                            Text(
-                                                text = body,
-                                                style = MaterialTheme.typography.bodyMedium,
-                                            )
-                                        }
+                                ad.body?.let { body ->
+                                    NativeAdBodyView {
+                                        Text(
+                                            text = body,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
                                     }
                                 }
-                                ad.callToAction?.let { cta ->
-                                    LargeHorizontalSpacer()
-                                    NativeAdCallToActionView {
-                                        NativeAdButton(text = cta)
-                                    }
+                            }
+                            ad.callToAction?.let { cta ->
+                                LargeHorizontalSpacer()
+                                NativeAdCallToActionView {
+                                    NativeAdButton(text = cta)
                                 }
                             }
                         }
                     }
-                    NativeAdClickOverlay(
-                        modifier = Modifier.matchParentSize()
-                    )
                 }
             }
         }
