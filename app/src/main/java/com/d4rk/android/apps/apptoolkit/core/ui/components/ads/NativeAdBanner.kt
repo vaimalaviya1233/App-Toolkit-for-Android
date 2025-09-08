@@ -39,9 +39,11 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToAct
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdMediaView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdListener
@@ -128,6 +130,16 @@ fun NativeAdBanner(
                         ) {
                             AdLabel()
                             NativeAdChoicesView()
+                        }
+                        ad.mediaContent?.let {
+                            LargeVerticalSpacer()
+                            NativeAdMediaView(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(120.dp)
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                            )
+                            LargeVerticalSpacer()
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),

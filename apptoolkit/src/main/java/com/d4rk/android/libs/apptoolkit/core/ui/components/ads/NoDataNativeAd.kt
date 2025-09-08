@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdListener
@@ -122,6 +123,16 @@ fun NoDataNativeAdBanner(
                         ) {
                             AdLabel()
                             NativeAdChoicesView()
+                        }
+                        ad.mediaContent?.let {
+                            LargeVerticalSpacer()
+                            NativeAdMediaView(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(120.dp)
+                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
+                            )
+                            LargeVerticalSpacer()
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
