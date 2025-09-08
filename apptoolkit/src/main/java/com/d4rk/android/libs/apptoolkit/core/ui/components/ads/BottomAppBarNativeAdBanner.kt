@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,6 +25,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdLabel
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdButton
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdCallToActionView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -44,15 +50,8 @@ fun BottomAppBarNativeAdBanner(
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
     if (LocalInspectionMode.current) {
-        NavigationBar(modifier = modifier.fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = "Native Ad")
-            }
+        Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Text(text = "Native Ad")
         }
         return
     }
@@ -93,10 +92,10 @@ fun BottomAppBarNativeAdBanner(
 
         nativeAd?.let { ad ->
             NativeAdView(modifier = modifier.fillMaxWidth()) {
-                NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                Box(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         modifier = Modifier
-                            .weight(1f)
+                            .fillMaxWidth()
                             .padding(horizontal = SizeConstants.LargeSize),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -135,6 +134,9 @@ fun BottomAppBarNativeAdBanner(
                             }
                         }
                     }
+                }
+                LaunchedEffect(ad) {
+                    LocalNativeAdView.current?.setNativeAd(ad)
                 }
             }
         }

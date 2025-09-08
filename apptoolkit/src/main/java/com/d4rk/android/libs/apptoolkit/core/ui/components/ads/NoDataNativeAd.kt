@@ -179,6 +179,9 @@ fun NoDataNativeAdBanner(
                         }
                     }
                 }
+                LaunchedEffect(ad) {
+                    LocalNativeAdView.current?.setNativeAd(ad)
+                }
             }
         }
     }

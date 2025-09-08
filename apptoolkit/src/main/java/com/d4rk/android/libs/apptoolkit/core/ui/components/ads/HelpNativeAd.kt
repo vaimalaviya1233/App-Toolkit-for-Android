@@ -179,6 +179,9 @@ fun HelpNativeAdBanner(
                         }
                     }
                 }
+                LaunchedEffect(ad) {
+                    LocalNativeAdView.current?.setNativeAd(ad)
+                }
             }
         }
     }

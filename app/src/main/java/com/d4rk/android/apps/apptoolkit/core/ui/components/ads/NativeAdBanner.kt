@@ -40,6 +40,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdChoicesVi
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdMediaView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.LocalNativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
@@ -184,6 +185,9 @@ fun NativeAdBanner(
                             }
                         }
                     }
+                }
+                LaunchedEffect(ad) {
+                    LocalNativeAdView.current?.setNativeAd(ad)
                 }
             }
         }

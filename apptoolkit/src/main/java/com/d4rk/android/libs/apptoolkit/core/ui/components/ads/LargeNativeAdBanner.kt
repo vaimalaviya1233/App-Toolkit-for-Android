@@ -178,6 +178,9 @@ fun LargeNativeAdBanner(
                         }
                     }
                 }
+                LaunchedEffect(ad) {
+                    LocalNativeAdView.current?.setNativeAd(ad)
+                }
             }
         }
     }
