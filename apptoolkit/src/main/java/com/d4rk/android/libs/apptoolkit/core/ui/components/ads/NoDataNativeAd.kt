@@ -40,6 +40,8 @@ import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Native ad banner tailored for the no data screen.
@@ -78,30 +80,32 @@ fun NoDataNativeAdBanner(
         }
 
         LaunchedEffect(key1 = adsConfig.bannerAdUnitId) {
-            val loader =
-                AdLoader.Builder(context, adsConfig.bannerAdUnitId)
-                    .forNativeAd { ad -> nativeAd = ad }
-                    .withAdListener(
-                        object : AdListener() {
-                            override fun onAdFailedToLoad(error: LoadAdError) {
-                                Log.e(TAG, "Native ad failed to load: ${error.message}")
-                            }
+            withContext(Dispatchers.IO) {
+                val loader =
+                    AdLoader.Builder(context, adsConfig.bannerAdUnitId)
+                        .forNativeAd { ad -> nativeAd = ad }
+                        .withAdListener(
+                            object : AdListener() {
+                                override fun onAdFailedToLoad(error: LoadAdError) {
+                                    Log.e(TAG, "Native ad failed to load: ${error.message}")
+                                }
 
-                            override fun onAdLoaded() {
-                                Log.d(TAG, "Native ad was loaded.")
-                            }
+                                override fun onAdLoaded() {
+                                    Log.d(TAG, "Native ad was loaded.")
+                                }
 
-                            override fun onAdImpression() {
-                                Log.d(TAG, "Native ad recorded an impression.")
-                            }
+                                override fun onAdImpression() {
+                                    Log.d(TAG, "Native ad recorded an impression.")
+                                }
 
-                            override fun onAdClicked() {
-                                Log.d(TAG, "Native ad was clicked.")
-                            }
-                        },
-                    )
-                    .build()
-            loader.loadAd(AdRequest.Builder().build())
+                                override fun onAdClicked() {
+                                    Log.d(TAG, "Native ad was clicked.")
+                                }
+                            },
+                        )
+                        .build()
+                loader.loadAd(AdRequest.Builder().build())
+            }
         }
 
         nativeAd?.let { ad ->
