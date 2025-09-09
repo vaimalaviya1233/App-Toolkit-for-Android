@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LoadingIndicatorDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NoDataNativeAdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -54,7 +55,7 @@ fun NoDataScreen(
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
     isError: Boolean = false,
-    adsConfig: AdsConfig = koinInject(qualifier = named(name = "native_ad")),
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "no_data_banner_ad")),
 ) {
 
     Box(
@@ -70,7 +71,8 @@ fun NoDataScreen(
                 contentAlignment = Alignment.Center
             ) {
                 LoadingIndicator(
-                    modifier = Modifier.size(size = 144.dp)
+                    modifier = Modifier.size(size = 144.dp),
+                    color = if (isError) MaterialTheme.colorScheme.errorContainer else LoadingIndicatorDefaults.indicatorColor
                 )
 
                 Icon(
@@ -99,11 +101,11 @@ fun NoDataScreen(
             LargeVerticalSpacer()
 
             if (showAd) {
-                NoDataNativeAdBanner(
+                AdBanner(
+                    adsConfig = adsConfig,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = SizeConstants.MediumSize),
-                    adsConfig = adsConfig
                 )
             }
         }

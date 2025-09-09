@@ -24,10 +24,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.BottomAppBarNativeAdBanner
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -41,7 +41,7 @@ fun BottomNavigationBar(
     val view: View = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
+    val adsConfig: AdsConfig = koinInject(qualifier = named("bottom_nav_bar_full_banner_ad"))
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
     val showLabels: Boolean =
@@ -49,9 +49,9 @@ fun BottomNavigationBar(
 
     Column(modifier = modifier) {
         key("bottom_ad") {
-            BottomAppBarNativeAdBanner(
+            AdBanner(
+                adsConfig = adsConfig,
                 modifier = Modifier.fillMaxWidth(),
-                adsConfig = adsConfig
             )
         }
 

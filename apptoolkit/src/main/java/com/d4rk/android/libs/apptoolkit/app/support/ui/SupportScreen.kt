@@ -32,7 +32,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProd
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.ShortenLinkConstants
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.LargeNativeAdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.TonalIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -94,7 +94,7 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
 ) {
     val context: Context = LocalContext.current
-    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "native_ad"))
+    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "support_banner_ad"))
 
     val productDetailsMap = data.products.associateBy { it.productId }
     LazyColumn(
@@ -199,8 +199,8 @@ fun SupportScreenContent(
             )
         }
         item {
-            LargeNativeAdBanner(
-                modifier = Modifier.padding(all = SizeConstants.LargeSize),
+            AdBanner(
+                modifier = Modifier.padding(all = SizeConstants.LargeSize).animateItem(),
                 adsConfig = nativeAdsConfig
             )
         }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -22,12 +21,12 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.apps.apptoolkit.core.ui.components.ads.NativeAdBanner
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 @Composable
 fun AppsList(
@@ -52,7 +51,7 @@ fun AppsList(
     val items by remember(apps, adsEnabled) {
         derivedStateOf { buildAppListItems(apps, adsEnabled, adFrequency) }
     }
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
+    val adsConfig: AdsConfig = koinInject(qualifier = named("apps_list_banner_ad"))
 
     AppsGrid(
         items = items,
@@ -162,9 +161,9 @@ private fun AdListItem(
     modifier: Modifier = Modifier,
     adsConfig: AdsConfig,
 ) {
-    NativeAdBanner(
-        modifier = modifier.fillMaxWidth(),
-        adsConfig = adsConfig
+    AdBanner(
+        adsConfig = adsConfig,
+        modifier = modifier
     )
 }
 
