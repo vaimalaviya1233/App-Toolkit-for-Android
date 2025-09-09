@@ -105,7 +105,7 @@ fun HelpNativeAdBanner(
         }
 
         nativeAd?.let { ad ->
-            NativeAdView {
+            NativeAdView(nativeAd = ad) {
                 Card(
                     modifier = modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(size = SizeConstants.MediumSize),

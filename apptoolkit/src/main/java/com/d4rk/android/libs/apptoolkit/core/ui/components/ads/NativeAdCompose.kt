@@ -11,8 +11,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
@@ -24,6 +26,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 
 /**
@@ -38,7 +41,7 @@ internal val LocalNativeAdView = staticCompositionLocalOf<NativeAdView?> { null 
  * @param content A composable function that defines the rest of the native ad view's elements.
  */
 @Composable
-fun NativeAdView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val localContext = LocalContext.current
     val nativeAdView = remember { NativeAdView(localContext).apply { id = View.generateViewId() } }
 
@@ -58,12 +61,7 @@ fun NativeAdView(modifier: Modifier = Modifier, content: @Composable () -> Unit)
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                             )
                         setContent {
-                            // Set `nativeAdView` as the current LocalNativeAdView so that
-                            // `content` can access the `NativeAdView` via `LocalNativeAdView.current`.
-                            // This would allow ad attributes (such as `NativeHeadline`) to attribute
-                            // its contained View subclass via setter functions (e.g. nativeAdView.headlineView =
-                            // view)
-                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) { content.invoke() }
+                            CompositionLocalProvider(LocalNativeAdView provides nativeAdView) { content() }
                         }
                     }
                 )
@@ -71,6 +69,12 @@ fun NativeAdView(modifier: Modifier = Modifier, content: @Composable () -> Unit)
         },
         modifier = modifier,
     )
+
+    LaunchedEffect(nativeAd) {
+        // Ensure child views are in place before binding the ad
+        withFrameNanos { }
+        nativeAdView.setNativeAd(nativeAd)
+    }
 }
 
 /**
@@ -127,14 +131,15 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 @Composable
 fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
-        factory = {
-            nativeAdView.callToActionView = localComposeView
-            localComposeView.apply { setContent(content) }
-        },
         modifier = modifier,
+        factory = { context ->
+            ComposeView(context).apply { id = View.generateViewId() }
+        },
+        update = { view ->
+            nativeAdView.callToActionView = view
+            view.setContent(content)
+        },
     )
 }
 
