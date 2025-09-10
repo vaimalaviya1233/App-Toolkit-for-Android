@@ -107,10 +107,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkInAppReview() {
         lifecycleScope.launch {
-            val (sessionCount: Int, hasPrompted: Boolean) = withContext(dispatchers.io) {
-                val sc = dataStore.sessionCount.first()
-                val hp = dataStore.hasPromptedReview.first()
-                sc to hp
+            val (sessionCount: Int, hasPrompted: Boolean) = coroutineScope {
+                val sessionCountDeferred = async(dispatchers.io) { dataStore.sessionCount.first() }
+                val hasPromptedDeferred = async(dispatchers.io) { dataStore.hasPromptedReview.first() }
+                awaitAll(sessionCountDeferred, hasPromptedDeferred)
+                sessionCountDeferred.getCompleted() to hasPromptedDeferred.getCompleted()
             }
             ReviewHelper.launchInAppReviewIfEligible(
                 activity = this@MainActivity,
