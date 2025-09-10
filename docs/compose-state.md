@@ -415,25 +415,3 @@ var userTypedQuery by rememberSaveable(typedQuery, stateSaver = TextFieldValue.S
     )
 }
 ```
-
-## Learn more
-
-To learn more about state and Jetpack Compose, consult the following additional resources.
-
-### Samples
-
-- [Jetchat sample](https://github.com/android/compose-samples/tree/main/Jetchat)
-- [Jetnews sample](https://github.com/android/compose-samples/tree/main/JetNews)
-- [Now in Android app](https://github.com/android/nowinandroid)
-
-### Codelabs
-
-- [Using State in Jetpack Compose](https://developer.android.com/codelabs/basic-android-kotlin-compose-state#0)
-
-### Videos
-
-- [A Compose state of mind](https://www.youtube.com/watch?v=8AqLBOTjSgw)
-
-### Blogs
-
-- [Jetpack Compose: Debugging Recomposition](https://medium.com/androiddevelopers/jetpack-compose-debugging-recomposition-81c014c030c6)
