@@ -25,7 +25,9 @@ import org.koin.compose.koinInject
 
 @Composable
 fun AppNavigationHost(
-    navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues
+    navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
+    paddingValues: PaddingValues
 ) {
     val dataStore : DataStore = koinInject()
     val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
