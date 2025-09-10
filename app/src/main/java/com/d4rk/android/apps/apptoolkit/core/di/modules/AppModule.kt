@@ -29,7 +29,7 @@ import org.koin.dsl.module
 val appModule : Module = module {
     single<DataStore> { DataStore(context = get(), dispatchers = get()) }
     single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), dispatchers = get()) }
-    single { KtorClient().createClient(enableLogging = BuildConfig.DEBUG) }
+    single { KtorClient.createClient(enableLogging = BuildConfig.DEBUG) }
 
     single<FavoritesRepository> { FavoritesRepositoryImpl(context = get(), dataStore = get(), dispatchers = get()) }
     single { ObserveFavoritesUseCase(repository = get()) }
