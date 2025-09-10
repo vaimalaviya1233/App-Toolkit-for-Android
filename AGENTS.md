@@ -24,8 +24,32 @@ You are an experienced Android app developer contributing to **App Toolkit for A
 ## Jetpack Compose architecture
 @./docs/jetpack-compose-layering.md
 
+## Jetpack Compose best practices
+@./docs/compose-best-practices.md
+
+## State and Jetpack Compose
+@./docs/compose-state.md
+
+## Thinking in Compose
+@./docs/thinking-in-compose.md
+
 ## Android architecture recommendations
 @./docs/android-architecture-recommendations.md
+
+## AGENTS usage
+@./docs/gemini-agents.md
+
+## Coroutines best practices
+@./docs/coroutines-best-practices.md
+
+## Kotlin coroutines on Android
+@./docs/kotlin-coroutines-android.md
+
+## Kotlin flows on Android
+@./docs/kotlin-flows-android.md
+
+## Testing Kotlin flows on Android
+@./docs/testing-kotlin-flows-android.md
 
 ## Testing
 - Run `./gradlew test` and ensure it passes before submitting changes.
