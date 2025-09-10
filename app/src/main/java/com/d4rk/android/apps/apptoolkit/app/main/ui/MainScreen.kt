@@ -34,7 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.navigation.compose.rememberNavController
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
@@ -148,8 +148,9 @@ fun MainScaffoldTabletContent() {
     val uiState: UiMainScreen = screenState.data ?: UiMainScreen()
     val navController: NavHostController = rememberNavController()
 
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
+    val currentRoute by remember(navController) {
+        derivedStateOf { navController.currentDestination?.route }
+    }
 
     val bottomItems: List<BottomBarItem> = remember {
         listOf(
