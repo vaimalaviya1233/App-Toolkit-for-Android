@@ -17,15 +17,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -54,9 +52,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.snackbar.DefaultSnackbarHost
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -81,8 +76,6 @@ fun MainScreen() {
 fun MainScaffoldContent(drawerState: DrawerState) {
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
-    val isFabExtended: MutableState<Boolean> = rememberSaveable { mutableStateOf(true) }
-    val isFabVisible: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val navController: NavHostController = rememberNavController()
     val bottomItems: List<BottomBarItem> = remember {
@@ -102,13 +95,6 @@ fun MainScaffoldContent(drawerState: DrawerState) {
         )
     }
 
-    LaunchedEffect(scrollBehavior.state) {
-        snapshotFlow { scrollBehavior.state.contentOffset }
-            .map { it >= 0f }
-            .distinctUntilChanged()
-            .collectLatest { isFabExtended.value = it }
-    }
-
     Scaffold(
         modifier = Modifier
             .imePadding()
@@ -125,7 +111,6 @@ fun MainScaffoldContent(drawerState: DrawerState) {
         AppNavigationHost(
             navController = navController,
             snackbarHostState = snackBarHostState,
-            onFabVisibilityChanged = { isFabVisible.value = it },
             paddingValues = paddingValues)
     }
 }
@@ -149,7 +134,9 @@ fun MainScaffoldTabletContent() {
     val navController: NavHostController = rememberNavController()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
+    val currentRoute by remember(backStackEntry) {
+        derivedStateOf { backStackEntry?.destination?.route ?: navController.currentDestination?.route }
+    }
 
     val bottomItems: List<BottomBarItem> = remember {
         listOf(
@@ -204,11 +191,10 @@ fun MainScaffoldTabletContent() {
                 )
             },
             content = {
-                AppNavigationHost(
-                    navController = navController,
-                    snackbarHostState = snackBarHostState,
-                    onFabVisibilityChanged = {},
-                    paddingValues = PaddingValues())
+                  AppNavigationHost(
+                      navController = navController,
+                      snackbarHostState = snackBarHostState,
+                      paddingValues = PaddingValues())
             })
     }
 
