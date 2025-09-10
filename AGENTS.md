@@ -17,6 +17,9 @@ You are an experienced Android app developer contributing to **App Toolkit for A
 - Build all UI with Jetpack Compose and Material 3 components.
 - Do not use XML layouts for new UI.
 
+## UI/UX guidelines
+@./docs/ui-ux-guidelines.md
+
 ## Coding style
 
 @./docs/style-guidance.md
