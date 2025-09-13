@@ -7,16 +7,21 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.Obser
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ObserveFavoritesUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.usecases.ToggleFavoriteUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
+import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.Error
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.IsLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.NoData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState.Success
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.showSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -72,8 +77,16 @@ class FavoriteAppsViewModel(
 
                         is DataState.Error -> {
                             screenState.update { current ->
-                                current.copy(screenState = Error("An error occurred"), data = null)
+                                current.copy(screenState = Error(), data = null)
                             }
+                            screenState.showSnackbar(
+                                UiSnackbar(
+                                    message = UiTextHelper.StringResource(R.string.error_an_error_occurred),
+                                    isError = true,
+                                    timeStamp = System.currentTimeMillis(),
+                                    type = ScreenMessageType.SNACKBAR,
+                                )
+                            )
                         }
                     }
                 }
@@ -93,8 +106,16 @@ class FavoriteAppsViewModel(
                 .onFailure { error ->
                     error.printStackTrace()
                     screenState.update { current ->
-                        current.copy(screenState = Error("Failed to update favorite"))
+                        current.copy(screenState = Error())
                     }
+                    screenState.showSnackbar(
+                        UiSnackbar(
+                            message = UiTextHelper.StringResource(R.string.error_failed_to_update_favorite),
+                            isError = true,
+                            timeStamp = System.currentTimeMillis(),
+                            type = ScreenMessageType.SNACKBAR,
+                        )
+                    )
                 }
         }
     }

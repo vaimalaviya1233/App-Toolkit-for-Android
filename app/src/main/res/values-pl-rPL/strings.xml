@@ -14,6 +14,9 @@
     <string name="favorite_apps">Ulubione</string>
     <string name="no_apps_added_to_favorites">Nie dodano aplikacji do ulubionych</string>
     <string name="error_failed_to_fetch_our_apps">Nie udało się pobrać list naszych aplikacji</string>
+    <string name="error_failed_to_load_apps">Nie udało się wczytać aplikacji</string>
+    <string name="error_an_error_occurred">Wystąpił błąd</string>
+    <string name="error_failed_to_update_favorite">Nie udało się zaktualizować ulubionego</string>
 
     <!-- Help screen -->
     <string name="question_1">Czym jest App Toolkit?</string>
