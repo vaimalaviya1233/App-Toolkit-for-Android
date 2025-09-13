@@ -10,7 +10,7 @@
 
 ## Components
 - `HelpNativeAdBanner` – native ad used on the Help screen via the `native_ad` DI qualifier.
-  See [Help page](Help.md) for placement and policy details.
+  See [Help page](../../help.md) for placement and policy details.
 
 ## Integration
 ```kotlin

@@ -13,7 +13,7 @@ The Help page displays a single native ad between the FAQ list and the Contact U
 The banner is rendered by `HelpNativeAdBanner` which uses the shared `native_ad` configuration.  
 An **Ad** label is shown to comply with policy requirements and padding ensures the banner
 does not interfere with surrounding content.  
-See [Ads](Ads.md) for more information on ad configuration.
+See [Ads](settings/privacy/ads.md) for more information on ad configuration.
 
 ## Integration
 ```kotlin

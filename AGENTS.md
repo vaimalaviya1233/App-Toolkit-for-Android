@@ -17,42 +17,29 @@ You are an experienced Android app developer contributing to **App Toolkit for A
 - Build all UI with Jetpack Compose and Material 3 components.
 - Do not use XML layouts for new UI.
 
+## Architecture and principles
+@./docs/core/
+
 ## UI/UX guidelines
-@./docs/ui-ux-guidelines.md
+@./docs/ui-ux/
 
-## Coding style
+## Coroutines and Flow
+@./docs/coroutines-flow/
 
-@./docs/style-guidance.md
+## Compose rules
+@./docs/compose/
 
-## Jetpack Compose architecture
-@./docs/jetpack-compose-layering.md
+## Testing guidelines
+@./docs/tests/
 
-## Jetpack Compose best practices
-@./docs/compose-best-practices.md
+## App documentation
+@./docs/app/
 
-## State and Jetpack Compose
-@./docs/compose-state.md
+## General policies
+@./docs/general/
 
-## Thinking in Compose
-@./docs/thinking-in-compose.md
+# General app and libraries used docs
+@./docs/screens/
 
-## Android architecture recommendations
-@./docs/android-architecture-recommendations.md
-
-## AGENTS usage
-@./docs/gemini-agents.md
-
-## Coroutines best practices
-@./docs/coroutines-best-practices.md
-
-## Kotlin coroutines on Android
-@./docs/kotlin-coroutines-android.md
-
-## Kotlin flows on Android
-@./docs/kotlin-flows-android.md
-
-## Testing Kotlin flows on Android
-@./docs/testing-kotlin-flows-android.md
-
-## Testing
+## Test execution
 - Run `./gradlew test` and ensure it passes before submitting changes.
