@@ -4,6 +4,8 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.ApiResponse
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.AppDataWrapper
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.AppInfoDto
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
+import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -18,9 +20,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import java.net.SocketTimeoutException
-import kotlin.test.assertTrue
 
 class DeveloperAppsRepositoryImplTest {
 
@@ -41,12 +40,13 @@ class DeveloperAppsRepositoryImplTest {
         val repository = DeveloperAppsRepositoryImpl(client)
 
         val result = repository.fetchDeveloperApps().first()
-        assertEquals(apps, result)
+        val success = result as DataState.Success
+        assertEquals(apps, success.data)
     }
 
     @Test
-    fun `fetchDeveloperApps throws on error`() = runTest {
-        val client = HttpClient(MockEngine { request ->
+    fun `fetchDeveloperApps emits timeout error`() = runTest {
+        val client = HttpClient(MockEngine { _ ->
             respond(
                 content = "",
                 status = HttpStatusCode.RequestTimeout,
@@ -57,9 +57,9 @@ class DeveloperAppsRepositoryImplTest {
         }
         val repository = DeveloperAppsRepositoryImpl(client)
 
-        val result = runCatching { repository.fetchDeveloperApps().first() }
-        val exception = result.exceptionOrNull()
-        assertIs<SocketTimeoutException>(exception)
+        val result = repository.fetchDeveloperApps().first()
+        val error = result as DataState.Error
+        assertEquals(Errors.Network.REQUEST_TIMEOUT, error.error)
     }
 
     @Test
@@ -82,13 +82,13 @@ class DeveloperAppsRepositoryImplTest {
         }
         val repository = DeveloperAppsRepositoryImpl(client)
 
-        val result = repository.fetchDeveloperApps().first()
-        assertEquals(listOf("Alpha", "beta", "zeta"), result.map(AppInfo::name))
+        val result = repository.fetchDeveloperApps().first() as DataState.Success
+        assertEquals(listOf("Alpha", "beta", "zeta"), result.data.map(AppInfo::name))
     }
 
     @Test
-    fun `fetchDeveloperApps throws IllegalStateException on http error`() = runTest {
-        val client = HttpClient(MockEngine { request ->
+    fun `fetchDeveloperApps emits failed to load error on http error`() = runTest {
+        val client = HttpClient(MockEngine { _ ->
             respond(
                 content = "",
                 status = HttpStatusCode.BadRequest,
@@ -99,9 +99,9 @@ class DeveloperAppsRepositoryImplTest {
         }
         val repository = DeveloperAppsRepositoryImpl(client)
 
-        val result = runCatching { repository.fetchDeveloperApps().first() }
-        val exception = result.exceptionOrNull()
-        assertTrue(exception is IllegalStateException)
+        val result = repository.fetchDeveloperApps().first()
+        val error = result as DataState.Error
+        assertEquals(Errors.UseCase.FAILED_TO_LOAD_APPS, error.error)
     }
 }
 

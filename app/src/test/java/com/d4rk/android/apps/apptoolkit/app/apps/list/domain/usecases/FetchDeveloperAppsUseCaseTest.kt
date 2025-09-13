@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import java.net.SocketTimeoutException
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -19,7 +18,8 @@ class FetchDeveloperAppsUseCaseTest {
     fun `invoke emits loading then success`() = runTest {
         val apps = listOf(AppInfo(name = "App", packageName = "pkg", iconUrl = "icon"))
         val repository = object : DeveloperAppsRepository {
-            override fun fetchDeveloperApps(): Flow<List<AppInfo>> = flow { emit(apps) }
+            override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, Errors>> =
+                flow { emit(DataState.Success(apps)) }
         }
         val useCase = FetchDeveloperAppsUseCase(repository)
 
@@ -34,7 +34,8 @@ class FetchDeveloperAppsUseCaseTest {
     @Test
     fun `invoke emits error when repository fails`() = runTest {
         val repository = object : DeveloperAppsRepository {
-            override fun fetchDeveloperApps(): Flow<List<AppInfo>> = flow { throw SocketTimeoutException("timeout") }
+            override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, Errors>> =
+                flow { emit(DataState.Error(error = Errors.Network.REQUEST_TIMEOUT)) }
         }
         val useCase = FetchDeveloperAppsUseCase(repository)
 
