@@ -2,20 +2,25 @@ package com.d4rk.android.apps.apptoolkit.app.apps.list
 
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
+import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
  * Fake implementation of [DeveloperAppsRepository] that returns a predefined list.
- * It can optionally throw an exception when [fetchDeveloperApps] is called.
+ * It can optionally emit an error when [fetchDeveloperApps] is called.
  */
 class FakeDeveloperAppsRepository(
     private val apps: List<AppInfo>,
-    private val fetchThrows: Throwable? = null,
+    private val fetchError: Errors? = null,
 ) : DeveloperAppsRepository {
-    override fun fetchDeveloperApps(): Flow<List<AppInfo>> = flow {
-        fetchThrows?.let { throw it }
-        emit(apps)
+    override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, Errors>> = flow {
+        fetchError?.let {
+            emit(DataState.Error(error = it))
+            return@flow
+        }
+        emit(DataState.Success(apps))
     }
 }
 
