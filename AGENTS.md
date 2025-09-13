@@ -32,13 +32,10 @@ You are an experienced Android app developer contributing to **App Toolkit for A
 ## Testing guidelines
 @./docs/tests/
 
-## App documentation
-@./docs/app/
-
 ## General policies
 @./docs/general/
 
-# General app and libraries used docs
+# General app and libraries used documentation
 @./docs/screens/
 
 ## Test execution
