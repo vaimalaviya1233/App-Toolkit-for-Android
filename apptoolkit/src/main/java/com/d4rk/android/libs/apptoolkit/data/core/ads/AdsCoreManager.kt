@@ -18,6 +18,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
 
+/**
+ * Manager responsible for configuring and displaying App Open ads.
+ *
+ * It checks user preferences stored in [CommonDataStore] to determine
+ * whether ads should be shown and manages the lifecycle of an
+ * [AppOpenAd] instance.
+ */
 open class AdsCoreManager(
     protected val context : Context,
     val buildInfoProvider : BuildInfoProvider,
@@ -26,6 +33,9 @@ open class AdsCoreManager(
     private var dataStore : CommonDataStore = CommonDataStore.getInstance(context = context)
     private var appOpenAdManager : AppOpenAdManager? = null
 
+    /**
+     * Prepares the SDK and loads an [AppOpenAd] if ads are enabled.
+     */
     suspend fun initializeAds(appOpenUnitId : String) {
         val isAdsChecked : Boolean = withContext(dispatchers.io) {
             dataStore.ads(default = !buildInfoProvider.isDebugBuild).first()
@@ -36,18 +46,28 @@ open class AdsCoreManager(
         }
     }
 
+    /**
+     * Displays an ad if one has been loaded.
+     *
+     * The check runs inside the provided [scope] so callers can decide
+     * where the asynchronous work should live.
+     */
     fun showAdIfAvailable(activity : Activity , scope : CoroutineScope) {
         scope.launch {
             appOpenAdManager?.showAdIfAvailable(activity = activity)
         }
     }
 
+    /**
+     * Helper that wraps loading and showing of the App Open ad.
+     */
     private inner class AppOpenAdManager(private val appOpenUnitId : String) {
         private var appOpenAd : AppOpenAd? = null
         private var isLoadingAd : Boolean = false
         var isShowingAd : Boolean = false
         private var loadTime : Long = 0
 
+        /** Loads a new ad if none is available. */
         fun loadAd(context : Context) {
             if (isLoadingAd || isAdAvailable()) {
                 return
@@ -75,16 +95,19 @@ open class AdsCoreManager(
             return dateDifference < numMilliSecondsPerHour * 4
         }
 
+        /** Whether a valid ad is ready to be shown. */
         private fun isAdAvailable() : Boolean {
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo()
         }
 
+        /** Convenience overload that ignores callbacks. */
         suspend fun showAdIfAvailable(activity : Activity) {
             showAdIfAvailable(activity = activity , onShowAdCompleteListener = object : OnShowAdCompleteListener {
                 override fun onShowAdComplete() {}
             })
         }
 
+        /** Displays the ad if available, otherwise triggers a reload. */
         suspend fun showAdIfAvailable(
             activity : Activity , onShowAdCompleteListener : OnShowAdCompleteListener
         ) {

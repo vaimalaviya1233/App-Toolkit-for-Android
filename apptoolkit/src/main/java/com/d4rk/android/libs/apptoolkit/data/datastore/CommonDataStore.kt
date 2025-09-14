@@ -78,16 +78,24 @@ open class CommonDataStore(
     }
 
     private val startupPageKey = stringPreferencesKey(name = DataStoreNamesConstants.DATA_STORE_STARTUP_PAGE)
+
+    /**
+     * Observes the preferred startup route.
+     *
+     * @param default value emitted when the preference has not been set yet.
+     */
     fun getStartupPage(default: String = "") : Flow<String> = dataStore.data.map { preferences ->
         preferences[startupPageKey] ?: default
     }
 
+    /** Stores whether the app has completed its first-time startup flow. */
     override suspend fun saveStartup(isFirstTime : Boolean) {
         dataStore.edit { preferences : MutablePreferences ->
             preferences[startupKey] = isFirstTime
         }
     }
 
+    /** Persists the route that should be opened when the app launches. */
     suspend fun saveStartupPage(route: String) {
         dataStore.edit { prefs: MutablePreferences ->
             prefs[startupPageKey] = route
