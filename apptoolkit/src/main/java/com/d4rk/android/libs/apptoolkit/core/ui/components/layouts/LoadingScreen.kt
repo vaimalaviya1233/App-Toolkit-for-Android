@@ -20,6 +20,18 @@ import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 
+/**
+ * Fullscreen wrapper that displays an animated [LoadingIndicator].
+ *
+ * This composable is typically used while data is being loaded. Optional
+ * text can be shown beneath the indicator, and the indicator size or padding
+ * can be customized through the provided parameters.
+ *
+ * @param modifier Modifier applied to the root [Column].
+ * @param paddingValues Additional padding around the content.
+ * @param indicatorSize Size of the circular loading indicator.
+ * @param showText When true a localized "loading" label is rendered.
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun LoadingScreen(

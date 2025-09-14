@@ -34,17 +34,21 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
 /**
- * A composable function that displays a screen indicating that no data is available.
- * It can optionally display a retry button to allow the user to attempt to fetch data again.
+ * Displays a placeholder screen when no data is available.
  *
- * @param text The string resource ID for the text to be displayed. Defaults to R.string.try_again.
- * @param icon The [ImageVector] to be displayed as an icon. Defaults to Icons.Default.Info.
- * @param showRetry A boolean indicating whether to show the retry button. Defaults to false.
- * @param onRetry A lambda function to be executed when the retry button is clicked. Defaults to an empty lambda.
+ * A progress indicator with an optional [icon] is shown in the center of the
+ * screen. A retry button and ad banner can be toggled through [showRetry] and
+ * [showAd] respectively. When [isError] is true error colors are used.
  *
- * Example Usage:
- * ```
- * NoDataScreen(text = R.string.no_items_found, icon = Icons.Default.Warning */
+ * @param text Label for the retry action button.
+ * @param textMessage Message describing the empty state.
+ * @param icon Icon rendered at the center of the indicator.
+ * @param showRetry Whether to display the retry button.
+ * @param onRetry Callback invoked when the retry button is pressed.
+ * @param showAd Whether an [AdBanner] should be displayed.
+ * @param isError Shows the indicator with error styling when true.
+ * @param adsConfig Configuration used for the ad banner instance.
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NoDataScreen(

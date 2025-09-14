@@ -16,8 +16,27 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import kotlinx.coroutines.delay
 
+/**
+ * Switches between different UI states with a fade animation.
+ *
+ * The handler observes [screenState] and renders the provided content
+ * based on its [ScreenState]. Loading and empty states receive their own
+ * composables while successful data is passed to [onSuccess].
+ *
+ * @param screenState The state holder describing screen status and data.
+ * @param onLoading Composable displayed while loading.
+ * @param onEmpty Composable shown when there is no data.
+ * @param onSuccess Composable invoked with loaded data on success.
+ * @param onError Optional composable shown when an error occurs.
+ */
 @Composable
-fun <T> ScreenStateHandler(screenState : UiStateScreen<T> , onLoading : @Composable () -> Unit , onEmpty : @Composable () -> Unit , onSuccess : @Composable (T) -> Unit , onError : (@Composable () -> Unit)? = null) {
+fun <T> ScreenStateHandler(
+    screenState : UiStateScreen<T> ,
+    onLoading : @Composable () -> Unit ,
+    onEmpty : @Composable () -> Unit ,
+    onSuccess : @Composable (T) -> Unit ,
+    onError : (@Composable () -> Unit)? = null
+) {
     var currentScreenState : ScreenState by remember { mutableStateOf(value = screenState.screenState) }
 
     LaunchedEffect(screenState.screenState) {
