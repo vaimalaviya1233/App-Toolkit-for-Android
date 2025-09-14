@@ -8,6 +8,16 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.sql.SQLException
 
+/**
+ * Converts a [Throwable] into a domain specific [Errors] value.
+ *
+ * The mapping centralizes error handling by translating common
+ * networking, serialization and database failures into
+ * semantic categories understood by the rest of the toolkit.
+ *
+ * @param default value returned when the [Throwable] type is not recognized
+ * @return [Errors] describing the failure
+ */
 fun Throwable.toError(default : Errors = Errors.UseCase.NO_DATA) : Errors {
     return when (this) {
         is UnknownHostException -> Errors.Network.NO_INTERNET
