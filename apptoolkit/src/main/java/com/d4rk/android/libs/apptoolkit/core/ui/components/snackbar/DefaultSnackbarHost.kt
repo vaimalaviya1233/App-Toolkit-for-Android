@@ -27,6 +27,15 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.CustomSnackbarVisua
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
+/**
+ * Material 3 [SnackbarHost] tailored for [CustomSnackbarVisuals].
+ *
+ * The host renders a dismiss action with sound and haptic feedback and
+ * applies custom colors when the snackbar represents an error.
+ *
+ * @param snackbarState State that holds the current snackbar data.
+ * @param modifier Modifier applied to the [SnackbarHost].
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DefaultSnackbarHost(snackbarState : SnackbarHostState , modifier : Modifier = Modifier) {

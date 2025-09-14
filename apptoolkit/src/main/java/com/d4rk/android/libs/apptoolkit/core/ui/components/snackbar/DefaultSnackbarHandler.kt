@@ -13,8 +13,25 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.handling.UiEvent
 
+/**
+ * Utility that shows snackbars described by [UiStateScreen.snackbar].
+ *
+ * The snackbar is displayed using [snackbarHostState]. When it is dismissed,
+ * [getDismissEvent] is invoked to build an event that is forwarded to
+ * [onEvent]. This allows view models to react once the snackbar disappears.
+ *
+ * @param screenState Screen state containing the snackbar information.
+ * @param snackbarHostState Host state that renders the snackbar.
+ * @param getDismissEvent Factory for an event triggered on dismissal.
+ * @param onEvent Callback receiving the event created by [getDismissEvent].
+ */
 @Composable
-fun <T , E : UiEvent> DefaultSnackbarHandler(screenState : UiStateScreen<T> , snackbarHostState : SnackbarHostState , getDismissEvent : (() -> E)? = null , onEvent : ((E) -> Unit)? = null) {
+fun <T , E : UiEvent> DefaultSnackbarHandler(
+    screenState : UiStateScreen<T> ,
+    snackbarHostState : SnackbarHostState ,
+    getDismissEvent : (() -> E)? = null ,
+    onEvent : ((E) -> Unit)? = null
+) {
     val context : Context = LocalContext.current
 
     LaunchedEffect(key1 = screenState.snackbar?.timeStamp) {

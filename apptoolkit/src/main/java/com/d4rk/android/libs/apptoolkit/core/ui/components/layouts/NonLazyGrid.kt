@@ -10,9 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
+/**
+ * Simple grid that measures and places all items without lazy behaviour.
+ *
+ * The grid arranges [itemCount] items into the given number of [columns] and
+ * invokes [content] for each index. Useful for small grids where the overhead
+ * of a `Lazy` component is unnecessary.
+ *
+ * @param columns Number of columns in the grid.
+ * @param itemCount Total number of items to show.
+ * @param modifier Modifier applied to the container.
+ * @param content Composable lambda called for each item index.
+ */
 @Composable
 fun NonLazyGrid(
-    columns : Int , itemCount : Int , modifier : Modifier = Modifier, content : @Composable (Int) -> Unit,
+    columns : Int ,
+    itemCount : Int ,
+    modifier : Modifier = Modifier,
+    content : @Composable (Int) -> Unit,
 ) {
     Column(  modifier = modifier) {
         val rows : Int = (itemCount + columns - 1) / columns
