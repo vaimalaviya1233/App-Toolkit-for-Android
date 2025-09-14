@@ -8,41 +8,69 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.Develope
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiConstants
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiEnvironments
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiPaths
+import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import java.net.SocketTimeoutException
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient,
 ) : DeveloperAppsRepository {
 
-    override fun fetchDeveloperApps(): Flow<List<AppInfo>> = flow {
+    override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, Errors>> = flow {
         val url = BuildConfig.DEBUG.let { isDebug ->
             val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
             "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
         }
-
-        val httpResponse: HttpResponse = client.get(url)
-        if (!httpResponse.status.isSuccess()) {
-            if (httpResponse.status == HttpStatusCode.RequestTimeout) {
-                throw SocketTimeoutException("Request timeout")
-            } else {
-                throw IllegalStateException("Failed to load apps")
+        runCatching {
+            client.get(url)
+        }.onSuccess { httpResponse ->
+            if (!httpResponse.status.isSuccess()) {
+                val error = if (httpResponse.status == HttpStatusCode.RequestTimeout) {
+                    Errors.Network.REQUEST_TIMEOUT
+                } else {
+                    Errors.UseCase.FAILED_TO_LOAD_APPS
+                }
+                emit(DataState.Error(error = error))
+                return@flow
             }
-        }
 
-        val apiResponse: ApiResponse = httpResponse.body()
-        emit(
-            apiResponse.data.apps
-                .map { it.toDomain() }
-                .sortedBy { it.name.lowercase() }
-        )
+            runCatching { httpResponse.body<ApiResponse>() }
+                .onSuccess { apiResponse ->
+                    emit(
+                        DataState.Success(
+                            apiResponse.data.apps
+                                .map { it.toDomain() }
+                                .sortedBy { it.name.lowercase() }
+                        )
+                    )
+                }
+                .onFailure {
+                    emit(DataState.Error(error = Errors.UseCase.FAILED_TO_LOAD_APPS))
+                }
+        }.onFailure { throwable ->
+            val error = when (throwable) {
+                is SocketTimeoutException -> Errors.Network.REQUEST_TIMEOUT
+                is IOException -> Errors.Network.NO_INTERNET
+                is ClientRequestException ->
+                    if (throwable.response.status == HttpStatusCode.RequestTimeout) {
+                        Errors.Network.REQUEST_TIMEOUT
+                    } else {
+                        Errors.UseCase.FAILED_TO_LOAD_APPS
+                    }
+
+                else -> Errors.UseCase.FAILED_TO_LOAD_APPS
+            }
+            emit(DataState.Error(error = error))
+        }
     }
 }
 
