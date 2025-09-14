@@ -56,7 +56,14 @@ val appModule : Module = module {
 
     viewModel { MainViewModel(navigationRepository = get()) }
 
-    single<DeveloperAppsRepository> { DeveloperAppsRepositoryImpl(client = get()) }
+    single<String>(qualifier = named(name = "developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL }
+
+    single<DeveloperAppsRepository> {
+        DeveloperAppsRepositoryImpl(
+            client = get(),
+            baseUrl = get(qualifier = named(name = "developer_apps_base_url")),
+        )
+    }
     single { FetchDeveloperAppsUseCase(repository = get()) }
     viewModel {
         AppsListViewModel(

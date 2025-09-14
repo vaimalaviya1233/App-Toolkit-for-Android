@@ -1,12 +1,9 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.data.repository
 
-import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.ApiResponse
 import com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api.toDomain
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.repository.DeveloperAppsRepository
-import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiConstants
-import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiEnvironments
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.api.ApiPaths
 import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
@@ -23,13 +20,11 @@ import java.net.SocketTimeoutException
 
 class DeveloperAppsRepositoryImpl(
     private val client: HttpClient,
+    private val baseUrl: String,
 ) : DeveloperAppsRepository {
 
     override fun fetchDeveloperApps(): Flow<DataState<List<AppInfo>, Errors>> = flow {
-        val url = BuildConfig.DEBUG.let { isDebug ->
-            val environment = if (isDebug) ApiEnvironments.ENV_DEBUG else ApiEnvironments.ENV_RELEASE
-            "${ApiConstants.BASE_REPOSITORY_URL}/$environment${ApiPaths.DEVELOPER_APPS_API}"
-        }
+        val url = "$baseUrl${ApiPaths.DEVELOPER_APPS_API}"
         runCatching {
             client.get(url)
         }.onSuccess { httpResponse ->

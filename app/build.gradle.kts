@@ -87,6 +87,8 @@ android {
         }
     }
 
+    val developerAppsBaseUrl = "https://raw.githubusercontent.com/MihaiCristianCondrea/com.d4rk.apis/refs/heads/main/App%20Toolkit"
+
     buildTypes {
         release {
             val signingFile = rootProject.file("signing.properties")
@@ -96,9 +98,19 @@ android {
                 null
             }
             isDebuggable = false
+            buildConfigField(
+                "String",
+                "DEVELOPER_APPS_BASE_URL",
+                "\"$developerAppsBaseUrl/release\"",
+            )
         }
         debug {
             isDebuggable = true
+            buildConfigField(
+                "String",
+                "DEVELOPER_APPS_BASE_URL",
+                "\"$developerAppsBaseUrl/debug\"",
+            )
         }
     }
 
