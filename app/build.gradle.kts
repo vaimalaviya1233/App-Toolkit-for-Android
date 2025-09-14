@@ -88,7 +88,8 @@ android {
         }
     }
 
-    val developerAppsBaseUrl = "https://raw.githubusercontent.com/MihaiCristianCondrea/com.d4rk.apis/refs/heads/main/App%20Toolkit"
+    val developerAppsBaseUrl =
+        "https://raw.githubusercontent.com/MihaiCristianCondrea/com.d4rk.apis/refs/heads/main/App%20Toolkit"
 
     buildTypes {
         release {
