@@ -14,6 +14,13 @@ import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+/**
+ * Helper responsible for applying user consent preferences to Firebase services.
+ *
+ * It reads persisted flags from [CommonDataStore] and propagates them to
+ * Analytics, Crashlytics and Performance so data collection respects the
+ * user's choices.
+ */
 object ConsentManagerHelper : KoinComponent {
 
     private val configProvider: BuildInfoProvider by inject()
@@ -99,6 +106,11 @@ object ConsentManagerHelper : KoinComponent {
         updateAnalyticsCollectionFromDatastore(dataStore = dataStore)
     }
 
+    /**
+     * Applies the persisted "Usage and Diagnostics" preference to Firebase SDKs.
+     *
+     * @param dataStore source of the user's consent setting
+     */
     suspend fun updateAnalyticsCollectionFromDatastore(dataStore: CommonDataStore) {
         val usageAndDiagnosticsGranted: Boolean = dataStore.usageAndDiagnostics(default = defaultAnalyticsGranted).first()
         Firebase.analytics.setAnalyticsCollectionEnabled(usageAndDiagnosticsGranted)
