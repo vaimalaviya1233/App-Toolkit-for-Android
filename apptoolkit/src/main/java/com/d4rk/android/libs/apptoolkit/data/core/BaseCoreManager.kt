@@ -22,6 +22,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.inject
 
+/**
+ * Base application class providing common initialization for the toolkit.
+ *
+ * It installs Firebase App Check, registers activity lifecycle callbacks and
+ * launches asynchronous initialization work inside an application wide
+ * coroutine scope. Subclasses can override [onInitializeApp] to perform
+ * additional setup before the app is marked as ready via [isAppLoaded].
+ */
 open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
 
     protected val billingRepository: BillingRepository by inject()
@@ -29,10 +37,17 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     private val applicationScope = CoroutineScope(SupervisorJob() + dispatchers.io)
 
     companion object {
+        /** Flag indicating whether the application finished its startup work. */
         var isAppLoaded : Boolean = false
             private set
     }
 
+    /**
+     * Initializes Firebase and kicks off asynchronous app initialization.
+     *
+     * Subclasses should avoid heavy work here and instead override
+     * [onInitializeApp] which runs on a background coroutine.
+     */
     override fun onCreate() {
         super.onCreate()
         Firebase.initialize(context = this)
@@ -45,6 +60,10 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
         }
     }
 
+    /**
+     * Executes [onInitializeApp] inside a supervisor scope and marks the
+     * application as loaded once completed.
+     */
     private suspend fun initializeApp() = supervisorScope {
         val appComponentsInitialization: Deferred<Unit> = async { onInitializeApp() }
 
@@ -53,8 +72,14 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
         finalizeInitialization()
     }
 
+    /**
+     * Hook for subclasses to perform additional initialization work.
+     *
+     * Runs on a background coroutine context provided by [dispatchers].
+     */
     protected open suspend fun onInitializeApp() {}
 
+    /** Marks the application as fully initialized. */
     private fun finalizeInitialization() {
         isAppLoaded = true
     }
@@ -67,6 +92,9 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     override fun onActivitySaveInstanceState(activity : Activity , outState : Bundle) {}
     override fun onActivityDestroyed(activity : Activity) {}
 
+    /**
+     * Cleans up resources when the process is terminating.
+     */
     override fun onTerminate() {
         super.onTerminate()
         billingRepository.close()
