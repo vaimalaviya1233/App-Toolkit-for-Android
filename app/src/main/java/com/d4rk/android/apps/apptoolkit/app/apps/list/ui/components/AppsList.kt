@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.d4rk.android.apps.apptoolkit.BuildConfig
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
@@ -37,6 +38,7 @@ fun AppsList(
     onFavoriteToggle: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
     onShareClick: (AppInfo) -> Unit,
+    adFrequency: Int = BuildConfig.APPS_LIST_AD_FREQUENCY,
 ) {
     val apps: List<AppInfo> = uiHomeScreen.apps
     val context = LocalContext.current
@@ -47,8 +49,7 @@ fun AppsList(
         derivedStateOf { if (isTabletOrLandscape) 4 else 2 }
     }
     val listState = rememberLazyGridState()
-    val adFrequency = 4
-    val items by remember(apps, adsEnabled) {
+    val items by remember(apps, adsEnabled, adFrequency) {
         derivedStateOf { buildAppListItems(apps, adsEnabled, adFrequency) }
     }
     val adsConfig: AdsConfig = koinInject(qualifier = named("apps_list_banner_ad"))
@@ -167,7 +168,7 @@ private fun AdListItem(
     )
 }
 
-private fun buildAppListItems(
+internal fun buildAppListItems(
     apps: List<AppInfo>,
     adsEnabled: Boolean,
     adFrequency: Int
