@@ -48,6 +48,6 @@ val adsModule : Module = module {
     }
 
     single<AdsConfig>(named(name = "support_banner_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID , adSize = AdSize.LARGE_BANNER)
+        AdsConfig(bannerAdUnitId = AdsConstants.SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
     }
 }
