@@ -65,6 +65,7 @@ android {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
+        buildConfigField("int", "APPS_LIST_AD_FREQUENCY", "4")
     }
 
     signingConfigs {
