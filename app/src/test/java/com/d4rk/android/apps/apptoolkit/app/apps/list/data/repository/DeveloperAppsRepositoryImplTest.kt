@@ -37,7 +37,7 @@ class DeveloperAppsRepositoryImplTest {
         }) {
             install(ContentNegotiation) { json() }
         }
-        val repository = DeveloperAppsRepositoryImpl(client)
+        val repository = DeveloperAppsRepositoryImpl(client, "https://example.com")
 
         val result = repository.fetchDeveloperApps().first()
         val success = result as DataState.Success
@@ -55,7 +55,7 @@ class DeveloperAppsRepositoryImplTest {
         }) {
             install(ContentNegotiation) { json() }
         }
-        val repository = DeveloperAppsRepositoryImpl(client)
+        val repository = DeveloperAppsRepositoryImpl(client, "https://example.com")
 
         val result = repository.fetchDeveloperApps().first()
         val error = result as DataState.Error
@@ -80,7 +80,7 @@ class DeveloperAppsRepositoryImplTest {
         }) {
             install(ContentNegotiation) { json() }
         }
-        val repository = DeveloperAppsRepositoryImpl(client)
+        val repository = DeveloperAppsRepositoryImpl(client, "https://example.com")
 
         val result = repository.fetchDeveloperApps().first() as DataState.Success
         assertEquals(listOf("Alpha", "beta", "zeta"), result.data.map(AppInfo::name))
@@ -97,7 +97,7 @@ class DeveloperAppsRepositoryImplTest {
         }) {
             install(ContentNegotiation) { json() }
         }
-        val repository = DeveloperAppsRepositoryImpl(client)
+        val repository = DeveloperAppsRepositoryImpl(client, "https://example.com")
 
         val result = repository.fetchDeveloperApps().first()
         val error = result as DataState.Error
