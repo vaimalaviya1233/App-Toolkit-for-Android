@@ -164,6 +164,7 @@ dependencies {
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testImplementation(dependencyNotation = libs.robolectric)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
 
     // Instrumentation Tests
