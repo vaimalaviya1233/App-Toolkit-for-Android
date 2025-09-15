@@ -164,7 +164,9 @@ dependencies {
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testImplementation(dependencyNotation = libs.androidx.navigation.testing)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
+    testRuntimeOnly(dependencyNotation = libs.junit.vintage.engine)
 
     // Instrumentation Tests
     androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
