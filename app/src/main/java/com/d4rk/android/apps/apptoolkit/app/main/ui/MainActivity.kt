@@ -1,6 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.app.main.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -28,6 +29,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
@@ -57,10 +59,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeDependencies() {
         lifecycleScope.launch {
-            coroutineScope {
-                val adsInitialization = async(dispatchers.default) { MobileAds.initialize(this@MainActivity) {} }
+            supervisorScope {
+                val adsInitialization = async(dispatchers.default) {
+                    try {
+                        MobileAds.initialize(this@MainActivity) {}
+                    } catch (error: Throwable) {
+                        Log.w(TAG, "Failed to initialize MobileAds", error)
+                    }
+                }
                 val consentInitialization = async(dispatchers.io) {
-                    ConsentManagerHelper.applyInitialConsent(dataStore)
+                    try {
+                        ConsentManagerHelper.applyInitialConsent(dataStore)
+                    } catch (error: Throwable) {
+                        Log.w(TAG, "Failed to apply initial consent", error)
+                    }
                 }
                 awaitAll(adsInitialization, consentInitialization)
             }
@@ -69,11 +81,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleStartup() {
         lifecycleScope.launch {
-            val isFirstLaunch: Boolean = withContext(dispatchers.io) {
-                dataStore.startup.first()
+            val startupResult = runCatching {
+                withContext(dispatchers.io) {
+                    dataStore.startup.first()
+                }
             }
             keepSplashVisible = false
-            if (isFirstLaunch) {
+            startupResult.exceptionOrNull()?.let { error ->
+                Log.w(TAG, "Failed to read startup flag", error)
+            }
+            val isFirstLaunch = startupResult.getOrNull()
+            if (isFirstLaunch == true) {
                 startStartupActivity()
             } else {
                 setMainActivityContent()
@@ -138,3 +156,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+private const val TAG: String = "MainActivity"
