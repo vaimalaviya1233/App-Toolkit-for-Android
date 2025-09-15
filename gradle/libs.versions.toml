@@ -41,6 +41,8 @@ testTurbine = "1.2.1"
 truth = "1.7.0"
 testManifestTestJunit4Android = "1.9.1"
 slf4j = "2.0.17"
+robolectric = "4.9.2"
+junit4 = "4.13.2"
 
 [libraries]
 # AndroidX & Material
@@ -120,6 +122,8 @@ test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-te
 test-turbine = { module = "app.cash.turbine:turbine", version.ref = "testTurbine" }
 androidx-truth = { module = "androidx.test.ext:truth", version.ref = "truth" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+junit4 = { module = "junit:junit", version.ref = "junit4" }
 
 # Instrumentation Tests (androidTest folder)
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
