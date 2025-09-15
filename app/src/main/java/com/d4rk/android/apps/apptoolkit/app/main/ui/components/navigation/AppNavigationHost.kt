@@ -1,6 +1,7 @@
 package com.d4rk.android.apps.apptoolkit.app.main.ui.components.navigation
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.SnackbarHostState
@@ -20,6 +21,8 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivit
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -30,7 +33,7 @@ fun AppNavigationHost(
     paddingValues: PaddingValues
 ) {
     val dataStore : DataStore = koinInject()
-    val startupRoute by dataStore.getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
+    val startupRoute by dataStore.startupDestinationFlow().collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(
         navController = navController , startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
@@ -43,6 +46,12 @@ fun AppNavigationHost(
         }
     }
 }
+
+@VisibleForTesting
+internal fun DataStore.startupDestinationFlow(): Flow<String> =
+    getStartupPage(default = NavigationRoutes.ROUTE_APPS_LIST).map { route ->
+        route.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
+    }
 
 fun handleNavigationItemClick(
     context: Context,
