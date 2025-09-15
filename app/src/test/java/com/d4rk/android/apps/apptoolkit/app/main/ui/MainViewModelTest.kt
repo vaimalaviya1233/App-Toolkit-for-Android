@@ -2,80 +2,90 @@ package com.d4rk.android.apps.apptoolkit.app.main.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import app.cash.turbine.test
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.RegisterExtension
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
 
-    private class FakeMainRepository : NavigationRepository {
-        val itemsFlow = MutableSharedFlow<List<NavigationDrawerItem>>(replay = 1)
-        private val errorFlow = MutableSharedFlow<Throwable>(replay = 1)
+    companion object {
+        @JvmField
+        @RegisterExtension
+        val dispatcherExtension = StandardDispatcherExtension()
+    }
 
-        override fun getNavigationDrawerItems(): Flow<List<NavigationDrawerItem>> =
-            merge(
-                itemsFlow,
-                errorFlow.flatMapConcat { throwable -> flow { throw throwable } }
+    @AfterEach
+    fun tearDown() {
+        clearAllMocks()
+    }
+
+    @Test
+    fun `initialization triggers navigation load`() = runTest(dispatcherExtension.testDispatcher) {
+        val navigationRepository = mockk<NavigationRepository>()
+        every { navigationRepository.getNavigationDrawerItems() } returns emptyFlow()
+
+        MainViewModel(navigationRepository)
+
+        runCurrent()
+
+        verify(exactly = 1) { navigationRepository.getNavigationDrawerItems() }
+    }
+
+    @Test
+    fun `successful navigation load populates drawer items`() = runTest(dispatcherExtension.testDispatcher) {
+        val navigationRepository = mockk<NavigationRepository>()
+        val expectedItems = listOf(
+            NavigationDrawerItem(
+                title = 1,
+                selectedIcon = createIcon(),
+                route = "route"
             )
+        )
+        every { navigationRepository.getNavigationDrawerItems() } returns flowOf(expectedItems)
 
-        suspend fun emitItems(items: List<NavigationDrawerItem>) {
-            itemsFlow.emit(items)
-        }
+        val viewModel = MainViewModel(navigationRepository)
 
-        suspend fun emitError(throwable: Throwable) {
-            errorFlow.emit(throwable)
-        }
+        runCurrent()
+
+        assertEquals(expectedItems, viewModel.uiState.value.data?.navigationDrawerItems)
     }
 
     @Test
-    fun `emitting items updates navigation drawer items`() = runTest {
-        val repository = FakeMainRepository()
-        val viewModel = MainViewModel(repository)
-        advanceUntilIdle()
-        val icon = ImageVector.Builder(
-            name = "test",
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
-            viewportWidth = 24f,
-            viewportHeight = 24f
-        ).build()
-        val items = listOf(NavigationDrawerItem(title = 1, selectedIcon = icon, route = "route"))
+    fun `navigation load error shows snackbar`() = runTest(dispatcherExtension.testDispatcher) {
+        val navigationRepository = mockk<NavigationRepository>()
+        val error = IllegalStateException("boom")
+        every { navigationRepository.getNavigationDrawerItems() } returns flow { throw error }
 
-        viewModel.uiState.test {
-            awaitItem() // initial state
-            repository.emitItems(items)
-            val updated = awaitItem()
-            assertEquals(items, updated.data?.navigationDrawerItems)
-            cancelAndIgnoreRemainingEvents()
-        }
+        val viewModel = MainViewModel(navigationRepository)
+
+        runCurrent()
+
+        val state = viewModel.uiState.value.data
+        assertTrue(state?.showSnackbar == true)
+        assertEquals("boom", state?.snackbarMessage)
     }
 
-    @Test
-    fun `emitting error shows snackbar`() = runTest {
-        val repository = FakeMainRepository()
-        val viewModel = MainViewModel(repository)
-        advanceUntilIdle()
-        val error = RuntimeException("boom")
-
-        viewModel.uiState.test {
-            awaitItem() // initial state
-            repository.emitError(error)
-            val updated = awaitItem()
-            assertEquals(true, updated.data?.showSnackbar)
-            assertEquals("boom", updated.data?.snackbarMessage)
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    private fun createIcon(): ImageVector = ImageVector.Builder(
+        name = "navigation_icon",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).build()
 }
-
