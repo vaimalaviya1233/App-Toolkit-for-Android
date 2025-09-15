@@ -165,6 +165,8 @@ dependencies {
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
+    testImplementation(dependencyNotation = libs.robolectric)
+    testImplementation(dependencyNotation = libs.junit4)
 
     // Instrumentation Tests
     androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
