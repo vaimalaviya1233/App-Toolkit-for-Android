@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.flowOn
  * Use case that combines the list of developer apps with the current set of
  * favorites and emits only those apps that are marked as favorite.
  */
-class ObserveFavoriteAppsUseCase(
+open class ObserveFavoriteAppsUseCase(
     private val fetchDeveloperAppsUseCase: FetchDeveloperAppsUseCase,
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val dispatchers: DispatcherProvider,
 ) {
-    suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
+    open suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
         return combine(
             fetchDeveloperAppsUseCase().flowOn(dispatchers.io),
             observeFavoritesUseCase()
