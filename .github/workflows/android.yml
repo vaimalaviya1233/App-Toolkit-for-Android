@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
 
@@ -26,5 +22,30 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
       - name: Build with Gradle
-        run: ./gradlew :app:testDebugUnitTest :app:testReleaseUnitTest :apptoolkit:testDebugUnitTest :apptoolkit:testReleaseUnitTest :app:test :apptoolkit:test
+        run: ./gradlew build
+
+      - name: Run tests with Gradle
+        run: ./gradlew testDebugUnitTest
+
+      - name: Run app debug unit tests
+        run: ./gradlew :app:testDebugUnitTest
+
+      - name: Run app release unit tests
+        run: ./gradlew :app:testReleaseUnitTest
+
+      - name: Run apptoolkit debug unit tests
+        run: ./gradlew :apptoolkit:testDebugUnitTest
+
+      - name: Run apptoolkit release unit tests
+        run: ./gradlew :apptoolkit:testReleaseUnitTest
+
+      - name: Run app test task
+        run: ./gradlew :app:test
+
+      - name: Run apptoolkit test task
+        run: ./gradlew :apptoolkit:test
+
+      - name: Run Gradle test task
+        run: ./gradlew test
