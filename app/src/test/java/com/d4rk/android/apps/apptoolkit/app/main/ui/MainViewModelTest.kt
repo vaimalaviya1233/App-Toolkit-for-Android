@@ -3,6 +3,7 @@ package com.d4rk.android.apps.apptoolkit.app.main.ui
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.StandardDispatcherExtension
+import com.d4rk.android.apps.apptoolkit.app.main.domain.model.ui.UiMainScreen
 import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
 import io.mockk.clearAllMocks
@@ -13,13 +14,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
@@ -42,7 +42,7 @@ class MainViewModelTest {
 
         MainViewModel(navigationRepository)
 
-        runCurrent()
+        advanceUntilIdle()
 
         verify(exactly = 1) { navigationRepository.getNavigationDrawerItems() }
     }
@@ -61,9 +61,12 @@ class MainViewModelTest {
 
         val viewModel = MainViewModel(navigationRepository)
 
-        runCurrent()
+        advanceUntilIdle()
 
-        assertEquals(expectedItems, viewModel.uiState.value.data?.navigationDrawerItems)
+        assertEquals(
+            UiMainScreen(navigationDrawerItems = expectedItems),
+            viewModel.uiState.value.data
+        )
     }
 
     @Test
@@ -74,11 +77,12 @@ class MainViewModelTest {
 
         val viewModel = MainViewModel(navigationRepository)
 
-        runCurrent()
+        advanceUntilIdle()
 
-        val state = viewModel.uiState.value.data
-        assertTrue(state?.showSnackbar == true)
-        assertEquals("boom", state?.snackbarMessage)
+        assertEquals(
+            UiMainScreen(showSnackbar = true, snackbarMessage = "boom"),
+            viewModel.uiState.value.data
+        )
     }
 
     private fun createIcon(): ImageVector = ImageVector.Builder(
