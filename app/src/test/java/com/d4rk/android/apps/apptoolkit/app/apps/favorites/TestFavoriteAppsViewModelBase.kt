@@ -8,6 +8,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.ui.FavoriteAppsViewMo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.FakeDeveloperAppsRepository
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
+import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -24,10 +25,11 @@ open class TestFavoriteAppsViewModelBase {
         initialFavorites: Set<String> = emptySet(),
         favoritesFlow: Flow<Set<String>>? = null,
         toggleError: Throwable? = null,
+        fetchError: Errors? = null,
         dispatchers: DispatcherProvider = TestDispatchers(),
     ) {
         println("\uD83E\uDDEA [SETUP] Initial favorites: $initialFavorites")
-        val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps)
+        val developerAppsRepository = FakeDeveloperAppsRepository(fetchApps, fetchError)
         val fetchUseCase = FetchDeveloperAppsUseCase(developerAppsRepository)
         val favoritesRepository = FakeFavoritesRepository(initialFavorites, favoritesFlow, toggleError)
         val observeFavoritesUseCase = ObserveFavoritesUseCase(favoritesRepository)
