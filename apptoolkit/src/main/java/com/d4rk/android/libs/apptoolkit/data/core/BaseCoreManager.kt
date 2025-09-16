@@ -80,7 +80,7 @@ open class BaseCoreManager : MultiDexApplication(), Application.ActivityLifecycl
     protected open suspend fun onInitializeApp() {}
 
     /** Marks the application as fully initialized. */
-    private fun finalizeInitialization() {
+    protected open fun finalizeInitialization() {
         isAppLoaded = true
     }
 
