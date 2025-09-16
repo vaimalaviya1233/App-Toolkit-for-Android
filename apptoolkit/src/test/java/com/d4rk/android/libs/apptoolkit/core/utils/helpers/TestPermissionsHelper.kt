@@ -12,144 +12,161 @@ import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlin.test.assertFailsWith
 
 class TestPermissionsHelper {
 
     @Test
-    fun `hasNotificationPermission parses permission state`() {
-        println("🚀 [TEST] hasNotificationPermission parses permission state")
+    fun `hasNotificationPermission returns true for API 32 and below`() {
         val context = mockk<Context>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returns PackageManager.PERMISSION_GRANTED
+
+        mockkStatic(Build.VERSION::class)
+        mockkStatic(ContextCompat::class)
+
+        try {
+            every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.S_V2
+
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returns PackageManager.PERMISSION_DENIED
-            assertFalse(PermissionsHelper.hasNotificationPermission(context))
-        } else {
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+
+            verify(exactly = 0) {
+                ContextCompat.checkSelfPermission(any(), any())
+            }
+        } finally {
+            unmockkStatic(ContextCompat::class)
+            unmockkStatic(Build.VERSION::class)
         }
-        println("🏁 [TEST DONE] hasNotificationPermission parses permission state")
     }
 
     @Test
-    fun `requestNotificationPermission delegates to ActivityCompat when needed`() {
-        println("🚀 [TEST] requestNotificationPermission delegates to ActivityCompat when needed")
-        val activity = mockk<Activity>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) } returns PackageManager.PERMISSION_DENIED
-            mockkStatic(ActivityCompat::class)
-            justRun { ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.POST_NOTIFICATIONS), PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION) }
-            PermissionsHelper.requestNotificationPermission(activity)
-            verify { ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.POST_NOTIFICATIONS), PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION) }
-        } else {
-            mockkStatic(ActivityCompat::class)
-            PermissionsHelper.requestNotificationPermission(activity)
-            verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
-        }
-        println("🏁 [TEST DONE] requestNotificationPermission delegates to ActivityCompat when needed")
-    }
-
-    @Test
-    fun `hasNotificationPermission handles unexpected value`() {
-        println("🚀 [TEST] hasNotificationPermission handles unexpected value")
+    fun `hasNotificationPermission reflects granted state on API 33`() {
         val context = mockk<Context>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returns 123
-            assertFalse(PermissionsHelper.hasNotificationPermission(context))
-        } else {
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
-        }
-        println("🏁 [TEST DONE] hasNotificationPermission handles unexpected value")
-    }
 
-    @Test
-    fun `hasNotificationPermission propagates exception`() {
-        println("🚀 [TEST] hasNotificationPermission propagates exception")
-        val context = mockk<Context>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } throws RuntimeException("fail")
-            assertFailsWith<RuntimeException> { PermissionsHelper.hasNotificationPermission(context) }
-        } else {
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
-        }
-        println("🏁 [TEST DONE] hasNotificationPermission propagates exception")
-    }
+        mockkStatic(Build.VERSION::class)
+        mockkStatic(ContextCompat::class)
 
-    @Test
-    fun `requestNotificationPermission propagates exception`() {
-        println("🚀 [TEST] requestNotificationPermission propagates exception")
-        val activity = mockk<Activity>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) } returns PackageManager.PERMISSION_DENIED
-            mockkStatic(ActivityCompat::class)
-            every { ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.POST_NOTIFICATIONS), PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION) } throws RuntimeException("boom")
-            assertFailsWith<RuntimeException> { PermissionsHelper.requestNotificationPermission(activity) }
-        } else {
-            mockkStatic(ActivityCompat::class)
-            PermissionsHelper.requestNotificationPermission(activity)
-            verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
-        }
-        println("🏁 [TEST DONE] requestNotificationPermission propagates exception")
-    }
-
-    @Test
-    fun `hasNotificationPermission handles other unknown values`() {
-        println("🚀 [TEST] hasNotificationPermission handles other unknown values")
-        val context = mockk<Context>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returnsMany listOf(1, -2)
-            assertFalse(PermissionsHelper.hasNotificationPermission(context))
-            assertFalse(PermissionsHelper.hasNotificationPermission(context))
-        } else {
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
-        }
-        println("🏁 [TEST DONE] hasNotificationPermission handles other unknown values")
-    }
-
-    @Test
-    fun `requestNotificationPermission skips when already granted`() {
-        println("🚀 [TEST] requestNotificationPermission skips when already granted")
-        val activity = mockk<Activity>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) } returns PackageManager.PERMISSION_GRANTED
-            mockkStatic(ActivityCompat::class)
-            PermissionsHelper.requestNotificationPermission(activity)
-            verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
-        } else {
-            mockkStatic(ActivityCompat::class)
-            PermissionsHelper.requestNotificationPermission(activity)
-            verify(exactly = 0) { ActivityCompat.requestPermissions(any(), any(), any()) }
-        }
-        println("🏁 [TEST DONE] requestNotificationPermission skips when already granted")
-    }
-
-    @Test
-    fun `hasNotificationPermission reflects runtime revocation`() {
-        println("🚀 [TEST] hasNotificationPermission reflects runtime revocation")
-        val context = mockk<Context>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            mockkStatic(ContextCompat::class)
-            every { ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) } returnsMany listOf(
+        try {
+            every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.TIRAMISU
+            every {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            } returnsMany listOf(
                 PackageManager.PERMISSION_GRANTED,
                 PackageManager.PERMISSION_DENIED
             )
+
             assertTrue(PermissionsHelper.hasNotificationPermission(context))
             assertFalse(PermissionsHelper.hasNotificationPermission(context))
-        } else {
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
-            assertTrue(PermissionsHelper.hasNotificationPermission(context))
+
+            verify(exactly = 2) {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
+        } finally {
+            unmockkStatic(ContextCompat::class)
+            unmockkStatic(Build.VERSION::class)
         }
-        println("🏁 [TEST DONE] hasNotificationPermission reflects runtime revocation")
+    }
+
+    @Test
+    fun `requestNotificationPermission requests on API 33 when missing`() {
+        val activity = mockk<Activity>()
+
+        mockkStatic(Build.VERSION::class)
+        mockkStatic(ContextCompat::class)
+        mockkStatic(ActivityCompat::class)
+
+        try {
+            every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.TIRAMISU
+            every {
+                ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            } returns PackageManager.PERMISSION_DENIED
+            justRun {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION
+                )
+            }
+
+            PermissionsHelper.requestNotificationPermission(activity)
+
+            verify(exactly = 1) {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    PermissionsConstants.REQUEST_CODE_NOTIFICATION_PERMISSION
+                )
+            }
+        } finally {
+            unmockkStatic(ActivityCompat::class)
+            unmockkStatic(ContextCompat::class)
+            unmockkStatic(Build.VERSION::class)
+        }
+    }
+
+    @Test
+    fun `requestNotificationPermission skips when already granted on API 33`() {
+        val activity = mockk<Activity>()
+
+        mockkStatic(Build.VERSION::class)
+        mockkStatic(ContextCompat::class)
+        mockkStatic(ActivityCompat::class)
+
+        try {
+            every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.TIRAMISU
+            every {
+                ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            } returns PackageManager.PERMISSION_GRANTED
+
+            PermissionsHelper.requestNotificationPermission(activity)
+
+            verify(exactly = 0) {
+                ActivityCompat.requestPermissions(any(), any(), any())
+            }
+        } finally {
+            unmockkStatic(ActivityCompat::class)
+            unmockkStatic(ContextCompat::class)
+            unmockkStatic(Build.VERSION::class)
+        }
+    }
+
+    @Test
+    fun `requestNotificationPermission ignores API 32 and below`() {
+        val activity = mockk<Activity>()
+
+        mockkStatic(Build.VERSION::class)
+        mockkStatic(ContextCompat::class)
+        mockkStatic(ActivityCompat::class)
+
+        try {
+            every { Build.VERSION.SDK_INT } returns Build.VERSION_CODES.S_V2
+
+            PermissionsHelper.requestNotificationPermission(activity)
+
+            verify(exactly = 0) {
+                ContextCompat.checkSelfPermission(any(), any())
+            }
+            verify(exactly = 0) {
+                ActivityCompat.requestPermissions(any(), any(), any())
+            }
+        } finally {
+            unmockkStatic(ActivityCompat::class)
+            unmockkStatic(ContextCompat::class)
+            unmockkStatic(Build.VERSION::class)
+        }
     }
 }
