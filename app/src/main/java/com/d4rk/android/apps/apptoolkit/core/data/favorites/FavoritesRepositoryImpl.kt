@@ -1,8 +1,6 @@
 package com.d4rk.android.apps.apptoolkit.core.data.favorites
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.repository.FavoritesRepository
 import com.d4rk.android.apps.apptoolkit.core.broadcast.FavoritesChangedReceiver
@@ -22,10 +20,7 @@ class FavoritesRepositoryImpl(
     override suspend fun toggleFavorite(packageName: String) {
         withContext(dispatchers.io) {
             dataStore.toggleFavoriteApp(packageName)
-            val intent = Intent(FavoritesChangedReceiver.ACTION_FAVORITES_CHANGED).apply {
-                component = ComponentName(context, FavoritesChangedReceiver::class.java)
-                putExtra(FavoritesChangedReceiver.EXTRA_PACKAGE_NAME, packageName)
-            }
+            val intent = FavoritesChangedReceiver.createIntentWithPackage(context, packageName)
             runCatching {
                 context.sendBroadcast(intent)
             }.onFailure { e ->
