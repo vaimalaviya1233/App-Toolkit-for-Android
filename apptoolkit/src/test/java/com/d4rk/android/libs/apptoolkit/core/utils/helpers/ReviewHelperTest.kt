@@ -24,7 +24,33 @@ class ReviewHelperTest {
     }
 
     @Test
-    fun `no coroutine launched when sessionCount less than 3`() = runTest {
+    fun `launchInAppReviewIfEligible launches review when eligible`() = runTest {
+        val activity = mockk<Activity>()
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(activity) } returns true
+        every {
+            ReviewHelper.launchInAppReviewIfEligible(
+                any(), any(), any(), any(), any()
+            )
+        } answers { callOriginal() }
+        var reviewLaunched = false
+
+        ReviewHelper.launchInAppReviewIfEligible(
+            activity = activity,
+            sessionCount = 3,
+            hasPromptedBefore = false,
+            scope = this,
+            onReviewLaunched = { reviewLaunched = true },
+        )
+        runCurrent()
+
+        assertTrue(reviewLaunched)
+        coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
+    }
+
+    @Test
+    fun `launchInAppReviewIfEligible does nothing when session count below threshold`() = runTest {
+        val activity = mockk<Activity>()
         mockkObject(ReviewHelper)
         coEvery { ReviewHelper.launchReview(any()) } returns true
         every {
@@ -34,7 +60,7 @@ class ReviewHelperTest {
         } answers { callOriginal() }
 
         ReviewHelper.launchInAppReviewIfEligible(
-            activity = mockk(),
+            activity = activity,
             sessionCount = 2,
             hasPromptedBefore = false,
             scope = this,
@@ -45,7 +71,8 @@ class ReviewHelperTest {
     }
 
     @Test
-    fun `no coroutine launched when hasPromptedBefore true`() = runTest {
+    fun `launchInAppReviewIfEligible does nothing when user has been prompted`() = runTest {
+        val activity = mockk<Activity>()
         mockkObject(ReviewHelper)
         coEvery { ReviewHelper.launchReview(any()) } returns true
         every {
@@ -55,7 +82,7 @@ class ReviewHelperTest {
         } answers { callOriginal() }
 
         ReviewHelper.launchInAppReviewIfEligible(
-            activity = mockk(),
+            activity = activity,
             sessionCount = 3,
             hasPromptedBefore = true,
             scope = this,
@@ -66,10 +93,8 @@ class ReviewHelperTest {
     }
 
     @Test
-    fun `onReviewLaunched not invoked when launchReview returns false`() = runTest {
+    fun `launchInAppReviewIfEligible does not invoke callback when launchReview fails`() = runTest {
         val activity = mockk<Activity>()
-        val context = mockk<Context>()
-        every { activity.applicationContext } returns context
         mockkObject(ReviewHelper)
         coEvery { ReviewHelper.launchReview(activity) } returns false
         every {
@@ -77,18 +102,33 @@ class ReviewHelperTest {
                 any(), any(), any(), any(), any()
             )
         } answers { callOriginal() }
-        var launched = false
+        var reviewLaunched = false
 
         ReviewHelper.launchInAppReviewIfEligible(
             activity = activity,
             sessionCount = 3,
             hasPromptedBefore = false,
             scope = this,
-            onReviewLaunched = { launched = true }
+            onReviewLaunched = { reviewLaunched = true },
         )
         runCurrent()
 
-        assertFalse(launched)
+        assertFalse(reviewLaunched)
+        coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
+    }
+
+    @Test
+    fun `forceLaunchInAppReview always attempts to show the review`() = runTest {
+        val activity = mockk<Activity>()
+        mockkObject(ReviewHelper)
+        coEvery { ReviewHelper.launchReview(activity) } returns false
+        every { ReviewHelper.forceLaunchInAppReview(any(), any()) } answers { callOriginal() }
+
+        ReviewHelper.forceLaunchInAppReview(
+            activity = activity,
+            scope = this,
+        )
+
         coVerify(exactly = 1) { ReviewHelper.launchReview(activity) }
     }
 
@@ -107,6 +147,8 @@ class ReviewHelperTest {
         val result = ReviewHelper.launchReview(activity)
 
         assertTrue(result)
+        verify(exactly = 1) { reviewManager.requestReviewFlow() }
+        verify(exactly = 1) { reviewManager.launchReviewFlow(activity, reviewInfo) }
     }
 
     @Test
@@ -122,6 +164,8 @@ class ReviewHelperTest {
         val result = ReviewHelper.launchReview(activity)
 
         assertFalse(result)
+        verify(exactly = 1) { reviewManager.requestReviewFlow() }
+        verify(exactly = 0) { reviewManager.launchReviewFlow(any(), any()) }
     }
 
     @Test
@@ -139,5 +183,7 @@ class ReviewHelperTest {
         val result = ReviewHelper.launchReview(activity)
 
         assertFalse(result)
+        verify(exactly = 1) { reviewManager.requestReviewFlow() }
+        verify(exactly = 1) { reviewManager.launchReviewFlow(activity, reviewInfo) }
     }
 }

@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 import android.app.Activity
 import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -42,7 +43,7 @@ object ReviewHelper {
      * Useful for debugging or providing a manual trigger within the app.
      */
     fun forceLaunchInAppReview(activity : Activity , scope : CoroutineScope) {
-        scope.launch {
+        scope.launch(start = CoroutineStart.UNDISPATCHED) {
             launchReview(activity)
         }
     }
