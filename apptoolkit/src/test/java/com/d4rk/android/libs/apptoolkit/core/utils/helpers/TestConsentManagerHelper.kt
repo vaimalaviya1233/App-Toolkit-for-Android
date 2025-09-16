@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -277,19 +278,22 @@ class TestConsentManagerHelper {
     }
 
     @Test
-    fun `defaultAnalyticsGranted false when debug build`() {
-        println("🚀 [TEST] defaultAnalyticsGranted false when debug build")
+    fun `defaultAnalyticsGranted matches inverse of debug mode`() {
+        println("🚀 [TEST] defaultAnalyticsGranted matches inverse of debug mode")
         val provider = mockk<BuildInfoProvider>()
-        every { provider.isDebugBuild } returns true
+        every { provider.isDebugBuild } returnsMany listOf(true, false)
         startKoin { modules(module { single<BuildInfoProvider> { provider } }) }
 
         val field = ConsentManagerHelper::class.java.getDeclaredField("defaultAnalyticsGranted\$delegate")
         field.isAccessible = true
-        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
 
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
         assertFalse(ConsentManagerHelper.defaultAnalyticsGranted)
 
+        field.set(ConsentManagerHelper, lazy { !provider.isDebugBuild })
+        assertTrue(ConsentManagerHelper.defaultAnalyticsGranted)
+
         stopKoin()
-        println("🏁 [TEST DONE] defaultAnalyticsGranted false when debug build")
+        println("🏁 [TEST DONE] defaultAnalyticsGranted matches inverse of debug mode")
     }
 }
