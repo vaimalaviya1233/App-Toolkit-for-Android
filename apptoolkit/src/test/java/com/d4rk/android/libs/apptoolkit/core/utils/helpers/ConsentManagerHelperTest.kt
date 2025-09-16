@@ -6,13 +6,16 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
+import io.mockk.capture
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.coVerifyOrder
 import io.mockk.every
+import io.mockk.firstArg
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifyOrder
@@ -94,45 +97,43 @@ class ConsentManagerHelperTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `applyInitialConsent pulls flags then delegates to updateConsent and updateAnalyticsCollection`() = runTest {
-        val dataStore = mockk<CommonDataStore>()
-        val defaultValue = true
-        every { dataStore.analyticsConsent(defaultValue) } returns flowOf(true)
-        every { dataStore.adStorageConsent(defaultValue) } returns flowOf(false)
-        every { dataStore.adUserDataConsent(defaultValue) } returns flowOf(true)
-        every { dataStore.adPersonalizationConsent(defaultValue) } returns flowOf(false)
+    fun `applyInitialConsent falls back to defaults when datastore values are missing`() = runTest {
+        val defaultValue = false
+        val fakeDataStore = FakeCommonDataStore()
 
         mockkObject(ConsentManagerHelper)
         every { ConsentManagerHelper.defaultAnalyticsGranted } returns defaultValue
         coEvery { ConsentManagerHelper.applyInitialConsent(any()) } coAnswers { callOriginal() }
-        every { ConsentManagerHelper.updateConsent(any(), any(), any(), any()) } answers { }
+        val analyticsSlot = slot<Boolean>()
+        val adStorageSlot = slot<Boolean>()
+        val adUserDataSlot = slot<Boolean>()
+        val adPersonalizationSlot = slot<Boolean>()
+        every {
+            ConsentManagerHelper.updateConsent(
+                capture(analyticsSlot),
+                capture(adStorageSlot),
+                capture(adUserDataSlot),
+                capture(adPersonalizationSlot)
+            )
+        } answers { }
         coEvery { ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(any()) } returns Unit
 
-        ConsentManagerHelper.applyInitialConsent(dataStore)
+        ConsentManagerHelper.applyInitialConsent(fakeDataStore.instance)
 
-        verify(exactly = 1) { dataStore.analyticsConsent(defaultValue) }
-        verify(exactly = 1) { dataStore.adStorageConsent(defaultValue) }
-        verify(exactly = 1) { dataStore.adUserDataConsent(defaultValue) }
-        verify(exactly = 1) { dataStore.adPersonalizationConsent(defaultValue) }
+        assertEquals(listOf(defaultValue), fakeDataStore.analyticsDefaultsUsed)
+        assertEquals(listOf(defaultValue), fakeDataStore.adStorageDefaultsUsed)
+        assertEquals(listOf(defaultValue), fakeDataStore.adUserDataDefaultsUsed)
+        assertEquals(listOf(defaultValue), fakeDataStore.adPersonalizationDefaultsUsed)
 
-        verify(exactly = 1) {
-            ConsentManagerHelper.updateConsent(
-                analyticsGranted = true,
-                adStorageGranted = false,
-                adUserDataGranted = true,
-                adPersonalizationGranted = false
-            )
-        }
+        assertEquals(defaultValue, analyticsSlot.captured)
+        assertEquals(defaultValue, adStorageSlot.captured)
+        assertEquals(defaultValue, adUserDataSlot.captured)
+        assertEquals(defaultValue, adPersonalizationSlot.captured)
 
-        coVerify(exactly = 1) { ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore) }
+        coVerify(exactly = 1) { ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(fakeDataStore.instance) }
         coVerifyOrder {
-            ConsentManagerHelper.updateConsent(
-                analyticsGranted = true,
-                adStorageGranted = false,
-                adUserDataGranted = true,
-                adPersonalizationGranted = false
-            )
-            ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(dataStore)
+            ConsentManagerHelper.updateConsent(any(), any(), any(), any())
+            ConsentManagerHelper.updateAnalyticsCollectionFromDatastore(fakeDataStore.instance)
         }
     }
 
@@ -185,4 +186,50 @@ class ConsentManagerHelperTest {
 
     private fun Boolean.toStatus(): FirebaseAnalytics.ConsentStatus =
         if (this) FirebaseAnalytics.ConsentStatus.GRANTED else FirebaseAnalytics.ConsentStatus.DENIED
+
+    private class FakeCommonDataStore(
+        analyticsStored: Boolean? = null,
+        adStorageStored: Boolean? = null,
+        adUserDataStored: Boolean? = null,
+        adPersonalizationStored: Boolean? = null,
+    ) {
+        private val analyticsDefaults = mutableListOf<Boolean>()
+        private val adStorageDefaults = mutableListOf<Boolean>()
+        private val adUserDataDefaults = mutableListOf<Boolean>()
+        private val adPersonalizationDefaults = mutableListOf<Boolean>()
+
+        val instance: CommonDataStore = mockk(relaxed = true)
+
+        val analyticsDefaultsUsed: List<Boolean>
+            get() = analyticsDefaults
+        val adStorageDefaultsUsed: List<Boolean>
+            get() = adStorageDefaults
+        val adUserDataDefaultsUsed: List<Boolean>
+            get() = adUserDataDefaults
+        val adPersonalizationDefaultsUsed: List<Boolean>
+            get() = adPersonalizationDefaults
+
+        init {
+            every { instance.analyticsConsent(any()) } answers {
+                val default = firstArg<Boolean>()
+                analyticsDefaults += default
+                flowOf(analyticsStored ?: default)
+            }
+            every { instance.adStorageConsent(any()) } answers {
+                val default = firstArg<Boolean>()
+                adStorageDefaults += default
+                flowOf(adStorageStored ?: default)
+            }
+            every { instance.adUserDataConsent(any()) } answers {
+                val default = firstArg<Boolean>()
+                adUserDataDefaults += default
+                flowOf(adUserDataStored ?: default)
+            }
+            every { instance.adPersonalizationConsent(any()) } answers {
+                val default = firstArg<Boolean>()
+                adPersonalizationDefaults += default
+                flowOf(adPersonalizationStored ?: default)
+            }
+        }
+    }
 }
