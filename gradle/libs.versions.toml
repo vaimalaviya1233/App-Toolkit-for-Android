@@ -145,10 +145,75 @@ googleFirebase = { id = "com.google.firebase.crashlytics", version.ref = "google
 mannodermaus = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus" }
 
 [bundles]
+androidx-core = [
+    "androidx-core-ktx",
+    "androidx-appcompat",
+    "androidx-core-splashscreen",
+    "androidx-work-runtime-ktx",
+    "androidx-multidex",
+    "androidx-datastore-preferences",
+]
+androidx-compose = [
+    "androidx-activity-compose",
+    "androidx-runtime-livedata",
+    "androidx-ui-tooling-preview",
+    "androidx-material3",
+    "androidx-material-icons-extended",
+    "androidx-navigation-compose",
+]
+androidx-lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-lifecycle-livedata-ktx",
+    "androidx-lifecycle-process",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-runtime-compose",
+]
+firebase = [
+    "firebase-analytics",
+    "firebase-crashlytics",
+    "firebase-perf",
+    "firebase-appcheck-playintegrity",
+]
+google-play = [
+    "play-services-ads",
+    "user-messaging-platform",
+    "material",
+    "app-update-ktx",
+    "billing",
+    "review-ktx",
+    "integrity",
+]
+coil = [
+    "coil-compose",
+    "coil-gif",
+    "coil-network-okhttp",
+]
+kotlinx = [
+    "kotlinx-coroutines-android",
+    "kotlinx-coroutines-play-services",
+    "kotlinx-serialization-json",
+]
+ktor = [
+    "ktor-client-android",
+    "ktor-client-serialization",
+    "ktor-client-logging",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+]
+ui-effects = [
+    "konfetti-compose",
+    "lottie-compose",
+]
+ui-richtext = [
+    "aboutlibraries-compose-m3",
+    "core",
+    "compose-markdown",
+]
 koin = [
     "koin-core",
     "koin-compose-viewmodel",
-    "koin-android"
+    "koin-android",
 ]
 
 # For local tests on the JVM (test sourceSet)

@@ -60,78 +60,39 @@ android {
 
 dependencies {
 
-    //AndroidX
-    api(dependencyNotation = libs.androidx.core.ktx)
-    api(dependencyNotation = libs.androidx.appcompat)
-    api(dependencyNotation = libs.androidx.core.splashscreen)
-    api(dependencyNotation = libs.androidx.multidex)
-    api(dependencyNotation = libs.androidx.work.runtime.ktx)
+    // AndroidX
+    api(dependencyNotation = libs.bundles.androidx.core)
 
     // Compose
     api(dependencyNotation = platform(libs.androidx.compose.bom))
-    api(dependencyNotation = libs.androidx.activity.compose)
-    api(dependencyNotation = libs.androidx.runtime.livedata)
-    api(dependencyNotation = libs.androidx.ui.tooling.preview)
-    api(dependencyNotation = libs.androidx.material3)
-    api(dependencyNotation = libs.androidx.material.icons.extended)
-    api(dependencyNotation = libs.androidx.datastore.preferences)
-    api(dependencyNotation = libs.androidx.navigation.compose)
+    api(dependencyNotation = libs.bundles.androidx.compose)
+
+    // Lifecycle
+    api(dependencyNotation = libs.bundles.androidx.lifecycle)
 
     // Firebase
     api(dependencyNotation = platform(libs.firebase.bom))
-    api(dependencyNotation = libs.firebase.analytics)
-    api(dependencyNotation = libs.firebase.crashlytics)
-    api(dependencyNotation = libs.firebase.perf)
-    api(dependencyNotation = libs.firebase.appcheck.playintegrity)
+    api(dependencyNotation = libs.bundles.firebase)
 
-    // Google
-    api(dependencyNotation = libs.play.services.ads)
-    api(dependencyNotation = libs.user.messaging.platform)
-    api(dependencyNotation = libs.material)
-    api(dependencyNotation = libs.app.update.ktx)
-    api(dependencyNotation = libs.billing)
-    api(dependencyNotation = libs.review.ktx)
-    api(dependencyNotation = libs.integrity)
+    // Google Play services & Play Store APIs
+    api(dependencyNotation = libs.bundles.google.play)
 
-    // Images
-    api(dependencyNotation = libs.coil.compose)
-    api(dependencyNotation = libs.coil.gif)
-    api(dependencyNotation = libs.coil.network.okhttp)
+    // Image loading
+    api(dependencyNotation = libs.bundles.coil)
 
-    // Kotlin
-    api(dependencyNotation = libs.kotlinx.coroutines.android)
-    api(dependencyNotation = libs.kotlinx.coroutines.play.services)
-    api(dependencyNotation = libs.kotlinx.serialization.json)
+    // Kotlin Coroutines & Serialization
+    api(dependencyNotation = libs.bundles.kotlinx)
 
-    // Ktor
+    // Networking (Ktor)
     api(dependencyNotation = platform(libs.ktor.bom))
-    api(dependencyNotation = libs.ktor.client.android)
-    api(dependencyNotation = libs.ktor.client.serialization)
-    api(dependencyNotation = libs.ktor.client.logging)
-    api(dependencyNotation = libs.ktor.client.content.negotiation)
-    api(dependencyNotation = libs.ktor.serialization.kotlinx.json)
+    api(dependencyNotation = libs.bundles.ktor)
 
-    // Koin
+    // Dependency Injection
     api(dependencyNotation = libs.bundles.koin)
 
-    // Konfetti
-    api(dependencyNotation = libs.konfetti.compose)
-
-    // Lottie
-    api(dependencyNotation = libs.lottie.compose)
-
-    // Lifecycle
-    api(dependencyNotation = libs.androidx.lifecycle.runtime.ktx)
-    api(dependencyNotation = libs.androidx.lifecycle.livedata.ktx)
-    api(dependencyNotation = libs.androidx.lifecycle.process)
-    api(dependencyNotation = libs.androidx.lifecycle.viewmodel.ktx)
-    api(dependencyNotation = libs.androidx.lifecycle.viewmodel.compose)
-    implementation(dependencyNotation = libs.androidx.lifecycle.runtime.compose)
-
-    // About
-    api(dependencyNotation = libs.aboutlibraries.compose.m3)
-    api(dependencyNotation = libs.core)
-    api(dependencyNotation = libs.compose.markdown)
+    // UI utilities
+    api(dependencyNotation = libs.bundles.ui.effects)
+    api(dependencyNotation = libs.bundles.ui.richtext)
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
