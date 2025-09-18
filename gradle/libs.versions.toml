@@ -226,6 +226,8 @@ unitTest = [
     "test-koin-junit5",
     "androidx-truth",
     "ktor-client-mock",
+    "robolectric",
+    "junit4",
     "slf4j-simple",
 ]
 unitTestRuntime = ["jupiter-engine"]
