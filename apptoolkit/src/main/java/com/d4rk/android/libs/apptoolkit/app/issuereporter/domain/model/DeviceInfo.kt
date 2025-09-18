@@ -29,7 +29,7 @@ class DeviceInfo(context: Context) {
     private val abis64Bits: Array<String>? = Build.SUPPORTED_64_BIT_ABIS
 
     companion object {
-        suspend fun create(context: Context): DeviceInfo {
+        fun create(context: Context): DeviceInfo {
             val info = DeviceInfo(context)
             val packageInfo = runCatching {
                 context.packageManager.getPackageInfo(context.packageName, 0)

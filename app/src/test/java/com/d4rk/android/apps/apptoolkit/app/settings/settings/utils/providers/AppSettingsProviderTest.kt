@@ -148,8 +148,7 @@ class AppSettingsProviderTest {
     @Test
     fun `provideSettingsConfig handles null context safely`() {
         val result = assertDoesNotThrow {
-            val context : Context? = null
-            context?.let { provider.provideSettingsConfig(it) }
+            null
         }
 
         assertNull(result)

@@ -21,8 +21,8 @@ class FetchDeveloperAppsUseCaseTest {
     @Test
     fun `use case prepends loading state to repository emissions`() = runTest {
         val apps = listOf(AppInfo(name = "App", packageName = "pkg", iconUrl = "icon"))
-        val repositoryEmissions = listOf<DataState<List<AppInfo>, Errors>>(
-            DataState.Success<List<AppInfo>, Errors>(apps),
+        val repositoryEmissions = listOf(
+            DataState.Success(apps),
             DataState.Error<List<AppInfo>, Errors>(error = Errors.Network.REQUEST_TIMEOUT),
         )
         val repository = mockk<DeveloperAppsRepository> {
@@ -33,7 +33,7 @@ class FetchDeveloperAppsUseCaseTest {
         val result = useCase().toList()
 
         val expected = mutableListOf<DataState<List<AppInfo>, RootError>>(
-            DataState.Loading<List<AppInfo>, RootError>(),
+            DataState.Loading(),
         )
         expected.addAll(repositoryEmissions)
 

@@ -129,7 +129,7 @@ class BillingRepository private constructor(
             val params = QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build()
-            suspendCancellableCoroutine<Unit> { continuation ->
+            suspendCancellableCoroutine { continuation ->
                 billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                         handlePurchases(purchasesList)
@@ -153,7 +153,7 @@ class BillingRepository private constructor(
             val params = QueryProductDetailsParams.newBuilder()
                 .setProductList(products)
                 .build()
-            suspendCancellableCoroutine<Unit> { continuation ->
+            suspendCancellableCoroutine { continuation ->
                 billingClient.queryProductDetailsAsync(params) { billingResult, result ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                         val map = result.productDetailsList.associateBy { it.productId }
