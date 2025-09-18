@@ -153,6 +153,7 @@ androidx-core = [
     "androidx-multidex",
     "androidx-datastore-preferences",
 ]
+
 androidx-compose = [
     "androidx-activity-compose",
     "androidx-runtime-livedata",
@@ -161,6 +162,7 @@ androidx-compose = [
     "androidx-material-icons-extended",
     "androidx-navigation-compose",
 ]
+
 androidx-lifecycle = [
     "androidx-lifecycle-runtime-ktx",
     "androidx-lifecycle-livedata-ktx",
@@ -169,12 +171,14 @@ androidx-lifecycle = [
     "androidx-lifecycle-viewmodel-compose",
     "androidx-lifecycle-runtime-compose",
 ]
+
 firebase = [
     "firebase-analytics",
     "firebase-crashlytics",
     "firebase-perf",
     "firebase-appcheck-playintegrity",
 ]
+
 google-play = [
     "play-services-ads",
     "user-messaging-platform",
@@ -184,16 +188,19 @@ google-play = [
     "review-ktx",
     "integrity",
 ]
+
 coil = [
     "coil-compose",
     "coil-gif",
     "coil-network-okhttp",
 ]
+
 kotlinx = [
     "kotlinx-coroutines-android",
     "kotlinx-coroutines-play-services",
     "kotlinx-serialization-json",
 ]
+
 ktor = [
     "ktor-client-android",
     "ktor-client-serialization",
@@ -201,15 +208,18 @@ ktor = [
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
 ]
+
 ui-effects = [
     "konfetti-compose",
     "lottie-compose",
 ]
+
 ui-richtext = [
     "aboutlibraries-compose-m3",
     "core",
     "compose-markdown",
 ]
+
 koin = [
     "koin-core",
     "koin-compose-viewmodel",
@@ -230,6 +240,7 @@ unitTest = [
     "junit4",
     "slf4j-simple",
 ]
+
 unitTestRuntime = ["jupiter-engine"]
 
 # For instrumentation tests on an Android device (androidTest sourceSet)
