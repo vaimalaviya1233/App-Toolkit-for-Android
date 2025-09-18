@@ -1,3 +1,7 @@
+# Version 1.1.3:
+
+- **Patch**: Updated dependencies.
+
 # Version 1.1.2:
 
 - **Patch**: Made several quality of life improvements.
