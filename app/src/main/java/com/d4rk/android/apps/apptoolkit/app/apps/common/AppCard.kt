@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
+package com.d4rk.android.apps.apptoolkit.app.apps.common
 
 import android.view.SoundEffectConstants
 import androidx.compose.animation.animateContentSize

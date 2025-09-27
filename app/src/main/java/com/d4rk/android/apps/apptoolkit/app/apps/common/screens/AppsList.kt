@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components
+package com.d4rk.android.apps.apptoolkit.app.apps.common.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.d4rk.android.apps.apptoolkit.BuildConfig
+import com.d4rk.android.apps.apptoolkit.app.apps.common.AppCard
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen

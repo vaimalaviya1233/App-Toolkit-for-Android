@@ -1,4 +1,4 @@
-package com.d4rk.android.apps.apptoolkit.app.apps.list.ui.components.screens.loading
+package com.d4rk.android.apps.apptoolkit.app.apps.common.screens.loading
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
