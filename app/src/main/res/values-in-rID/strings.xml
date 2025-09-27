@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">Terjadi kesalahan</string>
     <string name="error_failed_to_update_favorite">Gagal memperbarui favorit</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">Bagikan aplikasi</string>
+    <string name="app_details_view_on_play_store">Lihat di Google Play</string>
+
     <!-- Help screen -->
     <string name="question_1">Apa itu App Toolkit?</string>
     <string name="summary_preference_faq_1">App Toolkit adalah aplikasi yang dirancang untuk menampilkan dan mendemonstrasikan aplikasi yang dikembangkan oleh kami menggunakan pustaka AppToolkit kami. Ini adalah panduan Anda untuk menjelajahi ekosistem aplikasi kami dan melihat pustaka AppToolkit kami beraksi.</string>

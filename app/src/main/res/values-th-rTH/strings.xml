@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">เกิดข้อผิดพลาด</string>
     <string name="error_failed_to_update_favorite">ไม่สามารถอัปเดตที่ชื่นชอบได้</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">แชร์แอป</string>
+    <string name="app_details_view_on_play_store">ดูใน Google Play</string>
+
     <!-- Help screen -->
     <string name="question_1">App Toolkit คืออะไร</string>
     <string name="summary_preference_faq_1">App Toolkit เป็นแอปพลิเคชันที่ออกแบบมาเพื่อนำเสนอและสาธิตแอปที่เราพัฒนาขึ้นโดยใช้ไลบรารี AppToolkit ของเรา เป็นคู่มือของคุณในการสำรวจระบบนิเวศของแอปพลิเคชันของเราและดูไลบรารี AppToolkit ของเราทำงานจริง</string>

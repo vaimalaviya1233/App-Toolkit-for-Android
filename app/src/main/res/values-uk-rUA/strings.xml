@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">Сталася помилка</string>
     <string name="error_failed_to_update_favorite">Не вдалося оновити вибране</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">Поділитися застосунком</string>
+    <string name="app_details_view_on_play_store">Переглянути в Google Play</string>
+
     <!-- Help screen -->
     <string name="question_1">Що таке App Toolkit?</string>
     <string name="summary_preference_faq_1">App Toolkit — це програма, призначена для демонстрації програм, розроблених нами з використанням нашої бібліотеки AppToolkit. Це ваш посібник для вивчення нашої екосистеми програм та ознайомлення з роботою нашої бібліотеки AppToolkit.</string>

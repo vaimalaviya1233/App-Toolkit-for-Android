@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">Bir hata oluştu</string>
     <string name="error_failed_to_update_favorite">Favori güncellenemedi</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">Uygulamayı paylaş</string>
+    <string name="app_details_view_on_play_store">Google Play\'de görüntüle</string>
+
     <!-- Help screen -->
     <string name="question_1">App Toolkit nedir?</string>
     <string name="summary_preference_faq_1">App Toolkit, AppToolkit kütüphanemizi kullanarak geliştirdiğimiz uygulamaları öne çıkarmak ve göstermek için tasarlanmış bir uygulamadır. Uygulama ekosistemimizi keşfetmeniz ve AppToolkit kütüphanemizi çalışırken görmeniz için rehberinizdir.</string>

@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">Ett fel inträffade</string>
     <string name="error_failed_to_update_favorite">Det gick inte att uppdatera favoriten</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">Dela appen</string>
+    <string name="app_details_view_on_play_store">Visa på Google Play</string>
+
     <!-- Help screen -->
     <string name="question_1">Vad är App Toolkit?</string>
     <string name="summary_preference_faq_1">App Toolkit är en applikation utformad för att presentera och demonstrera appar som utvecklats av oss med hjälp av vårt AppToolkit-bibliotek. Det är din guide för att utforska vårt ekosystem av applikationer och se vårt AppToolkit-bibliotek i aktion.</string>

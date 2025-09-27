@@ -9,10 +9,14 @@ data class AppInfoDto(
     @SerialName("name") val name: String,
     @SerialName("packageName") val packageName: String,
     @SerialName("iconLogo") val iconUrl: String,
+    @SerialName("description") val description: String? = null,
+    @SerialName("screenshots") val screenshots: List<String>? = null
 )
 
 fun AppInfoDto.toDomain(): AppInfo = AppInfo(
     name = name,
     packageName = packageName,
     iconUrl = iconUrl,
+    description = description ?: "",
+    screenshots = screenshots ?: emptyList()
 )
