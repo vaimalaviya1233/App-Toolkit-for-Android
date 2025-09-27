@@ -42,7 +42,7 @@ import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallHorizontalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -133,10 +133,11 @@ fun AppDetailsBottomSheet(
                     fontWeight = FontWeight.Bold,
                 )
             }
-            ExtraSmallHorizontalSpacer()
+            ExtraSmallVerticalSpacer()
             Text(
                 text = appInfo.description,
                 style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = SizeConstants.LargeSize)
             )
         }
         if (appInfo.screenshots.isNotEmpty()) {
