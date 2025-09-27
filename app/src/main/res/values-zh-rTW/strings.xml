@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">發生錯誤</string>
     <string name="error_failed_to_update_favorite">無法更新最愛</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">分享應用程式</string>
+    <string name="app_details_view_on_play_store">在 Google Play 上查看</string>
+
     <!-- Help screen -->
     <string name="question_1">App Toolkit 是什麼？</string>
     <string name="summary_preference_faq_1">App Toolkit 是一款旨在展示我們使用 AppToolkit 程式庫開發的應用程式的應用程式。它是您探索我們應用程式生態系統並查看我們 AppToolkit 程式庫實際運作的指南。</string>

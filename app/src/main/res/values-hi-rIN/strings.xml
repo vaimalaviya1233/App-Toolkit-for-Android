@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">कोई त्रुटि हुई</string>
     <string name="error_failed_to_update_favorite">पसंदीदा अपडेट करने में विफल</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">ऐप साझा करें</string>
+    <string name="app_details_view_on_play_store">Google Play पर देखें</string>
+
     <!-- Help screen -->
     <string name="question_1">ऐप टूलकिट क्या है?</string>
     <string name="summary_preference_faq_1">ऐप टूलकिट एक एप्लिकेशन है जिसे हमारी ऐपटूलकिट लाइब्रेरी का उपयोग करके हमारे द्वारा विकसित ऐप्स को प्रदर्शित करने और प्रदर्शित करने के लिए डिज़ाइन किया गया है। यह हमारे एप्लिकेशन के पारिस्थितिकी तंत्र की खोज करने और हमारी ऐपटूलकिट लाइब्रेरी को क्रियान्वित देखने के लिए आपका मार्गदर्शक है।</string>

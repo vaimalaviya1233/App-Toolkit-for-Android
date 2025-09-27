@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">오류가 발생했습니다</string>
     <string name="error_failed_to_update_favorite">즐겨찾기를 업데이트하지 못했습니다</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">앱 공유하기</string>
+    <string name="app_details_view_on_play_store">Google Play에서 보기</string>
+
     <!-- Help screen -->
     <string name="question_1">앱 툴킷이란 무엇인가요?</string>
     <string name="summary_preference_faq_1">앱 툴킷은 저희가 앱툴킷 라이브러리를 사용하여 개발한 앱들을 소개하고 시연하기 위해 설계된 애플리케이션입니다. 저희 애플리케이션 생태계를 탐색하고 앱툴킷 라이브러리의 실제 활용 사례를 볼 수 있는 가이드입니다.</string>

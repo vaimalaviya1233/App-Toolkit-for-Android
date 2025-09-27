@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">একটি ত্রুটি ঘটেছে</string>
     <string name="error_failed_to_update_favorite">পছন্দ আপডেট করতে ব্যর্থ</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">অ্যাপ শেয়ার করুন</string>
+    <string name="app_details_view_on_play_store">গুগল প্লেতে দেখুন</string>
+
     <!-- Help screen -->
     <string name="question_1">অ্যাপ টুলকিট কী?</string>
     <string name="summary_preference_faq_1">অ্যাপ টুলকিট একটি অ্যাপ্লিকেশন যা আমাদের অ্যাপটুলকিট লাইব্রেরি ব্যবহার করে তৈরি করা অ্যাপগুলিকে বৈশিষ্ট্যযুক্ত করতে এবং প্রদর্শন করার জন্য ডিজাইন করা হয়েছে। এটি আমাদের অ্যাপ্লিকেশনগুলির ইকোসিস্টেম অন্বেষণ করার এবং আমাদের অ্যাপটুলকিট লাইব্রেরিকে কার্যকর অবস্থায় দেখার জন্য আপনার গাইড।</string>

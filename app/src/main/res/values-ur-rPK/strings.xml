@@ -18,6 +18,10 @@
     <string name="error_an_error_occurred">ایک خرابی پیش آگئی</string>
     <string name="error_failed_to_update_favorite">پسندیدہ کو اپ ڈیٹ کرنے میں ناکامی</string>
 
+    <!-- App details bottom sheet -->
+    <string name="app_details_share_content_description">ایپ شیئر کریں</string>
+    <string name="app_details_view_on_play_store">Google Play پر دیکھیں</string>
+
     <!-- Help screen -->
     <string name="question_1">ایپ ٹول کٹ کیا ہے؟</string>
     <string name="summary_preference_faq_1">ایپ ٹول کٹ ایک ایسی ایپلی کیشن ہے جو ہماری ایپ ٹول کٹ لائبریری کا استعمال کرتے ہوئے ہمارے تیار کردہ ایپس کو نمایاں کرنے اور ظاہر کرنے کے لیے ڈیزائن کی گئی ہے۔ یہ ہماری ایپلی کیشنز کے ایکو سسٹم کو دریافت کرنے اور ہماری ایپ ٹول کٹ لائبریری کو عملی طور پر دیکھنے کے لیے آپ کا رہنما ہے۔</string>
