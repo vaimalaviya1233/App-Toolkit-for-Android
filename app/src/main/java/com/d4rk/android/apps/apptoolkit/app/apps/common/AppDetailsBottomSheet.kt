@@ -100,6 +100,7 @@ fun AppDetailsBottomSheet(
 }
 
 @Preview
+@Composable
 private fun AppDetailsBottomSheetPreview() {
     AppDetailsBottomSheet(
         appInfo = AppInfo(
