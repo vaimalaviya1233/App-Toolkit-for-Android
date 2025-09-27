@@ -19,7 +19,7 @@
     <string name="error_failed_to_update_favorite">Impossibile aggiornare il preferito</string>
 
     <!-- App details bottom sheet -->
-    <string name="app_details_share_content_description">Condividi l&apos;app</string>
+    <string name="app_details_share_content_description">Condividi l\'app</string>
     <string name="app_details_view_on_play_store">Visualizza su Google Play</string>
 
     <!-- Help screen -->

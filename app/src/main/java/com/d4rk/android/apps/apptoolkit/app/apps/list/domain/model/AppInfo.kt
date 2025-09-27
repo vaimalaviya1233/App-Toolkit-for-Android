@@ -7,4 +7,6 @@ data class AppInfo(
     val name: String,
     val packageName: String,
     val iconUrl: String,
+    val description: String,
+    val screenshots: List<String>,
 )

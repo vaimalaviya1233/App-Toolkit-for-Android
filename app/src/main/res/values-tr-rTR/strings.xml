@@ -20,7 +20,7 @@
 
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Uygulamayı paylaş</string>
-    <string name="app_details_view_on_play_store">Google Play'de görüntüle</string>
+    <string name="app_details_view_on_play_store">Google Play\'de görüntüle</string>
 
     <!-- Help screen -->
     <string name="question_1">App Toolkit nedir?</string>

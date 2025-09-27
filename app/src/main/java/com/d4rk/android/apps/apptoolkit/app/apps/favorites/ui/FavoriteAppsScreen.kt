@@ -47,7 +47,7 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val dispatchers: DispatcherProvider = koinInject()
     val onOpenInPlayStore: (AppInfo) -> Unit = buildOnAppClick(dispatchers, context)
     val onShareClick: (AppInfo) -> Unit = buildOnShareClick(context)
-    var selectedApp: AppInfo? by remember { mutableStateOf<AppInfo?>(null) }
+    var selectedApp: AppInfo? by remember { mutableStateOf(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
 
@@ -67,9 +67,14 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
                 onShareClick = { onShareClick(app) },
                 onOpenInPlayStoreClick = {
                     coroutineScope.launch {
-                        sheetState.hide()
                         selectedApp = null
                         onOpenInPlayStore(app)
+                    }
+                },
+                onFavoriteClick = {
+                    coroutineScope.launch {
+                        selectedApp = null
+                        onFavoriteToggle(app.packageName)
                     }
                 }
             )

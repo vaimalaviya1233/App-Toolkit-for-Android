@@ -13,10 +13,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.app.apps.common.AppDetailsBottomSheet
 import com.d4rk.android.apps.apptoolkit.app.apps.common.buildOnAppClick
 import com.d4rk.android.apps.apptoolkit.app.apps.common.buildOnShareClick
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
@@ -44,7 +44,7 @@ fun AppsListRoute(paddingValues: PaddingValues) {
     val dispatchers: DispatcherProvider = koinInject()
     val onOpenInPlayStore: (AppInfo) -> Unit = buildOnAppClick(dispatchers, context)
     val onShareClick: (AppInfo) -> Unit = buildOnShareClick(context)
-    var selectedApp: AppInfo? by remember { mutableStateOf<AppInfo?>(null) }
+    var selectedApp: AppInfo? by remember { mutableStateOf(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
 
@@ -64,9 +64,14 @@ fun AppsListRoute(paddingValues: PaddingValues) {
                 onShareClick = { onShareClick(app) },
                 onOpenInPlayStoreClick = {
                     coroutineScope.launch {
-                        sheetState.hide()
                         selectedApp = null
                         onOpenInPlayStore(app)
+                    }
+                },
+                onFavoriteClick = {
+                    coroutineScope.launch {
+                        selectedApp = null
+                        onFavoriteToggle(app.packageName)
                     }
                 }
             )
