@@ -18,9 +18,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
@@ -111,7 +111,7 @@ fun AppDetailsBottomSheet(
                 true -> {
                     OutlinedIconButtonWithText(
                         onClick = onOpenAppClick,
-                        icon = Icons.Outlined.OpenInNew,
+                        icon = Icons.AutoMirrored.Outlined.OpenInNew,
                         label = stringResource(id = R.string.app_details_open_app)
                     )
                 }
