@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Share app</string>
     <string name="app_details_view_on_play_store">View on Google Play</string>
+    <string name="app_details_about_title">About this app</string>
+    <string name="app_details_screenshots_title">Screenshots</string>
+    <string name="app_details_open_app">Open app</string>
 
     <!-- Help screen -->
     <string name="question_1">What is App Toolkit?</string>

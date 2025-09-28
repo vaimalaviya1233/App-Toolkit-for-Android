@@ -18,10 +18,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -51,8 +54,11 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @Composable
 fun AppDetailsBottomSheet(
     appInfo: AppInfo,
+    isFavorite: Boolean,
+    isAppInstalled: Boolean?,
     onShareClick: () -> Unit,
     onFavoriteClick: () -> Unit,
+    onOpenAppClick: () -> Unit,
     onOpenInPlayStoreClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -101,19 +107,35 @@ fun AppDetailsBottomSheet(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.get_it_on_google_play),
-                contentDescription = stringResource(R.string.app_details_view_on_play_store),
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .bounceClick()
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) {
-                        onOpenInPlayStoreClick()
-                    }
-            )
+            when (isAppInstalled) {
+                true -> {
+                    OutlinedIconButtonWithText(
+                        onClick = onOpenAppClick,
+                        icon = Icons.Outlined.OpenInNew,
+                        label = stringResource(id = R.string.app_details_open_app)
+                    )
+                }
+
+                false -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.get_it_on_google_play),
+                        contentDescription = stringResource(R.string.app_details_view_on_play_store),
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .bounceClick()
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                onOpenInPlayStoreClick()
+                            }
+                    )
+                }
+
+                null -> {
+                    CircularProgressIndicator()
+                }
+            }
         }
         if (appInfo.description.isNotEmpty()) {
             LargeVerticalSpacer()
@@ -128,7 +150,7 @@ fun AppDetailsBottomSheet(
                 )
                 MediumHorizontalSpacer()
                 Text(
-                    text = "About this app",
+                    text = stringResource(id = R.string.app_details_about_title),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                 )
@@ -137,14 +159,16 @@ fun AppDetailsBottomSheet(
             Text(
                 text = appInfo.description,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = SizeConstants.LargeSize)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = SizeConstants.LargeSize)
             )
         }
         if (appInfo.screenshots.isNotEmpty()) {
             LargeVerticalSpacer()
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Screenshots",
+                    text = stringResource(id = R.string.app_details_screenshots_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -190,7 +214,7 @@ fun AppDetailsBottomSheet(
             )
             OutlinedIconButtonWithText(
                 onClick = onFavoriteClick,
-                icon = Icons.Outlined.StarOutline,
+                icon = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                 label = stringResource(id = R.string.favorite_apps)
             )
         }

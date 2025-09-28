@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Dela appen</string>
     <string name="app_details_view_on_play_store">Visa på Google Play</string>
+    <string name="app_details_about_title">Om den här appen</string>
+    <string name="app_details_screenshots_title">Skärmbilder</string>
+    <string name="app_details_open_app">Öppna appen</string>
 
     <!-- Help screen -->
     <string name="question_1">Vad är App Toolkit?</string>

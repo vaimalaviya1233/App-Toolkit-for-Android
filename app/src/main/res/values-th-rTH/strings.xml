@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">แชร์แอป</string>
     <string name="app_details_view_on_play_store">ดูใน Google Play</string>
+    <string name="app_details_about_title">เกี่ยวกับแอปนี้</string>
+    <string name="app_details_screenshots_title">ภาพหน้าจอ</string>
+    <string name="app_details_open_app">เปิดแอป</string>
 
     <!-- Help screen -->
     <string name="question_1">App Toolkit คืออะไร</string>

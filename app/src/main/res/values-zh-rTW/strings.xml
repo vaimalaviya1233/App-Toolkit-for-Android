@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">分享應用程式</string>
     <string name="app_details_view_on_play_store">在 Google Play 上查看</string>
+    <string name="app_details_about_title">關於此應用程式</string>
+    <string name="app_details_screenshots_title">螢幕截圖</string>
+    <string name="app_details_open_app">開啟應用程式</string>
 
     <!-- Help screen -->
     <string name="question_1">App Toolkit 是什麼？</string>

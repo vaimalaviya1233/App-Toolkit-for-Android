@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Bagikan aplikasi</string>
     <string name="app_details_view_on_play_store">Lihat di Google Play</string>
+    <string name="app_details_about_title">Tentang aplikasi ini</string>
+    <string name="app_details_screenshots_title">Tangkapan layar</string>
+    <string name="app_details_open_app">Buka aplikasi</string>
 
     <!-- Help screen -->
     <string name="question_1">Apa itu App Toolkit?</string>

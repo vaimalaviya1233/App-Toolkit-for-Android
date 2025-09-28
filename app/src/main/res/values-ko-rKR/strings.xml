@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">앱 공유하기</string>
     <string name="app_details_view_on_play_store">Google Play에서 보기</string>
+    <string name="app_details_about_title">이 앱 정보</string>
+    <string name="app_details_screenshots_title">스크린샷</string>
+    <string name="app_details_open_app">앱 열기</string>
 
     <!-- Help screen -->
     <string name="question_1">앱 툴킷이란 무엇인가요?</string>
