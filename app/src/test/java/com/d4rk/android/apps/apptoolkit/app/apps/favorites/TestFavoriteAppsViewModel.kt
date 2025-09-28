@@ -24,7 +24,15 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `toggle favorite throws after load`() = runTest(dispatcherExtension.testDispatcher) {
         println("\uD83D\uDE80 [TEST] toggle favorite throws after load")
-        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "url",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
         setup(
             fetchApps = apps,
             initialFavorites = emptySet(),
@@ -46,8 +54,20 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
     @Test
     fun `load favorites emits saved apps`() = runTest(dispatcherExtension.testDispatcher) {
         val apps = listOf(
-            AppInfo("App1", "pkg1", "url1"),
-            AppInfo("App2", "pkg2", "url2")
+            AppInfo(
+                name = "App1",
+                packageName = "pkg1",
+                iconUrl = "url1",
+                description = "Description 1",
+                screenshots = emptyList(),
+            ),
+            AppInfo(
+                name = "App2",
+                packageName = "pkg2",
+                iconUrl = "url2",
+                description = "Description 2",
+                screenshots = emptyList(),
+            )
         )
         setup(
             fetchApps = apps,
@@ -68,7 +88,15 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
 
     @Test
     fun `toggle favorite updates favorites flow`() = runTest(dispatcherExtension.testDispatcher) {
-        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "url",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
         setup(fetchApps = apps, dispatchers = TestDispatchers(dispatcherExtension.testDispatcher))
 
         viewModel.favorites.test {
@@ -83,7 +111,15 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
 
     @Test
     fun `load favorites with no saved apps shows no data`() = runTest(dispatcherExtension.testDispatcher) {
-        val apps = listOf(AppInfo("App", "pkg", "url"))
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "url",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
         setup(fetchApps = apps, initialFavorites = emptySet(), dispatchers = TestDispatchers(dispatcherExtension.testDispatcher))
 
         viewModel.uiState.test {

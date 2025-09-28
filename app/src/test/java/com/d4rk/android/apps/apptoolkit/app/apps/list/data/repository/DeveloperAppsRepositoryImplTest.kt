@@ -25,7 +25,15 @@ class DeveloperAppsRepositoryImplTest {
 
     @Test
     fun `fetchDeveloperApps returns apps list`() = runTest {
-        val apps = listOf(AppInfo("App", "pkg", "icon"))
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "icon",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
         val response = ApiResponse(AppDataWrapper(apps.map { AppInfoDto(it.name, it.packageName, it.iconUrl) }))
         val json = Json.encodeToString(response)
         val client = HttpClient(MockEngine { request ->
@@ -65,9 +73,27 @@ class DeveloperAppsRepositoryImplTest {
     @Test
     fun `fetchDeveloperApps sorts apps alphabetically ignoring case`() = runTest {
         val unsorted = listOf(
-            AppInfo("zeta", "pkg1", "icon"),
-            AppInfo("Alpha", "pkg2", "icon"),
-            AppInfo("beta", "pkg3", "icon"),
+            AppInfo(
+                name = "zeta",
+                packageName = "pkg1",
+                iconUrl = "icon",
+                description = "Description",
+                screenshots = emptyList(),
+            ),
+            AppInfo(
+                name = "Alpha",
+                packageName = "pkg2",
+                iconUrl = "icon",
+                description = "Description",
+                screenshots = emptyList(),
+            ),
+            AppInfo(
+                name = "beta",
+                packageName = "pkg3",
+                iconUrl = "icon",
+                description = "Description",
+                screenshots = emptyList(),
+            ),
         )
         val response = ApiResponse(AppDataWrapper(unsorted.map { AppInfoDto(it.name, it.packageName, it.iconUrl) }))
         val json = Json.encodeToString(response)
