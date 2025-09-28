@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">ایپ شیئر کریں</string>
     <string name="app_details_view_on_play_store">Google Play پر دیکھیں</string>
+    <string name="app_details_about_title">اس ایپ کے بارے میں</string>
+    <string name="app_details_screenshots_title">اسکرین شاٹس</string>
+    <string name="app_details_open_app">ایپ کھولیں</string>
 
     <!-- Help screen -->
     <string name="question_1">ایپ ٹول کٹ کیا ہے؟</string>

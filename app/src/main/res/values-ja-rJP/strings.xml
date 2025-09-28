@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">アプリを共有</string>
     <string name="app_details_view_on_play_store">Google Play で表示</string>
+    <string name="app_details_about_title">このアプリについて</string>
+    <string name="app_details_screenshots_title">スクリーンショット</string>
+    <string name="app_details_open_app">アプリを開く</string>
 
     <!-- Help screen -->
     <string name="question_1">App Toolkitとは何ですか？</string>

@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Distribuie aplicația</string>
     <string name="app_details_view_on_play_store">Vezi pe Google Play</string>
+    <string name="app_details_about_title">Despre această aplicație</string>
+    <string name="app_details_screenshots_title">Capturi de ecran</string>
+    <string name="app_details_open_app">Deschide aplicația</string>
 
     <!-- Help screen -->
     <string name="question_1">Ce este App Toolkit?</string>

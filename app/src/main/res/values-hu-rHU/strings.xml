@@ -21,6 +21,9 @@
     <!-- App details bottom sheet -->
     <string name="app_details_share_content_description">Alkalmazás megosztása</string>
     <string name="app_details_view_on_play_store">Megtekintés a Google Playen</string>
+    <string name="app_details_about_title">Az alkalmazásról</string>
+    <string name="app_details_screenshots_title">Képernyőképek</string>
+    <string name="app_details_open_app">Alkalmazás megnyitása</string>
 
     <!-- Help screen -->
     <string name="question_1">Mi az App Toolkit?</string>

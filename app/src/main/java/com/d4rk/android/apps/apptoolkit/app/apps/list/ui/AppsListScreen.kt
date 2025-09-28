@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.rememberAdsEnabled
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.AppInfoHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -42,11 +45,31 @@ fun AppsListRoute(paddingValues: PaddingValues) {
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(HomeEvent.FetchApps) } }
     val dispatchers: DispatcherProvider = koinInject()
-    val onOpenInPlayStore: (AppInfo) -> Unit = buildOnAppClick(dispatchers, context)
+    val openApp: (AppInfo) -> Unit = buildOnAppClick(dispatchers, context)
+    val appInfoHelper = remember(dispatchers) { AppInfoHelper(dispatchers) }
+    val onOpenInPlayStore: (AppInfo) -> Unit = remember(context) {
+        { appInfo ->
+            if (appInfo.packageName.isNotEmpty()) {
+                IntentsHelper.openPlayStoreForApp(context, appInfo.packageName)
+            }
+        }
+    }
     val onShareClick: (AppInfo) -> Unit = buildOnShareClick(context)
     var selectedApp: AppInfo? by remember { mutableStateOf(null) }
+    var isSelectedAppInstalled: Boolean? by remember { mutableStateOf(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(selectedApp?.packageName, context) {
+        isSelectedAppInstalled = null
+        isSelectedAppInstalled = selectedApp?.let { app ->
+            if (app.packageName.isNotEmpty()) {
+                appInfoHelper.isAppInstalled(context, app.packageName)
+            } else {
+                false
+            }
+        }
+    }
 
     selectedApp?.let { app ->
         ModalBottomSheet(
@@ -61,7 +84,15 @@ fun AppsListRoute(paddingValues: PaddingValues) {
         ) {
             AppDetailsBottomSheet(
                 appInfo = app,
+                isFavorite = favorites.contains(app.packageName),
+                isAppInstalled = isSelectedAppInstalled,
                 onShareClick = { onShareClick(app) },
+                onOpenAppClick = {
+                    coroutineScope.launch {
+                        selectedApp = null
+                        openApp(app)
+                    }
+                },
                 onOpenInPlayStoreClick = {
                     coroutineScope.launch {
                         selectedApp = null
