@@ -30,7 +30,8 @@ object IntentsHelper {
      * @return `true` if the URL could be handled, `false` otherwise.
      */
     fun openUrl(context : Context , url : String) : Boolean {
-        val intent = Intent(Intent.ACTION_VIEW , url.toUri()).apply {
+        val intent = Intent(Intent.ACTION_VIEW , url.trim().toUri()).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return intent.resolveActivity(context.packageManager)?.let {

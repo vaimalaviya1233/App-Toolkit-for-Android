@@ -20,7 +20,15 @@ class FetchDeveloperAppsUseCaseTest {
 
     @Test
     fun `use case prepends loading state to repository emissions`() = runTest {
-        val apps = listOf(AppInfo(name = "App", packageName = "pkg", iconUrl = "icon"))
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "icon",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
         val repositoryEmissions = listOf(
             DataState.Success(apps),
             DataState.Error<List<AppInfo>, Errors>(error = Errors.Network.REQUEST_TIMEOUT),
