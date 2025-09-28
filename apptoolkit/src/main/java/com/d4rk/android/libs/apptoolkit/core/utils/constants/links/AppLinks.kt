@@ -17,5 +17,5 @@ object AppLinks {
     const val LEGAL_NOTICES : String = "${AUTHOR_WEBSITE_BASE}#legal-notices"
     const val GPL_V3 : String = "https://www.gnu.org/licenses/gpl-3.0"
 
-    const val CONTACT_EMAIL : String = "contact.mihaicristiancondrea@gmail.com\n"
+    const val CONTACT_EMAIL : String = "contact.mihaicristiancondrea@gmail.com"
 }
