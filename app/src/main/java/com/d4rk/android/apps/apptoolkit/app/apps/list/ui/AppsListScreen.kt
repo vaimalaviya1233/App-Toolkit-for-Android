@@ -101,7 +101,6 @@ fun AppsListRoute(paddingValues: PaddingValues) {
                 },
                 onFavoriteClick = {
                     coroutineScope.launch {
-                        selectedApp = null
                         onFavoriteToggle(app.packageName)
                     }
                 }
