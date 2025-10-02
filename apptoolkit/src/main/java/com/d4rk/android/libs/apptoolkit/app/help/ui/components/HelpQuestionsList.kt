@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
@@ -9,13 +10,18 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import com.d4rk.android.libs.apptoolkit.app.help.domain.data.model.UiHelpQuestion
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
 @Composable
 fun HelpQuestionsList(questions : List<UiHelpQuestion>) {
     val expandedStates : SnapshotStateMap<Int , Boolean> = remember { mutableStateMapOf() }
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(SizeConstants.LargeIncreasedSize)) ,
+        shape = RoundedCornerShape(SizeConstants.LargeIncreasedSize)
+        ) {
         Column {
             questions.forEachIndexed { index : Int , question : UiHelpQuestion ->
                 key(question.id) {

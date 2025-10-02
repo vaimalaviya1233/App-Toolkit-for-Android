@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation
 
 import android.content.Context
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.VolunteerActivism
@@ -21,6 +22,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.support.ui.SupportActivity
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedIconButtonDirection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dropdown.CommonDropdownMenuItem
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +53,10 @@ fun MainTopAppBar(
                 onClick = { expandedMenu = true },
             )
 
-            DropdownMenu(expanded = expandedMenu, onDismissRequest = { expandedMenu = false }) {
+            DropdownMenu(
+                expanded = expandedMenu,
+                shape = RoundedCornerShape(SizeConstants.LargeIncreasedSize),
+                onDismissRequest = { expandedMenu = false }) {
                 CommonDropdownMenuItem(
                     textResId = R.string.support_us,
                     icon = Icons.Outlined.VolunteerActivism,

@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.outlined.QuestionAnswer
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,18 +30,20 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
+import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit , modifier : Modifier = Modifier) {
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
 
     Card(modifier = modifier
-        .bounceClick()
+            .bounceClick()
             .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
@@ -71,8 +74,9 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
                     text = title , style = MaterialTheme.typography.titleMedium , modifier = Modifier.weight(weight = 1f)
                 )
 
-                Icon(
-                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore , contentDescription = null , tint = MaterialTheme.colorScheme.primary , modifier = Modifier.size(size = SizeConstants.LargeIncreasedSize + SizeConstants.ExtraSmallSize)
+                OutlinedIconButton(
+                    onClick = { onToggleExpand() } ,
+                    icon = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore ,
                 )
             }
             if (isExpanded) {

@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown
 
 import android.app.Activity
 import android.content.Context
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Balance
@@ -24,6 +25,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.AnimatedIconB
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.VersionInfoAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dropdown.CommonDropdownMenuItem
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
@@ -35,7 +37,10 @@ fun HelpScreenMenuActions(
     AnimatedIconButtonDirection(
         fromRight = true , contentDescription = null , icon = Icons.Default.MoreVert , onClick = { showMenu = true })
 
-    DropdownMenu(expanded = showMenu , onDismissRequest = {
+    DropdownMenu(
+        expanded = showMenu ,
+        shape = RoundedCornerShape(SizeConstants.LargeIncreasedSize),
+        onDismissRequest = {
         showMenu = false
     }) {
         CommonDropdownMenuItem(

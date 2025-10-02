@@ -219,7 +219,7 @@ fun TonalIconButtonWithText(
 @Composable
 fun OutlinedIconButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
     enabled: Boolean = true,
     iconContentDescription: String? = null,
     icon: ImageVector? = null,

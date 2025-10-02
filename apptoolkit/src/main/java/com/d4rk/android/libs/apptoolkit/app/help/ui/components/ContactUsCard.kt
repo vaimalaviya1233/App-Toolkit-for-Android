@@ -42,12 +42,13 @@ fun ContactUsCard(onClick : () -> Unit) {
     Card(modifier = Modifier
             .fillMaxWidth()
             .bounceClick()
-            .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
+            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeIncreasedSize))
             .clickable {
                 view.playSoundEffect(SoundEffectConstants.CLICK)
                 hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
                 onClick()
-            }) {
+            },
+         shape = RoundedCornerShape(size = SizeConstants.LargeIncreasedSize)) {
         Row(
             modifier = Modifier
                     .fillMaxWidth()
