@@ -14,11 +14,11 @@ import org.junit.jupiter.api.extension.ExtensionContext
 class UnconfinedDispatcherExtension : BeforeEachCallback, AfterEachCallback {
     val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 
-    override fun beforeEach(context: ExtensionContext?) {
+    override fun beforeEach(context: ExtensionContext) {
         Dispatchers.setMain(testDispatcher)
     }
 
-    override fun afterEach(context: ExtensionContext?) {
+    override fun afterEach(context: ExtensionContext) {
         Dispatchers.resetMain()
     }
 }

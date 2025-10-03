@@ -12,14 +12,13 @@ import org.junit.jupiter.api.extension.ExtensionContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class StandardDispatcherExtension : BeforeEachCallback, AfterEachCallback {
-    lateinit var testDispatcher: TestDispatcher
+    val testDispatcher: TestDispatcher = StandardTestDispatcher()
 
-    override fun beforeEach(context: ExtensionContext?) {
-        testDispatcher = StandardTestDispatcher()
+    override fun beforeEach(context: ExtensionContext) {
         Dispatchers.setMain(testDispatcher)
     }
 
-    override fun afterEach(context: ExtensionContext?) {
+    override fun afterEach(context: ExtensionContext) {
         Dispatchers.resetMain()
     }
 }
