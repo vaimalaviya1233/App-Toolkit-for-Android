@@ -32,11 +32,13 @@ fun AppNavigationHost(
     snackbarHostState: SnackbarHostState,
     paddingValues: PaddingValues
 ) {
-    val dataStore : DataStore = koinInject()
-    val startupRoute by dataStore.startupDestinationFlow().collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
+    val dataStore: DataStore = koinInject()
+    val startupRoute by dataStore.startupDestinationFlow()
+        .collectAsStateWithLifecycle(initialValue = NavigationRoutes.ROUTE_APPS_LIST)
 
     NavigationHost(
-        navController = navController , startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
+        navController = navController,
+        startDestination = startupRoute.ifBlank { NavigationRoutes.ROUTE_APPS_LIST }
     ) {
         composable(route = NavigationRoutes.ROUTE_APPS_LIST) {
             AppsListRoute(paddingValues = paddingValues)
@@ -61,10 +63,21 @@ fun handleNavigationItemClick(
     onChangelogRequested: () -> Unit = {},
 ) {
     when (item.route) {
-        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(context = context, activityClass = SettingsActivity::class.java)
-        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(context = context, activityClass = HelpActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(
+            context = context,
+            activityClass = SettingsActivity::class.java
+        )
+
+        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(
+            context = context,
+            activityClass = HelpActivity::class.java
+        )
+
         NavigationDrawerRoutes.ROUTE_UPDATES -> onChangelogRequested()
-        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(context = context, shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
+        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(
+            context = context,
+            shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message
+        )
     }
     if (drawerState != null && coroutineScope != null) {
         coroutineScope.launch { drawerState.close() }

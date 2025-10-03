@@ -15,10 +15,10 @@ import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +51,7 @@ fun UsageAndDiagnosticsList(
 
     LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxSize()) {
         item {
-            val usageState = remember { derivedStateOf { uiState.usageAndDiagnostics } }
+            val usageState = rememberUpdatedState(newValue = uiState.usageAndDiagnostics)
             SwitchCardItem(
                 title = stringResource(id = R.string.usage_and_diagnostics),
                 switchState = usageState,
