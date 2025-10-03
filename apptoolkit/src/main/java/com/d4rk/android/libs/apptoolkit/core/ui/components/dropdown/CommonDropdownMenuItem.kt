@@ -2,11 +2,13 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.dropdown
 
 import android.view.SoundEffectConstants
 import android.view.View
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -32,6 +34,8 @@ fun CommonDropdownMenuItem(
             hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
             onClick()
         },
-        modifier = modifier.bounceClick()
+        modifier = modifier
+            .clip(CircleShape)
+            .bounceClick()
     )
 }
