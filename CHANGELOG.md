@@ -1,5 +1,7 @@
 # Version 1.1.3:
 
+- **New**: Added app preview.
+- **Patch**: Improved some UI components.
 - **Patch**: Updated dependencies.
 
 # Version 1.1.2:
