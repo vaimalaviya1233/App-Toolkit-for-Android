@@ -43,8 +43,8 @@ fun ThemeOnboardingPageTab() {
     val context: Context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
 
-    val defaultThemeModeName: String = stringResource(id = R.string.follow_system)
-    val currentThemeMode: String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = defaultThemeModeName)
+    val defaultThemeModeKey: String = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM
+    val currentThemeMode: String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = defaultThemeModeKey)
     val isAmoledMode: Boolean by dataStore.amoledMode.collectAsStateWithLifecycle(initialValue = false)
 
     val themeChoices: List<OnboardingThemeChoice> = listOf(
