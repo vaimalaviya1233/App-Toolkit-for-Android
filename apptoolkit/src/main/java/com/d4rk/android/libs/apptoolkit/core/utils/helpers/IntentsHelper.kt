@@ -34,15 +34,13 @@ object IntentsHelper {
             addCategory(Intent.CATEGORY_BROWSABLE)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return intent.resolveActivity(context.packageManager)?.let {
-            runCatching {
-                context.startActivity(intent)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: false
+        return runCatching {
+            context.startActivity(intent)
+            true
+        }.getOrElse {
+            it.printStackTrace()
+            false
+        }
     }
 
     /**
@@ -58,15 +56,13 @@ object IntentsHelper {
         val intent = Intent(context , activityClass).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return intent.resolveActivity(context.packageManager)?.let {
-            runCatching {
-                context.startActivity(intent)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: false
+        return runCatching {
+            context.startActivity(intent)
+            true
+        }.getOrElse {
+            it.printStackTrace()
+            false
+        }
     }
 
     /**
@@ -91,15 +87,13 @@ object IntentsHelper {
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        return intent.resolveActivity(context.packageManager)?.let {
-            runCatching {
-                context.startActivity(intent)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: false
+        return runCatching {
+            context.startActivity(intent)
+            true
+        }.getOrElse {
+            it.printStackTrace()
+            false
+        }
     }
 
     /**
@@ -156,15 +150,12 @@ object IntentsHelper {
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return marketIntent.resolveActivity(context.packageManager)?.let {
-            runCatching {
-                context.startActivity(marketIntent)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: openUrl(context , "${AppLinks.PLAY_STORE_APP}$packageName")
+        return runCatching {
+            context.startActivity(marketIntent)
+            true
+        }.getOrElse {
+            openUrl(context, "${AppLinks.PLAY_STORE_APP}$packageName")
+        }
     }
 
     /**
@@ -198,15 +189,13 @@ object IntentsHelper {
         ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return chooser.resolveActivity(context.packageManager)?.let {
-            runCatching {
-                context.startActivity(chooser)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: false
+        return runCatching {
+            context.startActivity(chooser)
+            true
+        }.getOrElse {
+            it.printStackTrace()
+            false
+        }
     }
 
     /**
@@ -227,21 +216,19 @@ object IntentsHelper {
         val bodyEncoded : String = URLEncoder.encode(body , "UTF-8").replace("+" , "%20")
 
         val mailtoUri : Uri = "mailto:$developerEmail?subject=$subjectEncoded&body=$bodyEncoded".toUri()
-        val emailIntent = Intent(Intent.ACTION_SENDTO , mailtoUri)
 
-        return emailIntent.resolveActivity(context.packageManager)?.let {
-            val chooser = Intent.createChooser(
-                emailIntent , context.getString(R.string.send_email_using)
-            ).apply {
+        return runCatching {
+            context.startActivity(
+                Intent.createChooser(
+                    Intent(Intent.ACTION_SENDTO, mailtoUri),
+                    context.getString(R.string.send_email_using)
+                ).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            runCatching {
-                context.startActivity(chooser)
-                true
-            }.getOrElse {
-                it.printStackTrace()
-                false
-            }
-        } ?: false
+                })
+            true
+        }.getOrElse {
+            it.printStackTrace()
+            false
+        }
     }
 }
