@@ -3,6 +3,7 @@ package com.d4rk.android.libs.apptoolkit.app.help.ui.components
 import android.view.SoundEffectConstants
 import android.view.View
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.outlined.QuestionAnswer
 import androidx.compose.material3.Card
@@ -23,9 +23,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -41,7 +43,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onToggleExpand : () -> Unit , modifier : Modifier = Modifier) {
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
-
+    val expandIconRotation by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f , label = "ExpandIconRotation")
     Card(modifier = modifier
             .bounceClick()
             .clip(shape = RoundedCornerShape(size = SizeConstants.MediumSize))
@@ -76,7 +78,8 @@ fun QuestionCard(title : String , summary : String , isExpanded : Boolean , onTo
 
                 OutlinedIconButton(
                     onClick = { onToggleExpand() } ,
-                    icon = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore ,
+                    icon = Icons.Filled.ExpandMore ,
+                    modifier = Modifier.rotate(degrees = expandIconRotation) ,
                 )
             }
             if (isExpanded) {
