@@ -170,15 +170,13 @@ class LoginViewModel(
     fun login(username: String, token: String) {
         viewModelScope.launch {
             val jsonBody = "{ username: \"$username\", token: \"$token\"}"
-            val result = try {
+            val result = runCatching {
                 loginRepository.makeLoginRequest(jsonBody)
-            } catch(e: Exception) {
-                Result.Error(Exception("Network request failed"))
+            }.getOrElse {
+                Result.Error(Exception("Network request failed", it))
             }
-            when (result) {
-                is Result.Success<LoginResponse> -> // Happy path
-                else -> // Show error in UI
-            }
+
+            // ...
         }
     }
 }

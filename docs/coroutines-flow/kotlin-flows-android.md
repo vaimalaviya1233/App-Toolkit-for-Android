@@ -201,25 +201,22 @@ class FirestoreUserEventsDataSource(
     fun getUserEvents(): Flow<UserEvents> = callbackFlow {
 
         // Reference to use in Firestore
-        var eventsCollection: CollectionReference? = null
-        try {
-            eventsCollection = FirebaseFirestore.getInstance()
+        val eventsCollection = runCatching {
+            FirebaseFirestore.getInstance()
                 .collection("collection")
                 .document("app")
-        } catch (e: Throwable) {
+        }.getOrElse {
             // If Firebase cannot be initialized, close the stream of data
             // flow consumers will stop collecting and the coroutine will resume
-            close(e)
+            close(it)
+            return@callbackFlow
         }
 
         // Registers callback to firestore, which will be called on new events
         val subscription = eventsCollection?.addSnapshotListener { snapshot, _ ->
-            if (snapshot == null) { return@addSnapshotListener }
-            // Sends events to the flow! Consumers will get the new events
-            try {
-                trySend(snapshot.getEvents())
-            } catch (e: Throwable) {
-                // Event couldn't be sent to the flow
+            snapshot?.let {
+                // Sends events to the flow! Consumers will get the new events.
+                runCatching { trySend(it.getEvents()) }
             }
         }
 
