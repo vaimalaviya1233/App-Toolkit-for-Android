@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -11,11 +12,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
@@ -38,6 +37,7 @@ internal val LocalNativeAdView = staticCompositionLocalOf<NativeAdView?> { null 
 /**
  * This is the Compose wrapper for a NativeAdView.
  *
+ * @param nativeAd The `NativeAd` object containing the ad assets to be displayed in this view.
  * @param modifier The modifier to apply to the native ad.
  * @param content A composable function that defines the rest of the native ad view's elements.
  */
@@ -108,7 +108,8 @@ fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable (
 fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.bodyView = localComposeView
@@ -128,15 +129,15 @@ fun NativeAdBodyView(modifier: Modifier = Modifier, content: @Composable () -> U
 @Composable
 fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
+    val localContext = LocalContext.current
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
+        factory = {
+            nativeAdView.callToActionView = localComposeView
+            localComposeView.apply { setContent(content) }
+        },
         modifier = modifier,
-        factory = { context ->
-            ComposeView(context).apply { id = View.generateViewId() }
-        },
-        update = { view ->
-            nativeAdView.callToActionView = view
-            view.setContent(content)
-        },
     )
 }
 
@@ -173,7 +174,8 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
 fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.headlineView = localComposeView
@@ -194,7 +196,8 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
 fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.iconView = localComposeView
@@ -209,14 +212,18 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
  * within a `NativeAdView`.
  *
  * @param modifier modify the native ad view element.
+ * @param scaleType The ImageView.ScaleType to apply to the image/media within the MediaView.
  */
 @Composable
-fun NativeAdMediaView(modifier: Modifier = Modifier) {
+fun NativeAdMediaView(modifier: Modifier = Modifier, scaleType: ImageView.ScaleType? = null) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
     AndroidView(
         factory = { MediaView(localContext) },
-        update = { view -> nativeAdView.mediaView = view },
+        update = { view ->
+            nativeAdView.mediaView = view
+            scaleType?.let { type -> view.setImageScaleType(type) }
+        },
         modifier = modifier,
     )
 }
@@ -232,7 +239,8 @@ fun NativeAdMediaView(modifier: Modifier = Modifier) {
 fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.priceView = localComposeView
@@ -253,7 +261,8 @@ fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> 
 fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.starRatingView = localComposeView
@@ -274,7 +283,8 @@ fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable (
 fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
     val localContext = LocalContext.current
-    val localComposeView = remember { ComposeView(localContext).apply { id = View.generateViewId() } }
+    val localComposeView =
+        remember { ComposeView(localContext).apply { id = View.generateViewId() } }
     AndroidView(
         factory = {
             nativeAdView.storeView = localComposeView
