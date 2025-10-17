@@ -23,7 +23,9 @@ import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -75,40 +77,38 @@ class IssueReporterViewModel(
         }
 
         sendJob = viewModelScope.launch {
-            runCatching {
+            val report = runCatching {
                 val deviceInfo = deviceInfoProvider.capture()
                 val extraInfo = ExtraInfo()
-                val report = Report(
+                Report(
                     title = data.title,
                     description = data.description,
                     deviceInfo = deviceInfo,
                     extraInfo = extraInfo,
-                    email = data.email.ifBlank { null }
+                    email = data.email.ifBlank { null },
                 )
-
-                val params = SendIssueReportUseCase.Params(
-                    report = report,
-                    target = githubTarget,
-                    token = githubToken.takeIf { it.isNotBlank() }
-                )
-
-                sendIssueReport(params)
-                    .onStart { screenState.updateState(ScreenState.IsLoading()) }
-                    .collect { outcome -> handleResult(outcome) }
-            }.onFailure {
-                screenState.update { current ->
-                    current.copy(
-                        screenState = ScreenState.Error(),
-                        snackbar = UiSnackbar(
-                            message = UiTextHelper.StringResource(R.string.snack_report_failed),
-                            isError = true,
-                            timeStamp = System.currentTimeMillis(),
-                            type = ScreenMessageType.SNACKBAR,
-                        )
-                    )
-                }
+            }.getOrElse {
+                showFailureSnackbar()
+                return@launch
             }
-            sendJob = null
+
+            val params = SendIssueReportUseCase.Params(
+                report = report,
+                target = githubTarget,
+                token = githubToken.takeIf { it.isNotBlank() }
+            )
+
+            sendIssueReport(params)
+                .onStart { screenState.updateState(ScreenState.IsLoading()) }
+                .onCompletion { cause ->
+                    when {
+                        cause != null && cause !is CancellationException -> showFailureSnackbar()
+                        screenState.value.screenState is ScreenState.IsLoading ->
+                            screenState.updateState(ScreenState.Success())
+                    }
+                    sendJob = null
+                }
+                .collect { outcome -> handleResult(outcome) }
         }
     }
 
@@ -138,18 +138,24 @@ class IssueReporterViewModel(
                     HttpStatusCode.UnprocessableEntity -> UiTextHelper.StringResource(R.string.error_unprocessable)
                     else -> UiTextHelper.StringResource(R.string.snack_report_failed)
                 }
-                screenState.update { current ->
-                    current.copy(
-                        screenState = ScreenState.Error(),
-                        snackbar = UiSnackbar(
-                            message = msg,
-                            isError = true,
-                            timeStamp = System.currentTimeMillis(),
-                            type = ScreenMessageType.SNACKBAR,
-                        )
-                    )
-                }
+                showFailureSnackbar(msg)
             }
+        }
+    }
+
+    private fun showFailureSnackbar(
+        message: UiTextHelper = UiTextHelper.StringResource(R.string.snack_report_failed),
+    ) {
+        screenState.update { current ->
+            current.copy(
+                screenState = ScreenState.Error(),
+                snackbar = UiSnackbar(
+                    message = message,
+                    isError = true,
+                    timeStamp = System.currentTimeMillis(),
+                    type = ScreenMessageType.SNACKBAR,
+                )
+            )
         }
     }
 }

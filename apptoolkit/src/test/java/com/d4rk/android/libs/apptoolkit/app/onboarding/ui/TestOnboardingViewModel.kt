@@ -6,6 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -27,6 +28,15 @@ private class FakeOnboardingRepository : OnboardingRepository {
     suspend fun emit(value: Boolean) {
         completion.emit(value)
     }
+}
+
+private class FailingOnboardingRepository : OnboardingRepository {
+    override fun observeOnboardingCompletion(): Flow<Boolean> = flow {
+        emit(true)
+        throw IllegalStateException("boom")
+    }
+
+    override suspend fun setOnboardingCompleted() = Unit
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -92,6 +102,16 @@ class TestOnboardingViewModel {
 
         assertThat(viewModel.uiState.value.isOnboardingCompleted).isTrue()
     }
+
+    @Test
+    fun `repository failure resets completion state via onCompletion`() =
+        runTest(dispatcherExtension.testDispatcher) {
+            val viewModel = OnboardingViewModel(repository = FailingOnboardingRepository())
+
+            advanceUntilIdle()
+
+            assertThat(viewModel.uiState.value.isOnboardingCompleted).isFalse()
+        }
 
     @Test
     fun `completeOnboarding sets completion and calls callback`() = runTest(dispatcherExtension.testDispatcher) {

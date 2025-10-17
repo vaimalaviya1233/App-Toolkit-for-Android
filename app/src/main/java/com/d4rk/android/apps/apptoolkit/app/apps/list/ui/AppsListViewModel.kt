@@ -19,6 +19,7 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -51,7 +53,16 @@ class AppsListViewModel(
     init {
         viewModelScope.launch {
             fetchAppsTrigger
-                .flatMapLatest { fetchDeveloperAppsUseCase().flowOn(dispatchers.io) }
+                .flatMapLatest {
+                    fetchDeveloperAppsUseCase()
+                        .flowOn(dispatchers.io)
+                        .onCompletion { cause ->
+                            if (cause != null && cause !is CancellationException) {
+                                cause.printStackTrace()
+                                showLoadAppsError()
+                            }
+                        }
+                }
                 .collect { result ->
                     when (result) {
                         is DataState.Success -> {

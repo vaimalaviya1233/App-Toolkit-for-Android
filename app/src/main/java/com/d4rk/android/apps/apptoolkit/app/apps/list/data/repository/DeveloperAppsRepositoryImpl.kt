@@ -13,6 +13,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -48,10 +49,16 @@ class DeveloperAppsRepositoryImpl(
                         )
                     )
                 }
-                .onFailure {
+                .onFailure { throwable ->
+                    if (throwable is CancellationException) {
+                        throw throwable
+                    }
                     emit(DataState.Error(error = Errors.UseCase.FAILED_TO_LOAD_APPS))
                 }
         }.onFailure { throwable ->
+            if (throwable is CancellationException) {
+                throw throwable
+            }
             val error = when (throwable) {
                 is SocketTimeoutException -> Errors.Network.REQUEST_TIMEOUT
                 is IOException -> Errors.Network.NO_INTERNET

@@ -4,6 +4,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.advanced.data.CacheRepository
 import com.d4rk.android.libs.apptoolkit.app.advanced.domain.actions.AdvancedSettingsEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.google.common.truth.Truth.assertThat
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,6 +56,7 @@ class TestAdvancedSettingsViewModel {
 
             // Success emission
             viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
+            assertThat(awaitItem().screenState).isInstanceOf(ScreenState.IsLoading::class.java)
             repository.emit(Result.Success(Unit))
             assertThat(awaitItem().data?.cacheClearMessage).isEqualTo(R.string.cache_cleared_success)
 
@@ -64,6 +66,7 @@ class TestAdvancedSettingsViewModel {
 
             // Error emission
             viewModel.onEvent(AdvancedSettingsEvent.ClearCache)
+            assertThat(awaitItem().screenState).isInstanceOf(ScreenState.IsLoading::class.java)
             repository.emit(Result.Error(Exception("boom")))
             assertThat(awaitItem().data?.cacheClearMessage).isEqualTo(R.string.cache_cleared_error)
 

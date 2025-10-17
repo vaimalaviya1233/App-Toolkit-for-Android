@@ -10,9 +10,13 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.Result
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 
 class AdvancedSettingsViewModel(
     private val repository: CacheRepository,
@@ -31,17 +35,31 @@ class AdvancedSettingsViewModel(
     }
 
     private fun clearCache() {
-        viewModelScope.launch {
-            repository.clearCache()
-                .catch { emit(Result.Error(it as Exception)) }
-                .collect { result ->
-                    val message = when (result) {
-                        is Result.Success -> R.string.cache_cleared_success
-                        is Result.Error -> R.string.cache_cleared_error
-                    }
-                    screenState.copyData { copy(cacheClearMessage = message) }
+        screenState.setLoading()
+        var hasResult = false
+
+        repository.clearCache()
+            .onEach { result ->
+                hasResult = true
+                screenState.updateState(ScreenState.Success())
+                val messageResId = when (result) {
+                    is Result.Success -> R.string.cache_cleared_success
+                    is Result.Error -> R.string.cache_cleared_error
                 }
-        }
+                screenState.copyData { copy(cacheClearMessage = messageResId) }
+            }
+            .catch {
+                hasResult = true
+                screenState.updateState(ScreenState.Success())
+                screenState.copyData { copy(cacheClearMessage = R.string.cache_cleared_error) }
+            }
+            .onCompletion { cause ->
+                screenState.updateState(ScreenState.Success())
+                if (!hasResult || cause != null) {
+                    screenState.copyData { copy(cacheClearMessage = R.string.cache_cleared_error) }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun onMessageShown() {

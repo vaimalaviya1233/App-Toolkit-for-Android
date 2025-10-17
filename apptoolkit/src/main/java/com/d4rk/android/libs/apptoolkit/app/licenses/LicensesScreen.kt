@@ -15,7 +15,7 @@ import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
-import com.mikepenz.aboutlibraries.ui.compose.android.rememberLibraries
+import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,7 +24,7 @@ fun LicensesScreen(activity : Activity) {
     val scrollBehavior : TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = rememberTopAppBarState())
 
     LargeTopAppBarWithScaffold(title = stringResource(id = R.string.oss_license_title) , onBackClicked = { activity.finish() } , scrollBehavior = scrollBehavior) { paddingValues ->
-        val libraries: Libs? by rememberLibraries(resId = R.raw.aboutlibraries)
+        val libraries: Libs? by produceLibraries(resId = R.raw.aboutlibraries)
 
         LibrariesContainer(
             libraries = libraries,

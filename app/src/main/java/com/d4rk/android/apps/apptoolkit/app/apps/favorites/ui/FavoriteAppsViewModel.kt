@@ -24,11 +24,9 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageTyp
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,7 +34,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 class FavoriteAppsViewModel(
     private val observeFavoriteAppsUseCase: ObserveFavoriteAppsUseCase,
-    observeFavoritesUseCase: ObserveFavoritesUseCase,
+    private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val dispatchers: DispatcherProvider,
 ) : ScreenViewModel<UiHomeScreen, FavoriteAppsEvent, FavoriteAppsAction>(
@@ -45,16 +43,31 @@ class FavoriteAppsViewModel(
 
     private val loadFavoritesTrigger = MutableSharedFlow<Unit>(replay = 1)
 
-    val favorites = flow { emitAll(observeFavoritesUseCase()) }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = emptySet()
-    )
+    val favorites = loadFavoritesTrigger
+        .flatMapLatest { observeFavoritesUseCase() }
+        .stateIn(
+            scope = viewModelScope,
+            started = WhileSubscribed(5_000),
+            initialValue = emptySet()
+        )
+
 
     init {
         viewModelScope.launch {
             loadFavoritesTrigger
-                .flatMapLatest { observeFavoriteAppsUseCase().flowOn(dispatchers.io) }
+                .flatMapLatest {
+                    observeFavoriteAppsUseCase()
+                        .onCompletion { cause ->
+                            if (cause == null && screenState.value.screenState is IsLoading) {
+                                screenState.update { current ->
+                                    current.copy(
+                                        screenState = NoData(),
+                                        data = current.data ?: UiHomeScreen(apps = emptyList())
+                                    )
+                                }
+                            }
+                        }
+                }
                 .collect { result ->
                     when (result) {
                         is DataState.Success -> {

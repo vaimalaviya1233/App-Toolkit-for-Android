@@ -8,8 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel for handling onboarding state and actions.
@@ -25,13 +28,20 @@ class OnboardingViewModel(
     val uiState: StateFlow<OnboardingUiState> = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            repository.observeOnboardingCompletion()
-                .catch { emit(false) }
-                .collect { completed ->
-                    _uiState.update { it.copy(isOnboardingCompleted = completed) }
+        repository
+            .observeOnboardingCompletion()
+            .onEach { completed ->
+                _uiState.update { it.copy(isOnboardingCompleted = completed) }
+            }
+            .onCompletion { cause ->
+                if (cause != null) {
+                    _uiState.update { it.copy(isOnboardingCompleted = false) }
                 }
-        }
+            }
+            .catch { _ ->
+                _uiState.update { it.copy(isOnboardingCompleted = false) }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun updateCurrentTab(index: Int) {
@@ -39,14 +49,20 @@ class OnboardingViewModel(
     }
 
     fun completeOnboarding(onFinished: () -> Unit) {
-        viewModelScope.launch {
-            runCatching {
-                repository.setOnboardingCompleted()
-                onFinished()
-            }.onFailure {
-                _uiState.update { it.copy(isOnboardingCompleted = false) }
-            }
+        flow<Unit> {
+            repository.setOnboardingCompleted()
         }
+            .onCompletion { cause ->
+                if (cause == null) {
+                    onFinished()
+                } else {
+                    _uiState.update { it.copy(isOnboardingCompleted = false) }
+                }
+            }
+            .catch { _ ->
+                // Failure is already handled in onCompletion above.
+            }
+            .launchIn(viewModelScope)
     }
 
     companion object {

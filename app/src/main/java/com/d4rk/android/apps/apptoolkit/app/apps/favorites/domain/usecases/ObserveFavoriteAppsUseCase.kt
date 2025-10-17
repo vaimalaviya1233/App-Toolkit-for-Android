@@ -5,11 +5,13 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDevel
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.transformLatest
 
 /**
@@ -21,20 +23,23 @@ class ObserveFavoriteAppsUseCase(
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     private val dispatchers: DispatcherProvider,
 ) {
-    suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
         return fetchDeveloperAppsUseCase()
             .transformLatest { dataState ->
                 when (dataState) {
                     is DataState.Success -> {
+                        var hasEmittedFavorites = false
                         val favoritesFlow = observeFavoritesUseCase()
-                            .onCompletion { cause ->
-                                if (cause == null) {
-                                    emit(emptySet())
-                                }
-                            }
+                            .onEach { hasEmittedFavorites = true }
                             .map { favorites ->
                                 val favoriteApps = dataState.data.filter { favorites.contains(it.packageName) }
                                 DataState.Success(favoriteApps)
+                            }
+                            .onCompletion { cause ->
+                                if (cause == null && !hasEmittedFavorites) {
+                                    emit(DataState.Success(emptyList()))
+                                }
                             }
                         emitAll(favoritesFlow)
                     }
