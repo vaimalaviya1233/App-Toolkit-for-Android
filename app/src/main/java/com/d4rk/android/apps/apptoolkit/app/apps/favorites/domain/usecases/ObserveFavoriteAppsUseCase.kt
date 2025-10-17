@@ -6,8 +6,11 @@ import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.RootError
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.transformLatest
 
 /**
  * Use case that combines the list of developer apps with the current set of
@@ -19,19 +22,28 @@ class ObserveFavoriteAppsUseCase(
     private val dispatchers: DispatcherProvider,
 ) {
     suspend operator fun invoke(): Flow<DataState<List<AppInfo>, RootError>> {
-        return combine(
-            fetchDeveloperAppsUseCase().flowOn(dispatchers.io),
-            observeFavoritesUseCase()
-        ) { dataState, favorites ->
-            when (dataState) {
-                is DataState.Success -> {
-                    val apps = dataState.data.filter { favorites.contains(it.packageName) }
-                    DataState.Success(apps)
+        return fetchDeveloperAppsUseCase()
+            .transformLatest { dataState ->
+                when (dataState) {
+                    is DataState.Success -> {
+                        val favoritesFlow = observeFavoritesUseCase()
+                            .onCompletion { cause ->
+                                if (cause == null) {
+                                    emit(emptySet())
+                                }
+                            }
+                            .map { favorites ->
+                                val favoriteApps = dataState.data.filter { favorites.contains(it.packageName) }
+                                DataState.Success(favoriteApps)
+                            }
+                        emitAll(favoritesFlow)
+                    }
+
+                    is DataState.Error -> emit(DataState.Error(data = dataState.data, error = dataState.error))
+                    is DataState.Loading -> emit(DataState.Loading(data = dataState.data))
                 }
-                is DataState.Error -> dataState
-                is DataState.Loading -> DataState.Loading()
             }
-        }.flowOn(dispatchers.io)
+            .flowOn(dispatchers.io)
     }
 }
 

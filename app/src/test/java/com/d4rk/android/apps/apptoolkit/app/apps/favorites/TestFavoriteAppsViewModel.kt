@@ -129,4 +129,37 @@ class TestFavoriteAppsViewModel : TestFavoriteAppsViewModelBase() {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `removing last favorite shows no data state`() = runTest(dispatcherExtension.testDispatcher) {
+        val apps = listOf(
+            AppInfo(
+                name = "App",
+                packageName = "pkg",
+                iconUrl = "url",
+                description = "Description",
+                screenshots = emptyList(),
+            )
+        )
+        setup(
+            fetchApps = apps,
+            initialFavorites = setOf("pkg"),
+            dispatchers = TestDispatchers(dispatcherExtension.testDispatcher)
+        )
+
+        viewModel.uiState.test {
+            awaitItem() // Initial loading
+            val success = awaitItem()
+            assertThat(success.screenState).isInstanceOf(ScreenState.Success::class.java)
+            assertThat(success.data?.apps?.map { it.packageName }).containsExactly("pkg")
+
+            viewModel.toggleFavorite("pkg")
+
+            val noData = awaitItem()
+            assertThat(noData.screenState).isInstanceOf(ScreenState.NoData::class.java)
+            assertThat(noData.data?.apps).isEmpty()
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
