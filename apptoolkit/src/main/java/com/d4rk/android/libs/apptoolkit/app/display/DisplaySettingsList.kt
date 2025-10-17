@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,7 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.display.components.dialogs.SelectLanguageAlertDialog
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.DisplaySettingsProvider
@@ -35,11 +34,15 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPre
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.SwitchPreferenceItemWithDivider
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraTinyVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.SmallVerticalSpacer
+import com.d4rk.android.libs.apptoolkit.core.ui.effects.collectWithLifecycleOnCompletion
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.datastore.DataStoreNamesConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+private const val DISPLAY_SETTINGS_TAG : String = "DisplaySettings"
 
 @Composable
 fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provider : DisplaySettingsProvider) {
@@ -49,7 +52,14 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
     var showLanguageDialog : Boolean by remember { mutableStateOf(value = false) }
     var showStartupDialog : Boolean by remember { mutableStateOf(value = false) }
 
-    val currentThemeModeKey : String by dataStore.themeMode.collectAsStateWithLifecycle(initialValue = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM)
+    val currentThemeModeKey : String by dataStore.themeMode.collectWithLifecycleOnCompletion(
+        initialValue = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM
+    ) { cause : Throwable? ->
+        if (cause != null && cause !is CancellationException) {
+            Log.w(DISPLAY_SETTINGS_TAG , "Theme mode flow completed with an error." , cause)
+            dataStore.themeModeState.value = DataStoreNamesConstants.THEME_MODE_FOLLOW_SYSTEM
+        }
+    }
     val isSystemDarkTheme : Boolean = isSystemInDarkTheme()
 
     val isDarkThemeActive : Boolean = when (currentThemeModeKey) {
@@ -67,9 +77,21 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
             stringResource(id = R.string.will_turn_on_automatically_by_system)
     }
 
-    val isDynamicColors : State<Boolean> = dataStore.dynamicColors.collectAsStateWithLifecycle(initialValue = true)
-    val bouncyButtons : Boolean by dataStore.bouncyButtons.collectAsStateWithLifecycle(initialValue = true)
-    val showLabelsOnBottomBar : Boolean by dataStore.getShowBottomBarLabels().collectAsStateWithLifecycle(initialValue = true)
+    val isDynamicColors : Boolean by dataStore.dynamicColors.collectWithLifecycleOnCompletion(initialValue = true) { cause : Throwable? ->
+        if (cause != null && cause !is CancellationException) {
+            Log.w(DISPLAY_SETTINGS_TAG , "Dynamic color flow completed with an error." , cause)
+        }
+    }
+    val bouncyButtons : Boolean by dataStore.bouncyButtons.collectWithLifecycleOnCompletion(initialValue = true) { cause : Throwable? ->
+        if (cause != null && cause !is CancellationException) {
+            Log.w(DISPLAY_SETTINGS_TAG , "Bouncy buttons flow completed with an error." , cause)
+        }
+    }
+    val showLabelsOnBottomBar : Boolean by dataStore.getShowBottomBarLabels().collectWithLifecycleOnCompletion(initialValue = true) { cause : Throwable? ->
+        if (cause != null && cause !is CancellationException) {
+            Log.w(DISPLAY_SETTINGS_TAG , "Bottom bar label flow completed with an error." , cause)
+        }
+    }
 
     LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
         item {
@@ -117,7 +139,7 @@ fun DisplaySettingsList(paddingValues : PaddingValues = PaddingValues() , provid
                     SwitchPreferenceItem(
                         title = stringResource(id = R.string.dynamic_colors) ,
                         summary = stringResource(id = R.string.summary_preference_settings_dynamic_colors) ,
-                        checked = isDynamicColors.value ,
+                        checked = isDynamicColors ,
                     ) { isChecked ->
                         coroutineScope.launch {
                             dataStore.saveDynamicColors(isChecked = isChecked)

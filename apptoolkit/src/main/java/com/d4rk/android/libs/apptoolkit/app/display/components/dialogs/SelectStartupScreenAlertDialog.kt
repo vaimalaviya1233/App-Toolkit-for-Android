@@ -13,16 +13,23 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.ui.effects.collectWithLifecycleOnCompletion
 import com.d4rk.android.libs.apptoolkit.core.ui.components.dialogs.BasicAlertDialog
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.sections.InfoMessageSection
 import com.d4rk.android.libs.apptoolkit.core.ui.components.preferences.RadioButtonPreferenceItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.MediumVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.onCompletion
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -33,7 +40,11 @@ fun SelectStartupScreenAlertDialog(onDismiss: () -> Unit, onStartupSelected: (St
     val selectedPage = remember { mutableStateOf("") }
     val entries: List<String> = koinInject(qualifier = named("startup_entries"))
     val values: List<String> = koinInject(qualifier = named("startup_values"))
-    val startupRoute by dataStore.getStartupPage(default = values.first()).collectAsStateWithLifecycle(initialValue = values.first())
+    val startupRoute by dataStore.getStartupPage(default = values.first()).collectWithLifecycleOnCompletion(initialValue = values.first()) { cause : Throwable? ->
+        if (cause != null && cause !is CancellationException) {
+            selectedPage.value = values.first()
+        }
+    }
 
     LaunchedEffect(startupRoute) {
         selectedPage.value = startupRoute
@@ -84,9 +95,21 @@ fun SelectStartupScreenAlertDialogContent(
         InfoMessageSection(message = stringResource(id = R.string.dialog_info_startup))
     }
 
-    LaunchedEffect(selectedPage.value) {
-        if (selectedPage.value.isNotBlank() && selectedPage.value != startupRoute) {
-            dataStore.saveStartupPage(selectedPage.value)
-        }
+    val latestStartupRoute by rememberUpdatedState(newValue = startupRoute)
+
+    LaunchedEffect(Unit) {
+        snapshotFlow { selectedPage.value }
+            .distinctUntilChanged()
+            .drop(count = 1)
+            .onCompletion { cause : Throwable? ->
+                if (cause != null && cause !is CancellationException) {
+                    selectedPage.value = latestStartupRoute
+                }
+            }
+            .collectLatest { route : String ->
+                if (route.isNotBlank() && route != latestStartupRoute) {
+                    dataStore.saveStartupPage(route)
+                }
+            }
     }
 }
