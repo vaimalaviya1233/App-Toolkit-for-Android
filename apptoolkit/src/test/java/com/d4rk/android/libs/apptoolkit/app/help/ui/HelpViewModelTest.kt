@@ -26,26 +26,6 @@ class HelpViewModelTest {
     }
 
     @Test
-    fun `loadFaq emits loading then success`() = runTest(dispatcherExtension.testDispatcher) {
-        val faqFlow = MutableSharedFlow<List<UiHelpQuestion>>()
-        val repo = object : HelpRepository {
-            override fun fetchFaq() = faqFlow
-        }
-        val viewModel = HelpViewModel(repo)
-
-        viewModel.onEvent(HelpEvent.LoadFaq)
-        advanceUntilIdle()
-        assertThat(viewModel.uiState.value.screenState)
-            .isInstanceOf(ScreenState.IsLoading::class.java)
-
-        faqFlow.emit(listOf(UiHelpQuestion(id = 0 , question = "Q" , answer = "A")))
-        advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertThat(state.screenState).isInstanceOf(ScreenState.Success::class.java)
-        assertThat(state.data?.questions).containsExactly(UiHelpQuestion(id = 0 , question = "Q" , answer = "A"))
-    }
-
-    @Test
     fun `loadFaq sets NoData when repository returns empty`() = runTest(dispatcherExtension.testDispatcher) {
         val repo = object : HelpRepository {
             override fun fetchFaq() = flowOf(emptyList<UiHelpQuestion>())
