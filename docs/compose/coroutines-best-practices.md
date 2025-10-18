@@ -269,10 +269,13 @@ class LoginViewModel(
 
     fun login(username: String, token: String) {
         viewModelScope.launch {
-            try {
+            val result = runCatching {
                 loginRepository.login(username, token)
+            }
+            result.onSuccess {
                 // Notify view user logged in successfully
-            } catch (exception: IOException) {
+            }.onFailure { exception ->
+                // e.g. handle IOException when there's a network issue
                 // Notify view login attempt failed
             }
         }
