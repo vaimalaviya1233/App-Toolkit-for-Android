@@ -9,14 +9,15 @@ import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.G
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -39,6 +40,11 @@ class GeneralSettingsViewModel(
         loadJob = viewModelScope.launch {
             repository.getContentKey(contentKey)
                 .onStart { screenState.setLoading() }
+                .onCompletion { cause ->
+                    if (cause == null) {
+                        screenState.updateState(newValues = ScreenState.Success())
+                    }
+                }
                 .catch {
                     screenState.setErrors(
                         errors = listOf(
@@ -53,8 +59,8 @@ class GeneralSettingsViewModel(
                 }
                 .collect { key ->
                     screenState.setErrors(errors = emptyList())
-                    screenState.updateData(newState = ScreenState.Success()) { current: UiGeneralSettingsScreen ->
-                        current.copy(contentKey = key)
+                    screenState.copyData {
+                        copy(contentKey = key)
                     }
                 }
         }

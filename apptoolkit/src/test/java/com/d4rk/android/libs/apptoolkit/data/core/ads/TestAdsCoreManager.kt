@@ -19,13 +19,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.EmptyCoroutineContext
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.lang.reflect.InvocationTargetException
-import kotlin.test.assertFailsWith
 import java.util.Date
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.test.assertFailsWith
 
 class TestAdsCoreManager {
     private val testScope = CoroutineScope(Dispatchers.Unconfined)

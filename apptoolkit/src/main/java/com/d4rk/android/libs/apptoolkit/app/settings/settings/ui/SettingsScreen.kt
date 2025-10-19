@@ -66,83 +66,153 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(viewModel : SettingsViewModel , contentProvider : GeneralSettingsContentProvider) {
-    val screenState : UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsStateWithLifecycle()
-    val context : Context = LocalContext.current
+fun SettingsScreen(
+    viewModel: SettingsViewModel,
+    contentProvider: GeneralSettingsContentProvider,
+) {
+    val screenState: UiStateScreen<SettingsConfig> by viewModel.uiState.collectAsStateWithLifecycle()
+    val context: Context = LocalContext.current
 
-    LargeTopAppBarWithScaffold(title = stringResource(id = R.string.settings) , onBackClicked = { (context as Activity).finish() }) { paddingValues ->
-        ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = {
-            NoDataScreen(icon = Icons.Outlined.Settings , showRetry = true , onRetry = {
-                viewModel.onEvent(event = SettingsEvent.Load(context = context))
-            })
-        } , onSuccess = { config : SettingsConfig ->
-            SettingsScreenContent(paddingValues = paddingValues , settingsConfig = config , contentProvider = contentProvider)
-        })
+    LargeTopAppBarWithScaffold(
+        title = stringResource(id = R.string.settings),
+        onBackClicked = { (context as Activity).finish() },
+    ) { paddingValues ->
+        ScreenStateHandler(
+            screenState = screenState,
+            onLoading = { LoadingScreen() },
+            onEmpty = {
+                NoDataScreen(
+                    icon = Icons.Outlined.Settings,
+                    showRetry = true,
+                    onRetry = { viewModel.onEvent(event = SettingsEvent.Load(context = context)) },
+                )
+            },
+            onSuccess = { config: SettingsConfig ->
+                SettingsScreenContent(
+                    paddingValues = paddingValues,
+                    settingsConfig = config,
+                    contentProvider = contentProvider,
+                )
+            },
+        )
     }
 }
 
 @Composable
-fun SettingsScreenContent(paddingValues : PaddingValues , settingsConfig : SettingsConfig , contentProvider : GeneralSettingsContentProvider) {
+fun SettingsScreenContent(
+    paddingValues: PaddingValues,
+    settingsConfig: SettingsConfig,
+    contentProvider: GeneralSettingsContentProvider,
+) {
     if (ScreenHelper.isLandscapeOrTablet(context = LocalContext.current)) {
-        TabletSettingsScreen(paddingValues = paddingValues , settingsConfig = settingsConfig , contentProvider = contentProvider)
-    }
-    else {
-        PhoneSettingsScreen(paddingValues = paddingValues , settingsConfig = settingsConfig)
+        TabletSettingsScreen(
+            paddingValues = paddingValues,
+            settingsConfig = settingsConfig,
+            contentProvider = contentProvider,
+        )
+    } else {
+        PhoneSettingsScreen(
+            paddingValues = paddingValues,
+            settingsConfig = settingsConfig,
+        )
     }
 }
 
 @Composable
-fun PhoneSettingsScreen(paddingValues : PaddingValues , settingsConfig : SettingsConfig) {
-    SettingsList(paddingValues = paddingValues , settingsConfig = settingsConfig) { pref : SettingsPreference ->
-        pref.action()
-    }
+fun PhoneSettingsScreen(
+    paddingValues: PaddingValues,
+    settingsConfig: SettingsConfig,
+) {
+    SettingsList(
+        paddingValues = paddingValues,
+        settingsConfig = settingsConfig,
+        onPreferenceClick = { preference -> preference.action() },
+    )
 }
 
 @Composable
-fun TabletSettingsScreen(paddingValues : PaddingValues , settingsConfig : SettingsConfig , contentProvider : GeneralSettingsContentProvider) {
-    var selected : SettingsPreference? by remember { mutableStateOf(value = null) }
+fun TabletSettingsScreen(
+    paddingValues: PaddingValues,
+    settingsConfig: SettingsConfig,
+    contentProvider: GeneralSettingsContentProvider,
+) {
+    var selected: SettingsPreference? by remember { mutableStateOf(null) }
 
     Row(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier.weight(weight = 1f)) {
-            SettingsList(paddingValues = paddingValues , settingsConfig = settingsConfig) { selected = it }
+        Box(modifier = Modifier.weight(1f)) {
+            SettingsList(
+                paddingValues = paddingValues,
+                settingsConfig = settingsConfig,
+                onPreferenceClick = { selected = it },
+            )
         }
-        Box(modifier = Modifier.weight(weight = 2f)) {
-            AnimatedContent(targetState = selected) { pref : SettingsPreference? ->
-                pref?.let { SettingsDetail(preference = it , contentProvider = contentProvider , paddingValues = paddingValues) } ?: SettingsDetailPlaceholder(paddingValues = paddingValues)
+        Box(modifier = Modifier.weight(2f)) {
+            AnimatedContent(targetState = selected) { preference ->
+                preference?.let {
+                    SettingsDetail(
+                        preference = it,
+                        paddingValues = paddingValues,
+                        contentProvider = contentProvider,
+                    )
+                } ?: SettingsDetailPlaceholder(paddingValues = paddingValues)
             }
         }
     }
 }
 
 @Composable
-fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
-    val context : Context = LocalContext.current
-    LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
+fun SettingsDetailPlaceholder(paddingValues: PaddingValues) {
+    val context: Context = LocalContext.current
+
+    LazyColumn(
+        contentPadding = paddingValues,
+        modifier = Modifier.fillMaxHeight(),
+    ) {
         item {
             Card(
                 modifier = Modifier
-                        .padding(top = SizeConstants.LargeSize , end = SizeConstants.LargeSize)
-                        .fillMaxSize()
-                        .wrapContentHeight() , shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+                    .padding(top = SizeConstants.LargeSize, end = SizeConstants.LargeSize)
+                    .fillMaxSize()
+                    .wrapContentHeight(),
+                shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize),
             ) {
-                Column(modifier = Modifier.padding(all = SizeConstants.MediumSize * 2) , horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.Center) {
+                Column(
+                    modifier = Modifier.padding(all = SizeConstants.MediumSize * 2),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
                     AsyncImage(
-                        model = R.drawable.il_settings , contentDescription = null , modifier = Modifier
-                                .size(size = 258.dp)
-                                .fillMaxWidth()
+                        model = R.drawable.il_settings,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(size = 258.dp)
+                            .fillMaxWidth(),
                     )
                     LargeVerticalSpacer()
-                    Text(text = stringResource(id = R.string.app_name) , style = MaterialTheme.typography.titleMedium , textAlign = TextAlign.Center)
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                    )
                     SmallVerticalSpacer()
-                    Text(text = stringResource(id = R.string.settings_placeholder_description) , style = MaterialTheme.typography.bodyMedium , textAlign = TextAlign.Center)
+                    Text(
+                        text = stringResource(id = R.string.settings_placeholder_description),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 OutlinedIconButtonWithText(
                     modifier = Modifier
                         .padding(all = SizeConstants.MediumSize * 2)
                         .align(alignment = Alignment.Start),
-                    onClick = { IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java) },
+                    onClick = {
+                        IntentsHelper.openActivity(
+                            context = context,
+                            activityClass = HelpActivity::class.java,
+                        )
+                    },
                     icon = Icons.AutoMirrored.Outlined.ContactSupport,
-                    label = stringResource(id = R.string.get_help)
+                    label = stringResource(id = R.string.get_help),
                 )
             }
         }
@@ -150,32 +220,53 @@ fun SettingsDetailPlaceholder(paddingValues : PaddingValues) {
 }
 
 @Composable
-fun SettingsDetail(preference : SettingsPreference , paddingValues : PaddingValues , contentProvider : GeneralSettingsContentProvider) {
-    val viewModel : GeneralSettingsViewModel = koinViewModel()
-    val snackbarHostState : SnackbarHostState = remember { SnackbarHostState() }
+fun SettingsDetail(
+    preference: SettingsPreference,
+    paddingValues: PaddingValues,
+    contentProvider: GeneralSettingsContentProvider,
+) {
+    val viewModel: GeneralSettingsViewModel = koinViewModel()
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = preference.key) {
         viewModel.onEvent(event = GeneralSettingsEvent.Load(contentKey = preference.key))
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        GeneralSettingsContent(viewModel = viewModel , contentProvider = contentProvider , paddingValues = paddingValues , snackbarHostState = snackbarHostState)
+        GeneralSettingsContent(
+            viewModel = viewModel,
+            contentProvider = contentProvider,
+            paddingValues = paddingValues,
+            snackbarHostState = snackbarHostState,
+        )
     }
 }
 
 @Composable
-fun SettingsList(paddingValues : PaddingValues , settingsConfig : SettingsConfig , onPreferenceClick : (SettingsPreference) -> Unit = {}) {
-    LazyColumn(contentPadding = paddingValues , modifier = Modifier.fillMaxHeight()) {
-        settingsConfig.categories.forEach { category : SettingsCategory ->
+fun SettingsList(
+    paddingValues: PaddingValues,
+    settingsConfig: SettingsConfig,
+    onPreferenceClick: (SettingsPreference) -> Unit = {},
+) {
+    LazyColumn(
+        contentPadding = paddingValues,
+        modifier = Modifier.fillMaxHeight(),
+    ) {
+        settingsConfig.categories.forEach { category: SettingsCategory ->
             item {
                 LargeVerticalSpacer()
                 Column(
-                    Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize))
+                    modifier = Modifier
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)),
                 ) {
-                    category.preferences.forEach { pref : SettingsPreference ->
-                        SettingsPreferenceItem(icon = pref.icon , title = pref.title , summary = pref.summary , onClick = { onPreferenceClick(pref) })
+                    category.preferences.forEach { preference: SettingsPreference ->
+                        SettingsPreferenceItem(
+                            icon = preference.icon,
+                            title = preference.title,
+                            summary = preference.summary,
+                            onClick = { onPreferenceClick(preference) },
+                        )
                         ExtraTinyVerticalSpacer()
                     }
                 }

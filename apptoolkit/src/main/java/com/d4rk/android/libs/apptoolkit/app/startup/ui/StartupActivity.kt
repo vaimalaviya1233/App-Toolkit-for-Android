@@ -1,6 +1,7 @@
 package com.d4rk.android.libs.apptoolkit.app.startup.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -19,9 +20,13 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val STARTUP_LOG_TAG : String = "StartupActivity"
 
 class StartupActivity : AppCompatActivity() {
     private val provider : StartupProvider by inject()
@@ -35,11 +40,21 @@ class StartupActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.actionEvent.collect { action : StartupAction ->
-                    when (action) {
-                        StartupAction.NavigateNext -> navigateToNext()
+                viewModel.actionEvent
+                    .onCompletion { cause : Throwable? ->
+                        if (cause != null && cause !is CancellationException) {
+                            Log.w(
+                                STARTUP_LOG_TAG,
+                                "Startup action flow completed with an error.",
+                                cause
+                            )
+                        }
                     }
-                }
+                    .collect { action : StartupAction ->
+                        when (action) {
+                            StartupAction.NavigateNext -> navigateToNext()
+                        }
+                    }
             }
         }
 

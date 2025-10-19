@@ -18,11 +18,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.apps.apptoolkit.app.apps.common.AppDetailsBottomSheet
 import com.d4rk.android.apps.apptoolkit.app.apps.common.buildOnAppClick
 import com.d4rk.android.apps.apptoolkit.app.apps.common.buildOnShareClick
+import com.d4rk.android.apps.apptoolkit.app.apps.common.screens.AppsList
+import com.d4rk.android.apps.apptoolkit.app.apps.common.screens.loading.HomeLoadingScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.actions.HomeEvent
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
-import com.d4rk.android.apps.apptoolkit.app.apps.common.screens.AppsList
-import com.d4rk.android.apps.apptoolkit.app.apps.common.screens.loading.HomeLoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.rememberAdsEnabled

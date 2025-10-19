@@ -1,11 +1,11 @@
 package com.d4rk.android.libs.apptoolkit.app.permissions.ui
 
-import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
-import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
-import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.actions.PermissionsEvent
+import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
+import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -14,9 +14,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.extension.RegisterExtension
 import org.junit.jupiter.api.Test
-import kotlin.OptIn
+import org.junit.jupiter.api.extension.RegisterExtension
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestPermissionsViewModel {
@@ -60,6 +59,17 @@ class TestPermissionsViewModel {
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.Error::class.java)
+    }
+
+    @Test
+    fun `load permissions with empty categories`() = runTest(dispatcherExtension.testDispatcher) {
+        val config = SettingsConfig(title = "", categories = emptyList())
+        setup(config = config)
+
+        viewModel.onEvent(PermissionsEvent.Load)
+        advanceUntilIdle()
+
+        assertThat(viewModel.uiState.value.screenState).isInstanceOf(ScreenState.NoData::class.java)
     }
 }
 

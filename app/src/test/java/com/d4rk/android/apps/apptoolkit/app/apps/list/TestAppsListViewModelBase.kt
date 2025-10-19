@@ -9,7 +9,9 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.usecases.FetchDeveloperAppsUseCase
 import com.d4rk.android.apps.apptoolkit.app.apps.list.ui.AppsListViewModel
+import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 import com.d4rk.android.apps.apptoolkit.core.domain.model.network.Errors
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.google.common.truth.Truth.assertThat
@@ -18,8 +20,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
-import com.d4rk.android.apps.apptoolkit.app.core.utils.dispatchers.TestDispatchers
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class TestAppsListViewModelBase {

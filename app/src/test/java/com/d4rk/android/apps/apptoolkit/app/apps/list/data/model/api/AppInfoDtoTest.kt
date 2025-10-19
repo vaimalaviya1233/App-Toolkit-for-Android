@@ -1,9 +1,9 @@
 package com.d4rk.android.apps.apptoolkit.app.apps.list.data.model.api
 
 import com.d4rk.android.apps.apptoolkit.app.apps.list.utils.constants.PlayStoreUrls
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import org.junit.jupiter.api.Test
 
 class AppInfoDtoTest {
 

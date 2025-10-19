@@ -1,10 +1,10 @@
 package com.d4rk.android.libs.apptoolkit.app.startup.ui
 
-import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
 import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupAction
+import com.d4rk.android.libs.apptoolkit.app.startup.domain.actions.StartupEvent
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.google.common.truth.Truth.assertThat
 import com.d4rk.android.libs.apptoolkit.core.utils.dispatchers.UnconfinedDispatcherExtension
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle

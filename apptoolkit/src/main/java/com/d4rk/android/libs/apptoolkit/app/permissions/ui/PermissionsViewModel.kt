@@ -9,11 +9,15 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setErrors
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 
@@ -33,16 +37,41 @@ class PermissionsViewModel(
 
     private fun loadPermissions() {
         viewModelScope.launch {
+            var latestConfig: SettingsConfig? = null
+            var failure: Throwable? = null
+
             permissionsRepository.getPermissionsConfig()
+                .onStart { screenState.setLoading() }
+                .onCompletion { cause ->
+                    val error = cause ?: failure
+                    when {
+                        error is CancellationException -> return@onCompletion
+                        error != null -> screenState.updateState(ScreenState.Error())
+                        latestConfig?.categories.isNullOrEmpty() -> {
+                            screenState.setErrors(
+                                listOf(
+                                    UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))
+                                )
+                            )
+                            screenState.updateState(ScreenState.NoData())
+                        }
+                        else -> screenState.updateState(ScreenState.Success())
+                    }
+                }
                 .catch { error ->
+                    if (error is CancellationException) throw error
+
+                    failure = error
                     screenState.setErrors(
                         listOf(
                             UiSnackbar(message = UiTextHelper.DynamicString(error.message ?: "Something went wrong"))
                         )
                     )
-                    screenState.updateState(ScreenState.Error())
                 }
                 .collect { result: SettingsConfig ->
+                    failure = null
+                    latestConfig = result
+
                     if (result.categories.isNotEmpty()) {
                         screenState.successData {
                             copy(title = result.title, categories = result.categories)
@@ -53,7 +82,6 @@ class PermissionsViewModel(
                                 UiSnackbar(message = UiTextHelper.DynamicString("No settings found"))
                             )
                         )
-                        screenState.updateState(ScreenState.NoData())
                     }
                 }
         }

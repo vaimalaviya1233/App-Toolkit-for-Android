@@ -18,12 +18,12 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.data.repository.DefaultOn
 import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.repository.OnboardingRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.data.DefaultGeneralSettingsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.general.domain.repository.GeneralSettingsRepository
-import java.util.stream.Stream
-import kotlin.reflect.KClass
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
+import kotlin.reflect.KClass
 
 class ImplementationContractsTest {
 

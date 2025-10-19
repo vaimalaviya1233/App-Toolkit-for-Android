@@ -37,10 +37,10 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdHeadlineV
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdIconView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NativeAdView
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.TAG
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.rememberNativeAd
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.rememberNativeAd
 
 @Composable
 fun NativeAdBanner(
