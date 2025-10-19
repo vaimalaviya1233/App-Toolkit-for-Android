@@ -16,6 +16,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -125,5 +126,31 @@ class SupportViewModelTest {
 
         viewModel.onDonateClicked(activity, product)
         verify { billingRepository.launchPurchaseFlow(activity, product) }
+    }
+
+    @Test
+    fun `product details failure updates state via onCompletion`() = runTest(dispatcherExtension.testDispatcher) {
+        val errorMessage = "boom"
+        val failingRepository = mockk<BillingRepository>(relaxed = true) {
+            every { productDetails } returns flow<Map<String, ProductDetails>> { throw IllegalStateException(errorMessage) }
+            every { purchaseResult } returns MutableSharedFlow()
+            coEvery { queryProductDetails(any()) } returns Unit
+        }
+
+        val viewModel = SupportViewModel(failingRepository)
+
+        viewModel.uiState.test {
+            awaitItem() // initial state
+            var errorState = awaitItem()
+            while (errorState.screenState !is ScreenState.Error || errorState.snackbar == null) {
+                errorState = awaitItem()
+            }
+
+            assertThat(errorState.data?.error).isEqualTo(errorMessage)
+            val snackbar = errorState.snackbar!!
+            assertThat(snackbar.isError).isTrue()
+            val message = snackbar.message as UiTextHelper.DynamicString
+            assertThat(message.content).isEqualTo(errorMessage)
+        }
     }
 }

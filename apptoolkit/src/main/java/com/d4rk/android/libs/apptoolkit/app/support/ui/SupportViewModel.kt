@@ -20,9 +20,11 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.updateState
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.ScreenMessageType
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -57,18 +59,38 @@ class SupportViewModel(
                     }
                 }
             }
-            .catch { e ->
-                screenState.updateData(newState = ScreenState.Error()) { current ->
-                    current.copy(error = e.message)
+            .onCompletion { cause ->
+                when {
+                    cause == null -> {
+                        if (screenData?.products?.isNotEmpty() == true) {
+                            screenState.updateState(ScreenState.Success())
+                        } else {
+                            screenState.updateData(newState = ScreenState.NoData()) { current ->
+                                current.copy(error = null, products = emptyList())
+                            }
+                        }
+                    }
+
+                    cause is CancellationException -> return@onCompletion
+
+                    else -> {
+                        val errorMessage = cause.message.orEmpty()
+                        screenState.updateData(newState = ScreenState.Error()) { current ->
+                            current.copy(error = errorMessage)
+                        }
+                        screenState.showSnackbar(
+                            UiSnackbar(
+                                message = UiTextHelper.DynamicString(errorMessage),
+                                isError = true,
+                                timeStamp = System.currentTimeMillis(),
+                                type = ScreenMessageType.SNACKBAR
+                            )
+                        )
+                    }
                 }
-                screenState.showSnackbar(
-                    UiSnackbar(
-                        message = UiTextHelper.DynamicString(e.message ?: ""),
-                        isError = true,
-                        timeStamp = System.currentTimeMillis(),
-                        type = ScreenMessageType.SNACKBAR
-                    )
-                )
+            }
+            .catch { cause ->
+                if (cause is CancellationException) throw cause
             }
             .launchIn(viewModelScope)
 
@@ -117,15 +139,23 @@ class SupportViewModel(
                     )
                 }
             }
-            .catch { e ->
+            .onCompletion { cause ->
+                if (cause == null || cause is CancellationException) {
+                    return@onCompletion
+                }
+
+                val errorMessage = cause.message.orEmpty()
                 screenState.showSnackbar(
                     UiSnackbar(
-                        message = UiTextHelper.DynamicString(e.message ?: ""),
+                        message = UiTextHelper.DynamicString(errorMessage),
                         isError = true,
                         timeStamp = System.currentTimeMillis(),
                         type = ScreenMessageType.SNACKBAR
                     )
                 )
+            }
+            .catch { cause ->
+                if (cause is CancellationException) throw cause
             }
             .launchIn(viewModelScope)
 
