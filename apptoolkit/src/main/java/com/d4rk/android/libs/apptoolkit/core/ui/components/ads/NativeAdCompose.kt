@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -25,8 +27,8 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.doOnLayout
 import com.d4rk.android.libs.apptoolkit.R
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
@@ -75,9 +77,11 @@ fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Co
                 nativeAdView.invalidate()
             }
         }
+    val boundNativeAd = remember { mutableStateOf<NativeAd?>(null) }
 
     DisposableEffect(nativeAdView) {
         onDispose {
+            boundNativeAd.value = null
             nativeAdView.removeCallbacks(relayoutRunnable)
             composeContentView.disposeComposition()
             nativeAdView.removeAllViews()
@@ -106,10 +110,17 @@ fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Co
             }
         },
         modifier = modifier,
-        update = {
-            if (composeContentView.parent != it) {
+        update = { view ->
+            if (composeContentView.parent != view) {
                 (composeContentView.parent as? ViewGroup)?.removeView(composeContentView)
-                it.addView(composeContentView)
+                view.addView(composeContentView)
+            }
+
+            if (boundNativeAd.value !== nativeAd) {
+                boundNativeAd.value = nativeAd
+                view.removeCallbacks(relayoutRunnable)
+                view.setNativeAd(nativeAd)
+                view.dispatchNativeLayoutPass(relayoutRunnable)
             }
         },
     )
@@ -121,6 +132,55 @@ fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Co
         nativeAdView.postDelayed(relayoutRunnable, 250L)
     }
 }
+
+private const val COMPOSE_VIEW_CLASS_SIMPLE_NAME = "AndroidComposeView"
+
+private fun NativeAdView.dispatchNativeLayoutPass(relayoutRunnable: Runnable) {
+    removeCallbacks(relayoutRunnable)
+    doOnLayout {
+        requestNativeRootRelayout()
+        post(relayoutRunnable)
+        postDelayed(relayoutRunnable, 250L)
+    }
+}
+
+private fun NativeAdView.requestNativeRootRelayout() {
+    requestLayout()
+    invalidate()
+
+    (parent as? View)?.let { parentView ->
+        parentView.requestLayout()
+        parentView.invalidate()
+    }
+
+    val composeParent = parent.findAndroidComposeViewParent()
+    if (composeParent != null) {
+        composeParent.requestLayout()
+        composeParent.invalidate()
+    } else {
+        postDelayed({ parent.findAndroidComposeViewParent()?.requestLayout() }, 400L)
+    }
+
+    rootView?.let { root ->
+        if (root !== this) {
+            root.requestLayout()
+            root.invalidate()
+        }
+    }
+}
+
+private tailrec fun ViewParent?.findAndroidComposeViewParent(): ViewGroup? =
+    when (this) {
+        null -> null
+        is ViewGroup ->
+            if (this::class.java.simpleName == COMPOSE_VIEW_CLASS_SIMPLE_NAME) {
+                this
+            } else {
+                this.parent.findAndroidComposeViewParent()
+            }
+        is View -> this.parent.findAndroidComposeViewParent()
+        else -> null
+    }
 
 /**
  * The ComposeWrapper container for an advertiserView inside a NativeAdView. This composable must be
@@ -222,6 +282,7 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
                 minimumWidth = 15
                 minimumHeight = 15
                 prepareNativeClickableAsset()
+                prepareNativeClickableAsset()
                 nativeAdView.adChoicesView = this
             }
         },
@@ -248,6 +309,7 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
         factory = { context ->
             ComposeView(context).apply {
                 id = View.generateViewId()
+                prepareNativeClickableAsset()
                 prepareNativeClickableAsset()
                 setContent { contentState.value() }
                 nativeAdView.headlineView = this
@@ -404,6 +466,7 @@ private fun View.prepareNativeClickableAsset() {
     isClickable = true
     isFocusable = true
     isFocusableInTouchMode = true
+    isEnabled = true
 }
 
 /**
@@ -449,7 +512,6 @@ fun NativeAdButton(text: String, modifier: Modifier = Modifier) {
     Box(
         modifier =
             modifier
-                .bounceClick()
                 .clip(ButtonDefaults.shape)
                 .background(ButtonDefaults.buttonColors().containerColor)
                 .padding(ButtonDefaults.ContentPadding)

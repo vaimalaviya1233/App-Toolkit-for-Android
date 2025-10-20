@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="native_ad_bottom_bar_horizontal_padding">16dp</dimen>
+    <dimen name="native_ad_bottom_bar_vertical_padding">12dp</dimen>
+    <dimen name="native_ad_bottom_bar_spacing">16dp</dimen>
+    <dimen name="native_ad_bottom_bar_icon_size">32dp</dimen>
+    <dimen name="native_ad_bottom_bar_icon_corner_radius">8dp</dimen>
+    <dimen name="native_ad_bottom_bar_label_horizontal_padding">4dp</dimen>
+    <dimen name="native_ad_bottom_bar_label_vertical_padding">2dp</dimen>
+    <dimen name="native_ad_bottom_bar_label_corner_radius">4dp</dimen>
+    <dimen name="native_ad_bottom_bar_label_stroke_width">1dp</dimen>
+    <dimen name="native_ad_bottom_bar_button_horizontal_padding">16dp</dimen>
+</resources>

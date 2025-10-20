@@ -1,31 +1,28 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
+import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeHorizontalSpacer
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.AdChoicesView
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
+import com.google.android.material.button.MaterialButton
 
 @Composable
 fun BottomAppBarNativeAdBanner(
@@ -35,84 +32,69 @@ fun BottomAppBarNativeAdBanner(
     val context = LocalContext.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
-    if (LocalInspectionMode.current) {
-        NavigationBar(modifier = modifier.fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = "Native Ad")
-            }
-        }
-        return
-    }
 
-    if (showAds) {
-        val nativeAd = rememberNativeAd(
-            adUnitId = adsConfig.bannerAdUnitId,
-            shouldLoad = adsConfig.bannerAdUnitId.isNotBlank(),
-            onAdFailedToLoad = { error: LoadAdError ->
-                Log.e(TAG, "Native ad failed to load: ${error.message}")
-            },
-            onAdLoaded = {
-                Log.d(TAG, "Native ad was loaded.")
-            },
-            onAdImpression = {
-                Log.d(TAG, "Native ad recorded an impression.")
-            },
-            onAdClicked = {
-                Log.d(TAG, "Native ad was clicked.")
-            },
-        )
+    if (LocalInspectionMode.current || !showAds) return
 
-        nativeAd?.let { ad ->
-            NativeAdView(nativeAd = ad, modifier = modifier.fillMaxWidth()) {
-                NavigationBar(modifier = Modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = SizeConstants.LargeSize),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        AdLabel()
-                        LargeHorizontalSpacer()
-                        NativeAdChoicesView()
-                        LargeHorizontalSpacer()
-                        ad.icon?.let { icon ->
-                            NativeAdIconView(
-                                modifier = Modifier
-                                    .size(SizeConstants.ExtraLargeIncreasedSize)
-                                    .clip(RoundedCornerShape(size = SizeConstants.SmallSize)),
-                            ) {
-                                AsyncImage(
-                                    model = icon.uri ?: icon.drawable,
-                                    contentDescription = ad.headline,
-                                )
-                            }
-                            LargeHorizontalSpacer()
-                        }
-                        ad.headline?.let {
-                            NativeAdHeadlineView {
-                                Text(
-                                    text = it,
-                                    fontWeight = FontWeight.Bold,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.weight(1f),
-                                )
-                            }
-                        }
-                        ad.callToAction?.let { cta ->
-                            LargeHorizontalSpacer()
-                            NativeAdCallToActionView {
-                                NativeAdButton(text = cta)
-                            }
-                        }
-                    }
+    rememberNativeAd(adUnitId = adsConfig.bannerAdUnitId , shouldLoad = adsConfig.bannerAdUnitId.isNotBlank())?.let { ad ->
+        AndroidView(
+            modifier = modifier.fillMaxWidth(),
+            factory = { context ->
+                val view = LayoutInflater.from(context).inflate(R.layout.native_ad_bottom_app_bar , /* root = */ FrameLayout(context) , /* attachToRoot = */ false) as NativeAdView
+                if (view.layoutParams == null) {
+                    view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 }
+                view
+            },
+            update = { nativeAdView ->
+                populateBottomAppBarNativeAdView(nativeAd = ad, nativeAdView = nativeAdView)
+            }
+        )
+        DisposableEffect(ad) {
+            onDispose {
+                runCatching { ad.destroy() }
             }
         }
     }
+}
+
+private fun populateBottomAppBarNativeAdView(nativeAd: NativeAd, nativeAdView: NativeAdView) {
+    val headlineView = nativeAdView.findViewById<TextView>(R.id.native_ad_headline)
+    val iconView = nativeAdView.findViewById<ImageView>(R.id.native_ad_icon)
+    val callToActionView = nativeAdView.findViewById<MaterialButton>(R.id.native_ad_call_to_action)
+    val adChoicesView = nativeAdView.findViewById<AdChoicesView>(R.id.native_ad_choices)
+    val iconContainer = nativeAdView.findViewById<View>(R.id.native_ad_icon_container)
+
+    nativeAdView.headlineView = headlineView
+    nativeAdView.adChoicesView = adChoicesView
+    adChoicesView?.visibility = View.VISIBLE
+
+    headlineView?.let {
+        it.text = nativeAd.headline
+        it.visibility = if (nativeAd.headline.isNullOrBlank()) View.GONE else View.VISIBLE
+    }
+
+    if (nativeAd.icon != null) {
+        iconView?.setImageDrawable(nativeAd.icon?.drawable)
+        iconView?.visibility = View.VISIBLE
+        iconContainer?.visibility = View.VISIBLE
+        nativeAdView.iconView = iconView
+    } else {
+        iconView?.setImageDrawable(null)
+        iconView?.visibility = View.GONE
+        iconContainer?.visibility = View.GONE
+        nativeAdView.iconView = null
+    }
+
+    if (nativeAd.callToAction.isNullOrBlank()) {
+        callToActionView?.text = null
+        callToActionView?.visibility = View.GONE
+        nativeAdView.callToActionView = null
+    } else {
+        callToActionView?.text = nativeAd.callToAction
+        callToActionView?.visibility = View.VISIBLE
+        nativeAdView.callToActionView = callToActionView
+    }
+
+    nativeAdView.setNativeAd(nativeAd)
+    nativeAdView.tag = nativeAd
 }
