@@ -17,6 +17,7 @@ import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
+
+private const val RETRY_DELAY_SIMPLE_MS = 1_000L
+private const val RETRY_DELAY_EXPONENTIAL_MS = 2_000L
+private const val RETRY_MAX_DELAY_MS = 16_000L
 
 class BillingRepository private constructor(
     context: Context,
@@ -71,16 +76,18 @@ class BillingRepository private constructor(
     }
 
     init {
-
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    scope.launch { processPastPurchases() }
+                when (billingResult.responseCode) {
+                    BillingClient.BillingResponseCode.OK -> scope.launch { processPastPurchases() }
+                    else -> if (billingResult.shouldRetrySimple()) {
+                        scope.launch { retryBillingConnection() }
+                    }
                 }
             }
 
             override fun onBillingServiceDisconnected() {
-                // handled by auto reconnection
+                scope.launch { retryBillingConnection() }
             }
         })
     }
@@ -88,10 +95,33 @@ class BillingRepository private constructor(
     override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             handlePurchases(purchases)
-        } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-            scope.launch { _purchaseResult.emit(PurchaseResult.UserCancelled) }
-        } else if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-            scope.launch { _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage)) }
+            return
+        }
+
+        scope.launch {
+            when (billingResult.responseCode) {
+                BillingClient.BillingResponseCode.USER_CANCELED -> _purchaseResult.emit(
+                    PurchaseResult.UserCancelled
+                )
+
+                BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
+                    processPastPurchases()
+                    _purchaseResult.emit(billingResult.toFailureResult())
+                }
+
+                BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> {
+                    processPastPurchases()
+                    _purchaseResult.emit(billingResult.toFailureResult())
+                }
+
+                else -> {
+                    if (billingResult.shouldRetrySimple()) {
+                        retryPurchaseUpdate(purchases)
+                    } else {
+                        _purchaseResult.emit(billingResult.toFailureResult())
+                    }
+                }
+            }
         }
     }
 
@@ -112,14 +142,25 @@ class BillingRepository private constructor(
     }
 
     private fun consumePurchase(purchase: Purchase) {
-        val params = ConsumeParams.newBuilder()
-            .setPurchaseToken(purchase.purchaseToken)
-            .build()
-        billingClient.consumeAsync(params) { billingResult: BillingResult, _: String? ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                scope.launch { _purchaseResult.emit(PurchaseResult.Success) }
-            } else {
-                scope.launch { _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage)) }
+        scope.launch {
+            val params = ConsumeParams.newBuilder()
+                .setPurchaseToken(purchase.purchaseToken)
+                .build()
+            val result = retryBillingCall(RetryStrategy.Exponential()) {
+                suspendCancellableCoroutine { continuation ->
+                    billingClient.consumeAsync(params) { billingResult: BillingResult, _: String? ->
+                        continuation.resume(BillingCallResult(billingResult, Unit))
+                    }
+                }
+            }
+            when (result.billingResult.responseCode) {
+                BillingClient.BillingResponseCode.OK -> _purchaseResult.emit(PurchaseResult.Success)
+                BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> {
+                    processPastPurchases()
+                    _purchaseResult.emit(result.billingResult.toFailureResult())
+                }
+
+                else -> _purchaseResult.emit(result.billingResult.toFailureResult())
             }
         }
     }
@@ -129,15 +170,17 @@ class BillingRepository private constructor(
             val params = QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build()
-            suspendCancellableCoroutine { continuation ->
-                billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
-                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        handlePurchases(purchasesList)
-                    }
-                    if (continuation.isActive) {
-                        continuation.resume(Unit)
+            val result = retryBillingCall(RetryStrategy.Exponential()) {
+                suspendCancellableCoroutine { continuation ->
+                    billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
+                        continuation.resume(BillingCallResult(billingResult, purchasesList))
                     }
                 }
+            }
+            if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                result.data?.let { handlePurchases(it) }
+            } else if (!result.billingResult.shouldRetryExponential()) {
+                scope.launch { _purchaseResult.emit(result.billingResult.toFailureResult()) }
             }
         }
     }
@@ -153,20 +196,20 @@ class BillingRepository private constructor(
             val params = QueryProductDetailsParams.newBuilder()
                 .setProductList(products)
                 .build()
-            suspendCancellableCoroutine { continuation ->
-                billingClient.queryProductDetailsAsync(params) { billingResult, result ->
-                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        val map = result.productDetailsList.associateBy { it.productId }
-                        scope.launch { _productDetails.emit(map) }
-                    } else {
-                        scope.launch {
-                            _purchaseResult.emit(PurchaseResult.Failed(billingResult.debugMessage))
-                        }
-                    }
-                    if (continuation.isActive) {
-                        continuation.resume(Unit)
+            val callResult = retryBillingCall(RetryStrategy.Simple()) {
+                suspendCancellableCoroutine { continuation ->
+                    billingClient.queryProductDetailsAsync(params) { billingResult, result ->
+                        continuation.resume(BillingCallResult(billingResult, result))
                     }
                 }
+            }
+
+            if (callResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                val map =
+                    callResult.data?.productDetailsList?.associateBy { it.productId }.orEmpty()
+                scope.launch { _productDetails.emit(map) }
+            } else {
+                scope.launch { _purchaseResult.emit(callResult.billingResult.toFailureResult()) }
             }
         }
     }
@@ -178,7 +221,7 @@ class BillingRepository private constructor(
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                         launchPurchaseFlow(activity, details)
                     } else {
-                        scope.launch { _purchaseResult.emit(PurchaseResult.Failed("Billing is unavailable")) }
+                        scope.launch { _purchaseResult.emit(billingResult.toFailureResult()) }
                     }
                 }
 
@@ -199,19 +242,155 @@ class BillingRepository private constructor(
             ).build()
         val billingResult = billingClient.launchBillingFlow(activity, params)
         if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-            val result = if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-                PurchaseResult.UserCancelled
-            } else {
-                PurchaseResult.Failed(billingResult.debugMessage)
+            val result = when (billingResult.responseCode) {
+                BillingClient.BillingResponseCode.USER_CANCELED -> PurchaseResult.UserCancelled
+                else -> billingResult.toFailureResult()
             }
             scope.launch { _purchaseResult.emit(result) }
-            return
         }
     }
 
     fun close() {
         scope.cancel()
         billingClient.endConnection()
+    }
+
+    private suspend fun retryBillingConnection(maxAttempts: Int = 3) {
+        var attempt = 0
+        while (!billingClient.isReady && attempt < maxAttempts) {
+            attempt++
+            suspendCancellableCoroutine { continuation ->
+                billingClient.startConnection(object : BillingClientStateListener {
+                    override fun onBillingSetupFinished(billingResult: BillingResult) {
+                        when (billingResult.responseCode) {
+                            BillingClient.BillingResponseCode.OK -> scope.launch { processPastPurchases() }
+                            else -> if (!billingResult.shouldRetrySimple()) {
+                                scope.launch { _purchaseResult.emit(billingResult.toFailureResult()) }
+                            }
+                        }
+                        if (continuation.isActive) {
+                            continuation.resume(Unit)
+                        }
+                    }
+
+                    override fun onBillingServiceDisconnected() {
+                        if (continuation.isActive) {
+                            continuation.resume(Unit)
+                        }
+                    }
+                })
+            }
+            if (!billingClient.isReady && attempt < maxAttempts) {
+                delay(RETRY_DELAY_SIMPLE_MS)
+            }
+        }
+    }
+
+    private suspend fun retryPurchaseUpdate(purchases: MutableList<Purchase>?) {
+        delay(RETRY_DELAY_SIMPLE_MS)
+        if (purchases.isNullOrEmpty()) {
+            processPastPurchases()
+        } else {
+            handlePurchases(purchases)
+        }
+    }
+
+    private data class BillingCallResult<T>(val billingResult: BillingResult, val data: T?)
+
+    private sealed interface RetryStrategy {
+        val maxAttempts: Int
+
+        data class Simple(
+            override val maxAttempts: Int = 3,
+            val delayMillis: Long = RETRY_DELAY_SIMPLE_MS,
+        ) : RetryStrategy
+
+        data class Exponential(
+            override val maxAttempts: Int = 3,
+            val initialDelayMillis: Long = RETRY_DELAY_EXPONENTIAL_MS,
+            val factor: Double = 2.0,
+            val maxDelayMillis: Long = RETRY_MAX_DELAY_MS,
+        ) : RetryStrategy
+    }
+
+    private suspend fun <T> retryBillingCall(
+        strategy: RetryStrategy,
+        block: suspend () -> BillingCallResult<T>,
+    ): BillingCallResult<T> {
+        var attempt = 1
+        var delayMillis = when (strategy) {
+            is RetryStrategy.Simple -> strategy.delayMillis
+            is RetryStrategy.Exponential -> strategy.initialDelayMillis
+        }
+
+        while (true) {
+            val result = block()
+            val responseCode = result.billingResult.responseCode
+            val shouldRetry = shouldRetry(responseCode, strategy)
+            if (!shouldRetry || attempt >= strategy.maxAttempts) {
+                return result
+            }
+            when (strategy) {
+                is RetryStrategy.Simple -> delay(strategy.delayMillis)
+                is RetryStrategy.Exponential -> {
+                    delay(delayMillis)
+                    delayMillis = (delayMillis * strategy.factor).toLong()
+                        .coerceAtMost(strategy.maxDelayMillis)
+                }
+            }
+            attempt++
+        }
+    }
+
+    private fun shouldRetry(responseCode: Int, strategy: RetryStrategy): Boolean {
+        val simpleRetryCodes = setOf(
+            BillingClient.BillingResponseCode.NETWORK_ERROR,
+            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+            BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
+            BillingClient.BillingResponseCode.ERROR,
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED,
+            BillingClient.BillingResponseCode.ITEM_NOT_OWNED,
+        )
+
+        val exponentialRetryCodes = setOf(
+            BillingClient.BillingResponseCode.NETWORK_ERROR,
+            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+            BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
+            BillingClient.BillingResponseCode.ERROR,
+        )
+
+        return when (strategy) {
+            is RetryStrategy.Simple -> responseCode in simpleRetryCodes
+            is RetryStrategy.Exponential -> responseCode in exponentialRetryCodes
+        }
+    }
+
+    private fun BillingResult.shouldRetrySimple(): Boolean = shouldRetry(
+        responseCode,
+        RetryStrategy.Simple(),
+    )
+
+    private fun BillingResult.shouldRetryExponential(): Boolean = shouldRetry(
+        responseCode,
+        RetryStrategy.Exponential(),
+    )
+
+    private fun BillingResult.toFailureResult(): PurchaseResult.Failed {
+        val message = debugMessage.takeIf { it.isNotBlank() }
+            ?: when (responseCode) {
+                BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> "Billing is unavailable"
+                BillingClient.BillingResponseCode.DEVELOPER_ERROR -> "Billing API misused"
+                BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> "Item is already owned"
+                BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> "Item is not owned"
+                BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> "Item is unavailable"
+                BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> "Feature not supported"
+                BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> "Billing service unavailable"
+                BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> "Billing service disconnected"
+                BillingClient.BillingResponseCode.NETWORK_ERROR -> "Network error"
+                BillingClient.BillingResponseCode.ERROR -> "Billing error"
+                else -> "Billing operation failed"
+            }
+        return PurchaseResult.Failed(message)
     }
 }
 
