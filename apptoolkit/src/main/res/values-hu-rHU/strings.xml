@@ -280,6 +280,7 @@
     <string name="support_us">Támogass minket</string>
     <string name="paid_support">Fizetett támogatás</string>
     <string name="summary_donations">Akármennyit adományozol, segítesz az alkalmazásunk működésének fenntartásában és a funkciók javításában. Nagyra értékeljük a nagylelkűségedet és kedvességedet.</string>
+    <string name="support_offer_unavailable">Ez az adományozási lehetőség jelenleg nem érhető el.</string>
     <string name="non_paid_support">Nem fizetett támogatás</string>
     <string name="web_ad">Webes hirdetés</string>
     <string name="error_failed_to_load_sku_details">Nem sikerült betölteni az SKU részleteit</string>

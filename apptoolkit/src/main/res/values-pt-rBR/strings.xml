@@ -280,6 +280,7 @@
     <string name="support_us">Apoie-nos</string>
     <string name="paid_support">Suporte pago</string>
     <string name="summary_donations">Independentemente do valor da sua doação, você nos ajudará a manter o aplicativo em funcionamento e melhorar seus recursos. Agradecemos por sua generosidade e gentileza.</string>
+    <string name="support_offer_unavailable">Esta opção de doação está indisponível no momento.</string>
     <string name="non_paid_support">Suporte não pago</string>
     <string name="web_ad">Anúncio na web</string>
     <string name="error_failed_to_load_sku_details">Falha ao carregar os detalhes do SKU</string>

@@ -34,7 +34,7 @@ class SupportViewModelTest {
         every { productDetails } returns productDetailsFlow
         every { purchaseResult } returns purchaseResultFlow
         coEvery { queryProductDetails(any()) } returns Unit
-        every { launchPurchaseFlow(any(), any()) } returns Unit
+        every { launchPurchaseFlow(any(), any(), any()) } returns Unit
     }
 
     private fun createViewModel(): SupportViewModel {
@@ -123,7 +123,39 @@ class SupportViewModelTest {
         val activity = mockk<Activity>()
         val product = mockk<ProductDetails>()
 
+        val offerDetails = mockk<ProductDetails.OneTimePurchaseOfferDetails> {
+            every { offerToken } returns "token"
+        }
+        every { product.oneTimePurchaseOfferDetailsList } returns listOf(offerDetails)
+
         viewModel.onDonateClicked(activity, product)
-        verify { billingRepository.launchPurchaseFlow(activity, product) }
+        verify { billingRepository.launchPurchaseFlow(activity, product, "token") }
+    }
+
+    @Test
+    fun `onDonateClicked without eligible offer shows error snackbar`() =
+        runTest(dispatcherExtension.testDispatcher) {
+            val viewModel = createViewModel()
+            val activity = mockk<Activity>()
+            val product = mockk<ProductDetails>()
+
+            every { product.oneTimePurchaseOfferDetailsList } returns emptyList()
+            every { product.oneTimePurchaseOfferDetails } returns null
+
+            viewModel.uiState.test {
+                awaitItem() // initial state
+                viewModel.onDonateClicked(activity, product)
+
+                verify(exactly = 0) { billingRepository.launchPurchaseFlow(any(), any(), any()) }
+
+                var stateWithSnackbar = awaitItem()
+                while (stateWithSnackbar.snackbar == null) {
+                    stateWithSnackbar = awaitItem()
+                }
+                val snackbar = stateWithSnackbar.snackbar
+                assertThat(snackbar.isError).isTrue()
+                val message = snackbar.message as UiTextHelper.StringResource
+                assertThat(message.resourceId).isEqualTo(R.string.support_offer_unavailable)
+            }
     }
 }

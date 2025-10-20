@@ -280,6 +280,7 @@
     <string name="support_us">ادعمنا</string>
     <string name="paid_support">دعم مدفوع</string>
     <string name="summary_donations">بغض النظر عن المبلغ الذي تتبرع به، ستساعدنا في الحفاظ على تشغيل تطبيقنا وتحسين ميزاتنا. نحن نقدر كرمك ولطفك.</string>
+    <string name="support_offer_unavailable">خيار التبرع هذا غير متاح حاليًا.</string>
     <string name="non_paid_support">دعم غير مدفوع</string>
     <string name="web_ad">إعلان ويب</string>
     <string name="error_failed_to_load_sku_details">فشل تحميل تفاصيل SKU</string>

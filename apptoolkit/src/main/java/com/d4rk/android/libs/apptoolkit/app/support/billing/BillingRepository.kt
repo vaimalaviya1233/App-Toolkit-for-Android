@@ -13,6 +13,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import com.d4rk.android.libs.apptoolkit.app.support.utils.extensions.primaryOfferToken
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -214,12 +215,16 @@ class BillingRepository private constructor(
         }
     }
 
-    fun launchPurchaseFlow(activity: Activity, details: ProductDetails) {
+    fun launchPurchaseFlow(
+        activity: Activity,
+        details: ProductDetails,
+        offerToken: String? = null
+    ) {
         if (!billingClient.isReady) {
             billingClient.startConnection(object : BillingClientStateListener {
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        launchPurchaseFlow(activity, details)
+                        launchPurchaseFlow(activity, details, offerToken)
                     } else {
                         scope.launch { _purchaseResult.emit(billingResult.toFailureResult()) }
                     }
@@ -237,6 +242,13 @@ class BillingRepository private constructor(
                 listOf(
                     BillingFlowParams.ProductDetailsParams.newBuilder()
                         .setProductDetails(details)
+                        .apply {
+                            val resolvedToken = offerToken?.takeIf { it.isNotBlank() }
+                                ?: details.primaryOfferToken()
+                            if (!resolvedToken.isNullOrBlank()) {
+                                setOfferToken(resolvedToken)
+                            }
+                        }
                         .build()
                 )
             ).build()

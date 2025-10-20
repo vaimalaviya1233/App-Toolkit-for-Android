@@ -10,6 +10,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportAction
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProductIds
+import com.d4rk.android.libs.apptoolkit.app.support.utils.extensions.primaryOfferToken
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiSnackbar
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -60,8 +61,8 @@ class SupportViewModel(
                 }
             }
             .onCompletion { cause ->
-                when {
-                    cause == null -> {
+                when (cause) {
+                    null -> {
                         if (screenData?.products?.isNotEmpty() == true) {
                             screenState.updateState(ScreenState.Success())
                         } else {
@@ -71,8 +72,7 @@ class SupportViewModel(
                         }
                     }
 
-                    cause is CancellationException -> return@onCompletion
-
+                    is CancellationException -> return@onCompletion
                     else -> {
                         val errorMessage = cause.message.orEmpty()
                         screenState.updateData(newState = ScreenState.Error()) { current ->
@@ -229,7 +229,20 @@ class SupportViewModel(
     }
 
     fun onDonateClicked(activity: Activity, productDetails: ProductDetails) {
-        billingRepository.launchPurchaseFlow(activity, productDetails)
+        val offerToken = productDetails.primaryOfferToken()
+        if (offerToken.isNullOrBlank()) {
+            screenState.showSnackbar(
+                UiSnackbar(
+                    message = UiTextHelper.StringResource(R.string.support_offer_unavailable),
+                    isError = true,
+                    timeStamp = System.currentTimeMillis(),
+                    type = ScreenMessageType.SNACKBAR
+                )
+            )
+            return
+        }
+
+        billingRepository.launchPurchaseFlow(activity, productDetails, offerToken)
     }
 }
 

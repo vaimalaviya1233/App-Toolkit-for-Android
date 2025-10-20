@@ -30,6 +30,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.billing.SupportScreenUiState
 import com.d4rk.android.libs.apptoolkit.app.support.domain.actions.SupportEvent
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.DonationProductIds
 import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.ShortenLinkConstants
+import com.d4rk.android.libs.apptoolkit.app.support.utils.extensions.primaryFormattedPrice
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
@@ -132,7 +133,8 @@ fun SupportScreenContent(
                                     productDetailsMap[DonationProductIds.LOW_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 },
                                 icon = Icons.Outlined.Paid,
-                                label = productDetailsMap[DonationProductIds.LOW_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                                label = productDetailsMap[DonationProductIds.LOW_DONATION]?.primaryFormattedPrice()
+                                    .orEmpty()
                             )
                         }
                         item {
@@ -142,7 +144,8 @@ fun SupportScreenContent(
                                     productDetailsMap[DonationProductIds.NORMAL_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 },
                                 icon = Icons.Outlined.Paid,
-                                label = productDetailsMap[DonationProductIds.NORMAL_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                                label = productDetailsMap[DonationProductIds.NORMAL_DONATION]?.primaryFormattedPrice()
+                                    .orEmpty()
                             )
                         }
                     }
@@ -159,7 +162,8 @@ fun SupportScreenContent(
                                     productDetailsMap[DonationProductIds.HIGH_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 },
                                 icon = Icons.Outlined.Paid,
-                                label = productDetailsMap[DonationProductIds.HIGH_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                                label = productDetailsMap[DonationProductIds.HIGH_DONATION]?.primaryFormattedPrice()
+                                    .orEmpty()
                             )
                         }
                         item {
@@ -169,7 +173,8 @@ fun SupportScreenContent(
                                     productDetailsMap[DonationProductIds.EXTREME_DONATION]?.let { viewModel.onDonateClicked(activity, it) }
                                 },
                                 icon = Icons.Outlined.Paid,
-                                label = productDetailsMap[DonationProductIds.EXTREME_DONATION]?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                                label = productDetailsMap[DonationProductIds.EXTREME_DONATION]?.primaryFormattedPrice()
+                                    .orEmpty()
                             )
                         }
                     }
@@ -200,7 +205,9 @@ fun SupportScreenContent(
         }
         item {
             AdBanner(
-                modifier = Modifier.padding(all = SizeConstants.LargeSize).animateItem(),
+                modifier = Modifier
+                    .padding(all = SizeConstants.LargeSize)
+                    .animateItem(),
                 adsConfig = nativeAdsConfig
             )
         }
