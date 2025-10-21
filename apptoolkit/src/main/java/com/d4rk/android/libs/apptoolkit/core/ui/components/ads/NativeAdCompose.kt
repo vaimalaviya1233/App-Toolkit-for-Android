@@ -282,7 +282,6 @@ fun NativeAdChoicesView(modifier: Modifier = Modifier) {
                 minimumWidth = 15
                 minimumHeight = 15
                 prepareNativeClickableAsset()
-                prepareNativeClickableAsset()
                 nativeAdView.adChoicesView = this
             }
         },
@@ -309,7 +308,6 @@ fun NativeAdHeadlineView(modifier: Modifier = Modifier, content: @Composable () 
         factory = { context ->
             ComposeView(context).apply {
                 id = View.generateViewId()
-                prepareNativeClickableAsset()
                 prepareNativeClickableAsset()
                 setContent { contentState.value() }
                 nativeAdView.headlineView = this
