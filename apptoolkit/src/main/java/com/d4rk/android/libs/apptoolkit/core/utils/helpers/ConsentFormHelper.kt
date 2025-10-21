@@ -2,6 +2,7 @@ package com.d4rk.android.libs.apptoolkit.core.utils.helpers
 
 import android.app.Activity
 import android.util.Log
+import com.d4rk.android.libs.apptoolkit.R
 import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
@@ -28,7 +29,9 @@ object ConsentFormHelper {
         consentInfo: ConsentInformation,
     ) {
         val params: ConsentRequestParameters =
-            ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
+            ConsentRequestParameters.Builder()
+                    .setAdMobAppId(activity.getString(R.string.ad_mob_app_id))
+                    .setTagForUnderAgeOfConsent(false).build()
 
         suspendCancellableCoroutine { continuation ->
             consentInfo.requestConsentInfoUpdate(activity, params, {
@@ -72,7 +75,9 @@ object ConsentFormHelper {
         consentInfo: ConsentInformation,
     ) {
         val params: ConsentRequestParameters =
-            ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
+            ConsentRequestParameters.Builder()
+                    .setAdMobAppId(activity.getString(R.string.ad_mob_app_id))
+                    .setTagForUnderAgeOfConsent(false).build()
 
         suspendCancellableCoroutine { continuation ->
             consentInfo.requestConsentInfoUpdate(activity, params, {

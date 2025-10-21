@@ -17,7 +17,8 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.d4rk.android.apps.apptoolkit"
+        applicationId = "com.d4rk.android.apps"
+        applicationIdSuffix = ".apptoolkit"
         minSdk = 23
         targetSdk = 36
         versionCode = 72
