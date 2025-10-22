@@ -80,7 +80,6 @@ object NativeAdViewBinder {
         nativeAdView.iconView = iconView
         nativeAdView.adChoicesView = adChoicesView
         nativeAdView.advertiserView = labelView
-        callToActionView?.let(nativeAdView::setClickConfirmingView)
 
         adChoicesView?.isVisible = true
 
@@ -138,6 +137,7 @@ object NativeAdViewBinder {
             debugNativeAds("registerNativeAdViewCompat unavailable - falling back to setNativeAd")
             nativeAdView.setNativeAd(nativeAd)
         }
+        callToActionView?.let(nativeAdView::setClickConfirmingView)
         logClickableState("labelView (after setNativeAd)", labelView)
         logClickableState("headlineView (after setNativeAd)", headlineView)
         logClickableState("ctaView (after setNativeAd)", callToActionView)
