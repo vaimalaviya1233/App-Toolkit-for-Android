@@ -43,33 +43,40 @@ fun rememberNativeAd(
     val updatedOnAdClicked = rememberUpdatedState(onAdClicked)
 
     fun destroyCurrentAd() {
+        debugNativeAds("rememberNativeAd destroying current native ad ${nativeAd?.hashCode()}")
         nativeAd?.destroy()
         nativeAd = null
     }
 
     DisposableEffect(adUnitId) {
+        debugNativeAds("rememberNativeAd DisposableEffect for adUnitId=$adUnitId")
         onDispose { destroyCurrentAd() }
     }
 
     ActivityLifecycleEffect(lifecycleEvent = Lifecycle.Event.ON_DESTROY) {
+        debugNativeAds("rememberNativeAd ActivityLifecycleEffect ON_DESTROY")
         destroyCurrentAd()
     }
 
     LaunchedEffect(adUnitId, shouldLoad) {
+        debugNativeAds("rememberNativeAd LaunchedEffect shouldLoad=$shouldLoad adUnitId=$adUnitId")
         if (!shouldLoad || adUnitId.isBlank()) {
             destroyCurrentAd()
             return@LaunchedEffect
         }
 
         val loader = withContext(Dispatchers.IO) {
+            debugNativeAds("rememberNativeAd creating AdLoader on IO thread")
             AdLoader.Builder(context, adUnitId)
                 .apply { updatedConfigureBuilder.value?.invoke(this) }
                 .forNativeAd { loadedAd ->
                     destroyCurrentAd()
                     val activity = hostActivity
                     if (activity?.isDestroyed == true || activity?.isFinishing == true) {
+                        debugNativeAds("rememberNativeAd destroying loaded ad due to finished activity")
                         loadedAd.destroy()
                     } else {
+                        debugNativeAds("rememberNativeAd successfully loaded native ad ${loadedAd.hashCode()}")
                         nativeAd = loadedAd
                         updatedOnAdLoaded.value(loadedAd)
                     }
@@ -77,15 +84,18 @@ fun rememberNativeAd(
                 .withAdListener(
                     object : AdListener() {
                         override fun onAdFailedToLoad(error: LoadAdError) {
+                            debugNativeAds("rememberNativeAd onAdFailedToLoad: ${error.message}")
                             destroyCurrentAd()
                             updatedOnAdFailedToLoad.value(error)
                         }
 
                         override fun onAdImpression() {
+                            debugNativeAds("rememberNativeAd onAdImpression")
                             updatedOnAdImpression.value()
                         }
 
                         override fun onAdClicked() {
+                            debugNativeAds("rememberNativeAd onAdClicked")
                             updatedOnAdClicked.value()
                         }
                     },
@@ -93,6 +103,7 @@ fun rememberNativeAd(
                 .build()
         }
 
+        debugNativeAds("rememberNativeAd starting ad request")
         loader.loadAd(AdRequest.Builder().build())
     }
 

@@ -25,6 +25,7 @@ class NativeAdBannerView @JvmOverloads constructor(
 
     init {
         visibility = GONE
+        debugNativeAds("NativeAdBannerView initialized with default layout=$layoutRes and adUnitId=$adUnitId")
         context.obtainStyledAttributes(attrs, R.styleable.NativeAdBannerView, defStyleAttr, 0)
             .use { typedArray ->
                 layoutRes = typedArray.getResourceId(
@@ -37,21 +38,26 @@ class NativeAdBannerView @JvmOverloads constructor(
                     adUnitId = adUnitValue
                 }
             }
+        debugNativeAds("NativeAdBannerView attribute initialization layout=$layoutRes adUnitId=$adUnitId")
     }
 
     fun loadAd() {
+        debugNativeAds("NativeAdBannerView loadAd() invoked with default AdRequest")
         loadAd(AdRequest.Builder().build(), null)
     }
 
     fun loadAd(listener: AdListener?) {
+        debugNativeAds("NativeAdBannerView loadAd(listener) invoked")
         loadAd(AdRequest.Builder().build(), listener)
     }
 
     fun loadAd(request: AdRequest) {
+        debugNativeAds("NativeAdBannerView loadAd(request) invoked")
         loadAd(request, null)
     }
 
     fun loadAd(request: AdRequest, listener: AdListener?) {
+        debugNativeAds("NativeAdBannerView starting ad request for unitId=$adUnitId layout=$layoutRes")
         NativeAdLoader.load(
             context = context,
             container = this,
@@ -60,6 +66,7 @@ class NativeAdBannerView @JvmOverloads constructor(
             listener = listener,
             adUnitId = adUnitId,
             onNativeAdLoaded = { loadedAd ->
+                debugNativeAds("NativeAdBannerView received native ad ${loadedAd.hashCode()}")
                 destroyOwnedNativeAdIfNecessary(loadedAd)
                 replaceNativeAd(loadedAd, ownsAd = true)
             },
@@ -69,8 +76,10 @@ class NativeAdBannerView @JvmOverloads constructor(
     fun renderNativeAd(nativeAd: NativeAd, @LayoutRes layoutResOverride: Int? = null) {
         val desiredLayout = layoutResOverride ?: layoutRes
         if (this.nativeAd === nativeAd && layoutRes == desiredLayout) {
+            debugNativeAds("NativeAdBannerView renderNativeAd skipped - ad already rendered")
             return
         }
+        debugNativeAds("NativeAdBannerView rendering provided native ad ${nativeAd.hashCode()} with layout=$desiredLayout")
         destroyOwnedNativeAdIfNecessary(nativeAd)
         NativeAdViewBinder.bind(
             context = context,
@@ -82,6 +91,7 @@ class NativeAdBannerView @JvmOverloads constructor(
     }
 
     fun clearAd() {
+        debugNativeAds("NativeAdBannerView clearing current native ad")
         destroyOwnedNativeAdIfNecessary()
         replaceNativeAd(null, ownsAd = false)
         removeAllViews()
@@ -91,6 +101,7 @@ class NativeAdBannerView @JvmOverloads constructor(
     fun setNativeAdLayout(@LayoutRes layoutRes: Int) {
         if (this.layoutRes == layoutRes) return
         this.layoutRes = layoutRes
+        debugNativeAds("NativeAdBannerView layout changed to $layoutRes. Clearing ad to rebind")
         clearAd()
     }
 
@@ -98,6 +109,7 @@ class NativeAdBannerView @JvmOverloads constructor(
         val resolved = adUnitId.takeUnless { it.isNullOrBlank() }
             ?: context.getString(R.string.native_ad_fallback_unit_id)
         if (this.adUnitId == resolved) return
+        debugNativeAds("NativeAdBannerView adUnitId changed from ${this.adUnitId} to $resolved")
         clearAd()
         this.adUnitId = resolved
     }
@@ -110,16 +122,19 @@ class NativeAdBannerView @JvmOverloads constructor(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+        debugNativeAds("NativeAdBannerView detached from window - clearing ad")
         clearAd()
     }
 
     private fun destroyOwnedNativeAdIfNecessary(incomingAd: NativeAd? = null) {
         if (ownsNativeAd && nativeAd != null && nativeAd !== incomingAd) {
+            debugNativeAds("NativeAdBannerView destroying owned native ad ${nativeAd?.hashCode()}")
             runCatching { nativeAd?.destroy() }
         }
     }
 
     private fun replaceNativeAd(newAd: NativeAd?, ownsAd: Boolean) {
+        debugNativeAds("NativeAdBannerView replaceNativeAd with newAd=${newAd?.hashCode()} ownsAd=$ownsAd")
         nativeAd = newAd
         ownsNativeAd = ownsAd && newAd != null
     }
