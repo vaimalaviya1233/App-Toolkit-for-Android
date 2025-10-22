@@ -1,5 +1,6 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
 import android.view.LayoutInflater
@@ -11,6 +12,11 @@ import androidx.core.view.isVisible
 import com.d4rk.android.libs.apptoolkit.R
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADCHOICES_CONTAINER_VIEW
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADVERTISER
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_CALL_TO_ACTION
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_HEADLINE
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ICON
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
@@ -102,15 +108,15 @@ object NativeAdViewBinder {
 
         val clickableAssetViews = mutableMapOf<String, View>()
         headlineView?.takeIf { it.isVisible }
-            ?.let { clickableAssetViews[NativeAd.ASSET_HEADLINE] = it }
+            ?.let { clickableAssetViews[ASSET_HEADLINE] = it }
         callToActionView?.takeIf { it.isVisible }?.let {
-            clickableAssetViews[NativeAd.ASSET_CALL_TO_ACTION] = it
+            clickableAssetViews[ASSET_CALL_TO_ACTION] = it
         }
-        iconView?.takeIf { it.isVisible }?.let { clickableAssetViews[NativeAd.ASSET_ICON] = it }
+        iconView?.takeIf { it.isVisible }?.let { clickableAssetViews[ASSET_ICON] = it }
 
         val nonClickableAssetViews = mutableMapOf<String, View>()
-        labelView?.let { nonClickableAssetViews[NativeAd.ASSET_ADVERTISER] = it }
-        adChoicesView?.let { nonClickableAssetViews[NativeAd.ASSET_ADCHOICES_CONTAINER_VIEW] = it }
+        labelView?.let { nonClickableAssetViews[ASSET_ADVERTISER] = it }
+        adChoicesView?.let { nonClickableAssetViews[ASSET_ADCHOICES_CONTAINER_VIEW] = it }
 
         val registered = nativeAd.registerNativeAdViewCompat(
             nativeAdView = nativeAdView,
@@ -166,7 +172,7 @@ private fun View?.prepareNativeClickableAsset() {
     isEnabled = true
 }
 
-private fun ensureNativeFallbackClicks(
+internal fun ensureNativeFallbackClicks(
     headlineView: View?,
     iconView: View?,
     callToActionView: View?,
@@ -255,6 +261,7 @@ private fun View?.checkOverlap(label: String, others: List<View>) {
 
 private fun View?.describeOnClickListener(): String? = getExistingOnClickListener()?.javaClass?.name
 
+@SuppressLint("PrivateApi")
 private fun View?.getExistingOnClickListener(): View.OnClickListener? {
     this ?: return null
     return runCatching {
@@ -327,10 +334,10 @@ private fun ViewParent?.describeParentChain(): String {
     return chain.joinToString(separator = " -> ")
 }
 
-private fun NativeAd.registerNativeAdViewCompat(
+internal fun NativeAd.registerNativeAdViewCompat(
     nativeAdView: NativeAdView,
-    clickableAssets: Map<String, View>,
-    nonClickableAssets: Map<String, View>,
+    clickableAssets: MutableMap<String, View>,
+    nonClickableAssets: MutableMap<String, View>,
 ): Boolean {
     val methods = NativeAd::class.java.methods.filter { it.name == "registerNativeAdView" }
 

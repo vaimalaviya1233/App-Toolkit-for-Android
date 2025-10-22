@@ -28,11 +28,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.doOnLayout
+import androidx.core.view.isVisible
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADCHOICES_CONTAINER_VIEW
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADVERTISER
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_CALL_TO_ACTION
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_HEADLINE
+import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ICON
 import com.google.android.gms.ads.nativead.NativeAdView
 
 /**
@@ -119,14 +125,64 @@ fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Co
             if (boundNativeAd.value !== nativeAd) {
                 boundNativeAd.value = nativeAd
                 view.removeCallbacks(relayoutRunnable)
-                view.setNativeAd(nativeAd)
                 view.dispatchNativeLayoutPass(relayoutRunnable)
             }
         },
     )
 
     SideEffect {
-        nativeAdView.setNativeAd(nativeAd)
+        val headlineView = nativeAdView.headlineView
+        val callToActionView = nativeAdView.callToActionView
+        val iconView = nativeAdView.iconView
+        val advertiserView = nativeAdView.advertiserView
+        val adChoicesView = nativeAdView.adChoicesView
+
+        val clickableAssetViews = mutableMapOf<String, View>()
+        headlineView?.takeIf { it.isVisible }
+            ?.let { clickableAssetViews[ASSET_HEADLINE] = it }
+        callToActionView?.takeIf { it.isVisible }
+            ?.let { clickableAssetViews[ASSET_CALL_TO_ACTION] = it }
+        iconView?.takeIf { it.isVisible }
+            ?.let { clickableAssetViews[ASSET_ICON] = it }
+
+        val nonClickableAssetViews = mutableMapOf<String, View>()
+        advertiserView?.let { nonClickableAssetViews[ASSET_ADVERTISER] = it }
+        adChoicesView?.let {
+            nonClickableAssetViews[ASSET_ADCHOICES_CONTAINER_VIEW] = it
+        }
+
+        val registered = nativeAd.registerNativeAdViewCompat(
+            nativeAdView = nativeAdView,
+            clickableAssets = clickableAssetViews,
+            nonClickableAssets = nonClickableAssetViews,
+        )
+
+        if (registered) {
+            debugNativeAds(
+                "Compose NativeAdView registered clickable=${clickableAssetViews.keys} " +
+                        "nonClickable=${nonClickableAssetViews.keys}"
+            )
+            runCatching { nativeAdView.setNativeAd(nativeAd) }
+                .onFailure { error ->
+                    debugNativeAds(
+                        "Compose NativeAdView setNativeAd post-register failed: ${error.message}"
+                    )
+                }
+        } else {
+            debugNativeAds(
+                "Compose NativeAdView registerNativeAdViewCompat unavailable - falling back to setNativeAd"
+            )
+            nativeAdView.setNativeAd(nativeAd)
+        }
+
+        ensureNativeFallbackClicks(
+            headlineView = headlineView,
+            iconView = iconView,
+            callToActionView = callToActionView,
+        )
+        nativeAdView.setClickConfirmingView(callToActionView)
+        nativeAdView.tag = nativeAd
+
         nativeAdView.removeCallbacks(relayoutRunnable)
         nativeAdView.post(relayoutRunnable)
         nativeAdView.postDelayed(relayoutRunnable, 250L)
@@ -256,12 +312,14 @@ fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable
                 prepareNativeClickableAsset()
                 setContent { contentState.value() }
                 nativeAdView.callToActionView = this
+                nativeAdView.setClickConfirmingView(this)
             }
         },
         modifier = modifier,
         update = { view ->
             nativeAdView.callToActionView = view
             view.prepareNativeClickableAsset()
+            nativeAdView.setClickConfirmingView(view)
         },
     )
 }
