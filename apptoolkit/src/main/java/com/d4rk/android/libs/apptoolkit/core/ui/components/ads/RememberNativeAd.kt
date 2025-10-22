@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import com.d4rk.android.libs.apptoolkit.core.ui.effects.ActivityLifecycleEffect
+import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.debugNativeAds
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.findActivity
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader

@@ -3,7 +3,6 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
-import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -30,9 +29,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import com.d4rk.android.libs.apptoolkit.R
+import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.debugNativeAds
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.google.android.gms.ads.nativead.AdChoicesView
-import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADCHOICES_CONTAINER_VIEW
 import com.google.android.gms.ads.nativead.NativeAdAssetNames.ASSET_ADVERTISER
@@ -57,7 +56,7 @@ internal val LocalNativeAdView = staticCompositionLocalOf<NativeAdView?> { null 
 fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val localContext = LocalContext.current
     val contentState = rememberUpdatedState(content)
-    val nativeAdView =
+    val nativeAdView : NativeAdView =
         remember(localContext) {
             NativeAdView(localContext).apply {
                 id = View.generateViewId()
@@ -159,8 +158,7 @@ fun NativeAdView(nativeAd: NativeAd, modifier: Modifier = Modifier, content: @Co
 
         if (registered) {
             debugNativeAds(
-                "Compose NativeAdView registered clickable=${clickableAssetViews.keys} " +
-                        "nonClickable=${nonClickableAssetViews.keys}"
+                "Compose NativeAdView registered clickable=${clickableAssetViews.keys} " + "nonClickable=${nonClickableAssetViews.keys}"
             )
             runCatching { nativeAdView.setNativeAd(nativeAd) }
                 .onFailure { error ->
@@ -237,34 +235,6 @@ private tailrec fun ViewParent?.findAndroidComposeViewParent(): ViewGroup? =
         is View -> this.parent.findAndroidComposeViewParent()
         else -> null
     }
-
-/**
- * The ComposeWrapper container for an advertiserView inside a NativeAdView. This composable must be
- * invoked from within a `NativeAdView`.
- *
- * @param modifier modify the native ad view element.
- * @param content A composable function that defines the content of this native asset.
- */
-@Composable
-fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val contentState = rememberUpdatedState(content)
-    AndroidView(
-        factory = { context ->
-            ComposeView(context).apply {
-                id = View.generateViewId()
-                prepareNativeClickableAsset()
-                setContent { contentState.value() }
-                nativeAdView.advertiserView = this
-            }
-        },
-        modifier = modifier,
-        update = { view ->
-            nativeAdView.advertiserView = view
-            view.prepareNativeClickableAsset()
-        },
-    )
-}
 
 /**
  * The ComposeWrapper container for a bodyView inside a NativeAdView. This composable must be
@@ -402,117 +372,6 @@ fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composable () -> U
         modifier = modifier,
         update = { view ->
             nativeAdView.iconView = view
-            view.prepareNativeClickableAsset()
-        },
-    )
-}
-
-/**
- * The ComposeWrapper for a mediaView inside a NativeAdView. This composable must be invoked from
- * within a `NativeAdView`.
- *
- * @param modifier modify the native ad view element.
- * @param scaleType The ImageView.ScaleType to apply to the image/media within the MediaView.
- */
-@Composable
-fun NativeAdMediaView(modifier: Modifier = Modifier, scaleType: ImageView.ScaleType? = null) {
-    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val localContext = LocalContext.current
-    AndroidView(
-        factory = {
-            MediaView(localContext).apply {
-                prepareNativeClickableAsset()
-                nativeAdView.mediaView = this
-            }
-        },
-        update = { view ->
-            nativeAdView.mediaView = view
-            view.prepareNativeClickableAsset()
-            scaleType?.let { type -> view.setImageScaleType(type) }
-        },
-        modifier = modifier,
-    )
-}
-
-/**
- * The ComposeWrapper container for a priceView inside a NativeAdView. This composable must be
- * invoked from within a `NativeAdView`.
- *
- * @param modifier modify the native ad view element.
- * @param content A composable function that defines the content of this native asset.
- */
-@Composable
-fun NativeAdPriceView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val contentState = rememberUpdatedState(content)
-    AndroidView(
-        factory = { context ->
-            ComposeView(context).apply {
-                id = View.generateViewId()
-                prepareNativeClickableAsset()
-                setContent { contentState.value() }
-                nativeAdView.priceView = this
-            }
-        },
-        modifier = modifier,
-        update = { view ->
-            nativeAdView.priceView = view
-            view.prepareNativeClickableAsset()
-        },
-    )
-}
-
-/**
- * The ComposeWrapper container for a starRatingView inside a NativeAdView. This composable must be
- * invoked from within a `NativeAdView`.
- *
- * @param modifier modify the native ad view element.
- * @param content A composable function that defines the content of this native asset.
- */
-@Composable
-fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val contentState = rememberUpdatedState(content)
-    AndroidView(
-        factory = { context ->
-            ComposeView(context).apply {
-                id = View.generateViewId()
-                prepareNativeClickableAsset()
-                setContent { contentState.value() }
-                nativeAdView.starRatingView = this
-            }
-        },
-        modifier = modifier,
-        update = { view ->
-            nativeAdView.starRatingView = view
-            view.prepareNativeClickableAsset()
-        },
-    )
-}
-
-/**
- * The ComposeWrapper container for a storeView inside a NativeAdView. This composable must be
- * invoked from within a `NativeAdView`.
- *
- * @param modifier modify the native ad view element.
- * @param content A composable function that defines the content of this native asset.
- */
-@Composable
-fun NativeAdStoreView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    val nativeAdView = LocalNativeAdView.current ?: throw IllegalStateException("NativeAdView null")
-    val contentState = rememberUpdatedState(content)
-    AndroidView(
-        factory = { context ->
-            ComposeView(context).apply {
-                id = View.generateViewId()
-                prepareNativeClickableAsset()
-                setContent { contentState.value() }
-                nativeAdView.storeView = this
-            }
-        },
-        modifier = modifier,
-        update = { view ->
-            nativeAdView.storeView = view
             view.prepareNativeClickableAsset()
         },
     )

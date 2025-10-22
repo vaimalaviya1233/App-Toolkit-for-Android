@@ -14,6 +14,7 @@ import com.d4rk.android.libs.apptoolkit.app.main.utils.InAppUpdateHelper
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.utils.ads.NativeAdManager
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private var keepSplashVisible: Boolean = true
+
+    override fun onStart() {
+        super.onStart()
+        NativeAdManager.loadNativeAds(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
