@@ -24,7 +24,7 @@ object NativeAdManager {
 
     val adQueue = SnapshotStateList<NativeAd>()
 
-    private var isLoading = false
+     var isLoading = false
 
     /**
      * Loads a batch of native ads into the adQueue.

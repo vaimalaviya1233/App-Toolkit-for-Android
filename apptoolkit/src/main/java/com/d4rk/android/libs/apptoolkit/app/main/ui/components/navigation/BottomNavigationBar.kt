@@ -50,10 +50,6 @@ fun BottomNavigationBar(
 
     Column(modifier = modifier) {
         key("bottom_ad") {
-      /*      AdBanner(
-                adsConfig = adsConfig,
-                modifier = Modifier.fillMaxWidth(),
-            )*/
             BottomAppBarNativeAdBanner(adsConfig = adsConfig)
         }
 

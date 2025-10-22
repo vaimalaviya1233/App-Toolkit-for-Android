@@ -40,11 +40,6 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private var keepSplashVisible: Boolean = true
 
-    override fun onStart() {
-        super.onStart()
-        NativeAdManager.loadNativeAds(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()

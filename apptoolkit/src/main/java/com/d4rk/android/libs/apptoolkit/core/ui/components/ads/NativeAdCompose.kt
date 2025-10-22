@@ -282,14 +282,12 @@ fun NativeAdCallToActionView(modifier: Modifier = Modifier, content: @Composable
                 prepareNativeClickableAsset()
                 setContent { contentState.value() }
                 nativeAdView.callToActionView = this
-                nativeAdView.setClickConfirmingView(this)
             }
         },
         modifier = modifier,
         update = { view ->
             nativeAdView.callToActionView = view
             view.prepareNativeClickableAsset()
-            nativeAdView.setClickConfirmingView(view)
         },
     )
 }

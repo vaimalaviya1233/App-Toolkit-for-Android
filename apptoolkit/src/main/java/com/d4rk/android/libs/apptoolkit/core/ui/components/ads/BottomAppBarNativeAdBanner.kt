@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.flow.filter
 
 @Composable
 fun BottomAppBarNativeAdBanner(
@@ -46,17 +48,21 @@ fun BottomAppBarNativeAdBanner(
     adsConfig: AdsConfig,
 ) {
     val context = LocalContext.current
-    var nativeAd by remember(adsConfig.bannerAdUnitId) { mutableStateOf<NativeAd?>(null) }
+    var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
 
-    LaunchedEffect(adsConfig.bannerAdUnitId, NativeAdManager.adQueue.size) {
-        if (nativeAd == null && NativeAdManager.adQueue.isNotEmpty()) {
-            nativeAd = NativeAdManager.adQueue.removeAt(0)
-        }
-
+    LaunchedEffect(Unit) {
         NativeAdManager.loadNativeAds(
             context = context,
             unitId = adsConfig.bannerAdUnitId
         )
+    }
+
+    LaunchedEffect(Unit) {
+        snapshotFlow { NativeAdManager.adQueue.size }
+                .filter { it > 0 && nativeAd == null }
+                .collect {
+                    nativeAd = NativeAdManager.adQueue.removeAt(0)
+                }
     }
 
     DisposableEffect(nativeAd) {
