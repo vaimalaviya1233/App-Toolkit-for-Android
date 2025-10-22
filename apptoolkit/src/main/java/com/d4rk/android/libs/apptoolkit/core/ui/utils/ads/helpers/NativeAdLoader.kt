@@ -18,7 +18,11 @@ fun dp(ctx: Context, value: Int) =
         (value * ctx.resources.displayMetrics.density).toInt()
 
 fun bindArticleNativeAd(view: NativeAdView, ad: NativeAd) {
-    (view.headlineView as TextView).text = ad.headline
+    (view.headlineView as? TextView)?.let { textView ->
+        val headline = ad.headline
+        textView.text = headline
+        textView.visibility = if (headline.isNullOrBlank()) View.GONE else View.VISIBLE
+    }
     view.mediaView?.mediaContent = ad.mediaContent
 
     (view.bodyView as? TextView)?.let {
