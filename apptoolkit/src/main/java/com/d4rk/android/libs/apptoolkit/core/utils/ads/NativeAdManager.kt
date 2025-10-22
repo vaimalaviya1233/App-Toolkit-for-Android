@@ -20,8 +20,6 @@ import kotlinx.coroutines.launch
  */
 object NativeAdManager {
 
-    private const val NUMBER_OF_ADS = 5
-
     val adQueue = SnapshotStateList<NativeAd>()
 
      var isLoading = false
@@ -59,7 +57,7 @@ object NativeAdManager {
                         }
                     })
                     .build()
-            adLoader.loadAds(AdRequest.Builder().build(), NUMBER_OF_ADS)
+            adLoader.loadAd(AdRequest.Builder().build())
             isLoading = false
         }
     }
