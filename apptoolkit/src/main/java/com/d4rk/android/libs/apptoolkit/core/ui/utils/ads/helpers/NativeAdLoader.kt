@@ -14,44 +14,44 @@ internal fun debugNativeAds(message: String) {
     println(message = "$DEBUGGING_NATIVE_ADS_TAG -> Here is $message")
 }
 
-fun dp(ctx: Context, value: Int) =
-        (value * ctx.resources.displayMetrics.density).toInt()
+fun dp(context: Context , dpValue: Int) =
+        (dpValue * context.resources.displayMetrics.density).toInt()
 
-fun bindArticleNativeAd(view: NativeAdView, ad: NativeAd) {
-    (view.headlineView as? TextView)?.let { textView ->
-        val headline = ad.headline
-        textView.text = headline
-        textView.visibility = if (headline.isNullOrBlank()) View.GONE else View.VISIBLE
+fun bindArticleNativeAd(nativeAdView: NativeAdView , nativeAd: NativeAd) {
+    (nativeAdView.headlineView as? TextView)?.let { headlineView ->
+        val headline = nativeAd.headline
+        headlineView.text = headline
+        headlineView.visibility = if (headline.isNullOrBlank()) View.GONE else View.VISIBLE
     }
-    view.mediaView?.mediaContent = ad.mediaContent
+    nativeAdView.mediaView?.mediaContent = nativeAd.mediaContent
 
-    (view.bodyView as? TextView)?.let {
-        val text = ad.body
+    (nativeAdView.bodyView as? TextView)?.let {
+        val text = nativeAd.body
         it.text = text
         it.visibility = if (text.isNullOrBlank()) View.GONE else View.VISIBLE
     }
 
-    (view.iconView as? ImageView)?.let { iv ->
-        val icon = ad.icon
+    (nativeAdView.iconView as? ImageView)?.let { iconView ->
+        val icon = nativeAd.icon
         if (icon != null) {
-            iv.setImageDrawable(icon.drawable)
-            iv.visibility = View.VISIBLE
+            iconView.setImageDrawable(icon.drawable)
+            iconView.visibility = View.VISIBLE
         } else {
-            iv.visibility = View.GONE
+            iconView.visibility = View.GONE
         }
     }
 
-    (view.advertiserView as? TextView)?.let {
-        val adv = ad.advertiser
-        it.text = adv
-        it.visibility = if (adv.isNullOrBlank()) View.GONE else View.VISIBLE
+    (nativeAdView.advertiserView as? TextView)?.let {
+        val advertiser = nativeAd.advertiser
+        it.text = advertiser
+        it.visibility = if (advertiser.isNullOrBlank()) View.GONE else View.VISIBLE
     }
 
-    (view.callToActionView as? MaterialButton)?.let { btn ->
-        val cta = ad.callToAction
-        btn.text = cta
-        btn.visibility = if (cta.isNullOrBlank()) View.GONE else View.VISIBLE
+    (nativeAdView.callToActionView as? MaterialButton)?.let { callToActionButton ->
+        val callToAction = nativeAd.callToAction
+        callToActionButton.text = callToAction
+        callToActionButton.visibility = if (callToAction.isNullOrBlank()) View.GONE else View.VISIBLE
     }
 
-    view.setNativeAd(ad)
+    nativeAdView.setNativeAd(nativeAd)
 }
