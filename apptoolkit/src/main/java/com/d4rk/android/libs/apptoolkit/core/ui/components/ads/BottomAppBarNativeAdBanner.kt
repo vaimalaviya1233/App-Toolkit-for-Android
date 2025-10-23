@@ -1,14 +1,12 @@
 package com.d4rk.android.libs.apptoolkit.core.ui.components.ads
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
-import android.text.TextUtils
-import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,19 +31,17 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.bindArticleNativeAd
-import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.dp
 import com.d4rk.android.libs.apptoolkit.core.utils.ads.NativeAdManager
-import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
-import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.flow.filter
 
 @Composable
 fun BottomAppBarNativeAdBanner(
     modifier: Modifier = Modifier,
-    adsConfig: AdsConfig,
 ) {
+    val adsConfig = AdsConfig(bannerAdUnitId = "ca-app-pub-3940256099942544/2247696110")
+
     val context = LocalContext.current
     var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
 
@@ -54,14 +50,12 @@ fun BottomAppBarNativeAdBanner(
             context = context,
             unitId = adsConfig.bannerAdUnitId
         )
-    }
 
-    LaunchedEffect(Unit) {
         snapshotFlow { NativeAdManager.adQueue.size }
-                .filter { it > 0 && nativeAd == null }
-                .collect {
-                    nativeAd = NativeAdManager.adQueue.removeAt(0)
-                }
+            .filter { it > 0 && nativeAd == null }
+            .collect {
+                nativeAd = NativeAdManager.adQueue.removeAt(0)
+            }
     }
 
     DisposableEffect(nativeAd) {
@@ -75,7 +69,7 @@ fun BottomAppBarNativeAdBanner(
         ) {
             AndroidView(
                 modifier = modifier.fillMaxWidth(),
-                factory = { ctx -> buildArticleNativeAdView(ctx) },
+                factory = { ctx -> createBottomAdView(ctx) },
                 update = { view ->
                     view.visibility = View.VISIBLE
                     bindArticleNativeAd(view, ad)
@@ -107,101 +101,27 @@ fun BottomAppBarNativeAdBanner(
     }
 }
 
-private fun buildArticleNativeAdView(ctx: Context): NativeAdView {
-    val container = NativeAdView(ctx)
+private fun createBottomAdView(ctx: Context): NativeAdView {
+    val inflater = LayoutInflater.from(ctx)
 
-    val root = LinearLayout(ctx).apply {
-        orientation = LinearLayout.HORIZONTAL
+    val parent = FrameLayout(ctx).apply {
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        val pad = dp(ctx , 12)
-        setPadding(pad, pad, pad, pad)
-        gravity = Gravity.CENTER_VERTICAL
     }
 
-    val centerCol = LinearLayout(ctx).apply {
-        orientation = LinearLayout.VERTICAL
-        layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, /*weight*/2f).apply {
-            leftMargin = dp(ctx , 12)
-            rightMargin = dp(ctx , 12)
-        }
-    }
-
-    val headline = TextView(ctx).apply {
-        id = View.generateViewId()
-        setTextAppearance(android.R.style.TextAppearance_Material_Subhead)
-        maxLines = 1
-        ellipsize = TextUtils.TruncateAt.END
-    }
-
-    val body = TextView(ctx).apply {
-        id = View.generateViewId()
-        setTextAppearance(android.R.style.TextAppearance_Material_Small)
-        maxLines = 2
-        ellipsize = TextUtils.TruncateAt.END
-        layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        ).apply { topMargin = dp(ctx , 6) }
-    }
-
-    centerCol.addView(headline)
-    centerCol.addView(body)
-
-    val rightCol = LinearLayout(ctx).apply {
-        orientation = LinearLayout.VERTICAL
-        gravity = Gravity.CENTER_HORIZONTAL
-        layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-    }
-
-    val icon = ImageView(ctx).apply {
-        id = View.generateViewId()
-        layoutParams = FrameLayout.LayoutParams(
-            dp(ctx , 52) , dp(ctx , 52) ,
-            Gravity.CENTER
-        )
-        scaleType = ImageView.ScaleType.CENTER_CROP
-        adjustViewBounds = true
-        clipToOutline = true
-        background = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-        }
-    }
-
-    val cta = MaterialButton(
-        ctx,
-        null,
-        com.google.android.material.R.attr.materialButtonTonalStyle
-    ).apply {
-        id = View.generateViewId()
-        isAllCaps = false
-        insetTop = 0
-        insetBottom = 0
-        layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        ).apply { topMargin = dp(ctx , 12) }
-    }
-
-    rightCol.addView(cta)
-
-    root.addView(icon)
-    root.addView(centerCol)
-    root.addView(rightCol)
-    container.addView(root)
-
-    val adChoices = AdChoicesView(ctx).apply { id = View.generateViewId() }
-    root.addView(adChoices, 0)
-    container.adChoicesView = adChoices
-    container.headlineView = headline
-    container.bodyView = body
-    container.iconView = icon
-    container.callToActionView = cta
+    val container = inflater.inflate(R.layout.native_ad_bottom_bar, parent, false) as NativeAdView
+    container.layoutParams = FrameLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    container.headlineView = container.findViewById<TextView>(R.id.native_ad_headline)
+    container.bodyView = container.findViewById<TextView>(R.id.native_ad_body)
+    container.advertiserView = container.findViewById<TextView>(R.id.native_ad_advertiser)
+    container.iconView = container.findViewById<ImageView>(R.id.native_ad_icon)
+    container.callToActionView =
+        container.findViewById<Button>(R.id.native_ad_call_to_action) // use Button if you dropped Material
 
     return container
 }

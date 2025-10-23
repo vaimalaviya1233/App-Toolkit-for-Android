@@ -4,7 +4,6 @@ import android.view.SoundEffectConstants
 import android.view.View
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,7 +24,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.d4rk.android.libs.apptoolkit.app.main.domain.model.BottomBarItem
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.BottomAppBarNativeAdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
@@ -42,7 +40,7 @@ fun BottomNavigationBar(
     val view: View = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
+    koinInject(qualifier = named("native_ad"))
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
     val showLabels: Boolean =
@@ -50,7 +48,7 @@ fun BottomNavigationBar(
 
     Column(modifier = modifier) {
         key("bottom_ad") {
-            BottomAppBarNativeAdBanner(adsConfig = adsConfig)
+            BottomAppBarNativeAdBanner()
         }
 
         NavigationBar {
