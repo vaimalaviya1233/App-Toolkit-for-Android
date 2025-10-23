@@ -8,12 +8,6 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.button.MaterialButton
 
-const val DEBUGGING_NATIVE_ADS_TAG: String = "DebuggingNative"
-
-internal fun debugNativeAds(message: String) {
-    println(message = "$DEBUGGING_NATIVE_ADS_TAG -> Here is $message")
-}
-
 fun dp(context: Context , dpValue: Int) =
         (dpValue * context.resources.displayMetrics.density).toInt()
 

@@ -30,17 +30,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.bindArticleNativeAd
 import com.d4rk.android.libs.apptoolkit.core.ui.utils.ads.helpers.dp
 import com.d4rk.android.libs.apptoolkit.core.utils.ads.NativeAdManager
-import com.google.android.gms.ads.nativead.MediaView
+import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.flow.filter
 
 @Composable
@@ -70,17 +68,20 @@ fun BottomAppBarNativeAdBanner(
         onDispose { nativeAd?.destroy() }
     }
 
-    val currentAd = nativeAd
-
-    currentAd?.let { ad ->
-        AndroidView(
+    nativeAd?.let { ad ->
+        Surface(
             modifier = modifier.fillMaxWidth(),
-            factory = { ctx -> buildArticleNativeAdView(ctx) },
-            update = { view ->
-                view.visibility = View.VISIBLE
-                bindArticleNativeAd(view, ad)
-            }
-        )
+            tonalElevation = 2.dp
+        ) {
+            AndroidView(
+                modifier = modifier.fillMaxWidth(),
+                factory = { ctx -> buildArticleNativeAdView(ctx) },
+                update = { view ->
+                    view.visibility = View.VISIBLE
+                    bindArticleNativeAd(view, ad)
+                }
+            )
+        }
     } ?: run {
         Surface(
             modifier = modifier.fillMaxWidth(),
@@ -120,34 +121,6 @@ private fun buildArticleNativeAdView(ctx: Context): NativeAdView {
         gravity = Gravity.CENTER_VERTICAL
     }
 
-    val left = ConstraintLayout(ctx).apply {
-        layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, /*weight*/1f)
-    }
-
-    val mediaCard = MaterialCardView(ctx).apply {
-        id = View.generateViewId()
-        radius = dp(ctx , 16).toFloat()
-        cardElevation = 0f
-        useCompatPadding = false
-        preventCornerOverlap = true
-        layoutParams = ConstraintLayout.LayoutParams(0, 0).apply {
-            startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-            endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-            topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-            bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
-            dimensionRatio = "16:9"
-        }
-    }
-
-    val media = MediaView(ctx).apply {
-        layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-    }
-    mediaCard.addView(media)
-    left.addView(mediaCard)
-
     val centerCol = LinearLayout(ctx).apply {
         orientation = LinearLayout.VERTICAL
         layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, /*weight*/2f).apply {
@@ -165,8 +138,8 @@ private fun buildArticleNativeAdView(ctx: Context): NativeAdView {
 
     val body = TextView(ctx).apply {
         id = View.generateViewId()
-        setTextAppearance(android.R.style.TextAppearance_Material_Display1)
-        maxLines = 3
+        setTextAppearance(android.R.style.TextAppearance_Material_Small)
+        maxLines = 2
         ellipsize = TextUtils.TruncateAt.END
         layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -200,10 +173,15 @@ private fun buildArticleNativeAdView(ctx: Context): NativeAdView {
         }
     }
 
-    val cta = MaterialButton(ctx).apply {
+    val cta = MaterialButton(
+        ctx,
+        null,
+        com.google.android.material.R.attr.materialButtonTonalStyle
+    ).apply {
         id = View.generateViewId()
         isAllCaps = false
-        insetTop = 0; insetBottom = 0
+        insetTop = 0
+        insetBottom = 0
         layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -212,12 +190,14 @@ private fun buildArticleNativeAdView(ctx: Context): NativeAdView {
 
     rightCol.addView(cta)
 
-    root.addView(left)
+    root.addView(icon)
     root.addView(centerCol)
     root.addView(rightCol)
     container.addView(root)
 
-    container.mediaView = media
+    val adChoices = AdChoicesView(ctx).apply { id = View.generateViewId() }
+    root.addView(adChoices, 0)
+    container.adChoicesView = adChoices
     container.headlineView = headline
     container.bodyView = body
     container.iconView = icon
