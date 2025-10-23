@@ -40,7 +40,7 @@ fun BottomNavigationBar(
     val view: View = LocalView.current
     val context = LocalContext.current
     val dataStore: CommonDataStore = CommonDataStore.getInstance(context = context)
-    koinInject(qualifier = named("native_ad"))
+    val adsConfig: AdsConfig = koinInject(qualifier = named("native_ad"))
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route ?: navController.currentDestination?.route
     val showLabels: Boolean =
@@ -48,7 +48,9 @@ fun BottomNavigationBar(
 
     Column(modifier = modifier) {
         key("bottom_ad") {
-            BottomAppBarNativeAdBanner()
+            BottomAppBarNativeAdBanner(
+                adsConfig = adsConfig
+            )
         }
 
         NavigationBar {

@@ -38,10 +38,9 @@ import kotlinx.coroutines.flow.filter
 
 @Composable
 fun BottomAppBarNativeAdBanner(
+    adsConfig: AdsConfig,
     modifier: Modifier = Modifier,
 ) {
-    val adsConfig = AdsConfig(bannerAdUnitId = "ca-app-pub-3940256099942544/2247696110")
-
     val context = LocalContext.current
     var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
 
