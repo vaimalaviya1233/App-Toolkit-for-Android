@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceContainer"
         android:orientation="vertical">
 
         <TextView
@@ -64,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/native_ad_bottom_bar_label_vertical_padding"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
                 <TextView

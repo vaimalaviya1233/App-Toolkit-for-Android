@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -69,20 +68,18 @@ fun BottomAppBarNativeAdBanner(modifier: Modifier = Modifier, adsConfig: AdsConf
         }
     }
 
-    Surface(modifier = modifier.fillMaxWidth(), tonalElevation = 2.dp) {
-        AndroidView(
-            modifier = Modifier.fillMaxWidth(),
-            factory = { ctx ->
-                LayoutInflater.from(ctx)
-                    .inflate(R.layout.native_ad_bottom_bar, null) as NativeAdView
-            },
-            update = { view ->
-                if (nativeAdView !== view) {
-                    nativeAdView = view
-                }
+    AndroidView(
+        modifier = Modifier.fillMaxWidth(),
+        factory = { ctx ->
+            LayoutInflater.from(ctx)
+                .inflate(R.layout.native_ad_bottom_bar, null) as NativeAdView
+        },
+        update = { view ->
+            if (nativeAdView !== view) {
+                nativeAdView = view
             }
-        )
-    }
+        }
+    )
 
     LaunchedEffect(nativeAdView, adsConfig.bannerAdUnitId, adRequest) {
         val view: NativeAdView = nativeAdView ?: return@LaunchedEffect
