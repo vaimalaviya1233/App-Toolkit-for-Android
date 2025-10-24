@@ -33,7 +33,7 @@ import com.d4rk.android.libs.apptoolkit.app.support.utils.constants.ShortenLinkC
 import com.d4rk.android.libs.apptoolkit.app.support.utils.extensions.primaryFormattedPrice
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.SupportNativeAdCard
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.TonalIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -96,7 +96,7 @@ fun SupportScreenContent(
     data: SupportScreenUiState,
 ) {
     val context: Context = LocalContext.current
-    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "support_banner_ad"))
+    val nativeAdsConfig: AdsConfig = koinInject(qualifier = named(name = "support_native_ad"))
 
     val productDetailsMap = data.products.associateBy { it.productId }
     LazyColumn(
@@ -205,7 +205,7 @@ fun SupportScreenContent(
             )
         }
         item {
-            AdBanner(
+            SupportNativeAdCard(
                 modifier = Modifier
                     .padding(all = SizeConstants.LargeSize)
                     .animateItem(),
