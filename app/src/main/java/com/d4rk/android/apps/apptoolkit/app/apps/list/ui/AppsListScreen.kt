@@ -134,7 +134,7 @@ fun AppsListScreen(
     ScreenStateHandler(
         screenState = screenState,
         onLoading = { HomeLoadingScreen(paddingValues = paddingValues) },
-        onEmpty = { NoDataScreen() },
+        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
         onSuccess = { uiHomeScreen ->
             AppsList(
                 uiHomeScreen = uiHomeScreen,
@@ -150,7 +150,8 @@ fun AppsListScreen(
             NoDataScreen(
                 showRetry = true,
                 onRetry = onRetry,
-                isError = true
+                isError = true,
+                paddingValues = paddingValues
             )
         }
     )

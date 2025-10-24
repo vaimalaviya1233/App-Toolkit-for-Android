@@ -47,8 +47,8 @@ fun AdsSettingsScreen(activity: Activity, viewModel: AdsSettingsViewModel) {
         ScreenStateHandler(
             screenState = screenState,
             onLoading = { LoadingScreen() },
-            onEmpty = { NoDataScreen() },
-            onError = { NoDataScreen(isError = true) },
+            onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+            onError = { NoDataScreen(isError = true, paddingValues = paddingValues) },
             onSuccess = { data: UiAdsSettingsScreen ->
                 LazyColumn(
                     modifier = Modifier

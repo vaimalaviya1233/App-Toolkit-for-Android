@@ -29,15 +29,6 @@ object AdsConstants {
             "ca-app-pub-5294151573817700/4464279910"
         }
 
-    val NO_DATA_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID : String
-        get() = if (BuildConfig.DEBUG) {
-            DebugAdsConstants.BANNER_AD_UNIT_ID
-        }
-        else {
-            "ca-app-pub-5294151573817700/2564874881"
-        }
-
-
     val SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID : String
         get() = if (BuildConfig.DEBUG) {
             DebugAdsConstants.BANNER_AD_UNIT_ID

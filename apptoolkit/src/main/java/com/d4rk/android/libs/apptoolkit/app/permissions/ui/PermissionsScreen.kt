@@ -49,6 +49,7 @@ fun PermissionsScreen(viewModel : PermissionsViewModel) {
                 icon = Icons.Outlined.Settings,
                 showRetry = true,
                 onRetry = { viewModel.onEvent(PermissionsEvent.Load) },
+                paddingValues = paddingValues
             )
         }, onSuccess = { settingsConfig ->
             PermissionsContent(paddingValues, settingsConfig)
@@ -67,8 +68,8 @@ fun PermissionsContent(paddingValues : PaddingValues , settingsConfig : Settings
                 }
                 Column(
                     modifier = Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     category.preferences.forEach { preference ->
                         SettingsPreferenceItem(icon = preference.icon , title = preference.title , summary = preference.summary , onClick = { preference.action.invoke() })

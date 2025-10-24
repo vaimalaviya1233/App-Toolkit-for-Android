@@ -42,7 +42,11 @@ fun StartupScreen(
     screenState : UiStateScreen<UiStartupScreen> ,
     onContinueClick : () -> Unit
 ) {
-    ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { data : UiStartupScreen ->
+    ScreenStateHandler(
+        screenState = screenState,
+        onLoading = { LoadingScreen() },
+        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+        onSuccess = { data: UiStartupScreen ->
         TopAppBarScaffold(
             title = stringResource(R.string.welcome) ,
             content = { paddingValues ->

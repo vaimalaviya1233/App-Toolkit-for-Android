@@ -134,8 +134,8 @@ fun IssueReporterScreen(activity: Activity) {
         ScreenStateHandler(
             screenState = uiStateScreen,
             onLoading = { LoadingScreen() },
-            onEmpty = { NoDataScreen() },
-            onError = { NoDataScreen(isError = true) },
+            onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+            onError = { NoDataScreen(isError = true, paddingValues = paddingValues) },
             onSuccess = { data: UiIssueReporterScreen ->
                 IssueReporterScreenContent(
                     paddingValues = paddingValues,

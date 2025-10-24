@@ -48,7 +48,7 @@ fun AdvancedSettingsList(
     ScreenStateHandler(
         screenState = screenState,
         onLoading = { LoadingScreen() },
-        onEmpty = { NoDataScreen() },
+        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
         onSuccess = {
             LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxHeight()) {
                 item {

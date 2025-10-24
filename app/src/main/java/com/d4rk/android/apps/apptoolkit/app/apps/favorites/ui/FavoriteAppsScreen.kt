@@ -140,7 +140,8 @@ fun FavoriteAppsScreen(
         onEmpty = {
             NoDataScreen(
                 textMessage = R.string.no_apps_added_to_favorites,
-                icon = Icons.Outlined.Android
+                icon = Icons.Outlined.Android,
+                paddingValues = paddingValues
             )
         },
         onSuccess = { uiHomeScreen ->
@@ -158,7 +159,8 @@ fun FavoriteAppsScreen(
             NoDataScreen(
                 showRetry = true,
                 onRetry = onRetry,
-                isError = true
+                isError = true,
+                paddingValues = paddingValues
             )
         }
     )

@@ -27,7 +27,11 @@ fun GeneralSettingsScreen(title : String , viewModel : GeneralSettingsViewModel 
 @Composable
 fun GeneralSettingsContent(viewModel : GeneralSettingsViewModel , contentProvider : GeneralSettingsContentProvider , paddingValues : PaddingValues , snackbarHostState : SnackbarHostState) {
     val screenState : UiStateScreen<UiGeneralSettingsScreen> by viewModel.uiState.collectAsStateWithLifecycle()
-    ScreenStateHandler(screenState = screenState , onLoading = { LoadingScreen() } , onEmpty = { NoDataScreen() } , onSuccess = { data : UiGeneralSettingsScreen ->
+    ScreenStateHandler(
+        screenState = screenState,
+        onLoading = { LoadingScreen() },
+        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+        onSuccess = { data: UiGeneralSettingsScreen ->
         contentProvider.ProvideContent(contentKey = data.contentKey , paddingValues = paddingValues , snackbarHostState = snackbarHostState)
     })
 }

@@ -85,6 +85,7 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Settings,
                     showRetry = true,
                     onRetry = { viewModel.onEvent(event = SettingsEvent.Load(context = context)) },
+                    paddingValues = paddingValues
                 )
             },
             onSuccess = { config: SettingsConfig ->

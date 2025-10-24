@@ -39,15 +39,19 @@ fun AboutSettingsList(paddingValues: PaddingValues = PaddingValues(), snackbarHo
     val screenState: UiStateScreen<UiAboutScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val deviceInfo: String = stringResource(id = R.string.device_info)
 
-    ScreenStateHandler(screenState = screenState, onLoading = { LoadingScreen() }, onEmpty = { NoDataScreen() }, onSuccess = { data: UiAboutScreen ->
+    ScreenStateHandler(
+        screenState = screenState,
+        onLoading = { LoadingScreen() },
+        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+        onSuccess = { data: UiAboutScreen ->
         LazyColumn(modifier = Modifier.fillMaxHeight() , contentPadding = paddingValues) {
             item {
                 PreferenceCategoryItem(title = stringResource(id = R.string.app_info))
                 SmallVerticalSpacer()
                 Column(
                     modifier = Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     SettingsPreferenceItem(title = stringResource(id = R.string.app_full_name), summary = stringResource(id = R.string.copyright))
                     ExtraTinyVerticalSpacer()
@@ -67,8 +71,8 @@ fun AboutSettingsList(paddingValues: PaddingValues = PaddingValues(), snackbarHo
                 SmallVerticalSpacer()
                 Column(
                     modifier = Modifier
-                            .padding(horizontal = SizeConstants.LargeSize)
-                            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
+                        .padding(horizontal = SizeConstants.LargeSize)
+                        .clip(shape = RoundedCornerShape(size = SizeConstants.LargeSize))
                 ) {
                     SettingsPreferenceItem(title = deviceInfo, summary = data.deviceInfo) {
                         viewModel.onEvent(event = AboutEvent.CopyDeviceInfo(label = deviceInfo))

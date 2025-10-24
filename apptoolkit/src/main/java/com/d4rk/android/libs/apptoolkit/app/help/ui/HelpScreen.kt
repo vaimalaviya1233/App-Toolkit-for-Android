@@ -92,10 +92,19 @@ fun HelpScreen(activity: ComponentActivity, config: HelpScreenConfig, scope: Cor
             screenState = screenState,
             onLoading = { LoadingScreen() },
             onEmpty = {
-                NoDataScreen(showRetry = true, onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) })
+                NoDataScreen(
+                    showRetry = true,
+                    onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) },
+                    paddingValues = paddingValues
+                )
             },
             onError = {
-                NoDataScreen(isError = true, showRetry = true, onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) })
+                NoDataScreen(
+                    isError = true,
+                    showRetry = true,
+                    onRetry = { viewModel.onEvent(HelpEvent.LoadFaq) },
+                    paddingValues = paddingValues
+                )
             },
             onSuccess = { data: UiHelpScreen ->
                 HelpScreenContent(questions = data.questions, paddingValues = paddingValues, activity = activity)

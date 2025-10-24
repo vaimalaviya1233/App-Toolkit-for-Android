@@ -19,4 +19,5 @@
     <dimen name="native_ad_card_label_vertical_padding">4dp</dimen>
     <dimen name="native_ad_card_cta_horizontal_padding">20dp</dimen>
     <dimen name="native_ad_card_star_rating_margin_end">24dp</dimen>
+    <dimen name="native_ad_card_media_corner_radius">20dp</dimen>
 </resources>

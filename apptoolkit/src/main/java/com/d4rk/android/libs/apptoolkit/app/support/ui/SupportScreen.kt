@@ -62,12 +62,13 @@ fun SupportComposable(
         ScreenStateHandler(
             screenState = screenState,
             onLoading = { LoadingScreen() },
-            onEmpty = { NoDataScreen() },
+            onEmpty = { NoDataScreen(paddingValues = paddingValues) },
             onError = {
                 NoDataScreen(
                     icon = Icons.Outlined.MoneyOff,
                     isError = true,
                     textMessage = R.string.error_failed_to_load_sku_details,
+                    paddingValues = paddingValues
                 )
             },
             onSuccess = { data: SupportScreenUiState ->

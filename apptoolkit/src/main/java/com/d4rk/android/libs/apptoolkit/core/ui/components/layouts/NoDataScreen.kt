@@ -3,11 +3,13 @@ package com.d4rk.android.libs.apptoolkit.core.ui.components.layouts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
@@ -26,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.NoDataNativeAdCard
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.IconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.LargeVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -37,7 +39,7 @@ import org.koin.core.qualifier.named
  * Displays a placeholder screen when no data is available.
  *
  * A progress indicator with an optional [icon] is shown in the center of the
- * screen. A retry button and ad banner can be toggled through [showRetry] and
+ * screen. A retry button and native ad card can be toggled through [showRetry] and
  * [showAd] respectively. When [isError] is true error colors are used.
  *
  * @param text Label for the retry action button.
@@ -45,73 +47,74 @@ import org.koin.core.qualifier.named
  * @param icon Icon rendered at the center of the indicator.
  * @param showRetry Whether to display the retry button.
  * @param onRetry Callback invoked when the retry button is pressed.
- * @param showAd Whether an [AdBanner] should be displayed.
+ * @param showAd Whether a [NoDataNativeAdCard] should be displayed.
  * @param isError Shows the indicator with error styling when true.
- * @param adsConfig Configuration used for the ad banner instance.
+ * @param adsConfig Configuration used for the native ad instance.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NoDataScreen(
     text: Int = R.string.try_again,
-    textMessage : Int = R.string.try_again,
+    textMessage: Int = R.string.try_again,
     icon: ImageVector = Icons.Default.Info,
     showRetry: Boolean = false,
     onRetry: () -> Unit = {},
     showAd: Boolean = true,
     isError: Boolean = false,
-    adsConfig: AdsConfig = koinInject(qualifier = named(name = "no_data_banner_ad")),
+    paddingValues: PaddingValues = PaddingValues(),
+    adsConfig: AdsConfig = koinInject(qualifier = named(name = "no_data_native_ad")),
 ) {
-
-    Box(
+    Column(
         modifier = Modifier
+            .padding(paddingValues)
             .fillMaxSize()
-            .wrapContentSize(align = Alignment.Center)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        LargeVerticalSpacer()
+        Box(
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                LoadingIndicator(
-                    modifier = Modifier.size(size = 144.dp),
-                    color = if (isError) MaterialTheme.colorScheme.errorContainer else LoadingIndicatorDefaults.indicatorColor
-                )
-
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize),
-                    tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primaryContainer
-                )
-            }
-
-            Text(
-                text = stringResource(id = textMessage),
-                style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
-                color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
+            LoadingIndicator(
+                modifier = Modifier.size(size = 144.dp),
+                color = if (isError) MaterialTheme.colorScheme.errorContainer else LoadingIndicatorDefaults.indicatorColor
             )
-            if (showRetry) {
-                LargeVerticalSpacer()
-                IconButtonWithText(
-                    onClick = onRetry,
-                    icon = Icons.Filled.Refresh,
-                    label = stringResource(id = text)
-                )
-            }
 
-            LargeVerticalSpacer()
-
-            if (showAd) {
-                AdBanner(
-                    adsConfig = adsConfig,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = SizeConstants.MediumSize),
-                )
-            }
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(size = SizeConstants.ExtraExtraLargeSize + SizeConstants.SmallSize + SizeConstants.ExtraTinySize),
+                tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primaryContainer
+            )
         }
+
+        Text(
+            text = stringResource(id = textMessage),
+            style = MaterialTheme.typography.displaySmall.copy(textAlign = TextAlign.Center),
+            color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
+        )
+        if (showRetry) {
+            LargeVerticalSpacer()
+            IconButtonWithText(
+                onClick = onRetry,
+                icon = Icons.Filled.Refresh,
+                label = stringResource(id = text)
+            )
+        }
+
+        LargeVerticalSpacer()
+
+        if (showAd) {
+            NoDataNativeAdCard(
+                adsConfig = adsConfig,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = SizeConstants.MediumSize),
+            )
+        }
+
+        LargeVerticalSpacer()
     }
 }
