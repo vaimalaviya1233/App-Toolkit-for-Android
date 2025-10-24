@@ -15,16 +15,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/native_ad_bottom_bar_horizontal_padding"
             android:paddingStart="@dimen/native_ad_bottom_bar_label_horizontal_padding"
-            android:paddingTop="@dimen/native_ad_bottom_bar_label_horizontal_padding"
+            android:paddingTop="@dimen/native_ad_label_to_content_spacing"
             android:paddingEnd="@dimen/native_ad_bottom_bar_label_horizontal_padding"
+            android:paddingBottom="@dimen/native_ad_bottom_bar_label_vertical_padding"
             android:text="● Sponsored Ad"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="?attr/colorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/native_ad_label_to_content_spacing"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="@dimen/native_ad_bottom_bar_horizontal_padding"
