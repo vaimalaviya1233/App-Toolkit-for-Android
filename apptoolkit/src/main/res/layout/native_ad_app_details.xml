@@ -61,7 +61,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="?attr/colorOnSurface"
                     android:textStyle="bold"
                     tools:text="Discover Awesome Tools" />
 
@@ -73,7 +73,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="?attr/colorOnSurface"
                     tools:text="Boost your productivity with curated utilities." />
 
                 <TextView
@@ -97,14 +97,9 @@
                 android:layout_marginStart="@dimen/native_ad_bottom_bar_spacing"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingStart="@dimen/native_ad_bottom_bar_button_horizontal_padding"
-                android:paddingEnd="@dimen/native_ad_bottom_bar_button_horizontal_padding"
                 android:textAllCaps="false"
                 android:visibility="gone"
                 app:icon="@drawable/ic_open_in_new_24"
-                app:iconGravity="textStart"
-                app:iconPadding="@dimen/native_ad_bottom_bar_label_vertical_padding"
-                app:iconTint="?attr/colorPrimary"
                 tools:text="Open" />
         </LinearLayout>
     </LinearLayout>
