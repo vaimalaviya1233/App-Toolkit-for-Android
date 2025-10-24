@@ -24,7 +24,7 @@ import kotlinx.serialization.json.Json
  */
 object KtorClient {
 
-    private const val requestTimeout: Long = 10_000L
+    private const val requestTimeout: Long = 30_000L
     private var client: HttpClient? = null
 
     /**
