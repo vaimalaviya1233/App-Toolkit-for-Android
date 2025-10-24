@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.apps.apptoolkit.R
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AppDetailsNativeAd
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.OutlinedIconButtonWithText
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ExtraSmallVerticalSpacer
@@ -60,6 +62,7 @@ fun AppDetailsBottomSheet(
     onFavoriteClick: () -> Unit,
     onOpenAppClick: () -> Unit,
     onOpenInPlayStoreClick: () -> Unit,
+    adsConfig: AdsConfig,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -137,8 +140,15 @@ fun AppDetailsBottomSheet(
                 }
             }
         }
+
+        LargeVerticalSpacer()
+        AppDetailsNativeAd(
+            modifier = Modifier
+                .fillMaxWidth(),
+            adsConfig = adsConfig
+        )
+
         if (appInfo.description.isNotEmpty()) {
-            LargeVerticalSpacer()
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

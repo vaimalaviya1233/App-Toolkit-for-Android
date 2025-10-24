@@ -27,6 +27,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.favorites.domain.actions.Favori
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.rememberAdsEnabled
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -36,6 +37,7 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.qualifier.named
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +47,7 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val adsEnabled = rememberAdsEnabled()
+    val appDetailsAdsConfig: AdsConfig = koinInject(qualifier = named("app_details_native_ad"))
     val onFavoriteToggle: (String) -> Unit = remember(viewModel) { { pkg -> viewModel.toggleFavorite(pkg) } }
     val onRetry: () -> Unit = remember(viewModel) { { viewModel.onEvent(FavoriteAppsEvent.LoadFavorites) } }
     val dispatchers: DispatcherProvider = koinInject()
@@ -106,7 +109,8 @@ fun FavoriteAppsRoute(paddingValues: PaddingValues) {
                     coroutineScope.launch {
                         onFavoriteToggle(app.packageName)
                     }
-                }
+                },
+                adsConfig = appDetailsAdsConfig
             )
         }
     }

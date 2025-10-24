@@ -5,11 +5,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +24,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.data.datastore.CommonDataStore
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
@@ -37,18 +32,21 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.google.android.material.button.MaterialButton
 
 @SuppressLint("InflateParams")
 @Composable
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-fun AppsListNativeAdCard(modifier: Modifier = Modifier, adsConfig: AdsConfig) {
+fun AppDetailsNativeAd(
+    modifier: Modifier = Modifier,
+    adsConfig: AdsConfig
+) {
     val context = LocalContext.current
     val inspectionMode = LocalInspectionMode.current
     val dataStore: CommonDataStore = remember { CommonDataStore.getInstance(context = context) }
     val showAds: Boolean by dataStore.adsEnabledFlow.collectAsStateWithLifecycle(initialValue = true)
 
     if (inspectionMode) {
-        AppsListNativeAdPreview(modifier = modifier)
+        AppDetailsNativeAdPreview(modifier = modifier)
         return
     }
 
@@ -68,25 +66,18 @@ fun AppsListNativeAdCard(modifier: Modifier = Modifier, adsConfig: AdsConfig) {
         }
     }
 
-    Card(
-        modifier = modifier
-            .fillMaxSize()
-            .aspectRatio(1f),
-        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
-    ) {
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { ctx ->
-                LayoutInflater.from(ctx)
-                    .inflate(R.layout.native_ad_apps_list_card, null) as NativeAdView
-            },
-            update = { view ->
-                if (nativeAdView !== view) {
-                    nativeAdView = view
-                }
+    AndroidView(
+        modifier = modifier,
+        factory = { ctx ->
+            LayoutInflater.from(ctx)
+                .inflate(R.layout.native_ad_app_details, null) as NativeAdView
+        },
+        update = { view ->
+            if (nativeAdView !== view) {
+                nativeAdView = view
             }
-        )
-    }
+        }
+    )
 
     LaunchedEffect(nativeAdView, adsConfig.bannerAdUnitId, adRequest) {
         val view: NativeAdView = nativeAdView ?: return@LaunchedEffect
@@ -95,7 +86,7 @@ fun AppsListNativeAdCard(modifier: Modifier = Modifier, adsConfig: AdsConfig) {
             .forNativeAd { nativeAd ->
                 currentNativeAd?.destroy()
                 currentNativeAd = nativeAd
-                bindAppsListNativeAd(adView = view, nativeAd = nativeAd)
+                bindAppDetailsNativeAd(adView = view, nativeAd = nativeAd)
                 view.isVisible = true
             }
             .withNativeAdOptions(
@@ -116,27 +107,21 @@ fun AppsListNativeAdCard(modifier: Modifier = Modifier, adsConfig: AdsConfig) {
 }
 
 @Composable
-private fun AppsListNativeAdPreview(modifier: Modifier) {
-    Card(
+private fun AppDetailsNativeAdPreview(modifier: Modifier) {
+    Box(
         modifier = modifier
-            .fillMaxSize()
-            .aspectRatio(1f),
-        shape = RoundedCornerShape(size = SizeConstants.ExtraLargeSize)
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Native Ad Preview",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        Text(
+            text = "Native Ad Preview",
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 
-private fun bindAppsListNativeAd(adView: NativeAdView, nativeAd: NativeAd) {
+private fun bindAppDetailsNativeAd(adView: NativeAdView, nativeAd: NativeAd) {
     val headlineView: TextView = adView.findViewById(R.id.native_ad_headline)
     adView.headlineView = headlineView
     headlineView.text = nativeAd.headline
@@ -169,6 +154,16 @@ private fun bindAppsListNativeAd(adView: NativeAdView, nativeAd: NativeAd) {
     } else {
         iconView.setImageDrawable(icon.drawable)
         iconView.isVisible = true
+    }
+
+    val callToActionView: MaterialButton = adView.findViewById(R.id.native_ad_call_to_action)
+    adView.callToActionView = callToActionView
+    val callToActionText: CharSequence? = nativeAd.callToAction
+    if (callToActionText.isNullOrEmpty()) {
+        callToActionView.isVisible = false
+    } else {
+        callToActionView.text = callToActionText
+        callToActionView.isVisible = true
     }
 
     adView.setNativeAd(nativeAd)
