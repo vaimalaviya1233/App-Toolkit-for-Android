@@ -31,8 +31,8 @@ val adsModule : Module = module {
         AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
     }
 
-    single<AdsConfig>(named(name = "apps_list_banner_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.APPS_LIST_BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
+    single<AdsConfig>(named(name = "apps_list_native_ad")) {
+        AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
     }
 
     single<AdsConfig>(named(name = "no_data_banner_ad")) {

@@ -23,7 +23,7 @@ import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppInfo
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.AppListItem
 import com.d4rk.android.apps.apptoolkit.app.apps.list.domain.model.ui.UiHomeScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AppsListNativeAdCard
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
@@ -53,7 +53,7 @@ fun AppsList(
     val items by remember(apps, adsEnabled, adFrequency) {
         derivedStateOf { buildAppListItems(apps, adsEnabled, adFrequency) }
     }
-    val adsConfig: AdsConfig = koinInject(qualifier = named("apps_list_banner_ad"))
+    val adsConfig: AdsConfig = koinInject(qualifier = named("apps_list_native_ad"))
 
     AppsGrid(
         items = items,
@@ -100,7 +100,7 @@ private fun AppsGrid(
                 }
             },
             span = { _, item ->
-                if (item is AppListItem.Ad) GridItemSpan(columnCount) else GridItemSpan(1)
+                GridItemSpan(1)
             },
             contentType = { _, item ->
                 when (item) {
@@ -163,7 +163,7 @@ private fun AdListItem(
     modifier: Modifier = Modifier,
     adsConfig: AdsConfig,
 ) {
-    AdBanner(
+    AppsListNativeAdCard(
         adsConfig = adsConfig,
         modifier = modifier
     )
