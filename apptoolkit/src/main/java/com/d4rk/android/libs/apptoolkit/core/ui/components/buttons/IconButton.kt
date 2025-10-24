@@ -21,6 +21,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextOverflow
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.ui.components.spacers.ButtonIconSpacer
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -176,7 +177,7 @@ fun IconButtonWithText(
                 contentDescription = iconContentDescription)
         }
         ButtonIconSpacer()
-        Text(text = label)
+        Text(text = label, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
@@ -211,7 +212,7 @@ fun TonalIconButtonWithText(
                 contentDescription = iconContentDescription)
         }
         ButtonIconSpacer()
-        Text(text = label)
+        Text(text = label, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
@@ -286,6 +287,6 @@ fun OutlinedIconButtonWithText(
                 contentDescription = iconContentDescription)
         }
         ButtonIconSpacer()
-        Text(text = label)
+        Text(text = label, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
