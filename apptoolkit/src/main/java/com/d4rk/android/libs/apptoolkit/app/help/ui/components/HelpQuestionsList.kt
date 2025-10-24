@@ -18,9 +18,17 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 @Composable
 fun HelpQuestionsList(questions : List<UiHelpQuestion>) {
     val expandedStates : SnapshotStateMap<Int , Boolean> = remember { mutableStateMapOf() }
+    val cardShape = RoundedCornerShape(
+        topStart = SizeConstants.LargeIncreasedSize,
+        topEnd = SizeConstants.LargeIncreasedSize,
+        bottomStart = SizeConstants.ExtraSmallSize,
+        bottomEnd = SizeConstants.ExtraSmallSize,
+    )
     Card(
-        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(SizeConstants.LargeIncreasedSize)) ,
-        shape = RoundedCornerShape(SizeConstants.LargeIncreasedSize)
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(cardShape),
+        shape = cardShape
         ) {
         Column {
             questions.forEachIndexed { index : Int , question : UiHelpQuestion ->

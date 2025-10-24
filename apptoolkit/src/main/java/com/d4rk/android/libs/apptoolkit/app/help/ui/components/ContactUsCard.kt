@@ -39,20 +39,27 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 fun ContactUsCard(onClick : () -> Unit) {
     val hapticFeedback : HapticFeedback = LocalHapticFeedback.current
     val view : View = LocalView.current
+    val cardShape = RoundedCornerShape(
+        topStart = SizeConstants.ExtraSmallSize,
+        topEnd = SizeConstants.ExtraSmallSize,
+        bottomStart = SizeConstants.LargeIncreasedSize,
+        bottomEnd = SizeConstants.LargeIncreasedSize,
+    )
     Card(modifier = Modifier
-            .fillMaxWidth()
-            .bounceClick()
-            .clip(shape = RoundedCornerShape(size = SizeConstants.LargeIncreasedSize))
-            .clickable {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
-                hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
-                onClick()
-            },
-         shape = RoundedCornerShape(size = SizeConstants.LargeIncreasedSize)) {
+        .fillMaxWidth()
+        .bounceClick()
+        .clip(shape = cardShape)
+        .clickable {
+            view.playSoundEffect(SoundEffectConstants.CLICK)
+            hapticFeedback.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.ContextClick)
+            onClick()
+        },
+        shape = cardShape
+    ) {
         Row(
             modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = SizeConstants.LargeSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(all = SizeConstants.LargeSize) , verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.Center
         ) {
             Box(contentAlignment = Alignment.Center , modifier = Modifier.size(size = SizeConstants.ExtraExtraLargeSize)) {
                 Icon(painter = painterResource(id = R.drawable.shape_scalloped) , contentDescription = null , modifier = Modifier.fillMaxSize() , tint = MaterialTheme.colorScheme.primaryContainer)
@@ -61,8 +68,8 @@ fun ContactUsCard(onClick : () -> Unit) {
             LargeHorizontalSpacer()
             Column(
                 modifier = Modifier
-                        .weight(weight = 1f)
-                        .fillMaxHeight()
+                    .weight(weight = 1f)
+                    .fillMaxHeight()
             ) {
                 Text(text = stringResource(id = R.string.contact_us) , fontWeight = FontWeight.Bold)
                 Text(text = stringResource(id = R.string.contact_us_description))

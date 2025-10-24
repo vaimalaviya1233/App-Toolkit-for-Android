@@ -34,7 +34,7 @@ import com.d4rk.android.libs.apptoolkit.app.help.ui.components.HelpQuestionsList
 import com.d4rk.android.libs.apptoolkit.app.help.ui.components.dropdown.HelpScreenMenuActions
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.HelpNativeAdCard
 import com.d4rk.android.libs.apptoolkit.core.ui.components.buttons.fab.AnimatedExtendedFloatingActionButton
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -120,7 +120,7 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
         modifier = Modifier.fillMaxSize() , contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() , bottom = paddingValues.calculateBottomPadding() , start = SizeConstants.LargeSize , end = SizeConstants.LargeSize
         ),
-        verticalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize)
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.ExtraTinySize)
     ) {
         item {
             Text(text = stringResource(id = R.string.popular_help_resources))
@@ -129,7 +129,7 @@ fun HelpScreenContent(questions : List<UiHelpQuestion> , paddingValues : Padding
             HelpQuestionsList(questions = questions)
         }
         item {
-            AdBanner(
+            HelpNativeAdCard(
                 adsConfig = adsConfig,
                 modifier = Modifier.animateItem()
             )

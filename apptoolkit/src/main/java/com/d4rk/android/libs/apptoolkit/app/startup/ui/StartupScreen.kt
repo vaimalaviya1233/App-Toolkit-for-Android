@@ -45,7 +45,7 @@ fun StartupScreen(
     ScreenStateHandler(
         screenState = screenState,
         onLoading = { LoadingScreen() },
-        onEmpty = { NoDataScreen(paddingValues = paddingValues) },
+        onEmpty = { NoDataScreen() },
         onSuccess = { data: UiStartupScreen ->
         TopAppBarScaffold(
             title = stringResource(R.string.welcome) ,
