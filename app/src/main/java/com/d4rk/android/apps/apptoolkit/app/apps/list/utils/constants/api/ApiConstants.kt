@@ -4,8 +4,11 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConsta
 
 object ApiHost {
     const val API_REPO: String = "com.d4rk.apis"
-    const val API_BRANCH: String = "main"
-    const val API_FOLDER_PATH: String = "App%20Toolkit"
+    const val API_BASE_PATH: String = "api/app_toolkit"
+}
+
+object ApiVersions {
+    const val V1: String = "v1"
 }
 
 object ApiEnvironments {
@@ -18,5 +21,6 @@ object ApiPaths {
 }
 
 object ApiConstants {
-    const val BASE_REPOSITORY_URL: String = "${GithubConstants.GITHUB_RAW}/${ApiHost.API_REPO}/refs/heads/${ApiHost.API_BRANCH}/${ApiHost.API_FOLDER_PATH}"
+    const val BASE_REPOSITORY_URL: String =
+        "${GithubConstants.GITHUB_PAGES}/${ApiHost.API_REPO}/${ApiHost.API_BASE_PATH}/${ApiVersions.V1}"
 }
